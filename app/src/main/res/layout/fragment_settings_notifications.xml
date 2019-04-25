@@ -60,11 +60,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/settings_category_notif_customize"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/set_notif_sound"
                 android:gravity="center"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:tint="@android:color/white"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_sound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -72,6 +102,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:id="@+id/channels_container"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
@@ -156,68 +188,141 @@
 
             </LinearLayout>
             <!-- NOTIFICATIONS SETTINGS -->
-            <TextView
-                android:text="@string/settings_title_notifications"
-                style="?attr/shapeBorder"
-                android:paddingBottom="10dp"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/settings_category_notif_categories"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+            </LinearLayout>
             <!-- Toots per page -->
             <CheckBox
                 android:id="@+id/set_notif_follow"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:id="@+id/set_notif_follow_add"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow_add"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:id="@+id/set_notif_follow_ask"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow_ask"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:id="@+id/set_notif_follow_mention"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow_mention"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:id="@+id/set_notif_follow_share"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow_share"
                 android:layout_height="wrap_content" />
             <!-- END NOTIFICATIONS SETTINGS -->
 
             <!-- NOTIFICATION CONTENT NEW -->
-            <TextView
-                android:text="@string/set_title_news"
-                style="?attr/shapeBorder"
-                android:paddingBottom="10dp"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/settings_category_notif_news"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+            </LinearLayout>
             <!-- New hometimeline content -->
             <CheckBox
                 android:id="@+id/set_notif_hometimeline"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notification_news"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:text="@string/settings_title_hour"
-                style="?attr/shapeBorder"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/settings_category_notif_time_slot"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+            </LinearLayout>
             <CheckBox
                 android:id="@+id/set_enable_time_slot"
                 android:layout_width="wrap_content"
                 android:text="@string/set_enable_time_slot"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:layout_height="wrap_content" />
             <LinearLayout
                 style="?attr/shapeBorder"
@@ -254,15 +359,33 @@
                     android:entries="@array/action_notification"/>
             </LinearLayout>
             <!-- MORE OPTIONS SETTINGS -->
-            <TextView
-                android:text="@string/settings_title_more_options"
-                style="?attr/shapeBorder"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/settings_category_notif_advanced"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="?colorAccent" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

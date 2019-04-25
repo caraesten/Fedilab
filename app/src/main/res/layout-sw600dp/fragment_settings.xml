@@ -216,6 +216,15 @@
             android:text="@string/set_display_follow_instance"
             android:layout_height="wrap_content" />
 
+        <!-- DISPLAY NEW BADGE -->
+        <CheckBox
+            android:id="@+id/set_display_new_badge"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_display_new_badge"
+            android:layout_height="wrap_content" />
+
         <!-- DISPLAY BOOKMARK BUTTON -->
         <CheckBox
             android:id="@+id/set_display_bookmarks"

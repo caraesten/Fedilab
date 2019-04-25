@@ -782,7 +782,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
-            if (status.isNew())
+            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+            if (status.isNew() && new_badge)
                 holder.new_element.setVisibility(View.VISIBLE);
             else
                 holder.new_element.setVisibility(View.GONE);
@@ -2408,7 +2409,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     doAction = API.StatusAction.BLOCK;
                                     break;
                                 case R.id.action_translate:
-                                    translateToot(status);
+                                    if (translator == Helper.TRANS_NONE)
+                                        Toasty.info(context, R.string.toast_error_translations_disabled, Toast.LENGTH_SHORT).show();
+                                    else
+                                        translateToot(status);
                                     return true;
                                 case R.id.action_report:
                                     builderInner = new AlertDialog.Builder(context, style);

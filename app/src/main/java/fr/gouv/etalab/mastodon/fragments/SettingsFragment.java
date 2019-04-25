@@ -674,6 +674,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+        final CheckBox set_new_badge = rootView.findViewById(R.id.set_display_new_badge);
+        set_new_badge.setChecked(new_badge);
+
+        set_new_badge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_NEW_BADGE, set_new_badge.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
         set_fit_preview.setChecked(fit_preview);
