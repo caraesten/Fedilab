@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <string name="toast_saved">Le média a été enregistré !</string>
     <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Brouillon enregistré !</string>
     <string name="toast_error_char_limit">Êtes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
     <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
     <string name="set_bubble_counter">Afficher les compteurs</string>
     <string name="set_auto_add_media_url">Ajouter l’URL des médias dans les pouets</string>
-    <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
     <string name="set_notif_follow_ask">Notifier lorsque quelqu’un demande à me suivre</string>
     <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
     <string name="set_share_validation">Confirmer avant de partager</string>
     <string name="set_share_validation_fav">Confirmer avant d’ajouter aux favoris</string>
-    <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Fractionnement automatique au-delà de 500 caractères</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
-    <string name="settings_title_hour">Plage horaire pour les notifications :</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">et</string>
     <string name="settings_time_greater">L’horaire doit être plus grand que %1$s</string>
@@ -373,7 +371,6 @@
         <item>Jaune</item>
         <item>Blanc</item>
     </string-array>
-    <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d’accueil</string>
     <string name="action_follow">Suivre</string>
     <string name="action_unfollow">Se désabonner</string>
@@ -809,6 +806,12 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="vote">Voter</string>
     <string name="poll_not_private">Un sondage ne peut pas être attaché à un message direct!</string>
     <string name="notif_poll">Le sondage auquel vous avez participé est maintenant terminé</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
