@@ -289,6 +289,7 @@
     <string name="nothing_to_do">Ni ellir gwneud dim</string>
     <string name="toast_saved">Arbedwyd y cyfryngau!</string>
     <string name="toast_error_translate">Aeth rhywbeth o\'i le tra\'n cyfieithu!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Arbedwyd y drafft!</string>
     <string name="toast_error_char_limit">Ydych chi\'n siwr fyd yr achos hwn yn caniatau y nifer hyn o nodau? Fel arfer, tua 500 o nodau yw\'r nifer a ganiateir.</string>
     <string name="toast_visibility_changed">Gwelededd y tŵtiau wedi ei newid ar gyfer y cyfrif %1$s</string>
@@ -314,7 +315,6 @@
     <string name="set_auto_store_toot">Arbed drafft yn ddiofyn</string>
     <string name="set_bubble_counter">Arddangos cownteri</string>
     <string name="set_auto_add_media_url">Ychwanegu URL o\'r cyfryngau yn y tŵtiau</string>
-    <string name="settings_title_notifications">Trefnu hysbysiadau</string>
     <string name="set_notif_follow">Hysbysu pryd mae rhywun yn eich dilyn chi</string>
     <string name="set_notif_follow_ask">Hysbysu pryd mae rhywun yn gwneud cais i\'ch dilyn chi</string>
     <string name="set_notif_follow_share">Hysbysu pan mae rhywun yn hybu\'ch statws</string>
@@ -322,7 +322,6 @@
     <string name="set_notif_follow_mention">Hysbysu pan mae rhywun yn sôn amdanoch chi</string>
     <string name="set_share_validation">Dangos deialog cadarnhau cyn hybu</string>
     <string name="set_share_validation_fav">Dangos deialog cadarnhau cyn ychwanegu i\'r ffefrynnau</string>
-    <string name="settings_title_more_options">Gosodiadau uwch</string>
     <string name="set_wifi_only">Ond hysbysu pan yn gysylltiedig i WIFI</string>
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
@@ -339,7 +338,6 @@
     <string name="set_automatically_split_toot">Hollti tŵtiau dros 500 nodyn yn ymatebion</string>
     <string name="note_no_space">Yr ydych wedi llewnwi\'r 160 nodyn a ganiateir!</string>
     <string name="username_no_space">Yr ydych wedi llenwi y 30 nodyn a ganiateir!</string>
-    <string name="settings_title_hour">Slot amser ar gyfer hysbysiadau:</string>
     <string name="settings_time_from">Rhwng</string>
     <string name="settings_time_to">ac</string>
     <string name="settings_time_greater">Rhaid i\'r amser fod yn fwy na %1$s</string>
@@ -389,7 +387,6 @@
         <item>Melyn</item>
         <item>Gwyn</item>
     </string-array>
-    <string name="set_title_news">Newyddion</string>
     <string name="set_notification_news">Hysbysu tŵtiau newydd ar y ffrwd gartref</string>
     <string name="action_follow">Dilyn</string>
     <string name="action_unfollow">Dad-ddilyn</string>
@@ -827,6 +824,12 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
