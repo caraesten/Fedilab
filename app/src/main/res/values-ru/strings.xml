@@ -820,6 +820,12 @@
     <string name="vote">Голосовать</string>
     <string name="poll_not_private">Опрос не может быть прикреплен к прямому сообщению!</string>
     <string name="notif_poll">Опрос, в котором вы проголосовали, завершен</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

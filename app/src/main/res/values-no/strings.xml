@@ -800,6 +800,12 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="vote">Stem</string>
     <string name="poll_not_private">En avstemming kan ikke kobles til en direktemelding!</string>
     <string name="notif_poll">En avstemming du har stemt på er avsluttet</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

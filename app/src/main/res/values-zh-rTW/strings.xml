@@ -808,6 +808,12 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="vote">投票</string>
     <string name="poll_not_private">投票不能附加到直接訊息中！</string>
     <string name="notif_poll">您曾投過的投票已經結束</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

@@ -803,6 +803,12 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="vote">Vota</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">S\'ha acabat una enquesta en què havies participat</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
