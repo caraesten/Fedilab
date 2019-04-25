@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Δεν μπορεί να εκτελεστεί καμία ενέργεια</string>
     <string name="toast_saved">Το πολυμέσο αποθηκεύθηκε.</string>
     <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Αποθηκεύτηκε το προσχέδιο.</string>
     <string name="toast_error_char_limit">Είσαι σίγουρος πως αυτή η υπόσταση επιτρέπει αυτό το πλήθος των χαρακτήρων; Συνήθως αυτή η τιμή είναι γύρω στους 500 χαρακτήρες.</string>
     <string name="toast_visibility_changed">Έχει αλλαχτεί η αναγνωσιμότητα των φωνών, για το λογαριασμό %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Αυτόματη αποθήκευση των προσχεδίων</string>
     <string name="set_bubble_counter">Προβολή των μετρητών</string>
     <string name="set_auto_add_media_url">Προσθήκη της διεύθυνσης URL στις φωνές πολυμέσων</string>
-    <string name="settings_title_notifications">Διαχείριση των ειδοποιήσεων</string>
     <string name="set_notif_follow">Ειδοποίηση όταν κάποιος σε παρακολουθεί</string>
     <string name="set_notif_follow_ask">Ειδοποίηση όταν κάποιος ζητήσει να σε παρακολουθεί</string>
     <string name="set_notif_follow_share">Ειδοποίηση όταν κάποιος ενισχύει την κατάστασή σου</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
     <string name="set_share_validation">Προβολή του διαλόγου επιβεβαίωσης, πριν από την ενίσχυση</string>
     <string name="set_share_validation_fav">Προβολή του διαλόγου επιβεβαίωσης, πριν να γίνει προσθήκη στα Αγαπημένα</string>
-    <string name="settings_title_more_options">Προχωρημένες ρυθμίσεις</string>
     <string name="set_wifi_only">Ειδοποίηση μόνο όταν σε Γουάι-Φάι</string>
     <string name="set_notify">Ειδοποιήσεις;</string>
     <string name="set_notif_silent">Άηχες Ειδοποιήσεις</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Στις απαντήσεις, αυτόματο κομμάτιασμα των φωνών, που έχουν περισσότερους από 500 χαρακτήρες</string>
     <string name="note_no_space">Έχεις χρησιμοποιήσει το πλήθος των 160 επιτρεπόμενων χαρακτήρων.</string>
     <string name="username_no_space">Έχεις χρησιμοποιήσει το πλήθος των 30 επιτρεπόμενων χαρακτήρων.</string>
-    <string name="settings_title_hour">Επιτρεπόμενες ώρες για τις ειδοποιήσεις:</string>
     <string name="settings_time_from">Μεταξύ</string>
     <string name="settings_time_to">και</string>
     <string name="settings_time_greater">Η ώρα θα πρέπει να είναι αργότερα από τις %1$s</string>
@@ -373,7 +371,6 @@
         <item>Κίτρινο</item>
         <item>Λευκό</item>
     </string-array>
-    <string name="set_title_news">Νέα</string>
     <string name="set_notification_news">Ειδοποίηση για νέες φωνές στην σπιτική χρονοστήλη</string>
     <string name="action_follow">Παρακολούθηση</string>
     <string name="action_unfollow">Διακοπή παρακολούθησης</string>
@@ -812,6 +809,12 @@
     <string name="vote">Ψήφισμα</string>
     <string name="poll_not_private">Μία ψηφοφορίας δεν μπορεί να προσκολληθεί σε ένα άμεσο μήνυμα.</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
