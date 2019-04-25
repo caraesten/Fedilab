@@ -281,6 +281,7 @@
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Draft saved!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
@@ -306,7 +307,6 @@
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -314,7 +314,6 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -331,7 +330,6 @@
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">Between</string>
     <string name="settings_time_to">and</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
@@ -381,7 +379,6 @@
         <item>Yellow</item>
         <item>White</item>
     </string-array>
-    <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
@@ -820,6 +817,12 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
