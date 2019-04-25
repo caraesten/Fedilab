@@ -312,7 +312,7 @@
     <string name="set_night_mode">Nachtmodus</string>
     <string name="set_nsfw_timeout">NSFW Anzeigedauer (in Sekunden, 0 ≙ deaktiviert)</string>
     <string name="settings_title_profile">Ändere Profil</string>
-    <string name="settings_title_custom_sharing">Benutzerdefinierte Freigabe</string>
+    <string name="settings_title_custom_sharing">Benutzerdefiniertes Teilen</string>
     <string name="settings_custom_sharing_url">Ihre benutzerdefinierte Freigabeadresse &#8230;</string>
     <string name="set_profile_description">Über mich…</string>
     <string name="set_lock_account">Konto sperren</string>
@@ -802,13 +802,13 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="settings_category_notif_news">Neuigkeiten</string>
     <string name="settings_category_notif_time_slot">Zeitfenster</string>
     <string name="settings_category_notif_advanced">Erweitert</string>
-    <string name="set_display_new_badge">Ungelesene Toots als \'neu\' kennzeichnen</string>
+    <string name="set_display_new_badge">Ungelesene Toots als „Neu” kennzeichnen</string>
     <string name="set_display_peertube">Peertube-Zeitleiste anzeigen</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="hide_tab">Tab ausblenden</string>
+    <string name="move_timeline">Zeitleiste verschieben</string>
+    <string name="hide_timeline">Zeitleiste ausblenden</string>
+    <string name="reorder_timelines">Zeitleiste neu anordnen</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
