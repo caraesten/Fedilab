@@ -281,6 +281,7 @@
     <string name="nothing_to_do">Nobena akcija ni na voljo</string>
     <string name="toast_saved">Vsebina je shranjena.</string>
     <string name="toast_error_translate">Med prevajanjem je prišlo do napake.</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Osnutek je shranjen.</string>
     <string name="toast_error_char_limit">Ali ste prepričani, da ta instanca omogoča to število znakov? Običajno je ta vrednost približno 500 znakov.</string>
     <string name="toast_visibility_changed">Spremenjena je vidnost objav Toot na računu %1$s</string>
@@ -306,7 +307,6 @@
     <string name="set_auto_store_toot">Samodejno shranjevanje osnutkov</string>
     <string name="set_bubble_counter">Prikaz števcev</string>
     <string name="set_auto_add_media_url">Dodaj naslove URL za vsebine v objavah Toot</string>
-    <string name="settings_title_notifications">Upravljanje obvestil</string>
     <string name="set_notif_follow">Obveščaj me o novih spremljevalcih</string>
     <string name="set_notif_follow_ask">Obveščaj me o novih zahtevah za spremljanje</string>
     <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
@@ -314,7 +314,6 @@
     <string name="set_notif_follow_mention">Obveščaj me, ko me kdo omeni</string>
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
-    <string name="settings_title_more_options">Napredne nastavitve</string>
     <string name="set_wifi_only">Obveščanj le v omrežju WiFi</string>
     <string name="set_notify">Obveščanje?</string>
     <string name="set_notif_silent">Tiha obvestila</string>
@@ -331,7 +330,6 @@
     <string name="set_automatically_split_toot">Objave, ki presegajo 500 znakov, samodejno razbij v odgovre</string>
     <string name="note_no_space">Dosegli ste 160 znakov, ki so vam na voljo.</string>
     <string name="username_no_space">Dosegli ste 30 znakov, ki so vam na voljo.</string>
-    <string name="settings_title_hour">Časovni okvir za obvestila:</string>
     <string name="settings_time_from">Med</string>
     <string name="settings_time_to">in</string>
     <string name="settings_time_greater">Čas mora biti večji od %1$s</string>
@@ -381,7 +379,6 @@
         <item>Rumena</item>
         <item>Bela</item>
     </string-array>
-    <string name="set_title_news">Nove objave</string>
     <string name="set_notification_news">Obveščaj me o novih objavah Toot na domači časovnici</string>
     <string name="action_follow">Spremljaj</string>
     <string name="action_unfollow">Ne spremljaj več</string>
@@ -820,6 +817,12 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

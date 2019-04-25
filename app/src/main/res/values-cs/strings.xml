@@ -281,6 +281,7 @@
     <string name="nothing_to_do">Nelze vykonat akci</string>
     <string name="toast_saved">Média byla uložena!</string>
     <string name="toast_error_translate">Při překladu došlo k chybě!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Koncept uložen!</string>
     <string name="toast_error_char_limit">Jste si jisti, že tato instance dovoluje tento počet znaků? Obvyklá hodnota je 500 znaků.</string>
     <string name="toast_visibility_changed">Viditelnost tootů byla změněna pro účet %1$s</string>
@@ -306,7 +307,6 @@
     <string name="set_auto_store_toot">Ukládat koncepty automaticky</string>
     <string name="set_bubble_counter">Zobrazit počítadla</string>
     <string name="set_auto_add_media_url">Přidat URL médií v tootu</string>
-    <string name="settings_title_notifications">Spravovat oznámení</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
     <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
@@ -314,7 +314,6 @@
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
     <string name="set_share_validation">Zobrazit potvrzení před boostnutí</string>
     <string name="set_share_validation_fav">Zobrazit potvrzení před oblíbením</string>
-    <string name="settings_title_more_options">Rozšířené nastavení</string>
     <string name="set_wifi_only">Oznámení pouze na WIFI</string>
     <string name="set_notify">Oznámení?</string>
     <string name="set_notif_silent">Tichá oznámení</string>
@@ -331,7 +330,6 @@
     <string name="set_automatically_split_toot">Automaticky rozdělit tooty nad 500 znaků do odpovědí</string>
     <string name="note_no_space">Bylo dosaženo 160ti znakového limitu!</string>
     <string name="username_no_space">Bylo dosaženo 30ti znakového limitu!</string>
-    <string name="settings_title_hour">Časové okno pro oznámení:</string>
     <string name="settings_time_from">Mezi</string>
     <string name="settings_time_to">a</string>
     <string name="settings_time_greater">Čas musí být vyšší než %1$s</string>
@@ -381,7 +379,6 @@
         <item>Žlutá</item>
         <item>Bílá</item>
     </string-array>
-    <string name="set_title_news">Novinky</string>
     <string name="set_notification_news">Upozorňovat na nové tooty v domovské časové ose</string>
     <string name="action_follow">Následovat</string>
     <string name="action_unfollow">Přestat sledovat</string>
@@ -817,6 +814,12 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="vote">Hlasovat</string>
     <string name="poll_not_private">K přímé zprávě nelze připojit anketu!</string>
     <string name="notif_poll">Anketa, ve které jste hlasoval/a, skončila</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

@@ -269,6 +269,7 @@
     <string name="nothing_to_do">Tidak dapat diambil tindakan</string>
     <string name="toast_saved">Media telah tersimpan!</string>
     <string name="toast_error_translate">Terjadi kesalahan saat menerjemahkan!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Konsep tersimpan!</string>
     <string name="toast_error_char_limit">Apakah anda yakin contoh ini memungkinkan jumlah karakter ini? biasanya, nilai mendekati 500 karakter.</string>
     <string name="toast_visibility_changed">Visibilitas kutipan telah diubah untuk akun %1$s</string>
@@ -294,7 +295,6 @@
     <string name="set_auto_store_toot">Simpan konsep otomatis</string>
     <string name="set_bubble_counter">Tampilkan konter</string>
     <string name="set_auto_add_media_url">Tambahkan URL dari media kutipan</string>
-    <string name="settings_title_notifications">Mengelola pemberitahuan</string>
     <string name="set_notif_follow">Beritahu ketika seseorang mengikuti Anda</string>
     <string name="set_notif_follow_ask">Beritahu ketika seseorang meminta untuk mengikuti Anda</string>
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
@@ -302,7 +302,6 @@
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
     <string name="set_share_validation">Tampilkan dialog konfirmasi sebelum meningkatkan</string>
     <string name="set_share_validation_fav">Tampilkan dialog konfirmasi sebelum menambahkan ke favorit</string>
-    <string name="settings_title_more_options">Pengaturan lanjutan</string>
     <string name="set_wifi_only">Beritahu hanya di WIFI</string>
     <string name="set_notify">Memberitahu?</string>
     <string name="set_notif_silent">Diamkan pemberitahuan</string>
@@ -319,7 +318,6 @@
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
     <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
-    <string name="settings_title_hour">Slot waktu untuk pemberitahuan:</string>
     <string name="settings_time_from">Antara</string>
     <string name="settings_time_to">dan</string>
     <string name="settings_time_greater">Waktunya harus lebih besar dari %1$s</string>
@@ -369,7 +367,6 @@
         <item>Kuning</item>
         <item>Putih</item>
     </string-array>
-    <string name="set_title_news">Berita</string>
     <string name="set_notification_news">Beritahu kutipan baru di beranda kronologi</string>
     <string name="action_follow">Ikuti</string>
     <string name="action_unfollow">Berhenti mengikuti</string>
@@ -810,6 +807,12 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

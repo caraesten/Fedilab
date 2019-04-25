@@ -281,6 +281,7 @@
     <string name="nothing_to_do">Żadna akcja nie może zostać podjęta</string>
     <string name="toast_saved">Zapisano zawartość multimedialną!</string>
     <string name="toast_error_translate">Tłumaczenie nieudane!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Zapisano szkic!</string>
     <string name="toast_error_char_limit">Czy na pewno ta instancja zezwala na więcej, niż domyślne 500 znaków?</string>
     <string name="toast_visibility_changed">Widoczność wpisu została zmieniona na %1$s</string>
@@ -306,7 +307,6 @@
     <string name="set_auto_store_toot">Automatyczny zapis szkicu</string>
     <string name="set_bubble_counter">Wyświetl kraje</string>
     <string name="set_auto_add_media_url">Dodaj adres URL zawartości we wpisach</string>
-    <string name="settings_title_notifications">Zarządzaj powiadomieniami</string>
     <string name="set_notif_follow">Powiadom mnie, gdy ktoś zaczyna mnie śledzić</string>
     <string name="set_notif_follow_ask">Powiadom mnie, gdy ktoś wysyła prośbę o śledzenie</string>
     <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś podbije mój wpis</string>
@@ -314,7 +314,6 @@
     <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś mnie wspomni</string>
     <string name="set_share_validation">Proś o potwierdzenie przed podbiciem</string>
     <string name="set_share_validation_fav">Proś o potwierdzenie przed dodaniem wpisu do ulubionych</string>
-    <string name="settings_title_more_options">Zaawansowane opcje</string>
     <string name="set_wifi_only">Powiadamiaj tylko w sieci WiFi</string>
     <string name="set_notify">Powiadamiać?</string>
     <string name="set_notif_silent">Ciche powiadomienia</string>
@@ -331,7 +330,6 @@
     <string name="set_automatically_split_toot">Automatycznie rozdzielaj wpisy na ponad 500 znaków w odpowiedziach</string>
     <string name="note_no_space">Przekroczono limit 160 dozwolonych znaków!</string>
     <string name="username_no_space">Przekroczono limit 30 dozwolonych znaków!</string>
-    <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>
     <string name="settings_time_from">Między</string>
     <string name="settings_time_to">i</string>
     <string name="settings_time_greater">Należy ustawić wcześniejszy, niż %1$s</string>
@@ -381,7 +379,6 @@
         <item>Żółty</item>
         <item>Biały</item>
     </string-array>
-    <string name="set_title_news">Aktualności</string>
     <string name="set_notification_news">Powiadom mnie o nowych wpisach na lokalnej osi czasu</string>
     <string name="action_follow">Śledź</string>
     <string name="action_unfollow">Przestań śledzić</string>
@@ -814,6 +811,12 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

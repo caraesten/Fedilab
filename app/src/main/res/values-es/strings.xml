@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Ninguna acción puede ser tomada</string>
     <string name="toast_saved">¡El contenido multimedia ha sido guardado!</string>
     <string name="toast_error_translate">¡Un error ocurrió mientras se traducía!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">¡Borrador guardado!</string>
     <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
     <string name="toast_visibility_changed">La visibilidad de los toots ha sido cambiado para la cuenta %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Guardar borradores automáticamente</string>
     <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Agregar URL del contenido multimedia en toots</string>
-    <string name="settings_title_notifications">Gestión de notificaciones</string>
     <string name="set_notif_follow">Notificar cuando alguien te siga</string>
     <string name="set_notif_follow_ask">Notificar cuando alguien pide que te siga</string>
     <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
     <string name="set_share_validation">Mostrar diálogo de confirmación antes de retootear</string>
     <string name="set_share_validation_fav">Mostrar diálogo de confirmación antes de agregar a favoritos</string>
-    <string name="settings_title_more_options">Configuración avanzada</string>
     <string name="set_wifi_only">Notificaciones en WI-FI solamente</string>
     <string name="set_notify">¿Notificar?</string>
     <string name="set_notif_silent">Notificaciones silenciosas</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Automáticamente divide Toots de más de 500 caracteres en respuestas</string>
     <string name="note_no_space">¡Has alcanzado los 160 caracteres permitidos!</string>
     <string name="username_no_space">¡Has alcanzado los 30 caracteres permitidos!</string>
-    <string name="settings_title_hour">Espacio de tiempo para notificaciones:</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">y</string>
     <string name="settings_time_greater">Este tiempo debe ser mayor que %1$s</string>
@@ -373,7 +371,6 @@
         <item>Amarillo</item>
         <item>Blanco</item>
     </string-array>
-    <string name="set_title_news">Noticias</string>
     <string name="set_notification_news">Notificar para nuevos toots en la cronología de inicio</string>
     <string name="action_follow">Seguir</string>
     <string name="action_unfollow">Dejar de Seguir</string>
@@ -806,6 +803,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

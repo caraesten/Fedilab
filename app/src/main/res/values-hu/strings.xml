@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Nem lehet végrehajtani ezt a műveletet</string>
     <string name="toast_saved">Média elmentve!</string>
     <string name="toast_error_translate">Hiba történt fordítás közben!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Piszkozat elmentve!</string>
     <string name="toast_error_char_limit">Biztos vagy benne, hogy ez a szerver megenged ennyi karaktert? Ez az érték általában 500 karakter körül van.</string>
     <string name="toast_visibility_changed">A tootok láthatósága megváltozott a %1$s fiók számára</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Piszkozatok automatikus mentése</string>
     <string name="set_bubble_counter">Számlálók megjelenítése</string>
     <string name="set_auto_add_media_url">Média URL-jének hozzáadása a tootokhoz</string>
-    <string name="settings_title_notifications">Értesítések kezelése</string>
     <string name="set_notif_follow">Értesítsen, amikor valaki követ</string>
     <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Értesíts, amikor valaki megemlít téged</string>
     <string name="set_share_validation">Kérdezz vissza újratootolás előtt</string>
     <string name="set_share_validation_fav">Megerősítés kérése kedvencekhez hozzáadás előtt</string>
-    <string name="settings_title_more_options">Részletes beállítások</string>
     <string name="set_wifi_only">Értesítés csak WiFi használatakor </string>
     <string name="set_notify">Kérsz értesítést?</string>
     <string name="set_notif_silent">Csendes értesítések</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Automatikusan darabolja fel az 500 karakternél hosszabb tootokat a válaszokban</string>
     <string name="note_no_space">Elérted az 160 karakteres limitet!</string>
     <string name="username_no_space">Elérted az 30 karakteres limitet!</string>
-    <string name="settings_title_hour">Engedélyezett idősáv az értesítések számára:</string>
     <string name="settings_time_from">Kezdet:</string>
     <string name="settings_time_to">Befejezés:</string>
     <string name="settings_time_greater">Az időnek hosszabbnak kell lennie, mint %1$s</string>
@@ -373,7 +371,6 @@
         <item>Sárga</item>
         <item>Fehér</item>
     </string-array>
-    <string name="set_title_news">Hírek</string>
     <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
     <string name="action_follow">Követés</string>
     <string name="action_unfollow">Követés megszűntetése</string>
@@ -809,6 +806,12 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
     <string name="notif_poll">Véget ért egy szavazás, amiben részt vettél</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>

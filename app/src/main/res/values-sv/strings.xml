@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Inga åtgärder kan vidtas</string>
     <string name="toast_saved">Inlägget har sparats!</string>
     <string name="toast_error_translate">Ett fel uppstod under översättningens gång!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Utkast sparat!</string>
     <string name="toast_error_char_limit">Är du säker på att denna instans tillåter detta dessa antal tecken? Vanligtvis, är detta värde ungefär 500 tecken.</string>
     <string name="toast_visibility_changed">Synligheten för toots har ändrats för konto %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Spara utkast automatiskt</string>
     <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Lägga till URL för media i toots</string>
-    <string name="settings_title_notifications">Hantera aviseringar</string>
     <string name="set_notif_follow">Meddela när någon följer dig</string>
     <string name="set_notif_follow_ask">Meddela när någon begär för att följa dig</string>
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
     <string name="set_share_validation">Visa en bekräftelsedialogruta före öka</string>
     <string name="set_share_validation_fav">Visa bekräftelsedialogrutan innan du lägger till favoriter</string>
-    <string name="settings_title_more_options">Avancerade inställningar</string>
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
     <string name="set_notify">Notifiera?</string>
     <string name="set_notif_silent">Tysta aviseringar</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Dela automatiskt toots med fler än 500 tecken i svar</string>
     <string name="note_no_space">Du har nått gränsen på max 160 tecken!</string>
     <string name="username_no_space">Du har nått gränsen på max 30 tecken!</string>
-    <string name="settings_title_hour">Tidsfönster för notifieringar:</string>
     <string name="settings_time_from">Mellan</string>
     <string name="settings_time_to">och</string>
     <string name="settings_time_greater">Intervallet måste vara större än %1$s</string>
@@ -373,7 +371,6 @@
         <item>Gul</item>
         <item>Vit</item>
     </string-array>
-    <string name="set_title_news">Nyheter</string>
     <string name="set_notification_news">Meddela om nya toots på hemtidslinjen</string>
     <string name="action_follow">Följ</string>
     <string name="action_unfollow">Sluta följa</string>
@@ -812,6 +809,12 @@
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
     <string name="notif_poll">En enkät som du röstat i har avslutats</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
