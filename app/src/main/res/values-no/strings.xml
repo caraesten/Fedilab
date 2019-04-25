@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Ingen handling kan tas</string>
     <string name="toast_saved">Media har blitt lagret!</string>
     <string name="toast_error_translate">Det oppstod en feil under oversettelsen!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Utkast lagret!</string>
     <string name="toast_error_char_limit">Er du sikker på at denne instansen tillater dette antall tegn? Vanligvis er denne verdien nær 500 tegn.</string>
     <string name="toast_visibility_changed">Synligheten til toots er endret for kontoen %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Lagre utkast automatisk</string>
     <string name="set_bubble_counter">Vis tellere</string>
     <string name="set_auto_add_media_url">Legg til URL til media i toots</string>
-    <string name="settings_title_notifications">Administrer varsler</string>
     <string name="set_notif_follow">Varlse når noen følger deg</string>
     <string name="set_notif_follow_ask">Varsle når noen ber om å følge deg</string>
     <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
     <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
-    <string name="settings_title_more_options">Avanserte innstillinger</string>
     <string name="set_wifi_only">Varsle kun på WIFI</string>
     <string name="set_notify">Varsle?</string>
     <string name="set_notif_silent">Dempede varslinger</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Del opp toots over 500 tegn i svar</string>
     <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
     <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
-    <string name="settings_title_hour">Tidsvindu for varsler:</string>
     <string name="settings_time_from">Mellom</string>
     <string name="settings_time_to">og</string>
     <string name="settings_time_greater">Tiden må være større enn %1$s</string>
@@ -373,7 +371,6 @@
         <item>Gul</item>
         <item>Hvit</item>
     </string-array>
-    <string name="set_title_news">Nyheter</string>
     <string name="set_notification_news">Varsle om nye toots på hjemmetidslinjen</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Slutt å følge</string>
@@ -800,6 +797,12 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="vote">Stem</string>
     <string name="poll_not_private">En avstemming kan ikke kobles til en direktemelding!</string>
     <string name="notif_poll">En avstemming du har stemt på er avsluttet</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
