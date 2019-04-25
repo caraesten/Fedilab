@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -52,6 +53,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.SyncTimelinesAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
@@ -929,9 +931,8 @@ public class ManageTimelines {
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                if( tabLayout.getTabCount() > tl.getPosition())
-                                    tabLayout.removeTab(tabLayout.getTabAt(tl.getPosition()));
                                 new SearchDAO(context, db).remove(tag);
+                                new SyncTimelinesAsyncTask(context, tabLayout.getSelectedTabPosition(), ((BaseMainActivity)context) ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 dialog.dismiss();
                             }
                         });

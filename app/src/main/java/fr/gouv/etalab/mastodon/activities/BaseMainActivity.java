@@ -23,9 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -41,7 +39,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -56,7 +53,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Patterns;
-import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -83,17 +79,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -115,7 +104,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
-import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -135,7 +123,6 @@ import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayReorderTabFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
-import fr.gouv.etalab.mastodon.fragments.SettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
@@ -156,9 +143,7 @@ import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
-import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
@@ -203,13 +188,10 @@ public abstract class BaseMainActivity extends BaseActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
-    private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
     public static int countNewStatus;
     public static int countNewNotifications;
     public static String lastHomeId = null, lastNotificationId = null;
-    boolean show_boosts, show_replies , show_nsfw;
-    String show_filtered;
     private AppBarLayout appBar;
     private String userId;
     private String instance;
@@ -223,7 +205,6 @@ public abstract class BaseMainActivity extends BaseActivity
     private String instance_id;
     private int style;
     private Activity activity;
-    private HashMap<String, Integer> tabPosition = new HashMap<>();
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
@@ -352,7 +333,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            new SyncTimelinesAsyncTask(BaseMainActivity.this, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             TabLayout.Tab pTabsub = tabLayout.newTab();
@@ -1346,7 +1327,7 @@ public abstract class BaseMainActivity extends BaseActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         DisplayReorderTabFragment displayReorderTabFragment = (DisplayReorderTabFragment)getSupportFragmentManager().findFragmentByTag("REORDER_TIMELINES");
         if (displayReorderTabFragment != null && displayReorderTabFragment.isVisible() && DisplayReorderTabFragment.updated) {
-            new SyncTimelinesAsyncTask(BaseMainActivity.this, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new SyncTimelinesAsyncTask(BaseMainActivity.this, tabLayout.getSelectedTabPosition(), BaseMainActivity.this ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -1787,7 +1768,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     @Override
-    public void syncedTimelines(List<ManageTimelines> manageTimelines) {
+    public void syncedTimelines(List<ManageTimelines> manageTimelines, int position) {
         DisplayReorderTabFragment.updated = false;
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -1797,6 +1778,11 @@ public abstract class BaseMainActivity extends BaseActivity
         final NavigationView navigationView = findViewById(R.id.nav_view);
 
         timelines = manageTimelines;
+        if( position >= manageTimelines.size()){
+            position = manageTimelines.size()-1;
+        }
+        if( position < 0)
+            position = 0;
 
         if( !optimize_loading)
             viewPager.setOffscreenPageLimit(countPage);
@@ -1908,6 +1894,29 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
+
+        if( tabLayout.getTabCount() > position) {
+            TabLayout.Tab tab = tabLayout.getTabAt(position);
+            if( tab != null) {
+                tab.select();
+                if( tab.getCustomView() != null){
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null){
+                        if( theme == THEME_BLACK)
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                        else
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                    }else{
+                        TextView tv = tabLayout.getChildAt(0).findViewById(android.R.id.title);
+                        if( tv != null)
+                            if( theme == THEME_BLACK)
+                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+                            else
+                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
+                    }
+                }
+            }
+        }
 
         //Scroll to top when top bar is clicked for favourites/blocked/muted
         toolbarTitle.setOnClickListener(new View.OnClickListener() {

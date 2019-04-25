@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -145,6 +146,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.mPageReferenceMap;
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
@@ -1359,7 +1361,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
                             for(ManageTimelines tl: timelines) {
                                 if( tl.getType() == ManageTimelines.Type.HOME) {
-                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) ((MainActivity) context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+                                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                                     if (homeFragment != null)
                                         homeFragment.fetchMore(status.getId());
                                     break;
