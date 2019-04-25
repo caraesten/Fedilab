@@ -677,7 +677,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="about_crowdin">Über Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed Instanz</string>
-    <string name="mastodon_instance">Mastodon Instanz</string>
+    <string name="mastodon_instance">Mastodon-Instanz</string>
     <string name="no_pixelfed_instance">Keine Pixelfed Instanzen</string>
     <string name="any_tags">Irgendwelche davon</string>
     <string name="all_tags">Alle von denen</string>
