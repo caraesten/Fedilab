@@ -826,9 +826,9 @@
     <string name="set_display_peertube">Показывать ленту Peertube</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Скрыть вкладку</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="move_timeline">Переместить ленту</string>
+    <string name="hide_timeline">Скрыть ленту</string>
+    <string name="reorder_timelines">Изменить порядок лент</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
