@@ -269,7 +269,7 @@
     <string name="nothing_to_do">無法採取行動</string>
     <string name="toast_saved">媒體已儲存！</string>
     <string name="toast_error_translate">翻譯時發生錯誤！</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">已在設定中停用翻譯</string>
     <string name="toast_toot_saved">草稿已儲存！</string>
     <string name="toast_error_char_limit">您確定此實體允許此數量的字元嗎？一般來說，此值約為 500 個字元左右。</string>
     <string name="toast_visibility_changed">%1$s 帳號的嘟文可見度已變更</string>
@@ -805,11 +805,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="vote">投票</string>
     <string name="poll_not_private">投票不能附加到直接訊息中！</string>
     <string name="notif_poll">您曾投過的投票已經結束</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_customize">自訂</string>
+    <string name="settings_category_notif_categories">分類</string>
+    <string name="settings_category_notif_news">新聞</string>
+    <string name="settings_category_notif_time_slot">時段</string>
+    <string name="settings_category_notif_advanced">進階</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
