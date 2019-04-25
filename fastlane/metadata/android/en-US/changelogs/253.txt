@@ -1,0 +1,16 @@
+Added
+* Poll notifications
+* Customise notification sounds per type (Android O+)
+
+Changed
+* More filters for UTM parameters
+* Live notifications for Pleroma are back
+* Honour white spaces in toots (emoji art)
+
+Fixed
+* Issues with some Mastodon API due to their special version name
+* Auto-save feature, drafts not deleted after being sent
+* Issue when uploading media due to the file name
+* Issue with the pinch-zoom
+* Polls not displayed in boosts
+
