@@ -30,6 +30,7 @@ import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
@@ -75,6 +76,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         TAG,
         REMOTE_INSTANCE,
         ART,
+        PEERTUBE,
         NOTIFICATION,
         SEARCH,
 
@@ -117,6 +119,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.filterToots = filterToots;
     }
+
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.contextReference = new WeakReference<>(context);
@@ -174,6 +177,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( action == null )
+            return null;
         switch (action){
             case HOME:
                 apiResponse = api.getHomeTimeline(max_id);

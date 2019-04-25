@@ -15,12 +15,15 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 05/10/2018.
  * Manages following instances
  */
 
-public class RemoteInstance {
+public class RemoteInstance implements Parcelable {
 
     private String host;
     private String type;
@@ -61,4 +64,36 @@ public class RemoteInstance {
     public void setDbID(String dbID) {
         this.dbID = dbID;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.host);
+        dest.writeString(this.type);
+        dest.writeString(this.id);
+        dest.writeString(this.dbID);
+    }
+
+    protected RemoteInstance(Parcel in) {
+        this.host = in.readString();
+        this.type = in.readString();
+        this.id = in.readString();
+        this.dbID = in.readString();
+    }
+
+    public static final Parcelable.Creator<RemoteInstance> CREATOR = new Parcelable.Creator<RemoteInstance>() {
+        @Override
+        public RemoteInstance createFromParcel(Parcel source) {
+            return new RemoteInstance(source);
+        }
+
+        @Override
+        public RemoteInstance[] newArray(int size) {
+            return new RemoteInstance[size];
+        }
+    };
 }

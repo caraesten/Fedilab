@@ -183,6 +183,21 @@ public class SearchDAO {
         }
     }
 
+
+
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getAll(){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, Sqlite.COL_KEYWORDS + " ASC", null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * Returns TagTimeline information by its keyword in db
      * @return info List<TagTimeline>
@@ -230,6 +245,7 @@ public class SearchDAO {
             try {
                 tagTimeline.setNone(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_NONE))));
             }catch (Exception ignored){}
+            tagTimeline.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
             tagTimeline.setDisplayname(c.getString(c.getColumnIndex(Sqlite.COL_NAME)));
             tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);
