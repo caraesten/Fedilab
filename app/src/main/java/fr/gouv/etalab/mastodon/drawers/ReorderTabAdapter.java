@@ -193,8 +193,12 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
 
     @Override
     public void onItemDismiss(int position) {
+        ManageTimelines item = mItems.get(position);
+        mItems.get(position).setDisplayed(false);
         mItems.remove(position);
         notifyItemRemoved(position);
+        mItems.add(item);
+        notifyItemInserted((mItems.size()-1));
     }
 
     @Override
