@@ -163,6 +163,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             timelineId = bundle.getInt("timelineId");
 
         }
+
         if( ischannel)
             type = RetrieveFeedsAsyncTask.Type.CHANNEL;
 

@@ -78,13 +78,19 @@ public class TimelinesDAO {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_DISPLAYED, timeline.isDisplayed());
         values.put(Sqlite.COL_POSITION, timeline.getPosition());
+        return db.update(Sqlite.TABLE_TIMELINES,
+                values, Sqlite.COL_ID + " =  ? ",
+                new String[]{String.valueOf(timeline.getId())});
+    }
+
+
+    //------- UPDATE  -------
+    public void updateTag(ManageTimelines timeline) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_DISPLAYED, timeline.isDisplayed());
         if( timeline.getTagTimeline() != null)
             values.put(Sqlite.COL_TAG_TIMELINE, Helper.tagTimelineToStringStorage(timeline.getTagTimeline()));
-        if( timeline.getRemoteInstance() != null)
-            values.put(Sqlite.COL_REMOTE_INSTANCE, Helper.remoteInstanceToStringStorage(timeline.getRemoteInstance()));
-        if( timeline.getListTimeline() != null)
-            values.put(Sqlite.COL_LIST_TIMELINE, Helper.listTimelineToStringStorage(timeline.getListTimeline()));
-        return db.update(Sqlite.TABLE_TIMELINES,
+        db.update(Sqlite.TABLE_TIMELINES,
                 values, Sqlite.COL_ID + " =  ? ",
                 new String[]{String.valueOf(timeline.getId())});
     }

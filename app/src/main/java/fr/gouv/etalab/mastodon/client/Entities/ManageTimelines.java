@@ -385,7 +385,6 @@ public class ManageTimelines {
                     });
                 }
             }else if( tl.getType() == Type.TAG) {
-                if(tabStrip != null)
                 if( tabStrip != null && tabStrip.getChildCount() > position) {
                     int finalPosition = position;
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
@@ -746,13 +745,13 @@ public class ManageTimelines {
             style = R.style.Dialog;
         }
         String tag;
-        TagTimeline tagtl = tl.getTagTimeline();
-        if( tagtl == null)
+        tagTimeline = tl.getTagTimeline();
+        if( tagTimeline == null)
             return;
-        if( tagtl.getDisplayname() != null)
-            tag = tagtl.getDisplayname();
+        if( tagTimeline.getDisplayname() != null)
+            tag = tagTimeline.getDisplayname();
         else
-            tag = tagtl.getName();
+            tag = tagTimeline.getName();
         popup.getMenuInflater()
                 .inflate(R.menu.option_tag_timeline, popup.getMenu());
         Menu menu = popup.getMenu();
@@ -765,19 +764,18 @@ public class ManageTimelines {
         final boolean[] changes = {false};
         final boolean[] mediaOnly = {false};
         final boolean[] showNSFW = {false};
-        mediaOnly[0] = tagtl.isART();
-        showNSFW[0] = tagtl.isNSFW();
+        mediaOnly[0] = tagTimeline.isART();
+        showNSFW[0] = tagTimeline.isNSFW();
         itemMediaOnly.setChecked(mediaOnly[0]);
         itemShowNSFW.setChecked(showNSFW[0]);
         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu menu) {
                 if(changes[0]) {
-                    tl.setTagTimeline(tagTimeline);
-                    new TimelinesDAO(context, db).update(tl);
                     FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                    assert displayStatusFragment != null;
+                    if( displayStatusFragment == null)
+                        return;
                     fragTransaction.detach(displayStatusFragment);
                     Bundle bundle = new Bundle();
                     bundle.putString("tag", tag);
@@ -813,26 +811,20 @@ public class ManageTimelines {
                 changes[0] = true;
                 switch (item.getItemId()) {
                     case R.id.action_show_media_only:
-                        TagTimeline tagTimeline = new TagTimeline();
                         mediaOnly[0] =!mediaOnly[0];
-                        tagTimeline.setName(tag.trim());
                         tagTimeline.setART(mediaOnly[0]);
-                        tagTimeline.setNSFW(showNSFW[0]);
-                        itemMediaOnly.setChecked(mediaOnly[0]);
-                        new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, null);
+                        new SearchDAO(context, db).updateSearch(tagTimeline);
                         tl.setTagTimeline(tagTimeline);
-                        new TimelinesDAO(context, db).update(tl);
+                        itemMediaOnly.setChecked(mediaOnly[0]);
+                        new TimelinesDAO(context, db).updateTag(tl);
                         break;
                     case R.id.action_show_nsfw:
                         showNSFW[0] = !showNSFW[0];
-                        tagTimeline = new TagTimeline();
-                        tagTimeline.setName(tag.trim());
-                        tagTimeline.setART(mediaOnly[0]);
                         tagTimeline.setNSFW(showNSFW[0]);
-                        itemShowNSFW.setChecked(showNSFW[0]);
-                        new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, null);
+                        new SearchDAO(context, db).updateSearch(tagTimeline);
                         tl.setTagTimeline(tagTimeline);
-                        new TimelinesDAO(context, db).update(tl);
+                        itemShowNSFW.setChecked(showNSFW[0]);
+                        new TimelinesDAO(context, db).updateTag(tl);
                         break;
                     case R.id.action_any:
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
@@ -848,21 +840,16 @@ public class ManageTimelines {
                             editText.setText(valuesTag);
                             editText.setSelection(editText.getText().toString().length());
                         }
-
-                        tagTimeline = new TagTimeline();
-                        tagTimeline.setName(tag.trim());
-                        tagTimeline.setART(mediaOnly[0]);
-                        tagTimeline.setNSFW(showNSFW[0]);
-
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 String[] values = editText.getText().toString().trim().split("\\s+");
                                 java.util.List<String> any =
                                         new ArrayList<>(Arrays.asList(values));
-                                new SearchDAO(context, db).updateSearch(tagTimeline,null, any, null, null);
+                                tagTimeline.setAny(any);
+                                new SearchDAO(context, db).updateSearch(tagTimeline);
                                 tl.setTagTimeline(tagTimeline);
-                                new TimelinesDAO(context, db).update(tl);
+                                new TimelinesDAO(context, db).updateTag(tl);
                             }
                         });
                         AlertDialog alertDialog = dialogBuilder.create();
@@ -882,20 +869,16 @@ public class ManageTimelines {
                             editTextAll.setText(valuesTag);
                             editTextAll.setSelection(editTextAll.getText().toString().length());
                         }
-                        tagTimeline = new TagTimeline();
-                        tagTimeline.setName(tag.trim());
-                        tagTimeline.setART(mediaOnly[0]);
-                        tagTimeline.setNSFW(showNSFW[0]);
-
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 String[] values = editTextAll.getText().toString().trim().split("\\s+");
                                 java.util.List<String> all =
                                         new ArrayList<>(Arrays.asList(values));
-                                new SearchDAO(context, db).updateSearch(tagTimeline, null,null, all, null);
+                                tagTimeline.setAll(all);
+                                new SearchDAO(context, db).updateSearch(tagTimeline);
                                 tl.setTagTimeline(tagTimeline);
-                                new TimelinesDAO(context, db).update(tl);
+                                new TimelinesDAO(context, db).updateTag(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
@@ -915,20 +898,16 @@ public class ManageTimelines {
                             editTextNone.setText(valuesTag);
                             editTextNone.setSelection(editTextNone.getText().toString().length());
                         }
-                        tagTimeline = new TagTimeline();
-                        tagTimeline.setName(tag.trim());
-                        tagTimeline.setART(mediaOnly[0]);
-                        tagTimeline.setNSFW(showNSFW[0]);
-
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 String[] values = editTextNone.getText().toString().trim().split("\\s+");
                                 java.util.List<String> none =
                                         new ArrayList<>(Arrays.asList(values));
-                                new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, none);
+                                tagTimeline.setNone(none);
+                                new SearchDAO(context, db).updateSearch(tagTimeline);
                                 tl.setTagTimeline(tagTimeline);
-                                new TimelinesDAO(context, db).update(tl);
+                                new TimelinesDAO(context, db).updateTag(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
@@ -945,10 +924,6 @@ public class ManageTimelines {
                             editTextName.setText(tagInfo.get(0).getDisplayname());
                             editTextName.setSelection(editTextName.getText().toString().length());
                         }
-                        tagTimeline = new TagTimeline();
-                        tagTimeline.setName(tag.trim());
-                        tagTimeline.setART(mediaOnly[0]);
-                        tagTimeline.setNSFW(showNSFW[0]);
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
@@ -957,9 +932,10 @@ public class ManageTimelines {
                                     values = tag;
                                 if( tabLayout.getTabAt(position) != null)
                                     tabLayout.getTabAt(position).setText(values);
-                                new SearchDAO(context, db).updateSearch(tagTimeline, values,null, null, null);
+                                tagTimeline.setDisplayname(values);
+                                new SearchDAO(context, db).updateSearch(tagTimeline);
                                 tl.setTagTimeline(tagTimeline);
-                                new TimelinesDAO(context, db).update(tl);
+                                new TimelinesDAO(context, db).updateTag(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
