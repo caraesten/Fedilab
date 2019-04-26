@@ -62,6 +62,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
 
     private Context context;
     private SharedPreferences sharedpreferences;
+
     public ReorderTabAdapter(Context context, List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener) {
         this. mDragStartListener = dragStartListener;
         this.mItems = manageTimelines;
@@ -183,12 +184,14 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
         holder.handleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     mDragStartListener.onStartDrag(holder);
+                    return true;
                 }
                 return false;
             }
         });
+
     }
 
     @Override

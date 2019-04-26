@@ -49,6 +49,7 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
 
     private Context context;
     public static boolean updated;
+    private ItemTouchHelper touchHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(adapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(lv_reorder_tabs);
 
         lv_reorder_tabs.setAdapter(adapter);
@@ -88,6 +89,6 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-
+        touchHelper.startDrag(viewHolder);
     }
 }
