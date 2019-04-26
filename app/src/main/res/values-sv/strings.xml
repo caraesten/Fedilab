@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
-    <string name="set_share_validation">Visa en bekräftelsedialogruta före öka</string>
+    <string name="set_share_validation">Visa en bekräftelsedialogruta före boostning</string>
     <string name="set_share_validation_fav">Visa bekräftelsedialogrutan innan du lägger till favoriter</string>
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
     <string name="set_notify">Notifiera?</string>
@@ -817,10 +817,10 @@
     <string name="set_display_new_badge">Visa \"nytt\" märke på olästa tootar</string>
     <string name="set_display_peertube">Visa Peertube tidslinje</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="hide_tab">Dölj fliken</string>
+    <string name="move_timeline">Flytta tidslinje</string>
+    <string name="hide_timeline">Dölj tidslinje</string>
+    <string name="reorder_timelines">Ändra ordning på tidslinjer</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>
