@@ -810,13 +810,13 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="settings_category_notif_news">新聞</string>
     <string name="settings_category_notif_time_slot">時段</string>
     <string name="settings_category_notif_advanced">進階</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
-    <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="set_display_new_badge">在未讀的嘟文上顯示「新」的標章</string>
+    <string name="set_display_peertube">顯示 PeerTube 時間軸</string>
+    <string name="peertube_menu">PeerTube</string>
+    <string name="hide_tab">隱藏分頁</string>
+    <string name="move_timeline">移動時間軸</string>
+    <string name="hide_timeline">隱藏時間軸</string>
+    <string name="reorder_timelines">重新排列時間軸</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
