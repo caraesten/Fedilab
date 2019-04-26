@@ -129,6 +129,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private BroadcastReceiver receive_action;
     private BroadcastReceiver  receive_data;
     private Date lastReadTootDate, initialBookMarkDate, updatedBookMarkDate;
+    private int timelineId;
     public DisplayStatusFragment(){
     }
 
@@ -159,6 +160,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             remote_channel_name = bundle.getString("remote_channel_name", null);
             instanceType  = bundle.getString("instanceType", "MASTODON");
             ischannel = bundle.getBoolean("ischannel",false);
+            timelineId = bundle.getInt("timelineId");
 
         }
         if( ischannel)
@@ -999,8 +1001,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             //Tag timelines
-        else if (type == RetrieveFeedsAsyncTask.Type.TAG || type == RetrieveFeedsAsyncTask.Type.SEARCH)
+        else if (type == RetrieveFeedsAsyncTask.Type.SEARCH)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if (type == RetrieveFeedsAsyncTask.Type.TAG )
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, timelineId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             //Remote instances
             if (search_peertube == null) { //Not a Peertube search

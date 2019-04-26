@@ -24,6 +24,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -37,6 +38,7 @@ import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
 
 /**
@@ -60,6 +62,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private FilterToots filterToots;
     private String instanceName,remoteInstance, name;
     private boolean cached = false;
+    private int timelineId;
     
     public enum Type{
         HOME,
@@ -134,6 +137,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.instanceName = instanceName;
+    }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, int timelineId, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.timelineId = timelineId;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -271,16 +282,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case TAG:
                 if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                    List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);
-                    if (tagTimelines != null && tagTimelines.size() > 0) {
-                        TagTimeline tagTimeline = tagTimelines.get(0);
-                        boolean isArt = tagTimeline.isART();
+                    ManageTimelines manageTimelines = new TimelinesDAO(contextReference.get(), db).getById(timelineId);
+                    if( manageTimelines != null && manageTimelines.getTagTimeline() != null){
+                        boolean isArt = manageTimelines.getTagTimeline().isART();
                         if (isArt)
-                            apiResponse = api.getCustomArtTimeline(false, tag, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                            apiResponse = api.getCustomArtTimeline(false,  manageTimelines.getTagTimeline().getName(), max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
                         else
-                            apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
-                    } else {
-                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
+                            apiResponse = api.getPublicTimelineTag(manageTimelines.getTagTimeline().getName(), false, max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
                     }
                 }else{
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());

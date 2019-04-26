@@ -78,6 +78,12 @@ public class TimelinesDAO {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_DISPLAYED, timeline.isDisplayed());
         values.put(Sqlite.COL_POSITION, timeline.getPosition());
+        if( timeline.getTagTimeline() != null)
+            values.put(Sqlite.COL_TAG_TIMELINE, Helper.tagTimelineToStringStorage(timeline.getTagTimeline()));
+        if( timeline.getRemoteInstance() != null)
+            values.put(Sqlite.COL_REMOTE_INSTANCE, Helper.remoteInstanceToStringStorage(timeline.getRemoteInstance()));
+        if( timeline.getListTimeline() != null)
+            values.put(Sqlite.COL_LIST_TIMELINE, Helper.listTimelineToStringStorage(timeline.getListTimeline()));
         return db.update(Sqlite.TABLE_TIMELINES,
                 values, Sqlite.COL_ID + " =  ? ",
                 new String[]{String.valueOf(timeline.getId())});
@@ -108,6 +114,15 @@ public class TimelinesDAO {
         }
     }
 
+
+    public ManageTimelines getById(int id){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_TIMELINES, null, Sqlite.COL_ID + " = '" + id+ "'", null, null, null, Sqlite.COL_POSITION + " ASC", null);
+            return cursorToTimeline(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
     /***

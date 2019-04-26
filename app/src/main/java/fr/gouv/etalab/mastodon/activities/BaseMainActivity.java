@@ -2007,6 +2007,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     }else if( tl.getType() == ManageTimelines.Type.LIST){
                         bundle.putString("targetedid", tl.getListTimeline().getId());
                     }
+                    bundle.putInt("timelineId", tl.getId());
                     displayStatusFragment.setArguments(bundle);
                     mPageReferenceMap.put(tl.getPosition(), displayStatusFragment);
                     return displayStatusFragment;

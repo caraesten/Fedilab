@@ -747,6 +747,8 @@ public class ManageTimelines {
         }
         String tag;
         TagTimeline tagtl = tl.getTagTimeline();
+        if( tagtl == null)
+            return;
         if( tagtl.getDisplayname() != null)
             tag = tagtl.getDisplayname();
         else
@@ -771,13 +773,15 @@ public class ManageTimelines {
             @Override
             public void onDismiss(PopupMenu menu) {
                 if(changes[0]) {
-
+                    tl.setTagTimeline(tagTimeline);
+                    new TimelinesDAO(context, db).update(tl);
                     FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                     assert displayStatusFragment != null;
                     fragTransaction.detach(displayStatusFragment);
                     Bundle bundle = new Bundle();
                     bundle.putString("tag", tag);
+                    bundle.putInt("timelineId", tl.getId());
                     bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
                     if( mediaOnly[0])
                         bundle.putString("instanceType","ART");
@@ -816,6 +820,8 @@ public class ManageTimelines {
                         tagTimeline.setNSFW(showNSFW[0]);
                         itemMediaOnly.setChecked(mediaOnly[0]);
                         new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, null);
+                        tl.setTagTimeline(tagTimeline);
+                        new TimelinesDAO(context, db).update(tl);
                         break;
                     case R.id.action_show_nsfw:
                         showNSFW[0] = !showNSFW[0];
@@ -825,6 +831,8 @@ public class ManageTimelines {
                         tagTimeline.setNSFW(showNSFW[0]);
                         itemShowNSFW.setChecked(showNSFW[0]);
                         new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, null);
+                        tl.setTagTimeline(tagTimeline);
+                        new TimelinesDAO(context, db).update(tl);
                         break;
                     case R.id.action_any:
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
@@ -853,6 +861,8 @@ public class ManageTimelines {
                                 java.util.List<String> any =
                                         new ArrayList<>(Arrays.asList(values));
                                 new SearchDAO(context, db).updateSearch(tagTimeline,null, any, null, null);
+                                tl.setTagTimeline(tagTimeline);
+                                new TimelinesDAO(context, db).update(tl);
                             }
                         });
                         AlertDialog alertDialog = dialogBuilder.create();
@@ -884,6 +894,8 @@ public class ManageTimelines {
                                 java.util.List<String> all =
                                         new ArrayList<>(Arrays.asList(values));
                                 new SearchDAO(context, db).updateSearch(tagTimeline, null,null, all, null);
+                                tl.setTagTimeline(tagTimeline);
+                                new TimelinesDAO(context, db).update(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
@@ -915,6 +927,8 @@ public class ManageTimelines {
                                 java.util.List<String> none =
                                         new ArrayList<>(Arrays.asList(values));
                                 new SearchDAO(context, db).updateSearch(tagTimeline, null,null, null, none);
+                                tl.setTagTimeline(tagTimeline);
+                                new TimelinesDAO(context, db).update(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
@@ -944,6 +958,8 @@ public class ManageTimelines {
                                 if( tabLayout.getTabAt(position) != null)
                                     tabLayout.getTabAt(position).setText(values);
                                 new SearchDAO(context, db).updateSearch(tagTimeline, values,null, null, null);
+                                tl.setTagTimeline(tagTimeline);
+                                new TimelinesDAO(context, db).update(tl);
                             }
                         });
                         alertDialog = dialogBuilder.create();
