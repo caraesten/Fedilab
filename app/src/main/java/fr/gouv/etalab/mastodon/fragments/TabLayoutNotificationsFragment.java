@@ -249,7 +249,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
     }
 
     public void refreshAll(){
-
+        if( viewPager == null)
+            return;
         FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
         if( a != null) {
             DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);

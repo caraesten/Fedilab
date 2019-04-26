@@ -1867,15 +1867,15 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 if( viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-
+                    ManageTimelines tl = timelines.get(tab.getPosition());
                     DisplayStatusFragment displayStatusFragment;
-                    if (tab.getPosition() == 0) {
+                    if (tl.getType() == ManageTimelines.Type.HOME) {
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         countNewStatus = 0;
                         updateHomeCounter();
                         displayStatusFragment.scrollToTop();
                         displayStatusFragment.updateLastReadToot();
-                    } else if( tab.getPosition() == 1) {
+                    } else if(tl.getType() == ManageTimelines.Type.NOTIFICATION) {
                         countNewNotifications = 0;
                         updateNotifCounter();
                     }else if (tab.getPosition() > 1) {
@@ -1945,16 +1945,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     int pos = tabLayout.getSelectedTabPosition();
                     if( viewPager.getAdapter() != null) {
                         Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                        switch (pos) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                                displayStatusFragment.scrollToTop();
-                                break;
-                            case 1:
-                                break;
+                        ManageTimelines tl = timelines.get(pos);
+                        if( tl.getType() != ManageTimelines.Type.NOTIFICATION){
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
                         }
                     }
                 }
@@ -2017,6 +2011,8 @@ public abstract class BaseMainActivity extends BaseActivity
                     mPageReferenceMap.put(tl.getPosition(), displayStatusFragment);
                     return displayStatusFragment;
                 }else{
+                    TabLayoutNotificationsFragment tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
+                    mPageReferenceMap.put(tl.getPosition(), tabLayoutNotificationsFragment);
                     return new TabLayoutNotificationsFragment();
                 }
 

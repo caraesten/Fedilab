@@ -95,7 +95,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     else
                         apiResponse = api.getPublicTimelineTagSinceId(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 } else {
-                    apiResponse = api.getPublicTimelineTag(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                    apiResponse = api.getPublicTimelineTag(remoteInstance, false, since_id, null, null, null);
                 }
             } else if (type == RetrieveFeedsAsyncTask.Type.ART)
                 apiResponse = api.getArtTimelineSinceId(false, since_id, null, null, null);
