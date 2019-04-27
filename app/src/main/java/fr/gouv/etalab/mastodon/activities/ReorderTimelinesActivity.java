@@ -42,6 +42,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnUndoListener;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.SimpleItemTouchHelperCallback;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -63,7 +65,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private TextView undo_action;
     private  List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
-
+    private boolean actionCanBeApplied;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,19 +140,35 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     public void onUndo(ManageTimelines manageTimelines, int position) {
         undo_container.setVisibility(View.VISIBLE);
         undo_action.setPaintFlags(undo_action.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        actionCanBeApplied = true;
         undo_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timelines.add(position, manageTimelines);
                 adapter.notifyItemInserted(position);
                 undo_container.setVisibility(View.GONE);
+                actionCanBeApplied = false;
             }
         });
-        final Handler handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 undo_container.setVisibility(View.GONE);
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                if( actionCanBeApplied){
+                    switch (manageTimelines.getType()){
+                        case TAG:
+                                new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
+                                new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                            break;
+                        case INSTANCE:
+                            new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getId());
+                            new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                            break;
+                    }
+                    updated = true;
+                }
             }
         }, 2000);
 

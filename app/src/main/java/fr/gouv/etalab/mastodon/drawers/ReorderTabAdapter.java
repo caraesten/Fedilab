@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -205,9 +204,18 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     @Override
     public void onItemDismiss(int position) {
         ManageTimelines item = mItems.get(position);
-        mUndoListener.onUndo(item, position);
-        mItems.remove(position);
-        notifyItemRemoved(position);
+        if( item.getType() == ManageTimelines.Type.TAG || item.getType() == ManageTimelines.Type.INSTANCE ) {
+            mUndoListener.onUndo(item, position);
+            mItems.remove(position);
+            notifyItemRemoved(position);
+        }else{
+            notifyItemChanged(position);
+            if( item.getType() == ManageTimelines.Type.LIST ){
+                Toasty.info(context, context.getString(R.string.warning_list_deletion), Toast.LENGTH_SHORT).show();
+            }else{
+                Toasty.info(context, context.getString(R.string.warning_main_timeline), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

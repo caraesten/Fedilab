@@ -539,7 +539,7 @@ public class ManageTimelines {
             final boolean[] show_nsfw = {sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false)};
             final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
             final MenuItem itemMedia = menu.findItem(R.id.action_show_media_only);
-            final MenuItem itemDelete = menu.findItem(R.id.action_delete);
+            //final MenuItem itemDelete = menu.findItem(R.id.action_delete);
 
             final MenuItem itemAny = menu.findItem(R.id.action_any);
             final MenuItem itemAll = menu.findItem(R.id.action_all);
@@ -550,7 +550,7 @@ public class ManageTimelines {
             itemNone.setVisible(false);
             action_displayname.setVisible(false);
             itemMedia.setVisible(false);
-            itemDelete.setVisible(false);
+           // itemDelete.setVisible(false);
             itemShowNSFW.setChecked(show_nsfw[0]);
             final boolean[] changes = {false};
             popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
@@ -941,7 +941,7 @@ public class ManageTimelines {
                         alertDialog = dialogBuilder.create();
                         alertDialog.show();
                         break;
-                    case R.id.action_delete:
+                    /*case R.id.action_delete:
                         dialogBuilder = new AlertDialog.Builder(context, style);
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
@@ -971,7 +971,7 @@ public class ManageTimelines {
                         if( alertDialog.getWindow() != null )
                             alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                         alertDialog.show();
-                        return false;
+                        return false;*/
                 }
                 return false;
             }
