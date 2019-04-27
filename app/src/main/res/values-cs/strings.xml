@@ -816,7 +816,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="notif_poll">Anketa, ve které jste hlasoval/a, skončila</string>
     <string name="settings_category_notif_customize">Přizpůsobit</string>
     <string name="settings_category_notif_categories">Kategorie</string>
-    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_news">Novinky</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
     <string name="settings_category_notif_advanced">Advanced</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
