@@ -271,6 +271,7 @@ public class Helper {
     public static final int SEARCH_INSTANCE = 8;
     public static final int SEARCH_REMOTE = 9;
     public static final int RELOAD_MYVIDEOS = 10;
+    public static final int REFRESH_TIMELINE = 11;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";

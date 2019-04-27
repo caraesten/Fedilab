@@ -18,26 +18,26 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.ReorderTimelinesActivity;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
-import fr.gouv.etalab.mastodon.fragments.DisplayReorderTabFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperAdapter;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperViewHolder;
@@ -171,15 +171,20 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
         holder.hideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tl.setDisplayed(! tl.isDisplayed());
-                if(tl.isDisplayed()){
-                    holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
-                }else{
-                    holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
-                }
-                DisplayReorderTabFragment.updated = true;
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                new TimelinesDAO(context, db).update(tl);
+                int count = new TimelinesDAO(context, db).countVisibleTimelines();
+                if( count > 2 || !tl.isDisplayed()) {
+                    tl.setDisplayed(!tl.isDisplayed());
+                    if (tl.isDisplayed()) {
+                        holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
+                    } else {
+                        holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
+                    }
+                    ReorderTimelinesActivity.updated = true;
+                    new TimelinesDAO(context, db).update(tl);
+                }else{
+                    Toasty.info(context, context.getString(R.string.visible_tabs_needed), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -216,7 +221,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
            new TimelinesDAO(context, db).update(timelines);
            i++;
         }
-        DisplayReorderTabFragment.updated = true;
+        ReorderTimelinesActivity.updated = true;
        return true;
     }
 

@@ -95,6 +95,17 @@ public class TimelinesDAO {
                 new String[]{String.valueOf(timeline.getId())});
     }
 
+    public int countVisibleTimelines(){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        Cursor mCount= db.rawQuery("select count(*) from " + Sqlite.TABLE_TIMELINES
+                + " where " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_DISPLAYED + "= 1", null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
 
     public List<ManageTimelines> getAllTimelines(){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

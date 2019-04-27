@@ -121,7 +121,6 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplayReorderTabFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
@@ -157,6 +156,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.REFRESH_TIMELINE;
 import static fr.gouv.etalab.mastodon.helper.Helper.RELOAD_MYVIDEOS;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
@@ -1217,6 +1217,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(myIntent);
             }else if( extras.getInt(INTENT_ACTION) == SEARCH_TAG){
                 new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else if( extras.getInt(INTENT_ACTION) == REFRESH_TIMELINE){
+                int position = 0;
+                if( tabLayout != null)
+                    position = tabLayout.getSelectedTabPosition();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
                 String url = extras.getString(SEARCH_URL);
                 intent.replaceExtras(new Bundle());
@@ -1328,10 +1333,6 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        DisplayReorderTabFragment displayReorderTabFragment = (DisplayReorderTabFragment)getSupportFragmentManager().findFragmentByTag("REORDER_TIMELINES");
-        if (displayReorderTabFragment != null && displayReorderTabFragment.isVisible() && DisplayReorderTabFragment.updated) {
-            new SyncTimelinesAsyncTask(BaseMainActivity.this, tabLayout.getSelectedTabPosition(), BaseMainActivity.this ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -1419,6 +1420,10 @@ public abstract class BaseMainActivity extends BaseActivity
         if( id == R.id.nav_archive) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
             startActivity(myIntent);
+            return false;
+        }else if(id == R.id.nav_drag_timelines){
+            Intent intent = new Intent(getApplicationContext(), ReorderTimelinesActivity.class);
+            startActivity(intent);
             return false;
         } else if( id == R.id.nav_about) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
@@ -1609,12 +1614,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "WHO_TO_FOLLOW";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, whoToFollowFragment, fragmentTag).commit();
-        }else if(id == R.id.nav_drag_timelines){
-            toot.hide();
-            DisplayReorderTabFragment displayReorderTabFragment = new DisplayReorderTabFragment();
-            fragmentTag = "REORDER_TIMELINES";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayReorderTabFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
@@ -1772,7 +1771,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
     @Override
     public void syncedTimelines(List<ManageTimelines> manageTimelines, int position) {
-        DisplayReorderTabFragment.updated = false;
+        ReorderTimelinesActivity.updated = false;
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
