@@ -413,25 +413,8 @@ public class ManageTimelines {
             }
             position++;
         }
-    //    tabLayout.getTabAt(0).select();
     }
 
-    public static void insertUpdateTL(Context context, ManageTimelines manageTimelines){
-        SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
-        java.util.List<ManageTimelines> timelines = new TimelinesDAO(context, db).getAllTimelines();
-        boolean canbeAdded = true;
-        for(ManageTimelines tl: timelines){
-            if( tl.getType() == manageTimelines.getType() && manageTimelines.type != Type.LIST && manageTimelines.type != Type.TAG && manageTimelines.type != Type.ART){
-                canbeAdded = false;
-                break;
-            }
-        }
-        if( canbeAdded) {
-            if( manageTimelines.type != Type.PEERTUBE && manageTimelines.type != Type.TAG && manageTimelines.type != Type.ART){
-                new TimelinesDAO(context, db).insert(manageTimelines);
-            }
-        }
-    }
 
 
 
@@ -601,7 +584,8 @@ public class ManageTimelines {
             final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
             final MenuItem itemFilter = menu.findItem(R.id.action_filter);
             DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-            if((displayStatusFragment != null && displayStatusFragment.getUserVisibleHint())){
+
+            if(tl.getType() != Type.HOME){
                 itemShowBoosts.setVisible(false);
                 itemShowReplies.setVisible(false);
                 itemFilter.setVisible(true);
@@ -832,10 +816,9 @@ public class ManageTimelines {
                         @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_any, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editText = dialogView.findViewById(R.id.filter_any);
-                        java.util.List<TagTimeline> tagInfo = new SearchDAO(context, db).getTimelineInfo(tag);
-                        if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getAny() != null) {
+                        if(tagTimeline.getAny() != null) {
                             String valuesTag = "";
-                            for(String val: tagInfo.get(0).getAny())
+                            for(String val: tagTimeline.getAny())
                                 valuesTag += val+" ";
                             editText.setText(valuesTag);
                             editText.setSelection(editText.getText().toString().length());
@@ -861,10 +844,9 @@ public class ManageTimelines {
                         dialogView = inflater.inflate(R.layout.tags_all, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextAll = dialogView.findViewById(R.id.filter_all);
-                        tagInfo = new SearchDAO(context, db).getTimelineInfo(tag);
-                        if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getAll() != null) {
+                        if( tagTimeline.getAll() != null) {
                             String valuesTag = "";
-                            for(String val: tagInfo.get(0).getAll())
+                            for(String val: tagTimeline.getAll())
                                 valuesTag += val+" ";
                             editTextAll.setText(valuesTag);
                             editTextAll.setSelection(editTextAll.getText().toString().length());
@@ -890,10 +872,9 @@ public class ManageTimelines {
                         dialogView = inflater.inflate(R.layout.tags_all, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextNone = dialogView.findViewById(R.id.filter_all);
-                        tagInfo = new SearchDAO(context, db).getTimelineInfo(tag);
-                        if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getNone() != null) {
+                        if( tagTimeline.getNone() != null) {
                             String valuesTag = "";
-                            for(String val: tagInfo.get(0).getNone())
+                            for(String val: tagTimeline.getNone())
                                 valuesTag += val+" ";
                             editTextNone.setText(valuesTag);
                             editTextNone.setSelection(editTextNone.getText().toString().length());
@@ -919,9 +900,8 @@ public class ManageTimelines {
                         dialogView = inflater.inflate(R.layout.tags_name, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextName = dialogView.findViewById(R.id.column_name);
-                        tagInfo = new SearchDAO(context, db).getTimelineInfo(tag);
-                        if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getDisplayname() != null) {
-                            editTextName.setText(tagInfo.get(0).getDisplayname());
+                        if( tagTimeline.getDisplayname() != null) {
+                            editTextName.setText(tagTimeline.getDisplayname());
                             editTextName.setSelection(editTextName.getText().toString().length());
                         }
                         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
@@ -941,37 +921,6 @@ public class ManageTimelines {
                         alertDialog = dialogBuilder.create();
                         alertDialog.show();
                         break;
-                    /*case R.id.action_delete:
-                        dialogBuilder = new AlertDialog.Builder(context, style);
-                        dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                new SearchDAO(context, db).remove(tag);
-                                new SyncTimelinesAsyncTask(context, tabLayout.getSelectedTabPosition(), ((BaseMainActivity)context) ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                dialog.dismiss();
-                            }
-                        });
-                        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                        dialogBuilder.setMessage(context.getString(R.string.delete) + ": " + tag);
-                        alertDialog = dialogBuilder.create();
-                        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                //Hide keyboard
-                                InputMethodManager imm = (InputMethodManager)  ((MainActivity)context).getSystemService(Context.INPUT_METHOD_SERVICE);
-                                assert imm != null;
-                                imm.hideSoftInputFromWindow(tabLayout.getWindowToken(), 0);
-                            }
-                        });
-                        if( alertDialog.getWindow() != null )
-                            alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                        alertDialog.show();
-                        return false;*/
                 }
                 return false;
             }
