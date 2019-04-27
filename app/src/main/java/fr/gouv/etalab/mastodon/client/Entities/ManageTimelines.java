@@ -464,8 +464,8 @@ public class ManageTimelines {
                             @Override
                             public void onDismiss(PopupMenu menu) {
                                 TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(tl.getPosition());
-                                if( tabLayoutNotificationsFragment != null)
-                                    tabLayoutNotificationsFragment.refreshAll();
+                                assert tabLayoutNotificationsFragment != null;
+                                tabLayoutNotificationsFragment.refreshAll();
                             }
                         });
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

@@ -2014,7 +2014,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }else{
                     TabLayoutNotificationsFragment tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
                     mPageReferenceMap.put(tl.getPosition(), tabLayoutNotificationsFragment);
-                    return new TabLayoutNotificationsFragment();
+                    return tabLayoutNotificationsFragment;
                 }
 
             }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
