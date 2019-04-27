@@ -42,6 +42,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperAdapter;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperViewHolder;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;
+import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnUndoListener;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -59,12 +60,14 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     private List<ManageTimelines> mItems;
 
     private final OnStartDragListener mDragStartListener;
+    private final OnUndoListener mUndoListener;
 
     private Context context;
     private SharedPreferences sharedpreferences;
 
-    public ReorderTabAdapter(Context context, List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener) {
+    public ReorderTabAdapter(Context context, List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener, OnUndoListener undoListener) {
         this. mDragStartListener = dragStartListener;
+        this.mUndoListener = undoListener;
         this.mItems = manageTimelines;
         this.context = context;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -197,11 +200,9 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     @Override
     public void onItemDismiss(int position) {
         ManageTimelines item = mItems.get(position);
-        mItems.get(position).setDisplayed(false);
+        mUndoListener.onUndo(item, position);
         mItems.remove(position);
         notifyItemRemoved(position);
-        mItems.add(item);
-        notifyItemInserted((mItems.size()-1));
     }
 
     @Override
@@ -246,8 +247,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
 
         @Override
         public void onItemSelected() {
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            itemView.setBackgroundColor(Color.LTGRAY);
+            itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC3));
         }
 
         @Override
