@@ -187,7 +187,6 @@ public abstract class BaseMainActivity extends BaseActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
-    private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
 
     public static int countNewStatus;
@@ -420,14 +419,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     viewPager.setCurrentItem(tab.getPosition());
-                    if (stackBack.empty())
-                        stackBack.push(0);
-                    if (stackBack.contains(tab.getPosition())) {
-                        stackBack.remove(stackBack.indexOf(tab.getPosition()));
-                        stackBack.push(tab.getPosition());
-                    } else {
-                        stackBack.push(tab.getPosition());
-                    }
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
                     delete_instance.setVisibility(View.GONE);
@@ -564,14 +555,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     viewPager.setCurrentItem(tab.getPosition());
-                    if (stackBack.empty())
-                        stackBack.push(0);
-                    if (stackBack.contains(tab.getPosition())) {
-                        stackBack.remove(stackBack.indexOf(tab.getPosition()));
-                        stackBack.push(tab.getPosition());
-                    } else {
-                        stackBack.push(tab.getPosition());
-                    }
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
                     delete_instance.setVisibility(View.GONE);
@@ -1344,12 +1327,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 return;
             }
             if( viewPager.getVisibility() == View.VISIBLE){
-                if (stackBack.size() > 1) {
-                    stackBack.pop();
-                    viewPager.setCurrentItem(stackBack.lastElement());
-                }else {
-                    super.onBackPressed();
-                }
+                super.onBackPressed();
             } else {
                 Helper.switchLayout(BaseMainActivity.this);
                 main_app_container.setVisibility(View.GONE);
@@ -1363,11 +1341,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 tootShow();
-                switch (viewPager.getCurrentItem()){
-                    case 1:
-                        toot.hide();
-                        break;
-                }
             }
 
         }
@@ -1800,14 +1773,6 @@ public abstract class BaseMainActivity extends BaseActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (stackBack.empty())
-                    stackBack.push(0);
-                if (stackBack.contains(tab.getPosition())) {
-                    stackBack.remove(stackBack.indexOf(tab.getPosition()));
-                    stackBack.push(tab.getPosition());
-                } else {
-                    stackBack.push(tab.getPosition());
-                }
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 delete_instance.setVisibility(View.GONE);
