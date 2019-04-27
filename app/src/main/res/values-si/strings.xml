@@ -467,11 +467,11 @@
     <string name="action_lists">ලැයිස්තු</string>
     <string name="action_lists_confirm_delete">මෙම ලැයිස්තුව ස්ථිරවම මකා දැමීමට අවශ්‍ය බව විශ්වාස ද?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
+    <string name="action_lists_add_to">ලැයිස්තුවට එකතු කරන්න</string>
+    <string name="action_lists_remove_from">ලැයිස්තුවෙන් ඉවත් කරන්න</string>
+    <string name="action_lists_create">ලැයිස්තුවක් එකතු කරන්න</string>
+    <string name="action_lists_delete">ලැයිස්තුව මකන්න</string>
+    <string name="action_lists_update">ලැයිස්තුව සංස්කරණය කරන්න</string>
     <string name="action_lists_title_placeholder">New list title</string>
     <string name="action_lists_search_users">Search among people you follow</string>
     <string name="action_lists_owner">Your lists</string>
