@@ -829,11 +829,11 @@
     <string name="move_timeline">Переместить ленту</string>
     <string name="hide_timeline">Скрыть ленту</string>
     <string name="reorder_timelines">Изменить порядок лент</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">Вернуть</string>
+    <string name="visible_tabs_needed">Необходимо сохранить две видимые вкладки!</string>
+    <string name="action_reorder_timeline">Изменить порядок лент</string>
+    <string name="warning_list_deletion">Используйте элемент списка для удаления этого списка!</string>
+    <string name="warning_main_timeline">Основные ленты могут быть только скрыты!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
