@@ -778,7 +778,7 @@ public class ManageTimelines {
                         return;
                     fragTransaction.detach(displayStatusFragment);
                     Bundle bundle = new Bundle();
-                    bundle.putString("tag", tag);
+                    bundle.putString("tag", tl.getTagTimeline().getName());
                     bundle.putInt("timelineId", tl.getId());
                     bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
                     if( mediaOnly[0])
