@@ -289,6 +289,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                             apiResponse = api.getCustomArtTimeline(false,  manageTimelines.getTagTimeline().getName(), max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
                         else
                             apiResponse = api.getPublicTimelineTag(manageTimelines.getTagTimeline().getName(), false, max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
+                    }else{
+                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
                     }
                 }else{
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());

@@ -32,6 +32,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +116,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
 
 
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-
-
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         lv_status.addItemDecoration(new DividerItemDecoration(HashTagActivity.this, DividerItemDecoration.VERTICAL));
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
@@ -125,7 +124,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
         statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         setTitle(String.format("#%s", tag));
@@ -143,7 +141,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy)
             {
                 if(dy > 0){
                     int visibleItemCount = mLayoutManager.getChildCount();
@@ -205,8 +203,11 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse == null || apiResponse.getError() != null){
+            if( apiResponse != null)
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();

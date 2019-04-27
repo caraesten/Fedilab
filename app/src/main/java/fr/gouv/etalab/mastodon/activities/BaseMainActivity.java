@@ -160,6 +160,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.RELOAD_MYVIDEOS;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
@@ -1214,7 +1215,9 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
-            }else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
+            }else if( extras.getInt(INTENT_ACTION) == SEARCH_TAG){
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
                 String url = extras.getString(SEARCH_URL);
                 intent.replaceExtras(new Bundle());
                 intent.setAction("");
@@ -1781,6 +1784,8 @@ public abstract class BaseMainActivity extends BaseActivity
         if( position >= manageTimelines.size()){
             position = manageTimelines.size()-1;
         }
+        if( position == -1)
+            position = (timelines.size()-1);
         if( position < 0)
             position = 0;
 
