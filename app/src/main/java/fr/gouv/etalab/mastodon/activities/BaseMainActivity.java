@@ -1778,7 +1778,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 delete_instance.setVisibility(View.GONE);
                 Helper.switchLayout(BaseMainActivity.this);
                 //TODO: not hiding the compose button
-                if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
+                if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.NOTIFICATION ||manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
                     toot.hide();
                     federatedTimelines.hide();
                 }else {
