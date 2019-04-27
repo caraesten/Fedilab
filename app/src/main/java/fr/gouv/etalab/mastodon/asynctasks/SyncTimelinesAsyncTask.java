@@ -209,7 +209,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 for(ManageTimelines manageTimeline: manageTimelines){
                     if( manageTimeline.getRemoteInstance() == null )
                         continue;
-                    if(manageTimeline.getRemoteInstance().getId().equals(instance.getId())){
+                    if(manageTimeline.getRemoteInstance().getHost().equals(instance.getHost())){
                         isInDb = true;
                         timelines_tmp = manageTimeline;
                         break;
@@ -233,7 +233,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     continue;
                 boolean shouldBeRemoved = true;
                 for(RemoteInstance instance: instancesInDb){
-                    if( instance.getId().equals(manageTimelines.getRemoteInstance().getId())){
+                    if( instance.getHost().equals(manageTimelines.getRemoteInstance().getHost())){
                         shouldBeRemoved = false;
                     }
                 }
