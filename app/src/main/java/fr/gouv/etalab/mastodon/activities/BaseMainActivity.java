@@ -331,7 +331,7 @@ public abstract class BaseMainActivity extends BaseActivity
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
 
-
+        main_app_container = findViewById(R.id.main_app_container);
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -410,7 +410,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
 
-            main_app_container = findViewById(R.id.main_app_container);
+
             adapter = new PagerAdapter
                     (getSupportFragmentManager(), tabLayout.getTabCount());
             viewPager.setAdapter(adapter);
@@ -545,8 +545,6 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-
-            main_app_container = findViewById(R.id.main_app_container);
             adapter = new PagerAdapter
                     (getSupportFragmentManager(), tabLayout.getTabCount());
             viewPager.setAdapter(adapter);
