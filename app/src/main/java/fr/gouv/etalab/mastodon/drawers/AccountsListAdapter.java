@@ -80,7 +80,6 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         this.targetedId = targetedId;
     }
 
-    private API.StatusAction doAction;
 
 
 
@@ -96,6 +95,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         final Account account = accounts.get(position);
 
 
+        API.StatusAction doAction = null;
         if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             holder.account_mute_notification.hide();
             if (action == RetrieveAccountsAsyncTask.Type.BLOCKED)
@@ -207,13 +207,14 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.account_follow.setEnabled(true);
         }
         //Follow button
+        API.StatusAction finalDoAction = doAction;
         holder.account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if( action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
-                    if (doAction != null) {
+                    if (finalDoAction != null) {
                         account.setMakingAction(true);
-                        new PostActionAsyncTask(context, doAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }else {
                     CrossActions.followPeertubeChannel(context, account, AccountsListAdapter.this);
@@ -285,16 +286,20 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 new InstancesDAO(context, db).insertInstance(accounts.get(0).getAcct().split("@")[1], accounts.get(0).getAcct().split("@")[0], "PEERTUBE_CHANNEL");
             }else{
                 for(Account account: accounts){
-                    if( account.getId().equals(targetedId))
+                    if( account.getId().equals(targetedId)) {
                         account.setFollowType(Account.followAction.FOLLOW);
+                        account.setMakingAction(false);
+                    }
                 }
                 accountsListAdapter.notifyDataSetChanged();
             }
         }
         if( statusAction == API.StatusAction.UNFOLLOW){
             for(Account account: accounts){
-                if( account.getId().equals(targetedId))
+                if( account.getId().equals(targetedId)) {
                     account.setFollowType(Account.followAction.NOT_FOLLOW);
+                    account.setMakingAction(false);
+                }
             }
             accountsListAdapter.notifyDataSetChanged();
         }
