@@ -809,11 +809,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="move_timeline">Zeitleiste verschieben</string>
     <string name="hide_timeline">Zeitleiste ausblenden</string>
     <string name="reorder_timelines">Zeitleiste neu anordnen</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">Widerrufen</string>
+    <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
+    <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
+    <string name="warning_list_deletion">Verwenden Sie den Listeneintrag zum Löschen dieser Liste!</string>
+    <string name="warning_main_timeline">Hauptzeitachsen können nur ausgeblendet werden!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

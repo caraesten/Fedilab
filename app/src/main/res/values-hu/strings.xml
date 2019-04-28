@@ -818,11 +818,11 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="move_timeline">Idővonal áthelyezése</string>
     <string name="hide_timeline">Idővonal elrejtése</string>
     <string name="reorder_timelines">Idővonalak átrendezése</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">Visszavonás</string>
+    <string name="visible_tabs_needed">Legalább két látható lapnak kell maradni!</string>
+    <string name="action_reorder_timeline">Idővonalak átrendezése</string>
+    <string name="warning_list_deletion">A lista törléséhez használd a listabejegyzést!</string>
+    <string name="warning_main_timeline">A fő idővonalakat csak elrejteni lehet!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

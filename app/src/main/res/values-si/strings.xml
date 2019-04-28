@@ -62,7 +62,7 @@
     <string name="drafts">කටුසටහන්</string>
     <string name="new_data">නව දත්ත ඇත! ඔබට ඒවා පෙන්වීමට අවශ්‍ය ද?</string>
     <string name="favourite">ප්‍රියතම</string>
-    <string name="follow">New followers</string>
+    <string name="follow">නව අනුගාමිකයන්</string>
     <string name="mention">සඳහන් කිරීම්</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
@@ -152,7 +152,7 @@
     <string name="date_day">දින %d</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">අවවාදයයි</string>
-    <string name="toot_placeholder">What is on your mind?</string>
+    <string name="toot_placeholder">ඔබේ සිතුවිලි මොනවාද?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
@@ -273,7 +273,7 @@
     <string name="nothing_to_do">කිසිම ක්‍රියාමාර්ගයක් ගැනීමට නොහැක</string>
     <string name="toast_saved">මාධ්‍යය සුරකින ලදී!</string>
     <string name="toast_error_translate">පරිවර්තනය කරන අතරතුර දෝෂයක් සිදුවුණා!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">පරිවර්තනයන්, සැකසුම් තුලින් අක්‍රිය කර ඇත</string>
     <string name="toast_toot_saved">කටුසටහන සුරකින ලදී!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
@@ -381,7 +381,7 @@
     <string name="action_unmute">නිහඬ බව නැති කරන්න</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
+    <string name="action_search">සොයන්න</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
@@ -430,7 +430,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">අවසරයන්:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -464,14 +464,14 @@
     <string name="delete">ඉවත් කරන්න</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">ලැයිස්තු</string>
+    <string name="action_lists_confirm_delete">මෙම ලැයිස්තුව ස්ථිරවම මකා දැමීමට අවශ්‍ය බව විශ්වාස ද?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
+    <string name="action_lists_add_to">ලැයිස්තුවට එකතු කරන්න</string>
+    <string name="action_lists_remove_from">ලැයිස්තුවෙන් ඉවත් කරන්න</string>
+    <string name="action_lists_create">ලැයිස්තුවක් එකතු කරන්න</string>
+    <string name="action_lists_delete">ලැයිස්තුව මකන්න</string>
+    <string name="action_lists_update">ලැයිස්තුව සංස්කරණය කරන්න</string>
     <string name="action_lists_title_placeholder">New list title</string>
     <string name="action_lists_search_users">Search among people you follow</string>
     <string name="action_lists_owner">Your lists</string>
