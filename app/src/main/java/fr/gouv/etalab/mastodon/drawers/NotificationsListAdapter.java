@@ -1347,8 +1347,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
-        RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
-        CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
         HorizontalBar choices;
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
