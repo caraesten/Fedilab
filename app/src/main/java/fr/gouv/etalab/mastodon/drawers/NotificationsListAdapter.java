@@ -574,46 +574,23 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         holder.choices.init(context).hasAnimation(true).addAll(items).build();
                     }else {
                         if( poll.isMultiple()){
+                            if((holder.multiple_choice).getChildCount() > 0)
+                                (holder.multiple_choice).removeAllViews();
+                            for(PollOptions pollOption: poll.getOptionsList()){
+                                CheckBox cb = new CheckBox(context);
+                                cb.setText(pollOption.getTitle());
+                                holder.multiple_choice.addView(cb);
+                            }
                             holder.multiple_choice.setVisibility(View.VISIBLE);
-                            holder.c_choice_3.setVisibility(View.GONE);
-                            holder.c_choice_4.setVisibility(View.GONE);
-                            if( choiceCount > 2)
-                                holder.c_choice_3.setVisibility(View.VISIBLE);
-                            if( choiceCount > 3)
-                                holder.c_choice_4.setVisibility(View.VISIBLE);
-                            int j = 1;
-                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
-                                if( j == 1 )
-                                    holder.c_choice_1.setText(pollOption.getTitle());
-                                else  if( j == 2 )
-                                    holder.c_choice_2.setText(pollOption.getTitle());
-                                else  if( j == 3 )
-                                    holder.c_choice_3.setText(pollOption.getTitle());
-                                else  if( j == 4 )
-                                    holder.c_choice_4.setText(pollOption.getTitle());
-                                j++;
-                            }
-
                         }else {
-                            holder.single_choice.setVisibility(View.VISIBLE);
-                            holder.r_choice_3.setVisibility(View.GONE);
-                            holder.r_choice_4.setVisibility(View.GONE);
-                            if( choiceCount > 2)
-                                holder.r_choice_3.setVisibility(View.VISIBLE);
-                            if( choiceCount > 3)
-                                holder.r_choice_4.setVisibility(View.VISIBLE);
-                            int j = 1;
-                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
-                                if( j == 1 )
-                                    holder.r_choice_1.setText(pollOption.getTitle());
-                                else  if( j == 2 )
-                                    holder.r_choice_2.setText(pollOption.getTitle());
-                                else  if( j == 3 )
-                                    holder.r_choice_3.setText(pollOption.getTitle());
-                                else  if( j == 4 )
-                                    holder.r_choice_4.setText(pollOption.getTitle());
-                                j++;
+                            if((holder.radio_group).getChildCount() > 0)
+                                (holder.radio_group).removeAllViews();
+                            for(PollOptions pollOption: poll.getOptionsList()){
+                                RadioButton rb = new RadioButton(context);
+                                rb.setText(pollOption.getTitle());
+                                holder.radio_group.addView(rb);
                             }
+                            holder.single_choice.setVisibility(View.VISIBLE);
                         }
                         holder.submit_vote.setVisibility(View.VISIBLE);
                         holder.submit_vote.setOnClickListener(new View.OnClickListener() {
@@ -622,14 +599,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 int [] choice;
                                 if( poll.isMultiple()){
                                     ArrayList<Integer> choices = new ArrayList<>();
-                                    if( holder.c_choice_1.isChecked())
-                                        choices.add(0);
-                                    if( holder.c_choice_2.isChecked())
-                                        choices.add(1);
-                                    if( holder.c_choice_3.isChecked())
-                                        choices.add(2);
-                                    if( holder.c_choice_4.isChecked())
-                                        choices.add(3);
+                                    int choicesCount = holder.multiple_choice.getChildCount();
+                                    for( int i = 0 ; i < choicesCount ; i++){
+                                        if( holder.multiple_choice.getChildAt(i) != null && holder.multiple_choice.getChildAt(i) instanceof CheckBox){
+                                            if(((CheckBox) holder.multiple_choice.getChildAt(i)).isChecked()){
+                                                choices.add(i);
+                                            }
+                                        }
+                                    }
                                     choice = new int[choices.size()];
                                     Iterator<Integer> iterator = choices.iterator();
                                     for (int i = 0; i < choice.length; i++) {
@@ -640,15 +617,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 }else{
                                     choice = new int[1];
                                     choice[0] = -1;
-                                    int checkedId = holder.radio_group.getCheckedRadioButtonId();
-                                    if( checkedId == R.id.r_choice_1)
-                                        choice[0] = 0;
-                                    if( checkedId == R.id.r_choice_2)
-                                        choice[0] = 1;
-                                    if( checkedId == R.id.r_choice_3)
-                                        choice[0] = 2;
-                                    if( checkedId == R.id.r_choice_4)
-                                        choice[0] = 3;
+                                    int choicesCount = holder.radio_group.getChildCount();
+                                    for( int i = 0 ; i < choicesCount ; i++){
+                                        if( holder.radio_group.getChildAt(i) != null && holder.radio_group.getChildAt(i) instanceof RadioButton){
+                                            if(((RadioButton) holder.radio_group.getChildAt(i)).isChecked()){
+                                                choice[0] = i;
+                                            }
+                                        }
+                                    }
                                     if( choice[0] == -1)
                                         return;
                                 }
@@ -1425,14 +1401,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
             rated = itemView.findViewById(R.id.rated);
             radio_group = itemView.findViewById(R.id.radio_group);
-            r_choice_1 = itemView.findViewById(R.id.r_choice_1);
-            r_choice_2 = itemView.findViewById(R.id.r_choice_2);
-            r_choice_3 = itemView.findViewById(R.id.r_choice_3);
-            r_choice_4 = itemView.findViewById(R.id.r_choice_4);
-            c_choice_1 = itemView.findViewById(R.id.c_choice_1);
-            c_choice_2 = itemView.findViewById(R.id.c_choice_2);
-            c_choice_3 = itemView.findViewById(R.id.c_choice_3);
-            c_choice_4 = itemView.findViewById(R.id.c_choice_4);
             choices = itemView.findViewById(R.id.choices);
             number_votes = itemView.findViewById(R.id.number_votes);
             remaining_time = itemView.findViewById(R.id.remaining_time);
