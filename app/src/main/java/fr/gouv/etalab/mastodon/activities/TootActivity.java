@@ -610,6 +610,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 case R.id.action_markdown:
                                     contentType = "text/markdown";
                                     break;
+                                case R.id.action_bbcode:
+                                    contentType = "text/bbcode";
+                                    break;
                             }
                             popup.dismiss();
                             sendToot(null, contentType);
