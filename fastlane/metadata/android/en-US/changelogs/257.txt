@@ -3,6 +3,7 @@ Added
 * Pin followed instances and lists
 * Hide/Show timelines easily
 * Add an option to hide 🆕 badge on unread toots
+* BBCode support for Pleroma
 
 Changed
 * Display a more informative toast when translation service is disabled
@@ -12,4 +13,5 @@ Changed
 Fixed
 * Move locked account indicator to end of the username
 * Polls with more than 4 choices
+* Follow/Unfollow from toot information
 
