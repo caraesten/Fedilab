@@ -820,6 +820,7 @@ và %d toots khác để khám phá</item>
     <string name="action_reorder_timeline">Reorder timelines</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
