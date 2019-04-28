@@ -817,11 +817,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="move_timeline">移動時間軸</string>
     <string name="hide_timeline">隱藏時間軸</string>
     <string name="reorder_timelines">重新排列時間軸</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">復原</string>
+    <string name="visible_tabs_needed">您必須保留兩個可見的分頁！</string>
+    <string name="action_reorder_timeline">重新排列時間軸</string>
+    <string name="warning_list_deletion">使用清單項目刪除此清單！</string>
+    <string name="warning_main_timeline">主時間軸只能被隱藏！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
