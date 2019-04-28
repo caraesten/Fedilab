@@ -1000,11 +1000,7 @@ public class SettingsFragment extends Fragment {
                             editor.apply();
                             break;
                     }
-                    if (getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
-                    startActivity(intent);
+                    ((MainActivity) context).recreate();
                 }
                 count1++;
             }
