@@ -547,7 +547,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.submit_vote.setVisibility(View.GONE);
                 if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
                     Poll poll = status.getPoll();
-                    int choiceCount = status.getPoll().getOptionsList().size();
                     if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
@@ -783,6 +782,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_spoiler_container.setVisibility(View.GONE);
             holder.status_spoiler_mention_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
+            holder.poll_container.setVisibility(View.GONE);
         }
 
 
