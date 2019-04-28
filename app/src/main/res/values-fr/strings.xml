@@ -818,9 +818,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="move_timeline">Déplacer le fil</string>
     <string name="hide_timeline">Cacher le fil</string>
     <string name="reorder_timelines">Réorganiser les fils</string>
-    <string name="undo">Undo</string>
+    <string name="undo">Annuler</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="action_reorder_timeline">Réorganiser les fils</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
