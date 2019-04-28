@@ -37,32 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="UselessParent">
-            <RadioButton
-                android:id="@+id/r_choice_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                />
-            <RadioButton
-                android:id="@+id/r_choice_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                />
-            <RadioButton
-                android:id="@+id/r_choice_3"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                />
-            <RadioButton
-                android:id="@+id/r_choice_4"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                />
+
         </RadioGroup>
     </LinearLayout>
     <LinearLayout
@@ -71,24 +46,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <CheckBox
-            android:id="@+id/c_choice_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/c_choice_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/c_choice_3"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/c_choice_4"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
