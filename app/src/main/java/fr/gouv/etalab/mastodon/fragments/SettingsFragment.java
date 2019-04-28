@@ -674,6 +674,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+        final CheckBox set_new_badge = rootView.findViewById(R.id.set_display_new_badge);
+        set_new_badge.setChecked(new_badge);
+
+        set_new_badge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_NEW_BADGE, set_new_badge.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
         set_fit_preview.setChecked(fit_preview);
@@ -795,86 +808,6 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.SET_CUSTOM_SHARING_URL, s.toString().trim());
                 editor.apply();
-            }
-        });
-
-
-        boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
-        final CheckBox set_display_direct = rootView.findViewById(R.id.set_display_direct);
-        set_display_direct.setChecked(display_direct);
-
-        set_display_direct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_DIRECT, set_display_direct.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                if(getActivity() != null)
-                    getActivity().finish();
-                startActivity(intent);
-            }
-        });
-
-        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
-        final CheckBox set_display_local = rootView.findViewById(R.id.set_display_local);
-        set_display_local.setChecked(display_local);
-
-        set_display_local.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_LOCAL, set_display_local.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                if(getActivity() != null)
-                    getActivity().finish();
-                startActivity(intent);
-            }
-        });
-
-        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-        final CheckBox set_display_global = rootView.findViewById(R.id.set_display_global);
-        set_display_global.setChecked(display_global);
-
-        set_display_global.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
-                if(getActivity() != null)
-                    getActivity().finish();
-                startActivity(intent);
-            }
-        });
-
-
-        boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
-        final CheckBox set_display_art = rootView.findViewById(R.id.set_display_art);
-        set_display_art.setChecked(display_art);
-
-        set_display_art.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_ART, set_display_art.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
-                if(getActivity() != null)
-                    getActivity().finish();
-                startActivity(intent);
             }
         });
 
@@ -1067,11 +1000,7 @@ public class SettingsFragment extends Fragment {
                             editor.apply();
                             break;
                     }
-                    if (getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
-                    startActivity(intent);
+                    ((MainActivity) context).recreate();
                 }
                 count1++;
             }

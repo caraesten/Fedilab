@@ -46,7 +46,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 27;
+    public static final int DB_VERSION = 28;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -86,6 +86,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for blocking tracking domains
     public static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
+
+    //Table for timelines
+    public static final String TABLE_TIMELINES = "TIMELINES";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -255,6 +258,22 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_DOMAIN + " TEXT NOT NULL)";
 
+    static final String COL_TYPE = "TYPE";
+    static final String COL_LIST_TIMELINE = "LIST_TIMELINE";
+    static final String COL_DISPLAYED = "DISPLAYED";
+    static final String COL_POSITION = "POSITION";
+    static final String COL_REMOTE_INSTANCE = "REMOTE_INSTANCE";
+    static final String COL_TAG_TIMELINE = "TAG_TIMELINE";
+
+    private static final String CREATE_TABLE_TIMELINES = "CREATE TABLE IF NOT EXISTS " + TABLE_TIMELINES + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_POSITION + " INTEGER NOT NULL, "
+            + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_TYPE + " TEXT NOT NULL, "
+            + COL_REMOTE_INSTANCE + " TEXT, "
+            + COL_TAG_TIMELINE + " TEXT, "
+            + COL_DISPLAYED + " INTEGER NOT NULL, "
+            + COL_LIST_TIMELINE + " TEXT)";
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -283,6 +302,12 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CACHE_TAGS);
         db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
         db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
+        db.execSQL(CREATE_TABLE_TIMELINES);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 
     @Override
@@ -362,6 +387,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_UPDATED_AT + " TEXT");
             case 26:
                 db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
+            case 27:
+                db.execSQL(CREATE_TABLE_TIMELINES);
             default:
                 break;
         }

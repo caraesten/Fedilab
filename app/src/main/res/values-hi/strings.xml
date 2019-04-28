@@ -273,6 +273,7 @@
     <string name="nothing_to_do">कार्यवाही नामुमकिन</string>
     <string name="toast_saved">मीडिया को सहेज लिया!</string>
     <string name="toast_error_translate">अनुवाद करते समय गड़बड़ी हुई!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">मसौदा सहेजा!</string>
     <string name="toast_error_char_limit">क्या आप सुनिश्चित है कि यह इंस्टंस इतने सारे अक्षर स्वीकार करता है? आम तौर पर यह मूल्य ५०० अक्षरों के करीब होता है।</string>
     <string name="toast_visibility_changed">%1$s खाते के लेखों की दृश्यता को बदल दिया गया है</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">मसौदे स्वतः सहेजें</string>
     <string name="set_bubble_counter">काउंटर दिखाएं</string>
     <string name="set_auto_add_media_url">मीडिया के यूआरएल को लेखों में जोड़े</string>
-    <string name="settings_title_notifications">सूचनाएं संभाले</string>
     <string name="set_notif_follow">अनुसरण होने पर सूचित करें</string>
     <string name="set_notif_follow_ask">अनुसरण करने की गुज़ारिश मिलने पर सूचित करें</string>
     <string name="set_notif_follow_share">आपके लेख बूस्ट होने पर सूचित करें</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">आपका उल्लेख होने पर सूचित करें</string>
     <string name="set_share_validation">बूस्ट करने से पहले पूछें</string>
     <string name="set_share_validation_fav">पसंद करने से पहले पूछें</string>
-    <string name="settings_title_more_options">अतिरिक्त सेटिंग्स</string>
     <string name="set_wifi_only">केवल वाईफ़ाई पे सूचित करें</string>
     <string name="set_notify">सूचित करें?</string>
     <string name="set_notif_silent">शांत सूचनाएं</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
     <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
-    <string name="settings_title_hour">सूचनाओं के लिये निर्धारित समय:</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
     <string name="settings_time_greater">समय %1$s से अधिक होना चाहिये</string>
@@ -373,7 +371,6 @@
         <item>पीला</item>
         <item>सफेद</item>
     </string-array>
-    <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखों के लिये सूचित करें</string>
     <string name="action_follow">अनुसरण करें</string>
     <string name="action_unfollow">अनुसरण ना करें</string>
@@ -801,6 +798,24 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

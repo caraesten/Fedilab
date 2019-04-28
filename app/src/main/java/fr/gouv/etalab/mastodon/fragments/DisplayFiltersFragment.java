@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,9 +49,14 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.drawers.FilterAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
+
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 /**
@@ -256,7 +262,16 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
             }
         }
         MainActivity.filters = apiResponse.getFilters();
-        ((MainActivity)context).refreshFilters();
+        SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+        for(ManageTimelines tl: timelines) {
+            if( tl.getType() == ManageTimelines.Type.HOME || tl.getType() == ManageTimelines.Type.LOCAL || tl.getType() == ManageTimelines.Type.PUBLIC) {
+                DisplayStatusFragment homeFragment = (DisplayStatusFragment) ((MainActivity) context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+                if (homeFragment != null)
+                    homeFragment.refreshFilter();
+            }
+        }
+
     }
 
 }

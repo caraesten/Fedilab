@@ -13,4 +13,8 @@
         android:id="@+id/action_markdown"
         android:title="@string/action_markdown"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_bbcode"
+        android:title="@string/action_bbcode"
+        app:showAsAction="always" />
 </menu>

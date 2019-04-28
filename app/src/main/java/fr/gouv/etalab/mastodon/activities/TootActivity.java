@@ -610,6 +610,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 case R.id.action_markdown:
                                     contentType = "text/markdown";
                                     break;
+                                case R.id.action_bbcode:
+                                    contentType = "text/bbcode";
+                                    break;
                             }
                             popup.dismiss();
                             sendToot(null, contentType);
@@ -1517,11 +1520,11 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_it.setEnabled(true);
             return;
         }
-        if( poll != null && visibility.equals("direct")){
+        /*if( poll != null && visibility.equals("direct")){
             Toasty.error(getApplicationContext(),getString(R.string.poll_not_private),Toast.LENGTH_LONG).show();
             toot_it.setEnabled(true);
             return;
-        }
+        }*/
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);

@@ -289,6 +289,7 @@
     <string name="nothing_to_do">لا يمكن اتخاذ أي إجراء</string>
     <string name="toast_saved">تم حفظ الصورة بنجاح!</string>
     <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">تم حِفظ المُسوَدَّة!</string>
     <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
     <string name="toast_visibility_changed">لقد تم تغيير نمط عرض التبويقات على الحساب %1$s</string>
@@ -314,7 +315,6 @@
     <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
     <string name="set_bubble_counter">عرض العدادات</string>
     <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
-    <string name="settings_title_notifications">إدارة الإشعارات</string>
     <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
     <string name="set_notif_follow_ask">تنبيهي عندما أتلقى طلبا بالمتابعة</string>
     <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
@@ -322,7 +322,6 @@
     <string name="set_notif_follow_mention">إخطاري عندما يُشار إليّ</string>
     <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
     <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
-    <string name="settings_title_more_options">الإعدادات المتقدمة</string>
     <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
     <string name="set_notify">هل تود الإشعار؟</string>
     <string name="set_notif_silent">كتم الاشعارات</string>
@@ -339,7 +338,6 @@
     <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
     <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به!</string>
     <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به!</string>
-    <string name="settings_title_hour">فترة استقبال الإشعارات:</string>
     <string name="settings_time_from">بين</string>
     <string name="settings_time_to">و</string>
     <string name="settings_time_greater">يجب أن تكون المدة الزمنية أكبر مِن %1$s</string>
@@ -389,7 +387,6 @@
         <item>أصفر</item>
         <item>أبيض</item>
     </string-array>
-    <string name="set_title_news">الأخبار</string>
     <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
     <string name="action_follow">اتبع</string>
     <string name="action_unfollow">إلغاء المتابعة</string>
@@ -826,6 +823,24 @@
     <string name="vote">تصويت</string>
     <string name="poll_not_private">لا يمكن إرفاق استطلاع للرأي في الرسائل المباشِرة!</string>
     <string name="notif_poll">لقد انقضت مدة استطلاع رأي قد قُمتَ بالتصويت عليه مِن قَبل</string>
+    <string name="settings_category_notif_customize">تخصيص</string>
+    <string name="settings_category_notif_categories">الفئات</string>
+    <string name="settings_category_notif_news">الأخبار</string>
+    <string name="settings_category_notif_time_slot">الفترة الزمنية</string>
+    <string name="settings_category_notif_advanced">خيارات متقدمة</string>
+    <string name="set_display_new_badge">عرض شارة \'new\' على التبويقات غير المقروءة</string>
+    <string name="set_display_peertube">عرض الخيط الزمني لبيرتيوب</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">إخفاء اللسان</string>
+    <string name="move_timeline">نقل الخيط الزمني</string>
+    <string name="hide_timeline">إخفاء الخيط الزمني</string>
+    <string name="reorder_timelines">إعادة ترتيب الخيوط الزمنية</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>

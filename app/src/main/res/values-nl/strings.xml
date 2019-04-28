@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Er valt niets te doen</string>
     <string name="toast_saved">Media is opgeslagen!</string>
     <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Concept opgeslagen!</string>
     <string name="toast_error_char_limit">Weet je zeker dat je op deze server zoveel tekens mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
     <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Concepten automatisch opslaan</string>
     <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
     <string name="set_auto_add_media_url">URL van afbeelding of video aan toot toevoegen</string>
-    <string name="settings_title_notifications">Meldingen beheren</string>
     <string name="set_notif_follow">Geef een melding wanneer iemand jou volgt</string>
     <string name="set_notif_follow_ask">Geef een melding van een volgverzoek</string>
     <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
     <string name="set_share_validation">Vraag voor het boosten een bevestiging</string>
     <string name="set_share_validation_fav">Vraag voor het markeren als favoriet een bevestiging</string>
-    <string name="settings_title_more_options">Geavanceerde instellingen</string>
     <string name="set_wifi_only">Alleen met Wifi meldingen tonen</string>
     <string name="set_notify">Meldingen?</string>
     <string name="set_notif_silent">Stille meldingen</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Toots met meer dan 500 tekens automatisch als reacties opsplitsen</string>
     <string name="note_no_space">Je hebt het limiet van 160 karakters bereikt!</string>
     <string name="username_no_space">Je hebt het limiet van 30 karakters bereikt!</string>
-    <string name="settings_title_hour">Op welk moment van de dag zijn meldingen toegestaan:</string>
     <string name="settings_time_from">Tussen</string>
     <string name="settings_time_to">en</string>
     <string name="settings_time_greater">Dit tijdstip moet na %1$s zijn</string>
@@ -373,7 +371,6 @@
         <item>Geel</item>
         <item>Wit</item>
     </string-array>
-    <string name="set_title_news">Nieuwe toots</string>
     <string name="set_notification_news">Geef een melding van nieuwe toots op jouw start-tijdlijn</string>
     <string name="action_follow">Volgen</string>
     <string name="action_unfollow">Ontvolgen</string>
@@ -809,6 +806,24 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
     <string name="notif_poll">Een poll waarin je hebt gestemd is beëindigd</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>

@@ -31,8 +31,8 @@
         android:id="@+id/action_none"
         app:showAsAction="always"
         android:title="@string/none_tags" />
-    <item
+    <!-- <item
         android:id="@+id/action_delete"
         app:showAsAction="always"
-        android:title="@string/delete" />
+        android:title="@string/delete" /> -->
 </menu>

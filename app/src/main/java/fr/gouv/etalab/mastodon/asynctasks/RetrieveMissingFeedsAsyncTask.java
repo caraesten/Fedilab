@@ -27,11 +27,13 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
 
 /**
@@ -47,6 +49,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private RetrieveFeedsAsyncTask.Type type;
     private WeakReference<Context> contextReference;
     private String remoteInstance;
+    private int timelineId;
 
     public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
         this.contextReference = new WeakReference<>(context);
@@ -61,6 +64,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveMissingFeedsInterface;
         this.type = type;
         this.remoteInstance = remoteInstance;
+    }
+
+    public RetrieveMissingFeedsAsyncTask(Context context, int timelineId, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.since_id = since_id;
+        this.listener = onRetrieveMissingFeedsInterface;
+        this.type = type;
+        this.timelineId = timelineId;
     }
 
 
@@ -86,16 +97,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getInstanceTimelineSinceId(remoteInstance, since_id);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG) {
                 SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(remoteInstance);
-                if (tagTimelines != null && tagTimelines.size() > 0) {
-                    TagTimeline tagTimeline = tagTimelines.get(0);
+                ManageTimelines manageTimelines = new TimelinesDAO(contextReference.get(), db).getById(timelineId);
+                if( manageTimelines != null && manageTimelines.getTagTimeline() != null){
+                    TagTimeline tagTimeline = manageTimelines.getTagTimeline();
                     boolean isArt = tagTimeline.isART();
                     if (isArt)
-                        apiResponse = api.getCustomArtTimelineSinceId(false, remoteInstance, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                        apiResponse = api.getCustomArtTimelineSinceId(false, manageTimelines.getTagTimeline().getName(), since_id, tagTimeline.getAny(), tagTimeline.getAll(), tagTimeline.getNone());
                     else
-                        apiResponse = api.getPublicTimelineTagSinceId(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
-                } else {
-                    apiResponse = api.getPublicTimelineTag(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                        apiResponse = api.getPublicTimelineTagSinceId(manageTimelines.getTagTimeline().getName(), false, since_id, tagTimeline.getAny(), tagTimeline.getAll(), tagTimeline.getNone());
                 }
             } else if (type == RetrieveFeedsAsyncTask.Type.ART)
                 apiResponse = api.getArtTimelineSinceId(false, since_id, null, null, null);

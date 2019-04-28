@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Ezin da ekintzarik egin</string>
     <string name="toast_saved">Multimedia gorde da!</string>
     <string name="toast_error_translate">Errore bat gertatu da itzuli bitartean!</string>
+    <string name="toast_error_translations_disabled">Itzulpenak ezarpenetan desgaituta daude</string>
     <string name="toast_toot_saved">Zirriborroa gordeta!</string>
     <string name="toast_error_char_limit">Ziur instantzia honek hainbeste karaktere onartzen dituela? Orokorrean, balio hau 500 inguru izaten da.</string>
     <string name="toast_visibility_changed">%1$s kontuaren toot-en ikusgaitasuna aldatu da</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
     <string name="set_bubble_counter">Erakutsi kontagailuak</string>
     <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
-    <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
     <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen dizunean</string>
     <string name="set_notif_follow_ask">Jakinarazi norbaitek zu jarraitzeko eskaera egiten duenean</string>
     <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
     <string name="set_share_validation">Baieztatu bultzada eman aurretik</string>
     <string name="set_share_validation_fav">Baieztatu gogokoetara gehitu aurretik</string>
-    <string name="settings_title_more_options">Ezarpen aurreratuak</string>
     <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
     <string name="set_notify">Jakinarazi?</string>
     <string name="set_notif_silent">Jakinarazpen isilak</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Zatitu automatikoki 500 karakteretik gorako toot-ak erantzunetan</string>
     <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
     <string name="username_no_space">Baimendutako 30 karaktereetara heldu zara!</string>
-    <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
     <string name="settings_time_from">Nondik</string>
     <string name="settings_time_to">nora</string>
     <string name="settings_time_greater">Denbora %1$s baino gehiago izan behar da</string>
@@ -373,7 +371,6 @@
         <item>Horia</item>
         <item>Zuria</item>
     </string-array>
-    <string name="set_title_news">Berriak</string>
     <string name="set_notification_news">Jakinarazi hasierako denbora-lerroan toot berriak daudenean</string>
     <string name="action_follow">Jarraitu</string>
     <string name="action_unfollow">Utzi jarraitzeari</string>
@@ -810,6 +807,24 @@
     <string name="vote">Eman botoa</string>
     <string name="poll_not_private">Ezin da inkesta bat txertatu mezu zuen batean!</string>
     <string name="notif_poll">Zuk erantzun duzun inkesta bat bukatu da</string>
+    <string name="settings_category_notif_customize">Pertsonalizatu</string>
+    <string name="settings_category_notif_categories">Kategoriak</string>
+    <string name="settings_category_notif_news">Berriak</string>
+    <string name="settings_category_notif_time_slot">Denbora tartea</string>
+    <string name="settings_category_notif_advanced">Aurreratua</string>
+    <string name="set_display_new_badge">Erakutsi \'berria\' ikurra irakurri gabeko toot-etan</string>
+    <string name="set_display_peertube">Erakutsi Peertube debora-lerroa</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Ezkutatu fitxa</string>
+    <string name="move_timeline">Aldatu denbora-lerroa lekuz</string>
+    <string name="hide_timeline">Ezkutatu denbora-lerroa</string>
+    <string name="reorder_timelines">Antolatu denbora-lerroak</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>

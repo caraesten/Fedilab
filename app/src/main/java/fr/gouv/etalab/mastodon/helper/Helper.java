@@ -145,13 +145,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.BuildConfig;
@@ -173,9 +177,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -264,6 +271,7 @@ public class Helper {
     public static final int SEARCH_INSTANCE = 8;
     public static final int SEARCH_REMOTE = 9;
     public static final int RELOAD_MYVIDEOS = 10;
+    public static final int REFRESH_TIMELINE = 11;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -364,6 +372,7 @@ public class Helper {
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EXPAND_MEDIA = "set_expand_media";
     public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
+    public static final String SET_DISPLAY_NEW_BADGE = "set_display_new_badge";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";
@@ -374,6 +383,7 @@ public class Helper {
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_DISPLAY_ART = "set_display_art";
+    public static final String SET_DISPLAY_PEERTUBE = "set_display_peertube";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
@@ -590,6 +600,7 @@ public class Helper {
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, newAccount.getToken());
             editor.putString(Helper.PREF_KEY_ID, newAccount.getId());
             editor.putString(Helper.PREF_INSTANCE, newAccount.getInstance().trim());
+
             editor.putBoolean(Helper.PREF_IS_MODERATOR, newAccount.isModerator());
             editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, newAccount.isAdmin());
             editor.commit();
@@ -2418,6 +2429,93 @@ public class Helper {
 
 
     /**
+     * Unserialized a
+     * @param serializedListTimeline String serialized List
+     * @return List
+     */
+    public static fr.gouv.etalab.mastodon.client.Entities.List restoreListtimelineFromString(String serializedListTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedListTimeline, fr.gouv.etalab.mastodon.client.Entities.List.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a List class
+     * @param listTimeline List to serialize
+     * @return String serialized List
+     */
+    public static String listTimelineToStringStorage(fr.gouv.etalab.mastodon.client.Entities.List listTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(listTimeline);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Unserialized a TagTimeline
+     * @param serializedTagTimeline String serialized TagTimeline
+     * @return TagTimeline
+     */
+    public static TagTimeline restoreTagTimelineFromString(String serializedTagTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedTagTimeline, TagTimeline.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a TagTimeline class
+     * @param tagTimeline TagTimeline to serialize
+     * @return String serialized TagTimeline
+     */
+    public static String tagTimelineToStringStorage(TagTimeline tagTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(tagTimeline);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Unserialized a RemoteInstance
+     * @param serializedRemoteInstance String serialized RemoteInstance
+     * @return RemoteInstance
+     */
+    public static RemoteInstance restoreRemoteInstanceFromString(String serializedRemoteInstance){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedRemoteInstance, RemoteInstance.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a RemoteInstance class
+     * @param remoteInstance RemoteInstance to serialize
+     * @return String serialized RemoteInstance
+     */
+    public static String remoteInstanceToStringStorage(RemoteInstance remoteInstance){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(remoteInstance);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
      * Unserialized a Locale
      * @param serializedLocale String serialized locale
      * @return Locale
@@ -3158,74 +3256,7 @@ public class Helper {
 
 
 
-    public static void refreshSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<String> searches = new SearchDAO(context, db).getAllSearch();
-        int countInitialTab = ((BaseMainActivity) context).countPage;
-        int allTabCount = tableLayout.getTabCount();
-        if( allTabCount > countInitialTab){
-            while(allTabCount > countInitialTab){
-                removeTab(tableLayout, pagerAdapter, allTabCount-1);
-                allTabCount -=1;
-            }
-        }
-        int i = countInitialTab;
-        if( searches != null) {
-            for (String search : searches) {
-                addTab(tableLayout, pagerAdapter, search);
-                BaseMainActivity.typePosition.put(i, RetrieveFeedsAsyncTask.Type.TAG);
-                i++;
-            }
-            if( searches.size() > 0 ){
-                tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-                tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-            }
-        }
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == THEME_LIGHT)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.mastodonC1), ContextCompat.getColor(context, R.color.mastodonC4));
-        else if( theme == THEME_BLACK)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.dark_icon));
-        else if( theme == THEME_DARK)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.mastodonC4));
-    }
 
-    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position  ) {
-            try {
-                if(tableLayout.getTabCount() > 0)
-                    tableLayout.removeTabAt(position);
-                pagerAdapter.removeTabPage();
-            }catch (Exception ignored){
-                refreshSearchTag(tableLayout.getContext(), tableLayout, pagerAdapter);
-            }
-
-        }
-    }
-
-
-
-
-    public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
-
-        int selection = -1;
-        for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
-            if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
-                selection = i;
-                break;
-            }
-        }
-        if( selection != -1)
-            removeTab(tableLayout, pagerAdapter, selection);
-    }
-
-
-
-    private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
-        tableLayout.addTab(tableLayout.newTab().setText(title));
-        pagerAdapter.addTabPage(title);
-    }
 
 
     /**
@@ -3802,5 +3833,19 @@ public class Helper {
         }
         return cleaned_content;
     }
+
+
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (Objects.equals(value, entry.getValue())) {
+                    return entry.getKey();
+                }
+            }
+        }
+        return null;
+    }
+
+
 
 }

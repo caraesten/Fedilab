@@ -48,6 +48,10 @@
                         android:id="@+id/nav_who_to_follow"
                         android:icon="@drawable/ic_people"
                         android:title="@string/how_to_follow" />
+                    <item
+                        android:id="@+id/nav_drag_timelines"
+                        android:icon="@drawable/ic_drag_handle_menu"
+                        android:title="@string/reorder_timelines" />
                 </group>
             </menu>
         </item>

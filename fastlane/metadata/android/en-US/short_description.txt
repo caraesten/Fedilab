@@ -1,1 +1,1 @@
-Fedilab is a multi-account client for the Fediverse
+A multi-account client for the Fediverse

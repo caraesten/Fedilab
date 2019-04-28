@@ -64,6 +64,8 @@
         <CheckBox
             android:id="@+id/set_share_validation"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_share_validation"
             android:layout_height="wrap_content" />
 
@@ -99,37 +101,6 @@
                 android:layout_weight="1"
                 android:background="?colorAccent" />
         </LinearLayout>
-        <CheckBox
-            android:id="@+id/set_display_direct"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/settings_checkbox_margin"
-            android:layout_marginBottom="@dimen/settings_checkbox_margin"
-            android:text="@string/set_display_direct"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:id="@+id/set_display_local"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/settings_checkbox_margin"
-            android:layout_marginBottom="@dimen/settings_checkbox_margin"
-            android:text="@string/set_display_local"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:id="@+id/set_display_global"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/settings_checkbox_margin"
-            android:layout_marginBottom="@dimen/settings_checkbox_margin"
-            android:text="@string/set_display_global"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:id="@+id/set_display_art"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/settings_checkbox_margin"
-            android:layout_marginBottom="@dimen/settings_checkbox_margin"
-            android:text="@string/set_display_art"
-            android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_old_direct_timeline"
@@ -250,6 +221,15 @@
             android:layout_marginTop="@dimen/settings_checkbox_margin"
             android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_follow_instance"
+            android:layout_height="wrap_content" />
+
+        <!-- DISPLAY NEW BADGE -->
+        <CheckBox
+            android:id="@+id/set_display_new_badge"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_display_new_badge"
             android:layout_height="wrap_content" />
 
         <!-- DISPLAY BOOKMARK BUTTON -->

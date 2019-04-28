@@ -269,6 +269,7 @@
     <string name="nothing_to_do">何もすることはできません</string>
     <string name="toast_saved">メディアが保存されました！</string>
     <string name="toast_error_translate">翻訳中にエラーが発生しました！</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">下書きが保存されました！</string>
     <string name="toast_error_char_limit">インスタンスはこの文字数を許可していますか？ 通常、この値は500文字程度です。</string>
     <string name="toast_visibility_changed">アカウント %1$s のトゥートの公開範囲が変更されました</string>
@@ -294,7 +295,6 @@
     <string name="set_auto_store_toot">下書きを自動的に保存する</string>
     <string name="set_bubble_counter">カウンターを表示する</string>
     <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
-    <string name="settings_title_notifications">通知の管理</string>
     <string name="set_notif_follow">フォローされたときに通知</string>
     <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
@@ -302,7 +302,6 @@
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
-    <string name="settings_title_more_options">高度な設定</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
     <string name="set_notify">通知する？</string>
     <string name="set_notif_silent">サイレント通知</string>
@@ -319,7 +318,6 @@
     <string name="set_automatically_split_toot">500文字を超える返信のトゥートを自動的に分割する</string>
     <string name="note_no_space">160文字の制限に達しました！</string>
     <string name="username_no_space">30文字の制限に達しました。</string>
-    <string name="settings_title_hour">通知のタイムスロット：</string>
     <string name="settings_time_from">期間:</string>
     <string name="settings_time_to">から</string>
     <string name="settings_time_greater">時間は %1$s より後でなければなりません</string>
@@ -369,7 +367,6 @@
         <item>黄</item>
         <item>白</item>
     </string-array>
-    <string name="set_title_news">ニュース</string>
     <string name="set_notification_news">ホームタイムラインの新しいトゥートを通知</string>
     <string name="action_follow">フォローする</string>
     <string name="action_unfollow">フォロー解除</string>
@@ -800,6 +797,24 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
+    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Hide the tab</string>
+    <string name="move_timeline">Move timeline</string>
+    <string name="hide_timeline">Hide timeline</string>
+    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>

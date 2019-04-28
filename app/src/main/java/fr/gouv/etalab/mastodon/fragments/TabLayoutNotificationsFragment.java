@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,6 +177,10 @@ public class TabLayoutNotificationsFragment extends Fragment {
         return inflatedView;
     }
 
+    public ViewPager getViewPager(){
+        return viewPager;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -249,7 +254,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
     }
 
     public void refreshAll(){
-
+        if( viewPager == null)
+            return;
         FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
         if( a != null) {
             DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);

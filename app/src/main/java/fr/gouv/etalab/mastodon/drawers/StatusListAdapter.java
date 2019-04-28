@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -121,6 +122,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
@@ -142,7 +144,9 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.mPageReferenceMap;
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
@@ -150,6 +154,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 /**
@@ -350,8 +355,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
-        RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
-        CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
+
         HorizontalBar choices;
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
@@ -449,14 +453,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
             rated = itemView.findViewById(R.id.rated);
             radio_group = itemView.findViewById(R.id.radio_group);
-            r_choice_1 = itemView.findViewById(R.id.r_choice_1);
-            r_choice_2 = itemView.findViewById(R.id.r_choice_2);
-            r_choice_3 = itemView.findViewById(R.id.r_choice_3);
-            r_choice_4 = itemView.findViewById(R.id.r_choice_4);
-            c_choice_1 = itemView.findViewById(R.id.c_choice_1);
-            c_choice_2 = itemView.findViewById(R.id.c_choice_2);
-            c_choice_3 = itemView.findViewById(R.id.c_choice_3);
-            c_choice_4 = itemView.findViewById(R.id.c_choice_4);
             choices = itemView.findViewById(R.id.choices);
             number_votes = itemView.findViewById(R.id.number_votes);
             remaining_time = itemView.findViewById(R.id.remaining_time);
@@ -600,46 +596,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.choices.init(context).hasAnimation(true).addAll(items).build();
                     }else {
                         if( poll.isMultiple()){
-                            holder.multiple_choice.setVisibility(View.VISIBLE);
-                            holder.c_choice_3.setVisibility(View.GONE);
-                            holder.c_choice_4.setVisibility(View.GONE);
-                            if( choiceCount > 2)
-                                holder.c_choice_3.setVisibility(View.VISIBLE);
-                            if( choiceCount > 3)
-                                holder.c_choice_4.setVisibility(View.VISIBLE);
-                            int j = 1;
+
+                            if((holder.multiple_choice).getChildCount() > 0)
+                                (holder.multiple_choice).removeAllViews();
                             for(PollOptions pollOption: poll.getOptionsList()){
-                                if( j == 1 )
-                                    holder.c_choice_1.setText(pollOption.getTitle());
-                                else  if( j == 2 )
-                                    holder.c_choice_2.setText(pollOption.getTitle());
-                                else  if( j == 3 )
-                                    holder.c_choice_3.setText(pollOption.getTitle());
-                                else  if( j == 4 )
-                                    holder.c_choice_4.setText(pollOption.getTitle());
-                                j++;
+                                CheckBox cb = new CheckBox(context);
+                                cb.setText(pollOption.getTitle());
+                                holder.multiple_choice.addView(cb);
                             }
+                            holder.multiple_choice.setVisibility(View.VISIBLE);
 
                         }else {
-                            holder.single_choice.setVisibility(View.VISIBLE);
-                            holder.r_choice_3.setVisibility(View.GONE);
-                            holder.r_choice_4.setVisibility(View.GONE);
-                            if( choiceCount > 2)
-                                holder.r_choice_3.setVisibility(View.VISIBLE);
-                            if( choiceCount > 3)
-                                holder.r_choice_4.setVisibility(View.VISIBLE);
-                            int j = 1;
+                            if((holder.radio_group).getChildCount() > 0)
+                                (holder.radio_group).removeAllViews();
                             for(PollOptions pollOption: poll.getOptionsList()){
-                                if( j == 1 )
-                                    holder.r_choice_1.setText(pollOption.getTitle());
-                                else  if( j == 2 )
-                                    holder.r_choice_2.setText(pollOption.getTitle());
-                                else  if( j == 3 )
-                                    holder.r_choice_3.setText(pollOption.getTitle());
-                                else  if( j == 4 )
-                                    holder.r_choice_4.setText(pollOption.getTitle());
-                                j++;
+                                RadioButton rb = new RadioButton(context);
+                                rb.setText(pollOption.getTitle());
+                                holder.radio_group.addView(rb);
                             }
+                            holder.single_choice.setVisibility(View.VISIBLE);
                         }
                         holder.submit_vote.setVisibility(View.VISIBLE);
                         holder.submit_vote.setOnClickListener(new View.OnClickListener() {
@@ -648,14 +623,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 int [] choice;
                                 if( poll.isMultiple()){
                                     ArrayList<Integer> choices = new ArrayList<>();
-                                    if( holder.c_choice_1.isChecked())
-                                        choices.add(0);
-                                    if( holder.c_choice_2.isChecked())
-                                        choices.add(1);
-                                    if( holder.c_choice_3.isChecked())
-                                        choices.add(2);
-                                    if( holder.c_choice_4.isChecked())
-                                        choices.add(3);
+                                    int choicesCount = holder.multiple_choice.getChildCount();
+                                    for( int i = 0 ; i < choicesCount ; i++){
+                                        if( holder.multiple_choice.getChildAt(i) != null && holder.multiple_choice.getChildAt(i) instanceof CheckBox){
+                                            if(((CheckBox) holder.multiple_choice.getChildAt(i)).isChecked()){
+                                                choices.add(i);
+                                            }
+                                        }
+                                    }
                                     choice = new int[choices.size()];
                                     Iterator<Integer> iterator = choices.iterator();
                                     for (int i = 0; i < choice.length; i++) {
@@ -665,16 +640,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         return;
                                 }else{
                                     choice = new int[1];
-                                    int checkedId = holder.radio_group.getCheckedRadioButtonId();
                                     choice[0] = -1;
-                                    if( checkedId == R.id.r_choice_1)
-                                        choice[0] = 0;
-                                    if( checkedId == R.id.r_choice_2)
-                                        choice[0] = 1;
-                                    if( checkedId == R.id.r_choice_3)
-                                        choice[0] = 2;
-                                    if( checkedId == R.id.r_choice_4)
-                                        choice[0] = 3;
+                                    int choicesCount = holder.radio_group.getChildCount();
+                                    for( int i = 0 ; i < choicesCount ; i++){
+                                        if( holder.radio_group.getChildAt(i) != null && holder.radio_group.getChildAt(i) instanceof RadioButton){
+                                            if(((RadioButton) holder.radio_group.getChildAt(i)).isChecked()){
+                                                choice[0] = i;
+                                            }
+                                        }
+                                    }
                                     if( choice[0] == -1)
                                         return;
                                 }
@@ -777,7 +751,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
-            if (status.isNew())
+            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+            if (status.isNew() && new_badge)
                 holder.new_element.setVisibility(View.VISIBLE);
             else
                 holder.new_element.setVisibility(View.GONE);
@@ -1352,9 +1327,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.fetch_more.setEnabled(false);
                         holder.fetch_more.setVisibility(View.GONE);
                         if( context instanceof BaseMainActivity) {
-                            DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
-                            if (homeFragment != null)
-                                homeFragment.fetchMore(status.getId());
+                            SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+                            List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+                            for(ManageTimelines tl: timelines) {
+                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                                    if (homeFragment != null)
+                                        homeFragment.fetchMore(status.getId());
+                                    break;
+                                }
+                            }
                         }else{
                             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                         }
@@ -2395,7 +2378,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     doAction = API.StatusAction.BLOCK;
                                     break;
                                 case R.id.action_translate:
-                                    translateToot(status);
+                                    if (translator == Helper.TRANS_NONE)
+                                        Toasty.info(context, R.string.toast_error_translations_disabled, Toast.LENGTH_SHORT).show();
+                                    else
+                                        translateToot(status);
                                     return true;
                                 case R.id.action_report:
                                     builderInner = new AlertDialog.Builder(context, style);

@@ -281,6 +281,7 @@
     <string name="nothing_to_do">Ничего нельзя сделать</string>
     <string name="toast_saved">Этот медиафайл сохранен!</string>
     <string name="toast_error_translate">При переводе произошла ошибка!</string>
+    <string name="toast_error_translations_disabled">Переводы отключены в настройках</string>
     <string name="toast_toot_saved">Черновик сохранен!</string>
     <string name="toast_error_char_limit">Вы уверены, что данный сервер допускает такое количество знаков? Обычно это значение близко к 500.</string>
     <string name="toast_visibility_changed">Видимость тутов была изменена для аккаунта %1$s</string>
@@ -306,7 +307,6 @@
     <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
     <string name="set_bubble_counter">Показывать счетчики</string>
     <string name="set_auto_add_media_url">Добавлять URL-адрес медиа в туты</string>
-    <string name="settings_title_notifications">Управление уведомлениями</string>
     <string name="set_notif_follow">Уведомлять, когда кто-то подписывается на вас</string>
     <string name="set_notif_follow_ask">Уведомлять при получении запроса на подписку</string>
     <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
@@ -314,7 +314,6 @@
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
     <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
-    <string name="settings_title_more_options">Расширенные настройки</string>
     <string name="set_wifi_only">Уведомлять только в сети WIFI</string>
     <string name="set_notify">Уведомлять?</string>
     <string name="set_notif_silent">Тихие уведомления</string>
@@ -331,7 +330,6 @@
     <string name="set_automatically_split_toot">Автоматически разделять туты, содержащие более 500 символов</string>
     <string name="note_no_space">Вы достигли 160 символов!</string>
     <string name="username_no_space">Вы достигли 30 символов!</string>
-    <string name="settings_title_hour">Временной интервал для уведомлений:</string>
     <string name="settings_time_from">Между</string>
     <string name="settings_time_to">и</string>
     <string name="settings_time_greater">Время должно быть больше, чем %1$s</string>
@@ -381,7 +379,6 @@
         <item>Желтый</item>
         <item>Белый</item>
     </string-array>
-    <string name="set_title_news">Новости</string>
     <string name="set_notification_news">Уведомлять о новых тутах в домашней ленте</string>
     <string name="action_follow">Подписаться</string>
     <string name="action_unfollow">Отписаться</string>
@@ -820,6 +817,24 @@
     <string name="vote">Голосовать</string>
     <string name="poll_not_private">Опрос не может быть прикреплен к прямому сообщению!</string>
     <string name="notif_poll">Опрос, в котором вы проголосовали, завершен</string>
+    <string name="settings_category_notif_customize">Настроить</string>
+    <string name="settings_category_notif_categories">Категории</string>
+    <string name="settings_category_notif_news">Новости</string>
+    <string name="settings_category_notif_time_slot">Временной интервал</string>
+    <string name="settings_category_notif_advanced">Дополнительно</string>
+    <string name="set_display_new_badge">Показывать значок \'new\' на непрочитанных тутах</string>
+    <string name="set_display_peertube">Показывать ленту Peertube</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Скрыть вкладку</string>
+    <string name="move_timeline">Переместить ленту</string>
+    <string name="hide_timeline">Скрыть ленту</string>
+    <string name="reorder_timelines">Изменить порядок лент</string>
+    <string name="undo">Вернуть</string>
+    <string name="visible_tabs_needed">Необходимо сохранить две видимые вкладки!</string>
+    <string name="action_reorder_timeline">Изменить порядок лент</string>
+    <string name="warning_list_deletion">Используйте элемент списка для удаления этого списка!</string>
+    <string name="warning_main_timeline">Основные ленты могут быть только скрыты!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

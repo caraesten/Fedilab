@@ -24,7 +24,7 @@
     android:layout_height="wrap_content">
     <ImageView
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:id="@+id/media_picture"
         android:layout_width="match_parent"

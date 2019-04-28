@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Keine Aktion kann durchgeführt werden</string>
     <string name="toast_saved">Datei wurde gespeichert!</string>
     <string name="toast_error_translate">Während der Übersetzung ist ein Fehler aufgetreten!</string>
+    <string name="toast_error_translations_disabled">Übersetzungen sind in den Einstellungen deaktiviert</string>
     <string name="toast_toot_saved">Entwurf gespeichert!</string>
     <string name="toast_error_char_limit">Bist du sicher das diese Instanz die Anzahl an Zeichen unterstützt? Gewöhnlich liegt der Wert bei 500.</string>
     <string name="toast_visibility_changed">Sichtbarkeit der Toots für Nutzer %1$s wurde geändert</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Entwürfe automatisch speichern</string>
     <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
     <string name="set_auto_add_media_url">Füge die URL bei Anhängen in Toots hinzu</string>
-    <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
     <string name="set_notif_follow">mir jemand folgt</string>
     <string name="set_notif_follow_ask">Ich eine Folgeanfrage erhalte</string>
     <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
@@ -306,14 +306,13 @@
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
     <string name="set_share_validation">Bestätigungsdialog vor dem Teilen anzeigen</string>
     <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren anzeigen</string>
-    <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
     <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_night_mode">Nachtmodus</string>
     <string name="set_nsfw_timeout">NSFW Anzeigedauer (in Sekunden, 0 ≙ deaktiviert)</string>
     <string name="settings_title_profile">Ändere Profil</string>
-    <string name="settings_title_custom_sharing">Benutzerdefinierte Freigabe</string>
+    <string name="settings_title_custom_sharing">Benutzerdefiniertes Teilen</string>
     <string name="settings_custom_sharing_url">Ihre benutzerdefinierte Freigabeadresse &#8230;</string>
     <string name="set_profile_description">Über mich…</string>
     <string name="set_lock_account">Konto sperren</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Toots mit mehr als 500 Zeichen automatisch unterteilen</string>
     <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
     <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
-    <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
     <string name="settings_time_from">Zwischen</string>
     <string name="settings_time_to">und</string>
     <string name="settings_time_greater">Uhrzeit muss größer sein als %1$s</string>
@@ -373,7 +371,6 @@
         <item>Gelb</item>
         <item>Weiß</item>
     </string-array>
-    <string name="set_title_news">Neuigkeiten</string>
     <string name="set_notification_news">Benachrichtigung für neue Toots auf der Startleiste</string>
     <string name="action_follow">Folgen</string>
     <string name="action_unfollow">Entfolgen</string>
@@ -680,7 +677,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="about_crowdin">Über Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed Instanz</string>
-    <string name="mastodon_instance">Mastodon Instanz</string>
+    <string name="mastodon_instance">Mastodon-Instanz</string>
     <string name="no_pixelfed_instance">Keine Pixelfed Instanzen</string>
     <string name="any_tags">Irgendwelche davon</string>
     <string name="all_tags">Alle von denen</string>
@@ -800,6 +797,24 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="vote">Abstimmen</string>
     <string name="poll_not_private">Eine Umfrage kann nicht an eine direkte Nachricht angehängt werden!</string>
     <string name="notif_poll">Eine Umfrage, in der du abgestimmt hast, ist beendet</string>
+    <string name="settings_category_notif_customize">Anpassen</string>
+    <string name="settings_category_notif_categories">Kategorien</string>
+    <string name="settings_category_notif_news">Neuigkeiten</string>
+    <string name="settings_category_notif_time_slot">Zeitfenster</string>
+    <string name="settings_category_notif_advanced">Erweitert</string>
+    <string name="set_display_new_badge">Ungelesene Toots als „Neu” kennzeichnen</string>
+    <string name="set_display_peertube">Peertube-Zeitleiste anzeigen</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Tab ausblenden</string>
+    <string name="move_timeline">Zeitleiste verschieben</string>
+    <string name="hide_timeline">Zeitleiste ausblenden</string>
+    <string name="reorder_timelines">Zeitleiste neu anordnen</string>
+    <string name="undo">Widerrufen</string>
+    <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
+    <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
+    <string name="warning_list_deletion">Verwenden Sie den Listeneintrag zum Löschen dieser Liste!</string>
+    <string name="warning_main_timeline">Hauptzeitachsen können nur ausgeblendet werden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

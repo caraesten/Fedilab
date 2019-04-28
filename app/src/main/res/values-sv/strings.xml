@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Inga åtgärder kan vidtas</string>
     <string name="toast_saved">Inlägget har sparats!</string>
     <string name="toast_error_translate">Ett fel uppstod under översättningens gång!</string>
+    <string name="toast_error_translations_disabled">Översättningar är inaktiverade i inställningarna</string>
     <string name="toast_toot_saved">Utkast sparat!</string>
     <string name="toast_error_char_limit">Är du säker på att denna instans tillåter detta dessa antal tecken? Vanligtvis, är detta värde ungefär 500 tecken.</string>
     <string name="toast_visibility_changed">Synligheten för toots har ändrats för konto %1$s</string>
@@ -298,15 +299,13 @@
     <string name="set_auto_store_toot">Spara utkast automatiskt</string>
     <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Lägga till URL för media i toots</string>
-    <string name="settings_title_notifications">Hantera aviseringar</string>
     <string name="set_notif_follow">Meddela när någon följer dig</string>
     <string name="set_notif_follow_ask">Meddela när någon begär för att följa dig</string>
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
-    <string name="set_share_validation">Visa en bekräftelsedialogruta före öka</string>
+    <string name="set_share_validation">Visa en bekräftelsedialogruta före boostning</string>
     <string name="set_share_validation_fav">Visa bekräftelsedialogrutan innan du lägger till favoriter</string>
-    <string name="settings_title_more_options">Avancerade inställningar</string>
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
     <string name="set_notify">Notifiera?</string>
     <string name="set_notif_silent">Tysta aviseringar</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Dela automatiskt toots med fler än 500 tecken i svar</string>
     <string name="note_no_space">Du har nått gränsen på max 160 tecken!</string>
     <string name="username_no_space">Du har nått gränsen på max 30 tecken!</string>
-    <string name="settings_title_hour">Tidsfönster för notifieringar:</string>
     <string name="settings_time_from">Mellan</string>
     <string name="settings_time_to">och</string>
     <string name="settings_time_greater">Intervallet måste vara större än %1$s</string>
@@ -373,7 +371,6 @@
         <item>Gul</item>
         <item>Vit</item>
     </string-array>
-    <string name="set_title_news">Nyheter</string>
     <string name="set_notification_news">Meddela om nya toots på hemtidslinjen</string>
     <string name="action_follow">Följ</string>
     <string name="action_unfollow">Sluta följa</string>
@@ -812,6 +809,24 @@
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
     <string name="notif_poll">En enkät som du röstat i har avslutats</string>
+    <string name="settings_category_notif_customize">Anpassa</string>
+    <string name="settings_category_notif_categories">Kategorier</string>
+    <string name="settings_category_notif_news">Nyheter</string>
+    <string name="settings_category_notif_time_slot">Tids lucka</string>
+    <string name="settings_category_notif_advanced">Avancerad</string>
+    <string name="set_display_new_badge">Visa \"nytt\" märke på olästa tootar</string>
+    <string name="set_display_peertube">Visa Peertube tidslinje</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Dölj fliken</string>
+    <string name="move_timeline">Flytta tidslinje</string>
+    <string name="hide_timeline">Dölj tidslinje</string>
+    <string name="reorder_timelines">Ändra ordning på tidslinjer</string>
+    <string name="undo">Ångra</string>
+    <string name="visible_tabs_needed">Du måste behålla minst två synliga tabbar!</string>
+    <string name="action_reorder_timeline">Ändra ordning på tidslinjer</string>
+    <string name="warning_list_deletion">Använd posten listor för att ta bort denna lista!</string>
+    <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>

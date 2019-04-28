@@ -75,20 +75,23 @@ public class SearchDAO {
      * update tag timeline info in database
      * @param tagTimeline TagTimeline
      */
-    public void updateSearch(TagTimeline tagTimeline, String name, List<String> any, List<String> all, List<String> none) {
+    public void updateSearch(TagTimeline tagTimeline) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_IS_ART, tagTimeline.isART()?1:0);
         values.put(Sqlite.COL_IS_NSFW, tagTimeline.isNSFW()?1:0);
+        List<String> any = tagTimeline.getAny();
+        List<String> all = tagTimeline.getAll();
+        List<String> none = tagTimeline.getNone();
+        String displayname = tagTimeline.getDisplayname();
+        values.put(Sqlite.COL_NAME, displayname);
         if( any != null && any.size() > 0)
             values.put(Sqlite.COL_ANY, Helper.arrayToStringStorage(any));
         if( all != null && all.size() > 0)
             values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
         if( none != null && none.size() > 0)
             values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
-        if( name != null && name.trim().length() > 0)
-            values.put(Sqlite.COL_NAME, name.trim());
         try{
-            db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
+            db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_ID + " =  ? ", new String[]{String.valueOf(tagTimeline.getId())});
         }catch (Exception ignored) {}
     }
 
@@ -183,6 +186,21 @@ public class SearchDAO {
         }
     }
 
+
+
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getAll(){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, Sqlite.COL_KEYWORDS + " ASC", null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * Returns TagTimeline information by its keyword in db
      * @return info List<TagTimeline>
@@ -230,6 +248,7 @@ public class SearchDAO {
             try {
                 tagTimeline.setNone(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_NONE))));
             }catch (Exception ignored){}
+            tagTimeline.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
             tagTimeline.setDisplayname(c.getString(c.getColumnIndex(Sqlite.COL_NAME)));
             tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);

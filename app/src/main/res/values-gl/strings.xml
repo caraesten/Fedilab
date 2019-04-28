@@ -273,6 +273,7 @@
     <string name="nothing_to_do">Non se poden realizar accións</string>
     <string name="toast_saved">Gardáronse os medios!</string>
     <string name="toast_error_translate">Algo fallou ao traducir!</string>
+    <string name="toast_error_translations_disabled">As traducións están desactivadas nos axustes</string>
     <string name="toast_toot_saved">Borrador gardado!</string>
     <string name="toast_error_char_limit">Está segura de que esta instancia permite este número de caracteres? Habitualmente este valor está próximo aos 500 caracteres.</string>
     <string name="toast_visibility_changed">Cambiouse a visibilidade dos toots para a conta %1$s</string>
@@ -298,7 +299,6 @@
     <string name="set_auto_store_toot">Gardar borradores automáticamente</string>
     <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Engadir a URL dos medios nos toots</string>
-    <string name="settings_title_notifications">Xestionar notificacións</string>
     <string name="set_notif_follow">Notificar cando alguén a segue</string>
     <string name="set_notif_follow_ask">Notificar cando alguén solicita seguila</string>
     <string name="set_notif_follow_share">Notificar cando alguén promove un dos seus toots</string>
@@ -306,7 +306,6 @@
     <string name="set_notif_follow_mention">Notificar cando alguén a menciona</string>
     <string name="set_share_validation">Solicitar confirmación antes de promover</string>
     <string name="set_share_validation_fav">Solicitar confirmación antes de engadir a favoritos</string>
-    <string name="settings_title_more_options">Axustes avanzados</string>
     <string name="set_wifi_only">Notificar só cando WiFi</string>
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Notificacións silenciosas</string>
@@ -323,7 +322,6 @@
     <string name="set_automatically_split_toot">Dividir automáticamente os toots de máis de 500 nas respostas</string>
     <string name="note_no_space">Acadou o límite de 160 caracteres permitido!</string>
     <string name="username_no_space">Acadou os 30 caracteres permitidos!</string>
-    <string name="settings_title_hour">Tramo horario para as notificacións:</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">e</string>
     <string name="settings_time_greater">A tempo debe ser maior de %1$s</string>
@@ -373,7 +371,6 @@
         <item>Amarelo</item>
         <item>Branco</item>
     </string-array>
-    <string name="set_title_news">Novas</string>
     <string name="set_notification_news">Notificar os novos toots na liña temporal de Inicio</string>
     <string name="action_follow">Seguir</string>
     <string name="action_unfollow">Non seguir</string>
@@ -813,6 +810,24 @@
     <string name="vote">Votar</string>
     <string name="poll_not_private">Unha sondaxe non se pode anexar a unha mensaxe directa!</string>
     <string name="notif_poll">Rematou a sondaxe na que participou</string>
+    <string name="settings_category_notif_customize">Personalizar</string>
+    <string name="settings_category_notif_categories">Categorías</string>
+    <string name="settings_category_notif_news">Novas</string>
+    <string name="settings_category_notif_time_slot">Marxe temporal</string>
+    <string name="settings_category_notif_advanced">Avanzado</string>
+    <string name="set_display_new_badge">Mostrar enseña \'novo\' nos toots non lidos</string>
+    <string name="set_display_peertube">Mostrar liña temporal Peertube</string>
+    <string name="peertube_menu">Peertube</string>
+    <string name="hide_tab">Agochar lapela</string>
+    <string name="move_timeline">Mover liña temporal</string>
+    <string name="hide_timeline">Agochar liña temporal</string>
+    <string name="reorder_timelines">Ordear liñas temporais</string>
+    <string name="undo">Undo</string>
+    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

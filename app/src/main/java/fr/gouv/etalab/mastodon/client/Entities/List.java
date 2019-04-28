@@ -14,14 +14,16 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 
 /**
  * Created by Thomas on 13/12/2017.
  * Manage List
  */
 
-public class List {
+public class List implements Parcelable {
 
     private String id;
     private String title;
@@ -41,4 +43,35 @@ public class List {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+    }
+
+    public List() {
+    }
+
+    protected List(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+    }
+
+    public static final Parcelable.Creator<List> CREATOR = new Parcelable.Creator<List>() {
+        @Override
+        public List createFromParcel(Parcel source) {
+            return new List(source);
+        }
+
+        @Override
+        public List[] newArray(int size) {
+            return new List[size];
+        }
+    };
 }

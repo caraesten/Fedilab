@@ -269,6 +269,7 @@
     <string name="nothing_to_do">無法採取行動</string>
     <string name="toast_saved">媒體已儲存！</string>
     <string name="toast_error_translate">翻譯時發生錯誤！</string>
+    <string name="toast_error_translations_disabled">已在設定中停用翻譯</string>
     <string name="toast_toot_saved">草稿已儲存！</string>
     <string name="toast_error_char_limit">您確定此實體允許此數量的字元嗎？一般來說，此值約為 500 個字元左右。</string>
     <string name="toast_visibility_changed">%1$s 帳號的嘟文可見度已變更</string>
@@ -294,7 +295,6 @@
     <string name="set_auto_store_toot">自動儲存草稿</string>
     <string name="set_bubble_counter">顯示計數器</string>
     <string name="set_auto_add_media_url">在嘟文中新增媒體的 URL</string>
-    <string name="settings_title_notifications">管理通知</string>
     <string name="set_notif_follow">當有人關注您時通知您</string>
     <string name="set_notif_follow_ask">當有人請求關注您時通知</string>
     <string name="set_notif_follow_share">當有人轉嘟您的嘟文時通知</string>
@@ -302,7 +302,6 @@
     <string name="set_notif_follow_mention">當有人提及您時通知</string>
     <string name="set_share_validation">在轉嘟前顯示確認對話框</string>
     <string name="set_share_validation_fav">在新增至最愛前顯示確認對話框</string>
-    <string name="settings_title_more_options">進階設定</string>
     <string name="set_wifi_only">僅在使用 Wi-Fi 時才啟用通知</string>
     <string name="set_notify">通知？</string>
     <string name="set_notif_silent">靜音通知</string>
@@ -319,7 +318,6 @@
     <string name="set_automatically_split_toot">自動分離超過 500 個字元的嘟文到回覆中</string>
     <string name="note_no_space">您已經到達允許的 160 個字元！</string>
     <string name="username_no_space">您已經到達允許的 30 個字元！</string>
-    <string name="settings_title_hour">啟用通知的時間帶：</string>
     <string name="settings_time_from">介於</string>
     <string name="settings_time_to">以及</string>
     <string name="settings_time_greater">時間必須大於 %1$s</string>
@@ -369,7 +367,6 @@
         <item>黃色</item>
         <item>白色</item>
     </string-array>
-    <string name="set_title_news">新聞</string>
     <string name="set_notification_news">在家時間軸上通知新嘟文</string>
     <string name="action_follow">關注</string>
     <string name="action_unfollow">取消關注</string>
@@ -808,6 +805,24 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="vote">投票</string>
     <string name="poll_not_private">投票不能附加到直接訊息中！</string>
     <string name="notif_poll">您曾投過的投票已經結束</string>
+    <string name="settings_category_notif_customize">自訂</string>
+    <string name="settings_category_notif_categories">分類</string>
+    <string name="settings_category_notif_news">新聞</string>
+    <string name="settings_category_notif_time_slot">時段</string>
+    <string name="settings_category_notif_advanced">進階</string>
+    <string name="set_display_new_badge">在未讀的嘟文上顯示「新」的標章</string>
+    <string name="set_display_peertube">顯示 PeerTube 時間軸</string>
+    <string name="peertube_menu">PeerTube</string>
+    <string name="hide_tab">隱藏分頁</string>
+    <string name="move_timeline">移動時間軸</string>
+    <string name="hide_timeline">隱藏時間軸</string>
+    <string name="reorder_timelines">重新排列時間軸</string>
+    <string name="undo">復原</string>
+    <string name="visible_tabs_needed">您必須保留兩個可見的分頁！</string>
+    <string name="action_reorder_timeline">重新排列時間軸</string>
+    <string name="warning_list_deletion">使用清單項目刪除此清單！</string>
+    <string name="warning_main_timeline">主時間軸只能被隱藏！</string>
+    <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
