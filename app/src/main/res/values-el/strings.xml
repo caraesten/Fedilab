@@ -466,7 +466,7 @@
     <!-- About lists -->
     <string name="action_lists">Κατάστιχα</string>
     <string name="action_lists_confirm_delete">Σίγουρα, να διαγραφεί αυτό το κατάστιχο, αμετάκλητα;</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">Ακόμη δεν υπάρχει τίποτα σε αυτό το κατάστιχο. Όταν κάποια μέλη αυτού του κατάστιχου θα δημοσιεύσουν νέες καταστάσεις, αυτές θα εμφανιστούν εδώ.</string>
     <string name="action_lists_add_to">Προσθήκη στο κατάστιχο</string>
     <string name="action_lists_remove_from">Απομάκρυνση από το κατάστιχο</string>
     <string name="action_lists_create">Προσθήκη κατάστιχου</string>
