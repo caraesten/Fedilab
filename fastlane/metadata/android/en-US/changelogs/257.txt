@@ -1,0 +1,15 @@
+Added
+* Reorder timelines
+* Pin followed instances and lists
+* Hide/Show timelines easily
+* Add an option to hide 🆕 badge on unread toots
+
+Changed
+* Display a more informative toast when translation service is disabled
+* Make the preview image fit in the viewer in content description popup
+* Changed some design stuff in notification settings screen
+
+Fixed
+* Move locked account indicator to end of the username
+* Polls with more than 4 choices
+
