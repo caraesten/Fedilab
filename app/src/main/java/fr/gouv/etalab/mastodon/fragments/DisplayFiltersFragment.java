@@ -56,6 +56,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.mPageReferenceMap;
 import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
@@ -266,9 +267,9 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
         for(ManageTimelines tl: timelines) {
             if( tl.getType() == ManageTimelines.Type.HOME || tl.getType() == ManageTimelines.Type.LOCAL || tl.getType() == ManageTimelines.Type.PUBLIC) {
-                DisplayStatusFragment homeFragment = (DisplayStatusFragment) ((MainActivity) context).getSupportFragmentManager().getFragments().get(tl.getPosition());
-                if (homeFragment != null)
-                    homeFragment.refreshFilter();
+                DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                if (displayStatusFragment != null)
+                    displayStatusFragment.refreshFilter();
             }
         }
 

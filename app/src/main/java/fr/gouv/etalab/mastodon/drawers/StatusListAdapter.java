@@ -1327,7 +1327,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
                             for(ManageTimelines tl: timelines) {
                                 if( tl.getType() == ManageTimelines.Type.HOME) {
-                                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                                     DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                                     if (homeFragment != null)
                                         homeFragment.fetchMore(status.getId());
