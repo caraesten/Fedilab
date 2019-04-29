@@ -569,8 +569,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 items.add(bar);
                             }
                         }
-                        holder.choices.init(context).hasAnimation(true).removeAll();
-                        holder.choices.init(context).hasAnimation(true).addAll(items).build();
+                        holder.rated.removeAllViews();
+                        HorizontalBar horizontalBar = new HorizontalBar(context);
+                        horizontalBar.hasAnimation(true).addAll(items).build();
+                        holder.rated.addView(horizontalBar);
                     }else {
                         if( poll.isMultiple()){
                             if((holder.multiple_choice).getChildCount() > 0)
@@ -1347,7 +1349,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
-        HorizontalBar choices;
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
@@ -1399,7 +1400,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
             rated = itemView.findViewById(R.id.rated);
             radio_group = itemView.findViewById(R.id.radio_group);
-            choices = itemView.findViewById(R.id.choices);
             number_votes = itemView.findViewById(R.id.number_votes);
             remaining_time = itemView.findViewById(R.id.remaining_time);
             submit_vote = itemView.findViewById(R.id.submit_vote);
