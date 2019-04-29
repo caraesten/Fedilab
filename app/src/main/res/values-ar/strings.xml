@@ -289,7 +289,7 @@
     <string name="nothing_to_do">لا يمكن اتخاذ أي إجراء</string>
     <string name="toast_saved">تم حفظ الصورة بنجاح!</string>
     <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">لقد تم تعطيل الترجمات في الإعدادات</string>
     <string name="toast_toot_saved">تم حِفظ المُسوَدَّة!</string>
     <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
     <string name="toast_visibility_changed">لقد تم تغيير نمط عرض التبويقات على الحساب %1$s</string>
@@ -835,11 +835,11 @@
     <string name="move_timeline">نقل الخيط الزمني</string>
     <string name="hide_timeline">إخفاء الخيط الزمني</string>
     <string name="reorder_timelines">إعادة ترتيب الخيوط الزمنية</string>
-    <string name="undo">Undo</string>
+    <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
