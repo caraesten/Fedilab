@@ -801,7 +801,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="poll_choice_4">Keuze 4</string>
     <string name="poll_invalid_choices">Je hebt tenminste twee keuzes nodig voor een poll!</string>
     <string name="done">Klaar</string>
-    <string name="poll_finish_at">eindigt over %s</string>
+    <string name="poll_finish_at">eindigt op %s</string>
     <string name="refresh_poll">Poll vernieuwen</string>
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
