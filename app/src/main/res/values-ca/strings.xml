@@ -812,12 +812,12 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="move_timeline">Move timeline</string>
     <string name="hide_timeline">Hide timeline</string>
     <string name="reorder_timelines">Reorder timelines</string>
-    <string name="undo">Undo</string>
+    <string name="undo">Desfés</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="action_reorder_timeline">Reordenar els cronogrames</string>
+    <string name="warning_list_deletion">Per esborrar aquesta llista, cal fer-ho des de les llistes entrades!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
-    <string name="action_bbcode">BBCode</string>
+    <string name="action_bbcode">Codi-BB</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
