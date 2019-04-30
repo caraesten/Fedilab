@@ -273,7 +273,7 @@
     <string name="nothing_to_do">No es pot endegar cap acció</string>
     <string name="toast_saved">El mèdia s\'ha guardat!</string>
     <string name="toast_error_translate">Hi ha hagut un error durant la traducció!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Opció de traducció deshabilitada</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
     <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
     <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>
@@ -798,13 +798,13 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="poll_finish_at">acaba a %s</string>
     <string name="refresh_poll">Actualitza l\'enquesta</string>
     <string name="vote">Vota</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
+    <string name="poll_not_private">No es pot adjuntar enquestes a un missatge directe!</string>
     <string name="notif_poll">S\'ha acabat una enquesta en què havies participat</string>
-    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_customize">Personalitza</string>
     <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_news">Notícies</string>
+    <string name="settings_category_notif_time_slot">Franja horària</string>
+    <string name="settings_category_notif_advanced">Avançat</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
@@ -816,7 +816,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
     <string name="action_reorder_timeline">Reordenar els cronogrames</string>
     <string name="warning_list_deletion">Per esborrar aquesta llista, cal fer-ho des de les llistes entrades!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="warning_main_timeline">Els cronogrames principals només es poden amagar!</string>
     <string name="action_bbcode">Codi-BB</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
