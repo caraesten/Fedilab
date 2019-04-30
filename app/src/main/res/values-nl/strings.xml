@@ -812,8 +812,8 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="settings_category_notif_time_slot">Tijdslot</string>
     <string name="settings_category_notif_advanced">Geavanceerd</string>
     <string name="set_display_new_badge">Badge met \'nieuw\' op ongelezen toots tonen</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
-    <string name="peertube_menu">Peertube</string>
+    <string name="set_display_peertube">PeerTubetijdlijn tonen</string>
+    <string name="peertube_menu">PeerTube</string>
     <string name="hide_tab">Hide the tab</string>
     <string name="move_timeline">Move timeline</string>
     <string name="hide_timeline">Hide timeline</string>
