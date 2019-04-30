@@ -829,8 +829,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="undo">Vrátit zpět</string>
     <string name="visible_tabs_needed">Musíte si nechat dvě viditelné karty!</string>
     <string name="action_reorder_timeline">Změnit pořadí časových os</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="warning_list_deletion">Použijte položky seznamu k odstranění tohoto seznamu!</string>
+    <string name="warning_main_timeline">Hlavní časové linie mohou být pouze skryty!</string>
     <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>

@@ -1,0 +1,3 @@
+Fixed
+* Fix an issue when refreshing polls
+* Fix an issue when accessing to filters

@@ -356,7 +356,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
 
-        HorizontalBar choices;
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
@@ -453,7 +452,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
             rated = itemView.findViewById(R.id.rated);
             radio_group = itemView.findViewById(R.id.radio_group);
-            choices = itemView.findViewById(R.id.choices);
             number_votes = itemView.findViewById(R.id.number_votes);
             remaining_time = itemView.findViewById(R.id.remaining_time);
             submit_vote = itemView.findViewById(R.id.submit_vote);
@@ -557,15 +555,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     || (status.getReblog() != null && status.getReblog().getPoll() != null && status.getReblog().getPoll().getOptionsList() != null)
                 ){
                     Poll poll;
-                    int choiceCount;
                     if( status.getReblog() != null) {
                         poll = status.getReblog().getPoll();
-                        choiceCount = status.getReblog().getPoll().getOptionsList().size();
                     }else {
                         poll = status.getPoll();
-                        choiceCount = status.getPoll().getOptionsList().size();
                     }
-
                     if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
@@ -592,8 +586,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 items.add(bar);
                             }
                         }
-                        holder.choices.init(context).hasAnimation(true).removeAll();
-                        holder.choices.init(context).hasAnimation(true).addAll(items).build();
+                        holder.rated.removeAllViews();
+                        HorizontalBar horizontalBar = new HorizontalBar(context);
+                        horizontalBar.hasAnimation(true).addAll(items).build();
+                        holder.rated.addView(horizontalBar);
                     }else {
                         if( poll.isMultiple()){
 
@@ -1331,7 +1327,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
                             for(ManageTimelines tl: timelines) {
                                 if( tl.getType() == ManageTimelines.Type.HOME) {
-                                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                                     DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                                     if (homeFragment != null)
                                         homeFragment.fetchMore(status.getId());
