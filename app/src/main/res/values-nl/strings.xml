@@ -273,7 +273,7 @@
     <string name="nothing_to_do">Er valt niets te doen</string>
     <string name="toast_saved">Media is opgeslagen!</string>
     <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Vertalingen zijn uitgeschakeld in instellingen</string>
     <string name="toast_toot_saved">Concept opgeslagen!</string>
     <string name="toast_error_char_limit">Weet je zeker dat je op deze server zoveel tekens mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
     <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
@@ -806,12 +806,12 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
     <string name="notif_poll">Een poll waarin je hebt gestemd is beëindigd</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
+    <string name="settings_category_notif_customize">Aanpassen</string>
+    <string name="settings_category_notif_categories">Categorieën</string>
+    <string name="settings_category_notif_news">Nieuws</string>
+    <string name="settings_category_notif_time_slot">Tijdslot</string>
+    <string name="settings_category_notif_advanced">Geavanceerd</string>
+    <string name="set_display_new_badge">Badge met \'nieuw\' op ongelezen toots tonen</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
