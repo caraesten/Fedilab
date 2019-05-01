@@ -125,6 +125,7 @@
         <item>是否屏蔽此帐户？</item>
         <item>举报这条嘟文吗？</item>
         <item>是否屏蔽此域名？</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
