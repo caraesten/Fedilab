@@ -125,7 +125,7 @@
         <item>是否屏蔽此帐户？</item>
         <item>举报这条嘟文吗？</item>
         <item>是否屏蔽此域名？</item>
-        <item>Unmute this account?</item>
+        <item>取消该用户的禁言吗？</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
@@ -270,7 +270,7 @@
     <string name="nothing_to_do">无法进行任何操作</string>
     <string name="toast_saved">媒体已保存！</string>
     <string name="toast_error_translate">翻译时出错！</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">设置中已禁用翻译</string>
     <string name="toast_toot_saved">草稿已保存！</string>
     <string name="toast_error_char_limit">您确定此实例允许此数量的字符？通常，该值接近于 500 个字符。</string>
     <string name="toast_visibility_changed">已更改帐户 %1$s 的嘟文可见性</string>
@@ -806,10 +806,10 @@
     <string name="vote">投票</string>
     <string name="poll_not_private">投票无法附加到直接消息上！</string>
     <string name="notif_poll">一个你参加过的投票已经结束</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_customize">定制</string>
+    <string name="settings_category_notif_categories">类别</string>
+    <string name="settings_category_notif_news">新闻</string>
+    <string name="settings_category_notif_time_slot">时隙</string>
     <string name="settings_category_notif_advanced">Advanced</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
