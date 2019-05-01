@@ -125,7 +125,7 @@
         <item>Letiltod ezt a fiókot?</item>
         <item>Jelented ezt a tootot?</item>
         <item>Letiltod ezt a domént?</item>
-        <item>Unmute this account?</item>
+        <item>Megszünteted a fiók elnémítását?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Értesítés</item>
