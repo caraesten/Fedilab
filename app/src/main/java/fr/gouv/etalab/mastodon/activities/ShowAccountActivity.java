@@ -1211,9 +1211,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         startActivity(intent);
                         return true;
                     case R.id.action_mute:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
-                        builderInner.setTitle(stringArrayConf[0]);
-                        doActionAccount = API.StatusAction.MUTE;
+                        if (relationship.isMuting()) {
+                            builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                            builderInner.setTitle(stringArrayConf[4]);
+                            doActionAccount = API.StatusAction.UNMUTE;
+                        } else {
+                            builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                            builderInner.setTitle(stringArrayConf[0]);
+                            doActionAccount = API.StatusAction.MUTE;
+                        }
                         break;
                     case R.id.action_block:
                         builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
