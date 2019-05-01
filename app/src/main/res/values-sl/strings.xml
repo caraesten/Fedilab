@@ -125,6 +125,7 @@
         <item>Naj blokiram ta račun?</item>
         <item>Želite prijaviti sporne vsebine v tej objavi?</item>
         <item>Želite blokirati to domeno?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Obvesti</item>
