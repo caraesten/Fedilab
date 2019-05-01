@@ -125,7 +125,7 @@
         <item>Blokkere denne kontoen?</item>
         <item>Rapportere dette tootet?</item>
         <item>Blokkere dette domenet?</item>
-        <item>Unmute this account?</item>
+        <item>Fjern demping for denne kontoen?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Varsle</item>
