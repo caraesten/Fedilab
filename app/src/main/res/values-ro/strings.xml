@@ -125,6 +125,7 @@
         <item>Blochează acest cont?</item>
         <item>Raportează acestă notiță?</item>
         <item>Block this domain?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>
