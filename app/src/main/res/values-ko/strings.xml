@@ -125,6 +125,7 @@
         <item>이 계정을 차단하시겠습니까?</item>
         <item>이 툿을 신고하시겠습니까?</item>
         <item>이 도메인을 차단하시겠습니까?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>알림</item>
