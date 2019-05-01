@@ -125,6 +125,7 @@
         <item>Блокирај овај налог?</item>
         <item>Пријави овaj тут?</item>
         <item>Блокирај овај домен?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Обавести</item>
