@@ -125,7 +125,7 @@
         <item>Diesen Nutzer blockieren?</item>
         <item>Diesen Toot melden?</item>
         <item>Diese Domäne blockieren?</item>
-        <item>Unmute this account?</item>
+        <item>Lautlosmodus für dieses Konto aufhaben?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Benachrichtigen</item>
