@@ -125,6 +125,7 @@
         <item>封鎖此帳號？</item>
         <item>檢舉此嘟文？</item>
         <item>是否封鎖該站點？</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
