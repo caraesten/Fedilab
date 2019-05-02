@@ -125,7 +125,7 @@
         <item>Account blokkeren?</item>
         <item>Toot rapporteren?</item>
         <item>Dit domein blokkeren?</item>
-        <item>Unmute this account?</item>
+        <item>Dit account niet langer negeren?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Melden</item>
