@@ -826,8 +826,8 @@
     <string name="undo">Desfacer</string>
     <string name="visible_tabs_needed">Debe manter dúas lapelas visibles!</string>
     <string name="action_reorder_timeline">Ordear liñas temporais</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="warning_list_deletion">Utilice os axustes das listas para eliminar esta lista!</string>
+    <string name="warning_main_timeline">As liñas temporais principais só poden ocultarse!</string>
     <string name="action_bbcode">BBCode</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
