@@ -125,7 +125,7 @@
         <item>Bloquear esta conta?</item>
         <item>Informar sobre este toot?</item>
         <item>Bloquear este dominio?</item>
-        <item>Unmute this account?</item>
+        <item>Voltar a ler esta conta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -823,9 +823,9 @@
     <string name="move_timeline">Mover liña temporal</string>
     <string name="hide_timeline">Agochar liña temporal</string>
     <string name="reorder_timelines">Ordear liñas temporais</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="undo">Desfacer</string>
+    <string name="visible_tabs_needed">Debe manter dúas lapelas visibles!</string>
+    <string name="action_reorder_timeline">Ordear liñas temporais</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
