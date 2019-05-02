@@ -125,6 +125,7 @@
         <item>Blok akun ini?</item>
         <item>Laporkan kutipan ini?</item>
         <item>Blok domain ini?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notifikasi</item>

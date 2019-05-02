@@ -125,6 +125,7 @@
         <item>Blocio\'r cyfrif hwn?</item>
         <item>Cwyno am y tŵt hwn?</item>
         <item>Blocio\'r parth hwn?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Hysbysu</item>

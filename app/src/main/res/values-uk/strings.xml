@@ -125,6 +125,7 @@
         <item>Заблокувати цей обліковий запис?</item>
         <item>Поскаржитися на цей дмух?</item>
         <item>Блокувати цей домен?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>

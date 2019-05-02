@@ -125,6 +125,7 @@
         <item>Φραγή αυτού του λογαριασμού;</item>
         <item>Αναφορά αυτής της φωνής;</item>
         <item>Φραγή αυτού του τομέα;</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Ειδοποίηση</item>
