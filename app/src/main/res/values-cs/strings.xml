@@ -125,7 +125,7 @@
         <item>Blokovat tento účet?</item>
         <item>Nahlásit tento toot?</item>
         <item>Blokovat tuto doménu?</item>
-        <item>Unmute this account?</item>
+        <item>Zrušit ztlumení tohoto účtu?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Oznámit</item>
