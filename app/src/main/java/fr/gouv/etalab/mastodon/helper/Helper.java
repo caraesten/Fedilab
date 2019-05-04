@@ -3433,7 +3433,6 @@ public class Helper {
             if(v instanceof MenuItem) {
                 ((MenuItem)v).getIcon().setColorFilter(colorFilter);
             }
-
             if(v instanceof ActionMenuView) {
                 for(int j = 0; j < ((ActionMenuView)v).getChildCount(); j++) {
 
@@ -3461,7 +3460,13 @@ public class Helper {
                     }
                 }
             }
-
+            if(v instanceof LinearLayout) {
+                for(int j = 0; j < ((LinearLayout)v).getChildCount(); j++) {
+                    //Action Bar back button
+                    if (((LinearLayout) v).getChildAt(j) instanceof ImageView)
+                        ((ImageView)((LinearLayout) v).getChildAt(j)).setColorFilter(colorFilter);
+                }
+            }
             //Step 3: Changing the color of title and subtitle.
             toolbarView.setTitleTextColor(toolbarIconsColor);
             toolbarView.setSubtitleTextColor(toolbarIconsColor);

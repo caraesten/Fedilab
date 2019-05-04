@@ -1713,12 +1713,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 drawer.closeDrawer(GravityCompat.START);
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
+
                     if( icon != null)
                         if( theme == THEME_BLACK)
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
                         else
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
+                    else if( tv != null){
+                        tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
+                    }
                 }
             }
 
@@ -1726,11 +1730,18 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onTabUnselected(TabLayout.Tab tab) {
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
                     if( icon != null)
                         if( theme == THEME_LIGHT)
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
                         else
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                    else if( tv != null){
+                        if( theme == THEME_LIGHT)
+                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+                        else
+                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_text));
+                    }
                 }
             }
 

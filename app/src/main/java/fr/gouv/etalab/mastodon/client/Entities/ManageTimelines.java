@@ -33,6 +33,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -349,27 +350,30 @@ public class ManageTimelines {
                 }
                 tabLayout.addTab(tb);
             }else{
+                String name = "";
                 if( tl.getType() == Type.TAG){
                     if( tl.getTagTimeline().getDisplayname() != null) {
-                        tb.setText(tl.getTagTimeline().getDisplayname());
+                        name = tl.getTagTimeline().getDisplayname();
                     }else {
-                        tb.setText(tl.getTagTimeline().getName());
+                        name = tl.getTagTimeline().getName();
                     }
-                    tabLayout.addTab(tb);
                 }else if( tl.getType() == Type.INSTANCE && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
-                    tb.setText(tl.getRemoteInstance().getHost());
-                    tabLayout.addTab(tb);
+                    name = tl.getRemoteInstance().getHost();
                 }else if( tl.getType() == Type.LIST){
-                    tb.setText(tl.getListTimeline().getTitle());
-                    tabLayout.addTab(tb);
+                    name = tl.getListTimeline().getTitle();
                 }
-
+                TextView tv=(TextView)LayoutInflater.from(context).inflate(R.layout.custom_tab_instance,null);
+                tv.setText(name);
+                if (theme == THEME_LIGHT) {
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
+                }
+                tb.setCustomView(tv);
                 if( tl.getPosition() == 0){
-                    TextView tv = tabLayout.getChildAt(0).findViewById(android.R.id.title);
-                    if( tv != null)
-                        tv.setTextColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.mastodonC4));
                 }
+                tabLayout.addTab(tb);
             }
+
             final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
             if( tl.getType() == Type.NOTIFICATION){
                 notificationClik(context, tl, tabLayout);
