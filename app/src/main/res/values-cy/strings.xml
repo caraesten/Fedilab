@@ -321,6 +321,7 @@
     <string name="set_notif_follow_share">Hysbysu pan mae rhywun yn hybu\'ch statws</string>
     <string name="set_notif_follow_add">Hysbysu pan mae rhywun yn ffefrynnu eich statws</string>
     <string name="set_notif_follow_mention">Hysbysu pan mae rhywun yn sôn amdanoch chi</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Dangos deialog cadarnhau cyn hybu</string>
     <string name="set_share_validation_fav">Dangos deialog cadarnhau cyn ychwanegu i\'r ffefrynnau</string>
     <string name="set_wifi_only">Ond hysbysu pan yn gysylltiedig i WIFI</string>
@@ -590,6 +591,7 @@
     <string name="channel_notif_boost">Hybiad newydd</string>
     <string name="channel_notif_fav">Ffefryn newydd</string>
     <string name="channel_notif_mention">New Mention</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Tŵt Newydd</string>
     <string name="channel_notif_backup">Tŵtiau wrth gefn</string>
     <string name="channel_notif_media">Lawrlwytho Cyfryngau</string>
@@ -813,6 +815,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Create a poll</string>
     <string name="poll_choice_1">Choice 1</string>
     <string name="poll_choice_2">Choice 2</string>
@@ -825,6 +828,7 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
     <string name="settings_category_notif_categories">Categories</string>
     <string name="settings_category_notif_news">News</string>
