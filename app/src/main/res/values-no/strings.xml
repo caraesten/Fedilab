@@ -820,6 +820,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="warning_list_deletion">Bruk listeoppføringen for å slette denne listen!</string>
     <string name="warning_main_timeline">Hovedtidslinjer kan bare skjules!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
