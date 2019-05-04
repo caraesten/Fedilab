@@ -125,6 +125,7 @@
         <item>මෙම ගිණුම අවහිර කරනවා ද?</item>
         <item>Report this toot?</item>
         <item>මෙම අඩවිය අවහිර කරනවා ද?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>දැනුම්දෙන්න</item>

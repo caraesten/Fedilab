@@ -125,6 +125,7 @@
         <item>Diesen Nutzer blockieren?</item>
         <item>Diesen Toot melden?</item>
         <item>Diese Domäne blockieren?</item>
+        <item>Nutzer nicht mehr stummschalten?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Benachrichtigen</item>
@@ -670,21 +671,21 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <!-- languages not translated -->
     <string name="languages">Sprachen</string>
     <string name="show_media_only">Nur Medien</string>
-    <string name="show_media_nsfw">Unpassenden Inhalten anzeigen</string>
+    <string name="show_media_nsfw">Heikle Inhalte anzeigen</string>
     <string name="crowdin_translations">Crowdin Übersetzungen</string>
     <string name="crowdin_manager">Crowdin Manager</string>
     <string name="translation_app">Übersetzung der App</string>
     <string name="about_crowdin">Über Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed Instanz</string>
+    <string name="pixelfed_instance">Pixelfed-Instanz</string>
     <string name="mastodon_instance">Mastodon-Instanz</string>
-    <string name="no_pixelfed_instance">Keine Pixelfed Instanzen</string>
+    <string name="no_pixelfed_instance">Keine Pixelfed-Instanzen</string>
     <string name="any_tags">Irgendwelche davon</string>
     <string name="all_tags">Alle von denen</string>
     <string name="none_tags">Keine von denen</string>
-    <string name="some_words_any">Eines dieser Wörter (Leerzeichen getrennt)</string>
-    <string name="some_words_all">Alle diese Wörter (Leerzeichen getrennt)</string>
-    <string name="some_words_none">Keines dieser Wörter (Leerzeichen getrennt)</string>
+    <string name="some_words_any">Eines dieser Wörter (durch Leerzeichen getrennt)</string>
+    <string name="some_words_all">Alle diese Wörter (durch Leerzeichen getrennt)</string>
+    <string name="some_words_none">Keines dieser Wörter (durch Leerzeichen getrennt)</string>
     <string name="change_tag_column">Spaltenname ändern</string>
     <string name="no_misskey_instance">Keine Misskey-Instanzen</string>
     <string name="misskey_instance">Misskey Instanz</string>
@@ -698,16 +699,16 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="reply">Antworten</string>
     <string name="delete_comment">Kommentar entfernen</string>
     <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
-    <string name="fullscreen">Vollbildvideo</string>
+    <string name="fullscreen">Vollbild-Video</string>
     <string name="set_video_mode">Modus für Videoaufnahmen</string>
-    <string name="file_to_upload">Eine Datei zum Hochladen auswählen</string>
+    <string name="file_to_upload">Datei zum Hochladen auswählen</string>
     <string name="my_videos">Eigene Videos</string>
     <string name="title">Titel</string>
     <string name="categories">Kategorien</string>
     <string name="license">Lizenz</string>
     <string name="category">Kategorie</string>
     <string name="language">Sprache</string>
-    <string name="peertube_nsfw">Dieses Video enthält für Erwachsene oder sexuell eindeutige Inhalte</string>
+    <string name="peertube_nsfw">Dieses Video enthält heikle Inhalte</string>
     <string name="peertube_enable_comments">Kommentare zu Videos ermöglichen</string>
     <string name="update_video">Video aktualisieren</string>
     <string name="description">Beschreibung</string>
@@ -719,7 +720,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="delete_video">Video löschen</string>
     <string name="delete_video_confirmation">Möchten Sie dieses Video wirklich löschen?</string>
     <string name="no_video_uploaded">Noch keine Videos hochgeladen!</string>
-    <string name="display_nsfw_videos">Videos mit unpassenden Inhalten anzeigen</string>
+    <string name="display_nsfw_videos">Videos mit heiklen Inhalten anzeigen</string>
     <string name="default_channel_of">Standard %s Kanal</string>
     <string name="no_video_to_display">Keine Videos zum Anzeigen!</string>
     <string name="add_image_to_favorite">Medien zu Favoriten hinzufügen</string>
@@ -760,7 +761,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="action_plain_text">Reintext</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Von Konto abmelden</string>
+    <string name="action_logout_account">Konto abmelden</string>
     <string name="set_optimize_loading">Ladezeit optimieren</string>
     <string name="all">Alle</string>
     <string name="about_opencollective">Die App unterstützen</string>

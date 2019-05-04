@@ -125,6 +125,7 @@
         <item>Vols blocar aquest compte?</item>
         <item>Vols denunciar aquest toot?</item>
         <item>Vols blocar el domini?</item>
+        <item>Desilenciar aquest compte?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -273,7 +274,7 @@
     <string name="nothing_to_do">No es pot endegar cap acció</string>
     <string name="toast_saved">El mèdia s\'ha guardat!</string>
     <string name="toast_error_translate">Hi ha hagut un error durant la traducció!</string>
-    <string name="toast_error_translations_disabled">Opció de traducció deshabilitada</string>
+    <string name="toast_error_translations_disabled">Tens l\'opció de traducció deshabilitada</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
     <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
     <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>

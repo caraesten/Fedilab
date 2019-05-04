@@ -125,6 +125,7 @@
         <item>Chặn tài khoản này?</item>
         <item>Báo cáo này thổi còi?</item>
         <item>Block this domain?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>

@@ -2396,7 +2396,7 @@ public class API {
             return apiResponse;
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_follow, notif_add, notif_mention, notif_share;
+        boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
         StringBuilder parameters = new StringBuilder();
         if( type == DisplayNotificationsFragment.Type.ALL){
             if( display) {
@@ -2404,11 +2404,13 @@ public class API {
                 notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
                 notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
                 notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+                notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL_FILTER, true);
             }else{
                 notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                 notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                 notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
                 notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
             }
 
 
@@ -2420,6 +2422,8 @@ public class API {
                 parameters.append("exclude_types[]=").append("reblog").append("&");
             if( !notif_mention )
                 parameters.append("exclude_types[]=").append("mention").append("&");
+            if( !notif_poll )
+                parameters.append("exclude_types[]=").append("poll").append("&");
             if( parameters.length() > 0) {
                 parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
                 params.put("exclude_types[]", parameters.toString());
@@ -2445,7 +2449,7 @@ public class API {
             parameters.append("exclude_types[]=").append("poll").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
             params.put("exclude_types[]", parameters.toString());
-        }else if(type == DisplayNotificationsFragment.Type.POOL){
+        }else if(type == DisplayNotificationsFragment.Type.POLL){
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("follow").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");

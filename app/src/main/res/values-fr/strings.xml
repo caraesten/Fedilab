@@ -125,6 +125,7 @@
         <item>Bloquer ce compte ?</item>
         <item>Signaler ce pouet ?</item>
         <item>Désirez-vous bloquer ce domaine ?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notifier</item>

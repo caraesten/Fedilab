@@ -125,6 +125,7 @@
         <item>इस खाते को अवरुद्ध करें?</item>
         <item>इस संदेश को रिपोर्ट करें?</item>
         <item>इस इंस्टेंस को अवरुद्ध करें?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>सूचित करें</item>
