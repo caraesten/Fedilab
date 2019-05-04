@@ -832,6 +832,7 @@
     <string name="warning_list_deletion">Använd posten listor för att ta bort denna lista!</string>
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>
