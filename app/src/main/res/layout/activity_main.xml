@@ -147,17 +147,6 @@
             android:layout_margin="@dimen/fab_margin_floating"
             app:srcCompat="@drawable/ic_action_add_new"
             tools:ignore="VectorDrawableCompat" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/federated_timeline"
-            android:layout_width="wrap_content"
-            android:contentDescription="@string/follow_instance"
-            android:layout_height="wrap_content"
-            app:fabSize="mini"
-            android:layout_gravity="bottom|start"
-            android:layout_margin="@dimen/fab_margin_floating"
-            app:srcCompat="@drawable/ic_public_world"
-            tools:ignore="VectorDrawableCompat" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
