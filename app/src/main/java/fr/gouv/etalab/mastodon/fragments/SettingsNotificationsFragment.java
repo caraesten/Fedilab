@@ -105,6 +105,7 @@ public class SettingsNotificationsFragment extends Fragment {
         boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
 
         boolean notif_wifi = sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false);
         boolean notif_silent = sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false);
@@ -120,6 +121,7 @@ public class SettingsNotificationsFragment extends Fragment {
         final CheckBox set_notif_follow_ask = rootView.findViewById(R.id.set_notif_follow_ask);
         final CheckBox set_notif_follow_mention = rootView.findViewById(R.id.set_notif_follow_mention);
         final CheckBox set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
+        final CheckBox set_notif_follow_poll = rootView.findViewById(R.id.set_notif_follow_poll);
 
         final CheckBox set_notif_hometimeline = rootView.findViewById(R.id.set_notif_hometimeline);
 
@@ -134,6 +136,7 @@ public class SettingsNotificationsFragment extends Fragment {
         final Button sound_fav = rootView.findViewById(R.id.sound_fav);
         final Button sound_follow = rootView.findViewById(R.id.sound_follow);
         final Button sound_mention = rootView.findViewById(R.id.sound_mention);
+        final Button sound_poll = rootView.findViewById(R.id.sound_poll);
         final Button sound_backup = rootView.findViewById(R.id.sound_backup);
         final Button sound_media = rootView.findViewById(R.id.sound_media);
         Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
@@ -180,6 +183,16 @@ public class SettingsNotificationsFragment extends Fragment {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
                     intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention");
+                    startActivity(intent);
+                }
+            });
+
+            sound_poll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_poll");
                     startActivity(intent);
                 }
             });
@@ -332,6 +345,7 @@ public class SettingsNotificationsFragment extends Fragment {
         set_notif_follow_ask.setChecked(notif_ask);
         set_notif_follow_mention.setChecked(notif_mention);
         set_notif_follow_share.setChecked(notif_share);
+        set_notif_follow_poll.setChecked(notif_poll);
         set_notif_hometimeline.setChecked(notif_hometimeline);
 
         switchCompatWIFI.setChecked(notif_wifi);
@@ -382,6 +396,14 @@ public class SettingsNotificationsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_SHARE, set_notif_follow_share.isChecked());
+                editor.apply();
+            }
+        });
+        set_notif_follow_poll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIF_POLL, set_notif_follow_poll.isChecked());
                 editor.apply();
             }
         });

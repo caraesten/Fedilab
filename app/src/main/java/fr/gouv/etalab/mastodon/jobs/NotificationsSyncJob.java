@@ -118,8 +118,9 @@ public class NotificationsSyncJob extends Job {
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
         //User disagree with all notifications
-        if( !notif_follow && !notif_add && !notif_mention && !notif_share)
+        if( !notif_follow && !notif_add && !notif_mention && !notif_share && !notif_poll)
             return; //Nothing is done
         //No account connected, the service is stopped
         if(!Helper.isLoggedIn(getContext()))
@@ -151,6 +152,7 @@ public class NotificationsSyncJob extends Job {
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
         final  List<Notification> notifications = new ArrayList<>();
         int pos = 0;
@@ -167,6 +169,7 @@ public class NotificationsSyncJob extends Job {
         int newAdds = 0;
         int newMentions = 0;
         int newShare = 0;
+        int newPolls = 0;
         String notificationUrl = null;
         String title = null;
         final String message;
@@ -229,11 +232,25 @@ public class NotificationsSyncJob extends Job {
                         }
                     }
                     break;
+                case "poll":
+                    notifType = Helper.NotifType.POLL;
+                    if(notif_poll){
+                        newPolls++;
+                        if( notificationUrl == null){
+                            notificationUrl = notification.getAccount().getAvatar();
+                            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                            if (notification.getAccount().getId() != null && notification.getAccount().getId().equals(userId))
+                                title = getContext().getString(R.string.notif_poll_self);
+                            else
+                                title = getContext().getString(R.string.notif_poll);
+                        }
+                    }
+                    break;
                 default:
             }
         }
 
-        int allNotifCount = newFollows + newAdds + newMentions + newShare;
+        int allNotifCount = newFollows + newAdds + newMentions + newShare + newPolls;
         if( allNotifCount > 0){
             //Some others notification
             int other = allNotifCount -1;

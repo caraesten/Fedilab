@@ -1079,6 +1079,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     editor.putBoolean(Helper.SET_NOTIF_ASK, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_POLL, set_push_notification.isChecked());
                    // editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_push_hometimeline.isChecked());
                     editor.putBoolean(Helper.SET_POPUP_PUSH, true);
                     editor.apply();

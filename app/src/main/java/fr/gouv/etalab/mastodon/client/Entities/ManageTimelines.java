@@ -82,7 +82,7 @@ public class ManageTimelines {
     private List listTimeline;
 
 
-    private boolean notif_follow, notif_add, notif_mention, notif_share;
+    private boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
 
 
     public int getPosition() {
@@ -435,14 +435,21 @@ public class ManageTimelines {
                         final MenuItem itemFollow = menu.findItem(R.id.action_follow);
                         final MenuItem itemMention = menu.findItem(R.id.action_mention);
                         final MenuItem itemBoost = menu.findItem(R.id.action_boost);
+                        final MenuItem itemPoll = menu.findItem(R.id.action_poll);
                         notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
                         notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
                         notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
                         notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+                        notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL_FILTER, true);
                         itemFavourite.setChecked(notif_add);
                         itemFollow.setChecked(notif_follow);
                         itemMention.setChecked(notif_mention);
                         itemBoost.setChecked(notif_share);
+                        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                            itemPoll.setChecked(notif_poll);
+                        else
+                            itemPoll.setVisible(false);
+
                         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                             @Override
                             public void onDismiss(PopupMenu menu) {
@@ -493,6 +500,13 @@ public class ManageTimelines {
                                         notif_share = !notif_share;
                                         editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
                                         itemBoost.setChecked(notif_share);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_poll:
+                                        editor = sharedpreferences.edit();
+                                        notif_poll = !notif_poll;
+                                        editor.putBoolean(Helper.SET_NOTIF_POLL_FILTER, notif_poll);
+                                        itemPoll.setChecked(notif_poll);
                                         editor.apply();
                                         break;
                                 }

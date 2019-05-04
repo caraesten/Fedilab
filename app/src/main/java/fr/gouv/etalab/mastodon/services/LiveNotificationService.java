@@ -327,7 +327,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
                         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-                        boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share);
+                        boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
+                        boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share || notif_poll);
                         String title = null;
                         if (somethingToPush && notification != null) {
                             switch (notification.getType()) {
@@ -372,6 +373,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                         else
                                             title = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow));
                                         targeted_account = notification.getAccount().getId();
+                                    } else {
+                                        canSendBroadCast = false;
+                                    }
+                                    break;
+                                case "poll":
+                                    notifType = Helper.NotifType.POLL;
+                                    if (notif_poll) {
+                                        if (notification.getAccount().getId() != null && notification.getAccount().getId().equals(userId))
+                                            title = getString(R.string.notif_poll_self);
+                                        else
+                                            title = getString(R.string.notif_poll);
                                     } else {
                                         canSendBroadCast = false;
                                     }
