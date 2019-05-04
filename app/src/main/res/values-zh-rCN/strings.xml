@@ -828,6 +828,7 @@
     <string name="warning_list_deletion">用列表入口来删除这个列表！</string>
     <string name="warning_main_timeline">主时间线只能被隐藏！</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
