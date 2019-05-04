@@ -1,0 +1,11 @@
+Added
+* Add followed instances directly in the reorder timelines
+* Swipe for removing lists
+* Polls can be filtered in notifications
+
+Changed
+* Remove the follow instances button at the bottom left
+
+Fixed
+* Followed instances not visible in light mode
+* Click on notifications

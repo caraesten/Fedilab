@@ -74,8 +74,8 @@ public class InstancesDAO {
      * Remove instance by its name
      * @return int
      */
-    public int remove(String id){
-        return db.delete(Sqlite.TABLE_INSTANCES,  Sqlite.COL_ID + " = \"" + id + "\"", null);
+    public int remove(String host){
+        return db.delete(Sqlite.TABLE_INSTANCES,  Sqlite.COL_INSTANCE + " = \"" + host + "\"", null);
     }
 
     //------- REMOVE  -------

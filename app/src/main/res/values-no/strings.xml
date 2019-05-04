@@ -125,6 +125,7 @@
         <item>Blokkere denne kontoen?</item>
         <item>Rapportere dette tootet?</item>
         <item>Blokkere dette domenet?</item>
+        <item>Fjern demping for denne kontoen?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Varsle</item>
@@ -304,6 +305,7 @@
     <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
     <string name="set_notif_follow_add">Varsle når noen favoriserer tootene dine</string>
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
     <string name="set_wifi_only">Varsle kun på WIFI</string>
@@ -565,6 +567,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="channel_notif_boost">Ny boost</string>
     <string name="channel_notif_fav">Ny favoritt</string>
     <string name="channel_notif_mention">Ny nevning</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Ny toot</string>
     <string name="channel_notif_backup">Backup av toots</string>
     <string name="channel_notif_media">Last ned media</string>
@@ -785,6 +788,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_retrieve_metadata_share_from_extras">Tilknytt et bilde når du deler en URL</string>
     <!-- end languages -->
     <string name="poll">Avstemning</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Lag en avstemming</string>
     <string name="poll_choice_1">Valg 1</string>
     <string name="poll_choice_2">Valg 2</string>
@@ -797,6 +801,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="vote">Stem</string>
     <string name="poll_not_private">En avstemming kan ikke kobles til en direktemelding!</string>
     <string name="notif_poll">En avstemming du har stemt på er avsluttet</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Tilpass</string>
     <string name="settings_category_notif_categories">Kategorier</string>
     <string name="settings_category_notif_news">Nyheter</string>
@@ -815,6 +820,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="warning_list_deletion">Bruk listeoppføringen for å slette denne listen!</string>
     <string name="warning_main_timeline">Hovedtidslinjer kan bare skjules!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

@@ -165,11 +165,11 @@
                     android:orientation="horizontal"
                     >
                     <Button
-                        android:id="@+id/sound_backup"
+                        android:id="@+id/sound_poll"
                         android:gravity="center"
                         style="@style/Base.Widget.AppCompat.Button.Colored"
                         android:tint="@android:color/white"
-                        android:text="@string/channel_notif_backup"
+                        android:text="@string/channel_notif_poll"
                         android:maxLines="1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -181,6 +181,27 @@
                         android:tint="@android:color/white"
                         android:text="@string/channel_notif_media"
                         android:maxLines="1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <Button
+                        android:id="@+id/sound_backup"
+                        android:gravity="center"
+                        style="@style/Base.Widget.AppCompat.Button.Colored"
+                        android:tint="@android:color/white"
+                        android:text="@string/channel_notif_backup"
+                        android:maxLines="1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:visibility="invisible"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
@@ -250,6 +271,13 @@
                 android:layout_marginTop="@dimen/settings_checkbox_margin"
                 android:layout_marginBottom="@dimen/settings_checkbox_margin"
                 android:text="@string/set_notif_follow_share"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/set_notif_follow_poll"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/settings_checkbox_margin"
+                android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                android:text="@string/set_notif_follow_poll"
                 android:layout_height="wrap_content" />
             <!-- END NOTIFICATIONS SETTINGS -->
 

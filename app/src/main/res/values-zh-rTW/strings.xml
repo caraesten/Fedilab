@@ -125,6 +125,7 @@
         <item>封鎖此帳號？</item>
         <item>檢舉此嘟文？</item>
         <item>是否封鎖該站點？</item>
+        <item>取消靜音此帳號？</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
@@ -300,6 +301,7 @@
     <string name="set_notif_follow_share">當有人轉嘟您的嘟文時通知</string>
     <string name="set_notif_follow_add">當有人收藏您的嘟文時通知您</string>
     <string name="set_notif_follow_mention">當有人提及您時通知</string>
+    <string name="set_notif_follow_poll">投票結束時通知</string>
     <string name="set_share_validation">在轉嘟前顯示確認對話框</string>
     <string name="set_share_validation_fav">在新增至最愛前顯示確認對話框</string>
     <string name="set_wifi_only">僅在使用 Wi-Fi 時才啟用通知</string>
@@ -570,6 +572,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="channel_notif_boost">新轉嘟</string>
     <string name="channel_notif_fav">新最愛</string>
     <string name="channel_notif_mention">新提及</string>
+    <string name="channel_notif_poll">投票結束</string>
     <string name="channel_notif_toot">新嘟文</string>
     <string name="channel_notif_backup">嘟文備份</string>
     <string name="channel_notif_media">媒體下載</string>
@@ -793,6 +796,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_retrieve_metadata_share_from_extras">如果網址是從其他應用程式分享的，則接收其中繼資料</string>
     <!-- end languages -->
     <string name="poll">投票</string>
+    <string name="polls">投票</string>
     <string name="create_poll">建立投票</string>
     <string name="poll_choice_1">第一種選擇</string>
     <string name="poll_choice_2">第二種選擇</string>
@@ -805,6 +809,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="vote">投票</string>
     <string name="poll_not_private">投票不能附加到直接訊息中！</string>
     <string name="notif_poll">您曾投過的投票已經結束</string>
+    <string name="notif_poll_self">您所嘟過的投票已經結束</string>
     <string name="settings_category_notif_customize">自訂</string>
     <string name="settings_category_notif_categories">分類</string>
     <string name="settings_category_notif_news">新聞</string>
@@ -823,6 +828,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="warning_list_deletion">使用清單項目刪除此清單！</string>
     <string name="warning_main_timeline">主時間軸只能被隱藏！</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

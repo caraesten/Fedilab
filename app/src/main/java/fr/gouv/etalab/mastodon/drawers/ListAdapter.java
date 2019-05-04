@@ -16,14 +16,11 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +33,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ListActivity;
-import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
@@ -48,20 +42,16 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 13/12/2017.
  * Adapter for lists
  */
-public class ListAdapter extends BaseAdapter implements OnListActionInterface {
+public class ListAdapter extends BaseAdapter {
 
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists;
     private LayoutInflater layoutInflater;
     private Context context;
-    private ListAdapter listAdapter;
-    private RelativeLayout textviewNoAction;
 
     public ListAdapter(Context context, List<fr.gouv.etalab.mastodon.client.Entities.List> lists, RelativeLayout textviewNoAction){
         this.lists = lists;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
-        this.listAdapter = this;
-        this.textviewNoAction = textviewNoAction;
     }
 
     @Override
@@ -125,50 +115,8 @@ public class ListAdapter extends BaseAdapter implements OnListActionInterface {
                 context.startActivity(intent);
             }
         });
-        int style;
-        if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
-            style = R.style.DialogBlack;
-        }else {
-            style = R.style.Dialog;
-        }
-        holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
-                builder.setTitle(context.getString(R.string.action_lists_delete) + ": " + list.getTitle());
-                builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
-                builder.setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                lists.remove(list);
-                                listAdapter.notifyDataSetChanged();
-                                new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_LIST,null, null, list.getId(), null, ListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                if( lists.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
-                                    textviewNoAction.setVisibility(View.VISIBLE);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
-                return false;
-            }
-        });
         return convertView;
     }
-
-    @Override
-    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-
-    }
-
 
     private class ViewHolder {
         LinearLayout search_container;

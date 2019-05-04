@@ -27,4 +27,10 @@
         android:title="@string/reblog"
         app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_poll"
+        android:checkable="true"
+        android:title="@string/polls"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always" />
 </menu>

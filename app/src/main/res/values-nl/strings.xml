@@ -56,7 +56,7 @@
     <string name="validate">Bevestigen</string>
     <string name="media">Media</string>
     <string name="share_with">Delen met</string>
-    <string name="shared_via">Gedeeld via Mastalab</string>
+    <string name="shared_via">Gedeeld via Fedilab</string>
     <string name="replies">Reacties</string>
     <string name="username">Gebruikersnaam</string>
     <string name="drafts">Concepten</string>
@@ -125,6 +125,7 @@
         <item>Account blokkeren?</item>
         <item>Toot rapporteren?</item>
         <item>Dit domein blokkeren?</item>
+        <item>Dit account niet langer negeren?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Melden</item>
@@ -273,7 +274,7 @@
     <string name="nothing_to_do">Er valt niets te doen</string>
     <string name="toast_saved">Media is opgeslagen!</string>
     <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Vertalingen zijn uitgeschakeld in instellingen</string>
     <string name="toast_toot_saved">Concept opgeslagen!</string>
     <string name="toast_error_char_limit">Weet je zeker dat je op deze server zoveel tekens mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
     <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
@@ -304,6 +305,7 @@
     <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
     <string name="set_notif_follow_add">Geef een melding wanneer jouw toot als favoriet is gemarkeerd</string>
     <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Vraag voor het boosten een bevestiging</string>
     <string name="set_share_validation_fav">Vraag voor het markeren als favoriet een bevestiging</string>
     <string name="set_wifi_only">Alleen met Wifi meldingen tonen</string>
@@ -574,6 +576,7 @@
     <string name="channel_notif_boost">Nieuwe boost</string>
     <string name="channel_notif_fav">Nieuwe favoriet</string>
     <string name="channel_notif_mention">Nieuwe vermelding</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Nieuwe toot</string>
     <string name="channel_notif_backup">Toots back-uppen</string>
     <string name="channel_notif_media">Media downloaden</string>
@@ -794,6 +797,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_retrieve_metadata_share_from_extras">Een afbeelding toevoegen wanneer een URL wordt gedeeld</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Een poll maken</string>
     <string name="poll_choice_1">Keuze 1</string>
     <string name="poll_choice_2">Keuze 2</string>
@@ -801,29 +805,31 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="poll_choice_4">Keuze 4</string>
     <string name="poll_invalid_choices">Je hebt tenminste twee keuzes nodig voor een poll!</string>
     <string name="done">Klaar</string>
-    <string name="poll_finish_at">eindigt over %s</string>
+    <string name="poll_finish_at">eindigt op %s</string>
     <string name="refresh_poll">Poll vernieuwen</string>
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
     <string name="notif_poll">Een poll waarin je hebt gestemd is beëindigd</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
-    <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="settings_category_notif_customize">Aanpassen</string>
+    <string name="settings_category_notif_categories">Categorieën</string>
+    <string name="settings_category_notif_news">Nieuws</string>
+    <string name="settings_category_notif_time_slot">Tijdslot</string>
+    <string name="settings_category_notif_advanced">Geavanceerd</string>
+    <string name="set_display_new_badge">Badge met \'nieuw\' op ongelezen toots tonen</string>
+    <string name="set_display_peertube">PeerTubetijdlijn tonen</string>
+    <string name="peertube_menu">PeerTube</string>
+    <string name="hide_tab">Tabblad verbergen</string>
+    <string name="move_timeline">Tijdlijn verplaatsen</string>
+    <string name="hide_timeline">Tijdlijn verbergen</string>
+    <string name="reorder_timelines">Tijdlijnen herordenen</string>
+    <string name="undo">Ongedaan maken</string>
+    <string name="visible_tabs_needed">Je moet twee zichtbare tabbladen behouden!</string>
+    <string name="action_reorder_timeline">Tijdlijnen herordenen</string>
+    <string name="warning_list_deletion">Druk lang op de lijstnaam onder lijsten om deze lijst te verwijderen!</string>
+    <string name="warning_main_timeline">Hoofdtijdlijnen kunnen alleen worden verborgen!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>

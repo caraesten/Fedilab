@@ -125,6 +125,7 @@
         <item>Φραγή αυτού του λογαριασμού;</item>
         <item>Αναφορά αυτής της φωνής;</item>
         <item>Φραγή αυτού του τομέα;</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Ειδοποίηση</item>
@@ -304,6 +305,7 @@
     <string name="set_notif_follow_share">Ειδοποίηση όταν κάποιος ενισχύει την κατάστασή σου</string>
     <string name="set_notif_follow_add">Ειδοποίηση όταν σε κάποιον αρέσει η κατάστασή σου</string>
     <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Προβολή του διαλόγου επιβεβαίωσης, πριν από την ενίσχυση</string>
     <string name="set_share_validation_fav">Προβολή του διαλόγου επιβεβαίωσης, πριν να γίνει προσθήκη στα Αγαπημένα</string>
     <string name="set_wifi_only">Ειδοποίηση μόνο όταν σε Γουάι-Φάι</string>
@@ -574,6 +576,7 @@
     <string name="channel_notif_boost">Νέα Ενίσχυση</string>
     <string name="channel_notif_fav">Νέο Αγαπημένο</string>
     <string name="channel_notif_mention">Νέα Μνημόνευση</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Νέα Φωνή</string>
     <string name="channel_notif_backup">Αντίγραφο των Φωνών</string>
     <string name="channel_notif_media">Κατέβασμα Πολυμέσων</string>
@@ -797,6 +800,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Προσκόλληση μιας εικόνας, όταν κοινοποιείται διεύθυνση URL</string>
     <!-- end languages -->
     <string name="poll">Ψηφοφορία</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Δημιουργία ψηφοφορίας</string>
     <string name="poll_choice_1">1η επιλογή</string>
     <string name="poll_choice_2">2η επιλογή</string>
@@ -809,6 +813,7 @@
     <string name="vote">Ψήφισμα</string>
     <string name="poll_not_private">Μία ψηφοφορίας δεν μπορεί να προσκολληθεί σε ένα άμεσο μήνυμα.</string>
     <string name="notif_poll">Μία ψηφοφορία στην οποία συμμετείχες έχει τελειώσει</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Προσαρμογή</string>
     <string name="settings_category_notif_categories">Κατηγορίες</string>
     <string name="settings_category_notif_news">Νέα</string>
@@ -827,6 +832,7 @@
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Η κύρια χρονοστήλη μπορεί, μονάχα, να κρυφτεί.</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d ψήφοι</item>

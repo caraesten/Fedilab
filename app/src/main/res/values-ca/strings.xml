@@ -125,6 +125,7 @@
         <item>Vols blocar aquest compte?</item>
         <item>Vols denunciar aquest toot?</item>
         <item>Vols blocar el domini?</item>
+        <item>Desilenciar aquest compte?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -273,7 +274,7 @@
     <string name="nothing_to_do">No es pot endegar cap acció</string>
     <string name="toast_saved">El mèdia s\'ha guardat!</string>
     <string name="toast_error_translate">Hi ha hagut un error durant la traducció!</string>
-    <string name="toast_error_translations_disabled">Opció de traducció deshabilitada</string>
+    <string name="toast_error_translations_disabled">Tens l\'opció de traducció deshabilitada</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
     <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
     <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>
@@ -304,6 +305,7 @@
     <string name="set_notif_follow_share">Avisa quan algú difongui el teu estatus</string>
     <string name="set_notif_follow_add">Avisa quan algú marqui el teu estatus com a preferit</string>
     <string name="set_notif_follow_mention">Avisa quan algú et mencioni</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Demana confirmació abans de difondre</string>
     <string name="set_share_validation_fav">Demana confirmació abans d\'afegir a preferits</string>
     <string name="set_wifi_only">Enviar avisos només per WIFI</string>
@@ -565,6 +567,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="channel_notif_boost">Nova difusió</string>
     <string name="channel_notif_fav">Nou preferit</string>
     <string name="channel_notif_mention">Nova menció</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Toot nou</string>
     <string name="channel_notif_backup">Còpia de seguretat de toots</string>
     <string name="channel_notif_media">Baixada de mèdia</string>
@@ -788,6 +791,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_retrieve_metadata_share_from_extras">Adjunta una imatge en compartir un URL</string>
     <!-- end languages -->
     <string name="poll">Enquesta</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Crea una enquesta</string>
     <string name="poll_choice_1">Opció 1</string>
     <string name="poll_choice_2">Opció 2</string>
@@ -800,6 +804,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="vote">Vota</string>
     <string name="poll_not_private">No es pot adjuntar enquestes a un missatge directe!</string>
     <string name="notif_poll">S\'ha acabat una enquesta en què havies participat</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Personalitza</string>
     <string name="settings_category_notif_categories">Categories</string>
     <string name="settings_category_notif_news">Notícies</string>
@@ -818,6 +823,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="warning_list_deletion">Per esborrar aquesta llista, cal fer-ho des de les llistes entrades!</string>
     <string name="warning_main_timeline">Les pissarres principals només es poden amagar!</string>
     <string name="action_bbcode">Codi-BB</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>

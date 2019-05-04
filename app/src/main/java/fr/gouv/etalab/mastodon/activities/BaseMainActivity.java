@@ -49,48 +49,28 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
@@ -104,12 +84,10 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
-import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
@@ -131,7 +109,6 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.MenuFloating;
 import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -141,7 +118,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -175,7 +151,7 @@ import static fr.gouv.etalab.mastodon.sqlite.Sqlite.importDB;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnListActionInterface, OnSyncTimelineInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -188,31 +164,25 @@ public abstract class BaseMainActivity extends BaseActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     public static List<Filters> filters = new ArrayList<>();
-
     public static int countNewStatus;
     public static int countNewNotifications;
     public static String lastHomeId = null, lastNotificationId = null;
     private AppBarLayout appBar;
     private String userId;
     private String instance;
-    public int countPage;
     private PagerAdapter adapter;
-    private String oldSearch;
-    boolean isLoadingInstance = false;
     private ImageView delete_instance;
     public static String displayPeertube = null;
-    private PopupMenu popup;
-    private String instance_id;
     private int style;
     private Activity activity;
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
-    private FloatingActionButton federatedTimelines;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
+    private static boolean notificationChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -424,10 +394,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     tootShow();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelinesShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                     if( tab.getCustomView() != null) {
@@ -558,10 +524,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     tootShow();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelinesShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                     if( tab.getCustomView() != null) {
@@ -618,7 +580,6 @@ public abstract class BaseMainActivity extends BaseActivity
             style = R.style.Dialog;
         }
 
-        displayFollowInstances();
 
         if( theme == THEME_LIGHT){
             changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_icon);
@@ -1079,6 +1040,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     editor.putBoolean(Helper.SET_NOTIF_ASK, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_POLL, set_push_notification.isChecked());
                    // editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_push_hometimeline.isChecked());
                     editor.putBoolean(Helper.SET_POPUP_PUSH, true);
                     editor.apply();
@@ -1133,9 +1095,7 @@ public abstract class BaseMainActivity extends BaseActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                if( tabLayout.getTabAt(1) != null)
-                    //noinspection ConstantConditions
-                    tabLayout.getTabAt(1).select();
+                notificationChecked = true;
                 if( extras.getString(INTENT_TARGETED_ACCOUNT) != null ){
                     Intent intentShow = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
                     Bundle b = new Bundle();
@@ -1705,38 +1665,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-        if( apiResponse.getError() != null){
-            return;
-        }
-        if( actionType == ManageListsAsyncTask.action.GET_LIST && popup != null) {
-            if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
-                SubMenu submList = popup.getMenu().findItem(R.id.action_show_list).getSubMenu();
-                int l = 0;
-                for (fr.gouv.etalab.mastodon.client.Entities.List list : apiResponse.getLists()) {
-                    MenuItem itemPlaceHolder = submList.findItem(R.id.list_instances);
-                    if( itemPlaceHolder != null)
-                        itemPlaceHolder.setVisible(false);
-                    MenuItem item = submList.add(0, l, Menu.NONE, list.getTitle());
-                    item.setIcon(R.drawable.ic_list_instance);
-                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Intent intent = new Intent(BaseMainActivity.this, ListActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("id", list.getId());
-                            b.putString("title", list.getTitle());
-                            intent.putExtras(b);
-                            startActivity(intent);
-                            return false;
-                        }
-                    });
-                    l++;
-                }
-            }
-        }
-    }
 
 
 
@@ -1758,7 +1686,7 @@ public abstract class BaseMainActivity extends BaseActivity
             position = (timelines.size()-1);
         if( position < 0)
             position = 0;
-
+        setTitle("");
         /*if( !optimize_loading)
             viewPager.setOffscreenPageLimit(countPage);*/
         viewPager.setOffscreenPageLimit(2);
@@ -1777,24 +1705,23 @@ public abstract class BaseMainActivity extends BaseActivity
                 Helper.switchLayout(BaseMainActivity.this);
                 if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.NOTIFICATION ||manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
                     toot.hide();
-                    federatedTimelines.hide();
                 }else {
                     tootShow();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelinesShow();
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
+
                     if( icon != null)
                         if( theme == THEME_BLACK)
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
                         else
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
+                    else if( tv != null){
+                        tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
+                    }
                 }
             }
 
@@ -1802,11 +1729,18 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onTabUnselected(TabLayout.Tab tab) {
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
                     if( icon != null)
                         if( theme == THEME_LIGHT)
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
                         else
                             icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                    else if( tv != null){
+                        if( theme == THEME_LIGHT)
+                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+                        else
+                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_text));
+                    }
                 }
             }
 
@@ -1822,13 +1756,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
                     toot.hide();
-                    federatedTimelines.hide();
                 }else {
                     tootShow();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelinesShow();
                 }
 
                 if( viewPager.getAdapter() != null) {
@@ -1920,6 +1849,19 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
+        if( notificationChecked){
+            notificationChecked = false;
+            int i = 0;
+            for(ManageTimelines tl: timelines){
+                if( tl.getType() == ManageTimelines.Type.NOTIFICATION){
+                    if( tabLayout.getTabAt(i) != null) {
+                        tabLayout.getTabAt(i).select();
+                    }
+                    break;
+                }
+                i++;
+            }
+        }
     }
 
     /**
@@ -2137,17 +2079,11 @@ public abstract class BaseMainActivity extends BaseActivity
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             if (display) {
                 tootShow();
-                if (!displayFollowInstance)
-                    federatedTimelines.hide();
-                else
-                    federatedTimelinesShow();
             } else {
                 toot.hide();
-                federatedTimelines.hide();
             }
         }else {
             toot.hide();
-            federatedTimelines.hide();
         }
     }
     public void tootShow(){
@@ -2157,13 +2093,7 @@ public abstract class BaseMainActivity extends BaseActivity
             toot.hide();
         }
     }
-    public void federatedTimelinesShow(){
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            federatedTimelines.show();
-        }else{
-            federatedTimelines.hide();
-        }
-    }
+
 
 
 
@@ -2171,438 +2101,5 @@ public abstract class BaseMainActivity extends BaseActivity
         return toot.getVisibility() == View.VISIBLE;
     }
 
-    public void refreshButton(){
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( !displayFollowInstance)
-            federatedTimelines.hide();
-        else
-            federatedTimelinesShow();
-    }
 
-    private void displayFollowInstances(){
-
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
-        federatedTimelines = findViewById(R.id.federated_timeline);
-
-        federatedTimelinesShow();
-        delete_instance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    String title = toolbarTitle.getText().toString();
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            new InstancesDAO(BaseMainActivity.this, db).remove(instance_id);
-                            BaseMainActivity.this.onBackPressed();
-                        }
-                    });
-                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialogBuilder.setTitle(R.string.delete_instance);
-                    dialogBuilder.setMessage(getString(R.string.warning_delete_instance, title));
-                    AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.show();
-
-                }catch (Exception e){
-                    Toasty.error(BaseMainActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( !displayFollowInstance)
-            federatedTimelines.hide();
-        federatedTimelines.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                    new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
-                new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
-                List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
-                popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
-                popup.getMenuInflater()
-                        .inflate(R.menu.remote_instances, popup.getMenu());
-                try {
-                    @SuppressLint("PrivateApi") Method method = popup.getMenu().getClass().getDeclaredMethod("setOptionalIconsVisible", boolean.class);
-                    method.setAccessible(true);
-                    method.invoke(popup.getMenu(), true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(remoteInstances != null) {
-                    SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
-                    SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
-                    SubMenu submPixelfed = popup.getMenu().findItem(R.id.action_show_pixelfed).getSubMenu();
-                    SubMenu submMisskey = popup.getMenu().findItem(R.id.action_show_misskey).getSubMenu();
-                    SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
-                    int i = 0, j = 0 , k = 0, l = 0 , m = 0;
-                    for (RemoteInstance remoteInstance : remoteInstances) {
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
-                            MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submMastodon.add(0, i, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.mastodon_icon_item);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            i++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE_CHANNEL")) {
-                            MenuItem itemPlaceHolder = submChannel.findItem(R.id.channel_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submChannel.add(0, k, Menu.NONE, remoteInstance.getId() + " - " +remoteInstance.getHost());
-                            item.setIcon(R.drawable.ic_list_instance);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    bundle.putString("remote_channel_name", remoteInstance.getId());
-                                    bundle.putString("instanceType", "PEERTUBE");
-                                    statusFragment.setArguments(bundle);
-                                    instance_id = remoteInstance.getDbID();
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            k++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PIXELFED")) {
-                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.pixelfed_instance);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submPixelfed.add(0, j, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.pixelfed);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    bundle.putString("instanceType", "PIXELFED");
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            j++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MISSKEY")) {
-                            MenuItem itemPlaceHolder = submMisskey.findItem(R.id.misskey_instance);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submMisskey.add(0, l, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.misskey);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    bundle.putString("instanceType", "MISSKEY");
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            l++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
-                            MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submPeertube.add(0, m, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.peertube_icon);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    bundle.putString("instanceType", "PEERTUBE");
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            m++;
-                        }
-                    }
-                }
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_add_instance:
-                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                LayoutInflater inflater = getLayoutInflater();
-                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_instance, null);
-                                dialogBuilder.setView(dialogView);
-
-                                AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
-                                //Manage download of attachments
-                                RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
-
-                                instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
-                                        String instanceName = instance_list.getText().toString().trim();
-                                        new Thread(new Runnable(){
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
-                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
-                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
-                                                    }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
-                                                        new HttpsConnection(BaseMainActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
-                                                    }
-                                                    runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            JSONObject resobj;
-                                                            dialog.dismiss();
-                                                            DisplayStatusFragment statusFragment;
-                                                            Bundle bundle = new Bundle();
-                                                            statusFragment = new DisplayStatusFragment();
-                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance) {
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
-                                                                bundle.putString("instanceType", "MASTODON");
-                                                            }else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance) {
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
-                                                                bundle.putString("instanceType", "PEERTUBE");
-                                                            } else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
-                                                                bundle.putString("instanceType", "PIXELFED");
-                                                            } else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
-                                                                bundle.putString("instanceType", "MISSKEY");
-                                                            }
-
-                                                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                                            bundle.putString("remote_instance", instanceName);
-                                                            statusFragment.setArguments(bundle);
-                                                            String fragmentTag = "REMOTE_INSTANCE";
-                                                            FragmentManager fragmentManager = getSupportFragmentManager();
-                                                            fragmentManager.beginTransaction()
-                                                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                                            main_app_container.setVisibility(View.VISIBLE);
-                                                            viewPager.setVisibility(View.GONE);
-                                                            delete_instance.setVisibility(View.VISIBLE);
-                                                            tabLayout.setVisibility(View.GONE);
-                                                            toolbarTitle.setVisibility(View.VISIBLE);
-                                                            toolbarTitle.setText(instanceName);
-                                                        }
-                                                    });
-                                                } catch (final Exception e) {
-                                                    e.printStackTrace();
-                                                    runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }).start();
-                                    }
-                                });
-                                AlertDialog alertDialog = dialogBuilder.create();
-                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialogInterface) {
-                                        //Hide keyboard
-                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                        assert imm != null;
-                                        imm.hideSoftInputFromWindow(instance_list.getWindowToken(), 0);
-                                    }
-                                });
-                                if( alertDialog.getWindow() != null )
-                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                                alertDialog.show();
-
-                                instance_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-                                        oldSearch = parent.getItemAtPosition(position).toString().trim();
-                                    }
-                                });
-                                instance_list.addTextChangedListener(new TextWatcher() {
-                                    @Override
-                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                    }
-
-                                    @Override
-                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                                    }
-
-                                    @Override
-                                    public void afterTextChanged(Editable s) {
-                                        Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
-                                        Matcher matcher = host.matcher(s.toString().trim());
-                                        if( s.toString().trim().length() == 0 || !matcher.find()) {
-                                            alertDialog.getButton(
-                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                                        } else {
-                                            // Something into edit text. Enable the button.
-                                            alertDialog.getButton(
-                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-                                        }
-                                        if (s.length() > 2 && !isLoadingInstance) {
-                                            final String action = "/instances/search";
-                                            final HashMap<String, String> parameters = new HashMap<>();
-                                            parameters.put("q", s.toString().trim());
-                                            parameters.put("count", String.valueOf(1000));
-                                            parameters.put("name", String.valueOf(true));
-                                            isLoadingInstance = true;
-
-                                            if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
-                                                new Thread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        try {
-                                                            final String response = new HttpsConnection(BaseMainActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                                                            runOnUiThread(new Runnable() {
-                                                                public void run() {
-                                                                    isLoadingInstance = false;
-                                                                    String[] instances;
-                                                                    try {
-                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                        JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                                                        if (jsonArray != null) {
-                                                                            int length = 0;
-                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
-                                                                                    length++;
-                                                                            }
-                                                                            instances = new String[length];
-                                                                            int j = 0;
-                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
-                                                                                    instances[j] = jsonArray.getJSONObject(i).get("name").toString();
-                                                                                    j++;
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            instances = new String[]{};
-                                                                        }
-                                                                        instance_list.setAdapter(null);
-                                                                        ArrayAdapter<String> adapter =
-                                                                                new ArrayAdapter<>(BaseMainActivity.this, android.R.layout.simple_list_item_1, instances);
-                                                                        instance_list.setAdapter(adapter);
-                                                                        if (instance_list.hasFocus() && !BaseMainActivity.this.isFinishing())
-                                                                            instance_list.showDropDown();
-                                                                        oldSearch = s.toString().trim();
-
-                                                                    } catch (JSONException ignored) {
-                                                                        isLoadingInstance = false;
-                                                                    }
-                                                                }
-                                                            });
-
-                                                        } catch (HttpsConnection.HttpsConnectionException e) {
-                                                            isLoadingInstance = false;
-                                                        } catch (Exception e) {
-                                                            isLoadingInstance = false;
-                                                        }
-                                                    }
-                                                }).start();
-                                            else
-                                                isLoadingInstance = false;
-                                        }
-                                    }
-                                });
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
-            }
-        });
-
-    }
 }

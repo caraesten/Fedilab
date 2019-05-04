@@ -204,17 +204,13 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     @Override
     public void onItemDismiss(int position) {
         ManageTimelines item = mItems.get(position);
-        if( item.getType() == ManageTimelines.Type.TAG || item.getType() == ManageTimelines.Type.INSTANCE ) {
+        if( item.getType() == ManageTimelines.Type.TAG || item.getType() == ManageTimelines.Type.INSTANCE || item.getType() == ManageTimelines.Type.LIST) {
             mUndoListener.onUndo(item, position);
             mItems.remove(position);
             notifyItemRemoved(position);
         }else{
             notifyItemChanged(position);
-            if( item.getType() == ManageTimelines.Type.LIST ){
-                Toasty.info(context, context.getString(R.string.warning_list_deletion), Toast.LENGTH_SHORT).show();
-            }else{
-                Toasty.info(context, context.getString(R.string.warning_main_timeline), Toast.LENGTH_SHORT).show();
-            }
+            Toasty.info(context, context.getString(R.string.warning_main_timeline), Toast.LENGTH_SHORT).show();
         }
     }
 

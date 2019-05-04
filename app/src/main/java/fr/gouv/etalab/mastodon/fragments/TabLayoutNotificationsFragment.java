@@ -229,7 +229,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
                     break;
                 case 4:
                     if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
-                        type = DisplayNotificationsFragment.Type.POOL;
+                        type = DisplayNotificationsFragment.Type.POLL;
                     else
                         type = DisplayNotificationsFragment.Type.FOLLOW;
                     break;

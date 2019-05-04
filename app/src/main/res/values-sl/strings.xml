@@ -125,6 +125,7 @@
         <item>Naj blokiram ta račun?</item>
         <item>Želite prijaviti sporne vsebine v tej objavi?</item>
         <item>Želite blokirati to domeno?</item>
+        <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Obvesti</item>
@@ -312,6 +313,7 @@
     <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
     <string name="set_notif_follow_add">Obveščaj me, ko kdo moj status doda med priljubljene</string>
     <string name="set_notif_follow_mention">Obveščaj me, ko me kdo omeni</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
     <string name="set_wifi_only">Obveščanj le v omrežju WiFi</string>
@@ -582,6 +584,7 @@
     <string name="channel_notif_boost">Novo ojačanje</string>
     <string name="channel_notif_fav">Nov všeček</string>
     <string name="channel_notif_mention">Nova omemba</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Nova objava Toot</string>
     <string name="channel_notif_backup">Arhivirani Tooti</string>
     <string name="channel_notif_media">Prenos vsebine</string>
@@ -805,6 +808,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Create a poll</string>
     <string name="poll_choice_1">Choice 1</string>
     <string name="poll_choice_2">Choice 2</string>
@@ -817,6 +821,7 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
     <string name="settings_category_notif_categories">Categories</string>
     <string name="settings_category_notif_news">News</string>
@@ -835,6 +840,7 @@
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>
