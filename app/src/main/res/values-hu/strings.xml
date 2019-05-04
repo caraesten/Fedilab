@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Értesíts, amikor valaki megemlít téged</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Értesíts, amikor egy szavazás végetér</string>
     <string name="set_share_validation">Kérdezz vissza újratootolás előtt</string>
     <string name="set_share_validation_fav">Megerősítés kérése kedvencekhez hozzáadás előtt</string>
     <string name="set_wifi_only">Értesítés csak WiFi használatakor </string>
@@ -573,7 +573,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="channel_notif_boost">Új újratoot</string>
     <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">Új említés</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">A szavazás véget ért</string>
     <string name="channel_notif_toot">Új toot</string>
     <string name="channel_notif_backup">Tootok elmentése</string>
     <string name="channel_notif_media">Média letöltése</string>
@@ -797,7 +797,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="set_retrieve_metadata_share_from_extras">Kép csatolása URL megosztásakor</string>
     <!-- end languages -->
     <string name="poll">Szavazás</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Szavazások</string>
     <string name="create_poll">Szavazás létrehozása</string>
     <string name="poll_choice_1">1. lehetőség</string>
     <string name="poll_choice_2">2. lehetőség</string>
@@ -829,7 +829,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="warning_list_deletion">A lista törléséhez használd a listabejegyzést!</string>
     <string name="warning_main_timeline">A fő idővonalakat csak elrejteni lehet!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Idővonal hozzáadása</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
