@@ -125,7 +125,7 @@
         <item>Account blokkeren?</item>
         <item>Toot rapporteren?</item>
         <item>Dit domein blokkeren?</item>
-        <item>Unmute this account?</item>
+        <item>Dit account niet langer negeren?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Melden</item>
@@ -305,6 +305,7 @@
     <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
     <string name="set_notif_follow_add">Geef een melding wanneer jouw toot als favoriet is gemarkeerd</string>
     <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Vraag voor het boosten een bevestiging</string>
     <string name="set_share_validation_fav">Vraag voor het markeren als favoriet een bevestiging</string>
     <string name="set_wifi_only">Alleen met Wifi meldingen tonen</string>
@@ -575,6 +576,7 @@
     <string name="channel_notif_boost">Nieuwe boost</string>
     <string name="channel_notif_fav">Nieuwe favoriet</string>
     <string name="channel_notif_mention">Nieuwe vermelding</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Nieuwe toot</string>
     <string name="channel_notif_backup">Toots back-uppen</string>
     <string name="channel_notif_media">Media downloaden</string>
@@ -795,6 +797,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_retrieve_metadata_share_from_extras">Een afbeelding toevoegen wanneer een URL wordt gedeeld</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Een poll maken</string>
     <string name="poll_choice_1">Keuze 1</string>
     <string name="poll_choice_2">Keuze 2</string>
@@ -807,6 +810,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
     <string name="notif_poll">Een poll waarin je hebt gestemd is beëindigd</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Aanpassen</string>
     <string name="settings_category_notif_categories">Categorieën</string>
     <string name="settings_category_notif_news">Nieuws</string>

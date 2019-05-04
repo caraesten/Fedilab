@@ -305,6 +305,7 @@
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Visa en bekräftelsedialogruta före boostning</string>
     <string name="set_share_validation_fav">Visa bekräftelsedialogrutan innan du lägger till favoriter</string>
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
@@ -575,6 +576,7 @@
     <string name="channel_notif_boost">Ny boost</string>
     <string name="channel_notif_fav">Ny favorit</string>
     <string name="channel_notif_mention">Nytt omnämnande</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Ny Toot</string>
     <string name="channel_notif_backup">Backup av Toot</string>
     <string name="channel_notif_media">Ladda ner media</string>
@@ -798,6 +800,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Hämta metadata om webbadress delas av andra appar</string>
     <!-- end languages -->
     <string name="poll">Enkät</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Skapa en enkät</string>
     <string name="poll_choice_1">Val 1</string>
     <string name="poll_choice_2">Val 2</string>
@@ -810,6 +813,7 @@
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
     <string name="notif_poll">En enkät som du röstat i har avslutats</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Anpassa</string>
     <string name="settings_category_notif_categories">Kategorier</string>
     <string name="settings_category_notif_news">Nyheter</string>

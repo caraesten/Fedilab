@@ -305,6 +305,7 @@
     <string name="set_notif_follow_share">Notificar cando alguén promove un dos seus toots</string>
     <string name="set_notif_follow_add">Notificar cando alguén favorece un dos seus estados</string>
     <string name="set_notif_follow_mention">Notificar cando alguén a menciona</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Solicitar confirmación antes de promover</string>
     <string name="set_share_validation_fav">Solicitar confirmación antes de engadir a favoritos</string>
     <string name="set_wifi_only">Notificar só cando WiFi</string>
@@ -575,6 +576,7 @@
     <string name="channel_notif_boost">Nova promoción</string>
     <string name="channel_notif_fav">Novo favorito</string>
     <string name="channel_notif_mention">Nova mención</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Novo Toot</string>
     <string name="channel_notif_backup">Respaldo de Toots</string>
     <string name="channel_notif_media">Descarga de medios</string>
@@ -799,6 +801,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Obter metadatos se o URL os comparte desde outras apps</string>
     <!-- end languages -->
     <string name="poll">Sondaxe</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Crear sondaxe</string>
     <string name="poll_choice_1">Opción 1</string>
     <string name="poll_choice_2">Opción 2</string>
@@ -811,6 +814,7 @@
     <string name="vote">Votar</string>
     <string name="poll_not_private">Unha sondaxe non se pode anexar a unha mensaxe directa!</string>
     <string name="notif_poll">Rematou a sondaxe na que participou</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Personalizar</string>
     <string name="settings_category_notif_categories">Categorías</string>
     <string name="settings_category_notif_news">Novas</string>

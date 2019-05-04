@@ -305,6 +305,7 @@
     <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Confirmer avant de partager</string>
     <string name="set_share_validation_fav">Confirmer avant d’ajouter aux favoris</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
@@ -573,6 +574,7 @@
     <string name="channel_notif_boost">Nouveau Repouet</string>
     <string name="channel_notif_fav">Nouveau Favori</string>
     <string name="channel_notif_mention">Nouvelle mention</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Nouveau pouet</string>
     <string name="channel_notif_backup">Sauvegarde des Pouets</string>
     <string name="channel_notif_media">Téléchargement des Médias</string>
@@ -795,6 +797,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_retrieve_metadata_share_from_extras">Attacher une image lors du partage d\'une URL</string>
     <!-- end languages -->
     <string name="poll">Sondages</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Créer un sondage</string>
     <string name="poll_choice_1">Choix 1</string>
     <string name="poll_choice_2">Choix 2</string>
@@ -807,6 +810,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="vote">Voter</string>
     <string name="poll_not_private">Un sondage ne peut pas être attaché à un message direct!</string>
     <string name="notif_poll">Le sondage auquel vous avez participé est maintenant terminé</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Personnaliser</string>
     <string name="settings_category_notif_categories">Catégories</string>
     <string name="settings_category_notif_news">Actualités</string>

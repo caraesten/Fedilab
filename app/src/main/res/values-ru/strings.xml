@@ -125,7 +125,7 @@
         <item>Заблокировать этот аккаунт?</item>
         <item>Пожаловаться на этот тут?</item>
         <item>Заблокировать этот домен?</item>
-        <item>Unmute this account?</item>
+        <item>Не глушить этот аккаунт?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Уведомлять</item>
@@ -313,6 +313,7 @@
     <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
     <string name="set_notif_follow_add">Уведомлять, если кто-то добавил ваш статус в избранное</string>
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
+    <string name="set_notif_follow_poll">Уведомить об окончании опроса</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
     <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
     <string name="set_wifi_only">Уведомлять только в сети WIFI</string>
@@ -583,6 +584,7 @@
     <string name="channel_notif_boost">Новое продвижение</string>
     <string name="channel_notif_fav">Новое избранное</string>
     <string name="channel_notif_mention">Новое упоминание</string>
+    <string name="channel_notif_poll">Опрос закончен</string>
     <string name="channel_notif_toot">Новый тут</string>
     <string name="channel_notif_backup">Резервирование тутов</string>
     <string name="channel_notif_media">Загрузка медиа</string>
@@ -806,6 +808,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Прикрепить изображение при публикации URL</string>
     <!-- end languages -->
     <string name="poll">Опрос</string>
+    <string name="polls">Опросы</string>
     <string name="create_poll">Создать опрос</string>
     <string name="poll_choice_1">Вариант 1</string>
     <string name="poll_choice_2">Вариант 2</string>
@@ -818,6 +821,7 @@
     <string name="vote">Голосовать</string>
     <string name="poll_not_private">Опрос не может быть прикреплен к прямому сообщению!</string>
     <string name="notif_poll">Опрос, в котором вы проголосовали, завершен</string>
+    <string name="notif_poll_self">Один из ваших опросов завершен</string>
     <string name="settings_category_notif_customize">Настроить</string>
     <string name="settings_category_notif_categories">Категории</string>
     <string name="settings_category_notif_news">Новости</string>

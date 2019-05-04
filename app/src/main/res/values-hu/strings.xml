@@ -305,6 +305,7 @@
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Értesíts, amikor valaki megemlít téged</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Kérdezz vissza újratootolás előtt</string>
     <string name="set_share_validation_fav">Megerősítés kérése kedvencekhez hozzáadás előtt</string>
     <string name="set_wifi_only">Értesítés csak WiFi használatakor </string>
@@ -572,6 +573,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="channel_notif_boost">Új újratoot</string>
     <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">Új említés</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Új toot</string>
     <string name="channel_notif_backup">Tootok elmentése</string>
     <string name="channel_notif_media">Média letöltése</string>
@@ -795,6 +797,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="set_retrieve_metadata_share_from_extras">Kép csatolása URL megosztásakor</string>
     <!-- end languages -->
     <string name="poll">Szavazás</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Szavazás létrehozása</string>
     <string name="poll_choice_1">1. lehetőség</string>
     <string name="poll_choice_2">2. lehetőség</string>
@@ -807,6 +810,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
     <string name="notif_poll">Véget ért egy szavazás, amiben részt vettél</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Testreszabás</string>
     <string name="settings_category_notif_categories">Kategóriák</string>
     <string name="settings_category_notif_news">Hírek</string>
