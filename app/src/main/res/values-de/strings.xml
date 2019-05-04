@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
     <string name="set_notif_follow_add">jemand meinen Beitrag favorisiert</string>
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Benachrichtigen, sobald eine Umfrage beendet ist</string>
     <string name="set_share_validation">Bestätigungsdialog vor dem Teilen anzeigen</string>
     <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren anzeigen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
@@ -566,7 +566,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="channel_notif_boost">Neu geteilt</string>
     <string name="channel_notif_fav">Neuer Favorit</string>
     <string name="channel_notif_mention">Neue Erwähnung</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Umfrage beendet</string>
     <string name="channel_notif_toot">Neuer Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Medien Download</string>
@@ -788,7 +788,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_retrieve_metadata_share_from_extras">Metadaten abrufen, wenn die URL von anderen Apps geteilt wird</string>
     <!-- end languages -->
     <string name="poll">Umfrage</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Umfragen</string>
     <string name="create_poll">Umfrage erstellen</string>
     <string name="poll_choice_1">Möglichkeit 1</string>
     <string name="poll_choice_2">Möglichkeit 2</string>
@@ -801,7 +801,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="vote">Abstimmen</string>
     <string name="poll_not_private">Eine Umfrage kann nicht an eine direkte Nachricht angehängt werden!</string>
     <string name="notif_poll">Eine Umfrage, in der du abgestimmt hast, ist beendet</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Eine deiner Umfragen ist beendet</string>
     <string name="settings_category_notif_customize">Anpassen</string>
     <string name="settings_category_notif_categories">Kategorien</string>
     <string name="settings_category_notif_news">Neuigkeiten</string>
