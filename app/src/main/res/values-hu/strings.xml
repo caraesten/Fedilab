@@ -829,6 +829,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="warning_list_deletion">A lista törléséhez használd a listabejegyzést!</string>
     <string name="warning_main_timeline">A fő idővonalakat csak elrejteni lehet!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

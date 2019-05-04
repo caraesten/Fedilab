@@ -829,6 +829,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="warning_list_deletion">Druk lang op de lijstnaam onder lijsten om deze lijst te verwijderen!</string>
     <string name="warning_main_timeline">Hoofdtijdlijnen kunnen alleen worden verborgen!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>

@@ -832,6 +832,7 @@
     <string name="warning_list_deletion">Usa la voce delle liste per eliminare questa lista!</string>
     <string name="warning_main_timeline">Le timeline principali possono solo essere nascoste!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>

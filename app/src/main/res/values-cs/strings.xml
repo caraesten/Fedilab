@@ -837,6 +837,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="warning_list_deletion">Použijte položky seznamu k odstranění tohoto seznamu!</string>
     <string name="warning_main_timeline">Hlavní časové linie mohou být pouze skryty!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>

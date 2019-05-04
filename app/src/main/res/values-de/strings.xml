@@ -820,6 +820,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="warning_list_deletion">Verwenden Sie den Listeneintrag zum Löschen dieser Liste!</string>
     <string name="warning_main_timeline">Hauptzeitachsen können nur ausgeblendet werden!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Zeitachse hinzufügen</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

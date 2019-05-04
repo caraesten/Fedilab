@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Meddela när en röstning slutar</string>
     <string name="set_share_validation">Visa en bekräftelsedialogruta före boostning</string>
     <string name="set_share_validation_fav">Visa bekräftelsedialogrutan innan du lägger till favoriter</string>
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_boost">Ny boost</string>
     <string name="channel_notif_fav">Ny favorit</string>
     <string name="channel_notif_mention">Nytt omnämnande</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Röstning avslutad</string>
     <string name="channel_notif_toot">Ny Toot</string>
     <string name="channel_notif_backup">Backup av Toot</string>
     <string name="channel_notif_media">Ladda ner media</string>
@@ -800,7 +800,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Hämta metadata om webbadress delas av andra appar</string>
     <!-- end languages -->
     <string name="poll">Enkät</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Röstning</string>
     <string name="create_poll">Skapa en enkät</string>
     <string name="poll_choice_1">Val 1</string>
     <string name="poll_choice_2">Val 2</string>
@@ -832,6 +832,7 @@
     <string name="warning_list_deletion">Använd posten listor för att ta bort denna lista!</string>
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
+    <string name="add_timeline">Add a timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>
