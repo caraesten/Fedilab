@@ -2445,7 +2445,7 @@ public class API {
             parameters.append("exclude_types[]=").append("poll").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
             params.put("exclude_types[]", parameters.toString());
-        }else if(type == DisplayNotificationsFragment.Type.POOL){
+        }else if(type == DisplayNotificationsFragment.Type.POLL){
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("follow").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
