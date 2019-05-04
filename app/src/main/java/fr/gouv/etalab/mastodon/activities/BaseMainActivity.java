@@ -182,6 +182,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private List<ManageTimelines> timelines;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
+    private static boolean notificationChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1094,9 +1095,7 @@ public abstract class BaseMainActivity extends BaseActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                if( tabLayout.getTabAt(1) != null)
-                    //noinspection ConstantConditions
-                    tabLayout.getTabAt(1).select();
+                notificationChecked = true;
                 if( extras.getString(INTENT_TARGETED_ACCOUNT) != null ){
                     Intent intentShow = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
                     Bundle b = new Bundle();
@@ -1850,6 +1849,19 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
+        if( notificationChecked){
+            notificationChecked = false;
+            int i = 0;
+            for(ManageTimelines tl: timelines){
+                if( tl.getType() == ManageTimelines.Type.NOTIFICATION){
+                    if( tabLayout.getTabAt(i) != null) {
+                        tabLayout.getTabAt(i).select();
+                    }
+                    break;
+                }
+                i++;
+            }
+        }
     }
 
     /**
