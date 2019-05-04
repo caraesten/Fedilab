@@ -906,6 +906,7 @@
     <!-- end languages -->
 
     <string name="poll">Poll</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Create a poll</string>
     <string name="poll_choice_1">Choice 1</string>
     <string name="poll_choice_2">Choice 2</string>

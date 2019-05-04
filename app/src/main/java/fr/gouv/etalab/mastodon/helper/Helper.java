@@ -361,6 +361,7 @@ public class Helper {
     public static final String SET_NOTIF_ADD_FILTER = "set_notif_follow_add_filter";
     public static final String SET_NOTIF_MENTION_FILTER = "set_notif_follow_mention_filter";
     public static final String SET_NOTIF_SHARE_FILTER = "set_notif_follow_share_filter";
+    public static final String SET_NOTIF_POLL_FILTER = "set_notif_follow_poll_filter";
     public static final String SET_FILTER_REGEX_HOME = "set_filter_regex_home";
     public static final String SET_FILTER_REGEX_LOCAL = "set_filter_regex_local";
     public static final String SET_FILTER_REGEX_PUBLIC = "set_filter_regex_public";
