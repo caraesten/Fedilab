@@ -394,7 +394,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                             new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
                             break;
                         case INSTANCE:
-                            new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getId());
+                            new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getHost());
                             new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
                             break;
                         case LIST:
