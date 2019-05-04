@@ -313,6 +313,7 @@
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
     <string name="set_notif_follow_add">Oznámení v případě oblíbení vašeho tootu</string>
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">Zobrazit potvrzení před boostnutí</string>
     <string name="set_share_validation_fav">Zobrazit potvrzení před oblíbením</string>
     <string name="set_wifi_only">Oznámení pouze na WIFI</string>
@@ -581,6 +582,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="channel_notif_boost">Nový boost</string>
     <string name="channel_notif_fav">Nové oblíbení</string>
     <string name="channel_notif_mention">Nová zmínka</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">Nový toot</string>
     <string name="channel_notif_backup">Záloha tootů</string>
     <string name="channel_notif_media">Stahování médií</string>
@@ -803,6 +805,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_retrieve_metadata_share_from_extras">Připojit při sdílení URL obrázek</string>
     <!-- end languages -->
     <string name="poll">Anketa</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">Vytvořit anketu</string>
     <string name="poll_choice_1">Volba 1</string>
     <string name="poll_choice_2">Volba 2</string>
@@ -815,6 +818,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="vote">Hlasovat</string>
     <string name="poll_not_private">K přímé zprávě nelze připojit anketu!</string>
     <string name="notif_poll">Anketa, ve které jste hlasoval/a, skončila</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Přizpůsobit</string>
     <string name="settings_category_notif_categories">Kategorie</string>
     <string name="settings_category_notif_news">Novinky</string>
