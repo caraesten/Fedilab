@@ -301,6 +301,7 @@
     <string name="set_notif_follow_share">当某人转嘟您的状态时通知</string>
     <string name="set_notif_follow_add">当某人收藏您的状态时通知</string>
     <string name="set_notif_follow_mention">当有人提到您时通知</string>
+    <string name="set_notif_follow_poll">Notify when a poll ended</string>
     <string name="set_share_validation">转嘟前显示确认对话框</string>
     <string name="set_share_validation_fav">添加到收藏夹前显示确认对话框</string>
     <string name="set_wifi_only">仅当使用 WiFi 时通知</string>
@@ -571,6 +572,7 @@
     <string name="channel_notif_boost">新的转嘟</string>
     <string name="channel_notif_fav">新的收藏</string>
     <string name="channel_notif_mention">新的提及</string>
+    <string name="channel_notif_poll">Poll Ended</string>
     <string name="channel_notif_toot">新的嘟文</string>
     <string name="channel_notif_backup">嘟文备份</string>
     <string name="channel_notif_media">媒体下载</string>
@@ -794,6 +796,7 @@
     <string name="set_retrieve_metadata_share_from_extras">分享 URL 时附加图像</string>
     <!-- end languages -->
     <string name="poll">投票</string>
+    <string name="polls">Polls</string>
     <string name="create_poll">创建投票</string>
     <string name="poll_choice_1">选项一</string>
     <string name="poll_choice_2">选项二</string>
@@ -806,6 +809,7 @@
     <string name="vote">投票</string>
     <string name="poll_not_private">投票无法附加到直接消息上！</string>
     <string name="notif_poll">一个你参加过的投票已经结束</string>
+    <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">定制</string>
     <string name="settings_category_notif_categories">类别</string>
     <string name="settings_category_notif_news">新闻</string>
