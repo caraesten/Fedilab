@@ -458,6 +458,7 @@ public class Helper {
         MENTION,
         BOOST,
         FAV,
+        POLL,
         BACKUP,
         STORE,
         TOOT
@@ -1011,6 +1012,10 @@ public class Helper {
             case MENTION:
                 channelId = "channel_mention";
                 channelTitle = context.getString(R.string.channel_notif_mention);
+                break;
+            case POLL:
+                channelId = "channel_poll";
+                channelTitle = context.getString(R.string.channel_notif_poll);
                 break;
             case BACKUP:
                 channelId = "channel_backup";
