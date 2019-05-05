@@ -2038,13 +2038,28 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     public void updateNotifCounter(){
-        if(tabLayout.getTabAt(1) == null)
+        if( timelines == null)
             return;
-        //noinspection ConstantConditions
-        View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        ManageTimelines notifTimeline;
+        int i = 0;
+        int position = -1;
+        for(ManageTimelines tl: timelines){
+            if( tl.getType() == ManageTimelines.Type.NOTIFICATION){
+                if( tabLayout.getTabAt(i) != null) {
+                    position = i;
+                }
+                break;
+            }
+            i++;
+        }
+        if( position == -1)
+            return;
+        View tabNotif = tabLayout.getTabAt(position).getCustomView();
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
+        if( tabCounterNotif == null)
+            return;
         tabCounterNotif.setText(String.valueOf(countNewNotifications));
         if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
