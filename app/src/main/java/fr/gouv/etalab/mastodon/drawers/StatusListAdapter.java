@@ -253,7 +253,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onPoll(Status status, Poll poll) {
-        status.setPoll(poll);
+        if( status.getReblog() != null){
+            status.getReblog().setPoll(poll);
+        }else{
+            status.setPoll(poll);
+        }
         notifyStatusChanged(status);
     }
 
