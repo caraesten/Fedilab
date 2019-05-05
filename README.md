@@ -38,7 +38,8 @@
 <img src="./images/device-2019-02-02-114910.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-Developer: [@tom79](https://mastodon.social/@tom79)
+Lead developer: [@tom79](https://mastodon.social/@tom79)
+Developer: [@kasun](https://mastodon.social/@kasun)
 
 ## Backers
 

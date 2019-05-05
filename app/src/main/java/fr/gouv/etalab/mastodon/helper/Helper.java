@@ -969,7 +969,7 @@ public class Helper {
         alert.show();
     }
 
-    private static String getMimeType(String url) {
+    public static String getMimeType(String url) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
         if (extension != null) {

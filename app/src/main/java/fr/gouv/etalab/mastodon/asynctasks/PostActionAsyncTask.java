@@ -129,6 +129,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 api = new API(contextReference.get());
             if (remoteStatus != null) {
                 String uri;
+
                 if (remoteStatus.getReblog() != null) {
                     if (remoteStatus.getReblog().getUri().startsWith("http"))
                         uri = remoteStatus.getReblog().getUri();

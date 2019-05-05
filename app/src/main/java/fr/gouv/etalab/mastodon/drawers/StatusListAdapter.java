@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
@@ -55,6 +56,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -180,7 +182,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private boolean redraft;
     private Status toot;
     private TagTimeline tagTimeline;
-
+    public static boolean fetch_all_more = false;
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -218,6 +220,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         redraft = false;
     }
 
+
     public void updateMuted(List<String> timedMute){
         this.timedMute = timedMute;
     }
@@ -250,7 +253,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onPoll(Status status, Poll poll) {
-        status.setPoll(poll);
+        if( status.getReblog() != null){
+            status.getReblog().setPoll(poll);
+        }else{
+            status.setPoll(poll);
+        }
         notifyStatusChanged(status);
     }
 
@@ -551,15 +558,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
                 holder.submit_vote.setVisibility(View.GONE);
-                if( (status.getPoll() != null && status.getPoll().getOptionsList() != null)
-                    || (status.getReblog() != null && status.getReblog().getPoll() != null && status.getReblog().getPoll().getOptionsList() != null)
-                ){
-                    Poll poll;
-                    if( status.getReblog() != null) {
-                        poll = status.getReblog().getPoll();
-                    }else {
-                        poll = status.getPoll();
-                    }
+                Poll poll;
+                if( status.getReblog() != null) {
+                    poll = status.getReblog().getPoll();
+                }else {
+                    poll = status.getPoll();
+                }
+                if( poll != null && poll.getOptionsList() != null){
                     if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
@@ -1338,6 +1343,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }
                 });
+                holder.fetch_more.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        status.setFetchMore(false);
+                        holder.fetch_more.setEnabled(false);
+                        holder.fetch_more.setVisibility(View.GONE);
+                        if( context instanceof BaseMainActivity) {
+                            SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+                            List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+                            for(ManageTimelines tl: timelines) {
+                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                                    if (homeFragment != null) {
+                                        fetch_all_more = true;
+                                        homeFragment.fetchMore(status.getId());
+                                    }
+                                    break;
+                                }
+                            }
+                        }else{
+                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+                });
             } else {
                 holder.fetch_more.setVisibility(View.GONE);
 
@@ -1456,12 +1486,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             /*if (expand_cw)
                 holder.status_spoiler_button.setVisibility(View.GONE);*/
             String contentCheck = "";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-            else
-                //noinspection deprecation
-                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent()).toString();
-
+            String content = status.getReblog() == null?status.getContent():status.getReblog().getContent();
+            if( content != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    contentCheck = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
+                else
+                    contentCheck = Html.fromHtml(content).toString();
+            }
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
@@ -2912,6 +2943,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             intent.putExtras(b);
                             context.startActivity(intent);
                         }
+                    }
+                });
+                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+                        String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
+                        ((MainActivity)context).download(myDir+"/"+fileName, attachment.getUrl());
+                        return true;
                     }
                 });
                 i++;

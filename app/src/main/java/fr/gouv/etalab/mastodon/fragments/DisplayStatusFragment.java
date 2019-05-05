@@ -975,9 +975,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
             if (initialBookMarkDate != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
-                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
-                fetchMoreButtonDisplayed = true;
+                if( StatusListAdapter.fetch_all_more && statuses.size() > 0){
+                    fetchMore(tmpStatuses.get(tmpStatuses.size() - 1).getId());
+                }else{
+                    fetchMoreButtonDisplayed = true;
+                    tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                    StatusListAdapter.fetch_all_more = false;
+                }
             }
+        }else{
+            StatusListAdapter.fetch_all_more = false;
         }
         this.statuses.addAll(position, tmpStatuses);
         boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);

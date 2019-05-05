@@ -24,11 +24,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -56,6 +59,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,9 +67,28 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.tonyodev.fetch2.Download;
+import com.tonyodev.fetch2.Error;
+import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.FetchListener;
+import com.tonyodev.fetch2.NetworkType;
+import com.tonyodev.fetch2.Priority;
+import com.tonyodev.fetch2.Request;
+import com.tonyodev.fetch2core.DownloadBlock;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 
 import es.dmoral.toasty.Toasty;
@@ -118,6 +141,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.DomainBlockDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -180,6 +204,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
+    private FetchConfiguration fetchConfiguration;
+    private Fetch fetch;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
     private static boolean notificationChecked = false;
@@ -228,6 +254,7 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
+        initializeDownload();
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -2038,13 +2065,28 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     public void updateNotifCounter(){
-        if(tabLayout.getTabAt(1) == null)
+        if( timelines == null)
             return;
-        //noinspection ConstantConditions
-        View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        ManageTimelines notifTimeline;
+        int i = 0;
+        int position = -1;
+        for(ManageTimelines tl: timelines){
+            if( tl.getType() == ManageTimelines.Type.NOTIFICATION){
+                if( tabLayout.getTabAt(i) != null) {
+                    position = i;
+                }
+                break;
+            }
+            i++;
+        }
+        if( position == -1)
+            return;
+        View tabNotif = tabLayout.getTabAt(position).getCustomView();
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
+        if( tabCounterNotif == null)
+            return;
         tabCounterNotif.setText(String.valueOf(countNewNotifications));
         if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
@@ -2094,7 +2136,83 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
+    private void initializeDownload(){
+        fetchConfiguration = new FetchConfiguration.Builder(this)
+                .setDownloadConcurrentLimit(3)
+                .build();
+        fetch = Fetch.Impl.getInstance(fetchConfiguration);
+        FetchListener fetchListener = new FetchListener() {
+            @Override
+            public void onWaitingNetwork(@NotNull Download download) {
+            }
+            @Override
+            public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
+            }
+            @Override
+            public void onResumed(@NotNull Download download) {
+            }
+            @Override
+            public void onRemoved(@NotNull Download download) {
+            }
+            @Override
+            public void onQueued(@NotNull Download download, boolean b) {
+            }
+            @Override
+            public void onProgress(@NotNull Download download, long l, long l1) {
+            }
+            @Override
+            public void onPaused(@NotNull Download download) {
+            }
+            @Override
+            public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
+            }
+            @Override
+            public void onDeleted(@NotNull Download download) {
+            }
+            @Override
+            public void onCompleted(@NotNull Download download) {
+                if( download.getFileUri().getPath() != null) {
+                    String url = download.getUrl();
+                    final String fileName = URLUtil.guessFileName(url, null, null);
+                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String mime = Helper.getMimeType(url);
+                    File file = new File(download.getFileUri().getPath());
+                    final Intent intent = new Intent();
+                    Random r = new Random();
+                    final int notificationIdTmp = r.nextInt(10000);
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
+                    intent.setDataAndType(uri, mime);
+                    Helper.notify_user(getApplicationContext(), intent, notificationIdTmp, BitmapFactory.decodeResource(getResources(),
+                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, getString(R.string.save_over), getString(R.string.download_from, fileName));
+                }
+            }
+            @Override
+            public void onCancelled(@NotNull Download download) {
+            }
+            @Override
+            public void onAdded(@NotNull Download download) {
+            }
+        };
 
+        fetch.addListener(fetchListener);
+    }
+
+    public void download(String file, String url){
+        final Request request = new Request(url, file);
+        request.setPriority(Priority.HIGH);
+        request.setNetworkType(NetworkType.ALL);
+        fetch.enqueue(request, updatedRequest -> {
+            //Request was successfully enqueued for download.
+        }, error -> {
+        });
+
+
+    }
 
 
     public boolean getFloatingVisibility(){

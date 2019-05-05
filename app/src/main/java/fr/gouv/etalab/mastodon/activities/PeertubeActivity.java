@@ -93,6 +93,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -518,6 +519,29 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 public void onClick(View v) {
                     String newState = peertube.getMyRating().equals("dislike")?"none":"dislike";
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.RATEVIDEO, peertube.getId(), null, newState, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    peertube.setMyRating(newState);
+                    changeColor();
+                }
+            });
+        }else{
+            peertube_like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newState = peertube.getMyRating().equals("like")?"none":"like";
+                    Status status = new Status();
+                    status.setUri("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
+                    CrossActions.doCrossAction(getApplicationContext(),  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.FAVOURITE, null, PeertubeActivity.this, true);
+                    peertube.setMyRating(newState);
+                    changeColor();
+                }
+            });
+            peertube_dislike_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newState = peertube.getMyRating().equals("dislike")?"none":"dislike";
+                    Status status = new Status();
+                    status.setUri("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
+                    CrossActions.doCrossAction(getApplicationContext(),  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.UNFAVOURITE, null, PeertubeActivity.this, true);
                     peertube.setMyRating(newState);
                     changeColor();
                 }
