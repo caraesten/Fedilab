@@ -1,0 +1,9 @@
+Added
+* Long press on "Fetch more" will retrieve all missing statuses
+* Long press on media in timelines will download them in full resolution
+* Favourite video from Peertube when following an instance
+
+Fixed
+* Crashes when notifications timeline has been moved
+* Media not uploaded when the filename contains some special characters
+* Fix vote issue on reblogs
