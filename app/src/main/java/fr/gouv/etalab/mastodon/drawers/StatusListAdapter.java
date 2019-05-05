@@ -182,7 +182,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private boolean redraft;
     private Status toot;
     private TagTimeline tagTimeline;
-
+    public static boolean fetch_all_more = false;
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -219,6 +219,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
     }
+
 
     public void updateMuted(List<String> timedMute){
         this.timedMute = timedMute;
@@ -1338,6 +1339,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else{
                             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                         }
+                    }
+                });
+                holder.fetch_more.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        status.setFetchMore(false);
+                        holder.fetch_more.setEnabled(false);
+                        holder.fetch_more.setVisibility(View.GONE);
+                        if( context instanceof BaseMainActivity) {
+                            SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+                            List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+                            for(ManageTimelines tl: timelines) {
+                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                                    if (homeFragment != null) {
+                                        fetch_all_more = true;
+                                        homeFragment.fetchMore(status.getId());
+                                    }
+                                    break;
+                                }
+                            }
+                        }else{
+                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                        }
+                        return false;
                     }
                 });
             } else {
