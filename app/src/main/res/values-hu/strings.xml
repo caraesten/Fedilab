@@ -810,7 +810,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
     <string name="notif_poll">Véget ért egy szavazás, amiben részt vettél</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Véget ért egy szavazás, amiben részt vettél</string>
     <string name="settings_category_notif_customize">Testreszabás</string>
     <string name="settings_category_notif_categories">Kategóriák</string>
     <string name="settings_category_notif_news">Hírek</string>
