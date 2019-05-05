@@ -1456,12 +1456,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             /*if (expand_cw)
                 holder.status_spoiler_button.setVisibility(View.GONE);*/
             String contentCheck = "";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-            else
-                //noinspection deprecation
-                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent()).toString();
-
+            String content = status.getReblog() == null?status.getContent():status.getReblog().getContent();
+            if( content != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    contentCheck = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
+                else
+                    contentCheck = Html.fromHtml(content).toString();
+            }
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
