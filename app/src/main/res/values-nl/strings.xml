@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
     <string name="set_notif_follow_add">Geef een melding wanneer jouw toot als favoriet is gemarkeerd</string>
     <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Geef een melding wanneer een poll is beëindigd</string>
     <string name="set_share_validation">Vraag voor het boosten een bevestiging</string>
     <string name="set_share_validation_fav">Vraag voor het markeren als favoriet een bevestiging</string>
     <string name="set_wifi_only">Alleen met Wifi meldingen tonen</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_boost">Nieuwe boost</string>
     <string name="channel_notif_fav">Nieuwe favoriet</string>
     <string name="channel_notif_mention">Nieuwe vermelding</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Poll is beëindigd</string>
     <string name="channel_notif_toot">Nieuwe toot</string>
     <string name="channel_notif_backup">Toots back-uppen</string>
     <string name="channel_notif_media">Media downloaden</string>
@@ -810,7 +810,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="vote">Stemmen</string>
     <string name="poll_not_private">Een poll kan niet aan een direct bericht worden toegevoegd!</string>
     <string name="notif_poll">Een poll waarin je hebt gestemd is beëindigd</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Een poll die je hebt getoot is beëindigd</string>
     <string name="settings_category_notif_customize">Aanpassen</string>
     <string name="settings_category_notif_categories">Categorieën</string>
     <string name="settings_category_notif_news">Nieuws</string>
@@ -829,7 +829,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="warning_list_deletion">Druk lang op de lijstnaam onder lijsten om deze lijst te verwijderen!</string>
     <string name="warning_main_timeline">Hoofdtijdlijnen kunnen alleen worden verborgen!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Tijdlijn toevoegen</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
