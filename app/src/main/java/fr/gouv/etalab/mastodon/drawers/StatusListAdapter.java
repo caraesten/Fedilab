@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
@@ -55,6 +56,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -2913,6 +2915,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             intent.putExtras(b);
                             context.startActivity(intent);
                         }
+                    }
+                });
+                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+                        String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
+                        ((MainActivity)context).download(myDir+"/"+fileName, attachment.getUrl());
+                        return true;
                     }
                 });
                 i++;
