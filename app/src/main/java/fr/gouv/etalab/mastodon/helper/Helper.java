@@ -118,8 +118,18 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import com.tonyodev.fetch2.Download;
+import com.tonyodev.fetch2.Error;
+import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.FetchListener;
+import com.tonyodev.fetch2.NetworkType;
+import com.tonyodev.fetch2.Priority;
+import com.tonyodev.fetch2.Request;
+import com.tonyodev.fetch2core.DownloadBlock;
 
 import org.conscrypt.Conscrypt;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -3858,6 +3868,83 @@ public class Helper {
         return null;
     }
 
+
+    public static void download(Context context, String file, String url){
+
+
+        FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(context)
+                .setDownloadConcurrentLimit(3)
+                .build();
+        Fetch fetch = Fetch.Impl.getInstance(fetchConfiguration);
+        FetchListener fetchListener = new FetchListener() {
+            @Override
+            public void onWaitingNetwork(@NotNull Download download) {
+            }
+            @Override
+            public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
+            }
+            @Override
+            public void onResumed(@NotNull Download download) {
+            }
+            @Override
+            public void onRemoved(@NotNull Download download) {
+            }
+            @Override
+            public void onQueued(@NotNull Download download, boolean b) {
+            }
+            @Override
+            public void onProgress(@NotNull Download download, long l, long l1) {
+            }
+            @Override
+            public void onPaused(@NotNull Download download) {
+            }
+            @Override
+            public void onError(@NotNull Download download, @NotNull Error error, @org.jetbrains.annotations.Nullable Throwable throwable) {
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
+            }
+            @Override
+            public void onDeleted(@NotNull Download download) {
+            }
+            @Override
+            public void onCompleted(@NotNull Download download) {
+                if( download.getFileUri().getPath() != null) {
+                    String url = download.getUrl();
+                    final String fileName = URLUtil.guessFileName(url, null, null);
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String mime = Helper.getMimeType(url);
+                    File file = new File(download.getFileUri().getPath());
+                    final Intent intent = new Intent();
+                    Random r = new Random();
+                    final int notificationIdTmp = r.nextInt(10000);
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
+                    intent.setDataAndType(uri, mime);
+                    Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                }
+            }
+            @Override
+            public void onCancelled(@NotNull Download download) {
+            }
+            @Override
+            public void onAdded(@NotNull Download download) {
+            }
+        };
+
+        fetch.addListener(fetchListener);
+        final Request request = new Request(url, file);
+        request.setPriority(Priority.HIGH);
+        request.setNetworkType(NetworkType.ALL);
+        fetch.enqueue(request, updatedRequest -> {
+            //Request was successfully enqueued for download.
+        }, error -> {
+        });
+
+
+    }
 
 
 }
