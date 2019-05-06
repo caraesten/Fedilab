@@ -2950,7 +2950,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public boolean onLongClick(View v) {
                         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
                         String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
-                        ((MainActivity)context).download(myDir+"/"+fileName, attachment.getUrl());
+                        Helper.download(context,myDir+"/"+fileName, attachment.getUrl());
                         return true;
                     }
                 });
