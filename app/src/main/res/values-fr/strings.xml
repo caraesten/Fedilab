@@ -797,7 +797,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_retrieve_metadata_share_from_extras">Attacher une image lors du partage d\'une URL</string>
     <!-- end languages -->
     <string name="poll">Sondages</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Sondages</string>
     <string name="create_poll">Créer un sondage</string>
     <string name="poll_choice_1">Choix 1</string>
     <string name="poll_choice_2">Choix 2</string>
@@ -829,7 +829,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Ajouter un fil</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
