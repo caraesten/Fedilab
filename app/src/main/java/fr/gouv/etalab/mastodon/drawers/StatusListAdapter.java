@@ -300,7 +300,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
-        Button status_show_more;
+        RelativeLayout status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
         RelativeLayout status_horizontal_document_container;
@@ -356,7 +356,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         RelativeLayout horizontal_second_image;
 
         LinearLayout status_peertube_container;
-        TextView status_peertube_reply, status_peertube_delete;
+        TextView status_peertube_reply, status_peertube_delete, show_more_content;
 
 
         //Poll
@@ -421,6 +421,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
             status_content_container = itemView.findViewById(R.id.status_content_container);
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
+            show_more_content = itemView.findViewById(R.id.show_more_content);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
             new_element = itemView.findViewById(R.id.new_element);
@@ -1550,7 +1551,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         } else {
                             //Text depending if toots is sensitive or not
                             String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
+                            holder.show_more_content.setText(textShowMore);
                             if (!status.isAttachmentShown()) {
                                 holder.status_show_more.setVisibility(View.VISIBLE);
                                 if (fullAttachement)
@@ -1564,7 +1565,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }else {
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
+                        holder.show_more_content.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
                             if (fullAttachement)
@@ -1594,7 +1595,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         } else {
                             //Text depending if toots is sensitive or not
                             String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
+                            holder.show_more_content.setText(textShowMore);
                             if (!status.isAttachmentShown()) {
                                 holder.status_show_more.setVisibility(View.VISIBLE);
                                 if (fullAttachement)
@@ -1608,7 +1609,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }else{
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
+                        holder.show_more_content.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
                             if (fullAttachement)
