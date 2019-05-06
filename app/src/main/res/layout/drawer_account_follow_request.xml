@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Mastalab
@@ -15,54 +14,75 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/account_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/account_container"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:orientation="horizontal">
+    android:layout_marginBottom="5dp">
+
     <ImageView
-        android:layout_gravity="center"
         android:id="@+id/account_pp"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:contentDescription="@string/profile_picture"/>
+        android:layout_gravity="center"
+        android:contentDescription="@string/profile_picture"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/account_dn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:maxLines="1"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/account_un"
+        app:layout_constraintLeft_toRightOf="@id/account_pp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/account_un"
-        android:padding="5dp"
-        android:maxLines="1"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:layout_gravity="center"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content" />
-    <LinearLayout
         android:layout_width="wrap_content"
-        android:gravity="end"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/btn_authorize"
-            android:text="@string/authorize"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_gravity="end"
-            android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btn_reject"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:text="@string/reject"
-            android:layout_gravity="end"
-            android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:maxLines="1"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_top_barrier"
+        app:layout_constraintLeft_toRightOf="@id/account_pp"
+        app:layout_constraintTop_toBottomOf="@id/account_dn" />
 
-</LinearLayout>
+    <android.support.constraint.Barrier
+        android:id="@+id/btn_top_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="btn_authorize,btn_reject" />
+
+    <Button
+        android:id="@+id/btn_authorize"
+        style="@style/Base.Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/authorize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_reject" />
+
+    <Button
+        android:id="@+id/btn_reject"
+        style="@style/Base.Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/reject"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
