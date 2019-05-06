@@ -419,6 +419,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
+
                     <RelativeLayout
                         android:id="@+id/status_horizontal_document_container"
                         android:visibility="gone"
@@ -671,8 +672,8 @@
                         android:visibility="gone"
                         android:id="@+id/status_show_more"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:layout_height="200dp"
+                        android:layout_centerInParent="true">
                         <TextView
                             android:id="@+id/show_more_content"
                             android:layout_width="wrap_content"

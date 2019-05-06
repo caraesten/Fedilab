@@ -147,6 +147,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.mPageReferenceMap;
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
@@ -1535,6 +1536,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
+            if( fullAttachement) {
+                RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                holder.status_show_more.setLayoutParams(rel_btn);
+            }
 
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
@@ -1545,7 +1551,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     //If medias are loaded without any conditions or if device is on wifi
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
                         if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
+                            loadAttachments(status, holder, false);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
@@ -1558,8 +1564,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
+                                loadAttachments(status, holder, true);
                             } else {
-                                loadAttachments(status, holder);
+                                loadAttachments(status, holder, false);
                             }
                         }
                     }else {
@@ -1572,8 +1579,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 holder.status_horizontal_document_container.setVisibility(View.GONE);
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
+                            loadAttachments(status, holder, true);
                         } else {
-                            loadAttachments(status, holder);
+                            loadAttachments(status, holder, false);
                         }
                     }
                 }
@@ -1589,7 +1597,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
                         //If medias are loaded without any conditions or if device is on wifi
                         if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
+                            loadAttachments(status.getReblog(), holder, false);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
@@ -1602,8 +1610,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
+                                loadAttachments(status.getReblog(), holder, true);
                             } else {
-                                loadAttachments(status.getReblog(), holder);
+                                loadAttachments(status.getReblog(), holder, false);
                             }
                         }
                     }else{
@@ -1616,8 +1625,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 holder.status_horizontal_document_container.setVisibility(View.GONE);
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
+                            loadAttachments(status.getReblog(), holder, true);
                         } else {
-                            loadAttachments(status.getReblog(), holder);
+                            loadAttachments(status.getReblog(), holder, false);
                         }
                     }
                 }
@@ -2723,7 +2733,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-    private void loadAttachments(final Status status, final ViewHolder holder){
+    private void loadAttachments(final Status status, final ViewHolder holder, boolean blur){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments = status.getMedia_attachments();
@@ -2897,36 +2907,71 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 if( fullAttachement){
                     imageView.setImageBitmap(null);
-                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
-                        Glide.with(imageView.getContext())
-                                .asBitmap()
-                                .load(url)
-                                .thumbnail(0.1f)
-                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        DrawableTransitionOptions.withCrossFade();
-                                        int width = resource.getWidth();
-                                        int height = resource.getHeight();
+                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() ) {
+                        if( !blur) {
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            DrawableTransitionOptions.withCrossFade();
+                                            int width = resource.getWidth();
+                                            int height = resource.getHeight();
 
-                                        if( height < Helper.convertDpToPixel(200, context)){
-                                            double ratio = ((double)Helper.convertDpToPixel(200, context) / (double)height);
-                                            width = (int)(ratio * width);
-                                            height = (int) Helper.convertDpToPixel(200, context);
-                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                                double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
+                                                width = (int) (ratio * width);
+                                                height = (int) Helper.convertDpToPixel(200, context);
+                                                resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            }
+                                            imageView.setImageBitmap(resource);
                                         }
-                                        imageView.setImageBitmap(resource);
-                                    }
-                                });
+                                    });
+                        }else{
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(80), new RoundedCorners(10)))
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            DrawableTransitionOptions.withCrossFade();
+                                            int width = resource.getWidth();
+                                            int height = resource.getHeight();
+
+                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                                double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
+                                                width = (int) (ratio * width);
+                                                height = (int) Helper.convertDpToPixel(200, context);
+                                                resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            }
+                                            imageView.setImageBitmap(resource);
+                                        }
+                                    });
+                        }
+                    }
                 }else {
-                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing())
-                        Glide.with(imageView.getContext())
-                                .load(url)
-                                .thumbnail(0.1f)
-                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .into(imageView);
+                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
+                        if( !blur) {
+                            Glide.with(imageView.getContext())
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .transition(DrawableTransitionOptions.withCrossFade())
+                                    .into(imageView);
+                        }else{
+                            Glide.with(imageView.getContext())
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(80), new RoundedCorners(10)))
+                                    .transition(DrawableTransitionOptions.withCrossFade())
+                                    .into(imageView);
+                        }
+                    }
                 }
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
