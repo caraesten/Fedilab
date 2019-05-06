@@ -321,7 +321,7 @@
     <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
     <string name="set_notif_follow_add">إخطاري عندما يُعجَب أحدهم بأحد منشوراتي</string>
     <string name="set_notif_follow_mention">إخطاري عندما يُشار إليّ</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">أرسل إشعاراً عند انتهاء استطلاع الرأي</string>
     <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
     <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
     <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
@@ -590,7 +590,7 @@
     <string name="channel_notif_boost">ترقية جديدة</string>
     <string name="channel_notif_fav">مفضلة جديدة</string>
     <string name="channel_notif_mention">إشارة جديدة</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">انتهى استطلاع الرأي</string>
     <string name="channel_notif_toot">تبويق جديد</string>
     <string name="channel_notif_backup">النسخ الاحتياطي للتبويقات</string>
     <string name="channel_notif_media">تنزيل الوسائط</string>
