@@ -237,8 +237,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         final ImageButton account_menu = findViewById(R.id.account_menu);
         ImageButton action_more = findViewById(R.id.action_more);
-        if( theme == THEME_LIGHT)
+        ImageButton action_back = findViewById(R.id.action_back);
+        if(theme == THEME_LIGHT){
             changeDrawableColor(getApplicationContext(),action_more,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(),account_menu,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(),action_back,R.color.dark_icon);
+        }
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,6 +253,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             @Override
             public void onClick(View v) {
                 showMenu(account_menu);
+            }
+        });
+        action_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         if( account != null){
