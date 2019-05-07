@@ -1536,11 +1536,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
-            if( fullAttachement) {
-                RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                holder.status_show_more.setLayoutParams(rel_btn);
-            }
 
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
@@ -2737,7 +2732,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments = status.getMedia_attachments();
-
+        if( !blur)
+            holder.status_show_more.setVisibility(View.GONE);
+        else
+            holder.status_show_more.setVisibility(View.VISIBLE);
         if( attachments != null && attachments.size() > 0){
             int i = 0;
             holder.horizontal_second_image.setVisibility(View.VISIBLE);
@@ -2935,7 +2933,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .asBitmap()
                                     .load(url)
                                     .thumbnail(0.1f)
-                                    .apply(new RequestOptions().transforms(new BlurTransformation(80), new RoundedCorners(10)))
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -2967,7 +2965,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Glide.with(imageView.getContext())
                                     .load(url)
                                     .thumbnail(0.1f)
-                                    .apply(new RequestOptions().transforms(new BlurTransformation(80), new RoundedCorners(10)))
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
                         }
@@ -3004,11 +3002,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }else{
-                holder.status_horizontal_document_container.setVisibility(View.GONE);
-                holder.status_document_container.setVisibility(View.GONE);
+            holder.status_horizontal_document_container.setVisibility(View.GONE);
+            holder.status_document_container.setVisibility(View.GONE);
+            holder.status_show_more.setVisibility(View.GONE);
         }
-        holder.status_show_more.setVisibility(View.GONE);
-
 
     }
 
