@@ -653,6 +653,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave in nato izberite <b>Doliči čas ojačanja</b>.]]></string>
     <string name="art_menu">Umetniška časovnica</string>
     <string name="open_menu">Odpri meni</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Logotip aplikacije</string>
     <string name="profile_picture">Profilna slika</string>
     <string name="profile_banner">Plakat profila</string>
