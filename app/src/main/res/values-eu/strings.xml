@@ -644,6 +644,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Ireko toot baten menua eta hautatu <b>programatu bultzada</b>.]]></string>
     <string name="art_menu">Arte denbora-lerroa</string>
     <string name="open_menu">Ireki menua</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Aplikazioaren logoa</string>
     <string name="profile_picture">Profilaren Irudia</string>
     <string name="profile_banner">Profileko banda</string>
