@@ -649,6 +649,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Отворите мени тута и одаберите <b>Закажи подршку</b>.]]></string>
     <string name="art_menu">Уметничка лајна</string>
     <string name="open_menu">Отвори мени</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Логотип апликације</string>
     <string name="profile_picture">Профилна слика</string>
     <string name="profile_banner">Профилни банер</string>
