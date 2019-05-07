@@ -642,6 +642,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Újratoot időzítése</b> opciót.]]></string>
     <string name="art_menu">Művészies idővonal</string>
     <string name="open_menu">Menü megnyitása</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Alkalmazás logója</string>
     <string name="profile_picture">Profilkép</string>
     <string name="profile_banner">Profilbanner</string>
