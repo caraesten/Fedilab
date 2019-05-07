@@ -640,6 +640,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Línea de tiempo de arte</string>
     <string name="open_menu">Abrir menú</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Logo de la aplicación</string>
     <string name="profile_picture">Imagen del perfil</string>
     <string name="profile_banner">Banner de perfil</string>
