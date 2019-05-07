@@ -39,6 +39,7 @@
 
 
 Lead developer: [@tom79](https://mastodon.social/@tom79)
+<br>
 Developer: [@kasun](https://mastodon.social/@kasun)
 
 ## Backers
