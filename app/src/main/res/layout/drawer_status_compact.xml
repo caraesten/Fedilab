@@ -633,14 +633,19 @@
                 android:visibility="gone"
                 android:id="@+id/status_show_more"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true">
+                android:layout_height="200dp"
+                >
                 <TextView
                     android:textSize="20sp"
                     android:gravity="center"
                     android:id="@+id/show_more_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                    android:padding="12dp"
+                    android:background="#AA000000"
+                    android:textColor="#ffffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

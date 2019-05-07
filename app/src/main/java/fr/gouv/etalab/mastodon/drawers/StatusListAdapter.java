@@ -1537,6 +1537,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+
+            if( fullAttachement){
+                int heigh = holder.status_horizontal_document_container.getHeight();
+                RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, heigh);
+                holder.status_show_more.setLayoutParams(rel_btn);
+            }
+
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
                     holder.status_horizontal_document_container.setVisibility(View.GONE);
@@ -2948,6 +2956,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 resource = Bitmap.createScaledBitmap(resource, width, height, false);
                                             }
                                             imageView.setImageBitmap(resource);
+                                            notifyStatusChanged(status);
+
+
                                         }
                                     });
                         }
