@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Notifica quando qualcuno ricondivide al tuo stato</string>
     <string name="set_notif_follow_add">Notifica quando qualcuno mette tra i preferiti il tuo stato</string>
     <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Notifica quando termina un sondaggio</string>
     <string name="set_share_validation">Mostra finestra di dialogo prima della ricondivisione</string>
     <string name="set_share_validation_fav">Mostra finestra di dialogo prima di aggiungere ai preferiti</string>
     <string name="set_wifi_only">Notifica solo in WIFI</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_boost">Un nuovo boost</string>
     <string name="channel_notif_fav">Un nuovo mi piace</string>
     <string name="channel_notif_mention">Una nuova menzione</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Sondaggio terminato</string>
     <string name="channel_notif_toot">Un nuovo toot</string>
     <string name="channel_notif_backup">Backup dei toot</string>
     <string name="channel_notif_media">Scarica i media</string>
@@ -800,7 +800,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Recupera metadati se l\'URL che condivide da altre applicazioni</string>
     <!-- end languages -->
     <string name="poll">Sondaggio</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Sondaggi</string>
     <string name="create_poll">Crea un sondaggio</string>
     <string name="poll_choice_1">Scelta 1</string>
     <string name="poll_choice_2">Scelta 2</string>
@@ -813,7 +813,7 @@
     <string name="vote">Vota</string>
     <string name="poll_not_private">Un sondaggio non può essere allegato ad un messaggio diretto!</string>
     <string name="notif_poll">Un sondaggio in cui hai votato è terminato</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Un tuo sondaggio è terminato</string>
     <string name="settings_category_notif_customize">Personalizza</string>
     <string name="settings_category_notif_categories">Categorie</string>
     <string name="settings_category_notif_news">Novità</string>
@@ -832,7 +832,7 @@
     <string name="warning_list_deletion">Usa la voce delle liste per eliminare questa lista!</string>
     <string name="warning_main_timeline">Le timeline principali possono solo essere nascoste!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Aggiungi una timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
