@@ -91,6 +91,20 @@
                         android:layout_height="wrap_content" />
 
                     <ImageButton
+                        android:id="@+id/action_back"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_back"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:contentDescription="@string/go_back" />
+
+                    <ImageButton
                         android:id="@+id/account_menu"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentTop="true"
@@ -436,7 +450,7 @@
                 android:text="@string/disclaimer_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
             android:id="@+id/account_tabLayout"
             android:layout_width="match_parent"
