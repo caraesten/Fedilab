@@ -830,7 +830,7 @@
     <string name="warning_main_timeline">主时间线只能被隐藏！</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">总是标记媒体为敏感</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
