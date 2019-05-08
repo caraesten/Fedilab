@@ -538,7 +538,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
             boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
             int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
-            final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
             boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
             boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
@@ -2075,32 +2075,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    status.setAttachmentShown(true);
-                    notifyStatusChanged(status);
-            /*
-                Added a Countdown Timer, so that Sensitive (NSFW)
-                images only get displayed for user set time,
-                giving the user time to click on them to expand them,
-                if they want. Images are then hidden again.
-                -> Default value is set to 5 seconds
-             */
-
-                    if (timeout > 0) {
-                        new CountDownTimer((timeout * 1000), 1000) {
-                            public void onTick(long millisUntilFinished) {
-                            }
-
-                            public void onFinish() {
-                                status.setAttachmentShown(false);
-                                notifyStatusChanged(status);
-                            }
-                        }.start();
-                    }
-                }
-            });
 
             if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
                 holder.status_more.setVisibility(View.GONE);
@@ -2723,8 +2697,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else{
                 holder.status_toot_app.setVisibility(View.GONE);
             }
-
         }
+
     }
 
 
@@ -2808,6 +2782,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int position = 1;
             for(final Attachment attachment: attachments){
                 ImageView imageView;
+                RelativeLayout container = holder.status_horizontal_document_container;
                 if( i == 0) {
                     imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
                     if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
@@ -2927,6 +2902,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 resource = Bitmap.createScaledBitmap(resource, width, height, false);
                                             }
                                             imageView.setImageBitmap(resource);
+                                            status.setMedia_height(container.getHeight());
                                         }
                                     });
                         }else{
@@ -2978,15 +2954,40 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if( attachment.getType().equals("web")){
-                            Helper.openBrowser(context, attachment.getUrl());
-                        }else {
-                            Intent intent = new Intent(context, MediaActivity.class);
-                            Bundle b = new Bundle();
-                            intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
-                            b.putInt("position", finalPosition);
-                            intent.putExtras(b);
-                            context.startActivity(intent);
+                        if( status.isAttachmentShown()) {
+
+                            if (attachment.getType().equals("web")) {
+                                Helper.openBrowser(context, attachment.getUrl());
+                            } else {
+                                Intent intent = new Intent(context, MediaActivity.class);
+                                Bundle b = new Bundle();
+                                intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                                b.putInt("position", finalPosition);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                        }else{
+                            status.setAttachmentShown(true);
+                            notifyStatusChanged(status);
+                            /*
+                                Added a Countdown Timer, so that Sensitive (NSFW)
+                                images only get displayed for user set time,
+                                giving the user time to click on them to expand them,
+                                if they want. Images are then hidden again.
+                                -> Default value is set to 5 seconds
+                             */
+                            final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+                            if (timeout > 0) {
+                                new CountDownTimer((timeout * 1000), 1000) {
+                                    public void onTick(long millisUntilFinished) {
+                                    }
+
+                                    public void onFinish() {
+                                        status.setAttachmentShown(false);
+                                        notifyStatusChanged(status);
+                                    }
+                                }.start();
+                            }
                         }
                     }
                 });
