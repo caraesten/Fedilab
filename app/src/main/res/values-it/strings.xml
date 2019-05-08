@@ -834,6 +834,7 @@
     <string name="warning_main_timeline">Le timeline principali possono solo essere nascoste!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Aggiungi una timeline</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
