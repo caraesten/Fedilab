@@ -835,6 +835,7 @@
     <string name="warning_main_timeline">As liñas temporais principais só poden ocultarse!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Engadir liña temporal</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
