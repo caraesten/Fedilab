@@ -842,7 +842,7 @@
     <string name="warning_main_timeline">Основные ленты могут быть только скрыты!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Добавить в ленту</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Всегда отмечать медиафайлы как деликатный контент</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
