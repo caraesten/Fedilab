@@ -830,6 +830,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="warning_main_timeline">主時間軸只能被隱藏！</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">加入動態時報</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
