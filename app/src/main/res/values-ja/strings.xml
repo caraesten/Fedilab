@@ -633,6 +633,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[トゥートのメニューを開いて、<b>ブースト予約</b>を選択してください。]]></string>
     <string name="art_menu">アートタイムライン</string>
     <string name="open_menu">メニューを開く</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">アプリケーションのロゴ</string>
     <string name="profile_picture">プロフィールの写真</string>
     <string name="profile_banner">プロフィールのバナー</string>

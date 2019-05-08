@@ -46,7 +46,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 28;
+    public static final int DB_VERSION = 29;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -115,6 +115,8 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_IS_MODERATOR = "IS_MODERATOR";
     static final String COL_IS_ADMIN = "IS_ADMIN";
     static final String COL_UPDATED_AT = "UPDATED_AT";
+    static final String COL_PRIVACY = "PRIVACY";
+    static final String COL_SENSITIVE = "SENSITIVE";
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT PRIMARY KEY, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
@@ -129,6 +131,8 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_IS_ADMIN + " INTEGER  DEFAULT 0, "
             + COL_CLIENT_ID + " TEXT, " + COL_CLIENT_SECRET + " TEXT, " + COL_REFRESH_TOKEN + " TEXT,"
             + COL_UPDATED_AT + " TEXT, "
+            + COL_PRIVACY + " TEXT, "
+            + COL_SENSITIVE + " INTEGER DEFAULT 0, "
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
@@ -191,7 +195,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_REBLOGGED = "REBLOGGED";
     static final String COL_FAVOURITED = "FAVOURITED";
     static final String COL_MUTED = "MUTED";
-    static final String COL_SENSITIVE = "SENSITIVE";
+
     static final String COL_SPOILER_TEXT = "SPOILER_TEXT";
     static final String COL_VISIBILITY = "VISIBILITY";
     static final String COL_MEDIA_ATTACHMENTS = "MEDIA_ATTACHMENTS";
@@ -389,6 +393,9 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
             case 27:
                 db.execSQL(CREATE_TABLE_TIMELINES);
+            case 28:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_PRIVACY + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SENSITIVE + " INTEGER DEFAULT 0");
             default:
                 break;
         }

@@ -125,7 +125,7 @@
         <item>هل تود حجب هذا الحساب؟</item>
         <item>هل تود الإبلاغ عن هذا التبويق؟</item>
         <item>هل تريد حظر هذا النطاق؟</item>
-        <item>Unmute this account?</item>
+        <item>هل تود إلغاء كتم هذا الحساب؟</item>
     </string-array>
     <string-array name="action_notification">
         <item>إشعار</item>
@@ -215,7 +215,7 @@
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض!</string>
     <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم اختر <b>برمَجة</b> على القائمة العلوية.</string>
-    <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
+    <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج؟</string>
     <string name="media_count">الوسائط: %d</string>
     <string name="toot_scheduled">تمت برمجة التبويق بنجاح!</string>
     <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية!</string>
@@ -237,7 +237,7 @@
         <item quantity="two">و إشعارين</item>
         <item quantity="few">و %d اشعارات</item>
         <item quantity="many">و %d اشعارات</item>
-        <item quantity="other">و %d اشعارات</item>
+        <item quantity="other">و %d إشعارات أخرى</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
@@ -251,12 +251,12 @@
         <item quantity="zero">%d إعجاب</item>
         <item quantity="one">%d إعجاب</item>
         <item quantity="two">%d إعجابان</item>
-        <item quantity="few">%d إعجابين</item>
+        <item quantity="few">%d إعجابات</item>
         <item quantity="many">%d إعجابات</item>
         <item quantity="other">%d إعجابات</item>
     </plurals>
-    <string name="delete_notification_ask">هل تريد حذف الإخطار؟</string>
-    <string name="delete_notification_ask_all">هل تود حذف كافة الإخطارات؟</string>
+    <string name="delete_notification_ask">هل تريد حذف الإشعار؟</string>
+    <string name="delete_notification_ask_all">هل تود حذف كافة الإشعارات؟</string>
     <string name="delete_notification">تم حذف الإشعار بنجاح!</string>
     <string name="delete_notification_all">تم حذف جميع الإشعارات بنجاح!</string>
     <!-- HEADER -->
@@ -280,7 +280,7 @@
     <string name="toast_unstatus">تم حذف التبويق بنجاح!</string>
     <string name="toast_pin">تم تثبيت التبويق بنجاح!</string>
     <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح!</string>
-    <string name="toast_error">عذراً ! حدث خطأ !</string>
+    <string name="toast_error">عذراً ! حدث خطأ!</string>
     <string name="toast_code_error">طرأ هناك خطأ! لم يقم مثيل الخادم بإعادة رمز المصادقة!</string>
     <string name="toast_error_instance">يبدو أنّ اسم نطاق مثيل الخادوم غير صالح!</string>
     <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر!</string>
@@ -321,7 +321,7 @@
     <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
     <string name="set_notif_follow_add">إخطاري عندما يُعجَب أحدهم بأحد منشوراتي</string>
     <string name="set_notif_follow_mention">إخطاري عندما يُشار إليّ</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">أرسل إشعاراً عند انتهاء استطلاع الرأي</string>
     <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
     <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
     <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
@@ -590,7 +590,7 @@
     <string name="channel_notif_boost">ترقية جديدة</string>
     <string name="channel_notif_fav">مفضلة جديدة</string>
     <string name="channel_notif_mention">إشارة جديدة</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">انتهى استطلاع الرأي</string>
     <string name="channel_notif_toot">تبويق جديد</string>
     <string name="channel_notif_backup">النسخ الاحتياطي للتبويقات</string>
     <string name="channel_notif_media">تنزيل الوسائط</string>
@@ -659,6 +659,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[افتح قائمة تبويق ما ثم اختر <b>برمجة ترقية</b>.]]></string>
     <string name="art_menu">الخيط الفني</string>
     <string name="open_menu">فتح القائمة</string>
+    <string name="go_back">العودة</string>
     <string name="app_logo">شعار التطبيق</string>
     <string name="profile_picture">الصورة الشخصية</string>
     <string name="profile_banner">رأسية الصفحة الشخصية</string>
@@ -676,7 +677,7 @@
     <string name="card_view_image">صورة البطاقة</string>
     <string name="hide_media">إخفاء الوسائط</string>
     <string name="favicon">أيقونة المفضلة</string>
-    <string name="media_description">وصف للمعاقين بصريا</string>
+    <string name="media_description">إضافة وصف على الصور (للمعاقين بصريا)</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
@@ -747,11 +748,11 @@
     <string name="video_uploaded_action">اضغط هنا لتعديل بيانات الفيديو.</string>
     <string name="delete_video">احذف الفيديو</string>
     <string name="delete_video_confirmation">هل أنت متأكد أنك تود حذف هذا الفيديو؟</string>
-    <string name="no_video_uploaded">لم يتم ارسال أية فيديوهات بعد!</string>
+    <string name="no_video_uploaded">لم يتم إرسال أية فيديوهات بعد!</string>
     <string name="display_nsfw_videos">عرض الفيديوهات الحساسة</string>
     <string name="default_channel_of">القناة الافتراضية لـ %s</string>
     <string name="no_video_to_display">لا توجد أية فيديوهات لعرضها!</string>
-    <string name="add_image_to_favorite">إضافة إلى المفضلة</string>
+    <string name="add_image_to_favorite">إضافة الوسائط إلى المفضلة</string>
     <string name="leave_a_comment">اترك تعليقاً</string>
     <string name="share">شارك</string>
     <string name="my_pictures">صوري</string>
@@ -814,7 +815,7 @@
     <string name="set_retrieve_metadata_share_from_extras">ارفاق صورة عند مشاركة عنوان رابط</string>
     <!-- end languages -->
     <string name="poll">استطلاع رأي</string>
-    <string name="polls">Polls</string>
+    <string name="polls">استطلاعات الرأي</string>
     <string name="create_poll">إنشاء استطلاع</string>
     <string name="poll_choice_1">الخيار 1</string>
     <string name="poll_choice_2">الخيار 2</string>
@@ -827,7 +828,7 @@
     <string name="vote">تصويت</string>
     <string name="poll_not_private">لا يمكن إرفاق استطلاع للرأي في الرسائل المباشِرة!</string>
     <string name="notif_poll">لقد انقضت مدة استطلاع رأي قد قُمتَ بالتصويت عليه مِن قَبل</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">لقد انتهت مدة استطلاع رأي قد قُمتَ بنشره</string>
     <string name="settings_category_notif_customize">تخصيص</string>
     <string name="settings_category_notif_categories">الفئات</string>
     <string name="settings_category_notif_news">الأخبار</string>
@@ -841,12 +842,12 @@
     <string name="hide_timeline">إخفاء الخيط الزمني</string>
     <string name="reorder_timelines">إعادة ترتيب الخيوط الزمنية</string>
     <string name="undo">إلغاء</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
+    <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">إضافة خيط زمني</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
@@ -869,7 +870,7 @@
         <item>7 أيام</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>تورنت</item>
+        <item>Webview</item>
         <item>تدفق مباشر</item>
     </string-array>
 </resources>

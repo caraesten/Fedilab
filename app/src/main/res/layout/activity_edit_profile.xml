@@ -207,6 +207,13 @@
             android:text="@string/set_lock_account"
             android:layout_height="wrap_content" />
 
+        <!-- Sensitive content -->
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_sensitive_content"
+            android:layout_width="wrap_content"
+            android:text="@string/set_sensitive_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:layout_marginTop="5dp"

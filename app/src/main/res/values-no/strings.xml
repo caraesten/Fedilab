@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
     <string name="set_notif_follow_add">Varsle når noen favoriserer tootene dine</string>
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Varsle når en avstemming er avsluttet</string>
     <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
     <string name="set_wifi_only">Varsle kun på WIFI</string>
@@ -567,7 +567,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="channel_notif_boost">Ny boost</string>
     <string name="channel_notif_fav">Ny favoritt</string>
     <string name="channel_notif_mention">Ny nevning</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Avstemming avsluttet</string>
     <string name="channel_notif_toot">Ny toot</string>
     <string name="channel_notif_backup">Backup av toots</string>
     <string name="channel_notif_media">Last ned media</string>
@@ -636,6 +636,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="no_scheduled_boosts_indications"><![CDATA[Åpne menyen på et toot, og velg <b>Planlegg boost</b>.]]></string>
     <string name="art_menu">Kunsttidslinje</string>
     <string name="open_menu">Åpne meny</string>
+    <string name="go_back">Tilbake</string>
     <string name="app_logo">Applikasjonens logo</string>
     <string name="profile_picture">Profilbilde</string>
     <string name="profile_banner">Profilfane</string>
@@ -788,7 +789,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_retrieve_metadata_share_from_extras">Tilknytt et bilde når du deler en URL</string>
     <!-- end languages -->
     <string name="poll">Avstemning</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Avstemminger</string>
     <string name="create_poll">Lag en avstemming</string>
     <string name="poll_choice_1">Valg 1</string>
     <string name="poll_choice_2">Valg 2</string>
@@ -801,7 +802,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="vote">Stem</string>
     <string name="poll_not_private">En avstemming kan ikke kobles til en direktemelding!</string>
     <string name="notif_poll">En avstemming du har stemt på er avsluttet</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">En avstemming du har tootet er avsluttet</string>
     <string name="settings_category_notif_customize">Tilpass</string>
     <string name="settings_category_notif_categories">Kategorier</string>
     <string name="settings_category_notif_news">Nyheter</string>

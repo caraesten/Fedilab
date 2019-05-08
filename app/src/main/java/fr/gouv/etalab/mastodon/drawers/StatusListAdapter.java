@@ -147,6 +147,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.mPageReferenceMap;
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
@@ -183,6 +184,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
+
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -300,7 +302,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
-        Button status_show_more;
+        RelativeLayout status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
         RelativeLayout status_horizontal_document_container;
@@ -356,7 +358,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         RelativeLayout horizontal_second_image;
 
         LinearLayout status_peertube_container;
-        TextView status_peertube_reply, status_peertube_delete;
+        TextView status_peertube_reply, status_peertube_delete, show_more_content;
 
 
         //Poll
@@ -421,6 +423,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
             status_content_container = itemView.findViewById(R.id.status_content_container);
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
+            show_more_content = itemView.findViewById(R.id.show_more_content);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
             new_element = itemView.findViewById(R.id.new_element);
@@ -536,7 +539,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
             boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
             int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
-            final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
             boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
             boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
@@ -1535,6 +1538,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
                     holder.status_horizontal_document_container.setVisibility(View.GONE);
@@ -1544,27 +1548,30 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     //If medias are loaded without any conditions or if device is on wifi
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
                         if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
+                            loadAttachments(status, holder, false);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
                             //Text depending if toots is sensitive or not
-                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
+                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.set_attachment_action);
+                            holder.show_more_content.setText(textShowMore);
                             if (!status.isAttachmentShown()) {
                                 holder.status_show_more.setVisibility(View.VISIBLE);
                                 if (fullAttachement)
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
+                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                    loadAttachments(status, holder, true);
+                                }
                             } else {
-                                loadAttachments(status, holder);
+                                loadAttachments(status, holder, false);
                             }
                         }
                     }else {
                         //Text depending if toots is sensitive or not
-                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
+                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.set_attachment_action);
+                        holder.show_more_content.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
                             if (fullAttachement)
@@ -1572,7 +1579,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
                         } else {
-                            loadAttachments(status, holder);
+                            loadAttachments(status, holder, false);
                         }
                     }
                 }
@@ -1588,27 +1595,30 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
                         //If medias are loaded without any conditions or if device is on wifi
                         if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
+                            loadAttachments(status.getReblog(), holder, false);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
                             //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
+                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.set_attachment_action);
+                            holder.show_more_content.setText(textShowMore);
                             if (!status.isAttachmentShown()) {
                                 holder.status_show_more.setVisibility(View.VISIBLE);
                                 if (fullAttachement)
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
+                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                    loadAttachments(status, holder, true);
+                                }
                             } else {
-                                loadAttachments(status.getReblog(), holder);
+                                loadAttachments(status.getReblog(), holder, false);
                             }
                         }
                     }else{
                         //Text depending if toots is sensitive or not
-                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
+                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.set_attachment_action);
+                        holder.show_more_content.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
                             if (fullAttachement)
@@ -1616,11 +1626,37 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
                         } else {
-                            loadAttachments(status.getReblog(), holder);
+                            loadAttachments(status.getReblog(), holder, false);
                         }
                     }
                 }
             }
+            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.setAttachmentShown(true);
+                    notifyStatusChanged(status);
+                            /*
+                                Added a Countdown Timer, so that Sensitive (NSFW)
+                                images only get displayed for user set time,
+                                giving the user time to click on them to expand them,
+                                if they want. Images are then hidden again.
+                                -> Default value is set to 5 seconds
+                             */
+                    final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+                    if (timeout > 0) {
+                        new CountDownTimer((timeout * 1000), 1000) {
+                            public void onTick(long millisUntilFinished) {
+                            }
+
+                            public void onFinish() {
+                                status.setAttachmentShown(false);
+                                notifyStatusChanged(status);
+                            }
+                        }.start();
+                    }
+                }
+            });
             if (theme == Helper.THEME_BLACK) {
                 changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_more_toot_content, R.color.dark_text);
@@ -2068,32 +2104,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    status.setAttachmentShown(true);
-                    notifyStatusChanged(status);
-            /*
-                Added a Countdown Timer, so that Sensitive (NSFW)
-                images only get displayed for user set time,
-                giving the user time to click on them to expand them,
-                if they want. Images are then hidden again.
-                -> Default value is set to 5 seconds
-             */
-
-                    if (timeout > 0) {
-                        new CountDownTimer((timeout * 1000), 1000) {
-                            public void onTick(long millisUntilFinished) {
-                            }
-
-                            public void onFinish() {
-                                status.setAttachmentShown(false);
-                                notifyStatusChanged(status);
-                            }
-                        }.start();
-                    }
-                }
-            });
 
             if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
                 holder.status_more.setVisibility(View.GONE);
@@ -2716,17 +2726,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else{
                 holder.status_toot_app.setVisibility(View.GONE);
             }
-
         }
+
     }
 
 
 
-    private void loadAttachments(final Status status, final ViewHolder holder){
+    private void loadAttachments(final Status status, final ViewHolder holder, boolean blur){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments = status.getMedia_attachments();
-
+        if( !blur)
+            holder.status_show_more.setVisibility(View.GONE);
+        else
+            holder.status_show_more.setVisibility(View.VISIBLE);
         if( attachments != null && attachments.size() > 0){
             int i = 0;
             holder.horizontal_second_image.setVisibility(View.VISIBLE);
@@ -2798,6 +2811,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int position = 1;
             for(final Attachment attachment: attachments){
                 ImageView imageView;
+                RelativeLayout container = holder.status_horizontal_document_container;
                 if( i == 0) {
                     imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
                     if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
@@ -2896,36 +2910,72 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 if( fullAttachement){
                     imageView.setImageBitmap(null);
-                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
-                        Glide.with(imageView.getContext())
-                                .asBitmap()
-                                .load(url)
-                                .thumbnail(0.1f)
-                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        DrawableTransitionOptions.withCrossFade();
-                                        int width = resource.getWidth();
-                                        int height = resource.getHeight();
+                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() ) {
+                        if( !blur) {
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            DrawableTransitionOptions.withCrossFade();
+                                            int width = resource.getWidth();
+                                            int height = resource.getHeight();
 
-                                        if( height < Helper.convertDpToPixel(200, context)){
-                                            double ratio = ((double)Helper.convertDpToPixel(200, context) / (double)height);
-                                            width = (int)(ratio * width);
-                                            height = (int) Helper.convertDpToPixel(200, context);
-                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                                double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
+                                                width = (int) (ratio * width);
+                                                height = (int) Helper.convertDpToPixel(200, context);
+                                                resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            }
+                                            imageView.setImageBitmap(resource);
+                                            status.setMedia_height(container.getHeight());
                                         }
-                                        imageView.setImageBitmap(resource);
-                                    }
-                                });
+                                    });
+                        }else{
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            DrawableTransitionOptions.withCrossFade();
+                                            int width = resource.getWidth();
+                                            int height = resource.getHeight();
+
+                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                                double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
+                                                width = (int) (ratio * width);
+                                                height = (int) Helper.convertDpToPixel(200, context);
+                                                resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                            }
+                                            imageView.setImageBitmap(resource);
+                                        }
+                                    });
+                        }
+                    }
                 }else {
-                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing())
-                        Glide.with(imageView.getContext())
-                                .load(url)
-                                .thumbnail(0.1f)
-                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .into(imageView);
+                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
+                        if( !blur) {
+                            Glide.with(imageView.getContext())
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .transition(DrawableTransitionOptions.withCrossFade())
+                                    .into(imageView);
+                        }else{
+                            Glide.with(imageView.getContext())
+                                    .load(url)
+                                    .thumbnail(0.1f)
+                                    .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
+                                    .transition(DrawableTransitionOptions.withCrossFade())
+                                    .into(imageView);
+                        }
+                    }
                 }
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
@@ -2933,15 +2983,40 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if( attachment.getType().equals("web")){
-                            Helper.openBrowser(context, attachment.getUrl());
-                        }else {
-                            Intent intent = new Intent(context, MediaActivity.class);
-                            Bundle b = new Bundle();
-                            intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
-                            b.putInt("position", finalPosition);
-                            intent.putExtras(b);
-                            context.startActivity(intent);
+                        if( status.isAttachmentShown()) {
+
+                            if (attachment.getType().equals("web")) {
+                                Helper.openBrowser(context, attachment.getUrl());
+                            } else {
+                                Intent intent = new Intent(context, MediaActivity.class);
+                                Bundle b = new Bundle();
+                                intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                                b.putInt("position", finalPosition);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                        }else{
+                            status.setAttachmentShown(true);
+                            notifyStatusChanged(status);
+                            /*
+                                Added a Countdown Timer, so that Sensitive (NSFW)
+                                images only get displayed for user set time,
+                                giving the user time to click on them to expand them,
+                                if they want. Images are then hidden again.
+                                -> Default value is set to 5 seconds
+                             */
+                            final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+                            if (timeout > 0) {
+                                new CountDownTimer((timeout * 1000), 1000) {
+                                    public void onTick(long millisUntilFinished) {
+                                    }
+
+                                    public void onFinish() {
+                                        status.setAttachmentShown(false);
+                                        notifyStatusChanged(status);
+                                    }
+                                }.start();
+                            }
                         }
                     }
                 });
@@ -2950,7 +3025,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public boolean onLongClick(View v) {
                         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
                         String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
-                        ((MainActivity)context).download(myDir+"/"+fileName, attachment.getUrl());
+                        Helper.download(context,myDir+"/"+fileName, attachment.getUrl());
                         return true;
                     }
                 });
@@ -2958,11 +3033,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }else{
-                holder.status_horizontal_document_container.setVisibility(View.GONE);
-                holder.status_document_container.setVisibility(View.GONE);
+            holder.status_horizontal_document_container.setVisibility(View.GONE);
+            holder.status_document_container.setVisibility(View.GONE);
+            holder.status_show_more.setVisibility(View.GONE);
         }
-        holder.status_show_more.setVisibility(View.GONE);
-
 
     }
 

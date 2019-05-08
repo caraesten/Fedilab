@@ -209,7 +209,8 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 for(ManageTimelines manageTimeline: manageTimelines){
                     if( manageTimeline.getRemoteInstance() == null )
                         continue;
-                    if(manageTimeline.getRemoteInstance().getHost().equals(instance.getHost())){
+
+                    if(manageTimeline.getRemoteInstance().getHost().trim().equals(instance.getHost().trim())){
                         isInDb = true;
                         timelines_tmp = manageTimeline;
                         break;
@@ -222,6 +223,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     manageTL.setType(ManageTimelines.Type.INSTANCE);
                     manageTL.setPosition(manageTimelines.size());
                     new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                    manageTimelines.add(manageTL);
                 }else{
                     //Update list
                     timelines_tmp.setRemoteInstance(instance);
@@ -233,7 +235,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     continue;
                 boolean shouldBeRemoved = true;
                 for(RemoteInstance instance: instancesInDb){
-                    if( instance.getHost().equals(manageTimelines.getRemoteInstance().getHost())){
+                    if( instance.getHost().trim().equals(manageTimelines.getRemoteInstance().getHost().trim())){
                         shouldBeRemoved = false;
                     }
                 }

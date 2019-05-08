@@ -24,6 +24,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.InstanceNodeInfo;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -74,6 +75,43 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
         if (this.type == null) {
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 API api = new API(this.contextReference.get());
+                String[] split = query.trim().split("@");
+                if( split.length > 1 ){
+
+                   String domain;
+                   String username;
+                   if( split.length == 2){
+                       username = split[0];
+                       domain = split[1];
+                   }else{
+                       username = split[1];
+                       domain = split[2];
+                   }
+                   if( domain != null && username != null){
+                       InstanceNodeInfo node = api.getNodeInfo(domain);
+                       String url = null;
+                       if( node != null && node.getName() != null){
+                           switch (node.getName().trim()){
+                               case "MASTODON":
+                                   url = "https://" + domain + "/@" + username;
+                                   break;
+                               case "PEERTUBE":
+                                   url = "https://" + domain + "/accounts/" + username;
+                                   break;
+                               case "PIXELFED":
+                                   url = "https://" + domain + "/" + username;
+                                   break;
+                               case "GNU":
+                                   url = "https://" + domain + "/profile/" + username;
+                                   break;
+                           }
+                       }
+                       if( url != null)
+                           query = url;
+                   }
+
+                }
+
                 if (!tagsOnly)
                     apiResponse = api.search(query);
                 else {

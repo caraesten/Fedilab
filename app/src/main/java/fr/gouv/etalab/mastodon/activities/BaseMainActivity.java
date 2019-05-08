@@ -177,6 +177,7 @@ import static fr.gouv.etalab.mastodon.sqlite.Sqlite.importDB;
 public abstract class BaseMainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
 
+
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
@@ -204,8 +205,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
-    private FetchConfiguration fetchConfiguration;
-    private Fetch fetch;
+
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
     private static boolean notificationChecked = false;
@@ -254,7 +254,6 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
-        initializeDownload();
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -650,10 +649,39 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
-                if(displayPeertube == null){
+                //Peertube search
+                if(tabLayout != null && timelines != null && (timelines.get(tabLayout.getSelectedTabPosition()).getType() == ManageTimelines.Type.PEERTUBE || (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))){
+                    DisplayStatusFragment statusFragment;
+                    Bundle bundle = new Bundle();
+                    statusFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    String instance = "peertube.social";
+                    if(timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE"))
+                        instance = timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getHost();
+                    bundle.putString("remote_instance", instance);
+                    bundle.putString("instanceType", "PEERTUBE");
+                    bundle.putString("search_peertube", query);
+                    statusFragment.setArguments(bundle);
+                    String fragmentTag = "REMOTE_INSTANCE";
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                    if( main_app_container.getVisibility() == View.GONE){
+
+                        main_app_container.setVisibility(View.VISIBLE);
+                        toolbarTitle.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                }else{
                     if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                        boolean isAccount = false;
+                        if( query.split("@").length > 1 ){
+                            isAccount = true;
+                        }
                         if( (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                        && !query.contains("http://") && !query.contains("https://")){
+                                && !query.contains("http://") && !query.contains("https://") && !isAccount){
                             Intent intent = new Intent(BaseMainActivity.this, SearchResultTabActivity.class);
                             intent.putExtra("search", query);
                             startActivity(intent);
@@ -669,27 +697,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         b.putString("tag", query.trim());
                         intent.putExtras(b);
                         startActivity(intent);
-                    }
-                }else{ //Peertube search
-                    DisplayStatusFragment statusFragment;
-                    Bundle bundle = new Bundle();
-                    statusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                    bundle.putString("remote_instance", displayPeertube);
-                    bundle.putString("instanceType", "PEERTUBE");
-                    bundle.putString("search_peertube", query);
-                    statusFragment.setArguments(bundle);
-                    String fragmentTag = "REMOTE_INSTANCE";
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                    if( main_app_container.getVisibility() == View.GONE){
-
-                        main_app_container.setVisibility(View.VISIBLE);
-                        toolbarTitle.setVisibility(View.VISIBLE);
-                        delete_instance.setVisibility(View.VISIBLE);
-                        viewPager.setVisibility(View.GONE);
-                        tabLayout.setVisibility(View.GONE);
                     }
                 }
                 toolbar_search.setQuery("", false);
@@ -1700,8 +1707,6 @@ public abstract class BaseMainActivity extends BaseActivity
         ReorderTimelinesActivity.updated = false;
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -1713,13 +1718,23 @@ public abstract class BaseMainActivity extends BaseActivity
             position = (timelines.size()-1);
         if( position < 0)
             position = 0;
-        setTitle("");
-        /*if( !optimize_loading)
-            viewPager.setOffscreenPageLimit(countPage);*/
+        if( toolbarTitle != null)
+            toolbarTitle.setVisibility(View.GONE);
         viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
+        boolean iconOnly = true;
+        for(ManageTimelines tl: timelines){
+            if( tl.getType() == ManageTimelines.Type.INSTANCE || tl.getType() == ManageTimelines.Type.TAG || tl.getType() == ManageTimelines.Type.LIST){
+                iconOnly = false;
+            }
+        }
+        if( iconOnly && timelines.size() < 5){
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -2136,83 +2151,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-    private void initializeDownload(){
-        fetchConfiguration = new FetchConfiguration.Builder(this)
-                .setDownloadConcurrentLimit(3)
-                .build();
-        fetch = Fetch.Impl.getInstance(fetchConfiguration);
-        FetchListener fetchListener = new FetchListener() {
-            @Override
-            public void onWaitingNetwork(@NotNull Download download) {
-            }
-            @Override
-            public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
-            }
-            @Override
-            public void onResumed(@NotNull Download download) {
-            }
-            @Override
-            public void onRemoved(@NotNull Download download) {
-            }
-            @Override
-            public void onQueued(@NotNull Download download, boolean b) {
-            }
-            @Override
-            public void onProgress(@NotNull Download download, long l, long l1) {
-            }
-            @Override
-            public void onPaused(@NotNull Download download) {
-            }
-            @Override
-            public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
-                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
-            }
-            @Override
-            public void onDeleted(@NotNull Download download) {
-            }
-            @Override
-            public void onCompleted(@NotNull Download download) {
-                if( download.getFileUri().getPath() != null) {
-                    String url = download.getUrl();
-                    final String fileName = URLUtil.guessFileName(url, null, null);
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String mime = Helper.getMimeType(url);
-                    File file = new File(download.getFileUri().getPath());
-                    final Intent intent = new Intent();
-                    Random r = new Random();
-                    final int notificationIdTmp = r.nextInt(10000);
-                    intent.setAction(android.content.Intent.ACTION_VIEW);
-                    Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
-                    intent.setDataAndType(uri, mime);
-                    Helper.notify_user(getApplicationContext(), intent, notificationIdTmp, BitmapFactory.decodeResource(getResources(),
-                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, getString(R.string.save_over), getString(R.string.download_from, fileName));
-                }
-            }
-            @Override
-            public void onCancelled(@NotNull Download download) {
-            }
-            @Override
-            public void onAdded(@NotNull Download download) {
-            }
-        };
-
-        fetch.addListener(fetchListener);
-    }
-
-    public void download(String file, String url){
-        final Request request = new Request(url, file);
-        request.setPriority(Priority.HIGH);
-        request.setNetworkType(NetworkType.ALL);
-        fetch.enqueue(request, updatedRequest -> {
-            //Request was successfully enqueued for download.
-        }, error -> {
-        });
 
 
-    }
 
 
     public boolean getFloatingVisibility(){

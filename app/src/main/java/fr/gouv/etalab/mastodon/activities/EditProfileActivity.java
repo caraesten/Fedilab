@@ -93,12 +93,13 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
     private TextView set_header_picture_overlay;
-    private CheckBox set_lock_account;
+    private CheckBox set_lock_account, set_sensitive_content;
     private static final int PICK_IMAGE_HEADER = 4565;
     private static final int PICK_IMAGE_PROFILE = 6545;
     private String profile_username, profile_note;
     private ByteArrayInputStream profile_picture, header_picture;
     private API.accountPrivacy profile_privacy;
+    private boolean sensitive;
     private Bitmap profile_picture_bmp, profile_header_bmp;
     private ImageView pp_actionBar;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
@@ -173,22 +174,26 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_profile_save = findViewById(R.id.set_profile_save);
         set_header_picture_overlay = findViewById(R.id.set_header_picture_overlay);
         set_lock_account = findViewById(R.id.set_lock_account);
-
+        set_sensitive_content = findViewById(R.id.set_sensitive_content);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.3");
-        if(currentVersion.compareTo(minVersion) == 1)
+        if(currentVersion.compareTo(minVersion) == 1) {
             set_lock_account.setVisibility(View.VISIBLE);
-        else
+            set_sensitive_content.setVisibility(View.VISIBLE);
+        }else {
             set_lock_account.setVisibility(View.GONE);
+            set_sensitive_content.setVisibility(View.GONE);
+        }
+
         set_profile_save.setEnabled(false);
         set_change_header_picture.setEnabled(false);
         set_change_profile_picture.setEnabled(false);
         set_profile_name.setEnabled(false);
         set_profile_description.setEnabled(false);
         set_lock_account.setEnabled(false);
-
+        set_sensitive_content.setEnabled(false);
         new RetrieveAccountInfoAsyncTask(getApplicationContext(), EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
@@ -231,10 +236,15 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_profile_name.setEnabled(true);
         set_profile_description.setEnabled(true);
         set_lock_account.setEnabled(true);
+        set_sensitive_content.setEnabled(true);
         if( account.isLocked())
             set_lock_account.setChecked(true);
         else
             set_lock_account.setChecked(false);
+        if( account.isSensitive())
+            set_sensitive_content.setChecked(true);
+        else
+            set_sensitive_content.setChecked(false);
         set_profile_description.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -438,6 +448,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     }
                 }
                 profile_privacy = set_lock_account.isChecked()?API.accountPrivacy.LOCKED:API.accountPrivacy.PUBLIC;
+                sensitive = set_sensitive_content.isChecked();
                 dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -467,7 +478,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         newCustomFields.put(key3,val3);
                         newCustomFields.put(key4,val4);
 
-                        new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, sensitive, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

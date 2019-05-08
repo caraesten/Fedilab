@@ -125,7 +125,7 @@
         <item>Diesen Nutzer blockieren?</item>
         <item>Diesen Toot melden?</item>
         <item>Diese Domäne blockieren?</item>
-        <item>Nutzer nicht mehr stummschalten?</item>
+        <item>Lautlosmodus für dieses Konto aufheben?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Benachrichtigen</item>
@@ -172,8 +172,8 @@
     <string name="toot_reply_content_title">Du antwortest auf diesen Toot:</string>
     <string name="toot_sensitive">Sensibler Inhalt?</string>
     <string-array name="toot_visibility">
-        <item>Absenden an öffentliche Zeitleiste</item>
-        <item>Nicht an öffentliche Zeitleiste absenden</item>
+        <item>In öffentliche Zeitleisten eintragen</item>
+        <item>Nicht in öffentliche Zeitleisten eintragen</item>
         <item>Nur an Folgende senden</item>
         <item>Nur an erwähnten Nutzer absenden</item>
     </string-array>
@@ -578,7 +578,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="no_blocked_domain">Keine blockierten Domänen!</string>
     <string name="unblock_domain_confirm">Domäne nicht mehr blockieren</string>
     <string name="unblock_domain_confirm_message">Möchten Sie %s wirklich entsperren?</string>
-    <string name="block_domain_confirm_message">Sicher, dass du %s blockieren möchtest?</string>
+    <string name="block_domain_confirm_message">Möchten Sie %s wirklich sperren?\n\nEs werden keine Inhalte aus dieser Domain in einer öffentlichen Zeitleiste oder in Ihren Benachrichtigungen angezeigt. Ihre Follower aus dieser Domain werden entfernt.</string>
     <string name="blocked_domains">Blockierte Domänen</string>
     <string name="block_domain">Blockiere Domäne</string>
     <string name="toast_block_domain">Die Domäne ist blockiert</string>
@@ -635,6 +635,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="no_scheduled_boosts_indications"><![CDATA[Öffne das Menü eines Toots und wähle <b>Teilen planen</b>.]]></string>
     <string name="art_menu">Kunst-Zeitlinie</string>
     <string name="open_menu">Öffne Menü</string>
+    <string name="go_back">Zurück</string>
     <string name="app_logo">Logo der Anwendung</string>
     <string name="profile_picture">Profilbild</string>
     <string name="profile_banner">Profilbanner</string>
@@ -801,7 +802,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="vote">Abstimmen</string>
     <string name="poll_not_private">Eine Umfrage kann nicht an eine direkte Nachricht angehängt werden!</string>
     <string name="notif_poll">Eine Umfrage, in der du abgestimmt hast, ist beendet</string>
-    <string name="notif_poll_self">Eine deiner Umfragen ist beendet</string>
+    <string name="notif_poll_self">Eine Ihrer Umfragen ist beendet</string>
     <string name="settings_category_notif_customize">Anpassen</string>
     <string name="settings_category_notif_categories">Kategorien</string>
     <string name="settings_category_notif_news">Neuigkeiten</string>

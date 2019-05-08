@@ -236,7 +236,7 @@
         <item quantity="other">lägg till %d till toot att utforska</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
+        <item quantity="one">%d gillar</item>
         <item quantity="other">%d gillar</item>
     </plurals>
     <string name="delete_notification_ask">Ta bort notifiering?</string>
@@ -645,6 +645,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Öppna menyn på en boost och välj <b>Schemalägg boost</b>.]]></string>
     <string name="art_menu">Konstidslinje</string>
     <string name="open_menu">Öppna menyn</string>
+    <string name="go_back">Gå tillbaka</string>
     <string name="app_logo">Applikationens logo</string>
     <string name="profile_picture">Profilbild</string>
     <string name="profile_banner">Profil banner</string>
@@ -813,7 +814,7 @@
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
     <string name="notif_poll">En enkät som du röstat i har avslutats</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">En enkät som du röstat i har avslutats</string>
     <string name="settings_category_notif_customize">Anpassa</string>
     <string name="settings_category_notif_categories">Kategorier</string>
     <string name="settings_category_notif_news">Nyheter</string>
@@ -832,10 +833,10 @@
     <string name="warning_list_deletion">Använd posten listor för att ta bort denna lista!</string>
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Lägg till en tidslinje</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="other">%d röster</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Enkel val</item>
@@ -851,7 +852,7 @@
         <item>7 dagar</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>Webview</item>
-        <item>Direkt stream</item>
+        <item>Webbvy</item>
+        <item>Direktström</item>
     </string-array>
 </resources>

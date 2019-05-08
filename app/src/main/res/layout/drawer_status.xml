@@ -416,268 +416,279 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/status_horizontal_document_container"
-                    android:visibility="gone"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:baselineAligned="false">
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                >
-                                <ImageView
-                                    android:id="@+id/status_prev1_h"
-                                    android:layout_width="match_parent"
-                                    android:scaleType="fitCenter"
-                                    android:adjustViewBounds="true"
-                                    android:layout_height="match_parent"
-                                    />
-                                <ImageView
-                                    android:id="@+id/status_prev1_play_h"
-                                    android:visibility="gone"
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="30dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="30dp"
-                                    android:contentDescription="@string/play_video" />
-                            </RelativeLayout>
-                            <RelativeLayout
-                                android:id="@+id/horizontal_second_image"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="1dp"
-                                android:layout_marginStart="1dp"
-                                >
-                                <ImageView
-                                    android:id="@+id/status_prev2_h"
-                                    android:scaleType="fitCenter"
-                                    android:layout_width="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:layout_height="match_parent"
-                                    />
-                                <ImageView
-                                    android:id="@+id/status_prev2_play_h"
-                                    android:visibility="gone"
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="30dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="30dp"
-                                    android:contentDescription="@string/play_video" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="1dp"
-                            android:baselineAligned="false">
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                >
-                                <ImageView
-                                    android:id="@+id/status_prev3_h"
-                                    android:layout_width="match_parent"
-                                    android:scaleType="fitCenter"
-                                    android:adjustViewBounds="true"
-                                    android:layout_height="match_parent"
-                                    />
-                                <ImageView
-                                    android:id="@+id/status_prev3_play_h"
-                                    android:visibility="gone"
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="30dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="30dp"
-                                    android:contentDescription="@string/play_video" />
-                            </RelativeLayout>
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="1dp"
-                                android:layout_marginStart="1dp"
-                                >
-                                <ImageView
-                                    android:id="@+id/status_prev4_h"
-                                    android:layout_width="match_parent"
-                                    android:scaleType="fitCenter"
-                                    android:adjustViewBounds="true"
-                                    android:layout_height="match_parent"
-                                    />
-                                <ImageView
-                                    android:id="@+id/status_prev4_play_h"
-                                    android:visibility="gone"
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="30dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="30dp"
-                                    android:contentDescription="@string/play_video" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <ImageView
-                        android:id="@+id/hide_preview_h"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/ic_remove_red_eye_img"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/show_media"/>
-                </RelativeLayout>
-                <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/status_document_container"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:baselineAligned="false">
                     <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        >
-                        <ImageView
-                            android:contentDescription="@string/show_media"
-                            android:id="@+id/status_prev1"
+                        android:id="@+id/status_horizontal_document_container"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:scaleType="centerCrop"
-                            android:layout_height="match_parent"
-                            />
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:baselineAligned="false">
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    >
+                                    <ImageView
+                                        android:id="@+id/status_prev1_h"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:adjustViewBounds="true"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev1_play_h"
+                                        android:visibility="gone"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video" />
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:id="@+id/horizontal_second_image"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="1dp"
+                                    android:layout_marginStart="1dp"
+                                    >
+                                    <ImageView
+                                        android:id="@+id/status_prev2_h"
+                                        android:scaleType="fitCenter"
+                                        android:layout_width="match_parent"
+                                        android:adjustViewBounds="true"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev2_play_h"
+                                        android:visibility="gone"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="1dp"
+                                android:baselineAligned="false">
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    >
+                                    <ImageView
+                                        android:id="@+id/status_prev3_h"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:adjustViewBounds="true"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev3_play_h"
+                                        android:visibility="gone"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video" />
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="1dp"
+                                    android:layout_marginStart="1dp"
+                                    >
+                                    <ImageView
+                                        android:id="@+id/status_prev4_h"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:adjustViewBounds="true"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev4_play_h"
+                                        android:visibility="gone"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </LinearLayout>
                         <ImageView
-                            android:id="@+id/status_prev1_play"
-                            android:visibility="gone"
-                            android:layout_centerInParent="true"
-                            android:layout_width="30dp"
-                            android:src="@drawable/ic_play_arrow"
-                            android:layout_height="30dp" />
-                        <ImageView
-                            android:id="@+id/hide_preview"
+                            android:id="@+id/hide_preview_h"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_width="wrap_content"
                             android:src="@drawable/ic_remove_red_eye_img"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/hide_media"/>
+                            android:contentDescription="@string/show_media"/>
                     </RelativeLayout>
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:id="@+id/status_container2"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
+                        android:visibility="gone"
+                        android:id="@+id/status_document_container"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:baselineAligned="false">
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:scaleType="centerCrop"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            >
                             <ImageView
-                                android:id="@+id/status_prev2"
+                                android:contentDescription="@string/show_media"
+                                android:id="@+id/status_prev1"
                                 android:layout_width="match_parent"
                                 android:scaleType="centerCrop"
                                 android:layout_height="match_parent"
                                 />
                             <ImageView
+                                android:id="@+id/status_prev1_play"
                                 android:visibility="gone"
-                                android:id="@+id/status_prev2_play"
                                 android:layout_centerInParent="true"
                                 android:layout_width="30dp"
                                 android:src="@drawable/ic_play_arrow"
-                                android:layout_height="30dp"
-                                android:contentDescription="@string/play_video"/>
+                                android:layout_height="30dp" />
+                            <ImageView
+                                android:id="@+id/hide_preview"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_remove_red_eye_img"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/hide_media"/>
                         </RelativeLayout>
-
                         <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="2dp"
+                            android:id="@+id/status_container2"
                             android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="2dp"
-                            android:id="@+id/status_container3"
-                            android:layout_height="0dp"
-                            android:baselineAligned="false">
+                            android:layout_height="match_parent">
                             <RelativeLayout
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content">
+                                android:layout_width="match_parent"
+                                android:scaleType="centerCrop"
+                                android:layout_height="0dp"
+                                android:layout_weight="1">
                                 <ImageView
-                                    android:id="@+id/status_prev3"
+                                    android:id="@+id/status_prev2"
                                     android:layout_width="match_parent"
                                     android:scaleType="centerCrop"
                                     android:layout_height="match_parent"
                                     />
                                 <ImageView
-                                    android:id="@+id/status_prev3_play"
+                                    android:visibility="gone"
+                                    android:id="@+id/status_prev2_play"
                                     android:layout_centerInParent="true"
                                     android:layout_width="30dp"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:visibility="gone"
                                     android:layout_height="30dp"
                                     android:contentDescription="@string/play_video"/>
                             </RelativeLayout>
-                            <RelativeLayout
-                                android:layout_marginLeft="2dp"
-                                android:layout_marginStart="2dp"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:id="@+id/status_prev4_container"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/status_prev4"
-                                    android:layout_width="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:layout_height="match_parent"
-                                    />
-                                <ImageView
-                                    android:id="@+id/status_prev4_play"
-                                    android:layout_centerInParent="true"
-                                    android:visibility="gone"
-                                    android:layout_width="30dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="30dp"
-                                    android:contentDescription="@string/play_video" />
-                            </RelativeLayout>
 
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="2dp"
+                                android:id="@+id/status_container3"
+                                android:layout_height="0dp"
+                                android:baselineAligned="false">
+                                <RelativeLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:id="@+id/status_prev3"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev3_play"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:visibility="gone"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video"/>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginStart="2dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:id="@+id/status_prev4_container"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:id="@+id/status_prev4"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:layout_height="match_parent"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/status_prev4_play"
+                                        android:layout_centerInParent="true"
+                                        android:visibility="gone"
+                                        android:layout_width="30dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="30dp"
+                                        android:contentDescription="@string/play_video" />
+                                </RelativeLayout>
+
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/status_show_more"
-                    android:visibility="gone"
-                    android:textAllCaps="false"
-                    android:drawableLeft="@drawable/ic_photo"
-                    android:drawableStart="@drawable/ic_photo"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:maxLines="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="?attr/borderless"
-                    android:text="@string/load_attachment" />
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/status_show_more"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        >
+                        <TextView
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:id="@+id/show_more_content"
+                            android:layout_gravity="center"
+                            android:layout_centerInParent="true"
+                            android:padding="12dp"
+                            android:background="@drawable/rounded_label_sensitive"
+                            android:textColor="#ffffffff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

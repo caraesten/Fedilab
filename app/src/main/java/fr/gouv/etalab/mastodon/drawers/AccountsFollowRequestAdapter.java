@@ -64,7 +64,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         this.context = context;
         accountsFollowRequestAdapter = this;
     }
-    
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -78,12 +78,19 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         final Account account = accounts.get(position);
         holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
-        holder.account_un.setText(String.format("@%s", account.getUsername()));
+        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(),true));
+        holder.account_un.setText(account.getAcct());
         //Profile picture
         Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAccountDetails(account);
+            }
+        });
+        holder.account_dn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openAccountDetails(account);
@@ -157,11 +164,13 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         ImageView account_pp;
         Button btn_authorize;
         Button btn_reject;
+        TextView account_dn;
         TextView account_un;
 
         public ViewHolder(View itemView) {
             super(itemView);
             account_pp = itemView.findViewById(R.id.account_pp);
+            account_dn = itemView.findViewById(R.id.account_dn);
             account_un = itemView.findViewById(R.id.account_un);
             btn_authorize = itemView.findViewById(R.id.btn_authorize);
             btn_reject = itemView.findViewById(R.id.btn_reject);
