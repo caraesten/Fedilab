@@ -831,6 +831,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="warning_main_timeline">A fő idővonalakat csak elrejteni lehet!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Idővonal hozzáadása</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
