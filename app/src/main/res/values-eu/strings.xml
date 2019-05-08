@@ -125,7 +125,7 @@
         <item>Blokeatu kontu hau?</item>
         <item>Salatu toot hau?</item>
         <item>Blokeatu domeinu hau?</item>
-        <item>Unmute this account?</item>
+        <item>Desmututu kontu hau?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Jakinarazi</item>
@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
     <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
     <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Jakinarazi inkesta bat amaitu denean</string>
     <string name="set_share_validation">Baieztatu bultzada eman aurretik</string>
     <string name="set_share_validation_fav">Baieztatu gogokoetara gehitu aurretik</string>
     <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
@@ -575,7 +575,7 @@
     <string name="channel_notif_boost">Bultzada berria</string>
     <string name="channel_notif_fav">Gogoko berria</string>
     <string name="channel_notif_mention">Aipamen berria</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Inkesta amaituta</string>
     <string name="channel_notif_toot">Toot berria</string>
     <string name="channel_notif_backup">Toot-en babes-kopia</string>
     <string name="channel_notif_media">Multimediaren deskarga</string>
@@ -644,7 +644,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Ireko toot baten menua eta hautatu <b>programatu bultzada</b>.]]></string>
     <string name="art_menu">Arte denbora-lerroa</string>
     <string name="open_menu">Ireki menua</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Joan atzera</string>
     <string name="app_logo">Aplikazioaren logoa</string>
     <string name="profile_picture">Profilaren Irudia</string>
     <string name="profile_banner">Profileko banda</string>
@@ -799,7 +799,7 @@
     <string name="set_retrieve_metadata_share_from_extras">Erantsi irudi bat URL bat partekatzean</string>
     <!-- end languages -->
     <string name="poll">Inkesta</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Inkestak</string>
     <string name="create_poll">Sortu inkesta bat</string>
     <string name="poll_choice_1">1. aukera</string>
     <string name="poll_choice_2">2. aukera</string>
@@ -812,7 +812,7 @@
     <string name="vote">Eman botoa</string>
     <string name="poll_not_private">Ezin da inkesta bat txertatu mezu zuen batean!</string>
     <string name="notif_poll">Zuk erantzun duzun inkesta bat bukatu da</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Zuk bidalitako inkesta bat amaitu da</string>
     <string name="settings_category_notif_customize">Pertsonalizatu</string>
     <string name="settings_category_notif_categories">Kategoriak</string>
     <string name="settings_category_notif_news">Berriak</string>
@@ -825,14 +825,14 @@
     <string name="move_timeline">Aldatu denbora-lerroa lekuz</string>
     <string name="hide_timeline">Ezkutatu denbora-lerroa</string>
     <string name="reorder_timelines">Antolatu denbora-lerroak</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">Desegin</string>
+    <string name="visible_tabs_needed">Bi fitxa ikusgai mantendu behar dituzu!</string>
+    <string name="action_reorder_timeline">Antolatu denbora-lerroak</string>
+    <string name="warning_list_deletion">Erabili zerrenden sarrera zerrenda hau ezabatzeko!</string>
+    <string name="warning_main_timeline">Denbora-lerro nagusiak ezkutatu besterik ezin dira egin!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="add_timeline">Gehitu denbora-lerro bat</string>
+    <string name="set_sensitive_content">Beti markatu multimedia mingarri gisa</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
