@@ -184,6 +184,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
+
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -1560,7 +1561,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
-                                loadAttachments(status, holder, true);
+                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                    loadAttachments(status, holder, true);
+                                }
                             } else {
                                 loadAttachments(status, holder, false);
                             }
@@ -1575,7 +1578,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 holder.status_horizontal_document_container.setVisibility(View.GONE);
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
-                            loadAttachments(status, holder, true);
                         } else {
                             loadAttachments(status, holder, false);
                         }
@@ -1606,7 +1608,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
-                                loadAttachments(status.getReblog(), holder, true);
+                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                    loadAttachments(status, holder, true);
+                                }
                             } else {
                                 loadAttachments(status.getReblog(), holder, false);
                             }
@@ -1621,13 +1625,38 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 holder.status_horizontal_document_container.setVisibility(View.GONE);
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
-                            loadAttachments(status.getReblog(), holder, true);
                         } else {
                             loadAttachments(status.getReblog(), holder, false);
                         }
                     }
                 }
             }
+            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.setAttachmentShown(true);
+                    notifyStatusChanged(status);
+                            /*
+                                Added a Countdown Timer, so that Sensitive (NSFW)
+                                images only get displayed for user set time,
+                                giving the user time to click on them to expand them,
+                                if they want. Images are then hidden again.
+                                -> Default value is set to 5 seconds
+                             */
+                    final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+                    if (timeout > 0) {
+                        new CountDownTimer((timeout * 1000), 1000) {
+                            public void onTick(long millisUntilFinished) {
+                            }
+
+                            public void onFinish() {
+                                status.setAttachmentShown(false);
+                                notifyStatusChanged(status);
+                            }
+                        }.start();
+                    }
+                }
+            });
             if (theme == Helper.THEME_BLACK) {
                 changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_more_toot_content, R.color.dark_text);
