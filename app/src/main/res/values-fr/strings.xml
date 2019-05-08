@@ -102,7 +102,7 @@
     <string name="no_status">Aucun pouet à afficher !</string>
     <string name="fav_added">Pouet ajouté aux favoris !</string>
     <string name="fav_removed">Pouet supprimé des favoris !</string>
-    <string name="reblog_added">Pouet partagé !</string>
+    <string name="reblog_added">Le pouet a été partagé !</string>
     <string name="reblog_removed">Pouet supprimé du partage !</string>
     <string name="reblog_by">Partagé par %1$s</string>
     <string name="favourite_add">Ajouter ce pouet aux favoris ?</string>
@@ -504,7 +504,7 @@
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Identifiant</string>
     <string name="poxy_password">Mot de passe</string>
-    <string name="set_theme">Thèmes :</string>
+    <string name="set_theme">Thème :</string>
     <string name="set_compact_mode">Mode compact</string>
     <string name="set_share_details">Ajouter les détails du pouet en le partageant</string>
     <string name="support_the_app_on_liberapay">Soutenir l’app sur Liberapay</string>
