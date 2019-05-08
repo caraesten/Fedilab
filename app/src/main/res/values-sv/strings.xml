@@ -834,7 +834,7 @@
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Lägg till en tidslinje</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Markera alltid media som känsligt</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
