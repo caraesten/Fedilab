@@ -1724,6 +1724,17 @@ public abstract class BaseMainActivity extends BaseActivity
         main_app_container = findViewById(R.id.main_app_container);
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
+        boolean iconOnly = true;
+        for(ManageTimelines tl: timelines){
+            if( tl.getType() == ManageTimelines.Type.INSTANCE || tl.getType() == ManageTimelines.Type.TAG || tl.getType() == ManageTimelines.Type.LIST){
+                iconOnly = false;
+            }
+        }
+        if( iconOnly && timelines.size() < 5){
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
