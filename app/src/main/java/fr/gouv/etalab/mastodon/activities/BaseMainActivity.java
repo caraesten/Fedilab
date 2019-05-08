@@ -651,8 +651,12 @@ public abstract class BaseMainActivity extends BaseActivity
                 //It's not a peertube search
                 if(displayPeertube == null){
                     if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                        boolean isAccount = false;
+                        if( query.split("@").length > 1 ){
+                            isAccount = true;
+                        }
                         if( (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                        && !query.contains("http://") && !query.contains("https://")){
+                        && !query.contains("http://") && !query.contains("https://") && !isAccount){
                             Intent intent = new Intent(BaseMainActivity.this, SearchResultTabActivity.class);
                             intent.putExtra("search", query);
                             startActivity(intent);
