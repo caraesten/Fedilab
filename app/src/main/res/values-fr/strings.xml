@@ -571,7 +571,7 @@
     <string name="expand_image">Étendre automatiquement les médias cachés</string>
     <string name="set_display_follow_instance">Afficher le bouton de suivi d’instances</string>
     <string name="channel_notif_follow">Nouvel abonnement</string>
-    <string name="channel_notif_boost">Nouveau Repouet</string>
+    <string name="channel_notif_boost">Nouveau partage</string>
     <string name="channel_notif_fav">Nouveau Favori</string>
     <string name="channel_notif_mention">Nouvelle mention</string>
     <string name="channel_notif_poll">Poll Ended</string>
@@ -620,7 +620,7 @@
     <string name="set_old_direct_timeline">Utiliser le fil direct antérieur à Mastodon 2.6</string>
     <string name="set_display_video_preview">Afficher les aperçus des vidéos</string>
     <string name="thanks_text_support">Support de Gitlab</string>
-    <string name="action_bug_report">Signaler un bug</string>
+    <string name="action_bug_report">Signaler un bogue</string>
     <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
     <string name="account_id_clipbloard">L’ID du compte été copié vers le presse-papiers !</string>
@@ -647,7 +647,7 @@
     <string name="app_logo">Logo de l’application</string>
     <string name="profile_picture">Photo du profil</string>
     <string name="profile_banner">Bannière du profil</string>
-    <string name="contact_instance_admin">Contacter l\'administrateur de l\'instance</string>
+    <string name="contact_instance_admin">Contacter l’administrateur de l’instance</string>
     <string name="add_new">Ajouter un nouveau</string>
     <string name="mastohost_logo">Logo de MastoHost</string>
     <string name="emoji_picker">Sélecteur d’émojis</string>
@@ -776,11 +776,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_logout_account">Déconnexion du compte</string>
     <string name="set_optimize_loading">Optimiser le temps de chargement</string>
     <string name="all">Tout</string>
-    <string name="about_opencollective">Soutenir l\'application</string>
+    <string name="about_opencollective">Soutenir l’application</string>
     <string name="more_about_opencollective">Open Collective permet aux groupes de créer rapidement un collectif, de collecter des fonds et de les gérer de manière transparente.</string>
     <string name="copy_link">Copier le lien</string>
     <string name="connect_instance">Connecter</string>
-    <string name="set_normal">Nomal</string>
+    <string name="set_normal">Normal</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Terminal</string>
     <string name="set_mode">Définir le mode d’affichage</string>
