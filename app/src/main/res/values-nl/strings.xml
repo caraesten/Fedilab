@@ -831,6 +831,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="warning_main_timeline">Hoofdtijdlijnen kunnen alleen worden verborgen!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Tijdlijn toevoegen</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
