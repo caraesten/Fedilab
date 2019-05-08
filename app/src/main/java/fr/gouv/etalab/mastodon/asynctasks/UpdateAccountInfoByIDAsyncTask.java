@@ -60,7 +60,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = null;
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-            account = new API(this.contextReference.get()).getAccount(userId);
+            account = new API(this.contextReference.get()).verifyCredentials();
         else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
             account.setSocial("PEERTUBE");
@@ -78,7 +78,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
             if( accountDb != null){
                 account.setInstance(accountDb.getInstance());
                 account.setToken(accountDb.getToken());
-                new AccountDAO(this.contextReference.get(), db).updateAccount(account);
+                new AccountDAO(this.contextReference.get(), db).updateAccountCredential(account);
             }
         }
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {

@@ -82,6 +82,8 @@ public class AccountDAO {
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
 
+        values.put(Sqlite.COL_SENSITIVE, account.isSensitive());
+        values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
         //Inserts account
         try{
             db.insert(Sqlite.TABLE_USER_ACCOUNT, null, values);
@@ -128,7 +130,49 @@ public class AccountDAO {
         }
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
+        return db.update(Sqlite.TABLE_USER_ACCOUNT,
+                values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_USERNAME + " =?",
+                new String[]{account.getId(), account.getUsername()});
+    }
 
+
+    /**
+     * Update an Account in database
+     * @param account Account
+     * @return boolean
+     */
+    public int updateAccountCredential(Account account)
+    {
+        ContentValues values = new ContentValues();
+        if( account.getNote() == null)
+            account.setNote("");
+        if( account.getCreated_at() == null)
+            account.setCreated_at(new Date());
+        values.put(Sqlite.COL_ACCT, account.getAcct());
+        values.put(Sqlite.COL_DISPLAYED_NAME, account.getDisplay_name());
+        values.put(Sqlite.COL_LOCKED,account.isLocked());
+        values.put(Sqlite.COL_FOLLOWERS_COUNT,account.getFollowers_count());
+        values.put(Sqlite.COL_FOLLOWING_COUNT,account.getFollowing_count());
+        values.put(Sqlite.COL_STATUSES_COUNT,account.getStatuses_count());
+        values.put(Sqlite.COL_NOTE,account.getNote());
+        values.put(Sqlite.COL_URL,account.getUrl());
+        values.put(Sqlite.COL_AVATAR,account.getAvatar());
+        values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
+        values.put(Sqlite.COL_HEADER,account.getHeader());
+        values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
+        values.put(Sqlite.COL_INSTANCE, account.getInstance());
+        values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
+        values.put(Sqlite.COL_SOCIAL, account.getSocial());
+        if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
+            values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
+            values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());
+            values.put(Sqlite.COL_REFRESH_TOKEN, account.getRefresh_token());
+        }
+        if( account.getToken() != null)
+            values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
+        values.put(Sqlite.COL_SENSITIVE, account.isSensitive());
+        values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
         return db.update(Sqlite.TABLE_USER_ACCOUNT,
                 values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_USERNAME + " =?",
                 new String[]{account.getId(), account.getUsername()});
@@ -325,6 +369,8 @@ public class AccountDAO {
         account.setClient_id(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_ID)));
         account.setClient_secret(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_SECRET)));
         account.setRefresh_token(c.getString(c.getColumnIndex(Sqlite.COL_REFRESH_TOKEN)));
+        account.setSensitive(c.getInt(c.getColumnIndex(Sqlite.COL_SENSITIVE)) == 1);
+        account.setPrivacy((c.getString(c.getColumnIndex(Sqlite.COL_PRIVACY))));
         //Close the cursor
         c.close();
 
@@ -368,6 +414,8 @@ public class AccountDAO {
             account.setClient_id(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_ID)));
             account.setClient_secret(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_SECRET)));
             account.setRefresh_token(c.getString(c.getColumnIndex(Sqlite.COL_REFRESH_TOKEN)));
+            account.setSensitive(c.getInt(c.getColumnIndex(Sqlite.COL_SENSITIVE)) == 1);
+            account.setPrivacy((c.getString(c.getColumnIndex(Sqlite.COL_PRIVACY))));
             accounts.add(account);
         }
         //Close the cursor

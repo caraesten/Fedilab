@@ -117,6 +117,8 @@ public class Account implements Parcelable {
     private String refresh_token;
     private boolean isModerator = false;
     private boolean isAdmin = false;
+    private String privacy = "public";
+    private boolean sensitive = false;
 
 
 
@@ -172,6 +174,8 @@ public class Account implements Parcelable {
         dest.writeString(this.refresh_token);
         dest.writeByte(this.isModerator ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isAdmin ? (byte) 1 : (byte) 0);
+        dest.writeString(this.privacy);
+        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
     }
 
     public Account() {
@@ -225,6 +229,8 @@ public class Account implements Parcelable {
         this.refresh_token = in.readString();
         this.isModerator = in.readByte() != 0;
         this.isAdmin = in.readByte() != 0;
+        this.privacy = in.readString();
+        this.sensitive =in.readByte() != 0;
     }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
@@ -382,6 +388,22 @@ public class Account implements Parcelable {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public boolean isSensitive() {
+        return sensitive;
+    }
+
+    public void setSensitive(boolean sensitive) {
+        this.sensitive = sensitive;
     }
 
 

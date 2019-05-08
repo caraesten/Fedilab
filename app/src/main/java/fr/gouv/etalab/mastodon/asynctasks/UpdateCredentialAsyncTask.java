@@ -34,6 +34,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private String display_name, note, avatarName, headerName;
+    private boolean senstive;
     private ByteArrayInputStream avatar, header;
     private API.accountPrivacy privacy;
     private APIResponse apiResponse;
@@ -41,7 +42,7 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private HashMap<String, String> customFields;
 
-    public UpdateCredentialAsyncTask(Context context, HashMap<String, String> customFields, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
+    public UpdateCredentialAsyncTask(Context context, HashMap<String, String> customFields, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, boolean senstive, OnUpdateCredentialInterface onUpdateCredentialInterface){
         this.contextReference = new WeakReference<>(context);
         this.display_name = display_name;
         this.note = note;
@@ -52,11 +53,12 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
         this.avatarName = avatarName;
         this.headerName = headerName;
         this.customFields = customFields;
+        this.senstive = senstive;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, avatarName, header, headerName, privacy, customFields);
+        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, avatarName, header, headerName, privacy, customFields, senstive);
         return null;
     }
 

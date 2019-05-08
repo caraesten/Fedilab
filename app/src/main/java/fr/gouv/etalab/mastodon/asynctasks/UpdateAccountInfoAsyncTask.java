@@ -97,7 +97,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         editor.putString(Helper.PREF_INSTANCE, instance);
         editor.apply();
         if( userExists)
-            new AccountDAO(this.contextReference.get(), db).updateAccount(account);
+            new AccountDAO(this.contextReference.get(), db).updateAccountCredential(account);
         else {
             if( account.getUsername() != null && account.getCreated_at() != null)
                 new AccountDAO(this.contextReference.get(), db).insertAccount(account);

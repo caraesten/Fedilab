@@ -1771,6 +1771,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_picture.setEnabled(true);
             toot_it.setEnabled(true);
             toot_sensitive.setVisibility(View.VISIBLE);
+            if( account.isSensitive()){
+                toot_sensitive.setChecked(true);
+            }
             picture_scrollview.setVisibility(View.VISIBLE);
         }else {
             if( attachments.size() > index && attachment.getDescription() != null) {

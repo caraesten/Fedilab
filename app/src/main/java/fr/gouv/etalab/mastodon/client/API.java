@@ -314,7 +314,7 @@ public class API {
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields, boolean sensitive) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -341,6 +341,9 @@ public class API {
                 it.remove();
                 i++;
             }
+        }
+        if(sensitive){
+            requestParams.put("source[sensitive]", String.valueOf(sensitive));
         }
         try {
             new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
@@ -393,7 +396,7 @@ public class API {
                     }
                 }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
                     targetedAccount.setRefresh_token(values.get("refresh_token"));
-                new AccountDAO(context, db).updateAccount(targetedAccount);
+                new AccountDAO(context, db).updateAccountCredential(targetedAccount);
                 String response;
                 try {
                     response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, targetedAccount.getToken());
@@ -4454,6 +4457,8 @@ public class API {
                 account.setFieldsVerified(fieldsMapVerified);
             }catch (Exception ignored){}
 
+
+
             //Retrieves emjis
             List<Emojis> emojiList = new ArrayList<>();
             try {
@@ -4468,6 +4473,17 @@ public class API {
                 account.setEmojis(emojiList);
             }catch (Exception e){
                 account.setEmojis(new ArrayList<>());
+            }
+            if( resobj.has("source")){
+                JSONObject source = resobj.getJSONObject("source");
+                try{
+                    account.setPrivacy(source.getString("privacy"));
+                    account.setSensitive(source.getBoolean("sensitive"));
+                }catch (Exception e){
+                    account.setPrivacy("public");
+                    account.setSensitive(false);
+                    e.printStackTrace();
+                }
             }
         } catch (JSONException ignored) {} catch (ParseException e) {
             e.printStackTrace();
