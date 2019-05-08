@@ -831,6 +831,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="warning_main_timeline">Les fils principaux ne peuvent qu’être masqués !</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Ajouter un fil</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
