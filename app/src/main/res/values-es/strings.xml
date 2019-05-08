@@ -828,6 +828,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
