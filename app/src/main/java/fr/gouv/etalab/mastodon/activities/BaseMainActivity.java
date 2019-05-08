@@ -1703,8 +1703,6 @@ public abstract class BaseMainActivity extends BaseActivity
         ReorderTimelinesActivity.updated = false;
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -1716,9 +1714,8 @@ public abstract class BaseMainActivity extends BaseActivity
             position = (timelines.size()-1);
         if( position < 0)
             position = 0;
-        setTitle("");
-        /*if( !optimize_loading)
-            viewPager.setOffscreenPageLimit(countPage);*/
+        if( toolbarTitle != null)
+            toolbarTitle.setVisibility(View.GONE);
         viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
         adapter = new PagerAdapter
