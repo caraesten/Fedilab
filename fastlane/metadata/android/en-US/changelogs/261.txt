@@ -2,12 +2,12 @@ Added
 * Blur sensitive media
 * Automatically federate accounts when searching (Mastodon/Pleroma/Peertube/Pixelfed/GNU)
 * Media can be set always as sensitive (synced with Mastodon)
-* Searches with a focused Peertube timeline filter videos
+* Searches on a Peertube timeline filter videos
 
 Changed
 * Add a back button in account viewer
 * Make the menu button dark in light theme for account viewer
 
 Fixed
-* Fix an issue when adding followed instance
-* Fix layout for tabs when there are few.
+* Fix an issue when following an instance
+* Fix layout for tabs when there are few ones
