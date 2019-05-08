@@ -650,6 +650,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Otwórz menu toota i wybierz <b>Zaplanuj podbicie</b>.]]></string>
     <string name="art_menu">Oś sztuki</string>
     <string name="open_menu">Otwórz menu</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Logo aplikacji</string>
     <string name="profile_picture">Zdjęcie profilowe</string>
     <string name="profile_banner">Baner profilowy</string>

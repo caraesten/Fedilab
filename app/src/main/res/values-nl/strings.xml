@@ -645,6 +645,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Open het menu van een toot en kies <b>Boost inplannen</b>.]]></string>
     <string name="art_menu">Kunsttijdlijn</string>
     <string name="open_menu">Menu openen</string>
+    <string name="go_back">Ga terug</string>
     <string name="app_logo">Logo van de applicatie</string>
     <string name="profile_picture">Avatar</string>
     <string name="profile_banner">Omslagfoto op profiel</string>

@@ -637,6 +637,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट शैड्यूल करें</b>।]]></string>
     <string name="art_menu">कला टाइम्लाइन</string>
     <string name="open_menu">मेन्यू खोलें</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">एेप का चिह्न</string>
     <string name="profile_picture">प्रोफ़ाइल चित्र</string>
     <string name="profile_banner">प्रोफ़ाइल बैनर</string>

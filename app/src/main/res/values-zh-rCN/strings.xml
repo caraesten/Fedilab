@@ -641,6 +641,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[打开嘟文的菜单，然后选择 <b>定时转嘟</b>。]]></string>
     <string name="art_menu">艺术时间线</string>
     <string name="open_menu">打开菜单</string>
+    <string name="go_back">返回</string>
     <string name="app_logo">应用程序的徽标</string>
     <string name="profile_picture">个人资料图片</string>
     <string name="profile_banner">个人资料横幅</string>

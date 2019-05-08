@@ -645,6 +645,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Ldi umuγ</string>
+    <string name="go_back">Go back</string>
     <string name="app_logo">Alugu n wesnas</string>
     <string name="profile_picture">Tugna n umaγnu</string>
     <string name="profile_banner">Profile banner</string>
