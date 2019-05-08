@@ -649,14 +649,39 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
-                if(displayPeertube == null){
+                //Peertube search
+                if(tabLayout != null && timelines != null && (timelines.get(tabLayout.getSelectedTabPosition()).getType() == ManageTimelines.Type.PEERTUBE || (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))){
+                    DisplayStatusFragment statusFragment;
+                    Bundle bundle = new Bundle();
+                    statusFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    String instance = "peertube.social";
+                    if(timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE"))
+                        instance = timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getHost();
+                    bundle.putString("remote_instance", instance);
+                    bundle.putString("instanceType", "PEERTUBE");
+                    bundle.putString("search_peertube", query);
+                    statusFragment.setArguments(bundle);
+                    String fragmentTag = "REMOTE_INSTANCE";
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                    if( main_app_container.getVisibility() == View.GONE){
+
+                        main_app_container.setVisibility(View.VISIBLE);
+                        toolbarTitle.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                }else{
                     if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                         boolean isAccount = false;
                         if( query.split("@").length > 1 ){
                             isAccount = true;
                         }
                         if( (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                        && !query.contains("http://") && !query.contains("https://") && !isAccount){
+                                && !query.contains("http://") && !query.contains("https://") && !isAccount){
                             Intent intent = new Intent(BaseMainActivity.this, SearchResultTabActivity.class);
                             intent.putExtra("search", query);
                             startActivity(intent);
@@ -672,27 +697,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         b.putString("tag", query.trim());
                         intent.putExtras(b);
                         startActivity(intent);
-                    }
-                }else{ //Peertube search
-                    DisplayStatusFragment statusFragment;
-                    Bundle bundle = new Bundle();
-                    statusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                    bundle.putString("remote_instance", displayPeertube);
-                    bundle.putString("instanceType", "PEERTUBE");
-                    bundle.putString("search_peertube", query);
-                    statusFragment.setArguments(bundle);
-                    String fragmentTag = "REMOTE_INSTANCE";
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                    if( main_app_container.getVisibility() == View.GONE){
-
-                        main_app_container.setVisibility(View.VISIBLE);
-                        toolbarTitle.setVisibility(View.VISIBLE);
-                        delete_instance.setVisibility(View.VISIBLE);
-                        viewPager.setVisibility(View.GONE);
-                        tabLayout.setVisibility(View.GONE);
                     }
                 }
                 toolbar_search.setQuery("", false);
