@@ -215,7 +215,7 @@
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض!</string>
     <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم اختر <b>برمَجة</b> على القائمة العلوية.</string>
-    <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
+    <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج؟</string>
     <string name="media_count">الوسائط: %d</string>
     <string name="toot_scheduled">تمت برمجة التبويق بنجاح!</string>
     <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية!</string>
@@ -237,7 +237,7 @@
         <item quantity="two">و إشعارين</item>
         <item quantity="few">و %d اشعارات</item>
         <item quantity="many">و %d اشعارات</item>
-        <item quantity="other">و %d اشعارات</item>
+        <item quantity="other">و %d إشعارات أخرى</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
@@ -251,12 +251,12 @@
         <item quantity="zero">%d إعجاب</item>
         <item quantity="one">%d إعجاب</item>
         <item quantity="two">%d إعجابان</item>
-        <item quantity="few">%d إعجابين</item>
+        <item quantity="few">%d إعجابات</item>
         <item quantity="many">%d إعجابات</item>
         <item quantity="other">%d إعجابات</item>
     </plurals>
-    <string name="delete_notification_ask">هل تريد حذف الإخطار؟</string>
-    <string name="delete_notification_ask_all">هل تود حذف كافة الإخطارات؟</string>
+    <string name="delete_notification_ask">هل تريد حذف الإشعار؟</string>
+    <string name="delete_notification_ask_all">هل تود حذف كافة الإشعارات؟</string>
     <string name="delete_notification">تم حذف الإشعار بنجاح!</string>
     <string name="delete_notification_all">تم حذف جميع الإشعارات بنجاح!</string>
     <!-- HEADER -->
@@ -280,7 +280,7 @@
     <string name="toast_unstatus">تم حذف التبويق بنجاح!</string>
     <string name="toast_pin">تم تثبيت التبويق بنجاح!</string>
     <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح!</string>
-    <string name="toast_error">عذراً ! حدث خطأ !</string>
+    <string name="toast_error">عذراً ! حدث خطأ!</string>
     <string name="toast_code_error">طرأ هناك خطأ! لم يقم مثيل الخادم بإعادة رمز المصادقة!</string>
     <string name="toast_error_instance">يبدو أنّ اسم نطاق مثيل الخادوم غير صالح!</string>
     <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر!</string>
@@ -677,7 +677,7 @@
     <string name="card_view_image">صورة البطاقة</string>
     <string name="hide_media">إخفاء الوسائط</string>
     <string name="favicon">أيقونة المفضلة</string>
-    <string name="media_description">وصف للمعاقين بصريا</string>
+    <string name="media_description">إضافة وصف على الصور (للمعاقين بصريا)</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
@@ -748,11 +748,11 @@
     <string name="video_uploaded_action">اضغط هنا لتعديل بيانات الفيديو.</string>
     <string name="delete_video">احذف الفيديو</string>
     <string name="delete_video_confirmation">هل أنت متأكد أنك تود حذف هذا الفيديو؟</string>
-    <string name="no_video_uploaded">لم يتم ارسال أية فيديوهات بعد!</string>
+    <string name="no_video_uploaded">لم يتم إرسال أية فيديوهات بعد!</string>
     <string name="display_nsfw_videos">عرض الفيديوهات الحساسة</string>
     <string name="default_channel_of">القناة الافتراضية لـ %s</string>
     <string name="no_video_to_display">لا توجد أية فيديوهات لعرضها!</string>
-    <string name="add_image_to_favorite">إضافة إلى المفضلة</string>
+    <string name="add_image_to_favorite">إضافة الوسائط إلى المفضلة</string>
     <string name="leave_a_comment">اترك تعليقاً</string>
     <string name="share">شارك</string>
     <string name="my_pictures">صوري</string>
@@ -870,7 +870,7 @@
         <item>7 أيام</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>تورنت</item>
+        <item>Webview</item>
         <item>تدفق مباشر</item>
     </string-array>
 </resources>
