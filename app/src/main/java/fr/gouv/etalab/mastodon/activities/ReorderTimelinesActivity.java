@@ -95,6 +95,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     public static boolean updated;
     private ItemTouchHelper touchHelper;
     private RelativeLayout undo_container;
+    private TextView undo_message;
     private TextView undo_action;
     private  List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
@@ -354,6 +355,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 new SimpleItemTouchHelperCallback(adapter);
         touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(lv_reorder_tabs);
+        undo_message = findViewById(R.id.undo_message);
         undo_action = findViewById(R.id.undo_action);
         undo_container = findViewById(R.id.undo_container);
         lv_reorder_tabs.setAdapter(adapter);
@@ -370,6 +372,17 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
         undo_container.setVisibility(View.VISIBLE);
+        switch (manageTimelines.getType()){
+            case TAG:
+                undo_message.setText(R.string.reorder_tag_removed);
+                break;
+            case INSTANCE:
+                undo_message.setText(R.string.reorder_instance_removed);
+                break;
+            case LIST:
+                undo_message.setText(R.string.reorder_list_deleted);
+                break;
+        }
         undo_action.setPaintFlags(undo_action.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         actionCanBeApplied = true;
         undo_action.setOnClickListener(new View.OnClickListener() {
