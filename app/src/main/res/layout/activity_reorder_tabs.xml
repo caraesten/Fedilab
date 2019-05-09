@@ -31,7 +31,7 @@
     <RelativeLayout
         android:id="@+id/undo_container"
         android:visibility="gone"
-        android:background="@color/mastodonC3"
+        android:background="@color/notif_black_3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

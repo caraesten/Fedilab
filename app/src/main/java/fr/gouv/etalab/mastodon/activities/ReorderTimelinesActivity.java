@@ -103,12 +103,13 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
+    private int theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
@@ -371,6 +372,8 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
+        if (theme == THEME_LIGHT)
+            undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
         switch (manageTimelines.getType()){
             case TAG:
