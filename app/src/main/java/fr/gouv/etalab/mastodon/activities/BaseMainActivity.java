@@ -42,6 +42,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -52,6 +53,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -85,10 +87,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import es.dmoral.toasty.Toasty;
@@ -1343,26 +1348,46 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
-      //  updateNotifCounter();
-      //  updateHomeCounter();
-
 
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        /*if( lastHomeId != null && homeFragment != null){
-            homeFragment.retrieveMissingToots(lastHomeId);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String datestr = sharedpreferences.getString(Helper.HOME_LAST_READ + userId + instance,null);
+
+        if( timelines != null && timelines.size() > 0 && mPageReferenceMap != null && datestr != null){
+            Date date = Helper.stringToDate(getApplicationContext(), datestr);
+            Date dateAllowed = new Date( System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(15));
+            //Refresh home if needed
+            Log.v(Helper.TAG,"date: " + date);
+            Log.v(Helper.TAG,"dateAllowed: " + dateAllowed);
+            Log.v(Helper.TAG,"dateAllowed.after(date): " + dateAllowed.after(date));
+            if( dateAllowed.after(date) || 1 == 1) {
+                for (ManageTimelines tl : timelines) {
+                    if (tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap.containsKey(tl.getPosition())) {
+                        DisplayStatusFragment homeTimeline = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                        if (homeTimeline != null) {
+                            homeTimeline.retrieveMissingHome();
+                        }
+                        break;
+                    }
+                }
+            }
         }
-        if( lastNotificationId != null && tabLayoutNotificationsFragment != null){
-            tabLayoutNotificationsFragment.retrieveMissingNotifications(lastNotificationId);
-        }*/
+
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
+        if( userId != null && instance != null) {
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.HOME_LAST_READ + userId + instance, Helper.dateToString(new Date()));
+            editor.apply();
+        }
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 

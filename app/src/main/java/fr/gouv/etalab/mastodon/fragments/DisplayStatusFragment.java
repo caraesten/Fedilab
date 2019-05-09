@@ -32,6 +32,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -709,6 +710,27 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+    }
+
+
+    public void retrieveMissingHome(){
+        if( statusListAdapter != null && statuses != null && lv_status != null && mLayoutManager != null){
+            int firstVisible = mLayoutManager.findFirstVisibleItemPosition();
+            Iterator<Status> s = statuses.iterator();
+            int i = 0;
+            Log.v(Helper.TAG,"firstVisible: " + firstVisible);
+            Log.v(Helper.TAG,"statuses: " + statuses.size());
+            while (s.hasNext() && i < firstVisible) {
+                Status status = s.next();
+                Log.v(Helper.TAG,status.getAccount().getAcct() + " - " + status.getCreated_at() );
+                s.remove();
+                statusListAdapter.notifyItemRemoved(0);
+                statusListAdapter.notifyItemChanged(0);
+                i++;
+            }
+            Log.v(Helper.TAG,"removed: " + i);
+           // asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     /**
