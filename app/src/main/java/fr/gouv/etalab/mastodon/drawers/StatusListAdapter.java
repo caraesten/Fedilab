@@ -1595,7 +1595,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
                         //If medias are loaded without any conditions or if device is on wifi
                         if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder, false);
+                            loadAttachments(status, holder, false);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
@@ -1612,7 +1612,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     loadAttachments(status, holder, true);
                                 }
                             } else {
-                                loadAttachments(status.getReblog(), holder, false);
+                                loadAttachments(status, holder, false);
                             }
                         }
                     }else{
@@ -1626,7 +1626,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             else
                                 holder.status_document_container.setVisibility(View.GONE);
                         } else {
-                            loadAttachments(status.getReblog(), holder, false);
+                            loadAttachments(status, holder, false);
                         }
                     }
                 }
@@ -2735,7 +2735,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private void loadAttachments(final Status status, final ViewHolder holder, boolean blur){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
-        List<Attachment> attachments = status.getMedia_attachments();
+        List<Attachment> attachments;
+        if( status.getReblog() != null)
+            attachments = status.getReblog().getMedia_attachments();
+        else
+            attachments = status.getMedia_attachments();
         if( !blur)
             holder.status_show_more.setVisibility(View.GONE);
         else
