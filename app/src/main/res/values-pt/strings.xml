@@ -274,7 +274,7 @@
     <string name="nothing_to_do">Nenhuma ação pode ser feita</string>
     <string name="toast_saved">Mídia salva!</string>
     <string name="toast_error_translate">Ocorreu um erro na tradução!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Tradução está desativada nas configurações</string>
     <string name="toast_toot_saved">Rascunho salvo!</string>
     <string name="toast_error_char_limit">Você tem certeza que sua instância permite esse número de caracteres? Geralmente, são 500 caracteres.</string>
     <string name="toast_visibility_changed">Visibilidade dos toots foi mudada para a conta %1$s</string>
