@@ -91,15 +91,15 @@
     <string name="send_email">Mandar um e-mail</string>
     <string name="choose_file">Por favor, selecione um arquivo</string>
     <string name="choose_file_error">Nenhum gerenciador de arquivo encontrado!</string>
-    <string name="click_to_change">Clique no caminho para mudá-lo</string>
+    <string name="click_to_change">Toque no caminho para mudá-lo</string>
     <string name="failed">Falhou!</string>
     <string name="scheduled_toots">Toots agendados</string>
     <string name="disclaimer_full">As informações abaixo podem refletir o perfil do usuário incompletamente.</string>
-    <string name="insert_emoji">Inserir Emoji</string>
-    <string name="no_emoji">O app não recolhe emojis personalizado para o momento.</string>
+    <string name="insert_emoji">Inserir emoji</string>
+    <string name="no_emoji">O aplicativo não achou emojis personalizados no momento.</string>
     <string name="live_notif">Notificações ao vivo</string>
     <!-- Status -->
-    <string name="no_status">Sem toots para exibir</string>
+    <string name="no_status">Sem toots para mostrar</string>
     <string name="fav_added">Toot adicionado aos favoritos</string>
     <string name="fav_removed">Toot removido dos favoritos!</string>
     <string name="reblog_added">Toot compartilhado!</string>
