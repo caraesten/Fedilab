@@ -301,7 +301,7 @@
     <string name="set_notif_follow_share">当某人转嘟您的状态时通知</string>
     <string name="set_notif_follow_add">当某人收藏您的状态时通知</string>
     <string name="set_notif_follow_mention">当有人提到您时通知</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">当投票结束发出通知</string>
     <string name="set_share_validation">转嘟前显示确认对话框</string>
     <string name="set_share_validation_fav">添加到收藏夹前显示确认对话框</string>
     <string name="set_wifi_only">仅当使用 WiFi 时通知</string>
@@ -797,7 +797,7 @@
     <string name="set_retrieve_metadata_share_from_extras">分享 URL 时附加图像</string>
     <!-- end languages -->
     <string name="poll">投票</string>
-    <string name="polls">Polls</string>
+    <string name="polls">投票</string>
     <string name="create_poll">创建投票</string>
     <string name="poll_choice_1">选项一</string>
     <string name="poll_choice_2">选项二</string>
