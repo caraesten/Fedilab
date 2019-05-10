@@ -818,6 +818,9 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="move_timeline">Mou la pissarra</string>
     <string name="hide_timeline">Amaga el cronograma</string>
     <string name="reorder_timelines">Reordenar els cronogrames</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Desfés</string>
     <string name="visible_tabs_needed">Cal que restin visibles dues pestanyes!</string>
     <string name="action_reorder_timeline">Reordenar les pissarres</string>
