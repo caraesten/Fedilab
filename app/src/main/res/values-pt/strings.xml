@@ -630,7 +630,7 @@
     <string name="set_change_locale">Mudar o idioma</string>
     <string name="default_language">Idioma padrão</string>
     <string name="truncate_long_toots">Delimitar toots longos</string>
-    <string name="set_truncate_toot">Delimitar toots maiores que \'x\' linhas. Use 0 para desativar.</string>
+    <string name="set_truncate_toot">Delimitar toots por nº de linhas, 0 para desativar.</string>
     <string name="display_toot_truncate">Mostrar mais</string>
     <string name="hide_toot_truncate">Mostrar menos</string>
     <string name="manage_tags">Gerenciar tags</string>
