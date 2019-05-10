@@ -645,7 +645,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menú de un toot e escolla <b>Programar promoción</b>.]]></string>
     <string name="art_menu">Liña temporal Art</string>
     <string name="open_menu">Abrir menú</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Atrás</string>
     <string name="app_logo">Logo da aplicación</string>
     <string name="profile_picture">Imaxe de perfil</string>
     <string name="profile_banner">Banda do perfil</string>
@@ -828,9 +828,9 @@
     <string name="move_timeline">Mover liña temporal</string>
     <string name="hide_timeline">Agochar liña temporal</string>
     <string name="reorder_timelines">Ordear liñas temporais</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
+    <string name="reorder_list_deleted">Lista eliminada de xeito permanente</string>
+    <string name="reorder_instance_removed">Eliminouse o seguimento da instancia</string>
+    <string name="reorder_tag_removed">Eliminouse a etiqueta fixada</string>
     <string name="undo">Desfacer</string>
     <string name="visible_tabs_needed">Debe manter dúas lapelas visibles!</string>
     <string name="action_reorder_timeline">Ordear liñas temporais</string>
@@ -838,7 +838,7 @@
     <string name="warning_main_timeline">As liñas temporais principais só poden ocultarse!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Engadir liña temporal</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Marcar os medios sempre como sensibles</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
