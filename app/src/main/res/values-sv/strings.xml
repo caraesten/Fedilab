@@ -827,6 +827,9 @@
     <string name="move_timeline">Flytta tidslinje</string>
     <string name="hide_timeline">Dölj tidslinje</string>
     <string name="reorder_timelines">Ändra ordning på tidslinjer</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Ångra</string>
     <string name="visible_tabs_needed">Du måste behålla minst två synliga tabbar!</string>
     <string name="action_reorder_timeline">Ändra ordning på tidslinjer</string>
