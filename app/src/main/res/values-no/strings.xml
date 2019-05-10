@@ -815,6 +815,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="move_timeline">Flytt tidslinje</string>
     <string name="hide_timeline">Skjul tidslinje</string>
     <string name="reorder_timelines">Endre rekkefølge på tidslinjer</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Angre</string>
     <string name="visible_tabs_needed">Du må ha to synlige faner!</string>
     <string name="action_reorder_timeline">Endre rekkefølge på tidslinjer</string>
