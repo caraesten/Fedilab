@@ -648,22 +648,22 @@
     <string name="go_back">Voltar</string>
     <string name="app_logo">Logo do aplicativo</string>
     <string name="profile_picture">Foto do perfil</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="profile_banner">Capa do perfil</string>
+    <string name="contact_instance_admin">Contate o administrador da instância</string>
     <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="mastohost_logo">Logo do MastoHost</string>
     <string name="emoji_picker">Seletor de emoticons</string>
     <string name="refresh">Atualizar</string>
     <string name="expand_conversation">Expandir a conversa</string>
     <string name="remove_account">Deletar uma conta</string>
     <string name="delete_domain">Remover o domínio bloqueado</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
+    <string name="custom_emoji_picker">Seletor de emoji personalizado</string>
+    <string name="play_video">Reproduzir vídeo</string>
     <string name="new_toot">Novo toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Imagem do cartão</string>
     <string name="hide_media">Esconder mídia</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Add description for media (for the visually impaired)</string>
+    <string name="media_description">Adicionar descrição da mídia</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
