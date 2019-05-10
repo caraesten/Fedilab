@@ -760,9 +760,9 @@
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> está seguindo sua conta]]></string>
     <string name="peertube_video_published"><![CDATA[Seu vídeo <b>%1$s</b> foi publicado]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Seu vídeo <b>%1$s</b> foi importado com sucesso]]></string>
+    <string name="peertube_video_import_error"><![CDATA[A importação do seu vídeo <b>%1$s</b> falhou]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicou um novo vídeo: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
     <string name="export_data">Export data</string>
