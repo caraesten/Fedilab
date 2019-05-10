@@ -29,27 +29,27 @@
     <string name="save">Salvar</string>
     <string name="restore">Restaurar</string>
     <string name="two_factor_authentification">Autenticação de dois fatores?</string>
-    <string name="other_instance">Outra instância que não mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Outra instância além de mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Sem resultados!</string>
     <string name="instance">Instância</string>
     <string name="instance_example">Instância: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Agora funcionando com a conta %1$s</string>
+    <string name="toast_account_changed" formatted="false">Usando a conta %1$s agora</string>
     <string name="add_account">Adicionar conta</string>
     <string name="clipboard">O conteúdo do toot foi copiado para a área de transferência</string>
-    <string name="clipboard_url">A URL do toot foi copiada para o clipboard</string>
+    <string name="clipboard_url">O link do toot foi copiado para a área de transferência</string>
     <string name="change">Mudar</string>
     <string name="choose_picture">Selecione uma imagem…</string>
     <string name="clear">Limpar</string>
     <string name="microphone">Microfone</string>
     <string name="camera">Câmera</string>
     <string name="speech_prompt">Por favor, diga algo</string>
-    <string name="speech_not_supported">Desculpe! Seu aparelho não suporta entrada por voz!</string>
+    <string name="speech_not_supported">Desculpe! Seu dispositivo não suporta entrada por voz!</string>
     <string name="delete_all">Excluir tudo</string>
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
-    <string name="text_size">Tamanhos de ícones e texto</string>
-    <string name="text_size_change">Mudar o tamanho de texto atual:</string>
-    <string name="icon_size_change">Mudar o tamanho de ícones atual:</string>
+    <string name="text_size">Tamanho do texto e dos ícones</string>
+    <string name="text_size_change">Mudar o tamanho atual do texto:</string>
+    <string name="icon_size_change">Mudar o tamanho atual dos ícones:</string>
     <string name="next">Próximo</string>
     <string name="previous">Anterior</string>
     <string name="open_with">Abrir com</string>
