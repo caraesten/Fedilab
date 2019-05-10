@@ -2989,12 +2989,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if( status.isAttachmentShown()) {
 
+                            ArrayList<Attachment> attachmentArrayList;
+                            if( status.getReblog() == null)
+                                attachmentArrayList = status.getMedia_attachments();
+                            else
+                                attachmentArrayList = status.getReblog().getMedia_attachments();
                             if (attachment.getType().equals("web")) {
                                 Helper.openBrowser(context, attachment.getUrl());
                             } else {
                                 Intent intent = new Intent(context, MediaActivity.class);
                                 Bundle b = new Bundle();
-                                intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                                intent.putParcelableArrayListExtra("mediaArray", attachmentArrayList);
                                 b.putInt("position", finalPosition);
                                 intent.putExtras(b);
                                 context.startActivity(intent);
