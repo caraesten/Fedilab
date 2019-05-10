@@ -823,6 +823,9 @@
     <string name="move_timeline">移动时间线</string>
     <string name="hide_timeline">隐藏时间线</string>
     <string name="reorder_timelines">记录时间线</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">撤销</string>
     <string name="visible_tabs_needed">您需要保持两条可见的时间线！</string>
     <string name="action_reorder_timeline">记录时间线</string>
