@@ -835,6 +835,9 @@
     <string name="move_timeline">Переместить ленту</string>
     <string name="hide_timeline">Скрыть ленту</string>
     <string name="reorder_timelines">Изменить порядок лент</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Вернуть</string>
     <string name="visible_tabs_needed">Необходимо сохранить две видимые вкладки!</string>
     <string name="action_reorder_timeline">Изменить порядок лент</string>
