@@ -784,7 +784,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="data_base_exported">Die Datenbank wurde exportiert!</string>
     <string name="featured_hashtags">Empfohlene Hashtags</string>
     <string name="filter_timeline_with_a_tag">Zeitleiste mit Schlagwörtern filtern</string>
-    <string name="no_tags">Keine Tags</string>
+    <string name="no_tags">Keine Schlagwörter</string>
     <string name="set_hide_delete_notification_on_tab">Schaltfläche „Mitteilungen löschen” im Tab „Mitteilungen” ausblenden</string>
     <string name="set_retrieve_metadata_share_from_extras">Metadaten abrufen, wenn die URL von anderen Apps geteilt wird</string>
     <!-- end languages -->
@@ -815,9 +815,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="move_timeline">Zeitleiste verschieben</string>
     <string name="hide_timeline">Zeitleiste ausblenden</string>
     <string name="reorder_timelines">Zeitleiste neu anordnen</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
+    <string name="reorder_list_deleted">Liste dauerhaft gelöscht</string>
+    <string name="reorder_instance_removed">Folgeinstanz entfernt</string>
+    <string name="reorder_tag_removed">Angeheftetes Schlagwort entfernt</string>
     <string name="undo">Widerrufen</string>
     <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
     <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
