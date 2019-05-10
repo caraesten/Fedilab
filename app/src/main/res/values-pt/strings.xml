@@ -305,7 +305,7 @@
     <string name="set_notif_follow_share">Notificar quando alguém compartilhar suas postagens</string>
     <string name="set_notif_follow_add">Notificar quando alguém favoritar suas postagens</string>
     <string name="set_notif_follow_mention">Notificar quando alguém te mencionar</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Notificar quando uma enquete terminar</string>
     <string name="set_share_validation">Mostrar diálogo antes de compartilhar</string>
     <string name="set_share_validation_fav">Mostrar diálogo antes de adicionar aos favoritos</string>
     <string name="set_wifi_only">Notificar somente em Wi-Fi</string>
@@ -495,9 +495,9 @@
     <string name="data_export_toots">Exportar status para %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
     <string name="data_export_error">Algo deu errado enquanto exportava dados para %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
+    <string name="data_export_error_simple">Algo deu errado ao exportar dados!</string>
     <string name="data_import_success_simple">Dados foram importados!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_import_error_simple">Algo deu errado ao importar dados!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Tipo</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_boost">Novo Boost</string>
     <string name="channel_notif_fav">Novo Favorito</string>
     <string name="channel_notif_mention">Nova Menção</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Enquete Terminada</string>
     <string name="channel_notif_toot">Novo Toot</string>
     <string name="channel_notif_backup">Backup de Toots</string>
     <string name="channel_notif_media">Baixar mídia</string>
@@ -623,13 +623,13 @@
     <string name="set_display_video_preview">Mostrar visualizações do vídeo</string>
     <string name="thanks_text_support">Suporte do Gitlab</string>
     <string name="action_bug_report">Relatório de erro</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="no_mail_client">Não há nenhum app de email instalado.</string>
+    <string name="bug_report_mail">Enviar relatório de erros</string>
+    <string name="account_id_clipbloard">O nome de usuário foi copiado para a área de transferência!</string>
+    <string name="settings_title_battery">Otimização da bateria</string>
     <string name="set_change_locale">Mudar o idioma</string>
     <string name="default_language">Idioma padrão</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="truncate_long_toots">Delimitar toots longos</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Mostrar mais</string>
     <string name="hide_toot_truncate">Mostrar menos</string>
