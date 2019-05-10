@@ -64,8 +64,8 @@
     <string name="favourite">Favoritos</string>
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
-    <string name="reblog">Compartilhamentos</string>
-    <string name="show_boosts">Mostrar compartilhamentos</string>
+    <string name="reblog">Boosts</string>
+    <string name="show_boosts">Mostrar boosts</string>
     <string name="show_replies">Mostrar respostas</string>
     <string name="action_open_in_web">Abrir no navegador</string>
     <string name="translate">Traduzir</string>
