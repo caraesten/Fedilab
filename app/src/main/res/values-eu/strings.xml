@@ -825,6 +825,9 @@
     <string name="move_timeline">Aldatu denbora-lerroa lekuz</string>
     <string name="hide_timeline">Ezkutatu denbora-lerroa</string>
     <string name="reorder_timelines">Antolatu denbora-lerroak</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Desegin</string>
     <string name="visible_tabs_needed">Bi fitxa ikusgai mantendu behar dituzu!</string>
     <string name="action_reorder_timeline">Antolatu denbora-lerroak</string>
