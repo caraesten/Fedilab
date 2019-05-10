@@ -824,6 +824,9 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="move_timeline">Idővonal áthelyezése</string>
     <string name="hide_timeline">Idővonal elrejtése</string>
     <string name="reorder_timelines">Idővonalak átrendezése</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Visszavonás</string>
     <string name="visible_tabs_needed">Legalább két látható lapnak kell maradni!</string>
     <string name="action_reorder_timeline">Idővonalak átrendezése</string>
