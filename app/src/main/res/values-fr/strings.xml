@@ -824,6 +824,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="move_timeline">Déplacer le fil</string>
     <string name="hide_timeline">Cacher le fil</string>
     <string name="reorder_timelines">Réorganiser les fils</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Annuler</string>
     <string name="visible_tabs_needed">Vous devez garder deux onglets visibles !</string>
     <string name="action_reorder_timeline">Réorganiser les fils</string>
