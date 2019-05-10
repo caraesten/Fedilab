@@ -623,11 +623,11 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="set_truncate_toot">Kürze Toots mit mehr als \'x\' Zeilen. Null bedeutet deaktiviert.</string>
     <string name="display_toot_truncate">Mehr anzeigen</string>
     <string name="hide_toot_truncate">Weniger anzeigen</string>
-    <string name="manage_tags">Verwalten von Markierungen</string>
-    <string name="tags_already_stored">Diese Markierung existiert bereits!</string>
-    <string name="tags_stored">Die Markierung wurde gespeichert!</string>
-    <string name="tags_renamed">Die Markierung wurde geändert!</string>
-    <string name="tags_deleted">Die Markierung wurde gelöscht!</string>
+    <string name="manage_tags">Schlagwörter verwalten</string>
+    <string name="tags_already_stored">Dieses Schlagwort existiert bereits!</string>
+    <string name="tags_stored">Dieses Schlagwort wurde gespeichert!</string>
+    <string name="tags_renamed">Dieses Schlagwort wurde geändert!</string>
+    <string name="tags_deleted">Dieses Schlagwort wurde gelöscht!</string>
     <string name="set_display_art">Kunst-Zeitlinie anzeigen</string>
     <string name="schedule_boost">Plane teilen des Beitrags</string>
     <string name="boost_scheduled">Teilen geplant!</string>
