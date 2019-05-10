@@ -6,7 +6,7 @@
     <string name="action_about">Sobre</string>
     <string name="action_about_instance">Sobre a instância</string>
     <string name="action_privacy">Privacidade</string>
-    <string name="action_cache">Cache</string>
+    <string name="action_cache">Cachê</string>
     <string name="action_logout">Sair</string>
     <string name="login">Entrar</string>
     <!-- common -->
@@ -53,14 +53,14 @@
     <string name="next">Próximo</string>
     <string name="previous">Anterior</string>
     <string name="open_with">Abrir com</string>
-    <string name="validate">Validar</string>
+    <string name="validate">Ok</string>
     <string name="media">Mídia</string>
     <string name="share_with">Compartilhar com</string>
     <string name="shared_via">Compartilhado via Mastalab</string>
     <string name="replies">Respostas</string>
     <string name="username">Nome de usuário</string>
     <string name="drafts">Rascunhos</string>
-    <string name="new_data">Novos dados disponíveis! Deseja exibi-los?</string>
+    <string name="new_data">Novos dados disponíveis! Deseja exibí-los?</string>
     <string name="favourite">Favoritos</string>
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
@@ -789,11 +789,11 @@
     <string name="set_mode">Definir modo de exibição</string>
     <string name="set_security_provider">Corrigir o Provedor de Segurança</string>
     <string name="update_tracking_domains">Atualizar domínios de rastreio</string>
-    <string name="tracking_db_updated">A base de dados de rastreio foi atualizada!</string>
+    <string name="tracking_db_updated">O banco de dados de rastreio foi atualizado!</string>
     <string name="calls_blocked">domínios bloqueados pelo aplicativo</string>
     <string name="list_of_blocked_domains">Lista de domínios bloqueados</string>
     <string name="submit">Enviar</string>
-    <string name="data_base_exported">A base de dados foi exportada!</string>
+    <string name="data_base_exported">O banco de dados foi exportado!</string>
     <string name="featured_hashtags">Hashtags em destaque</string>
     <string name="filter_timeline_with_a_tag">Filtrar timeline com tags</string>
     <string name="no_tags">Sem tags</string>
