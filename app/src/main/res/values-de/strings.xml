@@ -815,6 +815,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="move_timeline">Zeitleiste verschieben</string>
     <string name="hide_timeline">Zeitleiste ausblenden</string>
     <string name="reorder_timelines">Zeitleiste neu anordnen</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Widerrufen</string>
     <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
     <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
