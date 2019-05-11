@@ -638,7 +638,7 @@
     <string name="tags_stored">A tag foi salva!</string>
     <string name="tags_renamed">A tag foi alterada!</string>
     <string name="tags_deleted">A tag foi excluída!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Mostrar timeline de Artes</string>
     <string name="schedule_boost">Programar boost</string>
     <string name="boost_scheduled">O boost está programado!</string>
     <string name="no_scheduled_boosts">Nenhum toot agendado para mostrar!</string>
@@ -735,9 +735,9 @@
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
+    <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
     <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
+    <string name="no_video_to_display">Sem vídeos para mostrar!</string>
     <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
@@ -748,7 +748,7 @@
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Mostrar novos toots acima do botão \"Ver mais\"</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Timelines</string>
     <string name="settings_category_label_notification">Notification service</string>
