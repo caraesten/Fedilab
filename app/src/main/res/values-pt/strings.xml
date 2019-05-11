@@ -650,7 +650,7 @@
     <string name="profile_picture">Foto do perfil</string>
     <string name="profile_banner">Capa do perfil</string>
     <string name="contact_instance_admin">Contate o administrador da instância</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Adicionar novo(a)</string>
     <string name="mastohost_logo">Logo do MastoHost</string>
     <string name="emoji_picker">Seletor de emoji</string>
     <string name="refresh">Atualizar</string>
@@ -708,7 +708,7 @@
     <string name="subscriptions">Subscriptions</string>
     <string name="overview">Overview</string>
     <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
+    <string name="recently_added">Recentemente adicionado(a)</string>
     <string name="local">Local</string>
     <string name="upload_video">Upload</string>
     <string name="reply">Reply</string>
@@ -738,7 +738,7 @@
     <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">Sem vídeos!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="add_image_to_favorite">Adicionar mídia aos favoritos</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
     <string name="my_pictures">My pictures</string>
@@ -817,10 +817,10 @@
     <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
     <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_news">Notícias</string>
     <string name="settings_category_notif_time_slot">Intervalo de tempo para notificações</string>
     <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Mostrar etiqueta \'nova\' em toots não lidos</string>
+    <string name="set_display_new_badge">Mostrar etiqueta \'new\' em toots não lidos</string>
     <string name="set_display_peertube">Mostrar timeline do Peertube</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
@@ -828,7 +828,7 @@
     <string name="hide_timeline">Hide timeline</string>
     <string name="reorder_timelines">Reorder timelines</string>
     <string name="reorder_list_deleted">Lista permanentemente excluída</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_instance_removed">Instância seguida removida</string>
     <string name="reorder_tag_removed">Tag fixada removida</string>
     <string name="undo">Undo</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
@@ -836,7 +836,7 @@
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
+    <string name="add_timeline">Adicionar timeline</string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
