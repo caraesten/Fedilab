@@ -128,6 +128,9 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                     case "MISSKEY":
                         holder.iconView.setImageResource(R.drawable.misskey);
                         break;
+                    case "GNU":
+                        holder.iconView.setImageResource(R.drawable.ic_gnu_social);
+                        break;
                 }
                 holder.textView.setText( tl.getRemoteInstance().getHost());
                 break;

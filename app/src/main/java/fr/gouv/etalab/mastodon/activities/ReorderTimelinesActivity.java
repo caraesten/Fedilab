@@ -187,7 +187,10 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                             new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
+                                        }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
+
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 dialog.dismiss();
@@ -199,6 +202,8 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "PIXELFED");
                                                 } else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MISSKEY");
+                                                }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                                    new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "GNU");
                                                 }
                                                 if( timelines != null && adapter != null) {
                                                     List<RemoteInstance> instance = new InstancesDAO(ReorderTimelinesActivity.this, db).getInstanceByName(instanceName);

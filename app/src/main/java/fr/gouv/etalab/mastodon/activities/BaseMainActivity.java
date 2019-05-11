@@ -53,7 +53,6 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;

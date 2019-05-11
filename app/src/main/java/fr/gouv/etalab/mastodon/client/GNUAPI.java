@@ -1823,7 +1823,7 @@ public class GNUAPI {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private List<Status> parseStatuses(Context context, JSONArray jsonArray){
+    public static List<Status> parseStatuses(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -1848,7 +1848,7 @@ public class GNUAPI {
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    private Status parseStatuses(Context context, JSONObject resobj){
+    private static Status parseStatuses(Context context, JSONObject resobj){
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
@@ -1953,6 +1953,8 @@ public class GNUAPI {
             if( resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")){
                 status.setFavourited(false);
                 JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject like = jsonArray.getJSONObject(i);
                     if( like.getString("id").equals(userId)) {

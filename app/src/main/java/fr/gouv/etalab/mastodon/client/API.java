@@ -1025,6 +1025,40 @@ public class API {
     }
 
 
+    /**
+     * Retrieves public GNU timeline for the account *synchronously*
+     * @param max_id   String id max
+     * @return APIResponse
+     */
+    public APIResponse getGNUTimeline(String remoteInstance, String max_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get("https://"+remoteInstance+"/api/statuses/public_timeline.json", 60, params, prefKeyOauthTokenT);
+            statuses = GNUAPI.parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
 
     /**
      * Retrieves public pixelfed timeline for the account *synchronously*

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -232,6 +233,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                         }
                     } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED") ) {
                         apiResponse = api.getPixelfedTimeline(instanceName, max_id);
+                    } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU") ) {
+                        apiResponse = api.getGNUTimeline(instanceName, max_id);
                     }else {
                         apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
