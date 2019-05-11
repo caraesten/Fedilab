@@ -1358,12 +1358,9 @@ public abstract class BaseMainActivity extends BaseActivity
 
         if( timelines != null && timelines.size() > 0 && mPageReferenceMap != null && datestr != null){
             Date date = Helper.stringToDate(getApplicationContext(), datestr);
-            Date dateAllowed = new Date( System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(15));
+            Date dateAllowed = new Date( System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(30));
             //Refresh home if needed
-            Log.v(Helper.TAG,"date: " + date);
-            Log.v(Helper.TAG,"dateAllowed: " + dateAllowed);
-            Log.v(Helper.TAG,"dateAllowed.after(date): " + dateAllowed.after(date));
-            if( dateAllowed.after(date) || 1 == 1) {
+            if( dateAllowed.after(date) ) {
                 for (ManageTimelines tl : timelines) {
                     if (tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap.containsKey(tl.getPosition())) {
                         DisplayStatusFragment homeTimeline = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());

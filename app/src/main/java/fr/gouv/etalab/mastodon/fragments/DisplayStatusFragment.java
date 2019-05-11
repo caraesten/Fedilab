@@ -120,7 +120,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceType;
     private String search_peertube, remote_channel_name;
     private String initialBookMark;
-    private boolean fetchMoreButtonDisplayed;
     private TagTimeline tagTimeline;
     private String updatedBookMark;
     private String lastReadToot;
@@ -144,7 +143,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         showMediaOnly = false;
         //Will allow to load first toots if bookmark != null
         firstTootsLoaded = false;
-        fetchMoreButtonDisplayed = false;
         showPinned = false;
         showReply = false;
         tagTimeline = null;
@@ -644,7 +642,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         context.startService(streamingHomeIntent);
                     }catch (Exception ignored){}
                 }
-                if( statuses != null && statuses.size() > 0) {
+                if( statuses != null && statuses.size() > 0 && asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
                     retrieveMissingToots(statuses.get(0).getId());
                 }
             }
@@ -718,18 +716,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             int firstVisible = mLayoutManager.findFirstVisibleItemPosition();
             Iterator<Status> s = statuses.iterator();
             int i = 0;
-            Log.v(Helper.TAG,"firstVisible: " + firstVisible);
-            Log.v(Helper.TAG,"statuses: " + statuses.size());
             while (s.hasNext() && i < firstVisible) {
                 Status status = s.next();
-                Log.v(Helper.TAG,status.getAccount().getAcct() + " - " + status.getCreated_at() );
                 s.remove();
                 statusListAdapter.notifyItemRemoved(0);
                 statusListAdapter.notifyItemChanged(0);
                 i++;
             }
-            Log.v(Helper.TAG,"removed: " + i);
-           // asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -952,7 +946,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
-        fetchMoreButtonDisplayed = false;
         asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -995,11 +988,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
-            if (initialBookMarkDate != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
+            Log.v(Helper.TAG,"initialBookMarkDate! " + initialBookMarkDate);
+            Log.v(Helper.TAG,"tmpStatuses.size()! " + tmpStatuses.size());
+            Log.v(Helper.TAG,"date " + tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at() + " > " + initialBookMarkDate);
+            if (initialBookMarkDate != null &&  tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
                 if( StatusListAdapter.fetch_all_more && statuses.size() > 0){
                     fetchMore(tmpStatuses.get(tmpStatuses.size() - 1).getId());
                 }else{
-                    fetchMoreButtonDisplayed = true;
                     tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
                     StatusListAdapter.fetch_all_more = false;
                 }
