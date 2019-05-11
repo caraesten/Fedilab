@@ -321,9 +321,9 @@
     <string name="set_save_changes">Salvar mudanças</string>
     <string name="set_header_picture_overlay">Escolher cabeçalho</string>
     <string name="set_fit_preview">Ajustar visualização de imagens</string>
-    <string name="set_automatically_split_toot">Automaticamente dividir toots com mais de 500 caracteres em respostas</string>
-    <string name="note_no_space">Você já usou os 160 caracteres permitidos!</string>
-    <string name="username_no_space">Você já usou os 30 caracteres permitidos!</string>
+    <string name="set_automatically_split_toot">Transformar toots com mais de 500 caracteres em sequências</string>
+    <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
+    <string name="username_no_space">Você excedeu os 30 caracteres permitidos!</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">e</string>
     <string name="settings_time_greater">O tempo deve ser maior que %1$s</string>
