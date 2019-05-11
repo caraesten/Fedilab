@@ -373,7 +373,7 @@
         <item>Sárga</item>
         <item>Fehér</item>
     </string-array>
-    <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
+    <string name="set_notification_news">Értesíts, mikor a kezdőlap idővonalán új toot jelenik meg</string>
     <string name="action_follow">Követés</string>
     <string name="action_unfollow">Követés megszűntetése</string>
     <string name="action_block">Letilt</string>
@@ -535,7 +535,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="filters">Szűrők</string>
     <string name="action_filters_empty_content">Nincs megjeleníthető szűrő. Kattintson a \"+\" gombra a létrehozáshoz.</string>
     <string name="filter_keyword">Kulcsszó vagy kifejezés</string>
-    <string name="context_home">Saját szerver idővonala</string>
+    <string name="context_home">Kezdőlap idővonala</string>
     <string name="context_public">Nyilvános idővonalak</string>
     <string name="context_notification">Értesítések</string>
     <string name="context_conversation">Beszélgetések</string>
