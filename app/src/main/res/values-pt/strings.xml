@@ -60,7 +60,7 @@
     <string name="replies">Respostas</string>
     <string name="username">Nome de usuário</string>
     <string name="drafts">Rascunhos</string>
-    <string name="new_data">Novos dados disponíveis! Deseja exibí-los?</string>
+    <string name="new_data">Novos dados disponíveis! Deseja vê-los?</string>
     <string name="favourite">Favoritos</string>
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
@@ -99,7 +99,7 @@
     <string name="no_emoji">O aplicativo não achou emojis personalizados no momento.</string>
     <string name="live_notif">Notificações ao vivo</string>
     <!-- Status -->
-    <string name="no_status">Sem toots para mostrar</string>
+    <string name="no_status">Sem toots</string>
     <string name="fav_added">Toot adicionado aos favoritos</string>
     <string name="fav_removed">Toot removido dos favoritos!</string>
     <string name="reblog_added">Toot compartilhado!</string>
@@ -139,7 +139,7 @@
         <item quantity="one">%d resposta</item>
         <item quantity="other">%d respostas</item>
     </plurals>
-    <string name="set_display_bookmark_button">Exibir o botão de salvar</string>
+    <string name="set_display_bookmark_button">Mostrar o botão de salvar</string>
     <string name="bookmarks">Salvos</string>
     <string name="bookmark_add">Salvar</string>
     <string name="bookmark_remove">Remover dos Salvos</string>
@@ -200,8 +200,8 @@
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
-    <string name="no_accounts">Sem contas para exibir</string>
-    <string name="no_follow_request">Sem solicitações de seguidor</string>
+    <string name="no_accounts">Sem contas</string>
+    <string name="no_follow_request">Sem solicitações de seguidores</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Seguindo \n %1$s</string>
     <string name="followers_cnt">Seguidores \n %1$s</string>
@@ -209,7 +209,7 @@
     <string name="authorize">Autorizar</string>
     <string name="reject">Rejeitar</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">Nenhum toot agendado para exibir!</string>
+    <string name="no_scheduled_toots">Sem toots agendados!</string>
     <string name="no_scheduled_toots_indications">Escreva um toot e então clique em <b>Agendar</b> no topo do menu.</string>
     <string name="remove_scheduled">Excluir toot agendado?</string>
     <string name="media_count">Mídia: %d</string>
@@ -221,7 +221,7 @@
     <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode reativar essa conta de sua página de perfil.</string>
     <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Clique aqui para reativar a conta.</string>
     <!-- Notifications -->
-    <string name="no_notifications">Sem notificações para exibir</string>
+    <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">mencionou você</string>
     <string name="notif_reblog">compartilhou sua postagem</string>
     <string name="notif_favourite">favoritou sua postagem</string>
@@ -292,13 +292,13 @@
     <string name="load_attachment_spoiler">Mostrar mais…</string>
     <string name="load_attachment_spoiler_less">Exibir menos…</string>
     <string name="load_sensitive_attachment">Conteúdo sensível</string>
-    <string name="set_display_reply">Exibir mensagem anterior nas respostas</string>
-    <string name="set_display_local">Exibir timeline local</string>
-    <string name="set_display_global">Exibir timeline federada</string>
+    <string name="set_display_reply">Mostrar mensagem anterior nas respostas</string>
+    <string name="set_display_local">Mostrar timeline local</string>
+    <string name="set_display_global">Mostrar timeline federada</string>
     <string name="set_disable_gif">Desabilitar avatares GIF</string>
     <string name="set_folder_title">Caminho: </string>
     <string name="set_auto_store_toot">Salvar rascunhos automaticamente</string>
-    <string name="set_bubble_counter">Exibir contadores</string>
+    <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Adicionar URL da mídia nos toots</string>
     <string name="set_notif_follow">Notificar quando alguém te seguir</string>
     <string name="set_notif_follow_ask">Notificar quando alguém requisitar ser seu seguidor</string>
@@ -488,7 +488,7 @@
         - Você também pode usar este link sem usar o 2FA\n\n
         - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
     </string>
-    <string name="media_ready">A mídia foi carregada. Clique aqui para exibi-la.</string>
+    <string name="media_ready">A mídia foi carregada. Toque aqui para vê-la.</string>
     <string name="data_export_start">Esta ação pode ser bastante longa. Você será notificado quando ela será terminada.</string>
     <string name="data_export_running">Ainda em execução, por favor aguarde…</string>
     <string name="data_export">Exportar status</string>
@@ -536,7 +536,7 @@
     <string name="toast_hide_boost">Boosts agora são ocultados!</string>
     <string name="direct_message">Mensagem direta</string>
     <string name="filters">Filtros</string>
-    <string name="action_filters_empty_content">Sem filtros para exibir. Você pode criar um clicando no botão \"+\".</string>
+    <string name="action_filters_empty_content">Sem filtros para mostrar. Você pode criar um clicando no botão \"+\".</string>
     <string name="filter_keyword">Palavra-chave ou frase</string>
     <string name="context_home">Timeline local</string>
     <string name="context_public">Timeline pública</string>
@@ -596,7 +596,7 @@
     <string name="retrieve_remote_status">Requisitando status remoto</string>
     <string name="comment">Comentar</string>
     <string name="peertube_instance">Instância Peertube</string>
-    <string name="set_display_direct">Mostrar linha do tempo de mensagens privadas</string>
+    <string name="set_display_direct">Mostrar timeline de mensagens privadas</string>
     <string name="set_keep_background_process">Manter processo em segundo plano quando o aplicativo for fechado</string>
     <string name="no_comments">Seja o primeiro a deixar um comentário no vídeo clicando no botão superior direito!</string>
     <string name="number_view_video">%s visualizações</string>
@@ -617,10 +617,10 @@
     <string name="channels">Canais</string>
     <string name="set_display_emoji">Usar Emoji One</string>
     <string name="information">Informação</string>
-    <string name="set_display_card">Mostrar pré-visualização em todos os toots</string>
+    <string name="set_display_card">Mostrar pré-visualizações em todos os toots</string>
     <string name="thanks_text_ux">Novo UX/UI designer</string>
     <string name="set_old_direct_timeline">Usar a linha do tempo direta anterior ao Mastodon 2.6</string>
-    <string name="set_display_video_preview">Mostrar visualizações do vídeo</string>
+    <string name="set_display_video_preview">Mostrar pré-visualizações do vídeo</string>
     <string name="thanks_text_support">Suporte do Gitlab</string>
     <string name="action_bug_report">Relatório de erro</string>
     <string name="no_mail_client">Não há nenhum cliente de email instalado.</string>
@@ -638,7 +638,7 @@
     <string name="tags_stored">A tag foi salva!</string>
     <string name="tags_renamed">A tag foi alterada!</string>
     <string name="tags_deleted">A tag foi excluída!</string>
-    <string name="set_display_art">Mostrar timeline de Artes</string>
+    <string name="set_display_art">Mostrar timeline de Arte</string>
     <string name="schedule_boost">Programar boost</string>
     <string name="boost_scheduled">O boost está programado!</string>
     <string name="no_scheduled_boosts">Nenhum toot agendado para mostrar!</string>
@@ -820,8 +820,8 @@
     <string name="settings_category_notif_news">News</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
     <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="set_display_new_badge">Mostrar etiqueta \'nova\' em toots não lidos</string>
+    <string name="set_display_peertube">Mostrar timeline do Peertube</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
     <string name="move_timeline">Move timeline</string>
