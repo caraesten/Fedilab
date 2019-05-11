@@ -203,7 +203,7 @@
     <string name="no_accounts">Nincs megjelenítető fiók</string>
     <string name="no_follow_request">Nincs követési kérés</string>
     <string name="status_cnt">Tootok \n %1$s</string>
-    <string name="following_cnt">Követi \n %1$s</string>
+    <string name="following_cnt">Követettek \n %1$s</string>
     <string name="followers_cnt">Követők \n %1$s</string>
     <string name="pins_cnt">Rögzített \n %d</string>
     <string name="authorize">Engedélyez</string>
@@ -244,8 +244,8 @@
     <string name="delete_notification">Az értesítést törölted!</string>
     <string name="delete_notification_all">Minden értesítést töröltél!</string>
     <!-- HEADER -->
-    <string name="following">Követi</string>
-    <string name="followers">Követő</string>
+    <string name="following">Követettek</string>
+    <string name="followers">Követők</string>
     <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Hiba a kliens id betöltésekor!</string>
