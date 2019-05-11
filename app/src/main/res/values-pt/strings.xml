@@ -332,7 +332,7 @@
     <string name="settings_hour_end">Horário de término</string>
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
-    <string name="use_javascript">Habilitar Javascript</string>
+    <string name="use_javascript">Ativar Javascript</string>
     <string name="expand_cw">Expandir cw automaticamente</string>
     <string name="use_cookies">Permitir cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
@@ -491,8 +491,8 @@
     <string name="media_ready">A mídia foi carregada. Toque aqui para vê-la.</string>
     <string name="data_export_start">Esta ação pode ser demorada. Você será notificado quando ela terminar.</string>
     <string name="data_export_running">Ainda em execução, por favor, aguarde…</string>
-    <string name="data_export">Exportar status</string>
-    <string name="data_export_toots">Exportar status para %1$s</string>
+    <string name="data_export">Exportar toots</string>
+    <string name="data_export_toots">Exportar toots para %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
     <string name="data_export_error">Algo deu errado enquanto exportava dados para %1$s</string>
     <string name="data_export_error_simple">Algo deu errado ao exportar dados!</string>
@@ -501,7 +501,7 @@
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Tipo</string>
-    <string name="proxy_enable">Habilitar o proxy?</string>
+    <string name="proxy_enable">Ativar o proxy?</string>
     <string name="poxy_host">Servidor</string>
     <string name="poxy_port">Porta</string>
     <string name="poxy_login">Login</string>
@@ -582,7 +582,7 @@
     <string name="channel_notif_media">Baixar mídia</string>
     <string name="set_notif_sound">Mudar o som de notificação</string>
     <string name="select_sound">Selecionar toque</string>
-    <string name="set_enable_time_slot">Habilitar horário</string>
+    <string name="set_enable_time_slot">Ativar intervalo de tempo</string>
     <string name="how_to_videos">Tutoriais em vídeo</string>
     <string name="retrieve_remote_conversation">Requisitando tópico remoto!</string>
     <string name="no_blocked_domain">Não há domínios bloqueados!</string>
