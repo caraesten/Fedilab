@@ -54,9 +54,9 @@ public class DomainBlockDAO {
 
     /**
      * Insert domains in database
-     * @param domains ArrayList<String>
+     * @param domains List<String>
      */
-    public void insertAll(ArrayList<String> domains) {
+    public void set(List<String> domains) {
         removeAll();
         for (String domain : domains)
             insert(domain);
