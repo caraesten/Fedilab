@@ -329,12 +329,12 @@
     <string name="settings_time_greater">O tempo deve ser maior que %1$s</string>
     <string name="settings_time_lower">O tempo deve ser menor que %1$s</string>
     <string name="settings_hour_init">Horário de início</string>
-    <string name="settings_hour_end">Horário de fim</string>
+    <string name="settings_hour_end">Horário de término</string>
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
     <string name="use_javascript">Habilitar Javascript</string>
     <string name="expand_cw">Expandir cw automaticamente</string>
-    <string name="use_cookies">Habilitar cookies de terceiros</string>
+    <string name="use_cookies">Permitir cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
     <string-array name="battery_profiles">
         <item>Alto consumo de bateria</item>
@@ -363,10 +363,10 @@
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Configurar cor do LED:</string>
+    <string name="set_led_colour">Cor do LED:</string>
     <string-array name="led_colours">
         <item>Azul</item>
-        <item>Cyano</item>
+        <item>Ciano</item>
         <item>Magenta</item>
         <item>Verde</item>
         <item>Vermelho</item>
@@ -383,21 +383,21 @@
     <string name="action_unmute">Desativar silêncio</string>
     <string name="request_sent">Solicitação enviada</string>
     <string name="followed_by">Segue você</string>
-    <string name="action_search">Busca</string>
-    <string name="set_capitalize">Primeira letra maiúscula para respostas</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="set_capitalize">Primeira letra em maiúscula para respostas</string>
     <string name="set_resize_picture">Redimensionar fotos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificações</string>
     <string name="settings_popup_message">        Por favor, confirme que notificações você quer receber.
-        Você pode habilitar ou desabilitar essas notificações mais tarde em configurações (na aba Notificações).
+        Você pode ativar ou desativar essas notificações mais tarde em configurações (na aba Notificações).
     </string>
     <string name="settings_popup_timeline">Para toots não lidos na página inicial?</string>
     <string name="settings_popup_notification">Para notificações não lidas?</string>
     <!-- CACHE -->
-    <string name="cache_title">Limpar cache</string>
-    <string name="cache_message">Há %1$s em dados em cache.\n\nGostaria de exclui-los?</string>
+    <string name="cache_title">Limpar cachê</string>
+    <string name="cache_message">Há %1$s de dados no cachê.\n\nGostaria de limpá-lo?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
+    <string name="toast_cache_clear">Cachê limpo! %1$s foram liberados</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Título</string>
     <string name="title_hint_custom_sharing">Título&#8230;</string>
@@ -410,14 +410,14 @@
     <string name="action_filter">Filtro</string>
     <string name="owner_cached_toots">Seus toots</string>
     <string name="v_public">Público</string>
-    <string name="v_unlisted">Não Listado</string>
+    <string name="v_unlisted">Não-listado</string>
     <string name="v_private">Privado</string>
     <string name="v_direct">Direto</string>
     <string name="v_keywords">Algumas palavras-chave…</string>
-    <string name="show_media">Exibir mídia</string>
+    <string name="show_media">Mostrar mídia</string>
     <string name="show_pinned">Mostrar fixado</string>
     <string name="filter_no_result">Nenhum resultado correspondente encontrado!</string>
-    <string name="data_backup_toots">Fazer backup dos toots por %1$s</string>
+    <string name="data_backup_toots">Fazer backup dos toots de %1$s</string>
     <string name="data_backup_success">%1$s novos toots foram importados</string>
     <string-array name="filter_select">
         <item>Não</item>
@@ -436,7 +436,7 @@
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Usada para detectar se o aparelho está conectado a uma rede Wi-Fi.\n
         - <b>INTERNET</b>: Usado para consultas em instâncias.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Usada para armazenar mídia ou mover o aplicativo para o cartão SD.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Usada para adicionar mídia a toots.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Usada para adicionar mídia aos toots.\n
         - <b>BOOT_COMPLETED</b>: Usada para iniciar o serviço de notificação.\n
         - <b>WAKE_LOCK</b>: Usada durante o serviço de notificação.
     </string>
