@@ -836,6 +836,7 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="gnu_instance">GNU instance</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
