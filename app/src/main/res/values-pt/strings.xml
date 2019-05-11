@@ -508,8 +508,8 @@
     <string name="poxy_password">Senha</string>
     <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Modo compacto</string>
-    <string name="set_share_details">Adicionar detalhes do toot quando compartilhar</string>
-    <string name="support_the_app_on_liberapay">Suporte a app na Liberapay</string>
+    <string name="set_share_details">Adicionar detalhes do toot ao compartilhar</string>
+    <string name="support_the_app_on_liberapay">Suporte o aplicativo no Liberapay</string>
     <string name="alert_regex">Há um erro na expressão regular!</string>
     <string name="no_account_yet">Sem conta ainda?</string>
     <string name="toast_instance_unavailable">Nenhuma timeline foi encontrada nesta instância!</string>
