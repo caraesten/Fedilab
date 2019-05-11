@@ -320,7 +320,7 @@
     <string name="set_lock_account">Bloquear conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
     <string name="set_header_picture_overlay">Escolher cabeçalho</string>
-    <string name="set_fit_preview">Ajuste da visualização de imagens</string>
+    <string name="set_fit_preview">Ajustar visualização de imagens</string>
     <string name="set_automatically_split_toot">Automaticamente dividir toots com mais de 500 caracteres em respostas</string>
     <string name="note_no_space">Você já usou os 160 caracteres permitidos!</string>
     <string name="username_no_space">Você já usou os 30 caracteres permitidos!</string>
