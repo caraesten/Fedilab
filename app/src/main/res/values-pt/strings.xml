@@ -236,8 +236,8 @@
         <item quantity="other">e outros %d toots para descobrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d gostos</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d favoritou</item>
+        <item quantity="other">%d favoritaram</item>
     </plurals>
     <string name="delete_notification_ask">Excluir notificação?</string>
     <string name="delete_notification_ask_all">Excluir todas as notificações?</string>
@@ -753,11 +753,11 @@
     <string name="settings_category_label_timelines">Timelines</string>
     <string name="settings_category_label_notification">Serviço de notificação</string>
     <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
+    <string name="settings_category_label_hiddencontent">Conteúdo oculto</string>
+    <string name="settings_category_label_composing">Composição</string>
+    <string name="contact">Contatos</string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> comentou seu vídeo <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> está seguindo seu canal <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> está seguindo sua conta]]></string>
     <string name="peertube_video_published"><![CDATA[Seu vídeo <b>%1$s</b> foi publicado]]></string>
     <string name="peertube_video_import_success"><![CDATA[Seu vídeo <b>%1$s</b> foi importado com sucesso]]></string>
@@ -811,52 +811,52 @@
     <string name="done">Feito</string>
     <string name="poll_finish_at">termina em %s</string>
     <string name="refresh_poll">Atualizar enquete</string>
-    <string name="vote">Vote</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
+    <string name="vote">Votar</string>
+    <string name="poll_not_private">Uma enquete não pode ser anexada a uma mensagem direta!</string>
+    <string name="notif_poll">Uma enquete em que você votou terminou</string>
+    <string name="notif_poll_self">Uma enquete que você publicou terminou</string>
+    <string name="settings_category_notif_customize">Personalizar</string>
+    <string name="settings_category_notif_categories">Categorias</string>
     <string name="settings_category_notif_news">Notícias</string>
     <string name="settings_category_notif_time_slot">Intervalo de tempo para notificações</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_advanced">Avançado</string>
     <string name="set_display_new_badge">Mostrar etiqueta \'new\' em toots não lidos</string>
     <string name="set_display_peertube">Mostrar timeline do Peertube</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="hide_tab">Ocultar aba</string>
+    <string name="move_timeline">Mover timeline</string>
+    <string name="hide_timeline">Ocultar timeline</string>
+    <string name="reorder_timelines">Reordenar timelines</string>
     <string name="reorder_list_deleted">Lista permanentemente excluída</string>
     <string name="reorder_instance_removed">Instância seguida removida</string>
     <string name="reorder_tag_removed">Tag fixada removida</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="undo">Desfazer</string>
+    <string name="visible_tabs_needed">Você precisa manter duas abas visíveis!</string>
+    <string name="action_reorder_timeline">Reordenar timelines</string>
+    <string name="warning_list_deletion">Vá em Listas para excluir esta lista!</string>
+    <string name="warning_main_timeline">Timelines principais só podem ser ocultadas!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Adicionar timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d votou</item>
+        <item quantity="other">%d votaram</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Única opção</item>
+        <item>Múltiplas opções</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>6 horas</item>
+        <item>1 dia</item>
+        <item>3 dias</item>
+        <item>7 dias</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Stream direta</item>
     </string-array>
 </resources>
