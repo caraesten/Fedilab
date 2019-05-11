@@ -182,7 +182,7 @@
     <string name="choose_accounts">Escolha uma conta</string>
     <string name="select_accounts">Selecione algumas contas</string>
     <string name="remove_draft">Excluir rascunho?</string>
-    <string name="show_reply">Clique no botão para exibir toot original</string>
+    <string name="show_reply">Clique no botão para mostrar toot original</string>
     <string name="upload_form_description">Descreva para os deficientes visuais</string>
     <!-- Instance -->
     <string name="instance_no_description">Sem descrição!</string>
@@ -193,7 +193,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_thekinrar">Busca de instâncias:</string>
+    <string name="about_thekinrar">Pesquisar instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
     <string name="thanks_text_banner">Designer do banner:</string>
