@@ -103,7 +103,7 @@
     <string name="fav_added">Toot adicionado aos favoritos</string>
     <string name="fav_removed">Toot removido dos favoritos!</string>
     <string name="reblog_added">Toot compartilhado!</string>
-    <string name="reblog_removed">Toot não mais compartilhado!</string>
+    <string name="reblog_removed">Toot descompartilhado!</string>
     <string name="reblog_by">Compartilhado por %1$s</string>
     <string name="favourite_add">Adicionar este toot aos favoritos?</string>
     <string name="favourite_remove">Remover este toot dos favoritos?</string>
@@ -125,7 +125,7 @@
         <item>Bloquear esta conta?</item>
         <item>Denunciar este toot?</item>
         <item>Bloquear este domínio?</item>
-        <item>Desfazer silêncio desta conta?</item>
+        <item>Desativar silêncio desta conta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -218,8 +218,8 @@
     <string name="warning_battery">Economia de bateria ativada! Pode não funcionar como esperado.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">O tempo de silenciamento deve ser maior do que um minuto.</string>
-    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode desfazê-lo no perfil do usuário.</string>
-    <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para reativar a conta.</string>
+    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode desativá-lo no perfil do usuário.</string>
+    <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para desativar o silêncio.</string>
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">mencionou você</string>
@@ -259,7 +259,7 @@
     <string name="toast_reblog">Toot compartilhado!</string>
     <string name="toast_unreblog">Toot descompartilhado!</string>
     <string name="toast_favourite">Toot adicionado aos favoritos!</string>
-    <string name="toast_unfavourite">Toot retirado dos favoritos!</string>
+    <string name="toast_unfavourite">Toot removido dos favoritos!</string>
     <string name="toast_report">Toot denunciado!</string>
     <string name="toast_unstatus">Toot excluído!</string>
     <string name="toast_pin">Toot fixado!</string>
@@ -380,7 +380,7 @@
     <string name="action_unblock">Desbloquear</string>
     <string name="action_mute">Silenciar</string>
     <string name="action_no_action">Sem ação</string>
-    <string name="action_unmute">Desfazer silêncio</string>
+    <string name="action_unmute">Desativar silêncio</string>
     <string name="request_sent">Solicitação enviada</string>
     <string name="followed_by">Segue você</string>
     <string name="action_search">Busca</string>
