@@ -673,18 +673,18 @@
         <item>1 dia</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">        Neste campo, você precisa escrever o nome da sua instância.\nPor exemplo, se você criou sua conta em https://mastodon.social\nApenas digite <b>mastodon.social</b> (sem https://)\n
-        Você pode começar escrevendo as primeiras letras e nomes serão sugeridos.\n\n
+    <string name="showcase_instance">        Neste campo, você precisa digitar o nome da sua instância.\nPor exemplo, se você criou sua conta em https://mastodon.social\nApenas digite <b>mastodon.social</b> (sem https://)\n
+        Você pode começar digitando as primeiras letras e nomes serão sugeridos.\n\n
         ⚠ O botão de login só funcionará se o nome da instância for válido e a instância estiver ativa!
     </string>
-    <string name="showcase_uid">        Neste campo, escreva o e-mail usado na sua conta Mastodon.
+    <string name="showcase_uid">        Neste campo, digite o e-mail usado na sua conta Mastodon.
     </string>
     <string name="showcase_pwd">        O último passo é digitar sua senha e tocar em Entrar.
     </string>
     <string name="more_information">Mais informação</string>
     <string name="showcase_2FA">Se você usar 2FA (autenticação de dois fatores), você precisa usar este link.\nVocê também pode usá-lo se você não quiser inserir suas credenciais aqui.</string>
     <!-- languages not translated -->
-    <string name="languages">Línguas</string>
+    <string name="languages">Idiomas</string>
     <string name="show_media_only">Apenas mídia</string>
     <string name="show_media_nsfw">Conteúdo NSFW</string>
     <string name="crowdin_translations">Traduções no Crowdin</string>
