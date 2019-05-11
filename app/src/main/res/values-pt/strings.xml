@@ -434,7 +434,7 @@
     </string>
     <string name="privacy_authorizations_title">Permissões:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Usada para detectar se o aparelho está conectado a uma rede Wi-Fi.\n
-        - <b>INTERNET</b>: Usado para consultas em instâncias.\n
+        - <b>INTERNET</b>: Usado para consultar instâncias.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Usada para armazenar mídia ou mover o aplicativo para o cartão SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Usada para adicionar mídia aos toots.\n
         - <b>BOOT_COMPLETED</b>: Usada para iniciar o serviço de notificação.\n
@@ -442,37 +442,37 @@
     </string>
     <string name="privacy_API_authorizations_title">Permissões da API:</string>
     <string name="privacy_API_authorizations">        - <b>Leitura</b>: Ler dados.\n
-        - <b>Escrita</b>: Fazer postagens e enviar mídia em postagens.\n
-        - <b>Seguir</b>: Seguir, deixar de seguir, bloquear, desbloquear.\n\n
+        - <b>Escrita</b>: Publicar toots e enviar mídia nos toots.\n
+        - <b>Seguir</b>: Seguir, deixar de seguir, bloquear e desbloquear.\n\n
         <b>&#9888; Essas ações são realizadas apenas quando o usuário requisitá-las.</b>
     </string>
-    <string name="privacy_API_title">Rastreamento e bibliotecas</string>
-    <string name="privacy_API">        O aplicativo <b>não usa ferramentas de rastreamento</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
+    <string name="privacy_API_title">Rastreio e Bibliotecas</string>
+    <string name="privacy_API">        O aplicativo <b>não usa ferramentas de rastreio</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
         O uso de bibliotecas é minimizado: \n
         - <b>Glide</b>: Para gerenciar mídia\n
         - <b>Android-Job</b>: Para gerenciar serviços\n
         - <b>PhotoView</b>: Para gerenciar imagens\n
     </string>
     <string name="privacy_API_yandex_title">Tradução de toots</string>
-    <string name="privacy_API_yandex_authorizations">        O aplicativo oferece a habilidade de traduzir toots usando o idioma do aparelho a API do Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        O aplicativo oferece a habilidade de traduzir toots usando o idioma do aparelho e a API do Yandex.\n
         Yandex tem a sua própria política de privacidade, que pode ser lida aqui: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Agradecimentos a Stéphane pelo logo.
+    <string name="thanks_text">        Agradecimentos à Stéphane pelo logo.
     </string>
-    <string name="thanks_text_dev">        Agradecimentos a:
+    <string name="thanks_text_dev">        Agradecimentos aos:
     </string>
     <string name="filter_regex">Filtrar por expressões regulares</string>
-    <string name="search">Busca</string>
-    <string name="delete">Apagar</string>
-    <string name="fetch_more_toots">Buscar mais toots…</string>
+    <string name="search">Pesquisa</string>
+    <string name="delete">Excluir</string>
+    <string name="fetch_more_toots">Ver mais toots…</string>
     <!-- About lists -->
     <string name="action_lists">Listas</string>
-    <string name="action_lists_confirm_delete">Tem certeza que deseja apagar permanentemente esta lista?</string>
-    <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista postarem novos status, eles aparecerão aqui.</string>
+    <string name="action_lists_confirm_delete">Tem certeza que deseja excluir permanentemente esta lista?</string>
+    <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista postarem novos toots, eles aparecerão aqui.</string>
     <string name="action_lists_add_to">Adicionar à lista</string>
     <string name="action_lists_remove_from">Remover da lista</string>
     <string name="action_lists_create">Adicionar lista</string>
-    <string name="action_lists_delete">Apagar lista</string>
+    <string name="action_lists_delete">Excluir lista</string>
     <string name="action_lists_update">Editar lista</string>
     <string name="action_lists_title_placeholder">Título da nova lista</string>
     <string name="action_lists_search_users">Procure entre pessoas que você segue</string>
@@ -489,8 +489,8 @@
         - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
     </string>
     <string name="media_ready">A mídia foi carregada. Toque aqui para vê-la.</string>
-    <string name="data_export_start">Esta ação pode ser bastante longa. Você será notificado quando ela será terminada.</string>
-    <string name="data_export_running">Ainda em execução, por favor aguarde…</string>
+    <string name="data_export_start">Esta ação pode ser demorada. Você será notificado quando ela terminar.</string>
+    <string name="data_export_running">Ainda em execução, por favor, aguarde…</string>
     <string name="data_export">Exportar status</string>
     <string name="data_export_toots">Exportar status para %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
