@@ -125,7 +125,7 @@
         <item>Bloquear esta conta?</item>
         <item>Denunciar este toot?</item>
         <item>Bloquear este domínio?</item>
-        <item>Silenciar esta conta?</item>
+        <item>Desfazer silêncio desta conta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -210,21 +210,21 @@
     <string name="reject">Rejeitar</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Sem toots agendados!</string>
-    <string name="no_scheduled_toots_indications">Escreva um toot e então clique em <b>Agendar</b> no topo do menu.</string>
+    <string name="no_scheduled_toots_indications">Digite um toot e então toque em <b>Agendar</b> no topo do menu.</string>
     <string name="remove_scheduled">Excluir toot agendado?</string>
     <string name="media_count">Mídia: %d</string>
     <string name="toot_scheduled">Toot agendado!</string>
-    <string name="toot_scheduled_date">A data de agendamento deve ser após o momento atual!</string>
+    <string name="toot_scheduled_date">A data de agendamento deve ser após o horário atual!</string>
     <string name="warning_battery">Economia de bateria ativada! Pode não funcionar como esperado.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">O tempo de bloqueio deve ser maior do que um minuto.</string>
-    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode reativar essa conta de sua página de perfil.</string>
-    <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Clique aqui para reativar a conta.</string>
+    <string name="timed_mute_date_error">O tempo de silenciamento deve ser maior do que um minuto.</string>
+    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode reativar essa conta no perfil do usuário.</string>
+    <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para reativar a conta.</string>
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">mencionou você</string>
-    <string name="notif_reblog">compartilhou sua postagem</string>
-    <string name="notif_favourite">favoritou sua postagem</string>
+    <string name="notif_reblog">compartilhou seu toot</string>
+    <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">seguiu você</string>
     <string name="notif_pouet">Novo toot de %1$s</string>
     <plurals name="other_notifications">
@@ -246,13 +246,13 @@
     <!-- HEADER -->
     <string name="following">Seguindo</string>
     <string name="followers">Seguidores</string>
-    <string name="pinned_toots">Fixados</string>
+    <string name="pinned_toots">Fixado</string>
     <!-- TOAST -->
     <string name="client_error">Não foi possível detectar id do cliente!</string>
-    <string name="no_internet">Sem conexão!</string>
+    <string name="no_internet">Sem conexão com a internet!</string>
     <string name="toast_block">Conta bloqueada!</string>
     <string name="toast_unblock">Conta desbloqueada!</string>
-    <string name="toast_mute">Silêncio ativado!</string>
+    <string name="toast_mute">Conta silenciada!</string>
     <string name="toast_unmute">Silêncio desativado!</string>
     <string name="toast_follow">Você seguiu a conta!</string>
     <string name="toast_unfollow">Você deixou de seguir a conta!</string>
@@ -380,7 +380,7 @@
     <string name="action_unblock">Desbloquear</string>
     <string name="action_mute">Silenciar</string>
     <string name="action_no_action">Sem ação</string>
-    <string name="action_unmute">Retirar silêncio</string>
+    <string name="action_unmute">Desfazer silêncio</string>
     <string name="request_sent">Solicitação enviada</string>
     <string name="followed_by">Segue você</string>
     <string name="action_search">Busca</string>
