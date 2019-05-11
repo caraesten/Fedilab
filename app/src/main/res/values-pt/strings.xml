@@ -818,7 +818,7 @@
     <string name="settings_category_notif_customize">Customize</string>
     <string name="settings_category_notif_categories">Categories</string>
     <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_time_slot">Intervalo de tempo para notificações</string>
     <string name="settings_category_notif_advanced">Advanced</string>
     <string name="set_display_new_badge">Mostrar etiqueta \'nova\' em toots não lidos</string>
     <string name="set_display_peertube">Mostrar timeline do Peertube</string>
