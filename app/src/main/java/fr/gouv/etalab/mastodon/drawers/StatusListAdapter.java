@@ -2508,13 +2508,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            String name = "@" + (status.getReblog() != null ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct());
+                                            /*String name = "@" + (status.getReblog() != null ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct());
                                             if (name.split("@", -1).length - 1 == 1)
                                                 name = name + "@" + getLiveInstance(context);
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.status_content);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.status_content);*/
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();
-                                            String fname = "tootmention_" + status.getId() + ".jpg";
+                                            /*String fname = "tootmention_" + status.getId() + ".jpg";
                                             File file = new File(context.getCacheDir() + "/", fname);
                                             if (file.exists()) //noinspection ResultOfMethodCallIgnored
                                                 file.delete();
@@ -2526,7 +2526,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 out.close();
                                             } catch (Exception ignored) {
                                             }
-                                            b.putString("fileMention", fname);
+                                            b.putString("fileMention", fname);*/
                                             b.putString("tootMention", (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct());
                                             b.putString("urlMention", (status.getReblog() != null) ? status.getReblog().getUrl() : status.getUrl());
                                             intent.putExtras(b);

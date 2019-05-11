@@ -456,9 +456,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_content.setSelection(toot_content.getText().length());
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
-        if( tootMention != null && urlMention != null && fileMention != null) {
-            Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
-            if (pictureMention != null) {
+        if( tootMention != null && urlMention != null) {
+            if (fileMention != null) {
+                Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
