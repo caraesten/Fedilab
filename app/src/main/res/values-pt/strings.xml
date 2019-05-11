@@ -114,12 +114,12 @@
     <string name="more_action_1">Silenciar</string>
     <string name="more_action_2">Bloquear</string>
     <string name="more_action_3">Denunciar</string>
-    <string name="more_action_4">Deletar</string>
+    <string name="more_action_4">Excluir</string>
     <string name="more_action_5">Copiar</string>
     <string name="more_action_6">Compartilhar</string>
     <string name="more_action_7">Mencionar</string>
-    <string name="more_action_8">Mudo cronometrado</string>
-    <string name="more_action_9">Excluir &amp; redigir</string>
+    <string name="more_action_8">Silenciar temporariamente</string>
+    <string name="more_action_9">Excluir &amp; redigitar</string>
     <string-array name="more_action_confirm">
         <item>Silenciar esta conta?</item>
         <item>Bloquear esta conta?</item>
@@ -133,19 +133,19 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Excluir este toot?</item>
-        <item>Excluir &amp; re-elaborar este toot?</item>
+        <item>Excluir &amp; redigitar este toot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d resposta</item>
         <item quantity="other">%d respostas</item>
     </plurals>
-    <string name="set_display_bookmark_button">Exibir o botão de favorito</string>
-    <string name="bookmarks">Favoritos</string>
-    <string name="bookmark_add">Adicionar aos favoritos</string>
-    <string name="bookmark_remove">Remover dos favoritos</string>
-    <string name="bookmarks_empty">Não há favoritos para exibir</string>
-    <string name="status_bookmarked">Status foi adicionado aos favoritos!</string>
-    <string name="status_unbookmarked">Status foi removido dos favoritos!</string>
+    <string name="set_display_bookmark_button">Exibir o botão de salvar</string>
+    <string name="bookmarks">Salvos</string>
+    <string name="bookmark_add">Salvar</string>
+    <string name="bookmark_remove">Remover dos Salvos</string>
+    <string name="bookmarks_empty">Sem toots salvos</string>
+    <string name="status_bookmarked">Toot foi salvo!</string>
+    <string name="status_unbookmarked">Toot foi removido dos Salvos!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -158,12 +158,12 @@
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Escrever um toot</string>
-    <string name="toot_title_reply">Responder a um toot</string>
+    <string name="toot_title_reply">Responder um toot</string>
     <string name="queet_title">Escreva um queet</string>
     <string name="queet_title_reply">Responder um queet</string>
-    <string name="toot_no_space">Você já gastou os 500 caracteres permitidos!</string>
+    <string name="toot_no_space">Você excedeu os 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecionar mídia</string>
-    <string name="toot_select_image_error">Ocorreu um erro enquanto se selecionava a mídia!</string>
+    <string name="toot_select_image_error">Ocorreu um erro enquanto ao selecionar a mídia!</string>
     <string name="toot_delete_media">Excluir mídia?</string>
     <string name="toot_error_no_content">Toot vazio!</string>
     <string name="toot_visibility_tilte">Visibilidade do toot</string>
