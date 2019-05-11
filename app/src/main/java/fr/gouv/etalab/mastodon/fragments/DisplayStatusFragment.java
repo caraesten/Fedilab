@@ -32,7 +32,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -723,6 +722,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 statusListAdapter.notifyItemChanged(0);
                 i++;
             }
+            initialBookMarkDate = statuses.get(0).getCreated_at();
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -988,9 +988,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
-            Log.v(Helper.TAG,"initialBookMarkDate! " + initialBookMarkDate);
-            Log.v(Helper.TAG,"tmpStatuses.size()! " + tmpStatuses.size());
-            Log.v(Helper.TAG,"date " + tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at() + " > " + initialBookMarkDate);
             if (initialBookMarkDate != null &&  tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
                 if( StatusListAdapter.fetch_all_more && statuses.size() > 0){
                     fetchMore(tmpStatuses.get(tmpStatuses.size() - 1).getId());
