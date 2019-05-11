@@ -826,7 +826,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Zeitleiste hinzufügen</string>
     <string name="set_sensitive_content">Medien immer als vertraulich kennzeichnen</string>
-    <string name="gnu_instance">GNU instance</string>
+    <string name="gnu_instance">GNU-Instanz</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
