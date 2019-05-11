@@ -47,7 +47,6 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
-import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
@@ -55,12 +54,10 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
-import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -595,9 +592,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
-                    if (status.getAccount() != null && !status.getAccount().getId().equals(userId)) {
-                        MainActivity.countNewStatus++;
-                    }
                     try {
                         ((MainActivity) context).updateHomeCounter();
                     }catch (Exception ignored){}
