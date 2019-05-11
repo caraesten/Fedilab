@@ -815,6 +815,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="move_timeline">Flytt tidslinje</string>
     <string name="hide_timeline">Skjul tidslinje</string>
     <string name="reorder_timelines">Endre rekkefølge på tidslinjer</string>
+    <string name="reorder_list_deleted">Listen er slettet</string>
+    <string name="reorder_instance_removed">Fulgt instans er fjernet</string>
+    <string name="reorder_tag_removed">Festet emneord er fjernet</string>
     <string name="undo">Angre</string>
     <string name="visible_tabs_needed">Du må ha to synlige faner!</string>
     <string name="action_reorder_timeline">Endre rekkefølge på tidslinjer</string>
@@ -822,6 +825,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="warning_main_timeline">Hovedtidslinjer kan bare skjules!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Legg til tidlinje</string>
+    <string name="set_sensitive_content">Marker alltid media som sensitivt</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

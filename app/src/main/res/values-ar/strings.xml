@@ -841,6 +841,9 @@
     <string name="move_timeline">نقل الخيط الزمني</string>
     <string name="hide_timeline">إخفاء الخيط الزمني</string>
     <string name="reorder_timelines">إعادة ترتيب الخيوط الزمنية</string>
+    <string name="reorder_list_deleted">تم حذف القائمة نهائيا</string>
+    <string name="reorder_instance_removed">تم إزالة مثيل الخادم المُتابَع</string>
+    <string name="reorder_tag_removed">تم إزالة الوسم المدبس</string>
     <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
@@ -848,6 +851,7 @@
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">إضافة خيط زمني</string>
+    <string name="set_sensitive_content">اعتبار الوسائط دائما كحساسة</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>

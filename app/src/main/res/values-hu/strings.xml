@@ -642,7 +642,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Újratoot időzítése</b> opciót.]]></string>
     <string name="art_menu">Művészies idővonal</string>
     <string name="open_menu">Menü megnyitása</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Visszalépés</string>
     <string name="app_logo">Alkalmazás logója</string>
     <string name="profile_picture">Profilkép</string>
     <string name="profile_banner">Profilbanner</string>
@@ -824,6 +824,9 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="move_timeline">Idővonal áthelyezése</string>
     <string name="hide_timeline">Idővonal elrejtése</string>
     <string name="reorder_timelines">Idővonalak átrendezése</string>
+    <string name="reorder_list_deleted">Véglegesen törölted a listát</string>
+    <string name="reorder_instance_removed">A követett szerver el lett távolítva</string>
+    <string name="reorder_tag_removed">A rögzített címke el lett távolítva</string>
     <string name="undo">Visszavonás</string>
     <string name="visible_tabs_needed">Legalább két látható lapnak kell maradni!</string>
     <string name="action_reorder_timeline">Idővonalak átrendezése</string>
@@ -831,6 +834,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="warning_main_timeline">A fő idővonalakat csak elrejteni lehet!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Idővonal hozzáadása</string>
+    <string name="set_sensitive_content">Minden médiát jelölj meg érzékenynek</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

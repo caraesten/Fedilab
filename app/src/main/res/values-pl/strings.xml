@@ -829,6 +829,9 @@
     <string name="move_timeline">Move timeline</string>
     <string name="hide_timeline">Hide timeline</string>
     <string name="reorder_timelines">Reorder timelines</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Undo</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
     <string name="action_reorder_timeline">Reorder timelines</string>
@@ -836,6 +839,7 @@
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

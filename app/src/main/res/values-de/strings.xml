@@ -623,11 +623,11 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="set_truncate_toot">Kürze Toots mit mehr als \'x\' Zeilen. Null bedeutet deaktiviert.</string>
     <string name="display_toot_truncate">Mehr anzeigen</string>
     <string name="hide_toot_truncate">Weniger anzeigen</string>
-    <string name="manage_tags">Verwalten von Markierungen</string>
-    <string name="tags_already_stored">Diese Markierung existiert bereits!</string>
-    <string name="tags_stored">Die Markierung wurde gespeichert!</string>
-    <string name="tags_renamed">Die Markierung wurde geändert!</string>
-    <string name="tags_deleted">Die Markierung wurde gelöscht!</string>
+    <string name="manage_tags">Schlagwörter verwalten</string>
+    <string name="tags_already_stored">Dieses Schlagwort existiert bereits!</string>
+    <string name="tags_stored">Dieses Schlagwort wurde gespeichert!</string>
+    <string name="tags_renamed">Dieses Schlagwort wurde geändert!</string>
+    <string name="tags_deleted">Dieses Schlagwort wurde gelöscht!</string>
     <string name="set_display_art">Kunst-Zeitlinie anzeigen</string>
     <string name="schedule_boost">Plane teilen des Beitrags</string>
     <string name="boost_scheduled">Teilen geplant!</string>
@@ -784,7 +784,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="data_base_exported">Die Datenbank wurde exportiert!</string>
     <string name="featured_hashtags">Empfohlene Hashtags</string>
     <string name="filter_timeline_with_a_tag">Zeitleiste mit Schlagwörtern filtern</string>
-    <string name="no_tags">Keine Tags</string>
+    <string name="no_tags">Keine Schlagwörter</string>
     <string name="set_hide_delete_notification_on_tab">Schaltfläche „Mitteilungen löschen” im Tab „Mitteilungen” ausblenden</string>
     <string name="set_retrieve_metadata_share_from_extras">Metadaten abrufen, wenn die URL von anderen Apps geteilt wird</string>
     <!-- end languages -->
@@ -815,6 +815,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="move_timeline">Zeitleiste verschieben</string>
     <string name="hide_timeline">Zeitleiste ausblenden</string>
     <string name="reorder_timelines">Zeitleiste neu anordnen</string>
+    <string name="reorder_list_deleted">Liste dauerhaft gelöscht</string>
+    <string name="reorder_instance_removed">Folgeinstanz entfernt</string>
+    <string name="reorder_tag_removed">Angeheftetes Schlagwort entfernt</string>
     <string name="undo">Widerrufen</string>
     <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
     <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
@@ -822,6 +825,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="warning_main_timeline">Hauptzeitleisten können nur ausgeblendet werden!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Zeitleiste hinzufügen</string>
+    <string name="set_sensitive_content">Medien immer als vertraulich kennzeichnen</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
