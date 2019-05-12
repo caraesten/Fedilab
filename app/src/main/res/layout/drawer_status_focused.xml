@@ -44,6 +44,16 @@
                 android:layout_width="match_parent"
                 >
                 <ImageView
+                    android:visibility="gone"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_bot"
+                    android:id="@+id/status_account_bot"
+                    android:layout_alignParentStart="true" />
+                <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"

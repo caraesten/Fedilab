@@ -366,7 +366,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         LinearLayout status_peertube_container;
         TextView status_peertube_reply, status_peertube_delete, show_more_content;
-        ImageView cached_status;
+        ImageView cached_status, status_account_bot;
 
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
@@ -474,6 +474,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             submit_vote = itemView.findViewById(R.id.submit_vote);
             refresh_poll = itemView.findViewById(R.id.refresh_poll);
             cached_status = itemView.findViewById(R.id.cached_status);
+            status_account_bot = itemView.findViewById(R.id.status_account_bot);
         }
     }
 
@@ -538,6 +539,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.getReblog().setVisibility("public");
             }
             status.setItemViewType(viewHolder.getItemViewType());
+
+            if( status.getReblog() == null){
+                if( status.getAccount().isBot()){
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                }else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            }else{
+                if( status.getReblog().getAccount().isBot()){
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                }else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            }
 
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
