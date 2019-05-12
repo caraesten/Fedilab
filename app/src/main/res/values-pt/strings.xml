@@ -839,6 +839,7 @@
     <string name="add_timeline">Adicionar timeline</string>
     <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
     <string name="gnu_instance">Instância GNU</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d votou</item>
         <item quantity="other">%d votaram</item>
