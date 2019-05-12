@@ -193,7 +193,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             return null;
         switch (action){
             case HOME:
+
                 apiResponse = api.getHomeTimeline(max_id);
+
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);

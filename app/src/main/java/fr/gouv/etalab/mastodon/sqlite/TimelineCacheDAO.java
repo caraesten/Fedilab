@@ -106,7 +106,40 @@ public class TimelineCacheDAO {
         }
     }
 
+    /**
+     * Returns one cached Statuses
+     * @return stored Status List<Status>
+     */
+    public Status getSingle(String instance, String statusId){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_STATUS_ID + " = " + statusId, null, null, null, null, "1");
+            return cursorToSingleStatus(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
+    /***
+     * Method to hydrate one cached status from database
+     * @param c Cursor
+     * @return Status
+     */
+    private Status cursorToSingleStatus(Cursor c){
+        //No element found
+        if (c.getCount() == 0)
+            return null;
+        c.moveToFirst();
+        Status status = null;
+        try {
+            status = API.parseStatuses(context, new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //Close the cursor
+        c.close();
+        //Statuses list is returned
+        return status;
+    }
 
     /***
      * Method to hydrate cached statuses from database

@@ -78,6 +78,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 import static fr.gouv.etalab.mastodon.client.API.StatusAction.REFRESHPOLL;
 
@@ -977,36 +978,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-            /*if( response != null) {
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            List<Status> statuses;
-                            statuses = API.parseStatuses(context, new JSONArray(response));
-                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
-                            List<Status> alreadyCached = new TimelineCacheDAO(context, db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
-                            ArrayList<String> cachedId = new ArrayList<>();
-                            if(alreadyCached != null){
-                                for(Status status: alreadyCached){
-                                    cachedId.add(status.getId());
-                                }
-                            }
-                            for(Status status: statuses){
-                                if(!cachedId.contains(status.getId())){
-                                    new TimelineCacheDAO(context, db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, prefKeyOauthTokenT);
-                                }
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                thread.start();
-            }*/
+            statuses = parseStatuses(context, new JSONArray(response), instance, true);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -3748,6 +3720,38 @@ public class API {
             e.printStackTrace();
         }
         return schedules;
+    }
+
+
+    /**
+     * Parse json response for several status
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    private static List<Status> parseStatuses(Context context, JSONArray jsonArray, String instance, boolean cached){
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Status status = parseStatuses(context, resobj);
+                if( cached) {
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(instance, status.getId());
+                    if (alreadyCached == null) {
+                        new TimelineCacheDAO(context, db).insert(status.getId(), instance, resobj.toString());
+                    }
+                }
+                i++;
+                statuses.add(status);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
     }
 
     /**
