@@ -287,6 +287,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_STATUS_ID + " TEXT NOT NULL, "
             + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_USER_ID + " TEXT NOT NULL, "
             + COL_CACHE + " TEXT NOT NULL, "
             + COL_DATE + " TEXT NOT NULL)";
 

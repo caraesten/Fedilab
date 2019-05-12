@@ -953,6 +953,56 @@ public class API {
     }
 
 
+
+
+    /**
+     * Retrieves home timeline from cache the account *synchronously*
+     * @param max_id   String id max
+     * @return APIResponse
+     */
+    public APIResponse getHomeTimelineCache(String max_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        params.put("limit","40");
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        statuses  = new TimelineCacheDAO(context, db).get(max_id);
+        if( statuses == null){
+            statuses = new ArrayList<>();
+            try {
+                HttpsConnection httpsConnection = new HttpsConnection(context);
+                String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
+                apiResponse.setSince_id(httpsConnection.getSince_id());
+                apiResponse.setMax_id(httpsConnection.getMax_id());
+                statuses = parseStatuses(context, new JSONArray(response), true);
+            } catch (HttpsConnection.HttpsConnectionException e) {
+                setError(e.getStatusCode(), e);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if( apiResponse == null)
+                apiResponse = new APIResponse();
+            apiResponse.setStatuses(statuses);
+            return apiResponse;
+        }else{
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+            }
+            apiResponse.setStatuses(statuses);
+            return apiResponse;
+        }
+
+    }
+
+
     /**
      * Retrieves home timeline for the account *synchronously*
      * @param max_id   String id max
@@ -978,7 +1028,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response), instance, true);
+            statuses = parseStatuses(context, new JSONArray(response), true);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -3728,7 +3778,7 @@ public class API {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private static List<Status> parseStatuses(Context context, JSONArray jsonArray, String instance, boolean cached){
+    private static List<Status> parseStatuses(Context context, JSONArray jsonArray, boolean cached){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -3739,9 +3789,9 @@ public class API {
                 Status status = parseStatuses(context, resobj);
                 if( cached) {
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(instance, status.getId());
+                    Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
                     if (alreadyCached == null) {
-                        new TimelineCacheDAO(context, db).insert(status.getId(), instance, resobj.toString());
+                        new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString());
                     }
                 }
                 i++;

@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -52,10 +53,14 @@ public class TimelineCacheDAO {
      * Insert a status in database
      * @return boolean
      */
-    public long insert(String statusId, String instance, String jsonString) {
+    public long insert(String statusId, String jsonString) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_STATUS_ID, statusId);
+        values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_DATE, Helper.dateToString(new Date()));
         values.put(Sqlite.COL_CACHE, jsonString);
         //Inserts cached status
@@ -73,8 +78,11 @@ public class TimelineCacheDAO {
      * Remove stored status
      * @return int
      */
-    public int remove(String statusId, String instance) {
-        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_STATUS_ID + " = \""+ statusId +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
+    public int remove(String statusId) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_STATUS_ID + " = \""+ statusId +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null);
     }
 
     /***
@@ -93,13 +101,16 @@ public class TimelineCacheDAO {
      * Returns all cached Statuses
      * @return stored Status List<Status>
      */
-    public List<Status> get(String instance, String max_id){
+    public List<Status> get(String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
         try {
             Cursor c;
             if( max_id != null)
-                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_STATUS_ID + " <= " + max_id, null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND "+ Sqlite.COL_STATUS_ID + " <= " + max_id, null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
             else
-                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
             return cursorToListStatus(c);
         } catch (Exception e) {
             return null;
@@ -110,9 +121,12 @@ public class TimelineCacheDAO {
      * Returns one cached Statuses
      * @return stored Status List<Status>
      */
-    public Status getSingle(String instance, String statusId){
+    public Status getSingle(String statusId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_STATUS_ID + " = " + statusId, null, null, null, null, "1");
+            Cursor  c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "1");
             return cursorToSingleStatus(c);
         } catch (Exception e) {
             return null;
