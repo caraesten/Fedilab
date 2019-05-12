@@ -824,9 +824,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="move_timeline">Tijdlijn verplaatsen</string>
     <string name="hide_timeline">Tijdlijn verbergen</string>
     <string name="reorder_timelines">Tijdlijnen herordenen</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
+    <string name="reorder_list_deleted">Lijst is definitief verwijderd</string>
+    <string name="reorder_instance_removed">Gevolgde server verwijderd</string>
+    <string name="reorder_tag_removed">Vastgezette tag verwijderd</string>
     <string name="undo">Ongedaan maken</string>
     <string name="visible_tabs_needed">Je moet twee zichtbare tabbladen behouden!</string>
     <string name="action_reorder_timeline">Tijdlijnen herordenen</string>
@@ -834,9 +834,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="warning_main_timeline">Hoofdtijdlijnen kunnen alleen worden verborgen!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Tijdlijn toevoegen</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="set_sensitive_content">Media altijd als gevoelig markeren</string>
+    <string name="gnu_instance">GNU social-server</string>
+    <string name="cached_status">Gebufferd bericht</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
