@@ -835,6 +835,7 @@
     <string name="add_timeline">Add a timeline</string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
     <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
