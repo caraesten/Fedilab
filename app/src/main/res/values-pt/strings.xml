@@ -24,7 +24,7 @@
     <string name="email">E-mail</string>
     <string name="accounts">Contas</string>
     <string name="toots">Toots</string>
-    <string name="tags">Marcadores</string>
+    <string name="tags">Tags</string>
     <string name="token">Token</string>
     <string name="save">Salvar</string>
     <string name="restore">Restaurar</string>
@@ -64,7 +64,7 @@
     <string name="favourite">Favoritos</string>
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
-    <string name="reblog">Compartilhamentos</string>
+    <string name="reblog">Boosts</string>
     <string name="show_boosts">Mostrar boosts</string>
     <string name="show_replies">Mostrar respostas</string>
     <string name="action_open_in_web">Abrir no navegador</string>
@@ -81,7 +81,7 @@
     <string name="blocked_menu">Usuários bloqueados</string>
     <string name="remote_follow_menu">Seguir remotamente</string>
     <string name="notifications">Notificações</string>
-    <string name="follow_request">Solicitação para seguir</string>
+    <string name="follow_request">Solicitações de seguidor</string>
     <string name="optimization">Otimização</string>
     <string name="settings">Configurações</string>
     <string name="profile">Perfil</string>
