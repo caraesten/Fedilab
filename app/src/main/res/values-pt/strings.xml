@@ -102,9 +102,9 @@
     <string name="no_status">Sem toots</string>
     <string name="fav_added">Toot adicionado aos favoritos!</string>
     <string name="fav_removed">Toot removido dos favoritos!</string>
-    <string name="reblog_added">Você deu boost no toot!</string>
-    <string name="reblog_removed">Você desfez o boost no toot!</string>
-    <string name="reblog_by">%1$s deram boost</string>
+    <string name="reblog_added">Você deu boost!</string>
+    <string name="reblog_removed">Você desfez o boost!</string>
+    <string name="reblog_by">Boost de %1$s</string>
     <string name="favourite_add">Adicionar este toot aos favoritos?</string>
     <string name="favourite_remove">Remover este toot dos favoritos?</string>
     <string name="reblog_add">Dar boost?</string>
