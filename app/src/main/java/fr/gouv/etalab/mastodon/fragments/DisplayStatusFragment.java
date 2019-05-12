@@ -30,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -189,6 +190,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+
+        lv_status.addItemDecoration(new DividerItemDecoration(lv_status.getContext(), DividerItemDecoration.VERTICAL));
 
         //For Home timeline, fetch stored values for bookmark and last read toot
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {

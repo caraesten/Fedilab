@@ -50,6 +50,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -523,8 +524,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
 
-            if (status == null)
-                return;
+            //TODO:It sounds that sometimes this value is null - need deeper investigation
+            if (status.getVisibility() == null) {
+                status.setVisibility("public");
+            }
+            if (status.getReblog() != null && status.getReblog().getVisibility() == null) {
+                status.getReblog().setVisibility("public");
+            }
             status.setItemViewType(viewHolder.getItemViewType());
 
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
@@ -769,7 +775,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
 
 
-            if ((isCompactMode || isConsoleMode) && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
+            /*if ((isCompactMode || isConsoleMode) && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -783,7 +789,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 );
                 params.setMargins((int) Helper.convertDpToPixel(20, context), 0, 0, 0);
                 holder.main_container.setLayoutParams(params);
-            }
+            }*/
 
 
             if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
@@ -989,7 +995,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
-            if( status.getReblog() == null && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+            /*if( status.getReblog() == null && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
                 params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
                     paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
@@ -1004,7 +1010,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     paramsB.setMargins(0,0,0,0);
                 }
 
-            }
+            }*/
 
             if (!status.isClickable())
                 Status.transform(context, status);
@@ -1594,10 +1600,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else { //Attachments for reblogs
 
                 if (status.getReblog().getMedia_attachments().size() < 1) {
-                    if (fullAttachement)
-                        holder.status_horizontal_document_container.setVisibility(View.GONE);
-                    else
-                        holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
@@ -1711,9 +1715,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setVisibility(View.GONE);
             else
                 holder.status_content.setVisibility(View.VISIBLE);
-            //TODO:It sounds that sometimes this value is null - need deeper investigation
-            if (status.getVisibility() == null)
-                status.setVisibility("public");
 
             switch (status.getVisibility()) {
                 case "direct":
@@ -1841,17 +1842,33 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_remove.setVisibility(View.GONE);
             }
 
-            if (status.getWebviewURL() != null) {
-                String  url = status.getWebviewURL().replaceAll("&amp;","&");
-                holder.status_cardview_webview.loadUrl(url);
-                holder.status_cardview_webview.setVisibility(View.VISIBLE);
-                holder.status_cardview_video.setVisibility(View.VISIBLE);
-                holder.webview_preview.setVisibility(View.GONE);
-            } else {
-                holder.status_cardview_webview.setVisibility(View.GONE);
-                holder.status_cardview_video.setVisibility(View.GONE);
-                holder.webview_preview.setVisibility(View.VISIBLE);
+            if( status.getReblog() == null){
+                if (status.getWebviewURL() != null) {
+                    String  url = status.getWebviewURL().replaceAll("&amp;","&");
+                    holder.status_cardview_webview.loadUrl(url);
+                    holder.status_cardview_webview.setVisibility(View.VISIBLE);
+                    holder.status_cardview_video.setVisibility(View.VISIBLE);
+                    holder.webview_preview.setVisibility(View.GONE);
+                } else {
+                    holder.status_cardview_webview.setVisibility(View.GONE);
+                    holder.status_cardview_video.setVisibility(View.GONE);
+                    holder.webview_preview.setVisibility(View.VISIBLE);
+                }
+            }else{
+                if (status.getReblog().getWebviewURL() != null) {
+                    String  url = status.getReblog().getWebviewURL().replaceAll("&amp;","&");
+                    holder.status_cardview_webview.loadUrl(url);
+                    holder.status_cardview_webview.setVisibility(View.VISIBLE);
+                    holder.status_cardview_video.setVisibility(View.VISIBLE);
+                    holder.webview_preview.setVisibility(View.GONE);
+                } else {
+                    holder.status_cardview_webview.setVisibility(View.GONE);
+                    holder.status_cardview_video.setVisibility(View.GONE);
+                    holder.webview_preview.setVisibility(View.VISIBLE);
+                }
             }
+
+
 
             if ((type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition) || display_card || display_video_preview) {
 
