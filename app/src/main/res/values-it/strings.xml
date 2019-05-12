@@ -827,6 +827,9 @@
     <string name="move_timeline">Sposta timeline</string>
     <string name="hide_timeline">Nascondi timeline</string>
     <string name="reorder_timelines">Riordina timeline</string>
+    <string name="reorder_list_deleted">Lista eliminata definitivamente</string>
+    <string name="reorder_instance_removed">Istanza seguita rimossa</string>
+    <string name="reorder_tag_removed">Etichetta fissata rimossa</string>
     <string name="undo">Annulla</string>
     <string name="visible_tabs_needed">Devi mantenere almeno due schede visibili!</string>
     <string name="action_reorder_timeline">Riordina timeline</string>
@@ -834,6 +837,9 @@
     <string name="warning_main_timeline">Le timeline principali possono solo essere nascoste!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Aggiungi una timeline</string>
+    <string name="set_sensitive_content">Segna sempre media come sensibili</string>
+    <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>

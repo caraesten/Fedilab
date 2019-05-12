@@ -135,6 +135,7 @@ public class Status implements Parcelable{
     private Poll poll = null;
 
     private int media_height;
+    private boolean cached = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -193,6 +194,7 @@ public class Status implements Parcelable{
         dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.poll, flags);
         dest.writeInt(this.media_height);
+        dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
     }
 
     protected Status(Parcel in) {
@@ -253,6 +255,7 @@ public class Status implements Parcelable{
         this.isNotice = in.readByte() != 0;
         this.poll = in.readParcelable(Poll.class.getClassLoader());
         this.media_height = in.readInt();
+        this.cached = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1351,5 +1354,13 @@ public class Status implements Parcelable{
 
     public void setMedia_height(int media_height) {
         this.media_height = media_height;
+    }
+
+    public boolean iscached() {
+        return cached;
+    }
+
+    public void setcached(boolean cached) {
+        this.cached = cached;
     }
 }

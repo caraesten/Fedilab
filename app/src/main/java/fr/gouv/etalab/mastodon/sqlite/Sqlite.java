@@ -46,7 +46,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 29;
+    public static final int DB_VERSION = 30;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -76,7 +76,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_PEERTUBE_FAVOURITES = "PEERTUBE_FAVOURITES";
 
     //Table for timeline cache
-    private static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
+    public static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
 
     //Table for tags cache
     static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
@@ -89,6 +89,8 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for timelines
     public static final String TABLE_TIMELINES = "TIMELINES";
+
+
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -279,6 +281,16 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_DISPLAYED + " INTEGER NOT NULL, "
             + COL_LIST_TIMELINE + " TEXT)";
 
+
+    private static final String CREATE_TABLE_TIMELINE_CACHE = "CREATE TABLE "
+            + TABLE_TIMELINE_CACHE + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_STATUS_ID + " TEXT NOT NULL, "
+            + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_CACHE + " TEXT NOT NULL, "
+            + COL_DATE + " TEXT NOT NULL)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -307,6 +319,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
         db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
         db.execSQL(CREATE_TABLE_TIMELINES);
+        db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
     }
 
     @Override
@@ -396,6 +409,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 28:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_PRIVACY + " TEXT");
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SENSITIVE + " INTEGER DEFAULT 0");
+            case 29:
+                db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
             default:
                 break;
         }

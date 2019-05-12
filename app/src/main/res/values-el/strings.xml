@@ -827,6 +827,9 @@
     <string name="move_timeline">Μετακίνηση της χρονοστήλης</string>
     <string name="hide_timeline">Απόκρυψη της χρονοστήλης</string>
     <string name="reorder_timelines">Αναδιάταξη των χρονοστήλων</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Αναίρεση</string>
     <string name="visible_tabs_needed">Θα πρέπει να διατηρείς δύο καρτέλες ορατές.</string>
     <string name="action_reorder_timeline">Αναδιάταξη των χρονοστήλων</string>
@@ -834,6 +837,9 @@
     <string name="warning_main_timeline">Η κύρια χρονοστήλη μπορεί, μονάχα, να κρυφτεί.</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d ψήφοι</item>

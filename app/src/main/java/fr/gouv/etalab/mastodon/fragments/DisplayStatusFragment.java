@@ -30,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,7 +48,6 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
-import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
@@ -55,12 +55,10 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
-import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -74,7 +72,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
-import fr.gouv.etalab.mastodon.services.StreamingHomeTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
@@ -108,7 +105,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private RecyclerView lv_status;
     private boolean showMediaOnly, showPinned, showReply;
-    private Intent streamingHomeIntent, streamingFederatedIntent, streamingLocalIntent;
+    private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
     private String userId, instance;
@@ -119,7 +116,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceType;
     private String search_peertube, remote_channel_name;
     private String initialBookMark;
-    private boolean fetchMoreButtonDisplayed;
     private TagTimeline tagTimeline;
     private String updatedBookMark;
     private String lastReadToot;
@@ -143,7 +139,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         showMediaOnly = false;
         //Will allow to load first toots if bookmark != null
         firstTootsLoaded = false;
-        fetchMoreButtonDisplayed = false;
         showPinned = false;
         showReply = false;
         tagTimeline = null;
@@ -196,6 +191,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
+        lv_status.addItemDecoration(new DividerItemDecoration(lv_status.getContext(), DividerItemDecoration.VERTICAL));
+
         //For Home timeline, fetch stored values for bookmark and last read toot
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             initialBookMark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, null);
@@ -203,7 +200,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
             lastReadTootDate  = Helper.stringToDate(context, sharedpreferences.getString(Helper.LAST_READ_TOOT_DATE + userId + instance, null));
         }
-        if( instanceType == null || instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") ){
+        if( instanceType == null || instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") || instanceType.equals("GNU") ){
             if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
                 BaseMainActivity.displayPeertube = null;
                 List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
@@ -547,7 +544,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             //Let's deal with statuses
             if( statuses != null && statuses.size() > 0) {
-                if ( statusListAdapter != null && ( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))) {
+                if ( statusListAdapter != null && ( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }else if(artListAdapter != null && instanceType.equals("ART") ) {
@@ -597,9 +594,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
-                    if (status.getAccount() != null && !status.getAccount().getId().equals(userId)) {
-                        MainActivity.countNewStatus++;
-                    }
                     try {
                         ((MainActivity) context).updateHomeCounter();
                     }catch (Exception ignored){}
@@ -629,21 +623,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onResume();
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
-
-
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
             if( getUserVisibleHint() ){
                 statusListAdapter.updateMuted(mutedAccount);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
-                editor.apply();
-                if(liveNotifications && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
-                    try {
-                        context.startService(streamingHomeIntent);
-                    }catch (Exception ignored){}
-                }
-                if( statuses != null && statuses.size() > 0) {
+                if( statuses != null && statuses.size() > 0 && asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
                     retrieveMissingToots(statuses.get(0).getId());
                 }
             }
@@ -711,6 +694,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     }
 
+
+    public void retrieveMissingHome(){
+        if( statusListAdapter != null && statuses != null && lv_status != null && mLayoutManager != null){
+            int firstVisible = mLayoutManager.findFirstVisibleItemPosition();
+            Iterator<Status> s = statuses.iterator();
+            int i = 0;
+            while (s.hasNext() && i < firstVisible) {
+                Status status = s.next();
+                s.remove();
+                statusListAdapter.notifyItemRemoved(0);
+                statusListAdapter.notifyItemChanged(0);
+                i++;
+            }
+            initialBookMarkDate = statuses.get(0).getCreated_at();
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
     /**
      * When tab comes visible, first displayed toot is defined as read
      * @param visible boolean
@@ -725,25 +726,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME ) {
             if (visible) {
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
-                editor.apply();
-                if(liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
-                    try {
-                        context.startService(streamingHomeIntent);
-                    }catch (Exception ignored){}
-                }
                 if( statuses != null && statuses.size() > 0) {
                     retrieveMissingToots(statuses.get(0).getId());
-                }
-            }else {
-                if( streamingHomeIntent != null ){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
-                    editor.apply();
-                    context.stopService(streamingHomeIntent);
                 }
             }
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
@@ -794,12 +778,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onStop(){
         super.onStop();
-        if( type == RetrieveFeedsAsyncTask.Type.HOME && streamingHomeIntent != null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
-            editor.apply();
-            context.stopService(streamingHomeIntent);
-        } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
+       if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
             editor.apply();
@@ -814,7 +793,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void scrollToTop(){
         if( lv_status != null && instanceType != null) {
-            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")))
+            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")))
                 lv_status.setAdapter(statusListAdapter);
             else if( pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
                 lv_status.setAdapter(pixelfedListAdapter);
@@ -830,7 +809,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      */
     public void refreshFilter(){
 
-        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU"))
             statusListAdapter.notifyDataSetChanged();
         else if( instanceType.equals("PIXELFED"))
             pixelfedListAdapter.notifyDataSetChanged();
@@ -847,7 +826,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for (Status status : this.statuses) {
                 status.setNew(false);
             }
-            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU"))
                 statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
             else if( instanceType.equals("PIXELFED"))
                 pixelfedListAdapter.notifyItemRangeChanged(0, this.statuses.size());
@@ -871,7 +850,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Status status = it.next();
                         for (Status status1 : statuses) {
                             if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
-                                if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                                if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU"))
                                     statusListAdapter.notifyItemRemoved(position);
                                 else if( instanceType.equals("PIXELFED"))
                                     pixelfedListAdapter.notifyItemRemoved(position);
@@ -910,7 +889,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                 }
             }
-            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")))
+            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU")))
                 statusListAdapter.notifyItemRangeInserted(0, inserted);
             else if( pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
                 pixelfedListAdapter.notifyItemRangeInserted(0, inserted);
@@ -930,7 +909,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
-        fetchMoreButtonDisplayed = false;
         asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -973,11 +951,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
-            if (initialBookMarkDate != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
+            if (initialBookMarkDate != null &&  tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
                 if( StatusListAdapter.fetch_all_more && statuses.size() > 0){
                     fetchMore(tmpStatuses.get(tmpStatuses.size() - 1).getId());
                 }else{
-                    fetchMoreButtonDisplayed = true;
                     tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
                     StatusListAdapter.fetch_all_more = false;
                 }

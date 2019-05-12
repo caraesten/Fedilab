@@ -832,6 +832,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="move_timeline">Přesunout časovou osu</string>
     <string name="hide_timeline">Skrýt časovou osu</string>
     <string name="reorder_timelines">Změnit pořadí časových os</string>
+    <string name="reorder_list_deleted">List permanently deleted</string>
+    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Vrátit zpět</string>
     <string name="visible_tabs_needed">Musíte si nechat dvě viditelné karty!</string>
     <string name="action_reorder_timeline">Změnit pořadí časových os</string>
@@ -839,6 +842,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="warning_main_timeline">Hlavní časové linie mohou být pouze skryty!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Přidat časovou osu</string>
+    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>

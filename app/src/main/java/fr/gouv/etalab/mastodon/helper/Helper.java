@@ -253,6 +253,7 @@ public class Helper {
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
     public static final String BOOKMARK_ID = "bookmark_id";
     public static final String BOOKMARK_DATE = "bookmark_date";
+    public static final String HOME_LAST_READ = "home_last_read";
     public static final String LAST_READ_TOOT_ID = "last_read_toot_id";
     public static final String LAST_READ_TOOT_DATE = "last_read_toot_date";
     public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";

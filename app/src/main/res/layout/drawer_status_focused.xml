@@ -44,6 +44,16 @@
                 android:layout_width="match_parent"
                 >
                 <ImageView
+                    android:visibility="gone"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_bot"
+                    android:id="@+id/status_account_bot"
+                    android:layout_alignParentStart="true" />
+                <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
@@ -102,13 +112,25 @@
                 android:drawablePadding="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/status_account_displayname_owner"
-                android:maxLines="1"
-                android:drawablePadding="2dp"
-                android:textStyle="bold"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/cached_status"
+                    android:visibility="gone"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_cached_black"
+                    android:contentDescription="@string/cached_status" />
+                <TextView
+                    android:id="@+id/status_account_displayname_owner"
+                    android:maxLines="1"
+                    android:drawablePadding="2dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <TextView
                 android:textSize="12sp"
                 android:maxLines="1"

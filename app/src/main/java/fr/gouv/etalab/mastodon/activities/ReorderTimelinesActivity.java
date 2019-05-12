@@ -95,6 +95,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     public static boolean updated;
     private ItemTouchHelper touchHelper;
     private RelativeLayout undo_container;
+    private TextView undo_message;
     private TextView undo_action;
     private  List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
@@ -102,12 +103,13 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
+    private int theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
@@ -185,7 +187,10 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                             new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
+                                        }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
+
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 dialog.dismiss();
@@ -197,6 +202,8 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "PIXELFED");
                                                 } else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MISSKEY");
+                                                }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                                    new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "GNU");
                                                 }
                                                 if( timelines != null && adapter != null) {
                                                     List<RemoteInstance> instance = new InstancesDAO(ReorderTimelinesActivity.this, db).getInstanceByName(instanceName);
@@ -354,6 +361,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 new SimpleItemTouchHelperCallback(adapter);
         touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(lv_reorder_tabs);
+        undo_message = findViewById(R.id.undo_message);
         undo_action = findViewById(R.id.undo_action);
         undo_container = findViewById(R.id.undo_container);
         lv_reorder_tabs.setAdapter(adapter);
@@ -369,7 +377,20 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
+        if (theme == THEME_LIGHT)
+            undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
+        switch (manageTimelines.getType()){
+            case TAG:
+                undo_message.setText(R.string.reorder_tag_removed);
+                break;
+            case INSTANCE:
+                undo_message.setText(R.string.reorder_instance_removed);
+                break;
+            case LIST:
+                undo_message.setText(R.string.reorder_list_deleted);
+                break;
+        }
         undo_action.setPaintFlags(undo_action.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         actionCanBeApplied = true;
         undo_action.setOnClickListener(new View.OnClickListener() {

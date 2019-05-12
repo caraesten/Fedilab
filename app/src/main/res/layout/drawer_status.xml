@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,23 +27,27 @@
     android:layout_marginEnd="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:divider="?android:dividerHorizontal"
-    android:showDividers="end"
-    android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+    android:orientation="horizontal"
+    >
+
         <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="50dp"
-            android:orientation="vertical"
-            >
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 >
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_bot"
+                    android:id="@+id/status_account_bot"
+                    android:layout_alignParentStart="true" />
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -130,97 +135,6 @@
                     android:visibility="gone"
                     android:contentDescription="@string/profile_picture" />
             </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/status_account_displayname"
-                android:maxLines="1"
-                android:drawablePadding="2dp"
-                android:layout_marginTop="-2dp"
-                android:layout_marginStart="-2dp"
-                android:layout_marginLeft="-2dp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/status_account_displayname_owner"
-                android:maxLines="1"
-                android:textStyle="bold"
-                android:drawablePadding="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:id="@+id/status_account_username"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:id="@+id/status_toot_date"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="0"
-                    android:maxLines="1"
-                    android:textSize="12sp"
-                    android:layout_gravity="end"
-                    android:gravity="end"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-
-        android:id="@+id/vertical_content"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/status_spoiler_container"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <fr.gouv.etalab.mastodon.helper.CustomTextView
-                android:id="@+id/status_spoiler"
-                android:layout_marginBottom="10dp"
-                android:textIsSelectable="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/status_spoiler_button"
-                android:textAllCaps="false"
-                android:drawableLeft="@drawable/ic_remove_red_eye"
-                android:drawableStart="@drawable/ic_remove_red_eye"
-                android:gravity="center_vertical"
-                android:drawablePadding="5dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:maxLines="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/borderless"
-                android:text="@string/load_attachment_spoiler" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <LinearLayout
                 android:id="@+id/left_buttons"
                 android:orientation="vertical"
@@ -267,6 +181,94 @@
                     android:src="@drawable/ic_clear_toot"
                     android:layout_marginTop="5dp"
                     />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginBottom="3dp"
+                android:id="@+id/status_account_displayname"
+                android:maxLines="1"
+                android:drawablePadding="2dp"
+                android:layout_marginTop="-2dp"
+                android:layout_marginStart="-2dp"
+                android:layout_marginLeft="-2dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/cached_status"
+                    android:visibility="gone"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_cached_black"
+                    android:contentDescription="@string/cached_status" />
+                <TextView
+                    android:id="@+id/status_account_displayname_owner"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:drawablePadding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/status_account_username"
+                    android:layout_height="wrap_content"
+                     />
+                <TextView
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:id="@+id/status_toot_date"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0"
+                    android:maxLines="1"
+                    android:textSize="12sp"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/status_spoiler_container"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+                <fr.gouv.etalab.mastodon.helper.CustomTextView
+                    android:id="@+id/status_spoiler"
+                    android:layout_marginBottom="10dp"
+                    android:textIsSelectable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/status_spoiler_button"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_remove_red_eye"
+                    android:drawableStart="@drawable/ic_remove_red_eye"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:maxLines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/borderless"
+                    android:text="@string/load_attachment_spoiler" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/status_content_container"
@@ -413,13 +415,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </FrameLayout>
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-
                     <RelativeLayout
                         android:id="@+id/status_horizontal_document_container"
                         android:visibility="gone"
@@ -690,176 +689,168 @@
                 </RelativeLayout>
 
             </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/status_spoiler_mention_container"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/status_mention_spoiler"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
+                android:id="@+id/status_spoiler_mention_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/status_peertube_container"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:textColor="?colorAccent"
+                android:orientation="vertical"
                 android:visibility="gone"
-                android:text="@string/reply"
-                android:id="@+id/status_peertube_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:drawablePadding="2dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/status_mention_spoiler"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/status_peertube_container"
+                android:layout_width="match_parent"
                 android:visibility="gone"
-                android:textColor="?colorAccent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="@string/delete"
-                android:id="@+id/status_peertube_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <include
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:drawablePadding="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:textColor="?colorAccent"
+                    android:visibility="gone"
+                    android:text="@string/reply"
+                    android:id="@+id/status_peertube_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:drawablePadding="2dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:visibility="gone"
+                    android:textColor="?colorAccent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete"
+                    android:id="@+id/status_peertube_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/layout_poll" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/status_action_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:orientation="horizontal">
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_poll" />
+            </LinearLayout>
             <LinearLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <com.varunest.sparkbutton.SparkButton
-                    android:id="@+id/spark_button_reblog"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
-                    app:sparkbutton_inActiveImage="@drawable/ic_repeat"
-                    app:sparkbutton_iconSize="20dp"
-                    android:contentDescription="@string/reblog"
-                    />
+                android:id="@+id/status_action_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
                 <TextView
                     android:drawablePadding="2dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:id="@+id/status_reblog_count"
+                    android:id="@+id/status_reply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <com.varunest.sparkbutton.SparkButton
-                    android:id="@+id/spark_button_fav"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:sparkbutton_activeImage="@drawable/ic_star"
-                    app:sparkbutton_inActiveImage="@drawable/ic_star_border"
-                    android:contentDescription="@string/favourite"
-                    app:sparkbutton_iconSize="20dp"
-                    />
-                <TextView
-                    android:drawablePadding="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/status_favorite_count"
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:id="@+id/status_pin"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/pin_add"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_pin_drop"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/status_privacy"
                     android:layout_gravity="center_vertical"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/toot_visibility_tilte"/>
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <com.varunest.sparkbutton.SparkButton
+                        android:id="@+id/spark_button_reblog"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
+                        app:sparkbutton_inActiveImage="@drawable/ic_repeat"
+                        app:sparkbutton_iconSize="20dp"
+                        android:contentDescription="@string/reblog"
+                        />
+                    <TextView
+                        android:drawablePadding="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/status_reblog_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <com.varunest.sparkbutton.SparkButton
+                        android:id="@+id/spark_button_fav"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:sparkbutton_activeImage="@drawable/ic_star"
+                        app:sparkbutton_inActiveImage="@drawable/ic_star_border"
+                        android:contentDescription="@string/favourite"
+                        app:sparkbutton_iconSize="20dp"
+                        />
+                    <TextView
+                        android:drawablePadding="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/status_favorite_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
-                    android:id="@+id/status_more"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_more_horiz"
-                    android:contentDescription="@string/display_toot_truncate" />
+                    android:id="@+id/status_pin"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/pin_add"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_pin_drop"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/status_privacy"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:contentDescription="@string/toot_visibility_tilte"/>
+                    <ImageView
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:id="@+id/status_more"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_more_horiz"
+                        android:contentDescription="@string/display_toot_truncate" />
+                </LinearLayout>
             </LinearLayout>
+            <Button
+                android:id="@+id/fetch_more"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_fetch_more"
+                android:drawableStart="@drawable/ic_fetch_more"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawablePadding="5dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/borderless"
+                android:text="@string/fetch_more_toots" />
         </LinearLayout>
-    </LinearLayout>
-    <Button
-        android:id="@+id/fetch_more"
-        android:visibility="gone"
-        android:textAllCaps="false"
-        android:drawableLeft="@drawable/ic_fetch_more"
-        android:drawableStart="@drawable/ic_fetch_more"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:drawablePadding="5dp"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?attr/borderless"
-        android:text="@string/fetch_more_toots" />
+
 </LinearLayout>

@@ -827,6 +827,9 @@
     <string name="move_timeline">Flytta tidslinje</string>
     <string name="hide_timeline">Dölj tidslinje</string>
     <string name="reorder_timelines">Ändra ordning på tidslinjer</string>
+    <string name="reorder_list_deleted">Listan permanent borttagen</string>
+    <string name="reorder_instance_removed">Följda instanser är borttagna</string>
+    <string name="reorder_tag_removed">Fastnålad tagg borttagen</string>
     <string name="undo">Ångra</string>
     <string name="visible_tabs_needed">Du måste behålla minst två synliga tabbar!</string>
     <string name="action_reorder_timeline">Ändra ordning på tidslinjer</string>
@@ -834,6 +837,9 @@
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Lägg till en tidslinje</string>
+    <string name="set_sensitive_content">Markera alltid media som känsligt</string>
+    <string name="gnu_instance">GNU-instans</string>
+    <string name="cached_status">Cachadstatus</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
