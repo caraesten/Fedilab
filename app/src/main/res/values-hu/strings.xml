@@ -836,6 +836,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="add_timeline">Idővonal hozzáadása</string>
     <string name="set_sensitive_content">Minden médiát jelölj meg érzékenynek</string>
     <string name="gnu_instance">GNU szerver</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
