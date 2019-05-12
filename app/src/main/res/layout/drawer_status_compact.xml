@@ -152,17 +152,25 @@
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/status_account_displayname_owner"
-                android:maxLines="1"
-                android:drawablePadding="2dp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_cached_black"
+                    android:id="@+id/cached_status"
+                    android:visibility="gone"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/cached_status" />
+                <TextView
+                    android:id="@+id/status_account_displayname_owner"
+                    android:maxLines="1"
+                    android:drawablePadding="2dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="12sp"
                     android:maxLines="1"

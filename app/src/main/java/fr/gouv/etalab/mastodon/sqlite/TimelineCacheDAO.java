@@ -69,6 +69,7 @@ public class TimelineCacheDAO {
             last_id = db.insert(Sqlite.TABLE_TIMELINE_CACHE, null, values);
         }catch (Exception e) {
             last_id =  -1;
+            e.printStackTrace();
         }
         return last_id;
     }
@@ -126,7 +127,7 @@ public class TimelineCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor  c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "1");
+            Cursor  c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND "+ Sqlite.COL_STATUS_ID + " ='" + statusId +"'", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "1");
             return cursorToSingleStatus(c);
         } catch (Exception e) {
             return null;
@@ -146,6 +147,7 @@ public class TimelineCacheDAO {
         Status status = null;
         try {
             status = API.parseStatuses(context, new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));
+            status.setcached(true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -169,6 +171,7 @@ public class TimelineCacheDAO {
             //Restore cached status
             try {
                 Status status = API.parseStatuses(context, new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));
+                status.setcached(true);
                 statuses.add(status);
             } catch (JSONException e) {
                 e.printStackTrace();

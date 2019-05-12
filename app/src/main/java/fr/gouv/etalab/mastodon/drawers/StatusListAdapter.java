@@ -359,7 +359,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         LinearLayout status_peertube_container;
         TextView status_peertube_reply, status_peertube_delete, show_more_content;
-
+        ImageView cached_status;
 
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
@@ -466,6 +466,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             remaining_time = itemView.findViewById(R.id.remaining_time);
             submit_vote = itemView.findViewById(R.id.submit_vote);
             refresh_poll = itemView.findViewById(R.id.refresh_poll);
+            cached_status = itemView.findViewById(R.id.cached_status);
         }
     }
 
@@ -829,6 +830,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             changeDrawableColor(context, R.drawable.video_preview, R.color.white);
             if (theme == Helper.THEME_BLACK) {
+                changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 changeDrawableColor(context, holder.status_remove, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
                 changeDrawableColor(context, holder.status_more, R.color.action_black);
@@ -856,6 +858,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_translate, R.color.black);
                 holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
             } else if (theme == Helper.THEME_DARK) {
+                changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 changeDrawableColor(context, holder.status_remove, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_dark);
                 changeDrawableColor(context, holder.status_more, R.color.action_dark);
@@ -883,6 +886,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.mastodonC1);
                 changeDrawableColor(context, R.drawable.ic_translate, R.color.mastodonC1);
             } else {
+                changeDrawableColor(context, holder.cached_status, R.color.action_light);
                 changeDrawableColor(context, holder.status_remove, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
@@ -927,7 +931,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
 
-
+            if( status.iscached()){
+                holder.cached_status.setVisibility(View.VISIBLE);
+            }else{
+                holder.cached_status.setVisibility(View.GONE);
+            }
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
             holder.spark_button_fav.pressOnTouch(false);
@@ -967,10 +975,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 assert img != null;
                 img.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables(img, null, null, null);
-                holder.status_account_displayname_owner.setCompoundDrawables(null, null, imgConversation, null);
+                holder.status_toot_date.setCompoundDrawables(imgConversation, null, null, null);
             } else {
                 holder.status_account_displayname.setCompoundDrawables(null, null, null, null);
-                holder.status_account_displayname_owner.setCompoundDrawables(null, null, imgConversation, null);
+                holder.status_toot_date.setCompoundDrawables(imgConversation, null, null , null);
             }
             if( expand_media && status.isSensitive() || (status.getReblog() != null && status.getReblog().isSensitive())) {
                 changeDrawableColor(context, holder.hide_preview, R.color.red_1);

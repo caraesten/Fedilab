@@ -95,6 +95,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <ImageView
+                android:id="@+id/cached_status"
+                android:visibility="gone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_cached_black"
+                android:contentDescription="@string/cached_status" />
             <TextView
                 android:id="@+id/status_account_displayname"
                 android:maxLines="1"

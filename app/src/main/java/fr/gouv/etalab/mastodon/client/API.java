@@ -969,28 +969,7 @@ public class API {
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         statuses  = new TimelineCacheDAO(context, db).get(max_id);
         if( statuses == null){
-            statuses = new ArrayList<>();
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
-                apiResponse.setSince_id(httpsConnection.getSince_id());
-                apiResponse.setMax_id(httpsConnection.getMax_id());
-                statuses = parseStatuses(context, new JSONArray(response), true);
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if( apiResponse == null)
-                apiResponse = new APIResponse();
-            apiResponse.setStatuses(statuses);
-            return apiResponse;
+            return getHomeTimeline(max_id);
         }else{
             if( statuses.size() > 0) {
                 apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));

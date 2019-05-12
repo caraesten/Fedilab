@@ -160,6 +160,13 @@
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/cached_status"
+                android:src="@drawable/ic_cached_black"
+                android:visibility="gone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/cached_status" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
