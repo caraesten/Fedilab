@@ -63,6 +63,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
+            android:tooltipText="@string/add_remote_instance"
             android:contentDescription="@string/add_remote_instance"/>
     </LinearLayout>
 
