@@ -119,7 +119,7 @@
     <string name="more_action_6">Compartilhar</string>
     <string name="more_action_7">Mencionar</string>
     <string name="more_action_8">Silenciar temporariamente</string>
-    <string name="more_action_9">Excluir &amp; redigitar</string>
+    <string name="more_action_9">Excluir &amp; rascunhar</string>
     <string-array name="more_action_confirm">
         <item>Silenciar esta conta?</item>
         <item>Bloquear esta conta?</item>
@@ -133,7 +133,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Excluir este toot?</item>
-        <item>Excluir &amp; redigitar este toot?</item>
+        <item>Excluir &amp; rascunhar este toot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d resposta</item>
@@ -222,7 +222,7 @@
     <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para desativar o silêncio.</string>
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
-    <string name="notif_mention">mencionou você</string>
+    <string name="notif_mention">te mencionou</string>
     <string name="notif_reblog">compartilhou seu toot</string>
     <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">seguiu você</string>
@@ -302,7 +302,7 @@
     <string name="set_auto_add_media_url">Adicionar link da mídia nos toots</string>
     <string name="set_notif_follow">Notificar quando alguém te seguir</string>
     <string name="set_notif_follow_ask">Notificar quando alguém solicitar ser seu seguidor</string>
-    <string name="set_notif_follow_share">Notificar quando alguém compartilhar suas postagens</string>
+    <string name="set_notif_follow_share">Notificar quando alguém compartilhar seus toots</string>
     <string name="set_notif_follow_add">Notificar quando alguém favoritar seus toots</string>
     <string name="set_notif_follow_mention">Notificar quando alguém te mencionar</string>
     <string name="set_notif_follow_poll">Notificar quando uma enquete terminar</string>
@@ -524,7 +524,7 @@
     <string name="toast_instance_followed">A instância está sendo seguida!</string>
     <string name="action_partnership">Parcerias</string>
     <string name="neutral_menu_information">Informação</string>
-    <string name="hide_boost">Esconder boosts de %s</string>
+    <string name="hide_boost">Ocultar boosts de %s</string>
     <string name="endorse">Apresentar no perfil</string>
     <string name="hide_everything">Esconder tudo de %s</string>
     <string name="show_boost">Mostrar boosts de %s</string>
@@ -573,7 +573,7 @@
     <string name="expand_image">Expandir automaticamente mídias ocultas</string>
     <string name="set_display_follow_instance">Mostrar botão de seguir instâncias</string>
     <string name="channel_notif_follow">Novo seguidor</string>
-    <string name="channel_notif_boost">Novo compartilhamento</string>
+    <string name="channel_notif_boost">Novo Boost</string>
     <string name="channel_notif_fav">Novo favorito</string>
     <string name="channel_notif_mention">Nova menção</string>
     <string name="channel_notif_poll">Enquete terminada</string>
@@ -639,8 +639,8 @@
     <string name="tags_renamed">A tag foi alterada!</string>
     <string name="tags_deleted">A tag foi excluída!</string>
     <string name="set_display_art">Mostrar timeline de Arte</string>
-    <string name="schedule_boost">Programar boost</string>
-    <string name="boost_scheduled">O boost está programado!</string>
+    <string name="schedule_boost">Agendar boost</string>
+    <string name="boost_scheduled">O boost está agendado!</string>
     <string name="no_scheduled_boosts">Nenhum toot agendado para mostrar!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
@@ -838,6 +838,7 @@
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Adicionar timeline</string>
     <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
+    <string name="gnu_instance">Instância GNU</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d votou</item>
         <item quantity="other">%d votaram</item>

@@ -826,6 +826,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Legg til tidlinje</string>
     <string name="set_sensitive_content">Marker alltid media som sensitivt</string>
+    <string name="gnu_instance">GNU instance</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

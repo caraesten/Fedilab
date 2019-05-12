@@ -815,8 +815,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="move_timeline">Zeitleiste verschieben</string>
     <string name="hide_timeline">Zeitleiste ausblenden</string>
     <string name="reorder_timelines">Zeitleiste neu anordnen</string>
-    <string name="reorder_list_deleted">Liste dauerhaft gelöscht</string>
-    <string name="reorder_instance_removed">Folgeinstanz entfernt</string>
+    <string name="reorder_list_deleted">Liste endgültig gelöscht</string>
+    <string name="reorder_instance_removed">Gefolgte Instanz entfernt</string>
     <string name="reorder_tag_removed">Angeheftetes Schlagwort entfernt</string>
     <string name="undo">Widerrufen</string>
     <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
@@ -826,6 +826,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Zeitleiste hinzufügen</string>
     <string name="set_sensitive_content">Medien immer als vertraulich kennzeichnen</string>
+    <string name="gnu_instance">GNU-Instanz</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
