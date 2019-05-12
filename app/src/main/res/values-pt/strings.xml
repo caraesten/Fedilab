@@ -302,7 +302,7 @@
     <string name="set_auto_add_media_url">Adicionar link da mídia nos toots</string>
     <string name="set_notif_follow">Notificar quando alguém te seguir</string>
     <string name="set_notif_follow_ask">Notificar quando alguém solicitar ser seu seguidor</string>
-    <string name="set_notif_follow_share">Notificar quando alguém compartilhar suas postagens</string>
+    <string name="set_notif_follow_share">Notificar quando alguém compartilhar seus toots</string>
     <string name="set_notif_follow_add">Notificar quando alguém favoritar seus toots</string>
     <string name="set_notif_follow_mention">Notificar quando alguém te mencionar</string>
     <string name="set_notif_follow_poll">Notificar quando uma enquete terminar</string>
@@ -573,7 +573,7 @@
     <string name="expand_image">Expandir automaticamente mídias ocultas</string>
     <string name="set_display_follow_instance">Mostrar botão de seguir instâncias</string>
     <string name="channel_notif_follow">Novo seguidor</string>
-    <string name="channel_notif_boost">Novo compartilhamento</string>
+    <string name="channel_notif_boost">Novo Boost</string>
     <string name="channel_notif_fav">Novo favorito</string>
     <string name="channel_notif_mention">Nova menção</string>
     <string name="channel_notif_poll">Enquete terminada</string>
