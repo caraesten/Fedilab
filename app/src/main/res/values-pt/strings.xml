@@ -222,7 +222,7 @@
     <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para desativar o silêncio.</string>
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
-    <string name="notif_mention">mencionou você</string>
+    <string name="notif_mention">te mencionou</string>
     <string name="notif_reblog">compartilhou seu toot</string>
     <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">seguiu você</string>
