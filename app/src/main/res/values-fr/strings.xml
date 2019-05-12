@@ -835,7 +835,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Ajouter un fil</string>
     <string name="set_sensitive_content">Toujours marquer le média comme sensible</string>
-    <string name="gnu_instance">GNU instance</string>
+    <string name="gnu_instance">Instance GNU</string>
     <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
