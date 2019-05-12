@@ -225,15 +225,15 @@
     <string name="notif_mention">te mencionou</string>
     <string name="notif_reblog">te deu boost</string>
     <string name="notif_favourite">favoritou seu toot</string>
-    <string name="notif_follow">seguiu você</string>
+    <string name="notif_follow">te seguiu</string>
     <string name="notif_pouet">Novo toot de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">e outra %d notificação</item>
         <item quantity="other">e outras %d notificações</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">e outro %d toot para descobrir</item>
-        <item quantity="other">e outros %d toots para descobrir</item>
+        <item quantity="one">e outro %d toot para ver</item>
+        <item quantity="other">e outros %d toots para ver</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d favoritou</item>
