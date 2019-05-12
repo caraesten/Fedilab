@@ -221,7 +221,7 @@
     <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية!</string>
     <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل! مِن المحتمل ألا يعمل كالمعتاد.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">ينبغي أن يكون وقت الكتم أكبر من دقيقة واحدة.</string>
+    <string name="timed_mute_date_error">ينبغي أن تكون مدة الكتم أطول مِن دقيقة واحدة.</string>
     <string name="timed_mute_date">%1$s مكتوم إلى غاية %2$s.\n بإمكانك إلغاء كتم حساب المستخدم على صفحة ملفه الشخصي.</string>
     <string name="timed_mute_profile">%1$s مكتوم إلى غاية %2$s.\n بإمكانك إلغاء كتم حساب المستخدم بالنقر هنا.</string>
     <!-- Notifications -->
@@ -241,11 +241,11 @@
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="two">و تبويقين آخرين لاكتشافهما</item>
-        <item quantity="few">و %d تبويقات لاكتشافها</item>
-        <item quantity="many">and %d other toots to discover</item>
-        <item quantity="other">و %d تبويقات أخرى اكتشفها</item>
+        <item quantity="one">وتبويق آخر لاكتشافه</item>
+        <item quantity="two">وتبويقين آخرين لاكتشافهما</item>
+        <item quantity="few">و %d تبويقات أخرى لاكتشافها</item>
+        <item quantity="many">و %d تبويقات أخرى لاكتشافها</item>
+        <item quantity="other">و %d تبويقات أخرى لاكتشافها</item>
     </plurals>
     <plurals name="likes">
         <item quantity="zero">%d إعجاب</item>
