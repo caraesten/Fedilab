@@ -1,0 +1,135 @@
+package fr.gouv.etalab.mastodon.sqlite;
+/* Copyright 2019 Thomas Schneider
+ *
+ * This file is a part of Fedilab
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Fedilab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with Fedilab; if not,
+ * see <http://www.gnu.org/licenses>. */
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.Helper;
+
+
+/**
+ * Created by Thomas on 12/05/2019.
+ * Manage Timeline Cache
+ */
+public class TimelineCacheDAO {
+
+    private SQLiteDatabase db;
+    public Context context;
+
+    public TimelineCacheDAO(Context context, SQLiteDatabase db) {
+        //Creation of the DB with tables
+        this.context = context;
+        this.db = db;
+    }
+
+
+    //------- INSERTIONS  -------
+    /**
+     * Insert a status in database
+     * @return boolean
+     */
+    public long insert(String statusId, String instance, String jsonString) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_INSTANCE, instance);
+        values.put(Sqlite.COL_STATUS_ID, statusId);
+        values.put(Sqlite.COL_DATE, Helper.dateToString(new Date()));
+        values.put(Sqlite.COL_CACHE, jsonString);
+        //Inserts cached status
+        long last_id;
+        try{
+            last_id = db.insert(Sqlite.TABLE_TIMELINE_CACHE, null, values);
+        }catch (Exception e) {
+            last_id =  -1;
+        }
+        return last_id;
+    }
+    //------- REMOVE  -------
+
+    /***
+     * Remove stored status
+     * @return int
+     */
+    public int remove(String statusId, String instance) {
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_STATUS_ID + " = \""+ statusId +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
+    }
+
+    /***
+     * Remove stored status
+     * @return int
+     */
+    public int removeAll(){
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  null, null);
+    }
+
+
+
+    //------- GETTERS  -------
+
+    /**
+     * Returns all cached Statuses
+     * @return stored Status List<Status>
+     */
+    public List<Status> get(String instance, String max_id){
+        try {
+            Cursor c;
+            if( max_id != null)
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_STATUS_ID + " <= " + max_id, null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+            else
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,  Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+            return cursorToListStatus(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+
+    /***
+     * Method to hydrate cached statuses from database
+     * @param c Cursor
+     * @return List<Status>
+     */
+    private List<Status> cursorToListStatus(Cursor c){
+        //No element found
+        if (c.getCount() == 0)
+            return null;
+        List<Status> statuses = new ArrayList<>();
+        while (c.moveToNext() ) {
+            //Restore cached status
+            try {
+                Status status = API.parseStatuses(context, new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));
+                statuses.add(status);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        //Close the cursor
+        c.close();
+        //Statuses list is returned
+        return statuses;
+    }
+}
