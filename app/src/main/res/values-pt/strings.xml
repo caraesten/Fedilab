@@ -504,7 +504,7 @@
     <string name="proxy_enable">Ativar o proxy?</string>
     <string name="poxy_host">Servidor</string>
     <string name="poxy_port">Porta</string>
-    <string name="poxy_login">Login</string>
+    <string name="poxy_login">Entrar</string>
     <string name="poxy_password">Senha</string>
     <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Modo compacto</string>
