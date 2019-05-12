@@ -524,7 +524,7 @@
     <string name="toast_instance_followed">A instância está sendo seguida!</string>
     <string name="action_partnership">Parcerias</string>
     <string name="neutral_menu_information">Informação</string>
-    <string name="hide_boost">Esconder boosts de %s</string>
+    <string name="hide_boost">Ocultar boosts de %s</string>
     <string name="endorse">Apresentar no perfil</string>
     <string name="hide_everything">Esconder tudo de %s</string>
     <string name="show_boost">Mostrar boosts de %s</string>
@@ -639,8 +639,8 @@
     <string name="tags_renamed">A tag foi alterada!</string>
     <string name="tags_deleted">A tag foi excluída!</string>
     <string name="set_display_art">Mostrar timeline de Arte</string>
-    <string name="schedule_boost">Programar boost</string>
-    <string name="boost_scheduled">O boost está programado!</string>
+    <string name="schedule_boost">Agendar boost</string>
+    <string name="boost_scheduled">O boost está agendado!</string>
     <string name="no_scheduled_boosts">Nenhum toot agendado para mostrar!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
