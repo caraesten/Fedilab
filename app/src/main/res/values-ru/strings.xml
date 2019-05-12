@@ -847,6 +847,7 @@
     <string name="add_timeline">Добавить в ленту</string>
     <string name="set_sensitive_content">Всегда отмечать медиафайлы как деликатный контент</string>
     <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
