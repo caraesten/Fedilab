@@ -823,9 +823,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="move_timeline">移動時間軸</string>
     <string name="hide_timeline">隱藏時間軸</string>
     <string name="reorder_timelines">重新排列時間軸</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
+    <string name="reorder_list_deleted">已永久刪除列表</string>
+    <string name="reorder_instance_removed">追蹤的站台遭移除</string>
+    <string name="reorder_tag_removed">已移除釘選標籤</string>
     <string name="undo">復原</string>
     <string name="visible_tabs_needed">您必須保留兩個可見的分頁！</string>
     <string name="action_reorder_timeline">重新排列時間軸</string>
@@ -833,9 +833,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="warning_main_timeline">主時間軸只能被隱藏！</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">加入動態時報</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="set_sensitive_content">一律將媒體標記為敏感訊息</string>
+    <string name="gnu_instance">GNU 實體</string>
+    <string name="cached_status">已快取嘟文</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
