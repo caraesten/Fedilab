@@ -145,7 +145,7 @@
     <string name="bookmark_remove">Remover dos Salvos</string>
     <string name="bookmarks_empty">Sem toots salvos</string>
     <string name="status_bookmarked">Toot foi salvo!</string>
-    <string name="status_unbookmarked">Toot foi removido dos Salvos!</string>
+    <string name="status_unbookmarked">Toot foi removido do Salvos!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -154,22 +154,22 @@
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Alerta de conteúdo</string>
     <string name="toot_placeholder">No que você está pensando?</string>
-    <string name="toot_it">PUBLICAR!</string>
+    <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
-    <string name="cw">aviso de conteúdo</string>
-    <string name="toot_title">Digite um toot</string>
-    <string name="toot_title_reply">Responder um toot</string>
-    <string name="queet_title">Digite um queet</string>
-    <string name="queet_title_reply">Responder um queet</string>
+    <string name="cw">ac</string>
+    <string name="toot_title">Digite o toot</string>
+    <string name="toot_title_reply">Responder o toot</string>
+    <string name="queet_title">Digite o queet</string>
+    <string name="queet_title_reply">Responder o queet</string>
     <string name="toot_no_space">Você excedeu os 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecionar mídia</string>
-    <string name="toot_select_image_error">Ocorreu um erro enquanto ao selecionar a mídia!</string>
-    <string name="toot_delete_media">Excluir mídia?</string>
+    <string name="toot_select_image_error">Ocorreu um erro ao selecionar a mídia!</string>
+    <string name="toot_delete_media">Remover mídia?</string>
     <string name="toot_error_no_content">Toot vazio!</string>
     <string name="toot_visibility_tilte">Visibilidade do toot</string>
     <string name="toots_visibility_tilte">Visibilidade padrão dos toots: </string>
     <string name="toot_sent">Toot enviado!</string>
-    <string name="toot_reply_content_title">Você está respondendo a este toot:</string>
+    <string name="toot_reply_content_title">Você está respondendo este toot:</string>
     <string name="toot_sensitive">Conteúdo sensível?</string>
     <string-array name="toot_visibility">
         <item>Postar em timelines públicas</item>
@@ -180,7 +180,7 @@
     <string name="no_draft">Sem rascunhos!</string>
     <string name="choose_toot">Escolha um toot</string>
     <string name="choose_accounts">Escolha uma conta</string>
-    <string name="select_accounts">Selecione algumas contas</string>
+    <string name="select_accounts">Selecionar contas</string>
     <string name="remove_draft">Excluir rascunho?</string>
     <string name="show_reply">Clique no botão para mostrar toot original</string>
     <string name="upload_form_description">Descreva para os deficientes visuais</string>
@@ -193,15 +193,15 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_thekinrar">Pesquisar instâncias:</string>
+    <string name="about_thekinrar">Procurar instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
     <string name="thanks_text_banner">Designer do banner:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversa</string>
+    <string name="conversation">Sequência</string>
     <!-- Accounts -->
-    <string name="no_accounts">Sem contas</string>
-    <string name="no_follow_request">Sem solicitações de seguidores</string>
+    <string name="no_accounts">Sem conta</string>
+    <string name="no_follow_request">Sem solicitações de seguidor</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Seguindo \n %1$s</string>
     <string name="followers_cnt">Seguidores \n %1$s</string>
@@ -223,7 +223,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">te mencionou</string>
-    <string name="notif_reblog">compartilhou seu toot</string>
+    <string name="notif_reblog">te deu boost</string>
     <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">seguiu você</string>
     <string name="notif_pouet">Novo toot de %1$s</string>
