@@ -73,6 +73,23 @@ public class TimelineCacheDAO {
         }
         return last_id;
     }
+
+    //------- UPDATE  -------
+    /**
+     * Update a status in database
+     */
+    public void update(String statusId, String jsonString) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_DATE, Helper.dateToString(new Date()));
+        values.put(Sqlite.COL_CACHE, jsonString);
+        try{
+            db.update(Sqlite.TABLE_TIMELINE_CACHE,  values, Sqlite.COL_INSTANCE + " =  ? AND " + Sqlite.COL_STATUS_ID + " = ? AND " + Sqlite.COL_USER_ID + " = ?", new String[]{instance, statusId, userId});
+        }catch (Exception ignored) {}
+    }
+
     //------- REMOVE  -------
 
     /***

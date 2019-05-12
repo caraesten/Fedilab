@@ -50,7 +50,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -113,6 +112,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.TootInfoActivity;
+import fr.gouv.etalab.mastodon.asynctasks.ManageCachedStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.ManagePollAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -137,6 +137,7 @@ import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPollInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRefreshCachedStatusInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
@@ -165,7 +166,7 @@ import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -262,6 +263,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status.setPoll(poll);
         }
         notifyStatusChanged(status);
+    }
+
+    @Override
+    public void onRefresh(Status refreshedStatus) {
+        statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
     }
 
 
@@ -942,6 +948,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else{
                 holder.cached_status.setVisibility(View.GONE);
             }
+            holder.cached_status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ManageCachedStatusAsyncTask(context, status.getId(),  StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
             holder.spark_button_fav.pressOnTouch(false);
@@ -3080,6 +3093,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveFeeds(APIResponse apiResponse) {
 
         if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             long id = new StatusStoredDAO(context, db).insertStatus(toot, apiResponse.getStatuses().get(0));
             Intent intentToot = new Intent(context, TootActivity.class);

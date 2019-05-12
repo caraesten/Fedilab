@@ -787,6 +787,36 @@ public class API {
     }
 
     /**
+     * Retrieves one status *synchronously*
+     *
+     * @param statusId  String Id of the status
+     * @return APIResponse
+     */
+    public APIResponse getStatusbyIdAndCache(String statusId) {
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", statusId)), 60, null, prefKeyOauthTokenT);
+            Status status = parseStatuses(context, new JSONObject(response));
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            new TimelineCacheDAO(context, db).update(status.getId(), response);
+            statuses.add(status);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+    /**
      * Retrieves the context of status with replies *synchronously*
      *
      * @param statusId  Id of the status
@@ -2270,6 +2300,11 @@ public class API {
             b.putParcelable("status", status);
             Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
             intentBC.putExtras(b);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
+            if (alreadyCached != null) {
+                new TimelineCacheDAO(context, db).update(status.getId(), response);
+            }
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             return parsePoll(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {

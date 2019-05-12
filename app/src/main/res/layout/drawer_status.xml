@@ -181,6 +181,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
+                android:layout_marginBottom="3dp"
                 android:id="@+id/status_account_displayname"
                 android:maxLines="1"
                 android:drawablePadding="2dp"
