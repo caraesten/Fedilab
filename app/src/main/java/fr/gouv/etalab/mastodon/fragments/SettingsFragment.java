@@ -1,5 +1,6 @@
 package fr.gouv.etalab.mastodon.fragments;
 /* Copyright 2017 Thomas Schneider
+ * Copyright 2019 NickFreeman
  *
  * This file is a part of Mastalab
  *
@@ -24,11 +25,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -55,23 +54,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.collect.ImmutableSet;
-import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.Error;
-import com.tonyodev.fetch2.Fetch;
-import com.tonyodev.fetch2.FetchConfiguration;
-import com.tonyodev.fetch2.FetchListener;
-import com.tonyodev.fetch2.NetworkType;
-import com.tonyodev.fetch2.Priority;
-import com.tonyodev.fetch2.Request;
-import com.tonyodev.fetch2core.DownloadBlock;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,11 +63,11 @@ import java.util.Set;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.DownloadTrackingDomainsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.DomainBlockDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mabbas007.tagsedittext.TagsEditText;
 
@@ -226,112 +209,8 @@ public class SettingsFragment extends Fragment {
 
 
         Button update_tracking_domains = rootView.findViewById(R.id.update_tracking_domains);
-        update_tracking_domains.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(context)
-                        .setDownloadConcurrentLimit(1)
-                        .build();
-
-                update_tracking_domains.setEnabled(false);
-                Fetch fetch = Fetch.Impl.getInstance(fetchConfiguration);
-
-                String url = "https://sebsauvage.net/hosts/hosts";
-                File dir = context.getCacheDir();
-                String file = dir + "/tracking.txt";
-                FetchListener fetchListener = new FetchListener() {
-                    @Override
-                    public void onWaitingNetwork(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
-                    }
-                    @Override
-                    public void onResumed(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onRemoved(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onQueued(@NotNull Download download, boolean b) {
-                    }
-                    @Override
-                    public void onProgress(@NotNull Download download, long l, long l1) {
-                    }
-                    @Override
-                    public void onPaused(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
-                        Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
-                        update_tracking_domains.setEnabled(true);
-                    }
-                    @Override
-                    public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
-                    }
-                    @Override
-                    public void onDeleted(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onCompleted(@NotNull Download download) {
-                        boolean canRecord = false;
-                        if( download.getFileUri().getPath() != null) {
-                            File file = new File(download.getFileUri().getPath());
-                            try {
-                                BufferedReader br = new BufferedReader(new FileReader(file));
-                                String line;
-                                ArrayList<String> domains = new ArrayList<>();
-                                while ((line = br.readLine()) != null) {
-                                    if(!canRecord && line.contains("# Blocked domains"))
-                                        canRecord = true;
-                                    if( canRecord) {
-                                        String domain = line.replaceAll("0.0.0.0 ","").trim();
-                                        domains.add(domain);
-                                    }
-                                }
-                                br.close();
-                                AsyncTask.execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                        new DomainBlockDAO(context, db).insertAll(domains);
-                                        // Get a handler that can be used to post to the main thread
-                                        Handler mainHandler = new Handler(context.getMainLooper());
-
-                                        Runnable myRunnable = new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toasty.success(context, context.getString(R.string.tracking_db_updated), Toast.LENGTH_LONG).show();
-                                            }
-                                        };
-                                        mainHandler.post(myRunnable);
-
-                                    }
-                                });
-                            }
-                            catch (IOException e) {
-                                //You'll need to add proper error handling here
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NotNull Download download) {
-                    }
-                    @Override
-                    public void onAdded(@NotNull Download download) {
-                    }
-                };
-
-                fetch.addListener(fetchListener);
-                final Request request = new Request(url, file);
-                request.setPriority(Priority.HIGH);
-                request.setNetworkType(NetworkType.ALL);
-                fetch.enqueue(request, updatedRequest -> {
-                    //Request was successfully enqueued for download.
-                }, error -> {
-                    //An error occurred enqueuing the request.
-                });
-            }
+        update_tracking_domains.setOnClickListener(v -> {
+            new DownloadTrackingDomainsAsyncTask(getActivity().getApplicationContext(), update_tracking_domains).execute();
         });
 
         //Manage download of attachments
