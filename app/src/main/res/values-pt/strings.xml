@@ -471,10 +471,10 @@
     <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista postarem novos toots, eles aparecerão aqui.</string>
     <string name="action_lists_add_to">Adicionar à lista</string>
     <string name="action_lists_remove_from">Remover da lista</string>
-    <string name="action_lists_create">Adicionar lista</string>
+    <string name="action_lists_create">Criar lista</string>
     <string name="action_lists_delete">Excluir lista</string>
     <string name="action_lists_update">Editar lista</string>
-    <string name="action_lists_title_placeholder">Título da nova lista</string>
+    <string name="action_lists_title_placeholder">Nome da nova lista</string>
     <string name="action_lists_search_users">Procure entre pessoas que você segue</string>
     <string name="action_lists_owner">Suas listas</string>
     <!-- Migration -->
