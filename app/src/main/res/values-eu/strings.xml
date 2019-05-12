@@ -837,6 +837,7 @@
     <string name="add_timeline">Gehitu denbora-lerro bat</string>
     <string name="set_sensitive_content">Beti markatu multimedia mingarri gisa</string>
     <string name="gnu_instance">GNU instance</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
