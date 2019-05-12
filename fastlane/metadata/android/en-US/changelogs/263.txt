@@ -1,0 +1,13 @@
+Added
+* Cache toots (click on the indicator for refreshing a status)
+* Follow GNU Social instances
+* Add an indicator in TL for bot accounts
+
+Changed
+* Give less space to user name at the top of statuses
+* Improvement with blocking script updates
+
+Fixed
+* Issue with boosts & sensitive media
+* Issue with the Fetch more button
+* Avoid holes in TL after few hours
