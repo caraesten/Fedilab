@@ -835,6 +835,7 @@
     <string name="add_timeline">增加一条时间线</string>
     <string name="set_sensitive_content">总是标记媒体为敏感</string>
     <string name="gnu_instance">GNU实例</string>
+    <string name="cached_status">Cached status</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
