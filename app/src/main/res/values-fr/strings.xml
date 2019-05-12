@@ -743,7 +743,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="device_schedule">Depuis l’appareil</string>
     <string name="server_schedule">Depuis le serveur</string>
     <string name="toots_server">Pouets (Serveur)</string>
-    <string name="toots_client">Pouets (Appreil)</string>
+    <string name="toots_client">Pouets (Appareil)</string>
     <string name="modify">Modifier</string>
     <string name="set_display_content_after_fetch_more">Afficher les nouveaux pouets au-dessus du bouton « Afficher le contenu ? »</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
