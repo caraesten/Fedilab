@@ -1756,7 +1756,9 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

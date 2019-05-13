@@ -313,7 +313,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Date bookmarkL = statuses.get(firstVisibleItem).getCreated_at();
                         updatedBookMark = statuses.get(firstVisibleItem).getId();
                         updatedBookMarkDate = statuses.get(firstVisibleItem).getCreated_at();
-                        if( lastReadTootDate == null || bookmarkL.after(lastReadTootDate)){
+                        if( lastReadTootDate == null || (bookmarkL != null && bookmarkL.after(lastReadTootDate))){
                          //Last read toot, only incremented if the id of the toot is greater than the recorded one
                             lastReadTootDate = bookmarkL;
                         }
@@ -927,7 +927,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        if( statuses == null || statuses.size() == 0 )
+        if( statuses == null || statuses.size() == 0 || this.statuses == null )
             return;
         //Find the position of toots between those already present
         int position = 0;
