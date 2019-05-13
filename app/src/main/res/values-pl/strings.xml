@@ -842,6 +842,7 @@
     <string name="set_sensitive_content">Always mark media as sensitive</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
+    <string name="set_forward_tags">Forward tags in replies</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
