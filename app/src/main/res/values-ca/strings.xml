@@ -831,7 +831,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_sensitive_content">Tots els mèdia són material sensible</string>
     <string name="gnu_instance">Instància de GNU</string>
     <string name="cached_status">Estatus en memòria cau</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_forward_tags">Incloure etiquetes a les respostes</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
