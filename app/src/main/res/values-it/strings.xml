@@ -838,8 +838,8 @@
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Aggiungi una timeline</string>
     <string name="set_sensitive_content">Segna sempre media come sensibili</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="gnu_instance">Istanza GNU</string>
+    <string name="cached_status">Stato in cache</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
