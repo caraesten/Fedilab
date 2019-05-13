@@ -707,7 +707,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 statusListAdapter.notifyItemChanged(0);
                 i++;
             }
-            initialBookMarkDate = statuses.get(0).getCreated_at();
+            if( statuses.size() > 0)
+                initialBookMarkDate = statuses.get(0).getCreated_at();
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
