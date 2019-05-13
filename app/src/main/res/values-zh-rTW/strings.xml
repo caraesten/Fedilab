@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">打開選單</string>
     <string name="navigation_drawer_close">關閉選單</string>
     <string name="action_about">關於</string>
-    <string name="action_about_instance">關於實體</string>
+    <string name="action_about_instance">關於站台</string>
     <string name="action_privacy">隱私權</string>
     <string name="action_cache">快取</string>
     <string name="action_logout">登出</string>
@@ -29,10 +29,10 @@
     <string name="save">儲存</string>
     <string name="restore">還原</string>
     <string name="two_factor_authentification">兩步驟驗證？</string>
-    <string name="other_instance">除了 mastodon.etalab.gouv.fr 以外的實體？</string>
+    <string name="other_instance">除了 mastodon.etalab.gouv.fr 以外的站台？</string>
     <string name="no_result">沒有結果！</string>
-    <string name="instance">實體</string>
-    <string name="instance_example">實體：mastodon.social</string>
+    <string name="instance">站台</string>
+    <string name="instance_example">站台：mastodon.social</string>
     <string name="toast_account_changed" formatted="false">現在使用帳號 %1$s</string>
     <string name="add_account">新增帳號</string>
     <string name="clipboard">已將嘟文的內容複製到剪貼簿</string>
@@ -192,7 +192,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">原始碼：</string>
     <string name="about_yandex">嘟文翻譯提供者：</string>
-    <string name="about_thekinrar">搜尋實例：</string>
+    <string name="about_thekinrar">搜尋站台：</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">圖示設計者：</string>
     <string name="thanks_text_banner">橫幅設計師：</string>
@@ -261,8 +261,8 @@
     <string name="toast_pin">嘟文已被釘選！</string>
     <string name="toast_unpin">嘟文已被取消釘選！</string>
     <string name="toast_error">唉呀！發生錯誤！</string>
-    <string name="toast_code_error">發生錯誤！實體未回傳授權代碼！</string>
-    <string name="toast_error_instance">實體網域似乎不是有效的網域！</string>
+    <string name="toast_code_error">發生錯誤！站台未回傳授權代碼！</string>
+    <string name="toast_error_instance">站台網域似乎不是有效的網域！</string>
     <string name="toast_error_loading_account">在帳號間切換時發生錯誤！</string>
     <string name="toast_error_search">搜尋時發生錯誤！</string>
     <string name="toast_error_login">無法登入！</string>
@@ -272,9 +272,9 @@
     <string name="toast_error_translate">翻譯時發生錯誤！</string>
     <string name="toast_error_translations_disabled">已在設定中停用翻譯</string>
     <string name="toast_toot_saved">草稿已儲存！</string>
-    <string name="toast_error_char_limit">您確定此實體允許此數量的字元嗎？一般來說，此值約為 500 個字元左右。</string>
+    <string name="toast_error_char_limit">您確定此站台允許此數量的字元嗎？一般來說，此值約為 500 個字元左右。</string>
     <string name="toast_visibility_changed">%1$s 帳號的嘟文可見度已變更</string>
-    <string name="toast_empty_search">實體名稱與畫面名稱不能為空！</string>
+    <string name="toast_empty_search">站台名稱與畫面名稱不能為空！</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">載入最佳化</string>
     <string name="set_toots_page">每次載入的嘟文數量</string>
@@ -426,11 +426,11 @@
     <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。\n
 這些資料嚴格保密，僅能由應用程式使用。\n
 刪除應用程式將會立即移除這些資料。\n
-&#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
+&#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的站台上使用。
     </string>
     <string name="privacy_authorizations_title">權限：</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
-- <b>INTERNET</b>：用於查詢實體。\n
+- <b>INTERNET</b>：用於查詢站台。\n
 - <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
 - <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
 - <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
@@ -478,9 +478,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="show_boost_count">顯示嘟文／最愛計數</string>
     <string name="issue_login_title">身份驗證無法運作？</string>
     <string name="issue_login_message">        <b>這裡有一些可能會有幫助的檢查：</b>\n\n
-        - 檢查實體名稱沒有拼字錯誤\n\n
-        - 檢查您的實體是否仍在運行\n\n
-        - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫實體名稱後）\n\n
+        - 檢查站台名稱沒有拼字錯誤\n\n
+        - 檢查您的站台是否仍在運行\n\n
+        - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫站台名稱後）\n\n
         - 您也可以在不使用 2FA 的狀況下使用此連結\n\n
         - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
     </string>
@@ -508,16 +508,16 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="support_the_app_on_liberapay">在 Liberpay 上支援應用程式</string>
     <string name="alert_regex">在正規表達式中有錯誤！</string>
     <string name="no_account_yet">還沒有帳號？</string>
-    <string name="toast_instance_unavailable">在此實體上找不到時間軸！</string>
-    <string name="delete_instance">刪除此實體？</string>
-    <string name="warning_delete_instance">您將要從您追蹤的實體中刪除 %s。</string>
+    <string name="toast_instance_unavailable">在此站台上找不到時間軸！</string>
+    <string name="delete_instance">刪除此站台？</string>
+    <string name="warning_delete_instance">您將要從您追蹤的站台中刪除 %s。</string>
     <string name="which_language">翻譯成</string>
     <string name="crash_title">Mastalab 已停止 :(</string>
     <string name="crash_message">您可以透過電子郵件傳送當機報告給我。這可以協助我修復它 :)\n\n您可以加入鵝外的內容。感謝您！</string>
     <string name="send_crash_report">是否要透過電子郵件傳送當機報告？</string>
-    <string name="follow_instance">追蹤實體</string>
-    <string name="toast_instance_already_added">您已經追蹤此實體了！</string>
-    <string name="toast_instance_followed">實體已被追蹤！</string>
+    <string name="follow_instance">追蹤站台</string>
+    <string name="toast_instance_already_added">您已經追蹤此站台了！</string>
+    <string name="toast_instance_followed">站台已被追蹤！</string>
     <string name="action_partnership">夥伴</string>
     <string name="neutral_menu_information">資訊</string>
     <string name="hide_boost">隱藏由 %s 轉嘟的嘟文</string>
@@ -561,13 +561,13 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="account_added_list_trunk">帳號已新增至列表</string>
     <string name="adding_account_list_trunk">正在新增帳號到列表</string>
     <string name="action_list_add">您尚未建立列表。點選 \"+\" 按鈕以新增一個新的。</string>
-    <string name="action_remote_instance_add">您未關注任何遠端實體。點選 \"+\" 按鈕以新增一個新的。</string>
+    <string name="action_remote_instance_add">您未關注任何遠端站台。點選 \"+\" 按鈕以新增一個新的。</string>
     <string name="about_trunk">要關注誰</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">無法關注帳號</string>
     <string name="retrieve_remote_account">正在擷取遠端帳號</string>
     <string name="expand_image">自動展開隱藏的媒體</string>
-    <string name="set_display_follow_instance">顯示關注實體按鈕</string>
+    <string name="set_display_follow_instance">顯示關注站台按鈕</string>
     <string name="channel_notif_follow">新關注</string>
     <string name="channel_notif_boost">新轉嘟</string>
     <string name="channel_notif_fav">新最愛</string>
@@ -591,13 +591,13 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="toast_unblock_domain">網域不再被封鎖！</string>
     <string name="retrieve_remote_status">正在擷取遠端狀態</string>
     <string name="comment">評論</string>
-    <string name="peertube_instance">PeerTube 實體</string>
+    <string name="peertube_instance">PeerTube 站台</string>
     <string name="set_display_direct">顯示私人訊息時間軸</string>
     <string name="set_keep_background_process">當應用程式關閉時，保留背景處理程序</string>
     <string name="no_comments">使用右上角的按鈕來成為第一個對這部影片留下評論的人！</string>
     <string name="number_view_video">%s 次檢視</string>
     <string name="duration_video">長度：%s</string>
-    <string name="add_remote_instance">新增實體</string>
+    <string name="add_remote_instance">新增站台</string>
     <string name="comment_no_allowed_peertube">此影片未啟用評論！</string>
     <string name="pickup_resolution">選擇解析度</string>
     <string name="peertube_favorites">Peertube 最愛</string>
@@ -606,8 +606,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="bookmark_peertube_empty">您的最愛中沒有 PeerTube 影片！</string>
     <string name="channel">頻道</string>
     <string name="no_peertube_channels">沒有 PeerTube 頻道</string>
-    <string name="no_peertube_instances">沒有 PeerTube 實體</string>
-    <string name="no_mastodon_instances">沒有 Mastodon 實體</string>
+    <string name="no_peertube_instances">沒有 PeerTube 站台</string>
+    <string name="no_mastodon_instances">沒有 Mastodon 站台</string>
     <string name="no_lists">沒有列表</string>
     <string name="videos">影片</string>
     <string name="channels">頻道</string>
@@ -645,7 +645,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="app_logo">應用程式圖示</string>
     <string name="profile_picture">個人檔案照片</string>
     <string name="profile_banner">個人檔案封面照片</string>
-    <string name="contact_instance_admin">聯絡實體的管理員</string>
+    <string name="contact_instance_admin">聯絡站台的管理員</string>
     <string name="add_new">加入新的</string>
     <string name="mastohost_logo">MastoHost 圖示</string>
     <string name="emoji_picker">顏文字選擇器</string>
@@ -669,9 +669,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         <item>1 天</item>
         <item>1 週</item>
     </string-array>
-    <string name="showcase_instance">        在此欄位，您必須填寫您的實體主機名稱。\n舉例來說，如果您在 https://mastodon.social 上建立帳號\n只要填寫 <b>mastodon.social</b>（不要填寫 https://）\n
+    <string name="showcase_instance">        在此欄位，您必須填寫您的站台主機名稱。\n舉例來說，如果您在 https://mastodon.social 上建立帳號\n只要填寫 <b>mastodon.social</b>（不要填寫 https://）\n
         您可以填寫首字母，然後就會有建議的名稱。\n\n
-        ⚠ 登入按鈕將只在實體名稱有效且實體正常運作時才會運作！
+        ⚠ 登入按鈕將只在站台名稱有效且站台正常運作時才會運作！
     </string>
     <string name="showcase_uid">        在此欄位，填寫要連結到您的 Mastodon 帳號的電子郵件。
     </string>
@@ -688,9 +688,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="translation_app">應用程式翻譯</string>
     <string name="about_crowdin">關於 Crowdin</string>
     <string name="bot">機器人</string>
-    <string name="pixelfed_instance">Pixelfed 實體</string>
-    <string name="mastodon_instance">Mastodon 實體</string>
-    <string name="no_pixelfed_instance">沒有 Pixelfed 實體</string>
+    <string name="pixelfed_instance">Pixelfed 站台</string>
+    <string name="mastodon_instance">Mastodon 站台</string>
+    <string name="no_pixelfed_instance">沒有 Pixelfed 站台</string>
     <string name="any_tags">這些裡面的任何一個</string>
     <string name="all_tags">這些全部</string>
     <string name="none_tags">這些都不要</string>
@@ -698,8 +698,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="some_words_all">這些字詞全部（以空格分開）</string>
     <string name="some_words_none">這些字詞都不要（以空格分開）</string>
     <string name="change_tag_column">變更欄位名稱</string>
-    <string name="no_misskey_instance">沒有 Misskey 實體</string>
-    <string name="misskey_instance">Misskey 實體</string>
+    <string name="no_misskey_instance">沒有 Misskey 站台</string>
+    <string name="misskey_instance">Misskey 站台</string>
     <string name="toast_no_apps">您的裝置上沒有安裝任何支援此連結的應用程式。</string>
     <string name="subscriptions">訂閱</string>
     <string name="overview">概覽</string>
@@ -834,8 +834,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">加入動態時報</string>
     <string name="set_sensitive_content">一律將媒體標記為敏感訊息</string>
-    <string name="gnu_instance">GNU 實體</string>
+    <string name="gnu_instance">GNU 站台</string>
     <string name="cached_status">已快取嘟文</string>
+    <string name="set_forward_tags">Forward tags in replies</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
