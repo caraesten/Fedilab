@@ -568,7 +568,7 @@
     <string name="action_remote_instance_add">Sem instâncias. Você pode seguir uma tocando no botão \"+\".</string>
     <string name="about_trunk">Quem seguir</string>
     <string name="about_trunk_action">API Trunk</string>
-    <string name="toast_impossible_to_follow">A(s) conta(s) não pode(m) ser seguida(s)</string>
+    <string name="toast_impossible_to_follow">Infelizmente é impossível seguir</string>
     <string name="retrieve_remote_account">Carregando conta remota</string>
     <string name="expand_image">Expandir automaticamente mídias ocultas</string>
     <string name="set_display_follow_instance">Mostrar botão de seguir instâncias</string>
