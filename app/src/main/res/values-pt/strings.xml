@@ -47,8 +47,8 @@
     <string name="delete_all">Remover todas</string>
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
-    <string name="text_size">Tamanho do texto e dos ícones</string>
-    <string name="text_size_change">Mudar o tamanho atual do texto:</string>
+    <string name="text_size">Tamanho dos textos e dos ícones</string>
+    <string name="text_size_change">Mudar o tamanho atual dos textos:</string>
     <string name="icon_size_change">Mudar o tamanho atual dos ícones:</string>
     <string name="next">Próximo</string>
     <string name="previous">Anterior</string>
@@ -104,9 +104,9 @@
     <string name="fav_removed">Toot removido dos favoritos!</string>
     <string name="reblog_added">Você deu boost!</string>
     <string name="reblog_removed">Você desfez o boost!</string>
-    <string name="reblog_by">Boost de %1$s</string>
-    <string name="favourite_add">Adicionar este toot aos favoritos?</string>
-    <string name="favourite_remove">Remover este toot dos favoritos?</string>
+    <string name="reblog_by">Levou boost de %1$s</string>
+    <string name="favourite_add">Favoritar toot?</string>
+    <string name="favourite_remove">Desfavoritar toot?</string>
     <string name="reblog_add">Dar boost?</string>
     <string name="reblog_remove">Desfazer boost?</string>
     <string name="pin_add">Fixar este toot?</string>
@@ -158,9 +158,9 @@
     <string name="queet_it">QUEET!</string>
     <string name="cw">ac</string>
     <string name="toot_title">Digite o toot</string>
-    <string name="toot_title_reply">Responder o toot</string>
+    <string name="toot_title_reply">Responda o toot</string>
     <string name="queet_title">Digite o queet</string>
-    <string name="queet_title_reply">Responder o queet</string>
+    <string name="queet_title_reply">Responda o queet</string>
     <string name="toot_no_space">Você excedeu os 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecionar mídia</string>
     <string name="toot_select_image_error">Ocorreu um erro ao selecionar a mídia!</string>
@@ -223,7 +223,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">te mencionou</string>
-    <string name="notif_reblog">te deu boost</string>
+    <string name="notif_reblog">deu boost no seu toot</string>
     <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">te seguiu</string>
     <string name="notif_pouet">Novo toot de %1$s</string>
@@ -730,7 +730,7 @@
     <string name="toast_peertube_video_updated">O vídeo foi atualizado!</string>
     <string name="toast_cancelled">Envio cancelado!</string>
     <string name="upload_video_success">O vídeo foi enviado!</string>
-    <string name="uploading">Enviando, por favor aguarde…</string>
+    <string name="uploading">Enviando, por favor, aguarde…</string>
     <string name="video_uploaded_action">Toque aqui para editar os dados do vídeo.</string>
     <string name="delete_video">Excluir vídeo</string>
     <string name="delete_video_confirmation">Tem certeza de que deseja excluir este vídeo?</string>
