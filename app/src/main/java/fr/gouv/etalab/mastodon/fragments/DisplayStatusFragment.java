@@ -931,8 +931,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         //Find the position of toots between those already present
         int position = 0;
-        while (position < this.statuses.size() && statuses.get(0).getCreated_at().before(this.statuses.get(position).getCreated_at())) {
-            position++;
+        if( statuses.get(0).getCreated_at() != null && this.statuses.get(position).getCreated_at() != null) {
+            while (position < this.statuses.size() && statuses.get(0).getCreated_at().before(this.statuses.get(position).getCreated_at())) {
+                position++;
+            }
         }
         ArrayList<Status> tmpStatuses = new ArrayList<>();
         for (Status tmpStatus : statuses) {
