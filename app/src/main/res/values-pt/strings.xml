@@ -44,7 +44,7 @@
     <string name="camera">Câmera</string>
     <string name="speech_prompt">Por favor, diga algo</string>
     <string name="speech_not_supported">Desculpe! Seu dispositivo não suporta entrada por voz!</string>
-    <string name="delete_all">Remover todas</string>
+    <string name="delete_all">Excluir tudo</string>
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
     <string name="text_size">Tamanho dos textos e dos ícones</string>
@@ -656,7 +656,7 @@
     <string name="refresh">Atualizar</string>
     <string name="expand_conversation">Expandir a conversa</string>
     <string name="remove_account">Sair de uma conta</string>
-    <string name="delete_domain">Remover o domínio bloqueado</string>
+    <string name="delete_domain">Desbloquear instância</string>
     <string name="custom_emoji_picker">Seletor de emoji personalizado</string>
     <string name="play_video">Reproduzir vídeo</string>
     <string name="new_toot">Novo toot</string>
@@ -817,8 +817,8 @@
     <string name="notif_poll_self">Uma enquete que você publicou terminou</string>
     <string name="settings_category_notif_customize">Personalizar</string>
     <string name="settings_category_notif_categories">Categorias</string>
-    <string name="settings_category_notif_news">Notícias</string>
-    <string name="settings_category_notif_time_slot">Intervalo de tempo para notificações</string>
+    <string name="settings_category_notif_news">Novos!</string>
+    <string name="settings_category_notif_time_slot">Momento definido para notificações</string>
     <string name="settings_category_notif_advanced">Avançado</string>
     <string name="set_display_new_badge">Mostrar etiqueta \'new\' em toots não lidos</string>
     <string name="set_display_peertube">Mostrar timeline do Peertube</string>
@@ -841,11 +841,11 @@
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d votou</item>
-        <item quantity="other">%d votaram</item>
+        <item quantity="one">%d voto</item>
+        <item quantity="other">%d votos</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Única opção</item>
+        <item>Uma opção</item>
         <item>Múltiplas opções</item>
     </string-array>
     <string-array name="poll_duration">
@@ -859,6 +859,6 @@
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Stream direta</item>
+        <item>Stream direto</item>
     </string-array>
 </resources>
