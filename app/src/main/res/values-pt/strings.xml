@@ -193,7 +193,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_thekinrar">Procurar instâncias:</string>
+    <string name="about_thekinrar">Procure instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
     <string name="thanks_text_banner">Designer do banner:</string>
@@ -319,7 +319,7 @@
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
-    <string name="set_header_picture_overlay">Escolher cabeçalho</string>
+    <string name="set_header_picture_overlay">Escolher capa</string>
     <string name="set_fit_preview">Ajustar visualização de imagens</string>
     <string name="set_automatically_split_toot">Transformar toots com mais de 500 caracteres em sequência</string>
     <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
@@ -565,7 +565,7 @@
     <string name="account_added_list_trunk">Contas adicionadas à lista</string>
     <string name="adding_account_list_trunk">Adicionando contas à lista</string>
     <string name="action_list_add">Sem listas. Você pode criar uma tocando no botão \"+\".</string>
-    <string name="action_remote_instance_add">Sem instâncias remotas. Você pode seguir uma tocando no botão \"+\".</string>
+    <string name="action_remote_instance_add">Sem instâncias. Você pode seguir uma tocando no botão \"+\".</string>
     <string name="about_trunk">Quem seguir</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">A(s) conta(s) não pode(m) ser seguida(s)</string>
