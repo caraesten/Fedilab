@@ -131,6 +131,7 @@ import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
@@ -483,6 +484,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
+
+
         initialContent = toot_content.getText().toString();
 
 
@@ -526,6 +529,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_space_left.setText(String.valueOf(toot_content.length()));
             }
         }
+
+
         attachments = new ArrayList<>();
         int charsInCw = 0;
         int charsInToot = 0;
@@ -2690,6 +2695,16 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 }else {
                     toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
                 }
+            }
+            boolean forwardTags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
+            if( tootReply != null && forwardTags && tootReply.getTags() != null && tootReply.getTags().size() > 0){
+                int currentCursorPosition = toot_content.getSelectionStart();
+                toot_content.setText(toot_content.getText() +"\n");
+                for(Tag tag: tootReply.getTags()){
+                    toot_content.setText(toot_content.getText() +" #"+tag.getName());
+                }
+                toot_content.setSelection(currentCursorPosition);
+                toot_space_left.setText(String.valueOf(toot_content.length()));
             }
 
         }

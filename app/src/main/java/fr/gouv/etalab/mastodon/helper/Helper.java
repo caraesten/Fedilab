@@ -308,6 +308,7 @@ public class Helper {
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
+    public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final String SET_CONSOLE_MODE = "set_console_mode";
