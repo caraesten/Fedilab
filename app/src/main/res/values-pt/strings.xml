@@ -316,7 +316,7 @@
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Trancar conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
     <string name="set_header_picture_overlay">Escolher capa</string>
