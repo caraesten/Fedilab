@@ -320,7 +320,7 @@
     <string name="set_lock_account">Trancar conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
     <string name="set_header_picture_overlay">Escolher capa</string>
-    <string name="set_fit_preview">Ajustar visualização de imagens</string>
+    <string name="set_fit_preview">Ajustar prévias de imagens</string>
     <string name="set_automatically_split_toot">Transformar toots com mais de 500 caracteres em sequência</string>
     <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
     <string name="username_no_space">Você excedeu os 30 caracteres permitidos!</string>
@@ -353,9 +353,9 @@
     </string-array>
     <string name="your_api_key">Você pode deixar sua chave de API em branco para Yandex</string>
     <string-array name="settings_theme">
-        <item>Escuro</item>
-        <item>Claro</item>
-        <item>Preto</item>
+        <item>Noturno</item>
+        <item>Diurno</item>
+        <item>AMOLED</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Não</item>
@@ -617,10 +617,10 @@
     <string name="channels">Canais</string>
     <string name="set_display_emoji">Usar Emoji One</string>
     <string name="information">Informação</string>
-    <string name="set_display_card">Mostrar pré-visualizações em todos os toots</string>
+    <string name="set_display_card">Mostrar prévias em todos os toots</string>
     <string name="thanks_text_ux">Designer da nova UX/UI</string>
     <string name="set_old_direct_timeline">Usar a timeline direta anterior ao Mastodon 2.6</string>
-    <string name="set_display_video_preview">Mostrar pré-visualizações de vídeo</string>
+    <string name="set_display_video_preview">Mostrar prévias de vídeo</string>
     <string name="thanks_text_support">Suporte no Gitlab</string>
     <string name="action_bug_report">Relatório de erros</string>
     <string name="no_mail_client">Não há nenhum cliente de email instalado.</string>
