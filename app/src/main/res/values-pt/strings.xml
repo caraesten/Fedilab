@@ -654,7 +654,7 @@
     <string name="mastohost_logo">Logo do MastoHost</string>
     <string name="emoji_picker">Seletor de emoji</string>
     <string name="refresh">Atualizar</string>
-    <string name="expand_conversation">Expandir a conversa</string>
+    <string name="expand_conversation">Expandir a sequência</string>
     <string name="remove_account">Sair de uma conta</string>
     <string name="delete_domain">Desbloquear instância</string>
     <string name="custom_emoji_picker">Seletor de emoji personalizado</string>
