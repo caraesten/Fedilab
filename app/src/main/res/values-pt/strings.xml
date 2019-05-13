@@ -778,7 +778,7 @@
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Sair da conta</string>
     <string name="set_optimize_loading">Otimizar o tempo de carregamento</string>
-    <string name="all">Todos</string>
+    <string name="all">Tudo</string>
     <string name="about_opencollective">Apoie o aplicativo</string>
     <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerí-los de forma transparente.</string>
     <string name="copy_link">Copiar link</string>
