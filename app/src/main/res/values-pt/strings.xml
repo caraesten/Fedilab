@@ -152,7 +152,7 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Alerta de conteúdo</string>
+    <string name="toot_cw_placeholder">Aviso de conteúdo</string>
     <string name="toot_placeholder">No que você está pensando?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
