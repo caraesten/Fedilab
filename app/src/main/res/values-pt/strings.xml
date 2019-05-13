@@ -317,7 +317,7 @@
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
     <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Bloquear conta</string>
+    <string name="set_lock_account">Trancar conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
     <string name="set_header_picture_overlay">Escolher capa</string>
     <string name="set_fit_preview">Ajustar visualização de imagens</string>
@@ -475,7 +475,7 @@
     <string name="action_lists_delete">Excluir lista</string>
     <string name="action_lists_update">Editar lista</string>
     <string name="action_lists_title_placeholder">Nome da nova lista</string>
-    <string name="action_lists_search_users">Procure entre pessoas que você segue</string>
+    <string name="action_lists_search_users">Pesquisar entre pessoas que você segue</string>
     <string name="action_lists_owner">Suas listas</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s mudou-se para %2$s</string>
