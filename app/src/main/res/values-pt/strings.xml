@@ -840,6 +840,7 @@
     <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
+    <string name="set_forward_tags">Forward tags in replies</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

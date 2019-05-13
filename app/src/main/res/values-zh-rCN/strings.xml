@@ -836,6 +836,7 @@
     <string name="set_sensitive_content">总是标记媒体为敏感</string>
     <string name="gnu_instance">GNU实例</string>
     <string name="cached_status">高速缓冲的状态</string>
+    <string name="set_forward_tags">Forward tags in replies</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
