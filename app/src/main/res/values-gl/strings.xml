@@ -839,8 +839,9 @@
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Engadir liña temporal</string>
     <string name="set_sensitive_content">Marcar os medios sempre como sensibles</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="gnu_instance">Instancia GNU</string>
+    <string name="cached_status">Estado almacenado</string>
+    <string name="set_forward_tags">Forward tags in replies</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

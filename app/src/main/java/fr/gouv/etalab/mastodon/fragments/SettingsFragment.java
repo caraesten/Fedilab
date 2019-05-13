@@ -650,6 +650,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // forward tags in replies
+        boolean forward_tags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
+        final CheckBox set_forward_tags = rootView.findViewById(R.id.set_forward_tags);
+        set_forward_tags.setChecked(forward_tags);
+        set_forward_tags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, set_forward_tags.isChecked());
+                editor.apply();
+            }
+        });
+
         String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,"");
         if (custom_sharing_url.equals("")) {
             custom_sharing_url = "http://cs.example.net/add?token=umVe1zurZk47ihElSOQcBG05KUSA2v-GSet4_fFnJ4M&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}&creator=${creator}&thumbnailurl=${thumbnailurl}";
