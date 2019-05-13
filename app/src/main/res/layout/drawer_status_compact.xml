@@ -705,17 +705,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
-            android:id="@+id/new_element"
-            android:visibility="gone"
-            android:src="@drawable/ic_fiber_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/new_toot" />
         <TextView
             android:drawablePadding="2dp"
             android:layout_gravity="center_vertical"
@@ -771,6 +760,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:id="@+id/new_element"
+            android:visibility="gone"
+            android:src="@drawable/ic_fiber_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/new_toot" />
         <ImageView
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
