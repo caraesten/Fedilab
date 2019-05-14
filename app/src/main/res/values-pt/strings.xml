@@ -100,8 +100,8 @@
     <string name="live_notif">Notificações ao vivo</string>
     <!-- Status -->
     <string name="no_status">Sem toots</string>
-    <string name="fav_added">Toot adicionado aos favoritos!</string>
-    <string name="fav_removed">Toot removido dos favoritos!</string>
+    <string name="fav_added">Toot favoritado!</string>
+    <string name="fav_removed">Toot desfavoritado!</string>
     <string name="reblog_added">Você deu boost!</string>
     <string name="reblog_removed">Você desfez o boost!</string>
     <string name="reblog_by">Levou boost de %1$s</string>
@@ -258,8 +258,8 @@
     <string name="toast_unfollow">Você deixou de seguir a conta!</string>
     <string name="toast_reblog">Você deu boost!</string>
     <string name="toast_unreblog">Boost desfeito!</string>
-    <string name="toast_favourite">Toot adicionado aos favoritos!</string>
-    <string name="toast_unfavourite">Toot removido dos favoritos!</string>
+    <string name="toast_favourite">Toot favoritado!</string>
+    <string name="toast_unfavourite">Toot desfavoritado!</string>
     <string name="toast_report">Toot denunciado!</string>
     <string name="toast_unstatus">Toot excluído!</string>
     <string name="toast_pin">Toot fixado!</string>
@@ -605,7 +605,7 @@
     <string name="comment_no_allowed_peertube">Os comentários deste vídeo foram desativados!</string>
     <string name="pickup_resolution">Selecione uma resolução</string>
     <string name="peertube_favorites">Favoritos Peertube</string>
-    <string name="bookmark_add_peertube">O vídeo foi adicionado aos favoritos!</string>
+    <string name="bookmark_add_peertube">O vídeo foi favoritado!</string>
     <string name="bookmark_remove_peertube">O vídeo foi removido dos favoritos!</string>
     <string name="bookmark_peertube_empty">Não há vídeos do Peertube em seus favoritos!</string>
     <string name="channel">Canal</string>
