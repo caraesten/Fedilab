@@ -81,7 +81,7 @@
     <string name="blocked_menu">Usuários bloqueados</string>
     <string name="remote_follow_menu">Seguir remotamente</string>
     <string name="notifications">Notificações</string>
-    <string name="follow_request">Solicitação para seguir</string>
+    <string name="follow_request">Solicitações de seguidor</string>
     <string name="optimization">Otimização</string>
     <string name="settings">Configurações</string>
     <string name="profile">Perfil</string>
