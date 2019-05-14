@@ -210,7 +210,7 @@
     <string name="reject">Rejeitar</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Sem toots agendados!</string>
-    <string name="no_scheduled_toots_indications">Digite um toot e então toque em <b>Agendar</b> no topo do menu.</string>
+    <string name="no_scheduled_toots_indications">Digite um toot e toque em <b>Agendar</b> no topo do menu.</string>
     <string name="remove_scheduled">Excluir toot agendado?</string>
     <string name="media_count">Mídia: %d</string>
     <string name="toot_scheduled">Toot agendado!</string>
@@ -302,7 +302,7 @@
     <string name="set_auto_add_media_url">Adicionar link da mídia nos toots</string>
     <string name="set_notif_follow">Notificar quando alguém te seguir</string>
     <string name="set_notif_follow_ask">Notificar quando alguém solicitar ser seu seguidor</string>
-    <string name="set_notif_follow_share">Notificar quando alguém compartilhar seus toots</string>
+    <string name="set_notif_follow_share">Notificar quando alguém der boost nos seus toots</string>
     <string name="set_notif_follow_add">Notificar quando alguém favoritar seus toots</string>
     <string name="set_notif_follow_mention">Notificar quando alguém te mencionar</string>
     <string name="set_notif_follow_poll">Notificar quando uma enquete terminar</string>
@@ -641,7 +641,7 @@
     <string name="set_display_art">Mostrar timeline de Arte</string>
     <string name="schedule_boost">Agendar boost</string>
     <string name="boost_scheduled">O boost está agendado!</string>
-    <string name="no_scheduled_boosts">Nenhum toot agendado para mostrar!</string>
+    <string name="no_scheduled_boosts">Nenhum boost agendado!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
     <string name="open_menu">Abrir um menu</string>
