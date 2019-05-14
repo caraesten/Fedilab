@@ -44,7 +44,7 @@
     <string name="camera">Câmera</string>
     <string name="speech_prompt">Por favor, diga algo</string>
     <string name="speech_not_supported">Desculpe! Seu dispositivo não suporta entrada por voz!</string>
-    <string name="delete_all">Remover todas</string>
+    <string name="delete_all">Remover tudo</string>
     <string name="translate_toot">Traduzir este toot</string>
     <string name="schedule">Agendar</string>
     <string name="text_size">Tamanho do texto e dos ícones</string>
