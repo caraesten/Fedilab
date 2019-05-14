@@ -641,7 +641,7 @@
     <string name="set_display_art">Mostrar timeline de Arte</string>
     <string name="schedule_boost">Agendar boost</string>
     <string name="boost_scheduled">O boost está agendado!</string>
-    <string name="no_scheduled_boosts">Nenhum boost agendado!</string>
+    <string name="no_scheduled_boosts">Sem boost agendado!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
     <string name="open_menu">Abrir um menu</string>
@@ -742,7 +742,7 @@
     <string name="leave_a_comment">Comente</string>
     <string name="share">Compartilhar</string>
     <string name="my_pictures">Minhas imagens</string>
-    <string name="choose_schedule">Escolher um modo de agendamento</string>
+    <string name="choose_schedule">Escolher como agendar</string>
     <string name="device_schedule">Do dispositivo</string>
     <string name="server_schedule">Do servidor</string>
     <string name="toots_server">Toots (Servidor)</string>
