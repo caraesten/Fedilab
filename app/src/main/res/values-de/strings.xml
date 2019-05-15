@@ -393,7 +393,9 @@
     <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
     <!-- CACHE -->
     <string name="cache_title">Speicher leeren</string>
-    <string name="cache_message">Es befinden sich %1$s von Daten im Speicher.\n\nMöchten Sie sie löschen?</string>
+    <string name="cache_message">Es sind %1$s Daten im Speicher.\n
+    \n
+    Möchtest du diese löschen?</string>
     <string name="cache_units">MB</string>
     <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
     <!-- ACTIVITY CUSTOM SHARING -->
@@ -827,8 +829,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="add_timeline">Zeitleiste hinzufügen</string>
     <string name="set_sensitive_content">Medien immer als vertraulich kennzeichnen</string>
     <string name="gnu_instance">GNU-Instanz</string>
-    <string name="cached_status">Cached status</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="cached_status">Gespeicherter Status</string>
+    <string name="set_forward_tags">Schlagwörter in Antworten weiterleiten</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
