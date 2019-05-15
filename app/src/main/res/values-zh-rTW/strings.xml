@@ -836,7 +836,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_sensitive_content">一律將媒體標記為敏感訊息</string>
     <string name="gnu_instance">GNU 站台</string>
     <string name="cached_status">已快取嘟文</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_forward_tags">在回覆中轉發標籤</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
