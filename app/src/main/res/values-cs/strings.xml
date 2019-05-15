@@ -651,7 +651,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat boost</b>.]]></string>
     <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Zpět</string>
     <string name="app_logo">Logo aplikace</string>
     <string name="profile_picture">Profilový obrázek</string>
     <string name="profile_banner">Profilová hlavička</string>
@@ -832,8 +832,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="move_timeline">Přesunout časovou osu</string>
     <string name="hide_timeline">Skrýt časovou osu</string>
     <string name="reorder_timelines">Změnit pořadí časových os</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_list_deleted">Seznam trvale smazán</string>
+    <string name="reorder_instance_removed">Sledovaná instance odstraněna</string>
     <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Vrátit zpět</string>
     <string name="visible_tabs_needed">Musíte si nechat dvě viditelné karty!</string>
@@ -842,7 +842,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="warning_main_timeline">Hlavní časové linie mohou být pouze skryty!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Přidat časovou osu</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Vždy označovat média jako citlivá</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
