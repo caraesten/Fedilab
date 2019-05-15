@@ -56,7 +56,7 @@
     <string name="validate">Valider</string>
     <string name="media">Médias</string>
     <string name="share_with">Partager avec</string>
-    <string name="shared_via">Partagé via Mastalab</string>
+    <string name="shared_via">Partagé via Fedilab</string>
     <string name="replies">Réponses</string>
     <string name="username">Nom d’utilisateur</string>
     <string name="drafts">Brouillons</string>
@@ -77,7 +77,7 @@
     <string name="neutral_menu_title">Options</string>
     <string name="favorites_menu">Favoris</string>
     <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Utilisateurs muets</string>
+    <string name="muted_menu">Utilisateurs en sourdine</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="remote_follow_menu">Suivre à distance</string>
     <string name="notifications">Notifications</string>
@@ -88,10 +88,10 @@
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
     <string name="delete_account_title">Supprimer un compte</string>
     <string name="delete_account_message" formatted="false">Supprimer le compte %1$s de l’application ?</string>
-    <string name="send_email">Envoyer un email</string>
+    <string name="send_email">Envoyer un Email</string>
     <string name="choose_file">Veuillez sélectionner un fichier</string>
     <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
-    <string name="click_to_change">Cliquer sur le chemin pour changer</string>
+    <string name="click_to_change">Cliquer sur le chemin pour le changer</string>
     <string name="failed">Erreur !</string>
     <string name="scheduled_toots">Pouets programmés</string>
     <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
@@ -111,7 +111,7 @@
     <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
     <string name="pin_add">Épingler ce pouet ?</string>
     <string name="pin_remove">Désépingler ce pouet ?</string>
-    <string name="more_action_1">Masquer</string>
+    <string name="more_action_1">Ignorer</string>
     <string name="more_action_2">Bloquer</string>
     <string name="more_action_3">Signaler</string>
     <string name="more_action_4">Supprimer</string>
@@ -119,7 +119,7 @@
     <string name="more_action_6">Partager</string>
     <string name="more_action_7">Mentionner</string>
     <string name="more_action_8">Temporairement muet</string>
-    <string name="more_action_9">Supprimer &amp; reformuler</string>
+    <string name="more_action_9">Supprimer &amp; réécrire</string>
     <string-array name="more_action_confirm">
         <item>Masquer ce compte ?</item>
         <item>Bloquer ce compte ?</item>
