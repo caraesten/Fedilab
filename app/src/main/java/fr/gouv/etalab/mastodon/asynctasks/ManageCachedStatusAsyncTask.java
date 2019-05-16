@@ -48,9 +48,11 @@ public class ManageCachedStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         APIResponse apiResponse = new API(contextReference.get()).getStatusbyIdAndCache(statusId);
-        refreshedStatus = apiResponse.getStatuses().get(0);
-        if( refreshedStatus != null){
-            refreshedStatus.setcached(true);
+        if( apiResponse.getStatuses().size() > 0){
+            refreshedStatus = apiResponse.getStatuses().get(0);
+            if( refreshedStatus != null){
+                refreshedStatus.setcached(true);
+            }
         }
         return null;
     }

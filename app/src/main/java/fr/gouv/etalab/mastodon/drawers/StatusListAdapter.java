@@ -3207,6 +3207,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     public void notifyStatusWithActionChanged(Status status){
+        if( status == null)
+            return;
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
