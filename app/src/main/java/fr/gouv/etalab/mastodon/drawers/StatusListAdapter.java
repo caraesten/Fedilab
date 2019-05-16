@@ -148,6 +148,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -267,6 +268,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRefresh(Status refreshedStatus) {
+        if( refreshedStatus.getCreated_at() == null){
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            new TimelineCacheDAO(context, db).remove(refreshedStatus.getId());
+            new PostActionAsyncTask(context, API.StatusAction.UNSTATUS, refreshedStatus.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
     }
 

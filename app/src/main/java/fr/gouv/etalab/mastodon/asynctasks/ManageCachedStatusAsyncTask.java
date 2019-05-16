@@ -53,6 +53,10 @@ public class ManageCachedStatusAsyncTask extends AsyncTask<Void, Void, Void> {
             if( refreshedStatus != null){
                 refreshedStatus.setcached(true);
             }
+        }else {
+            refreshedStatus = new fr.gouv.etalab.mastodon.client.Entities.Status();
+            refreshedStatus.setId(statusId);
+
         }
         return null;
     }
