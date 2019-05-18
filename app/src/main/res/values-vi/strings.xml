@@ -29,7 +29,6 @@
     <string name="save">Lưu</string>
     <string name="restore">Khôi phục</string>
     <string name="two_factor_authentification">Xác thực hai bước?</string>
-    <string name="other_instance">Ví dụ khác hơn mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ko có kết quả!</string>
     <string name="instance">Ví dụ</string>
     <string name="instance_example">Ví dụ: mastodon.social</string>
@@ -457,9 +456,6 @@ Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên 
     <string name="privacy_API_yandex_authorizations">"
 Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
         Yandex có chính sách riêng tư phù hợp của nó có thể được tìm thấy ở đây: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-Cảm ơn Stéphane vì đã có logo.
     "</string>
     <string name="thanks_text_dev">"
 Cảm ơn bạn:    "</string>
