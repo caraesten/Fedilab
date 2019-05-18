@@ -30,7 +30,6 @@
     <string name="save">Save</string>
     <string name="restore">Restore</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>

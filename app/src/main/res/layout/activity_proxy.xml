@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    tools:context="fr.gouv.etalab.mastodon.activities.ProxyActivity"
+    tools:context="app.fedilab.android.activities.ProxyActivity"
     android:layout_margin="@dimen/fab_margin"
     android:id="@+id/container"
     android:orientation="vertical"
