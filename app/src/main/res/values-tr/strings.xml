@@ -29,7 +29,6 @@
     <string name="save">Kaydet</string>
     <string name="restore">Geri yükle</string>
     <string name="two_factor_authentification">İki adımlı kimlik doğrulama?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr yerine başka örnek?</string>
     <string name="no_result">Sonuç bulunamadı!</string>
     <string name="instance">Örnek</string>
     <string name="instance_example">Örnek: mastodon.social</string>
@@ -458,8 +457,6 @@ Hesaplardan yalnızca temel bilgiler cihazda saklanır.
     <string name="privacy_API_yandex_authorizations">"
 Uygulama cihazın yerel ayarını ve Yandex API'sini kullanarak toot tercüme olanağı sunar. \ N
          Yandex'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-Stephane'a logo için teşekkür ederiz.    "</string>
     <string name="thanks_text_dev">"
 Teşekkürler:    "</string>
     <string name="filter_regex">Düzenli ifadelerle filtreleme</string>
