@@ -299,7 +299,7 @@
         </LinearLayout>
 
 
-        <!-- About The Kinrar's API -->
+        <!-- About The Kinrar\'s API -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
                 android:text="@string/about_thekinrar_action"/>
         </LinearLayout>
 
-        <!-- About Trunk's API -->
+        <!-- About Trunk\'s API -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
