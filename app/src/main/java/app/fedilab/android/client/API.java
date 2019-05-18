@@ -2138,6 +2138,8 @@ public class API {
                     Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                     intentBC.putExtras(b);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    new TimelineCacheDAO(context, db).update(targetedId, resp);
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
@@ -2153,6 +2155,8 @@ public class API {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
                 httpsConnection.delete(getAbsoluteUrl(action), 60, null, prefKeyOauthTokenT);
                 actionCode = httpsConnection.getActionCode();
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new TimelineCacheDAO(context, db).remove(targetedId);
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             } catch (NoSuchAlgorithmException e) {

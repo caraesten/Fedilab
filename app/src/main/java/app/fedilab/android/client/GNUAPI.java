@@ -53,6 +53,7 @@ import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 
 import static app.fedilab.android.helper.Helper.PREF_KEY_OAUTH_TOKEN;
 
@@ -1393,6 +1394,11 @@ public class GNUAPI {
                 Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                 intentBC.putExtras(b);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new TimelineCacheDAO(context, db).update(targetedId, resp);
+            }else if( statusAction == API.StatusAction.UNSTATUS){
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new TimelineCacheDAO(context, db).remove(targetedId);
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
