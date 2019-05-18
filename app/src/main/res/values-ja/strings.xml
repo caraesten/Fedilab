@@ -29,7 +29,6 @@
     <string name="save">保存</string>
     <string name="restore">復元</string>
     <string name="two_factor_authentification">2段階認証を利用していますか？</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr以外のインスタンスですか？</string>
     <string name="no_result">検索結果はありません！</string>
     <string name="instance">インスタンス</string>
     <string name="instance_example">インスタンス：mastodon.social</string>
@@ -453,8 +452,6 @@
     <string name="privacy_API_yandex_authorizations">"
         このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
         Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    "</string>
-    <string name="thanks_text">"
-        ロゴについて、Stéphaneに感謝します。    "</string>
     <string name="thanks_text_dev">"
         感謝：    "</string>
     <string name="filter_regex">正規表現でフィルタする</string>
