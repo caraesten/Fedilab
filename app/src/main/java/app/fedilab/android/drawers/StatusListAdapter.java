@@ -2342,6 +2342,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_mute:
                                     builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[0]);
+                                    builderInner.setMessage(status.getAccount().getAcct());
                                     doAction = API.StatusAction.MUTE;
                                     break;
                                 case R.id.action_bookmark:
