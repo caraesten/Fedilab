@@ -29,7 +29,6 @@
     <string name="save">Speichern</string>
     <string name="restore">Wiederherstellen</string>
     <string name="two_factor_authentification">Zwei-Faktor-Authentifizierung?</string>
-    <string name="other_instance">Andere Instanz als mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Keine Ergebnisse.</string>
     <string name="instance">Instanz</string>
     <string name="instance_example">Instanz: mastodon.social</string>
@@ -457,7 +456,6 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
     <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
     <string name="privacy_API_yandex_authorizations">"
 Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die Sie hier finden können: https://yandex.ru/legal/confidential/?lang=en"</string>
-    <string name="thanks_text">Danke an Stéphane für das Logo.</string>
     <string name="thanks_text_dev">Danke an:</string>
     <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
     <string name="search">Suche</string>
