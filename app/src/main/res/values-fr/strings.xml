@@ -29,7 +29,6 @@
     <string name="save">Sauvegarder</string>
     <string name="restore">Restaurer</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
-    <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance : mastodon.social</string>
@@ -461,9 +460,6 @@
     <string name="privacy_API_yandex_authorizations">"
         L’application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l’appareil et l’API de Yandex.\n
         Yandex a sa propre politique de confidentialité qui peut être consultée à l'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Merci à Stéphane pour le logo.
     "</string>
     <string name="thanks_text_dev">"
         Merci à :
