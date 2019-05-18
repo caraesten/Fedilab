@@ -29,7 +29,6 @@
     <string name="save">حفظ</string>
     <string name="restore">استعادة</string>
     <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
-    <string name="other_instance">مثيل خادم آخر غير mastodon.etalab.gouv.fr ؟</string>
     <string name="no_result">لم يتم العثور على أية نتيجة!</string>
     <string name="instance">مثيل الخادم</string>
     <string name="instance_example">مثيل الخادم: mastodon.social</string>
@@ -479,7 +478,6 @@
         يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
         لدى ياندكس سياستهم الخاصة بشأن الخصوصية و يمكن العثور عليها هنا: https://yandex.ru/legal/confidential/?lang=en
     "</string>
-    <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
     <string name="thanks_text_dev">الشكر لـ :</string>
     <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
     <string name="search">البحث</string>
