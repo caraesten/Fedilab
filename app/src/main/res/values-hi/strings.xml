@@ -399,9 +399,9 @@
     <string name="cache_units">एमबी</string>
     <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_header_custom_sharing">शीर्षक</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_header_custom_sharing">विवरण</string>
     <string name="description_hint_custom_sharing">Description&#8230;</string>
     <string name="keywords_header_custom_sharing">Keywords</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
