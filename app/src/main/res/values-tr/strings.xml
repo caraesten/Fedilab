@@ -436,7 +436,7 @@ Hesaplardan yalnızca temel bilgiler cihazda saklanır.
 - <b> ACCESS_NETWORK_STATE </b>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \n
          - <b> INTERNET </b>: Bir sunucuyu sorgulamak için kullanılır. \n
          - <b> WRITE_EXTERNAL_STORAGE </b>: Medyayı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \n
-         - <b> READ_EXTERNAL_STORAGE </b>: Toot'a medya eklemek için kullanılır.\n
+         - <b> READ_EXTERNAL_STORAGE </b>: Toot\'a medya eklemek için kullanılır.\n
          - <b> BOOT_COMPLETED </b>: Bildirim hizmetini başlatmak için kullanılır. \n
          - <b> WAKE_LOCK </b>: Bildirim hizmeti sırasında kullanılır.    "</string>
     <string name="privacy_API_authorizations_title">API izinleri:</string>
@@ -455,8 +455,8 @@ Hesaplardan yalnızca temel bilgiler cihazda saklanır.
     "</string>
     <string name="privacy_API_yandex_title">Toot tercümesi</string>
     <string name="privacy_API_yandex_authorizations">"
-Uygulama cihazın yerel ayarını ve Yandex API'sini kullanarak toot tercüme olanağı sunar. \ N
-         Yandex'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    "</string>
+Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toot tercüme olanağı sunar. \ N
+         Yandex\'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    "</string>
     <string name="thanks_text_dev">"
 Teşekkürler:    "</string>
     <string name="filter_regex">Düzenli ifadelerle filtreleme</string>

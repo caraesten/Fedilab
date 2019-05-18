@@ -397,7 +397,7 @@
     <string name="settings_popup_title">Push-уведомления</string>
     <string name="settings_popup_message">"
         Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
-        Вы можете включить или отключить эти уведомления позже в настройках (вкладка 'Уведомления').
+        Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').
     "</string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
     <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>

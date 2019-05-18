@@ -450,7 +450,7 @@
     "</string>
     <string name="privacy_API_title">Suivi et bibliothèques</string>
     <string name="privacy_API">"
-        L’application n’utilise <b>aucun outil de suivi</b> (mesure d'audience, rapport d’erreurs, etc.) et elle ne comporte aucune publicité.\n\n
+        L’application n’utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d’erreurs, etc.) et elle ne comporte aucune publicité.\n\n
         L’utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Glid</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
@@ -459,7 +459,7 @@
     <string name="privacy_API_yandex_title">Traduction des pouets</string>
     <string name="privacy_API_yandex_authorizations">"
         L’application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l’appareil et l’API de Yandex.\n
-        Yandex a sa propre politique de confidentialité qui peut être consultée à l'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
+        Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
     "</string>
     <string name="thanks_text_dev">"
         Merci à :
