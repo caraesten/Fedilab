@@ -29,7 +29,6 @@
     <string name="save">Αποθήκευση</string>
     <string name="restore">Επαναφορά</string>
     <string name="two_factor_authentification">Διβηματικός έλεγχος ταυτότητας;</string>
-    <string name="other_instance">Υπόσταση διαφορετική από το mastodon.etalab.gouv.gr;</string>
     <string name="no_result">Κανένα αποτέλεσμα!</string>
     <string name="instance">Υπόσταση</string>
     <string name="instance_example">Υπόσταση: mastodon.social</string>
@@ -462,9 +461,6 @@
     <string name="privacy_API_yandex_authorizations">"
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Ευχαριστούμε τον Στεφάν για το λογότυπο.
     "</string>
     <string name="thanks_text_dev">"
         Ευχαριστίες στους:
