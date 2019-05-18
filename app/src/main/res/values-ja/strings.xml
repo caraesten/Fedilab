@@ -125,7 +125,7 @@
         <item>このアカウントをブロックしますか？</item>
         <item>このトゥートを報告しますか？</item>
         <item>このドメインをブロックしますか？</item>
-        <item>Unmute this account?</item>
+        <item>このアカウントのミュートを解除しますか？</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
@@ -158,8 +158,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">トゥートを書く</string>
     <string name="toot_title_reply">トゥートに返信</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Queetを書く</string>
+    <string name="queet_title_reply">Queetに返信</string>
     <string name="toot_no_space">500文字の制限に達しました！</string>
     <string name="toot_select_image">メディアを選択</string>
     <string name="toot_select_image_error">メディアの選択中にエラーが発生しました。</string>
@@ -270,7 +270,7 @@
     <string name="nothing_to_do">何もすることはできません</string>
     <string name="toast_saved">メディアが保存されました！</string>
     <string name="toast_error_translate">翻訳中にエラーが発生しました！</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">翻訳は設定で無効化されています</string>
     <string name="toast_toot_saved">下書きが保存されました！</string>
     <string name="toast_error_char_limit">インスタンスはこの文字数を許可していますか？ 通常、この値は500文字程度です。</string>
     <string name="toast_visibility_changed">アカウント %1$s のトゥートの公開範囲が変更されました</string>
@@ -301,7 +301,7 @@
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">投票の終了を通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
@@ -384,8 +384,9 @@
     <string name="set_resize_picture">画像をリサイズ</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
-    <string name="settings_popup_message">受信したいプッシュ通知を確認してください。
-後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    </string>
+    <string name="settings_popup_message">"
+受信したいプッシュ通知を確認してください。
+後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    "</string>
     <string name="settings_popup_timeline">ホームタイムラインでの未読トゥートは？</string>
     <string name="settings_popup_notification">未読の通知は？</string>
     <!-- CACHE -->
@@ -422,33 +423,40 @@
     <string name="owner_cached_toots_empty">トゥートがデータベースに見つかりませんでした。取得するには、メニューから同期ボタンを使用してください。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">記録されたデータ</string>
-    <string name="privacy_data">アカウントの基本情報のみがデバイスに保存されます。
+    <string name="privacy_data">"
+アカウントの基本情報のみがデバイスに保存されます。
          これらのデータは厳密に機密情報であり、アプリケーションによってのみ使用できます。
          アプリケーションを削除すると、すぐにこれらのデータが削除されます。\ n
-         ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    </string>
+         ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    "</string>
     <string name="privacy_authorizations_title">権限：</string>
-    <string name="privacy_authorizations">        - <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
+    <string name="privacy_authorizations">"
+        - <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
         - <b>インターネット</b>：インスタンスへのクエリに使用されます。\n
         - <b> WRITE_EXTERNAL_STORAGE </b>：メディアを保存したり、SDカードにアプリを移動したりするのに使用します。\n
         - <b> READ_EXTERNAL_STORAGE </b>：トゥートにメディアを追加するために使用します。\n
         - <b> BOOT_COMPLETED </b>：通知サービスを開始するために使用されます。\n
-        - <b> WAKE_LOCK </b>：通知サービスで使用されます。    </string>
+        - <b> WAKE_LOCK </b>：通知サービスで使用されます。    "</string>
     <string name="privacy_API_authorizations_title">API権限：</string>
-    <string name="privacy_API_authorizations">        - <b>読み取り</b>：データを読み取ります。\n
+    <string name="privacy_API_authorizations">"
+        - <b>読み取り</b>：データを読み取ります。\n
         - <b>書き込み</b>：トゥートの投稿とメディアのアップロードを行います。\n
         - <b>フォロー</b>：フォロー、フォロー解除、ブロック、ブロック解除を行います。\n\n
-        <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
+        <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    "</string>
     <string name="privacy_API_title">トラッキングとライブラリ</string>
-    <string name="privacy_API">        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
+    <string name="privacy_API">"
+        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
         ライブラリの使用は最小限です：\n
         - <b>Glide</b>: メディアの管理\n
         - <b>Android-Job</b>: サービスの管理\n
-        - <b>PhotoView</b>: 画像の管理\n    </string>
+        - <b>PhotoView</b>: 画像の管理\n    "</string>
     <string name="privacy_API_yandex_title">トゥートの翻訳</string>
-    <string name="privacy_API_yandex_authorizations">        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
-        Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    </string>
-    <string name="thanks_text">        ロゴについて、Stéphaneに感謝します。    </string>
-    <string name="thanks_text_dev">        感謝：    </string>
+    <string name="privacy_API_yandex_authorizations">"
+        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
+        Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    "</string>
+    <string name="thanks_text">"
+        ロゴについて、Stéphaneに感謝します。    "</string>
+    <string name="thanks_text_dev">"
+        感謝：    "</string>
     <string name="filter_regex">正規表現でフィルタする</string>
     <string name="search">検索</string>
     <string name="delete">削除</string>
@@ -469,13 +477,14 @@
     <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
     <string name="show_boost_count">ブースト/お気に入りの数を表示</string>
     <string name="issue_login_title">認証が機能していませんか？</string>
-    <string name="issue_login_message">        <b>役立つかもしれない確認事項:</b>\n\n
+    <string name="issue_login_message">"
+        <b>役立つかもしれない確認事項:</b>\n\n
         - インスタンス名の記述に間違いが無いかをチェック\n\n
         - インスタンスがダウンしていないかをチェック\n\n
         - もし2段階認証（2FA）を利用している場合は、下部のリンクを使用してください（先にインスタンス名を入力）\n\n
         - このリンクは、2FAを利用していなくても使用することができます\n\n
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
-    </string>
+    "</string>
     <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
     <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
     <string name="data_export_running">実行中です。お待ちください...</string>
@@ -564,7 +573,7 @@
     <string name="channel_notif_boost">新しいブースト</string>
     <string name="channel_notif_fav">新しいお気に入り</string>
     <string name="channel_notif_mention">新しいメンション</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">投票終了</string>
     <string name="channel_notif_toot">新しいトゥート</string>
     <string name="channel_notif_backup">トゥート バックアップ</string>
     <string name="channel_notif_media">メディアのダウンロード</string>
@@ -633,7 +642,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[トゥートのメニューを開いて、<b>ブースト予約</b>を選択してください。]]></string>
     <string name="art_menu">アートタイムライン</string>
     <string name="open_menu">メニューを開く</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">戻る</string>
     <string name="app_logo">アプリケーションのロゴ</string>
     <string name="profile_picture">プロフィールの写真</string>
     <string name="profile_banner">プロフィールのバナー</string>
@@ -651,7 +660,7 @@
     <string name="card_view_image">カードのイメージ</string>
     <string name="hide_media">メディアを非表示</string>
     <string name="favicon">ファビコン</string>
-    <string name="media_description">Add description for media (for the visually impaired)</string>
+    <string name="media_description">メディアの説明を追加(視覚障害者向け)</string>
     <string-array name="filter_expire">
         <item>無し</item>
         <item>30 分</item>
@@ -661,14 +670,17 @@
         <item>1 日</item>
         <item>1 週間</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        In this field, write the email that is attached to your Mastodon account.
+    "</string>
+    <string name="showcase_pwd">"
+        Last step is to enter your password and click on Login.
+    "</string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
