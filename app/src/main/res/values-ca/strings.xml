@@ -29,7 +29,6 @@
     <string name="save">Desa</string>
     <string name="restore">Restaura</string>
     <string name="two_factor_authentification">Autenticació de dos factors?</string>
-    <string name="other_instance">Instància diferent de mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No hi ha cap resultat!</string>
     <string name="instance">Instància</string>
     <string name="instance_example">Intància: mastodon.social</string>
@@ -460,8 +459,6 @@ Quan s'esborra l'aplicació s'eliminen les dades immediatament.\n
         L'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l'API Yandex.\n
         Yandex té la seva pròpia política de privacitat, disponible aquí: https://yandex.ru/legal/confidential/?lang=en
     "</string>
-    <string name="thanks_text">"
-Moltes gràcies a Stéphane pel logo.    "</string>
     <string name="thanks_text_dev">"
         Agraïments:
     "</string>
