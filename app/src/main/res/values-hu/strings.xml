@@ -29,7 +29,6 @@
     <string name="save">Mentés</string>
     <string name="restore">Visszaállítás</string>
     <string name="two_factor_authentification">Kétlépcsős hitelesítés?</string>
-    <string name="other_instance">Nem a mastodon.etalab.gouv.fr szerver?</string>
     <string name="no_result">Nincs találat!</string>
     <string name="instance">Szerver</string>
     <string name="instance_example">Szerver: mastodon.social</string>
@@ -462,8 +461,6 @@
     <string name="privacy_API_yandex_authorizations">"
 Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
 A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-Köszönet Stéphane-nak a logóért.    "</string>
     <string name="thanks_text_dev">"
 Köszönet a következőknek:    "</string>
     <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
