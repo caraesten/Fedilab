@@ -29,7 +29,6 @@
     <string name="save">儲存</string>
     <string name="restore">還原</string>
     <string name="two_factor_authentification">兩步驟驗證？</string>
-    <string name="other_instance">除了 mastodon.etalab.gouv.fr 以外的站台？</string>
     <string name="no_result">沒有結果！</string>
     <string name="instance">站台</string>
     <string name="instance_example">站台：mastodon.social</string>
@@ -458,9 +457,6 @@
     <string name="privacy_API_yandex_authorizations">"
         該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
 Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        謝謝 Stéphane 的圖示設計。
     "</string>
     <string name="thanks_text_dev">"
         感謝您：
