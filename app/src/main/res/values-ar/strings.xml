@@ -861,9 +861,9 @@
     <string name="add_timeline">إضافة خيط زمني</string>
     <string name="set_sensitive_content">اعتبار الوسائط دائما كحساسة</string>
     <string name="gnu_instance">مثيل خادم GNU</string>
-    <string name="cached_status">Cached status</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
+    <string name="cached_status">منشور مُخزَّن</string>
+    <string name="set_forward_tags">نقل الوسوم في الردود</string>
+    <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
