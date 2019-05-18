@@ -29,7 +29,6 @@
     <string name="save">Opslaan</string>
     <string name="restore">Herstellen</string>
     <string name="two_factor_authentification">Tweestapsverificatie?</string>
-    <string name="other_instance">Andere server dan mastodon.social?</string>
     <string name="no_result">Geen resultaten!</string>
     <string name="instance">Server</string>
     <string name="instance_example">Server: bv. mastodon.social</string>
@@ -462,9 +461,6 @@
     <string name="privacy_API_yandex_authorizations">"
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Met dank aan Stéphane voor het logo.
     "</string>
     <string name="thanks_text_dev">"
         Met dank aan:
