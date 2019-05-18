@@ -29,7 +29,6 @@
     <string name="save">Сохранить</string>
     <string name="restore">Восстановить</string>
     <string name="two_factor_authentification">Двухфакторная аутентификация?</string>
-    <string name="other_instance">Сервер не mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Нет результатов!</string>
     <string name="instance">Сервер</string>
     <string name="instance_example">Сервер: mastodon.social</string>
@@ -470,9 +469,6 @@
     <string name="privacy_API_yandex_authorizations">"
         Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
         Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Благодарю Stéphane за логотип.
     "</string>
     <string name="thanks_text_dev">"
         Спасибо:
