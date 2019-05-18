@@ -857,8 +857,8 @@
     <string name="gnu_instance">Сервер GNU</string>
     <string name="cached_status">Состояние кэша</string>
     <string name="set_forward_tags">Пересылать теги в ответах</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_long_press_media">Удерживайте, чтобы сохранить медиа</string>
+    <string name="set_blur_sensitive">Размытие деликатного контента</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
