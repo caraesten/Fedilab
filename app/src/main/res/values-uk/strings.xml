@@ -29,7 +29,6 @@
     <string name="save">Зберегти</string>
     <string name="restore">Відновити</string>
     <string name="two_factor_authentification">Двофакторна авторизація?</string>
-    <string name="other_instance">Інший екземпляр, ніж mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Нічого не знайдено!</string>
     <string name="instance">Екземпляр</string>
     <string name="instance_example">Екземпляр: mastodon.social</string>
@@ -461,9 +460,6 @@
     <string name="privacy_API_yandex_authorizations">"
 Додаток перекладає дмухи через Yandex API.\n
         Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-Дякуємо Stéphane за лого.
     "</string>
     <string name="thanks_text_dev">"
 Подяки:    "</string>
