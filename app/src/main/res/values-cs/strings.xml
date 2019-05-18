@@ -29,7 +29,6 @@
     <string name="save">Uložit</string>
     <string name="restore">Obnovit</string>
     <string name="two_factor_authentification">Dvoufázová autentikace?</string>
-    <string name="other_instance">Jiná instance než mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Žádné výsledky!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
@@ -469,9 +468,6 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="privacy_API_yandex_authorizations">"
         Aplikace umožňuje překlad tootů do jazyka zařízení s použitím služby Yandex API.\n
         Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Děkujeme Stéphane za logo.
     "</string>
     <string name="thanks_text_dev">"
 Poděkování:    "</string>
