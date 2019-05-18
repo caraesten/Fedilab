@@ -849,6 +849,8 @@
     <string name="gnu_instance">GNU-instans</string>
     <string name="cached_status">Cachadstatus</string>
     <string name="set_forward_tags">Vidarebefordra taggar i svar</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
