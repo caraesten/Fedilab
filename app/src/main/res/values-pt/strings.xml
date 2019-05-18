@@ -839,6 +839,8 @@
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
     <string name="set_forward_tags">Encaminhar tags nas respostas</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

@@ -849,6 +849,8 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     <string name="gnu_instance">Istanza GNU</string>
     <string name="cached_status">Stato in cache</string>
     <string name="set_forward_tags">Inoltra le etichette nelle risposte</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
