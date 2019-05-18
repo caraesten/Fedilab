@@ -694,7 +694,7 @@
     <string name="any_tags">いずれか含む</string>
     <string name="all_tags">すべてを含む</string>
     <string name="none_tags">すべて除外</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_any">これらの単語を除く(スペースで区切り)</string>
     <string name="some_words_all">含める単語(スペースで区切り)</string>
     <string name="some_words_none">除外する単語(スペースで区切り)</string>
     <string name="change_tag_column">カラムの名前を変更</string>
@@ -732,11 +732,11 @@
     <string name="delete_video_confirmation">この動画を本当に削除しますか？</string>
     <string name="no_video_uploaded">動画がアップロードされていません。</string>
     <string name="display_nsfw_videos">NSFW動画を表示</string>
-    <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
+    <string name="default_channel_of">%s のデフォルトチャンネル</string>
+    <string name="no_video_to_display">表示できる動画がありません！</string>
+    <string name="add_image_to_favorite">メディアをお気に入りに追加</string>
+    <string name="leave_a_comment">コメントする</string>
+    <string name="share">共有</string>
     <string name="my_pictures">My pictures</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">From device</string>
