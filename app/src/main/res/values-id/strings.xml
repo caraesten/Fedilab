@@ -29,7 +29,6 @@
     <string name="save">Simpan</string>
     <string name="restore">Mengembalikan</string>
     <string name="two_factor_authentification">Otentikasi dua langkah?</string>
-    <string name="other_instance">Contoh lainnya selain mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Tidak ada hasil!</string>
     <string name="instance">Contoh</string>
     <string name="instance_example">Contoh: mastodon.sosial</string>
@@ -459,9 +458,6 @@
         Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
         Yandex memiliki kebijakan privasi yang tepat yang dapat ditemukan disini: 
 https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Terima kasih untuk Stéphane untuk logo.
     "</string>
     <string name="thanks_text_dev">"
         Terima kasih untuk:
