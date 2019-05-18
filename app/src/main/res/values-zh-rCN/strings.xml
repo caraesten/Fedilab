@@ -845,6 +845,8 @@
     <string name="gnu_instance">GNU实例</string>
     <string name="cached_status">高速缓冲的状态</string>
     <string name="set_forward_tags">在回复中转发标签</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
