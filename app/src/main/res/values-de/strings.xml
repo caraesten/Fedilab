@@ -838,6 +838,8 @@ Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     <string name="gnu_instance">GNU-Instanz</string>
     <string name="cached_status">Gespeicherter Status</string>
     <string name="set_forward_tags">Schlagwörter in Antworten weiterleiten</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
