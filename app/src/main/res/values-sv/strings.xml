@@ -29,7 +29,6 @@
     <string name="save">Spara</string>
     <string name="restore">Återställ</string>
     <string name="two_factor_authentification">Tvåfaktorsautentisering?</string>
-    <string name="other_instance">Annan instans än mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Inga resultat!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
@@ -462,9 +461,6 @@
     <string name="privacy_API_yandex_authorizations">"
         Applikationen erbjuder möjligheten att översätta toots med hjälp av språket på enheten och Yandex API..\n
         Yandex har sin integritetspolicy  här: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Tack till Stéphane för logon.
     "</string>
     <string name="thanks_text_dev">"
         Tack till:
