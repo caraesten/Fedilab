@@ -404,9 +404,10 @@
     <string name="set_resize_picture">تعديل حجم الصور</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">الإشعارات المدفوعة</string>
-    <string name="settings_popup_message">        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
+    <string name="settings_popup_message">"
+        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
         بإمكانك تفعيل أو تعطيل هذه الإشعارات لاحقًا عبر الإعدادات (في تبويب الإخطارات).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">للتبويقات غير المقروءة على الخط الزمني الرئيسي ؟</string>
     <string name="settings_popup_notification">للإشعارات غير المقروءة ؟</string>
     <!-- CACHE -->
@@ -443,36 +444,41 @@
     <string name="owner_cached_toots_empty">لم يتم العثور على أي تبويق في قاعدة البيانات. يرجى استخدام زر المزامنة المتواجد في القائمة لجلبها.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">البيانات المسجلة</string>
-    <string name="privacy_data">        لا يقوم التطبيق إلا بحفظ معلومات عن الحسابات في الجهاز.
+    <string name="privacy_data">"
+        لا يقوم التطبيق إلا بحفظ معلومات عن الحسابات في الجهاز.
         تبقى هذه البايانات سرية و لا تُستخدَم إلا لتشغيل التطبيق.
         إنّ حذف التطبيق يؤدي إلى إزالة هذه البيانات.\n
         &#9888; لا يقوم التطبيق بحفظ إسم المستخدم و الكلمات السرية. يقوم التطبيق باستخدمها و فقط عند الإتصال الآمن و المصادقة عبر (SSL) مع مثيل خادوم.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">التصريحات:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API:</string>
-    <string name="privacy_API_authorizations">        - <b>القراءة</b>: قراءة البيانات.\n
+    <string name="privacy_API_authorizations">"
+        - <b>القراءة</b>: قراءة البيانات.\n
         - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنشورات.\n
         - <b>المتابعة</b>: المتابعة و إلغاء المتابعة و الحظر و إلغاء الحظر.\n\n
         <b>&#9888; يقوم التطبيق بهذه الإجراءات عند طلب المُستخدِم لاستعمالها.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">التعقب و المكتبات</string>
-    <string name="privacy_API">        إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
+    <string name="privacy_API">"
+        إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
         تم التقليل من استخدام المكتبات: \n
         - <b>Glide</b>: لإدارة الوسائط\n
         - <b>Android-Job</b>: لإدارة الخدمات\n
         - <b>PhotoView</b>: لإدارة الصور\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
-    <string name="privacy_API_yandex_authorizations">        يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">"
+        يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
         لدى ياندكس سياستهم الخاصة بشأن الخصوصية و يمكن العثور عليها هنا: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+    "</string>
     <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
     <string name="thanks_text_dev">الشكر لـ :</string>
     <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
@@ -495,13 +501,14 @@
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
     <string name="data_export_running">جارٍ التشغيل، الرجاء الانتظار…</string>
@@ -687,14 +694,17 @@
         <item>يوم واحد</item>
         <item>أسبوع واحد</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
-    </string>
-    <string name="showcase_pwd">        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
+    "</string>
+    <string name="showcase_pwd">"
+        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
+    "</string>
     <string name="more_information">تفاصيل أكثر</string>
     <string name="showcase_2FA">إن كنت قد قمت بتفعيل المصادقة بخطوتين (2FA)، يمكنك استخدام هذا الرابط.\nيمكنك استخدامه كذلك إن كنت لا ترغب في ادخال بيانات تسجيل الدخول الخاصة بك هنا.</string>
     <!-- languages not translated -->
