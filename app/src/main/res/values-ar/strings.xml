@@ -607,7 +607,7 @@
     <string name="no_blocked_domain">ليس هناك أية نطاقات محظورة!</string>
     <string name="unblock_domain_confirm">إلغاء حظر النطاق</string>
     <string name="unblock_domain_confirm_message">أمتأكد أنك تريد إلغاء الحظر عن %s؟</string>
-    <string name="block_domain_confirm_message">أمتأكد أنك تريد حظر %s؟</string>
+    <string name="block_domain_confirm_message">أمتأكد أنك تريد حظر %s؟\n\n سوف لن تَرَ أيا من محتويات هذا النطاق على أي خيط زمني عام كان أو في إشعاراتك. سيتم إزالة متابِعيك مِن هذا النطاق.</string>
     <string name="blocked_domains">النطاقات المحظورة</string>
     <string name="block_domain">حظر النطاق</string>
     <string name="toast_block_domain">تم حظر النطاق</string>
