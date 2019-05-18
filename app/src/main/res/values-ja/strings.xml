@@ -670,34 +670,30 @@
         <item>1 日</item>
         <item>1 週間</item>
     </string-array>
-    <string name="showcase_instance">"
-        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">"        このフィールドにはサーバーのホスト名を入力してください。\n例えば、https://mastodon.socialでアカウントを作成した場合\n<b>mastodon.social</b>とだけ入力してください(https://を除く)\n
+        最初の文字を入力するとそれに続く名前がサジェストされます。\n\n
+        ⚠ログインボタンはサーバー名が有効で、サーバーが稼働しているときのみ有効です！"</string>
+    <string name="showcase_uid">"        このフィールドには、Mastodonアカウントに関連付けられたメールアドレスを入力してください。
     "</string>
-    <string name="showcase_uid">"
-        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_pwd">"        最後にパスワードを入力してログインをタップしてください。
     "</string>
-    <string name="showcase_pwd">"
-        Last step is to enter your password and click on Login.
-    "</string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">詳しい情報</string>
+    <string name="showcase_2FA">2FA(2段階認証)を利用している場合、このリンクを使用してください。\nログイン情報をここに入力したくない場合にも利用できます。</string>
     <!-- languages not translated -->
     <string name="languages">言語</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_only">メディアのみ表示</string>
+    <string name="show_media_nsfw">NSFWを表示</string>
+    <string name="crowdin_translations">Crowdinの翻訳</string>
+    <string name="crowdin_manager">Crowdinのマネージャー</string>
+    <string name="translation_app">アプリケーションの翻訳</string>
+    <string name="about_crowdin">Crowdin について</string>
     <string name="bot">ボット</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
+    <string name="pixelfed_instance">Pixelfedインスタンス</string>
+    <string name="mastodon_instance">Mastodonインスタンス</string>
+    <string name="no_pixelfed_instance">Pixelfedのインスタンスがありません</string>
+    <string name="any_tags">いずれか含む</string>
+    <string name="all_tags">すべてを含む</string>
+    <string name="none_tags">すべて除外</string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">含める単語(スペースで区切り)</string>
     <string name="some_words_none">除外する単語(スペースで区切り)</string>
