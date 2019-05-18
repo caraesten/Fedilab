@@ -191,8 +191,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
-        lv_status.addItemDecoration(new DividerItemDecoration(lv_status.getContext(), DividerItemDecoration.VERTICAL));
-
         //For Home timeline, fetch stored values for bookmark and last read toot
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             initialBookMark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, null);
