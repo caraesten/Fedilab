@@ -29,7 +29,6 @@
     <string name="save">Shrani</string>
     <string name="restore">Obnovi</string>
     <string name="two_factor_authentification">Želite dvostopenjsko prijavljanje (2FA)? </string>
-    <string name="other_instance">Želite strežnik, ki ni \"mastodon.etalab.gouv.fr\"?</string>
     <string name="no_result">Ni rezultatov.</string>
     <string name="instance">Instanca strežnika</string>
     <string name="instance_example">Instanca: mastodon.social</string>
@@ -470,9 +469,6 @@
     <string name="privacy_API_yandex_authorizations">"
         Aplikacija omogoča prevajanje objav Toot s pomočjo nastavitev jezika vaše naprave in API-vmesnika Yandex.\n
         Yandex ima svoj Pravilnik o zasebnosti, ki ga lahko najdete na naslovu: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Zahvala Stéphane za logotip.
     "</string>
     <string name="thanks_text_dev">"
         Zahvala:
