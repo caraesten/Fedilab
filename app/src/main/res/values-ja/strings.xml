@@ -837,23 +837,23 @@
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
-        <item quantity="other">%d votes</item>
+        <item quantity="other">%d票</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>単一の選択</item>
+        <item>複数の選択</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5分</item>
+        <item>30分</item>
+        <item>1時間</item>
+        <item>6時間</item>
+        <item>1日</item>
+        <item>3日</item>
+        <item>7日</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>Webview</item>
-        <item>Direct stream</item>
+        <item>WebView</item>
+        <item>ダイレクトストリーム</item>
     </string-array>
 </resources>
