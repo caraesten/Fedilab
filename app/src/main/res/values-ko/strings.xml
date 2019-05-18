@@ -29,7 +29,6 @@
     <string name="save">저장</string>
     <string name="restore">복원</string>
     <string name="two_factor_authentification">2단계 인증을 이용하고 있나요?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr 이외의 인스턴스인가요?</string>
     <string name="no_result">결과가 없습니다!</string>
     <string name="instance">인스턴스</string>
     <string name="instance_example">인스턴스: mastodon.social</string>
@@ -458,9 +457,6 @@
     <string name="privacy_API_yandex_authorizations">"
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Thank you to Stéphane for the logo.
     "</string>
     <string name="thanks_text_dev">"
         Thank you to:
