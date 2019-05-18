@@ -847,6 +847,8 @@ Köszönet a következőknek:    "</string>
     <string name="gnu_instance">GNU szerver</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Címkék továbbítasa a válaszokban</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
