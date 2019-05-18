@@ -29,7 +29,6 @@
     <string name="save">Salvează</string>
     <string name="restore">Restabilire</string>
     <string name="two_factor_authentification">Autentificare în două etape?</string>
-    <string name="other_instance">Alt exemplu decât mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Nici un rezultat!</string>
     <string name="instance">Instanță</string>
     <string name="instance_example">Instanță: mastodon.social</string>
@@ -465,8 +464,6 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
 Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
         Yandex are propria politică de confidențialitate care poate fi găsită aici:
  https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-Mulțumumiri lui Stéphane pentru logo.    "</string>
     <string name="thanks_text_dev">"
 Vă mulțumesc:
     "</string>
