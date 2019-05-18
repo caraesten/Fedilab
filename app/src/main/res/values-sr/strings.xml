@@ -29,7 +29,6 @@
     <string name="save">Сачувај</string>
     <string name="restore">Поврати</string>
     <string name="two_factor_authentification">Двострука потврда идентитета?</string>
-    <string name="other_instance">Друга инстанца него mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Нема резултата!</string>
     <string name="instance">Инстанца</string>
     <string name="instance_example">Инстанца: mastodon.social</string>
@@ -466,9 +465,6 @@
     <string name="privacy_API_yandex_authorizations">"
         Апликација нуди могућност да преводи тутове на језик уређаја користећи Yandex API.\n
         Yandex има своју конкретну политику приватности која се може наћи овде: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Хвала Стефани за лого.
     "</string>
     <string name="thanks_text_dev">"
         Хвала Вам на:
