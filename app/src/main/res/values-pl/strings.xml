@@ -29,7 +29,6 @@
     <string name="save">Zapisz</string>
     <string name="restore">Przywracanie</string>
     <string name="two_factor_authentification">Dwustopniowe uwierzytelnianie?</string>
-    <string name="other_instance">Inna instancja, niż mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Brak wyników!</string>
     <string name="instance">Instancja</string>
     <string name="instance_example">Instancja: mastodon.social</string>
@@ -470,8 +469,6 @@ Wskaż, jakie powiadomienia chcesz otrzymywać.
         Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
         Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en
     "</string>
-    <string name="thanks_text">"
-Podziękowania dla Stéphane za logo.    "</string>
     <string name="thanks_text_dev">"
 Podziękowania dla:    "</string>
     <string name="filter_regex">Filtruj przez wyrażenia regularne</string>
