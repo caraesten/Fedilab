@@ -29,7 +29,6 @@
     <string name="save">保存</string>
     <string name="restore">恢复</string>
     <string name="two_factor_authentification">两步验证？</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例？</string>
     <string name="no_result">没有结果！</string>
     <string name="instance">实例</string>
     <string name="instance_example">实例：mastodon.social</string>
@@ -384,9 +383,10 @@
     <string name="set_resize_picture">调整图片大小</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推送通知</string>
-    <string name="settings_popup_message">        请确认要接收的推送通知。
+    <string name="settings_popup_message">"
+        请确认要接收的推送通知。
         您可以稍后在设置（通知选项卡）中启用或禁用这些通知。
-    </string>
+    "</string>
     <string name="settings_popup_timeline">针对主页时间线的未读嘟文？</string>
     <string name="settings_popup_notification">针对未读通知？</string>
     <!-- CACHE -->
@@ -423,40 +423,44 @@
     <string name="owner_cached_toots_empty">在数据库中未发现嘟文，请使用菜单中的同步按钮来检索它们。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">记录的数据</string>
-    <string name="privacy_data">        只有帐户中的基本信息才会存储在设备上。
+    <string name="privacy_data">"
+        只有帐户中的基本信息才会存储在设备上。
         这些数据是严格保密的，而且只能由应用程序使用。
         删除应用程序将立即删除这些数据。\n
         &#9888; 从不存储登录和密码。它们仅在与实例进行安全身份验证（SSL）时使用。  
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">权限：</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用于检测设备是否连接到 WIFI 网络。\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>：用于检测设备是否连接到 WIFI 网络。\n
         - <b>INTERNET</b>：用于查询实例。\n
         - <b>WRITE_EXTERNAL_STORAGE</b>：用于存储媒体或将应用程序移动到 SD 卡上。\n
         - <b>READ_EXTERNAL_STORAGE</b>：用于添加媒体到嘟文。\n
         - <b>BOOT_COMPLETED</b>：用于启动通知服务。\n
         - <b>WAKE_LOCK</b>：在通知服务期间使用。
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">API 权限：</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>：读取数据。\n
+    <string name="privacy_API_authorizations">"
+        - <b>Read</b>：读取数据。\n
         - <b>Write</b>：发布状态并上传用在状态上的媒体。 \n
         - <b>Follow</b>：关注、取消关注、屏蔽、取消屏蔽。\n\n
         <b>&#9888; 这些操作仅在用户请求时执行。</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">跟踪和库</string>
-    <string name="privacy_API">        本应用程序 <b>不使用跟踪工具</b>（受众测量、错误报告等），并且不包含任何广告。\n\n 
+    <string name="privacy_API">"
+        本应用程序 <b>不使用跟踪工具</b>（受众测量、错误报告等），并且不包含任何广告。\n\n 
         所使用的库也是最为精简的：\n 
         -<b>Glide</b>：用于管理媒体\n
         -<b>Android-Job</b>：用于管理服务\n
         -<b>PhotoView</b>：用于管理图像\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">嘟文的翻译</string>
-    <string name="privacy_API_yandex_authorizations">        本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
+    <string name="privacy_API_yandex_authorizations">"
+        本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
         Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        感谢 Stéphane 的徽标设计。
-    </string>
-    <string name="thanks_text_dev">        致谢：
-    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+        致谢：
+    "</string>
     <string name="filter_regex">按正则表达式进行筛选</string>
     <string name="search">搜索​​​​</string>
     <string name="delete">删除</string>
@@ -477,13 +481,14 @@
     <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
     <string name="show_boost_count">显示转嘟/收藏数目</string>
     <string name="issue_login_title">身份验证不起作用？</string>
-    <string name="issue_login_message">        <b>以下是一些可能有用的检查：</b>\n\n 
+    <string name="issue_login_message">"
+        <b>以下是一些可能有用的检查：</b>\n\n 
         - 检查实例名是否拼写错误\n\n 
         - 检查您的实例是否下线\n\n 
         - 如果您使用双因素身份验证（2FA），请使用底部的链接（实例名填好后）\n\n 
         - 您也可以使用这个链接但不使用双因素身份验证（2FA）\n\n 
         - 如果仍不工作，请向 https://github.com/stom79/mastalab/issues 提交问题。
-    </string>
+    "</string>
     <string name="media_ready">媒体已加载。单击此处显示。</string>
     <string name="data_export_start">此操作可能会很久。完成时会通知您。</string>
     <string name="data_export_running">仍在运行，请稍候……</string>
@@ -669,14 +674,17 @@
         <item>1 天</item>
         <item>1 星期</item>
     </string-array>
-    <string name="showcase_instance">        您需要在此字段中填入您的实例主机名。\n例如，您在 https://mastodon.social\n 上创建了帐户，直接填入 <b>mastodon.social</b>（不需要 https://）\n
+    <string name="showcase_instance">"
+        您需要在此字段中填入您的实例主机名。\n例如，您在 https://mastodon.social\n 上创建了帐户，直接填入 <b>mastodon.social</b>（不需要 https://）\n
         您开始填入首个字母后会提示主机名。\n\n
         ⚠ 登入按钮只有在实例名有效且该实例已上线时有效！
-    </string>
-    <string name="showcase_uid">        在此字段中，填写连接到您 Mastondon 帐户的电子邮件。
-    </string>
-    <string name="showcase_pwd">        最后一步是输入您的密码，然后点击登入。
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        在此字段中，填写连接到您 Mastondon 帐户的电子邮件。
+    "</string>
+    <string name="showcase_pwd">"
+        最后一步是输入您的密码，然后点击登入。
+    "</string>
     <string name="more_information">更多信息</string>
     <string name="showcase_2FA">如果您使用 2FA（双因素身份验证），则需要使用此链接。\n如果您不想在此处输入凭据，也可以使用它。</string>
     <!-- languages not translated -->

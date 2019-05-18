@@ -29,7 +29,6 @@
     <string name="save">Uložit</string>
     <string name="restore">Obnovit</string>
     <string name="two_factor_authentification">Dvoufázová autentikace?</string>
-    <string name="other_instance">Jiná instance než mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Žádné výsledky!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
@@ -396,9 +395,10 @@
     <string name="set_resize_picture">Změnit velikost obrázků</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push oznámení</string>
-    <string name="settings_popup_message">        Prosím potvrďte push oznámení, která chcete dostávat.
+    <string name="settings_popup_message">"
+        Prosím potvrďte push oznámení, která chcete dostávat.
         Toto nastavení můžete změnit později v Nastavení (záložka Oznámení).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">Pro nepřečtené tooty v domovské časové ose?</string>
     <string name="settings_popup_notification">Pro nepřečtená oznámení?</string>
     <!-- CACHE -->
@@ -435,38 +435,42 @@
     <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné tooty. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zaznamenaná data</string>
-    <string name="privacy_data">V zařízení jsou uloženy pouze základní informace o účtech.
+    <string name="privacy_data">"
+V zařízení jsou uloženy pouze základní informace o účtech.
 Tyto informace jsou přísně tajné a mohou být použity pouze aplikací.
 Smazaní aplikace okamžitě odstraní tyto údaje.\n
-Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během bezpečného přihlášení (SSL) k instanci.    </string>
+Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během bezpečného přihlášení (SSL) k instanci.    "</string>
     <string name="privacy_authorizations_title">Oprávnění:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Použito k detekci WiFi připojení.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: Použito k detekci WiFi připojení.\n
         - <b>INTERNET</b>: Použito ke komunikaci s instancí.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Použito k ukládání médií nebo k přesunu aplikace na SD kartu.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Použito pro přidání medií k tootům.\n
         - <b>BOOT_COMPLETED</b>: Použito k aktivaci oznamovací služby.\n
         - <b>WAKE_LOCK</b>: Použito během oznamovací služby.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
-    <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
+    <string name="privacy_API_authorizations">"
+        - <b>Čtení</b>: Čtení dat.\n
         - <b>Zápis</b>: Zveřejňování příspěvků a nahrávání médií k příspěvkům.\n
         - <b>Sledování</b>: Sledování, zrušení sledování, blokování, odblokování.\n\n
         <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Sledování a Knihovny</string>
-    <string name="privacy_API">        Aplikace <b>nepoužívá sledovací nástroje</b> (měření návštěvnosti, hlášení chyb, atd.) a neobsahuje reklamy.\n\n
+    <string name="privacy_API">"
+        Aplikace <b>nepoužívá sledovací nástroje</b> (měření návštěvnosti, hlášení chyb, atd.) a neobsahuje reklamy.\n\n
         Použití knihoven je minimální: \n
         - <b>Glide</b>: Správa médií\n
         - <b>Android-Job</b>: Správa služeb\n
         - <b>PhotoView</b>: Správa obrázků\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Překlad tootů</string>
-    <string name="privacy_API_yandex_authorizations">        Aplikace umožňuje překlad tootů do jazyka zařízení s použitím služby Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">"
+        Aplikace umožňuje překlad tootů do jazyka zařízení s použitím služby Yandex API.\n
         Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Děkujeme Stéphane za logo.
-    </string>
-    <string name="thanks_text_dev">Poděkování:    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+Poděkování:    "</string>
     <string name="filter_regex">Filtrování regulárními výrazy</string>
     <string name="search">Hledat</string>
     <string name="delete">Odstranit</string>
@@ -487,13 +491,14 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
     <string name="show_boost_count">Zobrazit počet boostů/oblíbení</string>
     <string name="issue_login_title">Přihlášení nefunguje?</string>
-    <string name="issue_login_message">        <b>Zde jsou kontroly, které by vám mohly pomoct:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Zde jsou kontroly, které by vám mohly pomoct:</b>\n\n
         - Zkontrolujte, že ve jmménu instance není překlep\n\n
         - Ověřte, že vaše instance běží\n\n
         - V případě, že používáte dvoufaktorovou autentizaci (2FA), použijte prosím odkaz dole (jakmile je vyplněno jméno instance)\n\n
         - Můžete také použít tento link bez použití 2FA\n\n
         - Pokud problém přetrvává, vytvořte tiket na  https://gitlab.com/tom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
     <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
     <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
@@ -651,7 +656,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat boost</b>.]]></string>
     <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Zpět</string>
     <string name="app_logo">Logo aplikace</string>
     <string name="profile_picture">Profilový obrázek</string>
     <string name="profile_banner">Profilová hlavička</string>
@@ -679,13 +684,16 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         <item>1 den</item>
         <item>1 týden</item>
     </string-array>
-    <string name="showcase_instance">        V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
+    <string name="showcase_instance">"
+        V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
         Začněte psát první znaky pro návrh.\n\n
         ⚠ Tlačítko přihlášení bude fungovat pouze v případě, že je jméno instance platné a instance běží!
-    </string>
-    <string name="showcase_uid">        V tomto poli vyplňte email, který je svázaný s vaším účtem Mastodon.
-    </string>
-    <string name="showcase_pwd">Jako poslední krok vložte své heslo a klepňete na Login.    </string>
+    "</string>
+    <string name="showcase_uid">"
+        V tomto poli vyplňte email, který je svázaný s vaším účtem Mastodon.
+    "</string>
+    <string name="showcase_pwd">"
+Jako poslední krok vložte své heslo a klepňete na Login.    "</string>
     <string name="more_information">Více informací</string>
     <string name="showcase_2FA">V případě, že používáte 2FA (dvoufaktorovou autentizaci), použijte tento odkaz.\nMůžete jej také použít, pokud nechcete vložit své přihlašovací údaje tady.</string>
     <!-- languages not translated -->
@@ -832,8 +840,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="move_timeline">Přesunout časovou osu</string>
     <string name="hide_timeline">Skrýt časovou osu</string>
     <string name="reorder_timelines">Změnit pořadí časových os</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
+    <string name="reorder_list_deleted">Seznam trvale smazán</string>
+    <string name="reorder_instance_removed">Sledovaná instance odstraněna</string>
     <string name="reorder_tag_removed">Pinned tag removed</string>
     <string name="undo">Vrátit zpět</string>
     <string name="visible_tabs_needed">Musíte si nechat dvě viditelné karty!</string>
@@ -842,7 +850,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="warning_main_timeline">Hlavní časové linie mohou být pouze skryty!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Přidat časovou osu</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Vždy označovat média jako citlivá</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>

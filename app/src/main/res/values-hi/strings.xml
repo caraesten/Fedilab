@@ -29,7 +29,6 @@
     <string name="save">सहेजें</string>
     <string name="restore">पहले जैसा करें</string>
     <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टंस?</string>
     <string name="no_result">कोई परिणाम नहीं!</string>
     <string name="instance">इंस्टंस</string>
     <string name="instance_example">इंस्टंस: mastodon.social</string>
@@ -388,9 +387,10 @@
     <string name="set_resize_picture">चित्रो का नाप बदलें</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">पुश सूचनाएँ</string>
-    <string name="settings_popup_message">कृप्या उन पुश सूचनाएं को पक्का करें जो आप पाना चाहते हैं।
+    <string name="settings_popup_message">"
+कृप्या उन पुश सूचनाएं को पक्का करें जो आप पाना चाहते हैं।
 
-आप सूचनाओं को बाद में सेटिंग्स में जाकर सक्रिय या निश्क्रिय कर सकते हैं (सूचनाएं टैब)।    </string>
+आप सूचनाओं को बाद में सेटिंग्स में जाकर सक्रिय या निश्क्रिय कर सकते हैं (सूचनाएं टैब)।    "</string>
     <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
     <string name="settings_popup_notification">अपठित सूचनाओं के लिये?</string>
     <!-- CACHE -->
@@ -399,9 +399,9 @@
     <string name="cache_units">एमबी</string>
     <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_header_custom_sharing">शीर्षक</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_header_custom_sharing">विवरण</string>
     <string name="description_hint_custom_sharing">Description&#8230;</string>
     <string name="keywords_header_custom_sharing">Keywords</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
@@ -427,33 +427,38 @@
     <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">अभिलिखित डेटा</string>
-    <string name="privacy_data">खातों की सिर्फ़ साधारण जानकारी उपकरण में रखी जाती है।
+    <string name="privacy_data">"
+खातों की सिर्फ़ साधारण जानकारी उपकरण में रखी जाती है।
 यह डेटा बिलकुल गोपनीय है और इसका उपयोग सिर्फ़ यह एेप कर सकता है।
 एेप के मिटाते ही यह डेटा तुरंत नष्ट हो जाता है।\n
-&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
+&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    "</string>
     <string name="privacy_authorizations_title">अनुमतियां:</string>
-    <string name="privacy_authorizations">- <b>एेकस्स_नैटवर्क_स्टेट</b>: यह पता लगाने के लिये कि उपकरण वाईफाई से जुड़ा है या नहीं।\n
+    <string name="privacy_authorizations">"
+- <b>एेकस्स_नैटवर्क_स्टेट</b>: यह पता लगाने के लिये कि उपकरण वाईफाई से जुड़ा है या नहीं।\n
 - <b>इंटर्नेट</b>: इंस्टंस से परिप्रश्न करने के लिये।\n
 - <b>राइट_एेक्सटर्नल_स्टोरेज</b>: मीडिया संचित या एेप को एेसडी कार्ड में डालने के लिये।\n
 - <b>पढ़े_एेक्सटर्नल_स्टोरेज</b>: लेखों में मीडिया जोड़ने के लिये।\n
 - <b>बूट_समाप्त</b>: सूचना सेवा शुरू करने के लिये।\n
-- <b>वेक_लौक</b>: सूचना सेवा के दौरान उपयोग करने के लिये।    </string>
+- <b>वेक_लौक</b>: सूचना सेवा के दौरान उपयोग करने के लिये।    "</string>
     <string name="privacy_API_authorizations_title">एपीआई अनुमतियां:</string>
-    <string name="privacy_API_authorizations">- <b>पढ़ें</b>: डेटा पढ़ें।\n
+    <string name="privacy_API_authorizations">"
+- <b>पढ़ें</b>: डेटा पढ़ें।\n
 - <b>लिखें</b>: लेख प्रकाशित करें और मीडिया अपलोड करें।\n
 - <b>अनुसरण</b>: अनुसरण, अंफ़ौलो, अवरुद्ध, मुक्त।\n\n
-- <b>&#9888; केवल उपयोगकर्ता की गुज़ारिश पर यह क्रियाएं की जाती हैं।</b>    </string>
+- <b>&#9888; केवल उपयोगकर्ता की गुज़ारिश पर यह क्रियाएं की जाती हैं।</b>    "</string>
     <string name="privacy_API_title">ट्रैकिंग एवं संग्रहालय</string>
-    <string name="privacy_API">यह एेप <b>ट्रैकिंग साधन का उपयोग नहीं करता</b> (श्रोता मापन, त्रुटि रिपोर्ट आदी) और इसमें कोई विज्ञापन नहीं है।\n\n
+    <string name="privacy_API">"
+यह एेप <b>ट्रैकिंग साधन का उपयोग नहीं करता</b> (श्रोता मापन, त्रुटि रिपोर्ट आदी) और इसमें कोई विज्ञापन नहीं है।\n\n
 संग्रहालयो के उपयोग कम किया है: \n
 - <b>ग्लाइड</b>: मीडिया को संभालने के लिये\n
 - <b>एंड्राॅयड-जाॅब</b>: सेवाएं संभालने के लिये\n
-- <b>फ़ोटोव्यू</b>: चित्रो को संभालने के लिये\n    </string>
+- <b>फ़ोटोव्यू</b>: चित्रो को संभालने के लिये\n    "</string>
     <string name="privacy_API_yandex_title">लेखों का अनुवाद</string>
-    <string name="privacy_API_yandex_authorizations">यह एेप लेखों का अनुवाद करने की काबिलियत प्रदान करता है उपकरण का स्थान और यैंडैक्स एपीआई की मदद से।\n
-यैंडैक्स की अपनी गोपनीयता नीति है जो यहाँ मौजूद है: https://yandex.ru/legal/confidential/?lang=en    </string>
-    <string name="thanks_text">लोगो के लिये स्टेफ़ैन को धन्यवाद।    </string>
-    <string name="thanks_text_dev">इनको धन्यवाद:    </string>
+    <string name="privacy_API_yandex_authorizations">"
+यह एेप लेखों का अनुवाद करने की काबिलियत प्रदान करता है उपकरण का स्थान और यैंडैक्स एपीआई की मदद से।\n
+यैंडैक्स की अपनी गोपनीयता नीति है जो यहाँ मौजूद है: https://yandex.ru/legal/confidential/?lang=en    "</string>
+    <string name="thanks_text_dev">"
+इनको धन्यवाद:    "</string>
     <string name="filter_regex">आम अभिव्यंजनाओ के अनुसार छाटें</string>
     <string name="search">खोजें</string>
     <string name="delete">मिटाएं</string>
@@ -474,12 +479,13 @@
     <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
     <string name="show_boost_count">बूस्ट/पसंदीदा की गिनती दिखाएं</string>
     <string name="issue_login_title">प्रमाणीकरण काम नहीं कर रहा?</string>
-    <string name="issue_login_message"><b>यह कुछ चैक्स हैं जो मदद करें:</b>\n\n
+    <string name="issue_login_message">"
+<b>यह कुछ चैक्स हैं जो मदद करें:</b>\n\n
 - जांचे कि इंस्टंस के नाम में कोई गलती तो नहीं ह\n\n
 - जांचे की आपका इंस्टंस कहीं बंद तो नहीं है\n\n
 - अगर आप दो-चरणीय प्रमाणीकरण (2FA) का उपयोग करते है तो कृप्या नीचे दिये लिंक का इस्तेमाल करें (इंस्टंस का नाम डालने के बाद)\n\n
 - आप इस लिंक का उपयोग दो-चरणीय प्रमाणीकरण के बिना भी कर सकते हैं\n\n
-- अगर यह फिर भी काम नहीं कर रहा तो कृप्या गिटलैब पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    </string>
+- अगर यह फिर भी काम नहीं कर रहा तो कृप्या गिटलैब पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    "</string>
     <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
     <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
     <string name="data_export_running">चालू है, कृप्या प्रतीक्षा करे...</string>
@@ -665,11 +671,14 @@
         <item>१ दिन</item>
         <item>१ सप्ताह</item>
     </string-array>
-    <string name="showcase_instance">यहाँ अपने इंस्टंस के मेज़बान का नाम डालें।\nउदाहरण, अगर आपने https://mastodon.social\n पे खाता बनाया है तो बस लिखें <b>mastodon.social</b> (https:// के बिना)\n
+    <string name="showcase_instance">"
+यहाँ अपने इंस्टंस के मेज़बान का नाम डालें।\nउदाहरण, अगर आपने https://mastodon.social\n पे खाता बनाया है तो बस लिखें <b>mastodon.social</b> (https:// के बिना)\n
 आप जब पहले अक्षर लिखना शुरू करेंगे तब नामों का सुझाव दिया जाएगा।\n\n
-⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंस्टंस काम कर रहा है!    </string>
-    <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखें।    </string>
-    <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
+⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंस्टंस काम कर रहा है!    "</string>
+    <string name="showcase_uid">"
+यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखें।    "</string>
+    <string name="showcase_pwd">"
+आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    "</string>
     <string name="more_information">अधिक जानकारी</string>
     <string name="showcase_2FA">अगर आप 2FA (दो-चरणीय प्रमाणीकरण) चालू करना चाहते है तो फिर इस लिंक का उपयोग करें।\nअगर आपको अपना ईमेल और पासवर्ड यहाँ नहीं डालना है तब इसे इस्तेमाल करें।</string>
     <!-- languages not translated -->

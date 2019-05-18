@@ -29,7 +29,6 @@
     <string name="save">Spara</string>
     <string name="restore">Återställ</string>
     <string name="two_factor_authentification">Tvåfaktorsautentisering?</string>
-    <string name="other_instance">Annan instans än mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Inga resultat!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
@@ -388,9 +387,10 @@
     <string name="set_resize_picture">Ändra storlek på bilder</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-meddelanden</string>
-    <string name="settings_popup_message">        Bekräfta push-meddelanden som du vill ta emot.
+    <string name="settings_popup_message">"
+        Bekräfta push-meddelanden som du vill ta emot.
         Du kan aktivera eller inaktivera dessa meddelanden senare i inställningar (fliken aviseringar).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">För olästa toots i hemtidslinjen?</string>
     <string name="settings_popup_notification">För olästa meddelanden?</string>
     <!-- CACHE -->
@@ -427,40 +427,44 @@
     <string name="owner_cached_toots_empty">Ingen toots hittades i databasen. Använd gärna knappen Synkronisera från menyn för att hämta dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Sparad data</string>
-    <string name="privacy_data">        Endast grundläggande information från konton lagras på enheten.
+    <string name="privacy_data">"
+        Endast grundläggande information från konton lagras på enheten.
         Uppgifterna är konfidentiella och kan endast användas av programmet.
         Borttagning av programmet tar omedelbart bort dessa data.\n
         &#9888; Inloggning och lösenord lagras aldrig. De används endast under en säker autentisering (SSL) med en instans.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Behörigheter:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Används för att upptäcka om enheten är ansluten till ett trådlöst nätverk.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: Används för att upptäcka om enheten är ansluten till ett trådlöst nätverk.\n
         - <b>INTERNET</b>: Används för frågor till en instans.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Används för att lagra media eller flytta appen på ett SD-kort.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Används för att lägga till media till toots.\n
         - <b>BOOT_COMPLETED</b>: Används för att starta meddelandetjänsten.\n
         - <b>WAKE_LOCK</b>: Används under meddelandetjänsten.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">API-rättigheter:</string>
-    <string name="privacy_API_authorizations">         - <b>Read</b>: Läs data.\n
+    <string name="privacy_API_authorizations">"
+         - <b>Read</b>: Läs data.\n
         - <b>Write</b>: Posta statusar och ladda upp media till statusar.\n
         - <b>Follow</b>: Följ, av följ, blockera, avblockera.\n\n
         <b>&#9888; Dessa händelser sker endast när användaren begär det.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Spårning och bibliotek</string>
-    <string name="privacy_API">        Applikationen <b>använder inga tracking-verktyg</b> (publikmätning, felrapportering etc.) och innehåller ingen reklam.\n\n
+    <string name="privacy_API">"
+        Applikationen <b>använder inga tracking-verktyg</b> (publikmätning, felrapportering etc.) och innehåller ingen reklam.\n\n
         Användanded av tredje-parts bibliotek är minimerad: \n
         - <b>Glide</b>: Till att hantera media\n
         - <b>Android-Job</b>: Till att hantera services\n
         - <b>PhotoView</b>: Till att hantera bilder\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Översättning av toots</string>
-    <string name="privacy_API_yandex_authorizations">        Applikationen erbjuder möjligheten att översätta toots med hjälp av språket på enheten och Yandex API..\n
+    <string name="privacy_API_yandex_authorizations">"
+        Applikationen erbjuder möjligheten att översätta toots med hjälp av språket på enheten och Yandex API..\n
         Yandex har sin integritetspolicy  här: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Tack till Stéphane för logon.
-    </string>
-    <string name="thanks_text_dev">        Tack till:
-    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+        Tack till:
+    "</string>
     <string name="filter_regex">Filtrera ut av reguljära uttryck</string>
     <string name="search">Sök</string>
     <string name="delete">Ta bort</string>
@@ -481,13 +485,14 @@
     <string name="account_moved_to">%1$s har flyttats till %2$s</string>
     <string name="show_boost_count">Visa knuffar/favoriter antal</string>
     <string name="issue_login_title">Autentisering fungerar inte?</string>
-    <string name="issue_login_message">        <b>Här är några kontroller som kan hjälpa:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Här är några kontroller som kan hjälpa:</b>\n\n
         - Kontrollera att det inte finns stavfel i instans namn\n\n
         - Kontrollera att din instans inte är nere\n\n
         - Om du använder tvåstegsfaktor autentisering (2FA), vänligen använd länken längst ner (när instansnamnet är ifyllt)\n\n
         - Du kan också använda denna länk utan att använda 2FA\n\n
         - Om det fortfarande inte fungerar, vänligen be om hjälp på GitLab https://gitlab.com/tom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Media har laddats, klicka här för att visa.</string>
     <string name="data_export_start">Denna åtgärd kan ta ganska lång tid. Du kommer att meddelas när den är färdig.</string>
     <string name="data_export_running">Körs fortfarande, vänligen vänta…</string>
@@ -673,14 +678,17 @@
         <item>1 dag</item>
         <item>1 vecka</item>
     </string-array>
-    <string name="showcase_instance">        I det här fältet måste du skriva din instans värdnamn.\nTill exempel om du skapade ditt konto på https://mastodon.social\n skriv <b>mastodon.social</b> (utan https://)\n
+    <string name="showcase_instance">"
+        I det här fältet måste du skriva din instans värdnamn.\nTill exempel om du skapade ditt konto på https://mastodon.social\n skriv <b>mastodon.social</b> (utan https://)\n
         Börja skriv de första bokstäverna, sen kommer förslag att visas.\n\n
         ⚠ Inloggningsknappen fungerar bara om instansnamnet är giltig och instansen körs!
-    </string>
-    <string name="showcase_uid">        I det här fältet ange den e-post som är kopplad till kontot på Mastodon.
-    </string>
-    <string name="showcase_pwd">        Sista steget är att ange ditt lösenord och klicka sen på Login.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        I det här fältet ange den e-post som är kopplad till kontot på Mastodon.
+    "</string>
+    <string name="showcase_pwd">"
+        Sista steget är att ange ditt lösenord och klicka sen på Login.
+    "</string>
     <string name="more_information">Mer information</string>
     <string name="showcase_2FA">Om du använder 2FA (två-faktorn autentisering), så måste du använda denna länk.\nDu kan också använda den om du inte vill ange dina autentiseringsuppgifter här.</string>
     <!-- languages not translated -->

@@ -29,7 +29,6 @@
     <string name="save">Cadw</string>
     <string name="restore">Adfer</string>
     <string name="two_factor_authentification">Dilysu dau gam?</string>
-    <string name="other_instance">Achos arall heblaw mastodon.etalablgouv.fr?</string>
     <string name="no_result">Dim canlyniadau!</string>
     <string name="instance">Achos</string>
     <string name="instance_example">Achos: mastodon.social</string>
@@ -404,9 +403,10 @@
     <string name="set_resize_picture">Newid maint lluniau</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Hysbysiadau push</string>
-    <string name="settings_popup_message">        Cadarnhewch yr hysbysiadau push yr ydych am eu derbyn.
+    <string name="settings_popup_message">"
+        Cadarnhewch yr hysbysiadau push yr ydych am eu derbyn.
         Mae modd galluogi neu diffodd yr hysbysiadau hyn wedyn yn gosodiadau (Tab hysbysiadau).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">Ar gyfer tŵtiau heb eu darllen yn y ffrwd?</string>
     <string name="settings_popup_notification">Ar gyfer hysbysiadau heb eu darllen?</string>
     <!-- CACHE -->
@@ -443,39 +443,43 @@
     <string name="owner_cached_toots_empty">Ni ganfyddwyd unrhyw dŵtiau yn y gronfa data. Defnyddiwch y botwm cydamseru o\'r ddewislen i\'w dychwelyd.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data a gofnodwyd</string>
-    <string name="privacy_data">        Ond gwybodaeth syml o\'r cyfrifoedd sy\'n cael ei gadw ar y ddyfais.
-        Mae\'r data yma\'n gwbl gyfrinachol ac ond yn gallu cael ei ddefnyddio gan y rhaglen.
-        Mae dileu y rhaglen yn cael gwared ar y data yma\'n syth.\n
-        &#9888; Nid yw\'r manylion mewngofnodi na cyfrineiriau yn cael eu storio. Maent ond yn cael eu defnyddio yn ystod dilysu (SSL) gyda achos.
-    </string>
+    <string name="privacy_data">"
+        Ond gwybodaeth syml o'r cyfrifoedd sy'n cael ei gadw ar y ddyfais.
+        Mae'r data yma'n gwbl gyfrinachol ac ond yn gallu cael ei ddefnyddio gan y rhaglen.
+        Mae dileu y rhaglen yn cael gwared ar y data yma'n syth.\n
+        &#9888; Nid yw'r manylion mewngofnodi na cyfrineiriau yn cael eu storio. Maent ond yn cael eu defnyddio yn ystod dilysu (SSL) gyda achos.
+    "</string>
     <string name="privacy_authorizations_title">Caniatad:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Defnyddir er mwyn gweld os yw\'r ddyfais wedi ei gysylltu a rhwydwaith WIFI.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: Defnyddir er mwyn gweld os yw'r ddyfais wedi ei gysylltu a rhwydwaith WIFI.\n
         - <b>INTERNET</b>: Defnyddir er mwyn gnweud holiadau i achos.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Defnyddir er mwyn storio cyfryngau neu i symud yr ap ar gerdyn SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Defnyddir er mwyn ychwanegu cyfryngau i dŵtiau\n
         - <b>BOOT_COMPLETED</b>: Defnyddir er mwyn cychwyn y gwasanaeth hysbysu.\n
         - <b>WAKE_LOCK</b>: Defnyddir yn ystod y gwasanaeth hysbysu.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">Caniatad API:</string>
-    <string name="privacy_API_authorizations">        - <b>Darllen</b>: Darllen data.\n
+    <string name="privacy_API_authorizations">"
+        - <b>Darllen</b>: Darllen data.\n
         - <b>Ysgrifennu</b>: Postio statws ac uwchlwytho cyfryngau ar gyfer statws.\n
         - <b>Dilyn</b>: Dilyn, dad-ddilyn, blocio a dad-flocio.\n\n
         <b>&#9888;  Ceith y rhain ond eu gweithredu pan y mae defnyddiwr yn gwneud cais amdanynt.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Tracio a Llyfrgelloedd</string>
-    <string name="privacy_API">        Nid yw\'r rhaglen hwn <b>yn defnyddio offerynnau tracio</b> (mesur cynulleidfa, adrodd gwallau, a. y. y. b) ac nid oes hysbysebu chwaith.\n\n
+    <string name="privacy_API">"
+        Nid yw'r rhaglen hwn <b>yn defnyddio offerynnau tracio</b> (mesur cynulleidfa, adrodd gwallau, a. y. y. b) ac nid oes hysbysebu chwaith.\n\n
         Mae defnydd llyfrgelloedd yn gyfyngedig: \n
         - <b>Glide</b>: I reoli cyfryngau\n
         - <b>Android-Job</b>: I reoli gwasanaethau\n
         - <b>PhotoView</b>: I reoli delweddau\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
-    <string name="privacy_API_yandex_authorizations">        Mae\'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">"
+        Mae'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
         Mae gan Yandex bolisi preifatrwydd, mae modd ei weld yma: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Diolch i Stéphane am y logo.
-    </string>
-    <string name="thanks_text_dev">Diolch i:    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+Diolch i:    "</string>
     <string name="filter_regex">Hidlo drwy ddefnyddio mynegiadau rheolaidd</string>
     <string name="search">Chwilio</string>
     <string name="delete">Dileu</string>
@@ -496,13 +500,14 @@
     <string name="account_moved_to">Mae %1$s wedi symud i %2$s</string>
     <string name="show_boost_count">Dangos nifer hybiadau/ffefrynnau</string>
     <string name="issue_login_title">Dilysu ddim yn gweithio?</string>
-    <string name="issue_login_message">        <b>Dyma ambell wiriad all fod yn help:</b>\n\n
-        - Gwiriwch nad oes camgymeriad sillafu yn enw\'r achos\n\n
+    <string name="issue_login_message">"
+        <b>Dyma ambell wiriad all fod yn help:</b>\n\n
+        - Gwiriwch nad oes camgymeriad sillafu yn enw'r achos\n\n
         - Gwiriwch nad yw eich achos i lawr\n\n
-        - Os ydych yn defnyddio dilysu dau gam (2FA), defnyddiwch y ddolen ar y gwaelod (unwaith y mae enw\'r achos wedi\'i lenwi)\n\n
-        - Mae modd defnyddio\'r ddolen yma heb ddefnyddio 2FA\n\n
+        - Os ydych yn defnyddio dilysu dau gam (2FA), defnyddiwch y ddolen ar y gwaelod (unwaith y mae enw'r achos wedi'i lenwi)\n\n
+        - Mae modd defnyddio'r ddolen yma heb ddefnyddio 2FA\n\n
         - Os yw dal ddim yn gweithio, codwch y mater ar GitLab: https://gitlab.com/tom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Mae\'r cyfryngau wedi eu llwytho. Cliciwch yma i\'w harddangos.</string>
     <string name="data_export_start">Mae\'r weithred yma\'n gallu cymryd amser. Cewch eich hysbysu pan y mae wedi gorffen.</string>
     <string name="data_export_running">Dal i redeg, arhoswch os gwelwch yn dda…</string>
@@ -688,14 +693,17 @@
         <item>1 diwrnod</item>
         <item>1 wythnos</item>
     </string-array>
-    <string name="showcase_instance">        Yn y maes hwn mae angen i chi ysgrifennu enw lletywr eich achos.\nEr enghraifft, os wnaethoch chi greu eich cyfrif ar https://mastodon.social\nYsgrifennwch <b>mastodon.social</b> (heb https://)\n
+    <string name="showcase_instance">"
+        Yn y maes hwn mae angen i chi ysgrifennu enw lletywr eich achos.\nEr enghraifft, os wnaethoch chi greu eich cyfrif ar https://mastodon.social\nYsgrifennwch <b>mastodon.social</b> (heb https://)\n
         Mae modd i chi ddechrau ysgrifennu llythrennau cychwynol a bydd enwau yn cael eu hawgrymu.\n\n
-        ⚠ Bydd y botwm Mewngofnodi ond yn gweithio os yw enw\'r achos yn ddilys a bod yr achos yn weithredol!
-    </string>
-    <string name="showcase_uid">        Yn y maes hwn, ysgrifennwch yr ebost sydd wedi ei gysylltu a\'ch cyfrif Mastodon.
-    </string>
-    <string name="showcase_pwd">        Y cam olaf yw i fewnosod eich cyfrinair a clicio ar Mengofnodi.
-    </string>
+        ⚠ Bydd y botwm Mewngofnodi ond yn gweithio os yw enw'r achos yn ddilys a bod yr achos yn weithredol!
+    "</string>
+    <string name="showcase_uid">"
+        Yn y maes hwn, ysgrifennwch yr ebost sydd wedi ei gysylltu a'ch cyfrif Mastodon.
+    "</string>
+    <string name="showcase_pwd">"
+        Y cam olaf yw i fewnosod eich cyfrinair a clicio ar Mengofnodi.
+    "</string>
     <string name="more_information">Mwy o wybodaeth</string>
     <string name="showcase_2FA">Os ydych yn defnyddio 2FA (Dilysu dau gam), mae angen i chi ddefnyddio\'r ddolen yma. \nMae modd i chi ddefnyddio os nad ydych eisiau mewnosod eich cymwysterau yma.</string>
     <!-- languages not translated -->
