@@ -29,7 +29,6 @@
     <string name="save">Gardar</string>
     <string name="restore">Restaurar</string>
     <string name="two_factor_authentification">Autenticación en dous pasos?</string>
-    <string name="other_instance">Outra instancia diferente a mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Sen resultados!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
@@ -462,9 +461,6 @@ Só se garda no dispositivo a información básica das contas.
     <string name="privacy_API_yandex_authorizations">"
 A aplicación ofrece a posibilidade de traducir os toots utilizando o idioma do dispositivo e a API de Yandex.\n
         Yandex ten a súa propia política de intimidade, que pode atopar aquí: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-Grazas Stéphane polo logo.
     "</string>
     <string name="thanks_text_dev">"
 Grazas a:
