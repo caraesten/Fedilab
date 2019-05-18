@@ -29,7 +29,6 @@
     <string name="save">Guardar</string>
     <string name="restore">Restaurar</string>
     <string name="two_factor_authentification">¿Autenticación de dos pasos?</string>
-    <string name="other_instance">¿Otra instancia que mastodon.etalab.gouv.fr?</string>
     <string name="no_result">¡No hay resultados!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
@@ -460,9 +459,6 @@ La aplicación <b>no usa herramientas de rastreo</b> (medidores de audiencia, re
 La aplicación ofrece la habilidad de traducir toots usando la localización del dipositivo y el Yandex API\n
 Yandex tine su propia política de privacidad la cual puede ser encontrada aquí:
 https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-Gracias a Stéphane por el logo.
-    "</string>
     <string name="thanks_text_dev">"
 Gracias a:    "</string>
     <string name="filter_regex">Filtrar por expresiones regulares</string>
