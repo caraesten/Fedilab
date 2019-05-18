@@ -114,6 +114,23 @@
             android:text="@string/set_hide_delete_notification_on_tab"
             android:layout_height="wrap_content" />
 
+
+        <CheckBox
+            android:id="@+id/set_blur_sensitive"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_blur_sensitive"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_long_press_media"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_long_press_media"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

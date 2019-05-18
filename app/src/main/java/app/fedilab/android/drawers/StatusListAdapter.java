@@ -1577,7 +1577,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
-
+            boolean blur_sensitive = sharedpreferences.getBoolean(Helper.SET_BLUR_SENSITIVE, true);
 
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
@@ -1601,7 +1601,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
-                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                if(blur_sensitive && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))){
                                     loadAttachments(status, holder, true);
                                 }
                             } else {
@@ -1646,7 +1646,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                                 else
                                     holder.status_document_container.setVisibility(View.GONE);
-                                if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+                                if(blur_sensitive && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))){
                                     loadAttachments(status, holder, true);
                                 }
                             } else {
@@ -3081,15 +3081,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }
                 });
-                imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-                        String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
-                        Helper.download(context,myDir+"/"+fileName, attachment.getUrl());
-                        return true;
-                    }
-                });
+                boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
+                if( long_press_media) {
+                    imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+                            String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
+                            Helper.download(context, myDir + "/" + fileName, attachment.getUrl());
+                            return true;
+                        }
+                    });
+                }
                 i++;
                 position++;
             }

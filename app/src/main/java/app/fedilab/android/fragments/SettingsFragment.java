@@ -502,6 +502,35 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean blur_sensitive = sharedpreferences.getBoolean(Helper.SET_BLUR_SENSITIVE, true);
+        final CheckBox set_blur_sensitive = rootView.findViewById(R.id.set_blur_sensitive);
+        set_blur_sensitive.setChecked(blur_sensitive);
+
+        set_blur_sensitive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_BLUR_SENSITIVE, set_blur_sensitive.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
+        final CheckBox set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
+        set_long_press_media.setChecked(long_press_media);
+
+        set_long_press_media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_LONG_PRESS_MEDIA, set_long_press_media.isChecked());
+                editor.apply();
+            }
+        });
+
+
+
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
         set_truncate_size.setMax(20);
