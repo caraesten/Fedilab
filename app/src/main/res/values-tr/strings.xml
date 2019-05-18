@@ -388,8 +388,9 @@
     <string name="set_resize_picture">Resimleri yeniden boyutlandır</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Anlık Bildirimler</string>
-    <string name="settings_popup_message">Lütfen, almak istediğiniz bildirimleri onaylayın.
-         Bu bildirimleri daha sonra ayarlarda etkinleştirebilir veya devre dışı bırakabilirsiniz (Bildirimler sekmesi).    </string>
+    <string name="settings_popup_message">"
+Lütfen, almak istediğiniz bildirimleri onaylayın.
+         Bu bildirimleri daha sonra ayarlarda etkinleştirebilir veya devre dışı bırakabilirsiniz (Bildirimler sekmesi).    "</string>
     <string name="settings_popup_timeline">Evdeki zaman çizgisindeki okunmamış toots için mi?</string>
     <string name="settings_popup_notification">Okunmamış bildirimler için?</string>
     <!-- CACHE -->
@@ -426,34 +427,41 @@
     <string name="owner_cached_toots_empty">Veritabanında toot bulunamadı. Menüdeki eşitle tuşunu kullan.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Kaydedilen veri</string>
-    <string name="privacy_data">Hesaplardan yalnızca temel bilgiler cihazda saklanır.
+    <string name="privacy_data">"
+Hesaplardan yalnızca temel bilgiler cihazda saklanır.
          Bu veriler kesinlikle gizlidir ve yalnızca uygulama tarafından kullanılabilir.
          Uygulamanın silinmesi, bu verileri derhal kaldırır. \ N
-         ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca sunucu ile güvenli giriş (SSL) için kullanılırlar.    </string>
+         ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca sunucu ile güvenli giriş (SSL) için kullanılırlar.    "</string>
     <string name="privacy_authorizations_title">Izinler:</string>
-    <string name="privacy_authorizations">- <b> ACCESS_NETWORK_STATE </b>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \n
+    <string name="privacy_authorizations">"
+- <b> ACCESS_NETWORK_STATE </b>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \n
          - <b> INTERNET </b>: Bir sunucuyu sorgulamak için kullanılır. \n
          - <b> WRITE_EXTERNAL_STORAGE </b>: Medyayı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \n
-         - <b> READ_EXTERNAL_STORAGE </b>: Toot\'a medya eklemek için kullanılır.\n
+         - <b> READ_EXTERNAL_STORAGE </b>: Toot'a medya eklemek için kullanılır.\n
          - <b> BOOT_COMPLETED </b>: Bildirim hizmetini başlatmak için kullanılır. \n
-         - <b> WAKE_LOCK </b>: Bildirim hizmeti sırasında kullanılır.    </string>
+         - <b> WAKE_LOCK </b>: Bildirim hizmeti sırasında kullanılır.    "</string>
     <string name="privacy_API_authorizations_title">API izinleri:</string>
-    <string name="privacy_API_authorizations">- <b> Oku </b>: Veri okunur. \n
+    <string name="privacy_API_authorizations">"
+- <b> Oku </b>: Veri okunur. \n
          - <b> Yaz </b>: Durumu yayınlar ve durumlar için ortam yükler. \n
          - <b> Takip et </b>: Takip etme, takipten vazgeçme, engelleme, engeli kaldırma.\n\n
-         <b> &#9888;  Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </b>    </string>
+         <b> &#9888;  Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </b>    "</string>
     <string name="privacy_API_title">İzleme ve kütüphaneler</string>
-    <string name="privacy_API">        Bu uygulama <b>takip araçları kullanmaz</b> (kitle ölçme, hata raporlama vs.) ve herhangi bir reklam içermez.\n\n
+    <string name="privacy_API">"
+        Bu uygulama <b>takip araçları kullanmaz</b> (kitle ölçme, hata raporlama vs.) ve herhangi bir reklam içermez.\n\n
         Kütüphane kullanımı en aza indirilmiştir: \n
         - <b>Glide</b>: Medya kontrolü\n
         - <b>Android-Job</b>: Servis kontrolü\n
         - <b>PhotoView</b>: Resim kontrolü\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Toot tercümesi</string>
-    <string name="privacy_API_yandex_authorizations">Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toot tercüme olanağı sunar. \ N
-         Yandex\'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    </string>
-    <string name="thanks_text">Stephane\'a logo için teşekkür ederiz.    </string>
-    <string name="thanks_text_dev">Teşekkürler:    </string>
+    <string name="privacy_API_yandex_authorizations">"
+Uygulama cihazın yerel ayarını ve Yandex API'sini kullanarak toot tercüme olanağı sunar. \ N
+         Yandex'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    "</string>
+    <string name="thanks_text">"
+Stephane'a logo için teşekkür ederiz.    "</string>
+    <string name="thanks_text_dev">"
+Teşekkürler:    "</string>
     <string name="filter_regex">Düzenli ifadelerle filtreleme</string>
     <string name="search">Ara</string>
     <string name="delete">Sil</string>
@@ -474,13 +482,14 @@
     <string name="account_moved_to">%1$s, %2$s\'e taşındı</string>
     <string name="show_boost_count">Hızlandırmaları göster/Favori sayısı</string>
     <string name="issue_login_title">Kimlik doğrulama çalışmıyor?</string>
-    <string name="issue_login_message">        <b>Yardımı olabilecek bazı kontroller:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Yardımı olabilecek bazı kontroller:</b>\n\n
         - Sunucu adını kontrol et\n\n
         - Sunucunda hata olmadığından emin ol\n\n
         - İki aşamalı doğrulama (2FA) kullanıyorsan, alttaki bağlantıyı kullan (sunucu adı doldurulduktan sonra)\n\n
         - Bağlantıyı 2FA olmadan da kullanabilirsin\n\n
         - Eğer hala çalışmıyorsa, Gitlab üzerinde hata kaydı aç: https://gitlab.com/tom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Medya yüklendi. Görüntülemek için tıkla.</string>
     <string name="data_export_start">Bu işlem oldukça uzun sürebilir. Bitince haberdar olacaksın.</string>
     <string name="data_export_running">Hâlâ çalışıyor, lütfen bekle…</string>
@@ -666,14 +675,17 @@
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        In this field, write the email that is attached to your Mastodon account.
+    "</string>
+    <string name="showcase_pwd">"
+        Last step is to enter your password and click on Login.
+    "</string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
