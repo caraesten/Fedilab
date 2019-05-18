@@ -29,7 +29,6 @@
     <string name="save">सहेजें</string>
     <string name="restore">पहले जैसा करें</string>
     <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टंस?</string>
     <string name="no_result">कोई परिणाम नहीं!</string>
     <string name="instance">इंस्टंस</string>
     <string name="instance_example">इंस्टंस: mastodon.social</string>
@@ -458,8 +457,6 @@
     <string name="privacy_API_yandex_authorizations">"
 यह एेप लेखों का अनुवाद करने की काबिलियत प्रदान करता है उपकरण का स्थान और यैंडैक्स एपीआई की मदद से।\n
 यैंडैक्स की अपनी गोपनीयता नीति है जो यहाँ मौजूद है: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-लोगो के लिये स्टेफ़ैन को धन्यवाद।    "</string>
     <string name="thanks_text_dev">"
 इनको धन्यवाद:    "</string>
     <string name="filter_regex">आम अभिव्यंजनाओ के अनुसार छाटें</string>
