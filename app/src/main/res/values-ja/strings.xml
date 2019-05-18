@@ -773,9 +773,9 @@
     <string name="set_optimize_loading">読み込み時間の調整</string>
     <string name="all">すべて</string>
     <string name="about_opencollective">アプリを支援する</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
+    <string name="more_about_opencollective">Open Collectiveを使用すると、グループは資金を調達し透明性をもって管理するための集団をすばやく立ち上げることができます。</string>
+    <string name="copy_link">リンクをコピー</string>
+    <string name="connect_instance">接続</string>
     <string name="set_normal">Normal</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
