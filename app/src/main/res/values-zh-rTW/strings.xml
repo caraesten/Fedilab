@@ -845,6 +845,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="gnu_instance">GNU 站台</string>
     <string name="cached_status">已快取嘟文</string>
     <string name="set_forward_tags">在回覆中轉發標籤</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
