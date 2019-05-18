@@ -29,7 +29,6 @@
     <string name="save">保存</string>
     <string name="restore">恢复</string>
     <string name="two_factor_authentification">两步验证？</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例？</string>
     <string name="no_result">没有结果！</string>
     <string name="instance">实例</string>
     <string name="instance_example">实例：mastodon.social</string>
@@ -458,9 +457,6 @@
     <string name="privacy_API_yandex_authorizations">"
         本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
         Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        感谢 Stéphane 的徽标设计。
     "</string>
     <string name="thanks_text_dev">"
         致谢：
