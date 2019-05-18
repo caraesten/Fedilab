@@ -185,8 +185,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                max_id = null;
-                firstLoad = true;
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
