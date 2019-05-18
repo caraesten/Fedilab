@@ -173,7 +173,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                             if (userIdService != null && userIdService.equals(userId)) {
                                 Notification notification = b.getParcelable("data");
                                 refresh(notification);
-                                if (context instanceof MainActivity)
+                                if (context instanceof MainActivity && type == Type.ALL )
                                     ((MainActivity) context).updateNotifCounter();
                             }
                         }
@@ -187,10 +187,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             public void onRefresh() {
                 flag_loading = true;
                 swiped = true;
-                MainActivity.countNewNotifications = 0;
-                try {
-                    ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
+                if(type == Type.ALL) {
+                    MainActivity.countNewNotifications = 0;
+                    try {
+                        ((MainActivity) context).updateNotifCounter();
+                    } catch (Exception ignored) {
+                    }
+                }
                 String sinceId = null;
                 if( notifications != null && notifications.size() > 0 )
                     sinceId = notifications.get(0).getId();
@@ -295,15 +298,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
 
-                if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
-                    MainActivity.countNewNotifications++;
+                if(type == Type.ALL) {
+                    if (lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
+                        MainActivity.countNewNotifications++;
+                    }
+                    try {
+                        ((MainActivity) context).updateNotifCounter();
+                    } catch (Exception ignored) {
+                    }
                 }
-                try {
-                    ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
                 this.notifications.add(tmpNotification);
             }
-            if( firstLoad) {
+            if( firstLoad && type == Type.ALL) {
                 //Update the id of the last notification retrieved
                 if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
                     MainActivity.lastNotificationId = notifications.get(0).getId();
@@ -314,7 +320,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             if( firstLoad)
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
-        if( firstLoad )
+        if( firstLoad && type == Type.ALL)
             ((MainActivity)context).updateNotifCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
@@ -358,7 +364,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         firstLoad = true;
         flag_loading = true;
         swiped = true;
-        MainActivity.countNewNotifications = 0;
+        if(type == Type.ALL) {
+            MainActivity.countNewNotifications = 0;
+        }
         asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -372,10 +380,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 //Update the id of the last notification retrieved
                 MainActivity.lastNotificationId = notification.getId();
                 notifications.add(0, notification);
-                MainActivity.countNewNotifications++;
-                try {
-                    ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
+                if( type == Type.ALL) {
+                    MainActivity.countNewNotifications++;
+                    try {
+                        ((MainActivity) context).updateNotifCounter();
+                    } catch (Exception ignored) {
+                    }
+                }
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisibleItem > 0)
                     notificationsListAdapter.notifyItemInserted(0);
