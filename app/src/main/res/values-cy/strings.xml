@@ -29,7 +29,6 @@
     <string name="save">Cadw</string>
     <string name="restore">Adfer</string>
     <string name="two_factor_authentification">Dilysu dau gam?</string>
-    <string name="other_instance">Achos arall heblaw mastodon.etalablgouv.fr?</string>
     <string name="no_result">Dim canlyniadau!</string>
     <string name="instance">Achos</string>
     <string name="instance_example">Achos: mastodon.social</string>
@@ -478,9 +477,6 @@
     <string name="privacy_API_yandex_authorizations">"
         Mae'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
         Mae gan Yandex bolisi preifatrwydd, mae modd ei weld yma: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Diolch i Stéphane am y logo.
     "</string>
     <string name="thanks_text_dev">"
 Diolch i:    "</string>
