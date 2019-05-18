@@ -29,7 +29,6 @@
     <string name="save">Lagre</string>
     <string name="restore">Gjenopprett</string>
     <string name="two_factor_authentification">Tofaktorautentisering?</string>
-    <string name="other_instance">Annen instans enn mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
@@ -457,8 +456,6 @@ Applikasjonen<b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrappo
     <string name="privacy_API_yandex_authorizations">"
 Programmet tilbyr muligheten til å oversette toots ved hjelp av lokasjonen til enheten og Yandex APIet. \n
          Yandex har sin egen personvernerklæring som finnes her: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text">"
-Takk til Stéphane for logoen.    "</string>
     <string name="thanks_text_dev">"
 Takk til:    "</string>
     <string name="filter_regex">Filtrer ut med regulære uttrykk</string>
