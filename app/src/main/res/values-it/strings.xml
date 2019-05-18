@@ -29,7 +29,6 @@
     <string name="save">Salva</string>
     <string name="restore">Ripristina</string>
     <string name="two_factor_authentification">Autenticazione a due fattori?</string>
-    <string name="other_instance">Un\'altra istanza diversa da mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Nessun risultato!</string>
     <string name="instance">Istanza</string>
     <string name="instance_example">Istanza: mastodon.social</string>
@@ -462,9 +461,6 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     <string name="privacy_API_yandex_authorizations">"
         L'applicazione offre la possibilità di tradurre i toot utilizzando il dispositivo locale e le API di Yandex.\n
         Yandex  ha la propria privacy policy che può essere trovata qui: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text">"
-        Grazie a Stéphane per il logo.
     "</string>
     <string name="thanks_text_dev">"
         Grazie anche a:
