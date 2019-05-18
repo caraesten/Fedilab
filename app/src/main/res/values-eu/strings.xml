@@ -29,7 +29,6 @@
     <string name="save">Gorde</string>
     <string name="restore">Berrezarri</string>
     <string name="two_factor_authentification">Bi pausutako autentifikazioa?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr ez den beste instantzia bat?</string>
     <string name="no_result">Emaitzarik ez!</string>
     <string name="instance">Instantzia</string>
     <string name="instance_example">Instantzia: mastodon.social</string>
@@ -463,8 +462,6 @@
         Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
         Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en
     "</string>
-    <string name="thanks_text">"
-Eskerrik asko Stéphane logoagatik.    "</string>
     <string name="thanks_text_dev">"
         Eskerrik asko:
     "</string>
