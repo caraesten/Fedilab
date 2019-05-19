@@ -843,6 +843,8 @@ Quan s'esborra l'aplicació s'eliminen les dades immediatament.\n
     <string name="set_forward_tags">Incloure etiquetes a les respostes</string>
     <string name="set_long_press_media">Pitjada llarga per emmagatzemar mèdia</string>
     <string name="set_blur_sensitive">Tornar borrosos els mèdia sensibles</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
