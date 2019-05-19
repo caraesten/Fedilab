@@ -519,7 +519,7 @@
     <string name="delete_instance">Désirez-vous effacer cette instance ?</string>
     <string name="warning_delete_instance">Vous êtes sur le point de supprimer %s des instances suivies.</string>
     <string name="which_language">Traduire en</string>
-    <string name="crash_title">Mastalab s’est arrêté :(</string>
+    <string name="crash_title">Fedilab s’est arrêté :(</string>
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="send_crash_report">Demander l’envoi de rapports d’incidents par courriel ?</string>
     <string name="follow_instance">Suivre l’instance</string>
