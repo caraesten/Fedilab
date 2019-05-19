@@ -851,6 +851,8 @@
     <string name="set_forward_tags">Vidarebefordra taggar i svar</string>
     <string name="set_long_press_media">Långtryck för att spara media</string>
     <string name="set_blur_sensitive">Censurera känslig media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
