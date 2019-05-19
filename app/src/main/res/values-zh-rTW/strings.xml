@@ -847,8 +847,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_forward_tags">在回覆中轉發標籤</string>
     <string name="set_long_press_media">長按以儲存媒體</string>
     <string name="set_blur_sensitive">將敏感內容模糊化</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">以清單顯示時間軸</string>
+    <string name="display_timeline">顯示時間軸</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
