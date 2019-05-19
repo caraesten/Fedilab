@@ -845,6 +845,8 @@ Cảm ơn bạn:    "</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
