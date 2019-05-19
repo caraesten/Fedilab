@@ -117,9 +117,9 @@
 
     <color name="pixelfed_like">#dc3545</color>
 
-    <color name="ic_launcher_background">#454b5a</color>
-
     <color name="console_name">#5E8D87</color>
     <color name="console_reblog_name">#5F819D</color>
     <color name="console_marker">#CC6666</color>
+
+    <color name="bot_background">#B3808080</color>
 </resources>

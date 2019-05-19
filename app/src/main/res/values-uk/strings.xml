@@ -29,7 +29,6 @@
     <string name="save">Зберегти</string>
     <string name="restore">Відновити</string>
     <string name="two_factor_authentification">Двофакторна авторизація?</string>
-    <string name="other_instance">Інший екземпляр, ніж mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Нічого не знайдено!</string>
     <string name="instance">Екземпляр</string>
     <string name="instance_example">Екземпляр: mastodon.social</string>
@@ -396,7 +395,8 @@
     <string name="set_resize_picture">Змінити розмір зображень</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-сповіщення</string>
-    <string name="settings_popup_message">Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).    </string>
+    <string name="settings_popup_message">"
+Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).    "</string>
     <string name="settings_popup_timeline">Для непрочитаних дмухів у домашній стрічці?</string>
     <string name="settings_popup_notification">Для непрочитаних сповіщень?</string>
     <!-- CACHE -->
@@ -433,32 +433,36 @@
     <string name="owner_cached_toots_empty">Жодного дмуху не знайдено в базі даних. Будь ласка, використовуйте кнопку синхронізації в меню, щоб отримати їх.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Записані дані</string>
-    <string name="privacy_data">Тільки основна інформація з облікових записів зберігається на пристрої.         Ці дані залишаються суворо конфіденційними і можуть використовуватися лише додатком.         У разі видалення додаток одразу видаляє ці дані. \n
+    <string name="privacy_data">"
+Тільки основна інформація з облікових записів зберігається на пристрої.         Ці дані залишаються суворо конфіденційними і можуть використовуватися лише додатком.         У разі видалення додаток одразу видаляє ці дані. \n
         &#9888; Логіни та паролі не зберігаються. Вони використовуються тільки під час безпечної аутентифікації (SSL) на екземплярі.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Дозволи:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: використовується для виявлення, чи пристрій підключено до Wi-Fi мережі. \n - <b>Інтернет</b>: використовується для запитів до до екземпляра. \n - <b>WRITE_EXTERNAL_STORAGE</b>: використовується для зберігання медіа або переміщення програми на карту SD \n - <b>READ_EXTERNAL_STORAGE</b>: використовується для додавання медіа до тутів. \n - <b>BOOT_COMPLETED</b>: використовується для запуску служби сповіщень. \n - <b>WAKE_LOCK</b>: Використовується під час роботи служби сповіщень.
-    </string>
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: використовується для виявлення, чи пристрій підключено до Wi-Fi мережі. \n - <b>Інтернет</b>: використовується для запитів до до екземпляра. \n - <b>WRITE_EXTERNAL_STORAGE</b>: використовується для зберігання медіа або переміщення програми на карту SD \n - <b>READ_EXTERNAL_STORAGE</b>: використовується для додавання медіа до тутів. \n - <b>BOOT_COMPLETED</b>: використовується для запуску служби сповіщень. \n - <b>WAKE_LOCK</b>: Використовується під час роботи служби сповіщень.
+    "</string>
     <string name="privacy_API_authorizations_title">API дозволи:</string>
-    <string name="privacy_API_authorizations">- <b>Читати</b>: Читати дані.\n
+    <string name="privacy_API_authorizations">"
+- <b>Читати</b>: Читати дані.\n
         - <b>Писати</b>: Постити статуси і завантажувати медіа-файли.\n
         - <b>Підписка</b>: Підписка, відписка, блок, розблок.\n\n
         <b>&#9888; Ці дії відбуваються тільки за запитом користувача.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Бібліотеки</string>
-    <string name="privacy_API">Додаток <b>не відслідковує користувача</b> І не містить реклами.\n\n
+    <string name="privacy_API">"
+Додаток <b>не відслідковує користувача</b> І не містить реклами.\n\n
         Використання сторонніх бібліотек мінімізоване: \n
         - <b>Glide</b>: для управління медіа-файлами\n
         - <b>Android-Job</b>: Для управління сервісами\n
         - <b>PhotoView</b>: Для управління зображеннями\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Переклад дмухів</string>
-    <string name="privacy_API_yandex_authorizations">Додаток перекладає дмухи через Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">"
+Додаток перекладає дмухи через Yandex API.\n
         Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">Дякуємо Stéphane за лого.
-    </string>
-    <string name="thanks_text_dev">Подяки:    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+Подяки:    "</string>
     <string name="filter_regex">Відфільтруйте регулярним виразом</string>
     <string name="search">Пошук</string>
     <string name="delete">Видалити</string>
@@ -479,13 +483,14 @@
     <string name="account_moved_to">%1$s відправлено до %2$s</string>
     <string name="show_boost_count">Показати лічильники передмухнутого/обраного</string>
     <string name="issue_login_title">Автентифікація не працює?</string>
-    <string name="issue_login_message">        <b>Деякі поради, що можуть допомогти:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Деякі поради, що можуть допомогти:</b>\n\n
         - Перевірте правильність написання назви екземпляру\n\n
         - Перевірте, чи екземпляр працює\n\n
         - Якщо використовуєте двофакторну авторизацію (2FA), будь ласка скористайтеся посиланням внизу, коли назву екземпляру заповнено\n\n
         - Також можна використовувати посилання без 2FA\n\n
         - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
     <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
     <string name="data_export_running">Почекайте, будь ласка…</string>
@@ -671,14 +676,17 @@
         <item>1 день</item>
         <item>1 тиждень</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        In this field, write the email that is attached to your Mastodon account.
+    "</string>
+    <string name="showcase_pwd">"
+        Last step is to enter your password and click on Login.
+    "</string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
@@ -839,6 +847,10 @@
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

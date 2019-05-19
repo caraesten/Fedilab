@@ -29,11 +29,10 @@
     <string name="save">Sauvegarder</string>
     <string name="restore">Restaurer</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
-    <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance : mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Fonctionne maintenant avec le compte %1$s</string>
+    <string name="toast_account_changed" formatted="false">Utilisation du compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
     <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
     <string name="clipboard_url">L\'URL du pouet a été copiée dans le presse-papier</string>
@@ -56,7 +55,7 @@
     <string name="validate">Valider</string>
     <string name="media">Médias</string>
     <string name="share_with">Partager avec</string>
-    <string name="shared_via">Partagé via Mastalab</string>
+    <string name="shared_via">Partagé via Fedilab</string>
     <string name="replies">Réponses</string>
     <string name="username">Nom d’utilisateur</string>
     <string name="drafts">Brouillons</string>
@@ -77,7 +76,7 @@
     <string name="neutral_menu_title">Options</string>
     <string name="favorites_menu">Favoris</string>
     <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Utilisateurs muets</string>
+    <string name="muted_menu">Utilisateurs en sourdine</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="remote_follow_menu">Suivre à distance</string>
     <string name="notifications">Notifications</string>
@@ -88,10 +87,10 @@
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
     <string name="delete_account_title">Supprimer un compte</string>
     <string name="delete_account_message" formatted="false">Supprimer le compte %1$s de l’application ?</string>
-    <string name="send_email">Envoyer un email</string>
+    <string name="send_email">Envoyer un Email</string>
     <string name="choose_file">Veuillez sélectionner un fichier</string>
     <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
-    <string name="click_to_change">Cliquer sur le chemin pour changer</string>
+    <string name="click_to_change">Cliquer sur le chemin pour le changer</string>
     <string name="failed">Erreur !</string>
     <string name="scheduled_toots">Pouets programmés</string>
     <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
@@ -111,7 +110,7 @@
     <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
     <string name="pin_add">Épingler ce pouet ?</string>
     <string name="pin_remove">Désépingler ce pouet ?</string>
-    <string name="more_action_1">Masquer</string>
+    <string name="more_action_1">Ignorer</string>
     <string name="more_action_2">Bloquer</string>
     <string name="more_action_3">Signaler</string>
     <string name="more_action_4">Supprimer</string>
@@ -119,7 +118,7 @@
     <string name="more_action_6">Partager</string>
     <string name="more_action_7">Mentionner</string>
     <string name="more_action_8">Temporairement muet</string>
-    <string name="more_action_9">Supprimer &amp; reformuler</string>
+    <string name="more_action_9">Supprimer &amp; réécrire</string>
     <string-array name="more_action_confirm">
         <item>Masquer ce compte ?</item>
         <item>Bloquer ce compte ?</item>
@@ -388,9 +387,10 @@
     <string name="set_resize_picture">Redimensionner les images</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notifications poussées</string>
-    <string name="settings_popup_message">        Veuillez confirmer les notifications que vous souhaitez recevoir.
+    <string name="settings_popup_message">"
+        Veuillez confirmer les notifications que vous souhaitez recevoir.
         Vous pourrez les activer ou les désactiver plus tard dans les paramètres (onglet Notifications).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">Pour les pouets non lus sur la page d’accueil</string>
     <string name="settings_popup_notification">Pour les notifications non lues ?</string>
     <!-- CACHE -->
@@ -427,39 +427,43 @@
     <string name="owner_cached_toots_empty">Aucun pouet trouvé en base de données. Veuillez utiliser le bouton synchroniser du menu pour les importer.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Données enregistrées</string>
-    <string name="privacy_data">       Seules les informations de base des comptes connectés sont enregistrées sur l’appareil.
+    <string name="privacy_data">"
+       Seules les informations de base des comptes connectés sont enregistrées sur l’appareil.
         Ces données sont strictement confidentielles et ne sont utilisables que par l’application. La suppression de l’application entraîne immédiatement la suppression de ces données.\n
         &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l’authentification sécurisée (SSL) vers l’instance.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Autorisations de l’application :</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l’appareil est connecté au WIFI.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l’appareil est connecté au WIFI.\n
         - <b>INTERNET</b> : Utilisée pour les requêtes vers l’instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
         - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
         - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l’appareil démarre.\n
         - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">Autorisations de l’API :</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b> : Lire les données du compte.\n
+    <string name="privacy_API_authorizations">"
+        - <b>Read</b> : Lire les données du compte.\n
         - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
         - <b>Follow</b> : S’abonner, se désabonner, bloquer, débloquer.\n\n
         <b>&#9888; Ces actions ne sont réalisées qu’à la demande de l’utilisateur·rice.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Suivi et bibliothèques</string>
-    <string name="privacy_API">        L’application n’utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d’erreurs, etc.) et elle ne comporte aucune publicité.\n\n
+    <string name="privacy_API">"
+        L’application n’utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d’erreurs, etc.) et elle ne comporte aucune publicité.\n\n
         L’utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Glid</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>PhotoView</b> : Pour la gestion des images\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Traduction des pouets</string>
-    <string name="privacy_API_yandex_authorizations">        L’application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l’appareil et l’API de Yandex.\n
+    <string name="privacy_API_yandex_authorizations">"
+        L’application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l’appareil et l’API de Yandex.\n
         Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Merci à Stéphane pour le logo.
-    </string>
-    <string name="thanks_text_dev">        Merci à :
-    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+        Merci à :
+    "</string>
     <string name="filter_regex">Filtrer avec une expression régulière</string>
     <string name="search">Rechercher</string>
     <string name="delete">Supprimer</string>
@@ -480,12 +484,13 @@
     <string name="account_moved_to">%1$s a été déplacé vers %2$s</string>
     <string name="show_boost_count">Afficher le nombre de partages/favoris</string>
     <string name="issue_login_title">Problème de connexion ?</string>
-    <string name="issue_login_message"><b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
+    <string name="issue_login_message">"
+<b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
 - Vérifier qu’il n’y a pas d’erreur dans le nom de l’instance\n\n 
 - Vérifiez que votre instance est fonctionnelle\n\n 
 - Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l’instance renseigné) \n\n 
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
-- Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
+- Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    "</string>
     <string name="media_ready">L’image a été chargée. Cliquez ici pour l’afficher.</string>
     <string name="data_export_start">Cela peut être assez long. Vous serez notifié·e une fois l’exportation finie.</string>
     <string name="data_export_running">Exportation en cours, veuillez patienter…</string>
@@ -514,7 +519,7 @@
     <string name="delete_instance">Désirez-vous effacer cette instance ?</string>
     <string name="warning_delete_instance">Vous êtes sur le point de supprimer %s des instances suivies.</string>
     <string name="which_language">Traduire en</string>
-    <string name="crash_title">Mastalab s’est arrêté :(</string>
+    <string name="crash_title">Fedilab s’est arrêté :(</string>
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="send_crash_report">Demander l’envoi de rapports d’incidents par courriel ?</string>
     <string name="follow_instance">Suivre l’instance</string>
@@ -671,13 +676,16 @@
         <item>1 jour</item>
         <item>1 semaine</item>
     </string-array>
-    <string name="showcase_instance">Renseignez le nom de domaine de votre instance dans ce champs.\nPar exemple, si vous avez créé un compte sur https://mastodon.social\nécrivez simplement <b>mastodon.social</b>(sans le https://)\n
+    <string name="showcase_instance">"
+Renseignez le nom de domaine de votre instance dans ce champs.\nPar exemple, si vous avez créé un compte sur https://mastodon.social\nécrivez simplement <b>mastodon.social</b>(sans le https://)\n
 Commencez à saisir les premières lettres et des domaines vous seront suggérés. \n\n
-Le bouton de connexion s’activera une fois qu’un domaine valide sera renseigné et que l’instance est active !    </string>
-    <string name="showcase_uid">        Dans ce champs, saisissez l’adresse de courrier relative à votre compte Mastodon et/ou Pleroma.
-    </string>
-    <string name="showcase_pwd">        Dernière étape consiste à saisir votre mot de passe puis cliquer sur « Connexion ».
-    </string>
+Le bouton de connexion s’activera une fois qu’un domaine valide sera renseigné et que l’instance est active !    "</string>
+    <string name="showcase_uid">"
+        Dans ce champs, saisissez l’adresse de courrier relative à votre compte Mastodon et/ou Pleroma.
+    "</string>
+    <string name="showcase_pwd">"
+        Dernière étape consiste à saisir votre mot de passe puis cliquer sur « Connexion ».
+    "</string>
     <string name="more_information">Plus d’informations</string>
     <string name="showcase_2FA">Si vous utilisez 2FA (authentification à deux facteurs), vous devez utiliser ce lien. \nVous pouvez également l’utiliser si vous ne souhaitez pas saisir vos identifiants ici.</string>
     <!-- languages not translated -->
@@ -838,6 +846,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="gnu_instance">Instance GNU</string>
     <string name="cached_status">Statut en cache</string>
     <string name="set_forward_tags">Transférer les tags dans les réponses</string>
+    <string name="set_long_press_media">Appui long pour stocker les médias</string>
+    <string name="set_blur_sensitive">Flouter les médias sensibles</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>

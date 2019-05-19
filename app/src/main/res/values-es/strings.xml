@@ -29,7 +29,6 @@
     <string name="save">Guardar</string>
     <string name="restore">Restaurar</string>
     <string name="two_factor_authentification">¿Autenticación de dos pasos?</string>
-    <string name="other_instance">¿Otra instancia que mastodon.etalab.gouv.fr?</string>
     <string name="no_result">¡No hay resultados!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
@@ -388,8 +387,9 @@
     <string name="set_resize_picture">Redimensionar imágenes</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificaciones Push</string>
-    <string name="settings_popup_message">Por favor, confirma notificaciones push que quieres recibir. 
-Tú puede activar o desactivar esas notificaciones después en configuración (pestaña de notificaciones).    </string>
+    <string name="settings_popup_message">"
+Por favor, confirma notificaciones push que quieres recibir. 
+Tú puede activar o desactivar esas notificaciones después en configuración (pestaña de notificaciones).    "</string>
     <string name="settings_popup_timeline">¿Para toots no leídos en el timeline del inicio?</string>
     <string name="settings_popup_notification">¿Para notificaciones sin leer?</string>
     <!-- CACHE -->
@@ -426,37 +426,41 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="owner_cached_toots_empty">No toots fueron encontrados en la base de datos. Por favor, utilice el botón de sincronizar de el menú para recuperarlos.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data grabada</string>
-    <string name="privacy_data">Solo la información básica de las cuentas son guardadas en el dispositivo. 
+    <string name="privacy_data">"
+Solo la información básica de las cuentas son guardadas en el dispositivo. 
         Esa data es estrictamente confidencial y solo puede ser usada por la aplicación.
         Al borrar la aplicación inmediatamente elimina esa data.\n
         &#9888; Usuario y contraseñas nunca son guardados. Estos son solo usados durante la autenticación de seguridad (SSL) con una instancia.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>:  Usado para detectar si el dispositivo esta conectado a una red WI-Fi.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>:  Usado para detectar si el dispositivo esta conectado a una red WI-Fi.\n
         - <b>INTERNET</b>:  Usado por para una instancia.\n
         - <b>ESCRIBIR_ALMACENAMIENTO_EXTERNO</b>:  Usado para almacenar contenido multimedia o para mover la aplicación a una tarjeta SD.\n
         - <b>LEER_ALMACENAMIENTO_EXTERNO</b>: Usado para agregar contenido multimedia a toots.\n
         - <b>INICIO_COMPLETADO</b>: Usado para iniciar servicios de notificación.\n
-        - <b>WAKE_LOCK</b>: Usado para notificación de servicio.    </string>
+        - <b>WAKE_LOCK</b>: Usado para notificación de servicio.    "</string>
     <string name="privacy_API_authorizations_title">Permisos API:</string>
-    <string name="privacy_API_authorizations">- <b>Leer</b>: Leer data.\n
+    <string name="privacy_API_authorizations">"
+- <b>Leer</b>: Leer data.\n
         - <b>Escribir</b>: Publicar estados y subir contenido multimedia para estados.\n
         - <b>Follow</b>: Seguir, dejar de seguir, bloquear, desbloquear.\n\n
         <b>&#9888; Esas acciones son llevadas solo cuando el usuario lo pida</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Rastreadores y librerías</string>
-    <string name="privacy_API">La aplicación <b>no usa herramientas de rastreo</b> (medidores de audiencia, reportadores de error, entre otro) y no contiene ninguna publicidad.\n\n
+    <string name="privacy_API">"
+La aplicación <b>no usa herramientas de rastreo</b> (medidores de audiencia, reportadores de error, entre otro) y no contiene ninguna publicidad.\n\n
         El uso de librerías es minimizado:\n
         -<b>Glide</b>: Para gestionar media\n
         -<b>Android-Job</b>: Para gestionar servicios\n
-<b>PhotoView</b> Para gestionar imágenes\n    </string>
+<b>PhotoView</b> Para gestionar imágenes\n    "</string>
     <string name="privacy_API_yandex_title">Traducción de los toots</string>
-    <string name="privacy_API_yandex_authorizations">La aplicación ofrece la habilidad de traducir toots usando la localización del dipositivo y el Yandex API\n
+    <string name="privacy_API_yandex_authorizations">"
+La aplicación ofrece la habilidad de traducir toots usando la localización del dipositivo y el Yandex API\n
 Yandex tine su propia política de privacidad la cual puede ser encontrada aquí:
-https://yandex.ru/legal/confidential/?lang=en    </string>
-    <string name="thanks_text">Gracias a Stéphane por el logo.
-    </string>
-    <string name="thanks_text_dev">Gracias a:    </string>
+https://yandex.ru/legal/confidential/?lang=en    "</string>
+    <string name="thanks_text_dev">"
+Gracias a:    "</string>
     <string name="filter_regex">Filtrar por expresiones regulares</string>
     <string name="search">Buscar</string>
     <string name="delete">Eliminar</string>
@@ -477,12 +481,13 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="account_moved_to">%1$s se ha movido a %2$s</string>
     <string name="show_boost_count">Mostrar contador de retoots/favoritos</string>
     <string name="issue_login_title">¿No funciona la autenticación?</string>
-    <string name="issue_login_message"><b>Aquí hay una lista de vistos que pueden ayudar </b>\n\n
+    <string name="issue_login_message">"
+<b>Aquí hay una lista de vistos que pueden ayudar </b>\n\n
 -Revisa que no hay ningún error de escritura en la instancia del nombre \n\n
 -Revisa que tu instancia no está caída \n\n
 -Si tu usas el factor de autenticación de dos pasos (2FA), por favor usa el link al pie (una vez que el nombre de la instancia esta lleno) \n\n
 -Puedes usar también este link sin usar el \"Fa \n\n
--Si eso todavía no funciona, por favor notifica el problema en Github https://github.com/stom79/mastalab/issues    </string>
+-Si eso todavía no funciona, por favor notifica el problema en Github https://github.com/stom79/mastalab/issues    "</string>
     <string name="media_ready">Se ha cargado el archivo. Haz clic aquí para mostrarlo.</string>
     <string name="data_export_start">Este proceso puede ser bastante largo. Recibirás una notificación cuando esté finalizado.</string>
     <string name="data_export_running">Todavía en curso, por favor espera…</string>
@@ -668,13 +673,16 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">En este campo, debe escribir el nombre de host de su instancia. \ Npor ejemplo, si creó su cuenta en https: //mastodon.social \ nSólo escriba <b> mastodon.social </b> (sin https: //) \norte
+    <string name="showcase_instance">"
+En este campo, debe escribir el nombre de host de su instancia. \ Npor ejemplo, si creó su cuenta en https: //mastodon.social \ nSólo escriba <b> mastodon.social </b> (sin https: //) \norte
          Puede comenzar a escribir las primeras letras y se sugerirán los nombres. \ N \ n
-         ⚠ El botón Iniciar sesión solo funcionará si el nombre de la instancia es válido y la instancia está activa!    </string>
-    <string name="showcase_uid">        En este campo, escriba el correo electrónico que está conectado a tu cuenta de Mastodon.
-    </string>
-    <string name="showcase_pwd">        Último paso es introducir su contraseña y haga clic en Inicio de sesión.
-    </string>
+         ⚠ El botón Iniciar sesión solo funcionará si el nombre de la instancia es válido y la instancia está activa!    "</string>
+    <string name="showcase_uid">"
+        En este campo, escriba el correo electrónico que está conectado a tu cuenta de Mastodon.
+    "</string>
+    <string name="showcase_pwd">"
+        Último paso es introducir su contraseña y haga clic en Inicio de sesión.
+    "</string>
     <string name="more_information">Más información</string>
     <string name="showcase_2FA">Si utilizas 2FA (autenticación de dos factores), es necesario utilizar este enlace. \nTu también puedes utilizarlo si no deseas ingresar tus credenciales aquí.</string>
     <!-- languages not translated -->
@@ -835,6 +843,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

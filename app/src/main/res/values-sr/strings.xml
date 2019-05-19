@@ -29,7 +29,6 @@
     <string name="save">Сачувај</string>
     <string name="restore">Поврати</string>
     <string name="two_factor_authentification">Двострука потврда идентитета?</string>
-    <string name="other_instance">Друга инстанца него mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Нема резултата!</string>
     <string name="instance">Инстанца</string>
     <string name="instance_example">Инстанца: mastodon.social</string>
@@ -392,9 +391,10 @@
     <string name="set_resize_picture">Мењај величине слика</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Брза обавештења</string>
-    <string name="settings_popup_message">        Потврдите која брза обавештења желите да примате.
+    <string name="settings_popup_message">"
+        Потврдите која брза обавештења желите да примате.
         Можете укључити и искључити ова обавештења накнадно у подешавањима (језичак за Обавештења).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>
     <string name="settings_popup_notification">За непрочитана обавештења?</string>
     <!-- CACHE -->
@@ -431,40 +431,44 @@
     <string name="owner_cached_toots_empty">Нема тутова у бази. Користите дугме за синхронизацију да их преузмете.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Снимљени подаци</string>
-    <string name="privacy_data">        Само основне информације о налозима су ускладиштене на уређају.
+    <string name="privacy_data">"
+        Само основне информације о налозима су ускладиштене на уређају.
         Ови подаци су строго поверљиви и може их користити само ова апликација.
         Брисање апликација моментално брише ове податке.\n
         &#9888; Пријаве и лозинке се никад не складиште. Користе се само за време безбедног (SSL) пријављивања са инстанцом.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Дозволе:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Користи се да види да ли је уређај накачен на бежичну мрежу.\n
+    <string name="privacy_authorizations">"
+        - <b>ACCESS_NETWORK_STATE</b>: Користи се да види да ли је уређај накачен на бежичну мрежу.\n
         - <b>INTERNET</b>: Користи се да прича са инстанцом.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Користи се да ускладишти мултимедију или да помери апликацију на SD картицу.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Користи се да дода мултимедију на тутове.\n
         - <b>BOOT_COMPLETED</b>: Користи се да стартује сервис за обавештења.\n
         - <b>WAKE_LOCK</b>: Користи се током рада сервиса за обавештења.
-    </string>
+    "</string>
     <string name="privacy_API_authorizations_title">API дозволе:</string>
-    <string name="privacy_API_authorizations">        - <b>Читај</b>: Чита податке.\n
+    <string name="privacy_API_authorizations">"
+        - <b>Читај</b>: Чита податке.\n
         - <b>Пиши</b>: Шаље статусе и отпрема мултимедију за статусе.\n
         - <b>Прати</b>: Прати, уклаља праћења, блокира, одблокира.\n\n
         <b>&#9888; Ове акције се изводе само када их корисник захтева.</b>
-    </string>
+    "</string>
     <string name="privacy_API_title">Праћење и библиотеке</string>
-    <string name="privacy_API">         Апликација <b> не користи за праћење алатке </b>&gt; (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
+    <string name="privacy_API">"
+         Апликација <b> не користи за праћење алатке </b>&gt; (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
         Употреба библиотека је минимизована: \n
         - <b>Glide</b>: за управљање мултимедијом\n
         - <b>Android-Job</b>: за управљање  сервисима\n
         - <b>PhotoView</b>: за управљање сликама\n
-    </string>
+    "</string>
     <string name="privacy_API_yandex_title">Превод тутова</string>
-    <string name="privacy_API_yandex_authorizations">        Апликација нуди могућност да преводи тутове на језик уређаја користећи Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">"
+        Апликација нуди могућност да преводи тутове на језик уређаја користећи Yandex API.\n
         Yandex има своју конкретну политику приватности која се може наћи овде: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Хвала Стефани за лого.
-    </string>
-    <string name="thanks_text_dev">        Хвала Вам на:
-    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+        Хвала Вам на:
+    "</string>
     <string name="filter_regex">Филтрирај по регуларним изразима</string>
     <string name="search">Претрага</string>
     <string name="delete">Обриши</string>
@@ -485,13 +489,14 @@
     <string name="account_moved_to">%1$s се померио на %2$s</string>
     <string name="show_boost_count">Прикажи број подржаних/омиљених</string>
     <string name="issue_login_title">Пријављивање не ради?</string>
-    <string name="issue_login_message">        <b>Ево неких провера које могу да помогну:</b>\n\n
+    <string name="issue_login_message">"
+        <b>Ево неких провера које могу да помогну:</b>\n\n
         - Проверите да нема грешака у куцању имена инстанце\n\n
         - Проверите да ли је инстанца жива и ради\n\n
         - Ако користите двофакторско пријављивање (2FA), користите линк на дну (када попуните име инстанце)\n\n
         - Линк испод можете користити и без да користите 2FA\n\n
         - Ако ништа ни даље не ради, пријавите нам проблем на Github-у, на https://github.com/stom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
     <string name="data_export_start">Ова акција може да потраје. Бићете обавештени када се заврши.</string>
     <string name="data_export_running">Још увек се извршава, сачекајте…</string>
@@ -677,14 +682,17 @@
         <item>1 дан</item>
         <item>Недељу дана</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Последњи корак је да унесете Вашу лозинку и да кликнете на пријаву.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        In this field, write the email that is attached to your Mastodon account.
+    "</string>
+    <string name="showcase_pwd">"
+        Последњи корак је да унесете Вашу лозинку и да кликнете на пријаву.
+    "</string>
     <string name="more_information">Више информација</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
@@ -845,6 +853,10 @@
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

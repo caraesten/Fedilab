@@ -30,7 +30,6 @@
     <string name="save">Save</string>
     <string name="restore">Restore</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
@@ -507,10 +506,6 @@
     </string>
 
 
-    <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
-
     <string name="thanks_text_dev">
         Thank you to:
     </string>
@@ -947,6 +942,10 @@
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

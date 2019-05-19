@@ -29,7 +29,6 @@
     <string name="save">Lưu</string>
     <string name="restore">Khôi phục</string>
     <string name="two_factor_authentification">Xác thực hai bước?</string>
-    <string name="other_instance">Ví dụ khác hơn mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ko có kết quả!</string>
     <string name="instance">Ví dụ</string>
     <string name="instance_example">Ví dụ: mastodon.social</string>
@@ -227,12 +226,12 @@
     <string name="notif_follow">đã theo bạn</string>
     <string name="notif_pouet">Thổi còi mới từ %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="other">và một thông báo khác
-và %d thông báo khác</item>
+        <item quantity="other">"và một thông báo khác
+và %d thông báo khác"</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">và một cái còi khác để khám phá
-và %d toots khác để khám phá</item>
+        <item quantity="other">"và một cái còi khác để khám phá
+và %d toots khác để khám phá"</item>
     </plurals>
     <plurals name="likes">
         <item quantity="other">%d likes</item>
@@ -386,9 +385,10 @@ và %d toots khác để khám phá</item>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push thông báo</string>
-    <string name="settings_popup_message">Vui lòng xác nhận thông báo đẩy mà bạn muốn nhận.         
+    <string name="settings_popup_message">"
+Vui lòng xác nhận thông báo đẩy mà bạn muốn nhận.         
         Bạn có thể bật hoặc tắt các thông báo này sau trong cài đặt (tab Thông báo).
-    </string>
+    "</string>
     <string name="settings_popup_timeline">Đối với những con rồng chưa đọc trong dòng thời gian ở nhà?</string>
     <string name="settings_popup_notification">Đối với thông báo chưa đọc?</string>
     <!-- CACHE -->
@@ -425,36 +425,40 @@ và %d toots khác để khám phá</item>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Dữ liệu đã ghi</string>
-    <string name="privacy_data">Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên thiết bị.
+    <string name="privacy_data">"
+Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên thiết bị.
         Những dữ liệu này là bí mật và chỉ có thể được sử dụng bởi các ứng dụng.
         Xóa ứng dụng sẽ xóa ngay các dữ liệu này.\n
         &#9888; Đăng nhập và mật khẩu không bao giờ được lưu trữ. Chúng chỉ được sử dụng trong quá trình xác thực an toàn (SSL) với một cá thể.
-    </string>
+    "</string>
     <string name="privacy_authorizations_title">Quyền:</string>
-    <string name="privacy_authorizations">-<b>ACCESS_NETWORK_STATE</b>: Được dùng để phát hiện nếu thiết bị được kết nối với mạng WIFI.\n
+    <string name="privacy_authorizations">"
+-<b>ACCESS_NETWORK_STATE</b>: Được dùng để phát hiện nếu thiết bị được kết nối với mạng WIFI.\n
          -<b>INTERNET</b>: Được sử dụng cho truy vấn đến một cá thể.\n
          -<b>WRITE_EXTERNAL_STORAGE</b>: Được sử dụng để lưu trữ phương tiện hoặc để di chuyển ứng dụng trên thẻ SD.\n
          -<b>READ_EXTERNAL_STORAGE</b>: Được sử dụng để thêm phương tiện vào toots.\n
          -<b>BOOT_COMPLETED</b>: Được sử dụng để bắt đầu dịch vụ thông báo.\n
-         -<b>WAKE_LOCK</b>: Được sử dụng trong dịch vụ thông báo.    </string>
+         -<b>WAKE_LOCK</b>: Được sử dụng trong dịch vụ thông báo.    "</string>
     <string name="privacy_API_authorizations_title">Quyền của API:</string>
-    <string name="privacy_API_authorizations">-<b>Đọc</b>: Đọc dữ liệu.\n
+    <string name="privacy_API_authorizations">"
+-<b>Đọc</b>: Đọc dữ liệu.\n
          -<b>Viết</b>: Đăng trạng thái và phương tiện tải lên cho các trạng thái.\n
          - <b> Thực hiện theo</b>: Theo dõi, hủy theo dõi, chặn, bỏ chặn.\n\n
-         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b>    </string>
+         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b>    "</string>
     <string name="privacy_API_title">Theo dõi và Thư viện</string>
-    <string name="privacy_API">Ứng dụng<b>không sử dụng công cụ theo dõi</b>(đo lường đối tượng, báo cáo lỗi, v. v.) và không chứa bất kỳ quảng cáo nào.\n\n
+    <string name="privacy_API">"
+Ứng dụng<b>không sử dụng công cụ theo dõi</b>(đo lường đối tượng, báo cáo lỗi, v. v.) và không chứa bất kỳ quảng cáo nào.\n\n
          Việc sử dụng thư viện được giảm thiểu:\n
          -<b>Glide </b>: Để quản lý phương tiện truyền thông\n
          -<b>Android-Job</b>: Để quản lý các dịch vụ\n
-         -<b>PhotoView</b>: Để quản lý hình ảnh\n    </string>
+         -<b>PhotoView</b>: Để quản lý hình ảnh\n    "</string>
     <string name="privacy_API_yandex_title">Dịch thổi còi</string>
-    <string name="privacy_API_yandex_authorizations">Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">"
+Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
         Yandex có chính sách riêng tư phù hợp của nó có thể được tìm thấy ở đây: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">Cảm ơn Stéphane vì đã có logo.
-    </string>
-    <string name="thanks_text_dev">Cảm ơn bạn:    </string>
+    "</string>
+    <string name="thanks_text_dev">"
+Cảm ơn bạn:    "</string>
     <string name="filter_regex">Lọc theo biểu thức thông thường</string>
     <string name="search">Tìm kiếm</string>
     <string name="delete">Xóa bỏ</string>
@@ -475,13 +479,14 @@ và %d toots khác để khám phá</item>
     <string name="account_moved_to">%1$s đã chuyển sang %2$s</string>
     <string name="show_boost_count">Hiển thị số lần tăng/số lần yêu thích</string>
     <string name="issue_login_title">Xác thực không hoạt động?</string>
-    <string name="issue_login_message"><b>Dưới đây là một số kiểm tra có thể giúp:</b>\n\n
+    <string name="issue_login_message">"
+<b>Dưới đây là một số kiểm tra có thể giúp:</b>\n\n
         - Kiểm tra không có lỗi chính tả trong tên dụ\n\n
         - Kiểm tra rằng trường hợp của bạn không xuống\n\n
         - Nếu bạn sử dụng xác thực hai yếu tố (2FA), vui lòng sử dụng liên kết ở cuối (khi tên cá thể được điền)\n\n
         - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
         - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
-    </string>
+    "</string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
@@ -667,14 +672,17 @@ và %d toots khác để khám phá</item>
         <item>1 ngày</item>
         <item>1 tuần</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">"
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    "</string>
+    <string name="showcase_uid">"
+        In this field, write the email that is attached to your Mastodon account.
+    "</string>
+    <string name="showcase_pwd">"
+        Last step is to enter your password and click on Login.
+    "</string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
@@ -835,6 +843,10 @@ và %d toots khác để khám phá</item>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
+    <string name="set_long_press_media">Long press to store media</string>
+    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>

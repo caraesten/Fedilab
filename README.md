@@ -11,7 +11,7 @@
 
 ## Download
 
-[<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80"/>](https://play.google.com/store/apps/details?id=fr.gouv.etalab.mastodon)
+[<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80"/>](https://play.google.com/store/apps/details?id=app.fedilab.android)
 &nbsp;&nbsp;[<img alt='Get it on Google Play' src='https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
 
 

@@ -4,11 +4,10 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 267
-        versionName "1.81.3"
+        versionCode 269
+        versionName "2.0.1"
         multiDexEnabled true
         renderscriptTargetApi 28 as int
         renderscriptSupportModeEnabled true
@@ -36,8 +35,10 @@ android {
     }
     productFlavors {
         fdroid {
+            applicationId "fr.gouv.etalab.mastodon"
         }
         playstore {
+            applicationId "app.fedilab.android"
         }
     }
     packagingOptions {
