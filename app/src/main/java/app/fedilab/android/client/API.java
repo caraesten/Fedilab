@@ -990,17 +990,21 @@ public class API {
 
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         statuses  = new TimelineCacheDAO(context, db).get(max_id);
-        Iterator<Status> i = statuses.iterator();
-        List<String> ids = new ArrayList<>();
-        while (i.hasNext()) {
-            Status s = i.next();
-            if( ids.contains(s.getId())) {
-                i.remove();
-                new TimelineCacheDAO(context, db).remove(s.getId());
-            }else{
-                ids.add(s.getId());
+
+        if( statuses != null){
+            Iterator<Status> i = statuses.iterator();
+            List<String> ids = new ArrayList<>();
+            while (i.hasNext()) {
+                Status s = i.next();
+                if( ids.contains(s.getId())) {
+                    i.remove();
+                    new TimelineCacheDAO(context, db).remove(s.getId());
+                }else{
+                    ids.add(s.getId());
+                }
             }
         }
+
         if( statuses == null){
             return getHomeTimeline(max_id);
         }else{
