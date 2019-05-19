@@ -864,7 +864,7 @@
     <string name="cached_status">منشور مُخزَّن</string>
     <string name="set_forward_tags">نقل الوسوم في الردود</string>
     <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
