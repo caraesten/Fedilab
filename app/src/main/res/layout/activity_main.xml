@@ -82,6 +82,16 @@
                         android:contentDescription="@string/delete_instance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"
+                        android:id="@+id/display_timeline"
+                        android:src="@drawable/ic_more_horiz_black"
+                        android:contentDescription="@string/display_timeline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp" />
                     <android.support.v7.widget.SearchView
                         android:background="@null"
                         android:id="@+id/toolbar_search"

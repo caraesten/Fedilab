@@ -530,6 +530,20 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
+        final CheckBox set_display_timeline_in_list = rootView.findViewById(R.id.set_display_timeline_in_list);
+        set_display_timeline_in_list.setChecked(display_timeline_in_list);
+
+        set_display_timeline_in_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_timeline_in_list.isChecked());
+                editor.apply();
+                ((MainActivity) context).displayTimelineMoreButton(set_display_timeline_in_list.isChecked());
+            }
+        });
+
 
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);

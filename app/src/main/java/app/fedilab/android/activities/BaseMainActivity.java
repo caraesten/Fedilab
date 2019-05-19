@@ -51,6 +51,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -101,6 +103,7 @@ import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
@@ -149,7 +152,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private String userId;
     private String instance;
     private PagerAdapter adapter;
-    private ImageView delete_instance;
+    private ImageView delete_instance, display_timeline;
     public static String displayPeertube = null;
     private int style;
     private Activity activity;
@@ -253,6 +256,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         delete_instance = findViewById(R.id.delete_instance);
+        display_timeline = findViewById(R.id.display_timeline);
         if( theme == Helper.THEME_LIGHT) {
             ImageView icon = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_button);
             ImageView close = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
@@ -264,11 +268,79 @@ public abstract class BaseMainActivity extends BaseActivity
             editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
             editText.setTextColor(getResources().getColor(R.color.dark_icon));
             changeDrawableColor(BaseMainActivity.this,delete_instance, R.color.dark_icon);
+            changeDrawableColor(BaseMainActivity.this,display_timeline, R.color.dark_icon);
         }
+
         tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = findViewById(R.id.viewpager);
 
+
+        display_timeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( timelines == null || timelines.size() <= 0 ){
+                    return;
+                }
+                PopupMenu popup = new PopupMenu(BaseMainActivity.this, display_timeline);
+                try {
+                    @SuppressLint("PrivateApi") Method method = popup.getMenu().getClass().getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+                    method.setAccessible(true);
+                    method.invoke(popup.getMenu(), true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                int i = 0;
+                for (ManageTimelines tl : timelines) {
+                    MenuItem item = null;
+                    switch (tl.getType()){
+                        case LIST:
+                            item = popup.getMenu().add(0, 0, Menu.NONE, tl.getListTimeline().getTitle());
+                            item.setIcon(R.drawable.ic_list_top_menu);
+                            break;
+                        case TAG:
+                            String name = (tl.getTagTimeline().getDisplayname()!= null && tl.getTagTimeline().getDisplayname().length() > 0)?tl.getTagTimeline().getDisplayname():tl.getTagTimeline().getName();
+                            item = popup.getMenu().add(0, 0, Menu.NONE, name);
+                            item.setIcon(R.drawable.ic_label_top_menu);
+                            break;
+                        case INSTANCE:
+                            item = popup.getMenu().add(0, 0, Menu.NONE, tl.getRemoteInstance().getHost());
+                            switch (tl.getRemoteInstance().getType()) {
+                                case "MASTODON":
+                                    item.setIcon(R.drawable.mastodon_icon_item);
+                                    break;
+                                case "PEERTUBE":
+                                    item.setIcon(R.drawable.peertube_icon);
+                                    break;
+                                case "GNU":
+                                    item.setIcon(R.drawable.ic_gnu_social);
+                                    break;
+                                case "MISSKEY":
+                                    item.setIcon(R.drawable.misskey);
+                                    break;
+                                case "PIXELFED":
+                                    item.setIcon(R.drawable.pixelfed);
+                                    break;
+                            }
+                            break;
+                    }
+                    if( item != null){
+                        int finalI = i;
+                        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                if( finalI < tabLayout.getTabCount() && tabLayout.getTabAt(finalI) != null) {
+                                    tabLayout.getTabAt(finalI).select();
+                                }
+                                return false;
+                            }
+                        });
+                    }
+                    i++;
+                }
+                popup.show();
+            }
+        });
 
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -370,6 +442,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     viewPager.setCurrentItem(tab.getPosition());
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     tootShow();
@@ -500,6 +573,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     viewPager.setCurrentItem(tab.getPosition());
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     tootShow();
@@ -625,6 +699,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         toolbarTitle.setVisibility(View.VISIBLE);
                         delete_instance.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.GONE);
+                        manageTimelineList(false);
                         tabLayout.setVisibility(View.GONE);
                     }
                 }else{
@@ -657,12 +732,14 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
+                    manageTimelineList(false);
                     delete_instance.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     tabLayout.setVisibility(View.VISIBLE);
                     delete_instance.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.GONE);
@@ -683,11 +760,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
+                    manageTimelineList(false);
                     tabLayout.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     tabLayout.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
@@ -703,17 +782,20 @@ public abstract class BaseMainActivity extends BaseActivity
                     if( main_app_container.getVisibility() == View.VISIBLE){
                         main_app_container.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.GONE);
+                        manageTimelineList(false);
                         tabLayout.setVisibility(View.GONE);
                         toolbarTitle.setVisibility(View.VISIBLE);
                     }else {
                         main_app_container.setVisibility(View.GONE);
                         viewPager.setVisibility(View.VISIBLE);
+                        manageTimelineList(true);
                         tabLayout.setVisibility(View.VISIBLE);
                         toolbarTitle.setVisibility(View.GONE);
                     }
                 }else {
                     toolbarTitle.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
+                    manageTimelineList(false);
                 }
                 delete_instance.setVisibility(View.GONE);
             }
@@ -982,11 +1064,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
+                    manageTimelineList(false);
                     tabLayout.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     tabLayout.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
@@ -1053,7 +1137,19 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-
+    private void manageTimelineList(boolean displayed){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
+        if( !display_timeline_in_list){
+            display_timeline.setVisibility(View.GONE);
+        }else{
+            if( displayed){
+                display_timeline.setVisibility(View.VISIBLE);
+            }else{
+                display_timeline.setVisibility(View.GONE);
+            }
+        }
+    }
 
     protected abstract void rateThisApp();
 
@@ -1124,6 +1220,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 toolbarTitle.setVisibility(View.VISIBLE);
                 delete_instance.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);
+                manageTimelineList(false);
                 tabLayout.setVisibility(View.GONE);
                 toolbarTitle.setText(instance);
             }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.HOME_TIMELINE_INTENT){
@@ -1277,6 +1374,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 Helper.switchLayout(BaseMainActivity.this);
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
+                manageTimelineList(true);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
                 delete_instance.setVisibility(View.GONE);
@@ -1408,6 +1506,7 @@ public abstract class BaseMainActivity extends BaseActivity
         main_app_container.setVisibility(View.VISIBLE);
 
         viewPager.setVisibility(View.GONE);
+        manageTimelineList(false);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
         delete_instance.setVisibility(View.GONE);
@@ -1670,7 +1769,13 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-
+    public void displayTimelineMoreButton(boolean displayed){
+        if( displayed ){
+            display_timeline.setVisibility(View.VISIBLE);
+        }else {
+            display_timeline.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void syncedTimelines(List<ManageTimelines> manageTimelines, int position) {
@@ -1679,6 +1784,7 @@ public abstract class BaseMainActivity extends BaseActivity
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final NavigationView navigationView = findViewById(R.id.nav_view);
+
 
         timelines = manageTimelines;
         if( position >= manageTimelines.size()){
@@ -1700,11 +1806,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 iconOnly = false;
             }
         }
+
         if( iconOnly && timelines.size() < 5){
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
         }else{
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
+
+        boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
+        displayTimelineMoreButton(display_timeline_in_list);
+
         adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
 
@@ -1715,6 +1826,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 viewPager.setCurrentItem(tab.getPosition());
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
+                manageTimelineList(true);
                 delete_instance.setVisibility(View.GONE);
                 Helper.switchLayout(BaseMainActivity.this);
                 if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.NOTIFICATION ||manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
@@ -1762,6 +1874,7 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onTabReselected(TabLayout.Tab tab) {
                 if( viewPager.getVisibility() == View.GONE){
                     viewPager.setVisibility(View.VISIBLE);
+                    manageTimelineList(true);
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     main_app_container.setVisibility(View.GONE);
