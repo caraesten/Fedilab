@@ -123,6 +123,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         if( theme == Helper.THEME_BLACK)
             setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
+        hideSystemUI();
         setContentView(R.layout.activity_media);
         action_bar_container = (RelativeLayout) findViewById(R.id.action_bar_container);
         mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
@@ -323,6 +324,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     isControlElementShown = !isControlElementShown;
                     if (thisControllShown) {
                         if(event.getY() > action_bar_container.getHeight()) {
+                            hideSystemUI();
                             action_bar_container.setVisibility(View.GONE);
                             if (media_description.getVisibility() == View.VISIBLE) {
                                 media_description.setVisibility(View.GONE);
@@ -588,6 +590,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     public void onUpdateProgress(int progressPercentage) {
         progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
         pbar_inf.setProgress(progressPercentage);
+    }
+
+
+    private void hideSystemUI() {
+        View mDecorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mDecorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
     }
 
 }
