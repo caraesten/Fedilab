@@ -451,12 +451,12 @@
     "</string>
     <string name="privacy_authorizations_title">التصريحات:</string>
     <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: تستخدم للكشف عن إذا كان الجهاز متصلا بشبكة واي فاي.\n
+        - <b>INTERNET</b>: تستخدم لطلبات الاستعلامات على مثيلات الخوادم.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: تستخدم لتخزين الوسائط أو نقل التطبيق على بطاقة SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: تستخدم لإضافة الوسائط في التبويقات.\n
+        - <b>BOOT_COMPLETED</b>: يستخدم لبدء تشغيل خدمة الإشعار.\n
+        - <b>WAKE_LOCK</b>: تستخدم في خدمة الإشعارات.
     "</string>
     <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API:</string>
     <string name="privacy_API_authorizations">"
@@ -864,7 +864,9 @@
     <string name="cached_status">منشور مُخزَّن</string>
     <string name="set_forward_tags">نقل الوسوم في الردود</string>
     <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>

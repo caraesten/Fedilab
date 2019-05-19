@@ -840,6 +840,8 @@ Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     <string name="set_forward_tags">Schlagwörter in Antworten weiterleiten</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

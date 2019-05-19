@@ -7,13 +7,13 @@
     <string name="action_about_instance">About the instance</string>
     <string name="action_privacy">Privacy</string>
     <string name="action_cache">Cache</string>
-    <string name="action_logout">Logout</string>
-    <string name="login">Login</string>
+    <string name="action_logout">Log ud</string>
+    <string name="login">Log ind</string>
     <!-- common -->
-    <string name="close">Close</string>
-    <string name="yes">Yes</string>
+    <string name="close">Luk</string>
+    <string name="yes">Ja</string>
     <string name="no">No</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Annuller</string>
     <string name="download">Download</string>
     <string name="download_file">Download %1$s</string>
     <string name="download_over">Download complete</string>
@@ -21,13 +21,13 @@
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="accounts">Accounts</string>
+    <string name="email">E-mail</string>
+    <string name="accounts">Konti</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
     <string name="token">Token</string>
-    <string name="save">Save</string>
-    <string name="restore">Restore</string>
+    <string name="save">Spar</string>
+    <string name="restore">Gendan</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
     <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
@@ -39,18 +39,18 @@
     <string name="change">Change</string>
     <string name="choose_picture">Select a picture…</string>
     <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
+    <string name="microphone">Mikrofon</string>
+    <string name="camera">Kamera</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
+    <string name="delete_all">Slet alle</string>
     <string name="translate_toot">Translate this toot.</string>
-    <string name="schedule">Schedule</string>
-    <string name="text_size">Text and icon sizes</string>
+    <string name="schedule">Tidsplan</string>
+    <string name="text_size">Tekst og ikon størrelser</string>
     <string name="text_size_change">Change the current text size:</string>
     <string name="icon_size_change">Change the current icon size:</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Næste</string>
+    <string name="previous">Tidligere</string>
     <string name="open_with">Open with</string>
     <string name="validate">Validate</string>
     <string name="media">Media</string>
@@ -71,10 +71,10 @@
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
-    <string name="local_menu">Local timeline</string>
-    <string name="global_menu">Federated timeline</string>
+    <string name="local_menu">Lokale tidslinje</string>
+    <string name="global_menu">Federated tidslinje</string>
     <string name="neutral_menu_title">Options</string>
-    <string name="favorites_menu">Favourites</string>
+    <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
@@ -82,16 +82,16 @@
     <string name="notifications">Notifications</string>
     <string name="follow_request">Follow requests</string>
     <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
+    <string name="settings">Indstillinger</string>
+    <string name="profile">Profil</string>
+    <string name="make_a_choice">Hvad ønsker du at gøre?</string>
+    <string name="delete_account_title">Slette en konto</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
     <string name="send_email">Send an email</string>
     <string name="choose_file">Please select a file</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="failed">Fejlede!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
@@ -111,11 +111,11 @@
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
     <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
+    <string name="more_action_2">Blok</string>
+    <string name="more_action_3">Rapport</string>
+    <string name="more_action_4">Fjern</string>
+    <string name="more_action_5">Kopi</string>
+    <string name="more_action_6">Dele</string>
     <string name="more_action_7">Mention</string>
     <string name="more_action_8">Timed mute</string>
     <string name="more_action_9">Delete &amp; re-draft</string>
@@ -176,9 +176,9 @@
         <item>Post to followers only</item>
         <item>Post to mentioned users only</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
+    <string name="no_draft">Ingen træk!</string>
     <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
+    <string name="choose_accounts">Vælg en konto</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
@@ -187,10 +187,10 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_developer">Udvikler:</string>
+    <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
+    <string name="about_code">Kildekoden: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -224,7 +224,7 @@
     <string name="notif_mention">mentioned you</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">fulgte dig</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
@@ -283,13 +283,13 @@
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
-    <string name="set_attachment_always">Always</string>
+    <string name="set_attachment_always">Altid</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
+    <string name="set_attachment_ask">Spørg</string>
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="load_attachment_spoiler">Vis flere…</string>
+    <string name="load_attachment_spoiler_less">Vis mindre…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
@@ -341,7 +341,7 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
+        <item>Faner</item>
         <item>Menu</item>
         <item>Tabs and menu</item>
     </string-array>
@@ -352,8 +352,8 @@
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
+        <item>Mørk</item>
+        <item>Lys</item>
         <item>Black</item>
     </string-array>
     <string-array name="settings_resize_picture">
@@ -364,16 +364,16 @@
     </string-array>
     <string name="set_led_colour">Set LED colour:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Blå</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Grøn</item>
+        <item>Rød</item>
+        <item>Gul</item>
+        <item>Hvid</item>
     </string-array>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
+    <string name="action_follow">Følg</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Block</string>
     <string name="action_unblock">Unblock</string>
@@ -382,7 +382,7 @@
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
+    <string name="action_search">Søg</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
@@ -851,6 +851,8 @@
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

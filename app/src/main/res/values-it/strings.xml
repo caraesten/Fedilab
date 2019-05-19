@@ -851,6 +851,8 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     <string name="set_forward_tags">Inoltra le etichette nelle risposte</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
