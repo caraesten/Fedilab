@@ -540,7 +540,6 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_timeline_in_list.isChecked());
                 editor.apply();
-                ((MainActivity) context).displayTimelineMoreButton(set_display_timeline_in_list.isChecked());
             }
         });
 
