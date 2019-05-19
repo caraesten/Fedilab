@@ -859,8 +859,8 @@
     <string name="set_forward_tags">Пересылать теги в ответах</string>
     <string name="set_long_press_media">Удерживайте, чтобы сохранить медиа</string>
     <string name="set_blur_sensitive">Размытие деликатного контента</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">Показывать список лент в списке</string>
+    <string name="display_timeline">Отображать ленты</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
