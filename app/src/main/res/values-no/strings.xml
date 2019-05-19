@@ -840,6 +840,8 @@ Siste steg er å oppgi passordet ditt, og trykke Logg inn.    "</string>
     <string name="set_forward_tags">Videresend emneord i svar</string>
     <string name="set_long_press_media">Langt trykk for å lagre media</string>
     <string name="set_blur_sensitive">Dim sensitiv media</string>
+    <string name="set_display_timeline_in_list">Display timelines in a list</string>
+    <string name="display_timeline">Display timelines</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
