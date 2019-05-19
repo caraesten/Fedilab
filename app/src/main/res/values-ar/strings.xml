@@ -607,7 +607,7 @@
     <string name="no_blocked_domain">ليس هناك أية نطاقات محظورة!</string>
     <string name="unblock_domain_confirm">إلغاء حظر النطاق</string>
     <string name="unblock_domain_confirm_message">أمتأكد أنك تريد إلغاء الحظر عن %s؟</string>
-    <string name="block_domain_confirm_message">أمتأكد أنك تريد حظر %s؟</string>
+    <string name="block_domain_confirm_message">أمتأكد أنك تريد حظر %s؟\n\n سوف لن تَرَ أيا من محتويات هذا النطاق على أي خيط زمني عام كان أو في إشعاراتك. سيتم إزالة متابِعيك مِن هذا النطاق.</string>
     <string name="blocked_domains">النطاقات المحظورة</string>
     <string name="block_domain">حظر النطاق</string>
     <string name="toast_block_domain">تم حظر النطاق</string>
@@ -861,9 +861,9 @@
     <string name="add_timeline">إضافة خيط زمني</string>
     <string name="set_sensitive_content">اعتبار الوسائط دائما كحساسة</string>
     <string name="gnu_instance">مثيل خادم GNU</string>
-    <string name="cached_status">Cached status</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
+    <string name="cached_status">منشور مُخزَّن</string>
+    <string name="set_forward_tags">نقل الوسوم في الردود</string>
+    <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>

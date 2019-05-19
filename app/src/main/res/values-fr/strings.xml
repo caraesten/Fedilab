@@ -846,8 +846,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="gnu_instance">Instance GNU</string>
     <string name="cached_status">Statut en cache</string>
     <string name="set_forward_tags">Transférer les tags dans les réponses</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_long_press_media">Appui long pour stocker les médias</string>
+    <string name="set_blur_sensitive">Flouter les médias sensibles</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
