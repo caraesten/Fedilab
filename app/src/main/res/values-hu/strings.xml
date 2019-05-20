@@ -847,10 +847,10 @@ Köszönet a következőknek:    "</string>
     <string name="gnu_instance">GNU szerver</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Címkék továbbítasa a válaszokban</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_long_press_media">Nyomd meg hosszan a média tárolásához</string>
+    <string name="set_blur_sensitive">Érzékeny média homályosítása</string>
+    <string name="set_display_timeline_in_list">Idővonalak megjelenítése listában</string>
+    <string name="display_timeline">Idővonalak megjelenítése</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

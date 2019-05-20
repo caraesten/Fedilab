@@ -848,8 +848,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_forward_tags">Transférer les tags dans les réponses</string>
     <string name="set_long_press_media">Appui long pour stocker les médias</string>
     <string name="set_blur_sensitive">Flouter les médias sensibles</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">Afficher les fils publics en liste</string>
+    <string name="display_timeline">Afficher les fils publics</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
