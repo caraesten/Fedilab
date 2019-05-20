@@ -90,7 +90,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private TextView undo_action;
     private  List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
-    private boolean actionCanBeApplied;
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
@@ -383,43 +382,40 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 break;
         }
         undo_action.setPaintFlags(undo_action.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        actionCanBeApplied = true;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                undo_container.setVisibility(View.GONE);
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                switch (manageTimelines.getType()){
+                    case TAG:
+                        new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
+                        new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                        break;
+                    case INSTANCE:
+                        new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getHost());
+                        new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                        break;
+                    case LIST:
+                        timeline = manageTimelines;
+                        new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST,null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new TimelinesDAO(getApplicationContext(), db).remove(timeline);
+                        break;
+                }
+                updated = true;
+            }
+        };
+        Handler handler = new Handler();
+        handler.postDelayed(runnable, 4000);
         undo_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timelines.add(position, manageTimelines);
                 adapter.notifyItemInserted(position);
                 undo_container.setVisibility(View.GONE);
-                actionCanBeApplied = false;
+                handler.removeCallbacks(runnable);
             }
         });
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                undo_container.setVisibility(View.GONE);
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                if( actionCanBeApplied){
-                    switch (manageTimelines.getType()){
-                        case TAG:
-                            new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
-                            new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
-                            break;
-                        case INSTANCE:
-                            new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getHost());
-                            new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
-                            break;
-                        case LIST:
-                            timeline = manageTimelines;
-                            new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST,null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new TimelinesDAO(getApplicationContext(), db).remove(timeline);
-                            break;
-                    }
-                    updated = true;
-                }
-            }
-        }, 2000);
-
     }
 
     @Override
