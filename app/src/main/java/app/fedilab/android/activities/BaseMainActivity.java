@@ -1061,7 +1061,10 @@ public abstract class BaseMainActivity extends BaseActivity
             if( openCollectiveItem != null){
                 openCollectiveItem.setVisible(false);
             }
-
+            MenuItem partnerShipItem = navigationView.getMenu().findItem(R.id.nav_partnership);
+            if( partnerShipItem != null){
+                partnerShipItem.setVisible(false);
+            }
         }
 
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
