@@ -72,6 +72,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Filters;
@@ -1055,6 +1056,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
             }
         }
+        if (!BuildConfig.DONATIONS) {
+            MenuItem openCollectiveItem = navigationView.getMenu().findItem(R.id.nav_opencollective);
+            if( openCollectiveItem != null){
+                openCollectiveItem.setVisible(false);
+            }
+
+        }
 
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
@@ -1135,6 +1143,8 @@ public abstract class BaseMainActivity extends BaseActivity
             // Retrieves filters
             new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+
+
     }
 
     private void manageTimelineList(boolean displayed){
@@ -1703,6 +1713,7 @@ public abstract class BaseMainActivity extends BaseActivity
             Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
         }
     }
+
 
 
     @Override

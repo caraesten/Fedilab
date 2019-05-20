@@ -36,9 +36,11 @@ android {
     productFlavors {
         fdroid {
             applicationId "fr.gouv.etalab.mastodon"
+            buildConfigField "boolean", "DONATIONS", "true"
         }
         playstore {
             applicationId "app.fedilab.android"
+            buildConfigField "boolean", "DONATIONS", "false"
         }
     }
     packagingOptions {
