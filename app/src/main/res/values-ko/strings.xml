@@ -505,8 +505,8 @@
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
+    <string name="poxy_login">로그인</string>
+    <string name="poxy_password">비밀번호</string>
     <string name="set_theme">Theme:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
@@ -609,15 +609,15 @@
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
+    <string name="channel">채널</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
+    <string name="videos">동영상</string>
+    <string name="channels">채널</string>
     <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
+    <string name="information">정보</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
@@ -654,7 +654,7 @@
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
+    <string name="refresh">새로고침</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
     <string name="delete_domain">Delete the blocked domain</string>
@@ -667,12 +667,12 @@
     <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
         <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>30 분</item>
+        <item>1 시간</item>
+        <item>6 시간</item>
+        <item>12 시간</item>
+        <item>1 일</item>
+        <item>1 주</item>
     </string-array>
     <string name="showcase_instance">"
         In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
