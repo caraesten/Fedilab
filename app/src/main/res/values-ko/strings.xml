@@ -807,7 +807,7 @@
     <string name="poll">Poll</string>
     <string name="polls">Polls</string>
     <string name="create_poll">Create a poll</string>
-    <string name="poll_choice_1">Choice 1</string>
+    <string name="poll_choice_1">선택 1</string>
     <string name="poll_choice_2">Choice 2</string>
     <string name="poll_choice_3">Choice 3</string>
     <string name="poll_choice_4">Choice 4</string>
@@ -820,10 +820,10 @@
     <string name="notif_poll">A poll you have voted in has ended</string>
     <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_categories">카테고리</string>
     <string name="settings_category_notif_news">News</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_advanced">고급</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
@@ -857,13 +857,13 @@
         <item>Multiple choices</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 분</item>
+        <item>30 분</item>
+        <item>1 시간</item>
+        <item>6 시간</item>
+        <item>1 일</item>
+        <item>3 일</item>
+        <item>7 일</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
