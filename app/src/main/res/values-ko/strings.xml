@@ -726,7 +726,7 @@
     <string name="categories">Categories</string>
     <string name="license">License</string>
     <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="language">언어</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
