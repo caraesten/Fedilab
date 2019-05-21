@@ -186,10 +186,10 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_developer">개발자:</string>
+    <string name="about_license">라이센스: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
+    <string name="about_code">소스 코드: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -337,8 +337,8 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
+        <item>탭</item>
+        <item>메뉴</item>
         <item>Tabs and menu</item>
     </string-array>
     <string-array name="settings_translation">
@@ -350,7 +350,7 @@
     <string-array name="settings_theme">
         <item>Dark</item>
         <item>Light</item>
-        <item>Black</item>
+        <item>블랙</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>No</item>
@@ -395,7 +395,7 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_header_custom_sharing">제목</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
     <string name="description_header_custom_sharing">Description</string>
     <string name="description_hint_custom_sharing">Description&#8230;</string>
@@ -462,11 +462,11 @@
         Thank you to:
     "</string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">검색</string>
+    <string name="delete">삭제</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
+    <string name="action_lists">목록</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
