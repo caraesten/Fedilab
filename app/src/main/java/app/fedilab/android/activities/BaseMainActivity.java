@@ -65,6 +65,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -106,6 +107,7 @@ import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
@@ -1147,6 +1149,15 @@ public abstract class BaseMainActivity extends BaseActivity
             new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
+        /* Clean cache for statuses */
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(10));
+                String dateString = Helper.dateToString(date);
+                new TimelineCacheDAO(BaseMainActivity.this, db).removeAfterDate(dateString);
+            }
+        });
 
     }
 
