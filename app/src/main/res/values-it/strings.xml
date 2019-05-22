@@ -171,9 +171,9 @@
     <string name="toot_reply_content_title">Stai rispondendo a questo toot:</string>
     <string name="toot_sensitive">Contenuto sensibile?</string>
     <string-array name="toot_visibility">
-        <item>Posta nella timeline pubblica</item>
-        <item>Non postare nella timeline pubblica</item>
-        <item>Posta solo nei follower</item>
+        <item>Pubblica nella timeline pubblica</item>
+        <item>Non pubblicare nella timeline pubblica</item>
+        <item>Pubblica solo tra i follower</item>
         <item>Posta solo agli utenti menzionati</item>
     </string-array>
     <string name="no_draft">Nessuna bozza!</string>
