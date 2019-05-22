@@ -395,10 +395,9 @@
     <string name="set_resize_picture">Prilagajanje velikosti slik</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Potisna obvestila</string>
-    <string name="settings_popup_message">"
-        Prosimo, potrdite potisna obvestila, ki jih želite prejemati.
+    <string name="settings_popup_message">        Prosimo, potrdite potisna obvestila, ki jih želite prejemati.
         Te nastavitve lahko kasneje omogočite ali onemogočite v nastavitvah (na zavihku Obvestila).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Za neprebrane objave Toot domače časovnice?</string>
     <string name="settings_popup_notification">Za neprebrana obvestila?</string>
     <!-- CACHE -->
@@ -435,44 +434,38 @@
     <string name="owner_cached_toots_empty">V podatkovni zbirki ni objav Toot. Prosimo, uporabite gumb Sinhroniziraj v meniju, da jih pridobite.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zabeleženi podatki</string>
-    <string name="privacy_data">"
-        Le osnovni podatki o računih se hranijo na napravi.
+    <string name="privacy_data">        Le osnovni podatki o računih se hranijo na napravi.
         Ti podatki so strogo zaupne narave in jih lahko uporablja le aplikacija.
         Ob brisanju aplikacije takoj odstranite tudi vse podatke.\n
         &#9888; Prijavni podatki in gesla se nikoli ne shranjujejo. Uporabljeni so le med varno avtentifikacijo (SSL) z instanco.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Dovoljenja:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Se uporablja za zaznavo ali je naprava povezana v omrežje WiFi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Se uporablja za zaznavo ali je naprava povezana v omrežje WiFi.\n
         - <b>INTERNET</b>: Se uporablja za poizvedbe na strežniški instanci.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Se uporablja za shranjevanje vsebin ali za možnost premika aplikacije na SD-kartico.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Se uporablja za dodajanje vsebin v objave Toot.\n
         - <b>BOOT_COMPLETED</b>: Se uporablja za zagon storitve za obveščanje.\n
         - <b>WAKE_LOCK</b>: Se uporalbja med delovanjem storitve za obveščanje.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Dovoljenja za API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Branje</b>: Branje podatkov.\n
+    <string name="privacy_API_authorizations">        - <b>Branje</b>: Branje podatkov.\n
         - <b>Pisanje</b>: Objava statusov in prilaganje vsebin le-tem.\n
         - <b>Spremljanje</b>: Spremljanje, prekinitev spremljanj, blokiranje, odblokiranje.\n\n
         <b>&#9888; Te akcije se izvedejo le, ko jih zahteva uporabnik.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Sledenje in knjižnice</string>
-    <string name="privacy_API">"
-        Aplikacija <b>ne uporablja analitičnih orodij</b> (merjenje občinstva, spremljanje napak, itd.) in ne vsebuje oglasov.\n\n
+    <string name="privacy_API">        Aplikacija <b>ne uporablja analitičnih orodij</b> (merjenje občinstva, spremljanje napak, itd.) in ne vsebuje oglasov.\n\n
         Uporaba knjižnic je omejena na: \n
         - <b>Glide</b>: za uporavljanje medijskih vsebin\n
         - <b>Android-Job</b>: za upravljanje sistemskih storitev\n
         - <b>PhotoView</b>: za upravljanje slik\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Prevajanje objav Toot</string>
-    <string name="privacy_API_yandex_authorizations">"
-        Aplikacija omogoča prevajanje objav Toot s pomočjo nastavitev jezika vaše naprave in API-vmesnika Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        Aplikacija omogoča prevajanje objav Toot s pomočjo nastavitev jezika vaše naprave in API-vmesnika Yandex.\n
         Yandex ima svoj Pravilnik o zasebnosti, ki ga lahko najdete na naslovu: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Zahvala:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Zahvala:
+    </string>
     <string name="filter_regex">Filtriraj s pomočjo regularnih izrazov</string>
     <string name="search">Išči</string>
     <string name="delete">Izbriši</string>
@@ -493,14 +486,13 @@
     <string name="account_moved_to">%1$s je premaknjen na %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
     <string name="issue_login_title">Prijava ne deluje?</string>
-    <string name="issue_login_message">"
-        <b>Sledi nekaj točk, ki so vam lahko v pomoč:</b>\n\n
+    <string name="issue_login_message">        <b>Sledi nekaj točk, ki so vam lahko v pomoč:</b>\n\n
         - Preverite, da nimate napak v imenu instance.\n\n
         - Preverite, da je instanca deujoča.\n\n
         - Če uporabljate dvostopenjsko prijavljanje (2FA), uporabite spodnjo povezavo (zatem, ko je vpisano ime instance).\n\n
         - To povezavo lahko uporabite tudi brez dvostopenjskega prijavljanja.\n\n
         - Če našteto ne pomaga, prosimo, prijavite napako na GitLab naslovu: https://gitlab.com/tom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Vsebina je naložena. Pritisnite tu, da jo prikažete.</string>
     <string name="data_export_start">Ta akcija lahko traja precej dolgo. Obvestili vas bomo, ko bo zaključeno.</string>
     <string name="data_export_running">Se še izvaja. Prosimo, počakajte …</string>
@@ -686,17 +678,14 @@
         <item>1 dan</item>
         <item>1 teden</item>
     </string-array>
-    <string name="showcase_instance">"
-        V to polje vpišite ime gostitelja vaše instance.\nNaprimer: Če ste ustarili račun na strežniku: https://mastodon.social\nVpišite le ime:<b>mastodon.social</b> (brez https://)\n
+    <string name="showcase_instance">        V to polje vpišite ime gostitelja vaše instance.\nNaprimer: Če ste ustarili račun na strežniku: https://mastodon.social\nVpišite le ime:<b>mastodon.social</b> (brez https://)\n
         Ob vpisu prvih nekaj črk vam bomo podali namige možnih imen gostiteljev.\n\n
         ⚠ Gumb Prijava deluje le, ko je instanca strežnika veljavna in delujoča!
-    "</string>
-    <string name="showcase_uid">"
-        V to polje vpišite naslov e-pošte, ki je vezana na vaš račun Mastodon.
-    "</string>
-    <string name="showcase_pwd">"
-        Zadnji korak je vpis gesla in potrditev s pritiskom na gumb Prijava.
-    "</string>
+    </string>
+    <string name="showcase_uid">        V to polje vpišite naslov e-pošte, ki je vezana na vaš račun Mastodon.
+    </string>
+    <string name="showcase_pwd">        Zadnji korak je vpis gesla in potrditev s pritiskom na gumb Prijava.
+    </string>
     <string name="more_information">Več informacij</string>
     <string name="showcase_2FA">Uporabite to povezavo, če uporabljate dvostopenjsko prijavljanje (2FA).\nLahko jo uporabite tudi, če tu ne želite vnašati svojih prijavnih podatkov.</string>
     <!-- languages not translated -->
