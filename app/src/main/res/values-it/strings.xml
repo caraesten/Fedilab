@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Ridimensiona foto</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notifiche push</string>
-    <string name="settings_popup_message">"
-Per favore, conferma le notifiche push che vuoi ricevere.
+    <string name="settings_popup_message">Per favore, conferma le notifiche push che vuoi ricevere.
    Puoi abilitare o disabilitar queste notifiche dopo nelle impostazioni (Scheda notifiche).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Per i toot non letti nella timeline home?</string>
     <string name="settings_popup_notification">Per le notifiche non lette?</string>
     <!-- CACHE -->
@@ -427,44 +426,38 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     <string name="owner_cached_toots_empty">Nessun toot è stato trovato nel database. Per favore, utilizza il pulsante di sincronizzazione dal menu per recuperarli.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Dati registrati</string>
-    <string name="privacy_data">"
-        Sul dispositivo sono salvati sono le informazioni basilari degli account.
+    <string name="privacy_data">        Sul dispositivo sono salvati sono le informazioni basilari degli account.
         TQuesti sono strettamente confidenziali e possono essere utilizzati sono dall\'applicazione.
         Eliminando l\'applicazione rimuoverà immediatamente questi dati.\n
         &#9888; Login e password non vengono mai salvati. Vengono solo usati durante una autenticazione sicura (SSL) con un istanza.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Permessi:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Usato per determinare se il dispositivo è connesso ad una rete WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Usato per determinare se il dispositivo è connesso ad una rete WIFI.\n
         - <b>INTERNET</b>: Usato per le ricerche di un isatnza.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Usato per salvare i media o per spostare l\'app su una scheda SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Usato per aggiungere media ai toot.\n
         - <b>BOOT_COMPLETED</b>: Usato per avviare il servizio di notifica.\n
         - <b>WAKE_LOCK</b>: Usato durante il servizio di notifica.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Permessi API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Read</b>: Legge dati.\n
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Legge dati.\n
         - <b>Write</b>: Posta gli stati e carica i media per gli stati.\n
         - <b>Follow</b>: Seguire, non seguire, bloccare, sbloccare.\n\n
         <b>&#9888; Queste azioni sono utilizzare solo quando l\'utente le richiede.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Tracciamento e librerie</string>
-    <string name="privacy_API">"
-        L\'applicazione <b>non utilizza tool di tracciamento</b> (audience measurement, error reporting, ecc.) e non contiene pubblicità.\n\n
+    <string name="privacy_API">        L\'applicazione <b>non utilizza tool di tracciamento</b> (audience measurement, error reporting, ecc.) e non contiene pubblicità.\n\n
         L\'utilizzo di librerie è minimizzato: \n
         - <b>Glide</b>: Per gestire i media\n
         - <b>Android-Job</b>: Per gestire i servizi\n
         - <b>PhotoView</b>: Per gestire le immagini\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Traduzione del toot</string>
-    <string name="privacy_API_yandex_authorizations">"
-        L\'applicazione offre la possibilità di tradurre i toot utilizzando il dispositivo locale e le API di Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        L\'applicazione offre la possibilità di tradurre i toot utilizzando il dispositivo locale e le API di Yandex.\n
         Yandex  ha la propria privacy policy che può essere trovata qui: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Grazie anche a:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Grazie anche a:
+    </string>
     <string name="filter_regex">Filtra tramite espressioni regolari</string>
     <string name="search">Cerca</string>
     <string name="delete">Elimina</string>
@@ -485,14 +478,13 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     <string name="account_moved_to">%1$s è stato spostato su %2$s</string>
     <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
     <string name="issue_login_title">L\'autenticazione non funziona?</string>
-    <string name="issue_login_message">"
-        <b>Qui ci sono alcuni controlli che possono aiutare:</b>\n\n
+    <string name="issue_login_message">        <b>Qui ci sono alcuni controlli che possono aiutare:</b>\n\n
         - Controlla che non ci siano errori di trascrizione nel nome dell\'istanza\n\n
         - Controlla che la tua istanza sia raggiungibile\n\n
         - Se usi l\'autenticazione a due fattori (2FA), usa il link in basso (una volta che il nome dell\'istanza è stato inserito)\n\n
         - Puoi anche usare questo link senza usare la 2FA\n\n
         - Se ancora continua a non funzionare, apri un issue su Github all\'indirizzo https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Il media è stato caricato. Fai clic qui per visualizzarlo.</string>
     <string name="data_export_start">Questa azione richiede molto tempo. Verrai avvisato quando sarà finita.</string>
     <string name="data_export_running">Ancora in corso, attendere prego…</string>
@@ -678,17 +670,14 @@ Per favore, conferma le notifiche push che vuoi ricevere.
         <item>1 giorno</item>
         <item>1 settimana</item>
     </string-array>
-    <string name="showcase_instance">"
-        In questo campo, devi scrivere il nome della tua istanza.\nPer esempio, se hai creato il tuo account su https://mastodon.social\nscrivi solo <b>mastodon.social</b> (senza https://)\n
+    <string name="showcase_instance">        In questo campo, devi scrivere il nome della tua istanza.\nPer esempio, se hai creato il tuo account su https://mastodon.social\nscrivi solo <b>mastodon.social</b> (senza https://)\n
         Puoi iniziare a digitare le prime lettere ed i nomi verranno suggeriti.\n\n
         ⚠ Il pulsante di accesso funzionerà solo se il nome dell\'istanza è valido e l\'istanza è online!
-    "</string>
-    <string name="showcase_uid">"
-        In questo campo, scrivi l\'indirizzo email collegato al tuo account Mastodon.
-    "</string>
-    <string name="showcase_pwd">"
-        L\'ultimo passaggio è inserire la tua password e premere Accedi.
-    "</string>
+    </string>
+    <string name="showcase_uid">        In questo campo, scrivi l\'indirizzo email collegato al tuo account Mastodon.
+    </string>
+    <string name="showcase_pwd">        L\'ultimo passaggio è inserire la tua password e premere Accedi.
+    </string>
     <string name="more_information">Più informazioni</string>
     <string name="showcase_2FA">Se utilizzi il 2FA (Autenticazione a 2 fattori), hai bisogno di questo collegamento.\nPuoi anche usarlo se non vuoi inserire le tue credenziali qui.</string>
     <!-- languages not translated -->

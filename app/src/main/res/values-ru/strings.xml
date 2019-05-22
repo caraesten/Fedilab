@@ -395,10 +395,9 @@
     <string name="set_resize_picture">Изменить размер изображений</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
-    <string name="settings_popup_message">"
-        Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
+    <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
         Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
     <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
@@ -435,44 +434,38 @@
     <string name="owner_cached_toots_empty">В базе данных тутов не найдено. Пожалуйста, используйте кнопку синхронизации в меню для их получения.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Записанные данные</string>
-    <string name="privacy_data">"
-        На устройстве хранятся только основные сведения из аккаунтов.
+    <string name="privacy_data">        На устройстве хранятся только основные сведения из аккаунтов.
         Эти данные являются строго конфиденциальными и могут использоваться только приложением.
         Удаление приложения немедленно удалит эти данные.\n
         &#9888; Логин и пароли никогда не сохраняются. Они используются только во время безопасной аутентификации (SSL) с сервером.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Разрешения:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Используется для определения, подключено ли устройство к сети WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Используется для определения, подключено ли устройство к сети WIFI.\n
         - <b>INTERNET</b>: Используется для запросов к серверу.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Используется для хранения мультимедиа или для перемещения приложения на SD-карту.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления мультимедиа в туты.\n
         - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомлений.\n
         - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Разрешения API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Чтение</b>: Чтение данных.\n
+    <string name="privacy_API_authorizations">        - <b>Чтение</b>: Чтение данных.\n
         - <b>Запись</b>: Публикация статусов и загрузка файлов для статусов.\n
         - <b>Подписка</b>: Подписка, отписка, блокировка, разблокировка.\n\n
         <b>&#9888; Эти действия выполняются только при запросе их пользователем.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Отслеживание и библиотеки</string>
-    <string name="privacy_API">"
-        Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
+    <string name="privacy_API">        Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
         Использование библиотек сведено к минимуму: \n
         - <b>Glide</b>: Для управления файлами\n
         - <b>Android-Job</b>: Для управления сервисами\n
         - <b>PhotoView</b>: Для управления изображениями\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Перевод тутов</string>
-    <string name="privacy_API_yandex_authorizations">"
-        Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
+    <string name="privacy_API_yandex_authorizations">        Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
         Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Спасибо:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Спасибо:
+    </string>
     <string name="filter_regex">Отфильтровать по регулярным выражениям</string>
     <string name="search">Поиск</string>
     <string name="delete">Удалить</string>
@@ -493,14 +486,13 @@
     <string name="account_moved_to">%1$s был перенесен в %2$s</string>
     <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
     <string name="issue_login_title">Аутентификация не работает?</string>
-    <string name="issue_login_message">"
-        <b>Вот некоторые подсказки, которые могут помочь:</b>\n\n
+    <string name="issue_login_message">        <b>Вот некоторые подсказки, которые могут помочь:</b>\n\n
         - Проверьте, нет ли орфографических ошибок в имени сервера\n\n
         - Убедитесь в доступности вашего сервера\n\n
         - Если вы используете двухфакторную аутентификацию (2FA), используйте ссылку внизу (после заполнения имени сервера)\n\n
         - Вы также можете использовать эту ссылку без использования 2FA\n\n
         - Если все перечисленное вам не помогло, создайте проблему на Github: https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
     <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
     <string name="data_export_running">Все еще работает, подождите…</string>
@@ -686,17 +678,14 @@
         <item>1 день</item>
         <item>1 неделя</item>
     </string-array>
-    <string name="showcase_instance">"
-        В этом поле вам нужно указать имя хоста вашего сервера.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nJust write <b>mastodon.social</b> (без https://)\n
+    <string name="showcase_instance">        В этом поле вам нужно указать имя хоста вашего сервера.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nJust write <b>mastodon.social</b> (без https://)\n
         Вы можете начать писать первые буквы, чтобы получить предложения имен.\n\n
         ⚠ Кнопка входа в систему будет работать только случае, если сервер включен и его имя корректно!
-    "</string>
-    <string name="showcase_uid">"
-        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
-    "</string>
-    <string name="showcase_pwd">"
-        Последний шаг - введите свой пароль и нажмите Войти.
-    "</string>
+    </string>
+    <string name="showcase_uid">        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
+    </string>
+    <string name="showcase_pwd">        Последний шаг - введите свой пароль и нажмите Войти.
+    </string>
     <string name="more_information">Дополнительная информация</string>
     <string name="showcase_2FA">Если вы используете 2FA (двухфакторную аутентификацию), вам нужно использовать эту ссылку.\nТакже вы можете ее использовать, если не хотите вводить здесь свои учетные данные.</string>
     <!-- languages not translated -->

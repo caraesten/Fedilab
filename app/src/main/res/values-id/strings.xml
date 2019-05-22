@@ -316,7 +316,7 @@
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
     <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
     <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
     <string name="settings_time_from">Antara</string>
@@ -383,10 +383,9 @@
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Tolak pemberitahuan</string>
-    <string name="settings_popup_message">"
-       Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
+    <string name="settings_popup_message">       Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
         Anda dapat mengaktifkan atau menonaktifkan pemberitahuan ini di setelan (Tab pemberitahuan).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Untuk kutipan yang belum dibaca di beranda kronologi?</string>
     <string name="settings_popup_notification">Untuk pemberitahuan yang belum dibaca?</string>
     <!-- CACHE -->
@@ -423,45 +422,39 @@
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data terekam</string>
-    <string name="privacy_data">"
-        Hanya informasi dasar dari akun yang tersimpan pada perangkat.
+    <string name="privacy_data">        Hanya informasi dasar dari akun yang tersimpan pada perangkat.
         Data ini sangat rahasia dan hanya bisa digunakan oleh aplikasi.
         Menghapus aplikasi segera menghapus data ini.\n
         &#9888; masuk dan kata sandi tidak pernah disimpan. Mereka hanya digunakan selama otentikasi aman (SSL) dengan sebuah tuntutan.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Izin:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Digunakan untuk mendeteksi perangkat terhubung ke jaringan WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Digunakan untuk mendeteksi perangkat terhubung ke jaringan WIFI.\n
         - <b>INTERNET</b>: Digunakan untuk menanyakan suatu hal.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Digunakan untuk menyimpan media atau memindahkan aplikasi ke kartu SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Digunakan untuk menambahkan media ke kutipan.\n
         - <b>BOOT_COMPLETED</b>: Digunakan untuk memulai layanan pemberitahuan.\n
         - <b>WAKE_LOCK</b>: Digunakan selama layanan pemberitahuan.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Izin API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Read</b>: Membaca data.\
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Membaca data.\
         - <b>Write</b>: Posting status dan unggah media untuk status.\n
         - <b>Follow</b>: Ikuti, berhenti ikuti, blokir, buka blokir.\n\n
         <b>&#9888; Tindakan ini hanya saat pengguna memintanya.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
-    <string name="privacy_API">"
-        Aplikasi <b>tidak menggunakan alat pelacak</b> (pengukuran pemirsa, kesalahan pelaporan, dll.) dan tidak berisi iklan apapun.\n\n
+    <string name="privacy_API">        Aplikasi <b>tidak menggunakan alat pelacak</b> (pengukuran pemirsa, kesalahan pelaporan, dll.) dan tidak berisi iklan apapun.\n\n
         Penggunaan perpustakaan diminimalkan: \n
         - <b>Luncuran</b>: Untuk mengelola media\n
         - <b>Kerja Android</b>: Untuk mengelola layanan\n
         - <b>Tampilan Foto</b>: Untuk mengelola gambar\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Terjemahan dari kutipan</string>
-    <string name="privacy_API_yandex_authorizations">"
-        Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
         Yandex memiliki kebijakan privasi yang tepat yang dapat ditemukan disini: 
 https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Terima kasih untuk:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Terima kasih untuk:
+    </string>
     <string name="filter_regex">Saring dengan ekspresi reguler</string>
     <string name="search">Cari</string>
     <string name="delete">Hapus</string>
@@ -482,15 +475,14 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="account_moved_to">%1$s telah dipindahkan ke%2$s</string>
     <string name="show_boost_count">Tampilkan dorongan/jumlah favorit</string>
     <string name="issue_login_title">Otentikasi tidak bekerja?</string>
-    <string name="issue_login_message">"
-<b>Disini ada beberapa pemeriksaan untuk membantu:
+    <string name="issue_login_message"><b>Disini ada beberapa pemeriksaan untuk membantu:
 </b>\n\n
         - Periksa bahwa tidak ada kealahan dalam pengejaan contoh nama\n\n
         - Periksa bahwa contoh tidak down\n\n
         - Jika anda menggunakan two-factor authentication (2FA), gunakan link dibawah ini (begitu nama contoh terisi)\n\n
         - Anda juga dapat menggunakan link tersebut tanpa menggunakan 2FA\n\n
         - Jika hal tersebut tidak bekerja, anda dapat melaporkan masalah tersebut pada Github di https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Media telah berhasil dimuat. Klik disini untuk menampilkannya.</string>
     <string name="data_export_start">Tindakan cukup lama, Anda akan mendapatkan notifikasi ketika tindakan ini telah selesai.</string>
     <string name="data_export_running">Masih berjalan, tunggu sebentar…</string>
@@ -676,17 +668,14 @@ https://yandex.ru/legal/confidential/?lang=en
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">"
-        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    "</string>
-    <string name="showcase_uid">"
-        In this field, write the email that is attached to your Mastodon account.
-    "</string>
-    <string name="showcase_pwd">"
-        Last step is to enter your password and click on Login.
-    "</string>
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->

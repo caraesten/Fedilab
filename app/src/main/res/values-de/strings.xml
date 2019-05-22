@@ -387,8 +387,7 @@
     <string name="set_resize_picture">Bildgröße verändern</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push Benachrichtigungen</string>
-    <string name="settings_popup_message">"
-Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest. Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.    "</string>
+    <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest. Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.    </string>
     <string name="settings_popup_timeline">Für ungelesene Toots auf der Startleiste?</string>
     <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
     <!-- CACHE -->
@@ -427,35 +426,31 @@ Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest. Diese kö
     <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Drücke oben auf den Synchronisierungsknopf um sie abzurufen.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Aufgezeichnete Daten</string>
-    <string name="privacy_data">"
-Auf dem Gerät werden nur allgemeine Informationen aus den Konten gespeichert.
+    <string name="privacy_data">Auf dem Gerät werden nur allgemeine Informationen aus den Konten gespeichert.
 Diese Daten sind streng vertraulich und können nur von der Anwendung verwendet werden.
 Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
-&#9888; Anmeldedaten und Passwörter werden nie gespeichert. Sie werden nur bei einer sicheren Authentifizierung (SSL) mit einer Instanz verwendet."</string>
+&#9888; Anmeldedaten und Passwörter werden nie gespeichert. Sie werden nur bei einer sicheren Authentifizierung (SSL) mit einer Instanz verwendet.</string>
     <string name="privacy_authorizations_title">Berechtigungen:</string>
-    <string name="privacy_authorizations">"- <b>ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
+    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
              - <b>INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
              - <b>WRITE_EXTERNAL_STORAGE</b>: Dateien speichern oder App auf SD Karte verschieben.\n
              - <b>READ_EXTERNAL_STORAGE</b>: Dateianhänge für toots.\n
              - <b>BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
-             - <b>WAKE_LOCK</b>: Benachrichtigungsdienst."</string>
+             - <b>WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
     <string name="privacy_API_authorizations_title">API Berechtigungen:</string>
-    <string name="privacy_API_authorizations">"
-• <b>Lesen</b>: Daten lesen.\n
+    <string name="privacy_API_authorizations">• <b>Lesen</b>: Daten lesen.\n
 • <b>Schreiben</b>: Beiträge veröffentlichen und Dateien hochladen.\n
 • <b>Folgen</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n\n
-<b>&#9888; Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b>    "</string>
+<b>&#9888; Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b>    </string>
     <string name="privacy_API_title">Tracking und Bibliotheken</string>
-    <string name="privacy_API">"
-Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
+    <string name="privacy_API">Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
         Die Nutzung von Bibliotheken ist minimiert:\n
         -<b>Glide</b>: Medien verwalten\n
         -<b>Android-Job</b>: Dienste verwalten\n
         -<b>PhotoView</b>: Bilder verwalten\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
-    <string name="privacy_API_yandex_authorizations">"
-Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die Sie hier finden können: https://yandex.ru/legal/confidential/?lang=en"</string>
+    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die Sie hier finden können: https://yandex.ru/legal/confidential/?lang=en</string>
     <string name="thanks_text_dev">Danke an:</string>
     <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
     <string name="search">Suche</string>
@@ -477,13 +472,12 @@ Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Ge
     <string name="account_moved_to">%1$s wurde verschoben nach %2$s</string>
     <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
     <string name="issue_login_title">Authentifizierung funktioniert nicht?</string>
-    <string name="issue_login_message">"
-<b>Hier sind einige Vorschläge die helfen könnten:</b>\n\n
+    <string name="issue_login_message"><b>Hier sind einige Vorschläge die helfen könnten:</b>\n\n
 - Prüfe ob der Instanzname richtig geschrieben ist\n\n
 - Prüfe ob die Instanz online ist\n\n
 - Benutze den Link unten falls du Zweifaktor-Authentifizierung (2FA) nutzt (nachdem der Instanzname eingetragen wurde)\n\n
 - Du kannst diesen Link auch ohne 2FA benutzen\n\n
-- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues    "</string>
+- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues    </string>
     <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
     <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
     <string name="data_export_running">Läuft noch, bitte warten…</string>
@@ -669,15 +663,12 @@ Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Ge
         <item>1 Tag</item>
         <item>1 Woche</item>
     </string-array>
-    <string name="showcase_instance">"
-In diesem Feld müssen Sie Ihren Instanz-Hostnamen eingeben.\nWenn Sie zum Beispiel ein Konto auf https://mastodon.social erstellt haben\nschreiben Sie einfach <b>mastodon.social</b> (ohne https://)\n
+    <string name="showcase_instance">In diesem Feld müssen Sie Ihren Instanz-Hostnamen eingeben.\nWenn Sie zum Beispiel ein Konto auf https://mastodon.social erstellt haben\nschreiben Sie einfach <b>mastodon.social</b> (ohne https://)\n
 Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n\n
-⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!"</string>
-    <string name="showcase_uid">"
-Tragen Sie hier die E-Mail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.    "</string>
-    <string name="showcase_pwd">"
-Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
-    "</string>
+⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!</string>
+    <string name="showcase_uid">Tragen Sie hier die E-Mail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.    </string>
+    <string name="showcase_pwd">Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
+    </string>
     <string name="more_information">Mehr Informationen</string>
     <string name="showcase_2FA">Falls du 2FA (Zwei-Faktor-Authentisierung) verwendest, musst du diesen Link verwenden.\nDu kannst ihn ebenfalls verwenden, wenn du eine Zugangsdaten hier nicht eingeben möchtest.</string>
     <!-- languages not translated -->
