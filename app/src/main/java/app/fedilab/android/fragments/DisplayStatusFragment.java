@@ -820,18 +820,27 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onRetrieveMissingFeeds(List<Status> statuses) {
         if(swipeRefreshLayout == null)
             return;
+        //Clean label new
         swipeRefreshLayout.setRefreshing(false);
         if( isSwipped && this.statuses != null && this.statuses.size() > 0) {
             for (Status status : this.statuses) {
                 status.setNew(false);
             }
-            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU"))
-                statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
-            else if( instanceType.equals("PIXELFED"))
-                pixelfedListAdapter.notifyItemRangeChanged(0, this.statuses.size());
-            else if( instanceType.equals("ART"))
-                artListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+            switch (instanceType) {
+                case "MASTODON":
+                case "MISSKEY":
+                case "GNU":
+                    statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+                    break;
+                case "PIXELFED":
+                    pixelfedListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+                    break;
+                case "ART":
+                    artListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+                    break;
+            }
         }
+
         isSwipped = false;
 
         if( statuses != null && statuses.size() > 0) {

@@ -1069,8 +1069,35 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        int split_size_val = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        LinearLayout set_split_container = rootView.findViewById(R.id.set_split_container);
+        //split size
+        SeekBar split_size = rootView.findViewById(R.id.set_split_size);
+        final TextView split_text = rootView.findViewById(R.id.set_split_text);
+
+        split_size.setProgress(0);
+        split_text.setText(String.valueOf(split_size_val));
+        split_size.setMax(5);
+        split_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int newProgress = (progress + 1) * Helper.SPLIT_TOOT_SIZE;
+                split_text.setText(String.valueOf(newProgress));
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, newProgress);
+                editor.apply();
+            }
+        });
 
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        if( !split_toot){
+            set_split_container.setVisibility(View.GONE);
+        }
         final CheckBox set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
         set_split_toot.setChecked(split_toot);
         set_split_toot.setOnClickListener(new View.OnClickListener() {
@@ -1079,6 +1106,11 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, set_split_toot.isChecked());
                 editor.apply();
+                if( set_split_toot.isChecked()){
+                    set_split_container.setVisibility(View.VISIBLE);
+                }else{
+                    set_split_container.setVisibility(View.GONE);
+                }
             }
         });
 
