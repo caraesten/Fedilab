@@ -88,9 +88,10 @@ public class HttpsConnection {
     private int CHUNK_SIZE = 4096;
     private SharedPreferences sharedpreferences;
     private Proxy proxy;
+    private String instance;
 
-
-    public HttpsConnection(Context context){
+    public HttpsConnection(Context context, String instance){
+        this.instance  = instance;
         this.context = context;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
@@ -155,7 +156,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))
@@ -250,7 +251,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestMethod("GET");
             String response;
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
@@ -338,7 +339,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestMethod("POST");
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -444,7 +445,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setRequestMethod("POST");
@@ -534,7 +535,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
-        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpsURLConnection.setRequestMethod("POST");
         if (token != null && !token.startsWith("Basic "))
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -772,7 +773,7 @@ public class HttpsConnection {
                     httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
                 else
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
                 httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                 int responseCode = httpsURLConnection.getResponseCode();
                 // always check HTTP response code first
@@ -867,7 +868,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setDoInput(true);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setUseCaches(false);
@@ -1085,7 +1086,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
                 httpsURLConnection.setRequestMethod("PATCH");
             }else {
@@ -1266,7 +1267,7 @@ public class HttpsConnection {
                         httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
 
                         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(instance));
                         httpsURLConnection.setDoInput(true);
                         httpsURLConnection.setDoOutput(true);
                         httpsURLConnection.setUseCaches(false);
@@ -1571,7 +1572,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))
@@ -1699,7 +1700,7 @@ public class HttpsConnection {
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))

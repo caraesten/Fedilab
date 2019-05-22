@@ -1,6 +1,7 @@
 package app.fedilab.android.client;
 
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import java.io.IOException;
@@ -8,11 +9,15 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.helper.Helper;
@@ -26,11 +31,29 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
     private SSLContext sslContext;
+    private String instance;
 
-    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
+    public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
 
         sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(null, null, null);
+        if( instance == null || !instance.endsWith(".onion")) {
+            sslContext.init(null, null, null);
+        }else{
+            TrustManager tm = new X509TrustManager() {
+                @SuppressLint("TrustAllX509TrustManager")
+                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                }
+
+                @SuppressLint("TrustAllX509TrustManager")
+                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                }
+
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            };
+            sslContext.init(null, new TrustManager[] { tm }, null);
+        }
         sSLSocketFactory = sslContext.getSocketFactory();
     }
 
