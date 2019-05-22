@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Aldatu irudien tamaina</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push jakinarazpenak</string>
-    <string name="settings_popup_message">"
-        Berretsi jaso nahi dituzun push jakinarazpenak.
+    <string name="settings_popup_message">        Berretsi jaso nahi dituzun push jakinarazpenak.
         Jakinarazpen hauek gero ezarpenetan aktibatu edo desaktibatu ditzakezu (Jakinarazpenak fitxa).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Irakurri gabeko toot-ak hasiera denbora-lerroan?</string>
     <string name="settings_popup_notification">Irakurri gabeko jakinarazpenentzat?</string>
     <!-- CACHE -->
@@ -427,44 +426,38 @@
     <string name="owner_cached_toots_empty">Ez da toot-ik aurkitu datu-basean. Erabili menuko sinkronizatu botoia eskuratzeko.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Grabatutako datuak</string>
-    <string name="privacy_data">"
-        Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
+    <string name="privacy_data">        Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
         Datu hauek guztiz konfidentzialak dira eta bakarrik aplikazioak erabili ditzake.
         Aplikazioa ezabatzean datu hauek ere ezabatzen dira.\n
         &#9888; Saioa eta pasahitzak ez dira inoiz gordetzen. Instantzia batekin autentifikazio segurua (SSL) ezartzean besterik ez dira erabiltzen.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Baimenak:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
         - <b>INTERNET</b>: Instantzia bati itaunketak egiteko erabiltzen da.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Multimedia gordetzeko edo aplikazioa SD txartelera eramateko erabiltzen da.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Toot-etara multimedia gehitzeko erabilytzen da.\n
         - <b>BOOT_COMPLETED</b>: Jakinarazpen zerbitzua abiatzeko erabiltzen da.\n
         - <b>WAKE_LOCK</b>: Jakinarazpen zerbitzuan zehar erabiltzen da.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">APIaren baimenak:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Irakurri</b>: Irakurri datuak.\n
+    <string name="privacy_API_authorizations">        - <b>Irakurri</b>: Irakurri datuak.\n
         - <b>Idatzi</b>: Bidali mezuak eta igo mezuetarako multimedia.\n
         - <b>Jarraitu</b>: Jarraitu, jarraitzeari utzi, blokeatu, desblokeatu.\n\n
         <b>&#9888; Ekintza hauek erabiltzaileak eskatuta besterik ez dira burutzen.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Jarraipena eta liburutegiak</string>
-    <string name="privacy_API">"
-        Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
+    <string name="privacy_API">        Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
         Liburutegien erabilera minimizatu da: \n
         - <b>Glide</b>: Multimedia kudeatzeko\n
         - <b>Android-Job</b>: Zerbitzuak kudeatzeko\n
         - <b>PhotoView</b>: Irudiak kudeatzeko\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Toot-en itzulpena</string>
-    <string name="privacy_API_yandex_authorizations">"
-        Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
+    <string name="privacy_API_yandex_authorizations">        Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
         Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Eskerrik asko:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Eskerrik asko:
+    </string>
     <string name="filter_regex">Iragazi adierazpen erregularrak erabiliz</string>
     <string name="search">Bilatu</string>
     <string name="delete">Ezabatu</string>
@@ -485,14 +478,13 @@
     <string name="account_moved_to">%1$s %2$s(e)ra mugitu da</string>
     <string name="show_boost_count">Erakutsi bultzada/gogoko kopurua</string>
     <string name="issue_login_title">Autentifikazioa ez dabil?</string>
-    <string name="issue_login_message">"
-        <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
+    <string name="issue_login_message">        <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
         - Egiaztatu ez dagoela akatsik instantziaren izenean\n\n
         - Egiaztatu instantzia ez dagoela erorita\n\n
         - Bi faktoreetako autentifikazioa erabiltzen baduzu (2FA), erabili beheko esteka (behin instantziaren izena bete eta gero)\n\n
         - Esteka hori erabili dezakezu 2FA erabiltzen ez baduzu ere\n\n
         - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
     <string name="data_export_start">Ekintza honek denbora behar dezake. Bukatzean jakinaraziko zaizu.</string>
     <string name="data_export_running">Oraindik abian, itxaron mesedez…</string>
@@ -678,16 +670,13 @@
         <item>egun 1</item>
         <item>aste 1</item>
     </string-array>
-    <string name="showcase_instance">"
-        Eremu honetan, zure instantziaren hostalari izena idatzi behar duzu.\nAdibidez, zure kontua https://mastodon.eus helbidean sortu baduzu\nIdatzi <b>mastodon.eus</b> (https:// gabe)\n
+    <string name="showcase_instance">        Eremu honetan, zure instantziaren hostalari izena idatzi behar duzu.\nAdibidez, zure kontua https://mastodon.eus helbidean sortu baduzu\nIdatzi <b>mastodon.eus</b> (https:// gabe)\n
         Idazten hasi zaitezke eta izenak proposatuko zaizkizu.\n\n
         ⚠ Hasi saioa botoiak instantzia baliogarria bada eta funtzionamenduan badago funtzionatuko du, bestela ez!
-    "</string>
-    <string name="showcase_uid">"
-        Eremu honetan, idatzi zure Mastodon kontura lotutako e-mail helbidea.
-    "</string>
-    <string name="showcase_pwd">"
-Azken urratsa zure pasahitza sartzea da eta Hasi saioa botoia sakatzea.    "</string>
+    </string>
+    <string name="showcase_uid">        Eremu honetan, idatzi zure Mastodon kontura lotutako e-mail helbidea.
+    </string>
+    <string name="showcase_pwd">Azken urratsa zure pasahitza sartzea da eta Hasi saioa botoia sakatzea.    </string>
     <string name="more_information">Informazio gehiago</string>
     <string name="showcase_2FA">2FA (bi faktoreetako autentifikazioa) erabiltzen baduzu, esteka hau erabili behar duzu.\nHemen zure kredentzialak sartu nahi ez badituzu erabili dezakezu baita ere.</string>
     <!-- languages not translated -->
