@@ -1539,7 +1539,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if (!status.isSpoilerShown() && !expand_cw && !status.isShowSpoiler()) {
+                    if (!status.isSpoilerShown() && (!expand_cw || status.isAutoHiddenCW())) {
                         holder.status_content_container.setVisibility(View.GONE);
                         if (status.getMentions().size() > 0)
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
@@ -1547,9 +1547,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     } else {
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        if( !status.isAutoHiddenCW()) {
+                            holder.status_content_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }else{
+                            holder.status_content_container.setVisibility(View.GONE);
+                            if (status.getMentions().size() > 0)
+                                holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            else
+                                holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }
                     }
                 } else {
                     holder.status_spoiler_container.setVisibility(View.GONE);
@@ -1559,7 +1568,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else {
                 if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if (!status.isSpoilerShown() && !expand_cw) {
+                    if (!status.isSpoilerShown() && (!expand_cw || status.isAutoHiddenCW())) {
                         holder.status_content_container.setVisibility(View.GONE);
                         if (status.getMentions().size() > 0)
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
@@ -1567,9 +1576,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     } else {
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        if( !status.isAutoHiddenCW()) {
+                            holder.status_content_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }else {
+                            holder.status_content_container.setVisibility(View.GONE);
+                            if (status.getMentions().size() > 0)
+                                holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            else
+                                holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }
                     }
                 } else {
                     holder.status_spoiler_container.setVisibility(View.GONE);
@@ -2150,6 +2168,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if( expand_cw && !status.isSpoilerShown() ){
+                        status.setAutoHiddenCW(true);
+                    }else{
+                        status.setAutoHiddenCW(false);
+                    }
                     status.setSpoilerShown(!status.isSpoilerShown());
                     notifyStatusChanged(status);
                 }
