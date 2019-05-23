@@ -1009,8 +1009,13 @@ public class API {
             return getHomeTimeline(max_id);
         }else{
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                if( statuses.get(0).getId().matches("\\d+")){
+                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                }else{
+                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())));
+                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())));
+                }
             }
             apiResponse.setStatuses(statuses);
             return apiResponse;
