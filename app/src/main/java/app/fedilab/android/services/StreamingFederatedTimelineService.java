@@ -109,7 +109,7 @@ public class StreamingFederatedTimelineService extends IntentService {
             Account finalAccountStream = accountStream;
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
                 try {
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
+                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(accountStream.getInstance()).getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
                 } catch (KeyManagementException e) {
                     e.printStackTrace();

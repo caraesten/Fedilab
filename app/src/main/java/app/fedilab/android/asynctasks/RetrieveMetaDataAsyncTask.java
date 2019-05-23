@@ -89,7 +89,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                 Pattern descriptionPattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:description[\"']\\s+content=[\"']([^>]*)[\"']");
                 Pattern imagePattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:image[\"']\\s+content=[\"']([^>]*)[\"']");
                 try {
-                    String response = new HttpsConnection(this.contextWeakReference.get()).get(potentialUrl);
+                    String response = new HttpsConnection(this.contextWeakReference.get(), null).get(potentialUrl);
                     Matcher matcherTitle = titlePattern.matcher(response);
                     Matcher matcherDescription = descriptionPattern.matcher(response);
                     Matcher matcherImage = imagePattern.matcher(response);

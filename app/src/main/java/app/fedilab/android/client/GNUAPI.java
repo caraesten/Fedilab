@@ -159,9 +159,9 @@ public class GNUAPI {
             requestParams.put("locked",privacy== accountPrivacy.LOCKED?"true":"false");
         try {
             if( requestParams.size() > 0)
-            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
+            new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
             if( avatar!= null && avatarName != null)
-                new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
+                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -183,7 +183,7 @@ public class GNUAPI {
     public Account verifyCredentials() {
         account = new Account();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -211,7 +211,7 @@ public class GNUAPI {
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id",accountId);
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -244,11 +244,11 @@ public class GNUAPI {
             String response;
             if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                 params.put("target_id",accountId);
-                response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
+                response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
                 relationship = parseRelationshipResponse(new JSONObject(response));
             }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 params.put("user_id",accountId);
-                response = new HttpsConnection(context).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
+                response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
                 JSONObject resobj = new JSONObject(response);
                 try {
                     relationship = new Relationship();
@@ -307,7 +307,7 @@ public class GNUAPI {
             params.put("target_id[]", parameters.toString());
             List<Relationship> relationships = new ArrayList<>();
             try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
+                HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
                 String response = httpsConnection.get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
                 relationships = parseRelationshipResponse(new JSONArray(response));
                 apiResponse.setSince_id(httpsConnection.getSince_id());
@@ -409,7 +409,7 @@ public class GNUAPI {
         params.put("count", String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/user_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
@@ -450,7 +450,7 @@ public class GNUAPI {
         params.put("limit", "80");
         accounts = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s/reblogged_by", statusId)), 60, params, prefKeyOauthTokenT);
             accounts = parseAccountResponse(new JSONArray(response));
             apiResponse.setSince_id(httpsConnection.getSince_id());
@@ -488,7 +488,7 @@ public class GNUAPI {
         params.put("limit", "80");
         accounts = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s/favourited_by", statusId)), 60, params, prefKeyOauthTokenT);
             accounts = parseAccountResponse(new JSONArray(response));
             apiResponse.setSince_id(httpsConnection.getSince_id());
@@ -520,7 +520,7 @@ public class GNUAPI {
         statuses = new ArrayList<>();
 
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", statusId)), 60, null, prefKeyOauthTokenT);
             Status status = parseStatuses(context, new JSONObject(response));
             statuses.add(status);
@@ -548,7 +548,7 @@ public class GNUAPI {
     public app.fedilab.android.client.Entities.Context getStatusContext(String statusId, boolean directtimeline) {
         app.fedilab.android.client.Entities.Context statusContext = new app.fedilab.android.client.Entities.Context();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response;
             if( !directtimeline)
                 response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
@@ -625,7 +625,7 @@ public class GNUAPI {
         params.put("limit",String.valueOf(limit));
         List<Conversation> conversations = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -672,7 +672,7 @@ public class GNUAPI {
         params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
@@ -745,7 +745,7 @@ public class GNUAPI {
         //Current user
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/home_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
@@ -834,7 +834,7 @@ public class GNUAPI {
         params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String url;
             if(local)
                 url = getAbsoluteUrl("/statuses/public_timeline.json");
@@ -987,7 +987,7 @@ public class GNUAPI {
             return null;
         try {
             String query = tag.trim();
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                 try {
                     query = URLEncoder.encode(query, "UTF-8");
@@ -1075,7 +1075,7 @@ public class GNUAPI {
             params.put("user_id",targetedId);
         accounts = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1132,7 +1132,7 @@ public class GNUAPI {
         params.put("limit",String.valueOf(limit));
         accounts = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/follow_requests"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1181,7 +1181,7 @@ public class GNUAPI {
         params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/favorites.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
@@ -1225,7 +1225,7 @@ public class GNUAPI {
         HashMap<String, String> params = new HashMap<>();
         params.put("notifications", Boolean.toString(muteNotifications));
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             httpsConnection.post(getAbsoluteUrl(String.format("/accounts/%s/mute", targetedId)), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1382,7 +1382,7 @@ public class GNUAPI {
         }
 
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String resp = httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
             if( statusAction == API.StatusAction.REBLOG || statusAction == API.StatusAction.UNREBLOG || statusAction == API.StatusAction.FAVOURITE || statusAction == API.StatusAction.UNFAVOURITE) {
@@ -1463,7 +1463,7 @@ public class GNUAPI {
             params.put("possibly_sensitive", Boolean.toString(status.isSensitive()));
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response;
             if( !status.getVisibility().equals("direct"))
                 response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
@@ -1565,7 +1565,7 @@ public class GNUAPI {
             return apiResponse;
         }
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1628,7 +1628,7 @@ public class GNUAPI {
             params.put("description", description);
         }
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.put(getAbsoluteUrl(String.format("/media/%s", mediaId)), 240, params, prefKeyOauthTokenT);
             attachment = parseAttachmentResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1665,7 +1665,7 @@ public class GNUAPI {
                 params.put("q", query);
             }
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/users/search.json"), 60, params, prefKeyOauthTokenT);
             List<Account> accounts = parseAccountResponse(new JSONArray(response));
             results.setAccounts(accounts);
@@ -1700,7 +1700,7 @@ public class GNUAPI {
         if (max_id != null)
             params.put("max_id", max_id);
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
             List<Status> statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
@@ -1755,7 +1755,7 @@ public class GNUAPI {
         params.put("limit", String.valueOf(count));
 
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/accounts/search"), 60, params, prefKeyOauthTokenT);
             accounts = parseAccountResponse(new JSONArray(response));
             apiResponse.setSince_id(httpsConnection.getSince_id());

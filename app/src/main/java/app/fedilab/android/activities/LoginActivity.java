@@ -149,7 +149,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
-                        final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
+                        final String response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
                         JSONObject resobj;
                         try {
                             resobj = new JSONObject(response);
@@ -354,7 +354,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     try {
-                                        final String response = new HttpsConnection(LoginActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                        final String response = new HttpsConnection(LoginActivity.this, instance).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 isLoadingInstance = false;
@@ -542,9 +542,9 @@ public class LoginActivity extends BaseActivity {
                     try {
                         String response;
                         if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                            response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                            response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
                         else
-                            response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                            response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 JSONObject resobj;
@@ -647,9 +647,9 @@ public class LoginActivity extends BaseActivity {
                         try {
                             String response;
                             if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
-                                response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, parameters, null );
+                                response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, parameters, null );
                             else {
-                                response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, null, basicAuth);
+                                response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, null, basicAuth);
                             }
                             runOnUiThread(new Runnable() {
                                 public void run() {

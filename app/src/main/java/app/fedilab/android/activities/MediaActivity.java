@@ -115,6 +115,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private boolean scheduleHidden, scheduleHiddenDescription;
     private SimpleExoPlayer player;
     private boolean isSHaring;
+    private String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +147,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
             }
         });
+        instance = Helper.getLiveInstance(MediaActivity.this);
         mSwipeBackLayout.attachToActivity(this);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
         if( getIntent().getExtras() != null)
@@ -177,7 +179,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
-                        new HttpsConnection(MediaActivity.this).download(attachment.getUrl(), MediaActivity.this);
+                        new HttpsConnection(MediaActivity.this, instance).download(attachment.getUrl(), MediaActivity.this);
                     }
                 }else {
                     if (Build.VERSION.SDK_INT >= 23) {
@@ -200,7 +202,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
-                        new HttpsConnection(MediaActivity.this).download(attachment.getUrl(), MediaActivity.this);
+                        new HttpsConnection(MediaActivity.this, instance).download(attachment.getUrl(), MediaActivity.this);
                     }
                 }else {
                     if (Build.VERSION.SDK_INT >= 23) {
@@ -441,7 +443,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
                 try {
-                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(instance));
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {

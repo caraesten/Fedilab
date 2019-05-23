@@ -199,7 +199,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
     private Status idRedirect;
-    private String userId, instance;
+    private String userId;
+    private static String instance;
     private Account account;
     private ArrayList<String> splitToot;
     private int stepSpliToot;
@@ -467,7 +468,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 picture_scrollview.setVisibility(View.VISIBLE);
                                 toot_picture.setEnabled(false);
                                 toot_it.setEnabled(false);
-                                new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                                new HttpsConnection(TootActivity.this, instance).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
                             }
                         });
 
@@ -513,7 +514,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                 }
                 if (image != null) {
-                    new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
+                    new HttpsConnection(TootActivity.this, instance).download(image, TootActivity.this);
                 }
                 int selectionBefore = toot_content.getSelectionStart();
                 toot_content.setText(String.format("\n%s", sharedContent));
@@ -894,7 +895,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     String mime = cr.getType(data.getData());
                     if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                         InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                        new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                        new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
                     } else if(mime != null && mime.toLowerCase().contains("image")) {
                         new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else {
@@ -979,7 +980,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_it.setEnabled(false);
                 String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 filesMap.put(filename, uriFile);
-                new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply != null ? accountReply.getToken() : null, (TootActivity) this.activityWeakReference.get());
+                new HttpsConnection(this.activityWeakReference.get(), instance).upload(bs, filename, accountReply != null ? accountReply.getToken() : null, (TootActivity) this.activityWeakReference.get());
             }
         }
     }
@@ -1002,7 +1003,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 String mime = cr.getType(imageUri);
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                    new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
                     new asyncPicture(TootActivity.this, accountReply, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
@@ -1797,7 +1798,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this).upload(bs, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+            new HttpsConnection(TootActivity.this, instance).upload(bs, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
         }
     }
 

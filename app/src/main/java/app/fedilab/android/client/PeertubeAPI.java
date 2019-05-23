@@ -143,7 +143,7 @@ public class PeertubeAPI {
      */
     public APIResponse getInstance() {
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/instance"), 30, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/instance"), 30, null, prefKeyOauthTokenT);
             Instance instanceEntity = parseInstance(new JSONObject(response));
             apiResponse.setInstance(instanceEntity);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -213,7 +213,7 @@ public class PeertubeAPI {
         params.put("scheduleUpdate","null");
         List<Peertube> peertubes = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             httpsConnection.put(getAbsoluteUrl(String.format("/videos/%s", peertube.getId())), 60, params, prefKeyOauthTokenT);
             peertubes.add(peertube);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -264,7 +264,7 @@ public class PeertubeAPI {
             }
         }
         try {
-            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
+            new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
@@ -288,7 +288,7 @@ public class PeertubeAPI {
         PeertubeInformation peertubeInformation = new PeertubeInformation();
         try {
 
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/categories"), 60, null, null);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/categories"), 60, null, null);
             JSONObject categories = new JSONObject(response);
             LinkedHashMap<Integer, String> _pcategories = new LinkedHashMap<>();
             for( int i = 1 ; i <= categories.length() ; i++){
@@ -297,7 +297,7 @@ public class PeertubeAPI {
             }
             peertubeInformation.setCategories(_pcategories);
 
-            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/languages"), 60, null, null);
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/languages"), 60, null, null);
             JSONObject languages = new JSONObject(response);
             LinkedHashMap<String, String> _languages = new LinkedHashMap<>();
             Iterator<String> iter = languages.keys();
@@ -309,7 +309,7 @@ public class PeertubeAPI {
             }
             peertubeInformation.setLanguages(_languages);
 
-            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/privacies"), 60, null, null);
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/privacies"), 60, null, null);
             JSONObject privacies = new JSONObject(response);
             LinkedHashMap<Integer, String> _pprivacies = new LinkedHashMap<>();
             for( int i = 1 ; i <= privacies.length() ; i++){
@@ -319,7 +319,7 @@ public class PeertubeAPI {
             peertubeInformation.setPrivacies(_pprivacies);
 
 
-            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
             JSONObject licences = new JSONObject(response);
             LinkedHashMap<Integer, String> _plicences = new LinkedHashMap<>();
             for( int i = 1 ; i <= licences.length() ; i++){
@@ -335,7 +335,7 @@ public class PeertubeAPI {
                 lang = PeertubeInformation.langueMapped.get(Locale.getDefault().getLanguage());
 
             if( lang != null && !lang.startsWith("en")) {
-                response = new HttpsConnection(context).get(String.format("https://" + instance + "/client/locales/%s/server.json", lang), 60, null, null);
+                response = new HttpsConnection(context, this.instance).get(String.format("https://" + instance + "/client/locales/%s/server.json", lang), 60, null, null);
                 JSONObject translations = new JSONObject(response);
                 LinkedHashMap<String, String> _translations = new LinkedHashMap<>();
                 Iterator<String> itertrans = translations.keys();
@@ -368,7 +368,7 @@ public class PeertubeAPI {
     public Account verifyCredentials()  {
         account = new Account();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
             JSONObject accountObject = new JSONObject(response).getJSONObject("account");
             account = parseAccountResponsePeertube(context, accountObject);
         } catch (NoSuchAlgorithmException e) {
@@ -399,7 +399,7 @@ public class PeertubeAPI {
                 new AccountDAO(context, db).updateAccount(targetedAccount);
                 String response;
                 try {
-                    response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, targetedAccount.getToken());
+                    response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, targetedAccount.getToken());
                     JSONObject accountObject = new JSONObject(response).getJSONObject("account");
                     account = parseAccountResponsePeertube(context, accountObject);
                 } catch (IOException e1) {
@@ -433,7 +433,7 @@ public class PeertubeAPI {
         params.put("client_secret", client_secret);
         params.put("refresh_token", refresh_token);
         try {
-            String response = new HttpsConnection(context).post(getAbsoluteUrl("/users/token"), 60, params, null);
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/users/token"), 60, params, null);
             JSONObject resobj = new JSONObject(response);
             String token = resobj.get("access_token").toString();
             if( resobj.has("refresh_token"))
@@ -465,7 +465,7 @@ public class PeertubeAPI {
 
         account = new Account();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponsePeertube(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -494,7 +494,7 @@ public class PeertubeAPI {
         params.put("uris", uri);
 
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/users/me/subscriptions/exist"), 60, params, prefKeyOauthTokenT);
             return new JSONObject(response).getBoolean(uri);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -558,7 +558,7 @@ public class PeertubeAPI {
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
 
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
@@ -581,7 +581,7 @@ public class PeertubeAPI {
                         account.setRefresh_token(refresh_token);
                     new AccountDAO(context, db).updateAccount(account);
                 }
-                HttpsConnection httpsConnection = new HttpsConnection(context);
+                HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
                 String response;
                 try {
                     response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
@@ -637,7 +637,7 @@ public class PeertubeAPI {
         params.put("count", String.valueOf(limit));
         List<Peertube> peertubes = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
@@ -699,7 +699,7 @@ public class PeertubeAPI {
         params.put("count", String.valueOf(limit));
         List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/users/me/notifications"), 60, params, prefKeyOauthTokenT);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubeNotifications = parsePeertubeNotifications(jsonArray);
@@ -754,7 +754,7 @@ public class PeertubeAPI {
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/video-channels/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
 
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
@@ -871,7 +871,7 @@ public class PeertubeAPI {
         params.put("nsfw", String.valueOf(nsfw));
         List<Peertube> peertubes = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             if( !action.equals("/overviews/videos")) {
                 JSONArray values = new JSONObject(response).getJSONArray("data");
@@ -955,7 +955,7 @@ public class PeertubeAPI {
 
         List<Account> accounts = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/video-channels", name)), 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             accounts = parseAccountResponsePeertube(context, instance, jsonArray);
@@ -983,7 +983,7 @@ public class PeertubeAPI {
 
         List<Peertube> peertubes = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/video-channels/%s/videos", name), 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
@@ -1015,7 +1015,7 @@ public class PeertubeAPI {
         params.put("start", max_id);
         params.put("count", "50");
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
@@ -1042,7 +1042,7 @@ public class PeertubeAPI {
 
         Peertube peertube = null;
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, token);
             JSONObject jsonObject = new JSONObject(response);
             peertube = parseSinglePeertube(context, instance, jsonObject);
@@ -1079,7 +1079,7 @@ public class PeertubeAPI {
         }
         List<Peertube> peertubes = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://"+instance+"/api/v1/search/videos", 60, params, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
@@ -1105,7 +1105,7 @@ public class PeertubeAPI {
     public APIResponse getSinglePeertubeComments(String instance, String videoId) {
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s/comment-threads", videoId), 60, null, null);
             JSONObject jsonObject = new JSONObject(response);
             statuses = parseSinglePeertubeComments(context, instance, jsonObject);
@@ -1136,7 +1136,7 @@ public class PeertubeAPI {
     @SuppressWarnings("SameParameterValue")
     public String getRating(String id){
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/users/me/videos/%s/rating",id)), 60, null, prefKeyOauthTokenT);
             return new JSONObject(response).get("rating").toString();
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1235,7 +1235,7 @@ public class PeertubeAPI {
                 return -1;
         }
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             if( actionCall.equals("POST"))
                 httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             else if( actionCall.equals("DELETE"))
@@ -1273,7 +1273,7 @@ public class PeertubeAPI {
             params.put("description", description);
         }
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.put(getAbsoluteUrl(String.format("/media/%s", mediaId)), 240, params, prefKeyOauthTokenT);
             attachment = parseAttachmentResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1301,7 +1301,7 @@ public class PeertubeAPI {
 
         List<Filters> filters = null;
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1328,7 +1328,7 @@ public class PeertubeAPI {
         List<Filters> filters = new ArrayList<>();
         Filters filter;
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
             filter = parseFilter(new JSONObject(response));
             filters.add(filter);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1367,7 +1367,7 @@ public class PeertubeAPI {
         params.put("expires_in", String.valueOf(filter.getExpires_in()));
         ArrayList<Filters> filters = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
             Filters resfilter = parseFilter(new JSONObject(response));
             filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1393,7 +1393,7 @@ public class PeertubeAPI {
     public int deleteFilters(Filters filter){
 
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             httpsConnection.delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1428,7 +1428,7 @@ public class PeertubeAPI {
         params.put("expires_in", String.valueOf(filter.getExpires_in()));
         ArrayList<Filters> filters = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
             Filters resfilter = parseFilter(new JSONObject(response));
             filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1454,7 +1454,7 @@ public class PeertubeAPI {
 
         List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
             lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1481,7 +1481,7 @@ public class PeertubeAPI {
         List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
         app.fedilab.android.client.Entities.List list;
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
             list = parseList(new JSONObject(response));
             lists.add(list);
         } catch (HttpsConnection.HttpsConnectionException e) {

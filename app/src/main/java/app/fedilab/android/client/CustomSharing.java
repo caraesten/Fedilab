@@ -56,7 +56,7 @@ public class CustomSharing {
     public CustomSharingResponse customShare(String encodedCustomSharingURL) {
         String HTTPResponse = "";
         try {
-            HTTPResponse = new HttpsConnection(context).get(encodedCustomSharingURL);
+            HTTPResponse = new HttpsConnection(context, null).get(encodedCustomSharingURL);
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
