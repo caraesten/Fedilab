@@ -1099,14 +1099,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                     if( !peertubeAccount) {
                                         //Here we can't know if the instance is a Mastodon one or not
                                         try { //Testing Mastodon
-                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                            new HttpsConnection(ShowAccountActivity.this, null).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
                                         }catch (Exception ignored){
-                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
+                                            new HttpsConnection(ShowAccountActivity.this, null).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
                                             peertubeAccount = true;
                                         }
                                     }
                                     else
-                                        new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
+                                        new HttpsConnection(ShowAccountActivity.this, null).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
 
                                     runOnUiThread(new Runnable() {
                                         public void run() {

@@ -94,6 +94,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private boolean isLoadingInstance;
     private String oldSearch;
     private int theme;
+    private String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         }else {
             style = R.style.Dialog;
         }
+
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -170,15 +172,15 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                 public void run() {
                                     try {
                                         if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
                                         else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
                                         else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
 
                                         runOnUiThread(new Runnable() {
@@ -277,7 +279,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                         @Override
                                         public void run() {
                                             try {
-                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
                                                 runOnUiThread(new Runnable() {
                                                     public void run() {
                                                         isLoadingInstance = false;

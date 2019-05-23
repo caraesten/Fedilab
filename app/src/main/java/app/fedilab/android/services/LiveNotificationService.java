@@ -228,7 +228,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             }
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
                 try {
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
+                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(account.getInstance()).getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
