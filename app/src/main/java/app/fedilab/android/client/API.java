@@ -182,7 +182,7 @@ public class API {
         String response;
         InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
         try {
-            response = new HttpsConnection(context, this.instance).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
+            response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
             ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
             try {

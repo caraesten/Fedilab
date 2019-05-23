@@ -3,6 +3,7 @@ package app.fedilab.android.client;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -31,14 +32,16 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
     private SSLContext sslContext;
-    private String instance;
+    private boolean isOnion;
 
     public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
 
         sslContext = SSLContext.getInstance("TLS");
         if( instance == null || !instance.endsWith(".onion")) {
+            isOnion = false;
             sslContext.init(null, null, null);
         }else{
+            isOnion = true;
             TrustManager tm = new X509TrustManager() {
                 @SuppressLint("TrustAllX509TrustManager")
                 public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
@@ -52,9 +55,11 @@ public class TLSSocketFactory extends SSLSocketFactory {
                     return null;
                 }
             };
-            sslContext.init(null, new TrustManager[] { tm }, null);
+            sslContext.init(null, new TrustManager[]{tm}, null);
+
         }
         sSLSocketFactory = sslContext.getSocketFactory();
+
     }
 
     public SSLContext getSSLContext(){
@@ -107,15 +112,19 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private Socket enableTLSOnSocket(Socket socket) {
         if((socket instanceof SSLSocket)) {
-            boolean security_provider = false;
-            try {
-                SharedPreferences sharedpreferences = MainApplication.getApp().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
-            }catch (Exception ignored){}
-            if( security_provider)
-                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2", "TLSv1.3"});
-            else
-                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+            if( !isOnion){
+                boolean security_provider = false;
+                try {
+                    SharedPreferences sharedpreferences = MainApplication.getApp().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                    security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
+                }catch (Exception ignored){}
+                if( security_provider)
+                    ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2", "TLSv1.3"});
+                else
+                    ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+            }else{
+                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2",});
+            }
         }
         return socket;
     }
