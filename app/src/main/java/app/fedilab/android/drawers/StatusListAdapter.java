@@ -794,23 +794,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
 
 
-            /*if ((isCompactMode || isConsoleMode) && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins((int) Helper.convertDpToPixel(25, context), 0, 0, 0);
-                holder.main_container.setLayoutParams(params);
-            } else if ((isCompactMode || isConsoleMode)  && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins((int) Helper.convertDpToPixel(20, context), 0, 0, 0);
-                holder.main_container.setLayoutParams(params);
-            }*/
-
-
             if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                 holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
                 holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
@@ -1019,24 +1002,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, holder.hide_preview, R.color.white);
                 Helper.changeDrawableColor(context, holder.hide_preview_h, R.color.white);
             }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
-            /*if( status.getReblog() == null && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
-                params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
-                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
-                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
-                else
-                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
-            }else if( !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
-                if( status.getContent() == null || status.getContent().trim().equals("")) {
-                    params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
-                    paramsB.setMargins(0,(int) Helper.convertDpToPixel(20, context),0,0);
-                }else {
-                    params.setMargins(0, 0, 0, 0);
-                    paramsB.setMargins(0,0,0,0);
-                }
-
-            }*/
 
             if (!status.isClickable())
                 Status.transform(context, status);
@@ -1111,6 +1076,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     translateToot(status);
                 }
             });
+
             if( isConsoleMode){
                 String starting = "";
                 String acct = status.getAccount().getAcct();
@@ -1162,8 +1128,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 SpannableString startingSpan = new SpannableString(starting);
                 if( acctReblogSpan != null) {
-
-
                     for(URLSpan span : urls)
                         acctReblogSpan.removeSpan(span);
                     acctReblogSpan.setSpan(new ClickableSpan() {
@@ -1205,7 +1169,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     startingSpan = new SpannableString(TextUtils.concat(acctSpan, " ", acctReblogSpan));
                 }else
                     startingSpan = acctSpan;
-
                 if( status.getReblog() == null && status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
                     holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
                     holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
@@ -1257,7 +1220,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     notifyStatusChanged(status);
                 }
             });
-
 
             holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1755,10 +1717,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
-            if( !isConsoleMode && contentCheck.trim().length() < 2 && !contentCheck.trim().matches("\\w+"))
-                holder.status_content.setVisibility(View.GONE);
-            else
-                holder.status_content.setVisibility(View.VISIBLE);
 
             switch (status.getVisibility()) {
                 case "direct":
