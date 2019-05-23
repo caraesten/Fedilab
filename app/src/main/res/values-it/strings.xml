@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Ora funziona con l\'account %1$s</string>
     <string name="add_account">Aggiungi un account</string>
     <string name="clipboard">Il contenuto del toot è stato copiato negli appunti</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">L\'URL del toot è stato copiato negli appunti</string>
     <string name="change">Cambia</string>
     <string name="choose_picture">Seleziona un\'immagine…</string>
     <string name="clear">Pulisci</string>
