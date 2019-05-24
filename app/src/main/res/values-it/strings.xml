@@ -171,10 +171,10 @@
     <string name="toot_reply_content_title">Stai rispondendo a questo toot:</string>
     <string name="toot_sensitive">Contenuto sensibile?</string>
     <string-array name="toot_visibility">
-        <item>Posta nella timeline pubblica</item>
-        <item>Non postare nella timeline pubblica</item>
-        <item>Posta solo nei follower</item>
-        <item>Posta solo agli utenti menzionati</item>
+        <item>Pubblica nella timeline pubblica</item>
+        <item>Non pubblicare nella timeline pubblica</item>
+        <item>Pubblica solo verso i follower</item>
+        <item>Pubblica solo verso gli utenti menzionati</item>
     </string-array>
     <string name="no_draft">Nessuna bozza!</string>
     <string name="choose_toot">Seleziona un toot</string>
@@ -213,10 +213,10 @@
     <string name="remove_scheduled">Eliminare toot programmato?</string>
     <string name="media_count">Media: %d</string>
     <string name="toot_scheduled">Il toot è stato programmato!</string>
-    <string name="toot_scheduled_date">La data di programmazione deve essere maggiore dell\'ora corrente!</string>
-    <string name="warning_battery">Il risparmio batteria è attivato! Potrebbe non funzionare correttamente.</string>
+    <string name="toot_scheduled_date">La data di programmazione deve essere successiva all\'ora corrente!</string>
+    <string name="warning_battery">Il risparmio batteria è attivo! Potrebbe non funzionare correttamente.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Il tempo per il silenziamento deve essere maggiore di un minuto.</string>
+    <string name="timed_mute_date_error">Il tempo di silenziamento deve essere maggiore di un minuto.</string>
     <string name="timed_mute_date">%1$s è stato silenziato fino al %2$s.\n Puoi smettere di silenziare questo account dalla sua pagina di profilo.</string>
     <string name="timed_mute_profile">%1$s è silenziato fino al%2$s.\n Fai clic qui per non silenziare l\'account.</string>
     <!-- Notifications -->
@@ -231,8 +231,8 @@
         <item quantity="other">e %d altre notifiche</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">e un altro toot per scoprire</item>
-        <item quantity="other">e un altro toot per scoprire</item>
+        <item quantity="one">e un altro toot da scoprire</item>
+        <item quantity="other">e altri %d toot da scoprire</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d mi piace</item>
