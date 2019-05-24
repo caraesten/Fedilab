@@ -331,6 +331,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             if (media_description.getVisibility() == View.VISIBLE) {
                                 media_description.setVisibility(View.GONE);
                             }
+                            if (videoView.getVisibility() == View.VISIBLE)
+                                videoView.hideController();
                         }
                     } else {
                         action_bar_container.setVisibility(View.VISIBLE);
@@ -343,6 +345,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             media_description.setText("");
                             media_description.setVisibility(View.GONE);
                         }
+                        if (videoView.getVisibility() == View.VISIBLE)
+                            videoView.showController();
                     }
 
 
