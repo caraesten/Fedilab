@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 
 import com.google.gson.JsonArray;
@@ -179,10 +180,35 @@ public class API {
     }
 
     public InstanceNodeInfo getNodeInfo(String domain){
+
+        //Try to guess URL scheme for the onion instance
+        String scheme = "https";
+        if( domain.endsWith(".onion")){
+            try {
+                new HttpsConnection(context, domain).get("http://" + domain, 30, null, null);
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_ONION_SCHEME + domain, "http");
+                scheme = "http";
+                editor.apply();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e) {
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_ONION_SCHEME + domain, "https");
+                editor.apply();
+            }
+        }
+        Log.v(Helper.TAG,"scheme: " + scheme);
         String response;
         InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
         try {
-            response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
+            response = new HttpsConnection(context, domain).get(scheme+"://" + domain + "/.well-known/nodeinfo", 30, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
             ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
             try {
@@ -229,7 +255,7 @@ public class API {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             try {
-                response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
+                response = new HttpsConnection(context, this.instance).get(scheme+"://" + domain + "/api/v1/instance", 30, null, null);
                 JSONObject jsonObject = new JSONObject(response);
                 instanceNodeInfo.setName("MASTODON");
                 instanceNodeInfo.setVersion(jsonObject.getString("version"));
@@ -4961,10 +4987,10 @@ public class API {
 
 
     private String getAbsoluteUrl(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v1" + action;
     }
     private String getAbsoluteUr2l(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api/v2" + action;
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v2" + action;
     }
     private String getAbsoluteUrlRemote(String remote, String action) {
         return "https://" + remote + "/api/v1" + action;

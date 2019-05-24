@@ -2265,7 +2265,7 @@ public class PeertubeAPI {
 
 
     private String getAbsoluteUrl(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v1" + action;
     }
     private String getAbsoluteUrlRemote(String remote, String action) {
         return "https://" + remote + "/api/v1" + action;

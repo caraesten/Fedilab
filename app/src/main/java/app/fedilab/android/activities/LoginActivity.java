@@ -16,6 +16,7 @@ package app.fedilab.android.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -149,7 +150,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
-                        final String response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
+                        final String response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(LoginActivity.this, instance) + action, 30, parameters, null);
                         JSONObject resobj;
                         try {
                             resobj = new JSONObject(response);
@@ -542,9 +543,9 @@ public class LoginActivity extends BaseActivity {
                     try {
                         String response;
                         if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                            response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                            response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(getApplicationContext(),instance) + actionToken, 30, parameters, null );
                         else
-                            response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                            response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(getApplicationContext(), instance) + actionToken, 30, parameters, null );
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 JSONObject resobj;
@@ -647,9 +648,9 @@ public class LoginActivity extends BaseActivity {
                         try {
                             String response;
                             if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
-                                response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, parameters, null );
+                                response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(getApplicationContext(),instance) + finalOauthUrl, 30, parameters, null );
                             else {
-                                response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, null, basicAuth);
+                                response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(getApplicationContext(),instance) + finalOauthUrl, 30, null, basicAuth);
                             }
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -751,7 +752,7 @@ public class LoginActivity extends BaseActivity {
                     i.putExtra("instance", instance);
                     startActivity(i);
                 }else{
-                    String url = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
+                    String url = redirectUserToAuthorizeAndLogin(getApplicationContext(), socialNetwork, client_id, instance);
 
 
                     Helper.openBrowser(LoginActivity.this, url);
@@ -848,13 +849,13 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public static String redirectUserToAuthorizeAndLogin(UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
+    public static String redirectUserToAuthorizeAndLogin(Context context, UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
         String queryString = Helper.CLIENT_ID + "="+ clientId;
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
         if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED )
             queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
-        return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
+        return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 
 

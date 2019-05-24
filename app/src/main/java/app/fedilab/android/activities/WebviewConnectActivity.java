@@ -42,10 +42,13 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.HashMap;
 
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -129,6 +132,12 @@ public class WebviewConnectActivity extends BaseActivity {
             }
         });
 
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        if( proxyEnabled ){
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            ProxyHelper.setProxy(getApplicationContext(), webView,host, port,WebviewConnectActivity.class.getName());
+        }
 
         webView.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
@@ -156,7 +165,7 @@ public class WebviewConnectActivity extends BaseActivity {
                         @Override
                         public void run() {
                             try {
-                                final String response = new HttpsConnection(WebviewConnectActivity.this, instance).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
+                                final String response = new HttpsConnection(WebviewConnectActivity.this, instance).post(Helper.instanceWithProtocol(getApplicationContext(), instance) + action, 30, parameters, null);
                                 JSONObject resobj;
                                 try {
                                     resobj = new JSONObject(response);
@@ -179,7 +188,7 @@ public class WebviewConnectActivity extends BaseActivity {
             }
 
         });
-        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(social, clientId, instance));
+        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(getApplicationContext(), social, clientId, instance));
     }
 
 

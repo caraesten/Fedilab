@@ -2357,7 +2357,7 @@ public class GNUAPI {
 
 
     private String getAbsoluteUrl(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api" + action;
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
     }
 
 

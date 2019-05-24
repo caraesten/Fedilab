@@ -41,7 +41,7 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
     public RetrieveRemoteDataAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
-        this.url = Helper.instanceWithProtocol(instance) + "/@" + username;
+        this.url = Helper.instanceWithProtocol(context, instance) + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
         this.contextReference = new WeakReference<>(context);
     }
