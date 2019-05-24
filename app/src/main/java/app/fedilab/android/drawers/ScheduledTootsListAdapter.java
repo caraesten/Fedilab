@@ -281,6 +281,8 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
 
                 final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
                 final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
+                if (android.text.format.DateFormat.is24HourFormat(context))
+                    timePicker.setIs24HourView(true);
                 Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
                 final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
                 final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);

@@ -1277,6 +1277,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
+                holder.status_account_displayname.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("account", status.getAccount());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                });
                 if (status.getReblog().getAccount().getDisplay_name().length() > 0)
                     holder.status_account_displayname_owner.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
                 else
