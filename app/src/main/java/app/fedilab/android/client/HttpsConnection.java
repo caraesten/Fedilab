@@ -1221,8 +1221,14 @@ public class HttpsConnection {
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, String fname, String tokenUsed, final OnRetrieveAttachmentInterface listener) {
+    public void upload(final InputStream inputStream, String fname, Account account, final OnRetrieveAttachmentInterface listener) {
         final String fileName = FileNameCleaner.cleanFileName(fname);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( account == null){
+            return;
+        }
+        this.instance = account.getInstance();
+        String token = account.getToken();
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
                 @Override
@@ -1232,15 +1238,6 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-                        String token;
-                        if( tokenUsed == null)
-                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        else
-                            token = tokenUsed;
-                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                         URL url;
                         if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             url = new URL("https://" + account.getInstance() + "/api/v1/media");
@@ -1406,11 +1403,6 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-                        String token;
-                        if( tokenUsed == null)
-                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        else
-                            token = tokenUsed;
                         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));

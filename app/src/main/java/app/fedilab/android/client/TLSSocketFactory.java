@@ -1,10 +1,7 @@
 package app.fedilab.android.client;
 
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -60,7 +57,6 @@ public class TLSSocketFactory extends SSLSocketFactory {
             sslContext.init(null, trustAllCerts, null);
 
         }
-        Log.v(Helper.TAG,instance + " -> " + isOnion);
         sSLSocketFactory = sslContext.getSocketFactory();
 
     }
