@@ -591,6 +591,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
+        final CheckBox set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
+        set_bot_icon.setChecked(bot_icon);
+
+        set_bot_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_BOT_ICON, set_bot_icon.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
         set_fit_preview.setChecked(fit_preview);
