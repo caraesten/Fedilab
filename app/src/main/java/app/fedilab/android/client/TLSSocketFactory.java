@@ -36,28 +36,31 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
 
-        sslContext = SSLContext.getInstance("TLS");
+
         if( instance == null || !instance.endsWith(".onion")) {
+            sslContext = SSLContext.getInstance("TLS");
             isOnion = false;
             sslContext.init(null, null, null);
         }else{
+            sslContext = SSLContext.getInstance("SSL");
             isOnion = true;
-            TrustManager tm = new X509TrustManager() {
-                @SuppressLint("TrustAllX509TrustManager")
-                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                @SuppressLint("TrustAllX509TrustManager")
-                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+                        public void checkClientTrusted(
+                                java.security.cert.X509Certificate[] certs, String authType) {
+                        }
+                        public void checkServerTrusted(
+                                java.security.cert.X509Certificate[] certs, String authType) {
+                        }
+                    }
             };
-            sslContext.init(null, new TrustManager[]{tm}, null);
+            sslContext.init(null, trustAllCerts, null);
 
         }
+        Log.v(Helper.TAG,instance + " -> " + isOnion);
         sSLSocketFactory = sslContext.getSocketFactory();
 
     }

@@ -55,6 +55,7 @@ import app.fedilab.android.sqlite.DomainBlockDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
+import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 
@@ -111,6 +112,15 @@ public class WebviewActivity extends BaseActivity {
         FrameLayout webview_container = findViewById(R.id.webview_container);
         final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
         webView.getSettings().setJavaScriptEnabled(true);
+
+
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        if( proxyEnabled ){
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            ProxyHelper.setProxy(getApplicationContext(), webView,host, port,WebviewActivity.class.getName());
+        }
+
         MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this,  webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
             @Override

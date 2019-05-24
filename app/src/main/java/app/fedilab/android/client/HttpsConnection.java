@@ -14,6 +14,7 @@ package app.fedilab.android.client;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,7 +55,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -121,6 +124,16 @@ public class HttpsConnection {
                 proxy = null;
             }
 
+        }
+
+        if( instance != null && instance.endsWith(".onion")) {
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @SuppressLint("BadHostnameVerifier")
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
         }
     }
 

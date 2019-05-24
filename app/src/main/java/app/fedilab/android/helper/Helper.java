@@ -327,7 +327,7 @@ public class Helper {
     public static final String SET_BLUR_SENSITIVE = "set_blur_sensitive";
     public static final String SET_LONG_PRESS_MEDIA = "set_long_press_media";
     public static final String SET_DISPLAY_TIMELINE_IN_LIST = "set_display_timeline_in_list";
-
+    public static final String SET_ONION_SCHEME = "set_onion_scheme";
     public static final int S_NO = 0;
     static final int S_512KO = 1;
     public static final int S_1MO = 2;
@@ -1232,16 +1232,19 @@ public class Helper {
     }
 
     public static String getLiveInstanceWithProtocol(Context context) {
-        return instanceWithProtocol(getLiveInstance(context));
+        return instanceWithProtocol(context, getLiveInstance(context));
     }
 
-    public static String instanceWithProtocol(String instance){
+    public static String instanceWithProtocol(Context context, String instance){
         if( instance == null)
             return null;
-        if( instance.endsWith(".onion"))
-            return "http://" + instance;
-        else
+        if( instance.endsWith(".onion")) {
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(SET_ONION_SCHEME+instance, "http");
+            return scheme + "://" + instance;
+        }else {
             return "https://" + instance;
+        }
     }
 
 
