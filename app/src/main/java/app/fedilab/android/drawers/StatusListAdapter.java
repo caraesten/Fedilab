@@ -1471,13 +1471,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                    if (status.isSpoilerShown() || expand_cw  || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_translate.setVisibility(View.GONE);
                     }
                 } else if (status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                    if (status.isSpoilerShown() || expand_cw   || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_translate.setVisibility(View.GONE);
@@ -1711,10 +1711,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if (status.isTranslationShown() && status.getContentSpanTranslated() != null) {
                 holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
-                holder.status_content.setVisibility(View.GONE);
                 holder.status_content_translated_container.setVisibility(View.VISIBLE);
             } else { //Toot is not translated
-                holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
 

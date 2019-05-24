@@ -2153,20 +2153,28 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     public void updateHomeCounter(){
-        if( tabLayout.getTabAt(0) == null )
-            return;
-        //noinspection ConstantConditions
-        View tabHome = tabLayout.getTabAt(0).getCustomView();
-        if( tabHome == null)
-            return;
-        TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(countNewStatus));
-        if( countNewStatus> 0){
-            //New data are available
-            //The fragment is not displayed, so the counter is displayed
-            tabCounterHome.setVisibility(View.VISIBLE);
-        }else {
-            tabCounterHome.setVisibility(View.GONE);
+        int i = 0;
+        if( timelines != null && timelines.size() > 0){
+            for(ManageTimelines tl: timelines){
+                if( tl.getType() == ManageTimelines.Type.HOME){
+                    if( tabLayout.getTabCount() > i) {
+                        View tabHome = tabLayout.getTabAt(i).getCustomView();
+                        if( tabHome != null){
+                            TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
+                            tabCounterHome.setText(String.valueOf(countNewStatus));
+                            if( countNewStatus> 0){
+                                //New data are available
+                                //The fragment is not displayed, so the counter is displayed
+                                tabCounterHome.setVisibility(View.VISIBLE);
+                            }else {
+                                tabCounterHome.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+
         }
     }
 
