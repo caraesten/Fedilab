@@ -698,7 +698,7 @@
     <string name="some_words_any">Någon av dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_all">Alla dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_none">Inga av dessa ord (mellanrumsseparerade)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Lägg till några ord att filtrera (separera med mellanslag)</string>
     <string name="change_tag_column">Ändra kolumnnamn</string>
     <string name="no_misskey_instance">Inga Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
