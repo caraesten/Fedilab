@@ -75,6 +75,7 @@ public class ManageTimelines {
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
     private List listTimeline;
+    private String currentFilter;
 
 
     private boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
@@ -972,14 +973,67 @@ public class ManageTimelines {
         remoteInstance = tl.getRemoteInstance();
         if( remoteInstance == null)
             return;
-        String currentFilter = remoteInstance.getFilteredWith();
-        popup.getMenuInflater()
-                .inflate(R.menu.option_instance_timeline, popup.getMenu());
+        currentFilter = remoteInstance.getFilteredWith();
+
+        final boolean[] changes = {false};
+
+        String title;
+        if( currentFilter == null) {
+            title = "✔ " + context.getString(R.string.all);
+        }else{
+            title = context.getString(R.string.all);
+        }
+
+        MenuItem itemall = popup.getMenu().add(0, 0, Menu.NONE, title);
+
+        itemall.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                item.setActionView(new View(context));
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        return false;
+                    }
+                });
+                changes[0] = true;
+                FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                if( displayStatusFragment == null)
+                    return false;
+                tl.getRemoteInstance().setFilteredWith(null);
+                remoteInstance.setFilteredWith(null);
+                currentFilter = null;
+                new InstancesDAO(context, db).updateInstance(remoteInstance);
+                tl.setRemoteInstance(remoteInstance);
+                new TimelinesDAO(context, db).updateRemoteInstance(tl);
+                fragTransaction.detach(displayStatusFragment);
+                Bundle bundle = new Bundle();
+                bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                bundle.putInt("timelineId", tl.getId());
+                bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                displayStatusFragment.setArguments(bundle);
+                fragTransaction.attach(displayStatusFragment);
+                fragTransaction.commit();
+                popup.getMenu().close();
+                return false;
+            }
+        });
+
+
         java.util.List<String> tags = remoteInstance.getTags();
         if( tags != null && tags.size() > 0){
             java.util.Collections.sort(tags);
             for(String tag: tags){
-                String title = "";
+                if( tag == null || tag.length() == 0 )
+                    continue;
                 if( currentFilter != null && currentFilter.equals(tag)) {
                     title = "✔ " + tag;
                 }else{
@@ -994,21 +1048,18 @@ public class ManageTimelines {
                         if( displayStatusFragment == null)
                             return false;
                         tl.getRemoteInstance().setFilteredWith(tag);
+                        remoteInstance.setFilteredWith(tag);
                         new InstancesDAO(context, db).updateInstance(remoteInstance);
                         tl.setRemoteInstance(remoteInstance);
                         new TimelinesDAO(context, db).updateRemoteInstance(tl);
-
+                        currentFilter = tl.getRemoteInstance().getFilteredWith();
                         fragTransaction.detach(displayStatusFragment);
                         Bundle bundle = new Bundle();
                         bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
                         bundle.putString("instanceType", tl.getRemoteInstance().getType());
                         bundle.putInt("timelineId", tl.getId());
-                        if( currentFilter == null){
-                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        }else{
-                            bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
-                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
-                        }
+                        bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
                         displayStatusFragment.setArguments(bundle);
                         fragTransaction.attach(displayStatusFragment);
                         fragTransaction.commit();
@@ -1018,7 +1069,58 @@ public class ManageTimelines {
             }
         }
 
-        final boolean[] changes = {false};
+
+        MenuItem itemadd = popup.getMenu().add(0, 0, Menu.NONE, context.getString(R.string.add_tags));
+        itemadd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                item.setActionView(new View(context));
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        return false;
+                    }
+                });
+                changes[0] = true;
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_instance, null);
+                dialogBuilder.setView(dialogView);
+                final EditText editText = dialogView.findViewById(R.id.filter_words);
+                if(remoteInstance.getTags() != null) {
+                    String valuesTag = "";
+                    for(String val: remoteInstance.getTags())
+                        valuesTag += val+" ";
+                    editText.setText(valuesTag);
+                    editText.setSelection(editText.getText().toString().length());
+                }
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String[] values = editText.getText().toString().trim().split("\\s+");
+                        java.util.List<String> tags =
+                                new ArrayList<>(Arrays.asList(values));
+                        remoteInstance.setTags(tags);
+                        new InstancesDAO(context, db).updateInstance(remoteInstance);
+                        tl.setRemoteInstance(remoteInstance);
+                        new TimelinesDAO(context, db).updateRemoteInstance(tl);
+                        popup.getMenu().clear();
+                        popup.getMenu().close();
+                        instanceClick(context, tl, tabStrip, position);
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
+
         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu menu) {
@@ -1045,56 +1147,6 @@ public class ManageTimelines {
             }
         });
 
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                item.setActionView(new View(context));
-                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                    @Override
-                    public boolean onMenuItemActionExpand(MenuItem item) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onMenuItemActionCollapse(MenuItem item) {
-                        return false;
-                    }
-                });
-                changes[0] = true;
-                switch (item.getItemId()) {
-                    case R.id.action_add_tags:
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                        LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
-                        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_instance, null);
-                        dialogBuilder.setView(dialogView);
-                        final EditText editText = dialogView.findViewById(R.id.filter_words);
-                        if(remoteInstance.getTags() != null) {
-                            String valuesTag = "";
-                            for(String val: remoteInstance.getTags())
-                                valuesTag += val+" ";
-                            editText.setText(valuesTag);
-                            editText.setSelection(editText.getText().toString().length());
-                        }
-                        dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                String[] values = editText.getText().toString().trim().split("\\s+");
-                                java.util.List<String> tags =
-                                        new ArrayList<>(Arrays.asList(values));
-                                remoteInstance.setTags(tags);
-                                new InstancesDAO(context, db).updateInstance(remoteInstance);
-                                tl.setRemoteInstance(remoteInstance);
-                                new TimelinesDAO(context, db).updateRemoteInstance(tl);
-                            }
-                        });
-                        AlertDialog alertDialog = dialogBuilder.create();
-                        alertDialog.show();
-                        break;
-                }
-                return false;
-            }
-        });
         popup.show();
 
     }

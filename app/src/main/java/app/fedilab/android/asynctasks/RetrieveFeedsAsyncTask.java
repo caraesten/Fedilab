@@ -17,7 +17,6 @@ package app.fedilab.android.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 
 
 import java.lang.ref.WeakReference;
@@ -201,6 +200,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.name = retrieveFeedsParam.getName();
         this.currentfilter = retrieveFeedsParam.getCurrentfilter();
         this.social = retrieveFeedsParam.getSocial();
+        this.instanceName = retrieveFeedsParam.getInstanceName();
+        this.remoteInstance = retrieveFeedsParam.getRemoteInstance();
     }
 
 
@@ -230,19 +231,21 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getConversationTimeline(max_id);
                 break;
             case REMOTE_INSTANCE_FILTERED:
-                if( this.social.equals("MASTODON")) {
-                    apiResponse = api.getPublicTimelineTag(this.currentfilter, true, max_id,this.instanceName);
-                    List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                    if( statusesTemp != null){
-                        for(app.fedilab.android.client.Entities.Status status: statusesTemp){
-                            status.setType(action);
+                if( this.social != null && this.social.equals("MASTODON")) {
+                    apiResponse = api.getPublicTimelineTag(this.currentfilter, true, max_id,this.remoteInstance);
+                    if( apiResponse != null){
+                        List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if( statusesTemp != null){
+                            for(app.fedilab.android.client.Entities.Status status: statusesTemp){
+                                status.setType(action);
+                            }
                         }
                     }
-                } else if(this.social.equals("GNU") ) {
+                } else if(this.social != null && this.social.equals("GNU") ) {
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-                    apiResponse = gnuapi.searchRemote(instanceName,currentfilter,max_id);
+                    apiResponse = gnuapi.searchRemote(this.remoteInstance,currentfilter,max_id);
                 }else {
-                    apiResponse = api.searchPeertube(instanceName, currentfilter);
+                    apiResponse = api.searchPeertube(this.remoteInstance, currentfilter);
                 }
                 break;
             case REMOTE_INSTANCE:
