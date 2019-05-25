@@ -687,7 +687,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="some_words_any">Hvilke som helst av disse stikkordene (separert med mellomrom)</string>
     <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
     <string name="some_words_none">Ingen av disse stikkordene (separert med mellomrom)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Legg noen ord til filteret (skill dem med mellomrom)</string>
     <string name="change_tag_column">Endre kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
@@ -832,8 +832,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_blur_sensitive">Dim sensitiv media</string>
     <string name="set_display_timeline_in_list">Vis tidslinjer i en liste</string>
     <string name="display_timeline">Vis tidslinjer</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Marker robot-kontoer i toots</string>
+    <string name="add_tags">Administrer stikkord</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

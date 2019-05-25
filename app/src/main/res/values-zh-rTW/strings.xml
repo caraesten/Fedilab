@@ -841,6 +841,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="display_timeline">顯示時間軸</string>
     <string name="set_display_bot_icon">Mark bot accounts in toots</string>
     <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

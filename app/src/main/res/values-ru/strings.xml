@@ -706,7 +706,7 @@
     <string name="some_words_any">Любое из этих слов (через пробел)</string>
     <string name="some_words_all">Все эти слова (через пробел)</string>
     <string name="some_words_none">Ни одно из этих слов (через пробел)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Добавьте слова в фильтр (через пробел)</string>
     <string name="change_tag_column">Изменить имя столбца</string>
     <string name="no_misskey_instance">Нет серверов Misskey</string>
     <string name="misskey_instance">Сервер Misskey</string>
@@ -851,8 +851,9 @@
     <string name="set_blur_sensitive">Размытие деликатного контента</string>
     <string name="set_display_timeline_in_list">Показывать список лент в списке</string>
     <string name="display_timeline">Отображать ленты</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Отметить аккаунты ботов в тутах</string>
+    <string name="add_tags">Управлять тегами</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

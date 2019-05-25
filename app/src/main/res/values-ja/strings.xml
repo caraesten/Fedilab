@@ -300,14 +300,14 @@
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
-    <string name="set_notif_follow_poll">投票の終了を通知する</string>
+    <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
-    <string name="set_notify">通知する？</string>
+    <string name="set_notify">通知する</string>
     <string name="set_notif_silent">サイレント通知</string>
     <string name="set_night_mode">夜間モード</string>
-    <string name="set_nsfw_timeout">NSFWビューのタイムアウト（秒、0はオフを意味します）</string>
+    <string name="set_nsfw_timeout">NSFWビューのタイムアウト(秒、0でオフ)</string>
     <string name="settings_title_profile">プロフィールを編集</string>
     <string name="settings_title_custom_sharing">カスタム共有</string>
     <string name="settings_custom_sharing_url">カスタム共有URL&#8230;</string>
@@ -332,8 +332,8 @@
     <string name="use_cookies">サードパーティのCookieを許可する</string>
     <string name="settings_ui_layout">タイムラインのレイアウト: </string>
     <string-array name="battery_profiles">
-        <item>通常のバッテリー消費</item>
-        <item>中程度のバッテリー消費</item>
+        <item>高バッテリー消費</item>
+        <item>中バッテリー消費</item>
         <item>低バッテリー消費</item>
     </string-array>
     <string-array name="settings_menu_tabs">
@@ -379,7 +379,7 @@
     <string name="request_sent">リクエスト送信</string>
     <string name="followed_by">あなたをフォロー</string>
     <string name="action_search">検索</string>
-    <string name="set_capitalize">返信用の最初の文字列</string>
+    <string name="set_capitalize">返信で最初の文字を大文字にする</string>
     <string name="set_resize_picture">画像をリサイズ</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
@@ -568,8 +568,8 @@
     <string name="channel_notif_media">メディアのダウンロード</string>
     <string name="set_notif_sound">通知サウンドを変更</string>
     <string name="select_sound">音の選択</string>
-    <string name="set_enable_time_slot">タイムスロットを有効化</string>
-    <string name="how_to_videos">操作解説ビデオ</string>
+    <string name="set_enable_time_slot">時間帯管理を有効化</string>
+    <string name="how_to_videos">操作解説動画</string>
     <string name="retrieve_remote_conversation">リモートスレッドの取得中です！</string>
     <string name="no_blocked_domain">ブロックしたドメインはありません！</string>
     <string name="unblock_domain_confirm">ドメインのブロックを解除</string>
@@ -583,7 +583,7 @@
     <string name="comment">コメント</string>
     <string name="peertube_instance">Peertubeインスタンス</string>
     <string name="set_display_direct">プライベートメッセージのタイムラインを表示</string>
-    <string name="set_keep_background_process">アプリが閉じているときもバックグラウンドプロセスを保持</string>
+    <string name="set_keep_background_process">アプリが閉じているときもバックグラウンドプロセスを実行する</string>
     <string name="no_comments">右上のボタンをタップして最初のコメントを投稿しましょう！</string>
     <string name="number_view_video">%s 回再生</string>
     <string name="duration_video">長さ: %s</string>
@@ -603,10 +603,10 @@
     <string name="channels">チャンネル</string>
     <string name="set_display_emoji">Emoji Oneを使用する</string>
     <string name="information">情報</string>
-    <string name="set_display_card">全てのトゥートのプレビューを表示</string>
+    <string name="set_display_card">全てのトゥートでプレビューを表示する</string>
     <string name="thanks_text_ux">新しいUX/UIデザイナー</string>
-    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用</string>
-    <string name="set_display_video_preview">ビデオプレビューを表示</string>
+    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用する</string>
+    <string name="set_display_video_preview">動画プレビューを表示する</string>
     <string name="thanks_text_support">Gitlabでのサポート</string>
     <string name="action_bug_report">バグ報告</string>
     <string name="no_mail_client">メールクライアントがインストールされていません。</string>
@@ -686,7 +686,7 @@
     <string name="some_words_any">これらの単語を除く(スペースで区切り)</string>
     <string name="some_words_all">含める単語(スペースで区切り)</string>
     <string name="some_words_none">除外する単語(スペースで区切り)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">フィルターする単語を追加(スペースで区切り)</string>
     <string name="change_tag_column">カラムの名前を変更</string>
     <string name="no_misskey_instance">Misskeyのインスタンスはありません</string>
     <string name="misskey_instance">Misskeyインスタンス</string>
@@ -804,7 +804,7 @@
     <string name="settings_category_notif_customize">カスタマイズ</string>
     <string name="settings_category_notif_categories">カテゴリ</string>
     <string name="settings_category_notif_news">ニュース</string>
-    <string name="settings_category_notif_time_slot">タイムスロット</string>
+    <string name="settings_category_notif_time_slot">時間帯</string>
     <string name="settings_category_notif_advanced">上級者向け</string>
     <string name="set_display_new_badge">未読のトゥートに「new」バッジを表示する</string>
     <string name="set_display_peertube">Peertubeのタイムラインを表示する</string>
@@ -826,13 +826,14 @@
     <string name="set_sensitive_content">メディアを常に閲覧注意としてマークする</string>
     <string name="gnu_instance">GNUインスタンス</string>
     <string name="cached_status">キャッシュされたステータス</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_forward_tags">返信でタグを先頭に付加する</string>
+    <string name="set_long_press_media">長押しでメディアを保存</string>
+    <string name="set_blur_sensitive">閲覧注意のメディアをぼかす</string>
+    <string name="set_display_timeline_in_list">リストでタイムラインを表示する</string>
+    <string name="display_timeline">タイムラインを表示</string>
+    <string name="set_display_bot_icon">トゥート内でbotアカウントをマークする</string>
+    <string name="add_tags">タグ管理</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>

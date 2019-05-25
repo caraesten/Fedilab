@@ -698,7 +698,7 @@
     <string name="some_words_any">Någon av dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_all">Alla dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_none">Inga av dessa ord (mellanrumsseparerade)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Lägg till några ord att filtrera (separera med mellanslag)</string>
     <string name="change_tag_column">Ändra kolumnnamn</string>
     <string name="no_misskey_instance">Inga Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
@@ -843,8 +843,9 @@
     <string name="set_blur_sensitive">Censurera känslig media</string>
     <string name="set_display_timeline_in_list">Visa tidslinjer i en lista</string>
     <string name="display_timeline">Visa tidslinjer</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Markera robotkonton i toot</string>
+    <string name="add_tags">Hantera taggar</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
