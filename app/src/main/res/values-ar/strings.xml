@@ -860,6 +860,7 @@
     <string name="display_timeline">عرض الخيوط الزمنية</string>
     <string name="set_display_bot_icon">Mark bot accounts in toots</string>
     <string name="add_tags">إدارة الوسوم</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
