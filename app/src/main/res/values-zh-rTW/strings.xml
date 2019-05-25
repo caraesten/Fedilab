@@ -694,6 +694,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="some_words_any">這些字詞的其中一個（以空格分開）</string>
     <string name="some_words_all">這些字詞全部（以空格分開）</string>
     <string name="some_words_none">這些字詞都不要（以空格分開）</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">變更欄位名稱</string>
     <string name="no_misskey_instance">沒有 Misskey 站台</string>
     <string name="misskey_instance">Misskey 站台</string>
@@ -838,6 +839,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_blur_sensitive">將敏感內容模糊化</string>
     <string name="set_display_timeline_in_list">以清單顯示時間軸</string>
     <string name="display_timeline">顯示時間軸</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
