@@ -304,10 +304,10 @@
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
-    <string name="set_notify">通知する？</string>
+    <string name="set_notify">通知する</string>
     <string name="set_notif_silent">サイレント通知</string>
     <string name="set_night_mode">夜間モード</string>
-    <string name="set_nsfw_timeout">NSFWビューのタイムアウト（秒、0はオフを意味します）</string>
+    <string name="set_nsfw_timeout">NSFWビューのタイムアウト(秒、0でオフ)</string>
     <string name="settings_title_profile">プロフィールを編集</string>
     <string name="settings_title_custom_sharing">カスタム共有</string>
     <string name="settings_custom_sharing_url">カスタム共有URL&#8230;</string>
@@ -568,7 +568,7 @@
     <string name="channel_notif_media">メディアのダウンロード</string>
     <string name="set_notif_sound">通知サウンドを変更</string>
     <string name="select_sound">音の選択</string>
-    <string name="set_enable_time_slot">タイムスロットを有効化</string>
+    <string name="set_enable_time_slot">時間帯管理を有効化</string>
     <string name="how_to_videos">操作解説動画</string>
     <string name="retrieve_remote_conversation">リモートスレッドの取得中です！</string>
     <string name="no_blocked_domain">ブロックしたドメインはありません！</string>
