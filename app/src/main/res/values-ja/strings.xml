@@ -605,7 +605,7 @@
     <string name="information">情報</string>
     <string name="set_display_card">全てのトゥートのプレビューを表示</string>
     <string name="thanks_text_ux">新しいUX/UIデザイナー</string>
-    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用</string>
+    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用する</string>
     <string name="set_display_video_preview">ビデオプレビューを表示</string>
     <string name="thanks_text_support">Gitlabでのサポート</string>
     <string name="action_bug_report">バグ報告</string>
