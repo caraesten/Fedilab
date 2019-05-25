@@ -226,12 +226,12 @@
     <string name="notif_follow">đã theo bạn</string>
     <string name="notif_pouet">Thổi còi mới từ %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="other">"và một thông báo khác
-và %d thông báo khác"</item>
+        <item quantity="other">và một thông báo khác
+và %d thông báo khác</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">"và một cái còi khác để khám phá
-và %d toots khác để khám phá"</item>
+        <item quantity="other">và một cái còi khác để khám phá
+và %d toots khác để khám phá</item>
     </plurals>
     <plurals name="likes">
         <item quantity="other">%d likes</item>
