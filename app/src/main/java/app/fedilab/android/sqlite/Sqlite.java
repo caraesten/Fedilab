@@ -45,7 +45,7 @@ import app.fedilab.android.R;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 30;
+    public static final int DB_VERSION = 31;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -89,6 +89,8 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table for timelines
     public static final String TABLE_TIMELINES = "TIMELINES";
 
+    //Table for timelines
+    public static final String TABLE_REMOTE_INSTANCE_TAGS = "REMOTE_INSTANCE_TAGS";
 
 
     static final String COL_USER_ID = "USER_ID";
@@ -225,9 +227,10 @@ public class Sqlite extends SQLiteOpenHelper {
             + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
 
     static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
+    static final String COL_FILTERED_WITH = "FILTERED_WITH";
     private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_TAGS + " TEXT, " + COL_FILTERED_WITH + " TEXT, "+ COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
     static final String COL_UUID = "UUID";
@@ -289,6 +292,9 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_USER_ID + " TEXT NOT NULL, "
             + COL_CACHE + " TEXT NOT NULL, "
             + COL_DATE + " TEXT NOT NULL)";
+
+
+
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -410,6 +416,11 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SENSITIVE + " INTEGER DEFAULT 0");
             case 29:
                 db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
+            case 30:
+                if( oldVersion > 11) {
+                    db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_TAGS + " TEXT");
+                    db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_FILTERED_WITH + " TEXT");
+                }
             default:
                 break;
         }

@@ -18,6 +18,8 @@ package app.fedilab.android.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by Thomas on 05/10/2018.
  * Manages following instances
@@ -29,6 +31,8 @@ public class RemoteInstance implements Parcelable {
     private String type;
     private String id;
     private String dbID;
+    private List<String> tags;
+    private String filteredWith;
 
     public RemoteInstance(){}
 
@@ -65,6 +69,22 @@ public class RemoteInstance implements Parcelable {
         this.dbID = dbID;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getFilteredWith() {
+        return filteredWith;
+    }
+
+    public void setFilteredWith(String filteredWith) {
+        this.filteredWith = filteredWith;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,6 +96,8 @@ public class RemoteInstance implements Parcelable {
         dest.writeString(this.type);
         dest.writeString(this.id);
         dest.writeString(this.dbID);
+        dest.writeStringList(this.tags);
+        dest.writeString(this.filteredWith);
     }
 
     protected RemoteInstance(Parcel in) {
@@ -83,9 +105,11 @@ public class RemoteInstance implements Parcelable {
         this.type = in.readString();
         this.id = in.readString();
         this.dbID = in.readString();
+        this.tags = in.createStringArrayList();
+        this.filteredWith = in.readString();
     }
 
-    public static final Parcelable.Creator<RemoteInstance> CREATOR = new Parcelable.Creator<RemoteInstance>() {
+    public static final Creator<RemoteInstance> CREATOR = new Creator<RemoteInstance>() {
         @Override
         public RemoteInstance createFromParcel(Parcel source) {
             return new RemoteInstance(source);
