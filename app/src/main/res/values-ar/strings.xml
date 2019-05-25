@@ -493,12 +493,12 @@
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>وهنا بعض الاختبارات التي قد تساعد:</b>\n\n
+        - التحقق من عدم وجود الأخطاء الإملائية في اسم المثيل\n\n
+        - التحقق من أن الحالة ليست\n\n
+        - إذا كنت تستخدم مصادقة اثنين عامل (2FA) الرجاء استخدام الرابط في الأسفل (مرة واحدة اسم المثيل شغل)\n\n
+        - يمكنك أيضا استخدام هذا الرابط بدون استخدام 2FA\n\n
+        - إذا كان لا يزال لا يعمل ، يرجى رفع قضية على GitLab في https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
@@ -685,9 +685,9 @@
         <item>يوم واحد</item>
         <item>أسبوع واحد</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        في هذا المجال تحتاج إلى كتابة سبيل المثال اسم المضيف.\nعلى سبيل المثال ، إذا كنت قد أنشأت حسابك على https://mastodon.social\nمجرد كتابة <b>الصناجة.الاجتماعية</b> (دون https://)\n
+        يمكنك البدء في كتابة الحروف الأولى وأسماء المقترح.\n\n
+        ⚠ زر \"تسجيل الدخول\" سوف تعمل فقط إذا كان اسم مثيل صالح المثيل حتى!
     </string>
     <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
     </string>
@@ -792,7 +792,7 @@
     <string name="set_optimize_loading">تحسين مدة التحميل</string>
     <string name="all">الكل</string>
     <string name="about_opencollective">ادعم التطبيق</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="more_about_opencollective">فتح الجماعية تمكن الجماعات إلى المسارعة الجماعية ، جمع الأموال وإدارتها بشفافية.</string>
     <string name="copy_link">انسخ الرابط</string>
     <string name="connect_instance">اتصل</string>
     <string name="set_normal">عادي</string>
@@ -845,7 +845,7 @@
     <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_list_deletion">استخدام قوائم دخول حذف هذه القائمة!</string>
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">إضافة خيط زمني</string>
@@ -855,8 +855,8 @@
     <string name="set_forward_tags">نقل الوسوم في الردود</string>
     <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
     <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">عرض الجداول الزمنية في قائمة</string>
+    <string name="display_timeline">عرض الجداول الزمنية</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
