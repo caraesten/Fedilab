@@ -554,7 +554,7 @@
     <string name="context_public">الخطوط الزمنية العمومية</string>
     <string name="context_notification">الإشعارات</string>
     <string name="context_conversation">المحادثات</string>
-    <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
+    <string name="filter_keyword_explanations">سوف يتم العثور عليه بغض النظر عن حالة الأحرف في النص أو حتى و إن كان فيه تحذير عن المحتوى</string>
     <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
     <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
     <string name="context_whole_word_explanations">إذا كانت الكلمة أو الجملة مكونة من الأرقام والحروف فقط سوف يتم تطبيقها فقط عند مطابقة الكلمة ككل</string>
@@ -685,9 +685,9 @@
         <item>يوم واحد</item>
         <item>أسبوع واحد</item>
     </string-array>
-    <string name="showcase_instance">        في هذا المجال تحتاج إلى كتابة سبيل المثال اسم المضيف.\nعلى سبيل المثال ، إذا كنت قد أنشأت حسابك على https://mastodon.social\nمجرد كتابة <b>الصناجة.الاجتماعية</b> (دون https://)\n
-        يمكنك البدء في كتابة الحروف الأولى وأسماء المقترح.\n\n
-        ⚠ زر \"تسجيل الدخول\" سوف تعمل فقط إذا كان اسم مثيل صالح المثيل حتى!
+    <string name="showcase_instance">        في هذا الحقل تحتاج إلى كتابة اسم المضيف.\nعلى سبيل المثال ، إن أنشأتم حسابكم على https://mastodon.social\nتكفي كتابة <b>mastodon.social</b> (دون https://)\n
+        يمكنكم الشروع في كتابة الحروف الأولى وستُقترَحُ عليكم أسماء.\n\n
+        ⚠ زِرّ \"تسجيل الدخول\" سوف يعمل فقط إذا كان الخادم شغّالاً واسمه صالح!
     </string>
     <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
     </string>
@@ -845,7 +845,7 @@
     <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
-    <string name="warning_list_deletion">استخدام قوائم دخول حذف هذه القائمة!</string>
+    <string name="warning_list_deletion">استخدم القوائم قصد حذف هذه القائمة!</string>
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">إضافة خيط زمني</string>
@@ -855,8 +855,8 @@
     <string name="set_forward_tags">نقل الوسوم في الردود</string>
     <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
     <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
-    <string name="set_display_timeline_in_list">عرض الجداول الزمنية في قائمة</string>
-    <string name="display_timeline">عرض الجداول الزمنية</string>
+    <string name="set_display_timeline_in_list">عرض الخيوط الزمنية في قائمة</string>
+    <string name="display_timeline">عرض الخيوط الزمنية</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
