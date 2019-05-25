@@ -1037,8 +1037,8 @@ public class API {
                     apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
                     apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
                 }else{
-                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())));
-                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())));
+                    apiResponse.setSince_id(statuses.get(0).getId());
+                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                 }
             }
             apiResponse.setStatuses(statuses);
