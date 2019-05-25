@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
 
 

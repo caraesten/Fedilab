@@ -328,6 +328,7 @@ public class Helper {
     public static final String SET_LONG_PRESS_MEDIA = "set_long_press_media";
     public static final String SET_DISPLAY_TIMELINE_IN_LIST = "set_display_timeline_in_list";
     public static final String SET_ONION_SCHEME = "set_onion_scheme";
+    public static final String SET_REMEMBER_POSITION_HOME = "set_remember_position";
     public static final int S_NO = 0;
     static final int S_512KO = 1;
     public static final int S_1MO = 2;

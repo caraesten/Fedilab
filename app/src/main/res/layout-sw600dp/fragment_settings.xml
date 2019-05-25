@@ -99,6 +99,14 @@
         </LinearLayout>
 
         <CheckBox
+            android:id="@+id/set_remember_position"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_remember_position"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
             android:id="@+id/set_old_direct_timeline"
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/settings_checkbox_margin"

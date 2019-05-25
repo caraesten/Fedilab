@@ -540,7 +540,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Only for the Home timeline
 
             if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
-                asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
+                if( remember_position_home) {
+                    asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
                 firstTootsLoaded = true;
             }
             //Let's deal with statuses
@@ -925,6 +928,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeedsAfterBookmark(APIResponse apiResponse) {
+
         if( statusListAdapter == null)
             return;
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
@@ -937,10 +941,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
+
         if( statuses == null || statuses.size() == 0 || this.statuses == null )
             return;
         //Find the position of toots between those already present
         int position = 0;
+
         if( position < this.statuses.size() && statuses.get(0).getCreated_at() != null && this.statuses.get(position).getCreated_at() != null) {
             while (position < this.statuses.size() && statuses.get(0).getCreated_at().before(this.statuses.get(position).getCreated_at())) {
                 position++;
@@ -949,7 +955,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         ArrayList<Status> tmpStatuses = new ArrayList<>();
         for (Status tmpStatus : statuses) {
             //Put the toot at its place in the list (id desc)
-            if( !this.statuses.contains(tmpStatus) ) { //Element not already added
+            if (this.statuses.size() == 0){
+                tmpStatuses.add(tmpStatus);
+            }else if( tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
                 if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);
@@ -1025,7 +1033,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( !pagination) {
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
                     if (context instanceof BaseMainActivity) {
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
+                        if(remember_position_home )
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        else
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 } else { //Most classical search will be done by this call
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

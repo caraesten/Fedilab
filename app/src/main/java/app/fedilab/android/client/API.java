@@ -1015,34 +1015,40 @@ public class API {
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         statuses  = new TimelineCacheDAO(context, db).get(max_id);
 
-        if( statuses != null){
-            Iterator<Status> i = statuses.iterator();
-            List<String> ids = new ArrayList<>();
-            while (i.hasNext()) {
-                Status s = i.next();
-                if( ids.contains(s.getId())) {
-                    i.remove();
-                    new TimelineCacheDAO(context, db).remove(s.getId());
-                }else{
-                    ids.add(s.getId());
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
+        //TODO: remove forced condition
+        if( remember_position_home ){
+            if( statuses != null){
+                Iterator<Status> i = statuses.iterator();
+                List<String> ids = new ArrayList<>();
+                while (i.hasNext()) {
+                    Status s = i.next();
+                    if( ids.contains(s.getId())) {
+                        i.remove();
+                        new TimelineCacheDAO(context, db).remove(s.getId());
+                    }else{
+                        ids.add(s.getId());
+                    }
                 }
             }
-        }
-
-        if( statuses == null){
-            return getHomeTimeline(max_id);
+            if( statuses == null){
+                return getHomeTimeline(max_id);
+            }else{
+                if( statuses.size() > 0) {
+                    if( statuses.get(0).getId().matches("\\d+")){
+                        apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                        apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                    }else{
+                        apiResponse.setSince_id(statuses.get(0).getId());
+                        apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+                    }
+                }
+                apiResponse.setStatuses(statuses);
+                return apiResponse;
+            }
         }else{
-            if( statuses.size() > 0) {
-                if( statuses.get(0).getId().matches("\\d+")){
-                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
-                }else{
-                    apiResponse.setSince_id(statuses.get(0).getId());
-                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
-                }
-            }
-            apiResponse.setStatuses(statuses);
-            return apiResponse;
+            return getHomeTimeline(max_id);
         }
 
     }

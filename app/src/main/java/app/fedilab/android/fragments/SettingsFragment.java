@@ -464,6 +464,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
+        final CheckBox set_remember_position = rootView.findViewById(R.id.set_remember_position);
+        set_remember_position.setChecked(remember_position_home);
+
+        set_remember_position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_REMEMBER_POSITION_HOME, set_remember_position.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
         final CheckBox set_old_direct_timeline = rootView.findViewById(R.id.set_old_direct_timeline);
         set_old_direct_timeline.setChecked(old_direct_timeline);
