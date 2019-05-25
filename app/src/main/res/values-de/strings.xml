@@ -392,9 +392,9 @@
     <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
     <!-- CACHE -->
     <string name="cache_title">Speicher leeren</string>
-    <string name="cache_message">"Es sind %1$s Daten im Speicher.\n
+    <string name="cache_message">Es sind %1$s Daten im Speicher.\n
     \n
-    Möchtest du diese löschen?"</string>
+    Möchtest du diese löschen?</string>
     <string name="cache_units">MB</string>
     <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
     <!-- ACTIVITY CUSTOM SHARING -->
