@@ -151,7 +151,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
 
 
     public void scrollToTop(){
-        if( lv_search_tags != null) {
+        if( lv_search_tags != null && searchTagsAdapter != null) {
             lv_search_tags.setAdapter(searchTagsAdapter);
         }
     }
