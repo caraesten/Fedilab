@@ -2062,6 +2062,12 @@ public abstract class BaseMainActivity extends BaseActivity
                         bundle.putString("remote_instance", "peertube.social");
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                     }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
+                        if( tl.getRemoteInstance().getFilteredWith() == null){
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        }else{
+                            bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        }
                         bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
                         bundle.putString("instanceType", tl.getRemoteInstance().getType());
                     }else if( tl.getType() == ManageTimelines.Type.LIST){

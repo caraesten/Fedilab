@@ -95,6 +95,17 @@ public class TimelinesDAO {
                 new String[]{String.valueOf(timeline.getId())});
     }
 
+    //------- UPDATE  -------
+    public void updateRemoteInstance(ManageTimelines timeline) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_DISPLAYED, timeline.isDisplayed());
+        if( timeline.getTagTimeline() != null)
+            values.put(Sqlite.COL_REMOTE_INSTANCE, Helper.remoteInstanceToStringStorage(timeline.getRemoteInstance()));
+        db.update(Sqlite.TABLE_TIMELINES,
+                values, Sqlite.COL_ID + " =  ? ",
+                new String[]{String.valueOf(timeline.getId())});
+    }
+
     public int countVisibleTimelines(){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

@@ -1287,6 +1287,8 @@ public class API {
     public APIResponse searchPeertube(String instance, String query) {
         HashMap<String, String> params = new HashMap<>();
         params.put("count", "50");
+        if( query == null)
+            return null;
         try {
             params.put("search", URLEncoder.encode(query, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -1578,7 +1580,7 @@ public class API {
     private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id, List<String> any, List<String> all, List<String> none){
         if( tag == null)
             tag = "mastoart";
-        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage, any, all, none);
+        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage, any, all, none, null);
         APIResponse apiResponseReply = new APIResponse();
         if( apiResponse != null){
             apiResponseReply.setMax_id(apiResponse.getMax_id());
@@ -1611,7 +1613,19 @@ public class API {
      */
     @SuppressWarnings("SameParameterValue")
     public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, List<String> any, List<String> all, List<String> none){
-        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, any, all, none);
+        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, any, all, none, null);
+    }
+
+    /**
+     * Retrieves public tag timeline *synchronously*
+     * @param tag String
+     * @param local boolean only local timeline
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, String instance){
+        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, null, null, null, instance);
     }
 
     /**
@@ -1623,7 +1637,7 @@ public class API {
      */
     @SuppressWarnings("SameParameterValue")
     public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id, List<String> any, List<String> all, List<String> none){
-        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage, any, all, none);
+        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage, any, all, none, null);
     }
     /**
      * Retrieves public tag timeline *synchronously*
@@ -1635,7 +1649,7 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none){
+    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none, String instance){
 
         HashMap<String, String> params = new HashMap<>();
         if( local)
@@ -1694,7 +1708,11 @@ public class API {
                 try {
                     query = URLEncoder.encode(query, "UTF-8");
                 } catch (UnsupportedEncodingException ignored) {}
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
+            String response;
+            if( instance == null)
+                response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
+            else
+                response = httpsConnection.get(getAbsoluteUrlRemote(instance, String.format("/timelines/tag/%s",query)), 60, params, null);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));

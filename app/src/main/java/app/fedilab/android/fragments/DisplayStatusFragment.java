@@ -50,6 +50,7 @@ import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
+import app.fedilab.android.client.Entities.RetrieveFeedsParam;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.drawers.ArtListAdapter;
@@ -126,6 +127,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private BroadcastReceiver  receive_data;
     private Date lastReadTootDate, initialBookMarkDate, updatedBookMarkDate;
     private int timelineId;
+    private String currentfilter;
     public DisplayStatusFragment(){
     }
 
@@ -156,6 +158,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             instanceType  = bundle.getString("instanceType", "MASTODON");
             ischannel = bundle.getBoolean("ischannel",false);
             timelineId = bundle.getInt("timelineId");
+            currentfilter = bundle.getString("currentfilter", null);
 
         }
         if( ischannel)
@@ -1008,6 +1011,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else
                 asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else if(type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED){
+            RetrieveFeedsParam retrieveFeedsParam = new RetrieveFeedsParam();
+            retrieveFeedsParam.setAction(type);
+            retrieveFeedsParam.setCurrentfilter(currentfilter);
+            retrieveFeedsParam.setRemoteInstance(remoteInstance);
+            retrieveFeedsParam.setMax_id(max_id);
+            retrieveFeedsParam.setSocial(instanceType);
+            asyncTask = new RetrieveFeedsAsyncTask(context, retrieveFeedsParam, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else if( type == RetrieveFeedsAsyncTask.Type.LIST){
             new ManageListsAsyncTask(context,targetedId, max_id ,null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else {

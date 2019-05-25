@@ -989,7 +989,29 @@ public class ManageTimelines {
                 item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                        if( displayStatusFragment == null)
+                            return false;
+                        tl.getRemoteInstance().setFilteredWith(tag);
+                        new InstancesDAO(context, db).updateInstance(remoteInstance);
+                        tl.setRemoteInstance(remoteInstance);
+                        new TimelinesDAO(context, db).updateRemoteInstance(tl);
 
+                        fragTransaction.detach(displayStatusFragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                        bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                        bundle.putInt("timelineId", tl.getId());
+                        if( currentFilter == null){
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        }else{
+                            bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        }
+                        displayStatusFragment.setArguments(bundle);
+                        fragTransaction.attach(displayStatusFragment);
+                        fragTransaction.commit();
                         return false;
                     }
                 });
@@ -1010,8 +1032,12 @@ public class ManageTimelines {
                     bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
                     bundle.putString("instanceType", tl.getRemoteInstance().getType());
                     bundle.putInt("timelineId", tl.getId());
-                    bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
-                    bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    if( currentFilter == null){
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    }else{
+                        bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                    }
                     displayStatusFragment.setArguments(bundle);
                     fragTransaction.attach(displayStatusFragment);
                     fragTransaction.commit();
@@ -1059,7 +1085,7 @@ public class ManageTimelines {
                                 remoteInstance.setTags(tags);
                                 new InstancesDAO(context, db).updateInstance(remoteInstance);
                                 tl.setRemoteInstance(remoteInstance);
-                                new TimelinesDAO(context, db).updateTag(tl);
+                                new TimelinesDAO(context, db).updateRemoteInstance(tl);
                             }
                         });
                         AlertDialog alertDialog = dialogBuilder.create();

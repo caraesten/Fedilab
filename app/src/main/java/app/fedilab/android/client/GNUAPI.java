@@ -1652,6 +1652,44 @@ public class GNUAPI {
      * @param query  String search
      * @return Results
      */
+    public APIResponse searchRemote(String instance, String query, String max_id) {
+        HashMap<String, String> params = new HashMap<>();
+        try {
+            query = URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException ignored) {}
+        if (max_id != null)
+            params.put("max_id", max_id);
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteRemoteUrl(instance, "/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
+            List<Status> statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+            }
+            apiResponse.setStatuses(statuses);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves Accounts and feeds when searching *synchronously*
+     *
+     * @param query  String search
+     * @return Results
+     */
     public APIResponse search(String query) {
         Results results = new Results();
         HashMap<String, String> params = new HashMap<>();
@@ -2359,6 +2397,8 @@ public class GNUAPI {
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
     }
-
+    private String getAbsoluteRemoteUrl(String instance, String action) {
+        return Helper.instanceWithProtocol(this.context,instance) + "/api" + action;
+    }
 
 }
