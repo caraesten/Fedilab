@@ -844,6 +844,7 @@
     <string name="display_timeline">Bistaratu denbora-lerroak</string>
     <string name="set_display_bot_icon">Markatu bot kontuak toot-etan</string>
     <string name="add_tags">Kudeatu etiketak</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
