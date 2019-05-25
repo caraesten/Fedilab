@@ -336,7 +336,7 @@
     <string name="set_save_changes">حفظ التغييرات</string>
     <string name="set_header_picture_overlay">اختيار الصورة الرأسية</string>
     <string name="set_fit_preview">تكافؤ معاينة الصور</string>
-    <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
+    <string name="set_automatically_split_toot">تقسيم التبويقات على شكل ردود عندما تفوق عدد الحروف:</string>
     <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به!</string>
     <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به!</string>
     <string name="settings_time_from">بين</string>
