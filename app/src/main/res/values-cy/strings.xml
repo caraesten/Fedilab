@@ -713,6 +713,7 @@
     <string name="some_words_any">Unrhyw un o\'r geiriau hyn (a gofod rhyngddynt)</string>
     <string name="some_words_all">Yr holl eiriau hyn (a gofod rhyngddynt)</string>
     <string name="some_words_none">Dim un o\'r geiriau hyn (a gofod rhyngddynt)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Newid enw\'r golofn</string>
     <string name="no_misskey_instance">Dim achosion Misskey</string>
     <string name="misskey_instance">Achos Misskey</string>
@@ -857,6 +858,8 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>

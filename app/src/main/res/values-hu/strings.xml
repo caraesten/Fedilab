@@ -696,6 +696,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="some_words_any">Bármelyik a következő szavakból (szóközzel elválasztva)</string>
     <string name="some_words_all">Minden szó (szóközzel elválasztva)</string>
     <string name="some_words_none">Egyik szó sem (szóközzel elválasztva)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Oszlop nevének megváltoztatása</string>
     <string name="no_misskey_instance">Nincs Misskey szerver</string>
     <string name="misskey_instance">Misskey szerver</string>
@@ -840,6 +841,8 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="set_blur_sensitive">Érzékeny média homályosítása</string>
     <string name="set_display_timeline_in_list">Idővonalak megjelenítése listában</string>
     <string name="display_timeline">Idővonalak megjelenítése</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

@@ -706,6 +706,7 @@
     <string name="some_words_any">Katerakoli od teh besed (ločene s presledkom)</string>
     <string name="some_words_all">Vse te besede (ločene s presledkom)</string>
     <string name="some_words_none">Nobena od teh besed (ločene s presledkom)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Preimenuj stolpec</string>
     <string name="no_misskey_instance">Ni instanc Misskey</string>
     <string name="misskey_instance">Instanca Misskey</string>
@@ -850,6 +851,8 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>

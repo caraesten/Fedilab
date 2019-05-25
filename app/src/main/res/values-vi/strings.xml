@@ -226,12 +226,12 @@
     <string name="notif_follow">đã theo bạn</string>
     <string name="notif_pouet">Thổi còi mới từ %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="other">"và một thông báo khác
-và %d thông báo khác"</item>
+        <item quantity="other">và một thông báo khác
+và %d thông báo khác</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">"và một cái còi khác để khám phá
-và %d toots khác để khám phá"</item>
+        <item quantity="other">và một cái còi khác để khám phá
+và %d toots khác để khám phá</item>
     </plurals>
     <plurals name="likes">
         <item quantity="other">%d likes</item>
@@ -692,6 +692,7 @@ và %d toots khác để khám phá"</item>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Change column name</string>
     <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
@@ -836,6 +837,8 @@ và %d toots khác để khám phá"</item>
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
