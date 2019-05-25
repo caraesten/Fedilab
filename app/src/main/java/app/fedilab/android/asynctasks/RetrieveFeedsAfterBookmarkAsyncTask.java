@@ -37,18 +37,20 @@ public class RetrieveFeedsAfterBookmarkAsyncTask extends AsyncTask<Void, Void, V
     private OnRetrieveFeedsAfterBookmarkInterface listener;
     private WeakReference<Context> contextReference;
     private String max_id;
+    private boolean fetchMore;
 
-
-    public RetrieveFeedsAfterBookmarkAsyncTask(Context context, String max_id, OnRetrieveFeedsAfterBookmarkInterface onRetrieveFeedsAfterBookmarkInterface){
+    public RetrieveFeedsAfterBookmarkAsyncTask(Context context, String max_id, boolean fetchMore, OnRetrieveFeedsAfterBookmarkInterface onRetrieveFeedsAfterBookmarkInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveFeedsAfterBookmarkInterface;
         this.max_id = max_id;
+        this.fetchMore = fetchMore;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         apiResponse = api.getHomeTimeline(max_id);
+        apiResponse.setFetchmore(fetchMore);
         return null;
     }
 

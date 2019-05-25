@@ -30,7 +30,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -541,9 +540,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
                 boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
-                if( remember_position_home) {
-                    asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
+                if( remember_position_home)
+                    asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 firstTootsLoaded = true;
             }
             //Let's deal with statuses
@@ -688,7 +686,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void retrieveMissingToots(String sinceId){
 
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if(type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -713,7 +711,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if( statuses.size() > 0)
                 initialBookMarkDate = statuses.get(0).getCreated_at();
-            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -923,7 +921,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
-        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -955,9 +953,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         ArrayList<Status> tmpStatuses = new ArrayList<>();
         for (Status tmpStatus : statuses) {
             //Put the toot at its place in the list (id desc)
-            if (this.statuses.size() == 0){
+            if( !apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus) &&  tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
+                //Mark status at new ones when their id is greater than the last read toot id
+                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
+                    tmpStatus.setNew(true);
+                    MainActivity.countNewStatus++;
+                }
                 tmpStatuses.add(tmpStatus);
-            }else if( tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
+            }else if( apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus)) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
                 if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);

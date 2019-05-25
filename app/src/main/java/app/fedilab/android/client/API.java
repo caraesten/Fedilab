@@ -1017,7 +1017,6 @@ public class API {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
-        //TODO: remove forced condition
         if( remember_position_home ){
             if( statuses != null){
                 Iterator<Status> i = statuses.iterator();
