@@ -853,6 +853,7 @@
     <string name="display_timeline">Display timelines</string>
     <string name="set_display_bot_icon">Mark bot accounts in toots</string>
     <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>
