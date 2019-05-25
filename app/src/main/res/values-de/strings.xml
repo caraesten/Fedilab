@@ -831,12 +831,12 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="cached_status">Gespeicherter Status</string>
     <string name="set_forward_tags">Schlagwörter in Antworten weiterleiten</string>
     <string name="set_long_press_media">Lange Drücken, um Medien zu speichern</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_blur_sensitive">Verschwommene, empfindliche Medien</string>
     <string name="set_display_timeline_in_list">Zeitleisten in einer Liste anzeigen</string>
     <string name="display_timeline">Zeitleisten anzeigen</string>
     <string name="set_display_bot_icon">Bot-Konten als Toots kennzeichnen</string>
     <string name="add_tags">Schlagwörter verwalten</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
+    <string name="set_remember_position">Position der Startseiten-Zeitleiste merken</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
