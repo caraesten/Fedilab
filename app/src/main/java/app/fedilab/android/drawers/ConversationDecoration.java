@@ -62,7 +62,7 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
         if( consoleMode)
             leftSide = (int) Helper.convertDpToPixel(6, context);
         else if( compactMode)
-            leftSide = (int) Helper.convertDpToPixel(12, context);
+            leftSide = (int) Helper.convertDpToPixel(3, context);
         else
             leftSide = (int) Helper.convertDpToPixel(28, context);
 
