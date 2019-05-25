@@ -538,19 +538,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             status.setItemViewType(viewHolder.getItemViewType());
 
-            if( status.getReblog() == null){
-                if( status.getAccount().isBot()){
-                    holder.status_account_bot.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_account_bot.setVisibility(View.GONE);
-                }
-            }else{
-                if( status.getReblog().getAccount().isBot()){
-                    holder.status_account_bot.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_account_bot.setVisibility(View.GONE);
-                }
-            }
 
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
@@ -573,8 +560,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean isModerator = sharedpreferences.getBoolean(Helper.PREF_IS_MODERATOR, false);
             boolean isAdmin = sharedpreferences.getBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
 
+            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+            boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
+
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+
+            if (status.getReblog() == null) {
+                if (bot_icon && status.getAccount().isBot()) {
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            } else {
+                if (bot_icon && status.getReblog().getAccount().isBot()) {
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            }
+
             if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
@@ -781,7 +786,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
-            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+
             if (status.isNew() && new_badge)
                 holder.new_element.setVisibility(View.VISIBLE);
             else

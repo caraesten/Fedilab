@@ -947,6 +947,7 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
     <string name="add_tags">Manage tags</string>
 
     <plurals name="number_of_vote">
