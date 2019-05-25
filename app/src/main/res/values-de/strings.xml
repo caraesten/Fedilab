@@ -689,7 +689,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="some_words_any">Eines dieser Wörter (durch Leerzeichen getrennt)</string>
     <string name="some_words_all">Alle diese Wörter (durch Leerzeichen getrennt)</string>
     <string name="some_words_none">Keines dieser Wörter (durch Leerzeichen getrennt)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Fügen Sie einige Wörter zum Filter hinzu (durch Leerzeichen getrennt)</string>
     <string name="change_tag_column">Spaltenname ändern</string>
     <string name="no_misskey_instance">Keine Misskey-Instanzen</string>
     <string name="misskey_instance">Misskey Instanz</string>
@@ -834,8 +834,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Zeitleisten in einer Liste anzeigen</string>
     <string name="display_timeline">Zeitleisten anzeigen</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Bot-Konten als Toots kennzeichnen</string>
+    <string name="add_tags">Schlagwörter verwalten</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
