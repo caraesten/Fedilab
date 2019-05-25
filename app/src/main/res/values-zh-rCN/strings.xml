@@ -694,6 +694,7 @@
     <string name="some_words_any">任一关键词（以空格隔开）</string>
     <string name="some_words_all">全部关键词（以空格隔开）</string>
     <string name="some_words_none">除开关键词（以空格隔开）</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">更改列名称</string>
     <string name="no_misskey_instance">没有 Misskey 实例</string>
     <string name="misskey_instance">Misskey 实例</string>
@@ -838,6 +839,8 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
