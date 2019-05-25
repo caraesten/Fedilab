@@ -842,6 +842,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="display_timeline">Afficher les fils publics</string>
     <string name="set_display_bot_icon">Marquer les comptes bot dans les pouets</string>
     <string name="add_tags">Gestion des étiquettes</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
