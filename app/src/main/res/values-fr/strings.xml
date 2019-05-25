@@ -695,7 +695,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="some_words_any">N’importe lequel de ces mots (séparés par des espaces)</string>
     <string name="some_words_all">Tous ces mots (séparés par des espaces)</string>
     <string name="some_words_none">Aucun de ces mots (séparés par des espaces)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Ajouter quelques mots à filtrer (séparés par un espace)</string>
     <string name="change_tag_column">Renommer la colonne</string>
     <string name="no_misskey_instance">Aucune instance Misskey</string>
     <string name="misskey_instance">Instance Misskey</string>
@@ -840,8 +840,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_blur_sensitive">Flouter les médias sensibles</string>
     <string name="set_display_timeline_in_list">Afficher les fils publics en liste</string>
     <string name="display_timeline">Afficher les fils publics</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Marquer les comptes bot dans les pouets</string>
+    <string name="add_tags">Gestion des étiquettes</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
