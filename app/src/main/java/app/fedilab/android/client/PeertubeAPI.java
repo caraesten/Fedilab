@@ -17,6 +17,7 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -397,6 +398,7 @@ public class PeertubeAPI {
                 }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
                     targetedAccount.setRefresh_token(values.get("refresh_token"));
                 new AccountDAO(context, db).updateAccount(targetedAccount);
+
                 String response;
                 try {
                     response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, targetedAccount.getToken());
@@ -440,7 +442,6 @@ public class PeertubeAPI {
                 refresh_token = resobj.get("refresh_token").toString();
             newValues.put("access_token",token);
             newValues.put("refresh_token",refresh_token);
-
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -566,6 +567,7 @@ public class PeertubeAPI {
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             if( e.getStatusCode() == 401){ //Avoid the issue with the refresh token
+
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -580,6 +582,7 @@ public class PeertubeAPI {
                     if (refresh_token != null)
                         account.setRefresh_token(refresh_token);
                     new AccountDAO(context, db).updateAccount(account);
+                    prefKeyOauthTokenT = newtoken;
                 }
                 HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
                 String response;
