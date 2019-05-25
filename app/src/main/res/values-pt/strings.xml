@@ -387,9 +387,9 @@
     <string name="set_resize_picture">Redimensionar fotos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificações</string>
-    <string name="settings_popup_message">"        Por favor, confirme que notificações você quer receber.
+    <string name="settings_popup_message">        Por favor, confirme que notificações você quer receber.
         Você pode ativar ou desativar essas notificações mais tarde em configurações (na aba Notificações).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Para toots não lidos na página inicial?</string>
     <string name="settings_popup_notification">Para notificações não lidas?</string>
     <!-- CACHE -->
@@ -426,39 +426,38 @@
     <string name="owner_cached_toots_empty">Nenhum toot foi encontrado no banco de dados. Por favor, use o botão de sincronização no menu para recuperá-los.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Dados salvos</string>
-    <string name="privacy_data">"        Apenas informação básica das contas é armazenada no aparelho.
+    <string name="privacy_data">        Apenas informação básica das contas é armazenada no aparelho.
         Estes dados são estritamente confidenciais e só podem ser usados pelo aplicativo.
         Desinstalar o aplicativo imediatamente remove esses dados.\n
         &#9888; Credenciais nunca são armazenadas. Elas só são usadas durante a autenticação segura (SSL) com uma instância.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Permissões:</string>
-    <string name="privacy_authorizations">"        - <b>ACCESS_NETWORK_STATE</b>: Usada para detectar se o aparelho está conectado a uma rede Wi-Fi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Usada para detectar se o aparelho está conectado a uma rede Wi-Fi.\n
         - <b>INTERNET</b>: Usado para consultar instâncias.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Usada para armazenar mídia ou mover o aplicativo para o cartão SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Usada para adicionar mídia aos toots.\n
         - <b>BOOT_COMPLETED</b>: Usada para iniciar o serviço de notificação.\n
         - <b>WAKE_LOCK</b>: Usada durante o serviço de notificação.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Permissões da API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Leitura</b>: Ler dados.\n
+    <string name="privacy_API_authorizations">        - <b>Leitura</b>: Ler dados.\n
         - <b>Escrita</b>: Publicar toots e enviar mídia nos toots.\n
         - <b>Seguir</b>: Seguir, deixar de seguir, bloquear e desbloquear.\n\n
         <b>&#9888; Essas ações são realizadas apenas quando o usuário solicitá-las.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Rastreio e Bibliotecas</string>
-    <string name="privacy_API">"        O aplicativo <b>não usa ferramentas de rastreio</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
+    <string name="privacy_API">        O aplicativo <b>não usa ferramentas de rastreio</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
         O uso de bibliotecas é minimizado: \n
         - <b>Glide</b>: Para gerenciar mídia\n
         - <b>Android-Job</b>: Para gerenciar serviços\n
         - <b>PhotoView</b>: Para gerenciar imagens\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Tradução de toots</string>
-    <string name="privacy_API_yandex_authorizations">"        O aplicativo oferece a habilidade de traduzir toots usando o idioma do aparelho e a API do Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        O aplicativo oferece a habilidade de traduzir toots usando o idioma do aparelho e a API do Yandex.\n
         Yandex tem a sua própria política de privacidade, que pode ser lida aqui: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"        Agradecimentos aos:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Agradecimentos aos:
+    </string>
     <string name="filter_regex">Filtrar por expressões regulares</string>
     <string name="search">Pesquisa</string>
     <string name="delete">Remover</string>
@@ -479,13 +478,13 @@
     <string name="account_moved_to">%1$s mudou-se para %2$s</string>
     <string name="show_boost_count">Mostrar número de boosts/favoritos</string>
     <string name="issue_login_title">Falha ao autenticar?</string>
-    <string name="issue_login_message">"        <b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
+    <string name="issue_login_message">        <b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
         - Verifique se não há erros de digitação no nome da instância\n\n
         - Verifique se a sua instância não está fora do ar\n\n
         - Se você utiliza a autenticação de dois fatores (2FA), use o link na parte inferior (uma vez que o nome da instância estiver preenchido) \n\n
         - Você também pode usar este link sem usar o 2FA\n\n
         - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">A mídia foi carregada. Toque aqui para vê-la.</string>
     <string name="data_export_start">Esta ação pode ser demorada. Você será notificado quando ela terminar.</string>
     <string name="data_export_running">Ainda em execução, por favor, aguarde…</string>
@@ -671,14 +670,14 @@
         <item>1 dia</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">"        Neste campo, você precisa digitar o nome da sua instância.\nPor exemplo, se você criou sua conta em https://mastodon.social\nApenas digite <b>mastodon.social</b> (sem https://)\n
+    <string name="showcase_instance">        Neste campo, você precisa digitar o nome da sua instância.\nPor exemplo, se você criou sua conta em https://mastodon.social\nApenas digite <b>mastodon.social</b> (sem https://)\n
         Você pode começar digitando as primeiras letras e nomes serão sugeridos.\n\n
         ⚠ O botão de login só funcionará se o nome da instância for válido e a instância estiver ativa!
-    "</string>
-    <string name="showcase_uid">"        Neste campo, digite o e-mail usado na sua conta Mastodon.
-    "</string>
-    <string name="showcase_pwd">"        O último passo é digitar sua senha e tocar em Entrar.
-    "</string>
+    </string>
+    <string name="showcase_uid">        Neste campo, digite o e-mail usado na sua conta Mastodon.
+    </string>
+    <string name="showcase_pwd">        O último passo é digitar sua senha e tocar em Entrar.
+    </string>
     <string name="more_information">Mais informação</string>
     <string name="showcase_2FA">Se você usar 2FA (autenticação de dois fatores), você precisa usar este link.\nVocê também pode usá-lo se você não quiser inserir suas credenciais aqui.</string>
     <!-- languages not translated -->
@@ -699,6 +698,7 @@
     <string name="some_words_any">Qualquer uma destas palavras (separadas por espaço)</string>
     <string name="some_words_all">Todas estas palavras (separadas por espaço)</string>
     <string name="some_words_none">Nenhuma destas palavras (separadas por espaço)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Mudar nome da aba</string>
     <string name="no_misskey_instance">Sem instâncias Misskey</string>
     <string name="misskey_instance">Instância Misskey</string>
@@ -843,6 +843,9 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

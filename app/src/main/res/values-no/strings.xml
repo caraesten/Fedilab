@@ -387,9 +387,8 @@
     <string name="set_resize_picture">Endre størrelsen på bilder</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-varsler</string>
-    <string name="settings_popup_message">"
-Vennligst bekreft push notifications som du vil motta.
-Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen).    "</string>
+    <string name="settings_popup_message">Vennligst bekreft push notifications som du vil motta.
+Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen).    </string>
     <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
@@ -426,38 +425,32 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="owner_cached_toots_empty">Ingen toots ble funnet. Bruk Oppdater-knappen oppe til høyre for å hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Lagrede data</string>
-    <string name="privacy_data">"
-Bare grunnleggende informasjon fra kontoer lagres på enheten.
+    <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
  Disse dataene er strengt konfidensielle og kan bare brukes av applikasjonen.
  Hvis du sletter programmet, fjernes disse dataene. \n
- &#9888; Brukernavn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en instans.    "</string>
+ &#9888; Brukernavn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en instans.    </string>
     <string name="privacy_authorizations_title">Tillatelser:</string>
-    <string name="privacy_authorizations">"
-<b> ACCESS_NETWORK_STATE </b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \n
+    <string name="privacy_authorizations"><b> ACCESS_NETWORK_STATE </b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \n
          - <b> INTERNET </b>: Brukes for spørringer til en instans. \n
          - <b> WRITE_EXTERNAL_STORAGE </b>: Brukes til å lagre media eller flytte appen på et SD-kort. \n
          - <b> READ_EXTERNAL_STORAGE </b>: Brukes til å legge til media til toots. \n
          - <b> BOOT_COMPLETED </b>: Brukes til å starte varslingstjenesten. \n
-         - <b> WAKE_LOCK </b>: Brukes under varsling.    "</string>
+         - <b> WAKE_LOCK </b>: Brukes under varsling.    </string>
     <string name="privacy_API_authorizations_title">API-tillatelser:</string>
-    <string name="privacy_API_authorizations">"
-- <b>Les</b>: Les data. \n
+    <string name="privacy_API_authorizations">- <b>Les</b>: Les data. \n
 - <b>Skriv</b>: Legg inn statuser og last opp medier for statuser. \n
 - <b>Følg</b>: Følg, unollow, block, unblock. \n \n
-<b>⚠ Disse handlingene utføres bare når brukeren ber om dem.</b>    "</string>
+<b>⚠ Disse handlingene utføres bare når brukeren ber om dem.</b>    </string>
     <string name="privacy_API_title">Sporing og biblioteker</string>
-    <string name="privacy_API">"
-Applikasjonen<b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrapportering, etc.), og inneholder ingen reklame. \n \n
+    <string name="privacy_API">Applikasjonen<b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrapportering, etc.), og inneholder ingen reklame. \n \n
          Bruken av biblioteker er minmal: \n
          - <b>Glide</b>: For å administrere media \n
          - <b>Android-job</b>: For å administrere tjenester \n
-         - <b>PhotoView</b>: For å administrere bilder \n    "</string>
+         - <b>PhotoView</b>: For å administrere bilder \n    </string>
     <string name="privacy_API_yandex_title">Oversettelse av toots</string>
-    <string name="privacy_API_yandex_authorizations">"
-Programmet tilbyr muligheten til å oversette toots ved hjelp av lokasjonen til enheten og Yandex APIet. \n
-         Yandex har sin egen personvernerklæring som finnes her: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text_dev">"
-Takk til:    "</string>
+    <string name="privacy_API_yandex_authorizations">Programmet tilbyr muligheten til å oversette toots ved hjelp av lokasjonen til enheten og Yandex APIet. \n
+         Yandex har sin egen personvernerklæring som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="thanks_text_dev">Takk til:    </string>
     <string name="filter_regex">Filtrer ut med regulære uttrykk</string>
     <string name="search">Søk</string>
     <string name="delete">Slett</string>
@@ -478,13 +471,12 @@ Takk til:    "</string>
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="show_boost_count">Vis antall boosts/favoritter</string>
     <string name="issue_login_title">Får du ikke logget inn?</string>
-    <string name="issue_login_message">"
-<b>Her er noen ting du kan sjekke:</b>\n\n
+    <string name="issue_login_message"><b>Her er noen ting du kan sjekke:</b>\n\n
 - Kontroller at det ikke er noen skrivefeil i adressen til instansen\n\n
 - Kontroller at instansen ikke er nede (offline)\n\n
 - Hvis du bruker tofaktorautentisering (2FA), vennligst benytt linken på bunnen (etter at adressen til instansen er fylt inn)\n\n
 - Du kan også benytte denne linken for å logge inn med 2FA\n\n
-- Hvis det fortsatt ikke fungerer å koble til instansen, vennligst opprett en sak på GitLab, https://gitlab.com/tom79/mastalab/issues\n\n    "</string>
+- Hvis det fortsatt ikke fungerer å koble til instansen, vennligst opprett en sak på GitLab, https://gitlab.com/tom79/mastalab/issues\n\n    </string>
     <string name="media_ready">Mediet er lastet. Klikk her for å vise.</string>
     <string name="data_export_start">Denne handlingen kan ta lang tid. Du vil bli varslet når det er ferdig.</string>
     <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
@@ -670,14 +662,11 @@ Takk til:    "</string>
         <item>1 dag</item>
         <item>1 uke</item>
     </string-array>
-    <string name="showcase_instance">"
-I dette feltet skriver du adressen til instansen. Hvis du opprettet en konto på https://mastodon.social\n, skriv <b>mastodon.social</b> (uten https://)\n
+    <string name="showcase_instance">I dette feltet skriver du adressen til instansen. Hvis du opprettet en konto på https://mastodon.social\n, skriv <b>mastodon.social</b> (uten https://)\n
 Adresser vil bli foreslått når du begynner å skrive.\n\n
-⚠ Logg inn-knappen vil bare fungere hvis navnet på instansen er gyldig, og instansen er oppe (online)!    "</string>
-    <string name="showcase_uid">"
-Skriv e-postadressen tilknyttet Mastodon-kontoen din i dette feltet.    "</string>
-    <string name="showcase_pwd">"
-Siste steg er å oppgi passordet ditt, og trykke Logg inn.    "</string>
+⚠ Logg inn-knappen vil bare fungere hvis navnet på instansen er gyldig, og instansen er oppe (online)!    </string>
+    <string name="showcase_uid">Skriv e-postadressen tilknyttet Mastodon-kontoen din i dette feltet.    </string>
+    <string name="showcase_pwd">Siste steg er å oppgi passordet ditt, og trykke Logg inn.    </string>
     <string name="more_information">Mer informasjon</string>
     <string name="showcase_2FA">Hvis du bruker tofaktorautentisering (2FA), må du benytte deg av denne linken.\nDu kan også benytte deg av linken dersom du ikke vil skrive inn brukernavn og passord her, men heller logge inn via instansen.</string>
     <!-- languages not translated -->
@@ -698,6 +687,7 @@ Siste steg er å oppgi passordet ditt, og trykke Logg inn.    "</string>
     <string name="some_words_any">Hvilke som helst av disse stikkordene (separert med mellomrom)</string>
     <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
     <string name="some_words_none">Ingen av disse stikkordene (separert med mellomrom)</string>
+    <string name="some_tags">Legg noen ord til filteret (skill dem med mellomrom)</string>
     <string name="change_tag_column">Endre kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
@@ -840,8 +830,11 @@ Siste steg er å oppgi passordet ditt, og trykke Logg inn.    "</string>
     <string name="set_forward_tags">Videresend emneord i svar</string>
     <string name="set_long_press_media">Langt trykk for å lagre media</string>
     <string name="set_blur_sensitive">Dim sensitiv media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">Vis tidslinjer i en liste</string>
+    <string name="display_timeline">Vis tidslinjer</string>
+    <string name="set_display_bot_icon">Marker robot-kontoer i toots</string>
+    <string name="add_tags">Administrer stikkord</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

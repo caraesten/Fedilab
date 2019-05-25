@@ -464,6 +464,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
+        final CheckBox set_remember_position = rootView.findViewById(R.id.set_remember_position);
+        set_remember_position.setChecked(remember_position_home);
+
+        set_remember_position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_REMEMBER_POSITION_HOME, set_remember_position.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
         final CheckBox set_old_direct_timeline = rootView.findViewById(R.id.set_old_direct_timeline);
         set_old_direct_timeline.setChecked(old_direct_timeline);
@@ -587,6 +600,19 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_NEW_BADGE, set_new_badge.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
+        final CheckBox set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
+        set_bot_icon.setChecked(bot_icon);
+
+        set_bot_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_BOT_ICON, set_bot_icon.isChecked());
                 editor.apply();
             }
         });
@@ -1069,8 +1095,35 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        int split_size_val = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        LinearLayout set_split_container = rootView.findViewById(R.id.set_split_container);
+        //split size
+        SeekBar split_size = rootView.findViewById(R.id.set_split_size);
+        final TextView split_text = rootView.findViewById(R.id.set_split_text);
+
+        split_size.setProgress(0);
+        split_text.setText(String.valueOf(split_size_val));
+        split_size.setMax(5);
+        split_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int newProgress = (progress + 1) * Helper.SPLIT_TOOT_SIZE;
+                split_text.setText(String.valueOf(newProgress));
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, newProgress);
+                editor.apply();
+            }
+        });
 
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        if( !split_toot){
+            set_split_container.setVisibility(View.GONE);
+        }
         final CheckBox set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
         set_split_toot.setChecked(split_toot);
         set_split_toot.setOnClickListener(new View.OnClickListener() {
@@ -1079,6 +1132,11 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, set_split_toot.isChecked());
                 editor.apply();
+                if( set_split_toot.isChecked()){
+                    set_split_container.setVisibility(View.VISIBLE);
+                }else{
+                    set_split_container.setVisibility(View.GONE);
+                }
             }
         });
 

@@ -134,7 +134,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private ImageView my_pp, send;
     private TextView add_comment_read;
     private EditText add_comment_write;
-
+    private  String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,7 +206,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         });
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), my_pp);
         Bundle b = getIntent().getExtras();
@@ -544,7 +544,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
         try {
-            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(instance));
         } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

@@ -1,0 +1,16 @@
+Added
+- Filter followed instances with tags
+- Allow do disable the remember position feature
+- Bot icon can be disabled
+- Support onion instances over SSL
+- Booster accounts are clickable
+- Proxy available for the built-in browser
+
+Fixed
+- Fixed conversations in compact mode
+- Crashes when importing data with Pleroma
+- Issue when attaching media with cross-account actions
+- Statuses with one char or emoji
+- Top bar hidden with media player.
+- Some old toots at the top
+- Some crashes

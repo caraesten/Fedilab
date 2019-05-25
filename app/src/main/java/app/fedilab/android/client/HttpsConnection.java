@@ -14,6 +14,7 @@ package app.fedilab.android.client;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,7 +55,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -88,9 +91,10 @@ public class HttpsConnection {
     private int CHUNK_SIZE = 4096;
     private SharedPreferences sharedpreferences;
     private Proxy proxy;
+    private String instance;
 
-
-    public HttpsConnection(Context context){
+    public HttpsConnection(Context context, String instance){
+        this.instance  = instance;
         this.context = context;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
@@ -120,6 +124,16 @@ public class HttpsConnection {
                 proxy = null;
             }
 
+        }
+
+        if( instance != null && instance.endsWith(".onion")) {
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @SuppressLint("BadHostnameVerifier")
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
         }
     }
 
@@ -155,7 +169,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))
@@ -250,7 +264,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestMethod("GET");
             String response;
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
@@ -338,7 +352,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestMethod("POST");
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -444,7 +458,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setRequestMethod("POST");
@@ -534,7 +548,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
-        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpsURLConnection.setRequestMethod("POST");
         if (token != null && !token.startsWith("Basic "))
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -772,7 +786,7 @@ public class HttpsConnection {
                     httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
                 else
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
                 httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                 int responseCode = httpsURLConnection.getResponseCode();
                 // always check HTTP response code first
@@ -867,7 +881,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setDoInput(true);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setUseCaches(false);
@@ -1085,7 +1099,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
                 httpsURLConnection.setRequestMethod("PATCH");
             }else {
@@ -1207,8 +1221,14 @@ public class HttpsConnection {
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, String fname, String tokenUsed, final OnRetrieveAttachmentInterface listener) {
+    public void upload(final InputStream inputStream, String fname, Account account, final OnRetrieveAttachmentInterface listener) {
         final String fileName = FileNameCleaner.cleanFileName(fname);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( account == null){
+            return;
+        }
+        this.instance = account.getInstance();
+        String token = account.getToken();
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
                 @Override
@@ -1218,15 +1238,6 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-                        String token;
-                        if( tokenUsed == null)
-                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        else
-                            token = tokenUsed;
-                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                         URL url;
                         if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             url = new URL("https://" + account.getInstance() + "/api/v1/media");
@@ -1266,7 +1277,7 @@ public class HttpsConnection {
                         httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
 
                         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(instance));
                         httpsURLConnection.setDoInput(true);
                         httpsURLConnection.setDoOutput(true);
                         httpsURLConnection.setUseCaches(false);
@@ -1392,11 +1403,6 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-                        String token;
-                        if( tokenUsed == null)
-                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        else
-                            token = tokenUsed;
                         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
@@ -1571,7 +1577,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))
@@ -1699,7 +1705,7 @@ public class HttpsConnection {
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if( token != null && token.startsWith("Basic "))

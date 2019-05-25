@@ -2,17 +2,20 @@ package app.fedilab.android.client;
 
 
 import android.content.SharedPreferences;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.helper.Helper;
@@ -26,12 +29,36 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
     private SSLContext sslContext;
+    private boolean isOnion;
 
-    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
+    public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
 
-        sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(null, null, null);
+
+        if( instance == null || !instance.endsWith(".onion")) {
+            sslContext = SSLContext.getInstance("TLS");
+            isOnion = false;
+            sslContext.init(null, null, null);
+        }else{
+            sslContext = SSLContext.getInstance("SSL");
+            isOnion = true;
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+                        public void checkClientTrusted(
+                                java.security.cert.X509Certificate[] certs, String authType) {
+                        }
+                        public void checkServerTrusted(
+                                java.security.cert.X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+            sslContext.init(null, trustAllCerts, null);
+
+        }
         sSLSocketFactory = sslContext.getSocketFactory();
+
     }
 
     public SSLContext getSSLContext(){
@@ -84,15 +111,19 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private Socket enableTLSOnSocket(Socket socket) {
         if((socket instanceof SSLSocket)) {
-            boolean security_provider = false;
-            try {
-                SharedPreferences sharedpreferences = MainApplication.getApp().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
-            }catch (Exception ignored){}
-            if( security_provider)
-                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2", "TLSv1.3"});
-            else
-                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+            if( !isOnion){
+                boolean security_provider = false;
+                try {
+                    SharedPreferences sharedpreferences = MainApplication.getApp().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                    security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
+                }catch (Exception ignored){}
+                if( security_provider)
+                    ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2", "TLSv1.3"});
+                else
+                    ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+            }else{
+                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2",});
+            }
         }
         return socket;
     }

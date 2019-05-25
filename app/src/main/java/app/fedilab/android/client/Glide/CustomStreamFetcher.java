@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.HttpsConnection;
+import app.fedilab.android.helper.Helper;
 
 /**
  * Created by Thomas on 13/12/2017.
@@ -30,7 +31,8 @@ public class CustomStreamFetcher implements DataFetcher<InputStream> {
 
     @Override
     public void loadData(@NonNull Priority priority, @NonNull DataCallback<? super InputStream> callback) {
-        callback.onDataReady(new HttpsConnection(this.contextWeakReference.get()).getPicture(url.toStringUrl()));
+        String instance = Helper.getLiveInstance(this.contextWeakReference.get());
+        callback.onDataReady(new HttpsConnection(this.contextWeakReference.get(), instance).getPicture(url.toStringUrl()));
     }
 
     @Override

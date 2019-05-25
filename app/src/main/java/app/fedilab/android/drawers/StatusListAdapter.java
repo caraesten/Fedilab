@@ -538,19 +538,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             status.setItemViewType(viewHolder.getItemViewType());
 
-            if( status.getReblog() == null){
-                if( status.getAccount().isBot()){
-                    holder.status_account_bot.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_account_bot.setVisibility(View.GONE);
-                }
-            }else{
-                if( status.getReblog().getAccount().isBot()){
-                    holder.status_account_bot.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_account_bot.setVisibility(View.GONE);
-                }
-            }
 
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
@@ -573,8 +560,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean isModerator = sharedpreferences.getBoolean(Helper.PREF_IS_MODERATOR, false);
             boolean isAdmin = sharedpreferences.getBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
 
+            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+            boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
+
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+
+            if (status.getReblog() == null) {
+                if (bot_icon && status.getAccount().isBot()) {
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            } else {
+                if (bot_icon && status.getReblog().getAccount().isBot()) {
+                    holder.status_account_bot.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_account_bot.setVisibility(View.GONE);
+                }
+            }
+
             if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
@@ -781,7 +786,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
-            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+
             if (status.isNew() && new_badge)
                 holder.new_element.setVisibility(View.VISIBLE);
             else
@@ -792,23 +797,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
-
-
-            /*if ((isCompactMode || isConsoleMode) && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins((int) Helper.convertDpToPixel(25, context), 0, 0, 0);
-                holder.main_container.setLayoutParams(params);
-            } else if ((isCompactMode || isConsoleMode)  && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins((int) Helper.convertDpToPixel(20, context), 0, 0, 0);
-                holder.main_container.setLayoutParams(params);
-            }*/
 
 
             if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
@@ -1019,24 +1007,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, holder.hide_preview, R.color.white);
                 Helper.changeDrawableColor(context, holder.hide_preview_h, R.color.white);
             }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
-            /*if( status.getReblog() == null && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
-                params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
-                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
-                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
-                else
-                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
-            }else if( !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
-                if( status.getContent() == null || status.getContent().trim().equals("")) {
-                    params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
-                    paramsB.setMargins(0,(int) Helper.convertDpToPixel(20, context),0,0);
-                }else {
-                    params.setMargins(0, 0, 0, 0);
-                    paramsB.setMargins(0,0,0,0);
-                }
-
-            }*/
 
             if (!status.isClickable())
                 Status.transform(context, status);
@@ -1111,6 +1081,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     translateToot(status);
                 }
             });
+
             if( isConsoleMode){
                 String starting = "";
                 String acct = status.getAccount().getAcct();
@@ -1162,8 +1133,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 SpannableString startingSpan = new SpannableString(starting);
                 if( acctReblogSpan != null) {
-
-
                     for(URLSpan span : urls)
                         acctReblogSpan.removeSpan(span);
                     acctReblogSpan.setSpan(new ClickableSpan() {
@@ -1205,7 +1174,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     startingSpan = new SpannableString(TextUtils.concat(acctSpan, " ", acctReblogSpan));
                 }else
                     startingSpan = acctSpan;
-
                 if( status.getReblog() == null && status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
                     holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
                     holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
@@ -1257,7 +1225,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     notifyStatusChanged(status);
                 }
             });
-
 
             holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1315,6 +1282,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
+                holder.status_account_displayname.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("account", status.getAccount());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                });
                 if (status.getReblog().getAccount().getDisplay_name().length() > 0)
                     holder.status_account_displayname_owner.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
                 else
@@ -1509,13 +1486,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                    if (status.isSpoilerShown() || expand_cw  || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_translate.setVisibility(View.GONE);
                     }
                 } else if (status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                    if (status.isSpoilerShown() || expand_cw   || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_translate.setVisibility(View.GONE);
@@ -1539,7 +1516,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if (!status.isSpoilerShown() && !expand_cw && !status.isShowSpoiler()) {
+                    if (!status.isSpoilerShown() && (!expand_cw || status.isAutoHiddenCW())) {
                         holder.status_content_container.setVisibility(View.GONE);
                         if (status.getMentions().size() > 0)
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
@@ -1547,9 +1524,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     } else {
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        if( !status.isAutoHiddenCW()) {
+                            holder.status_content_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }else{
+                            holder.status_content_container.setVisibility(View.GONE);
+                            if (status.getMentions().size() > 0)
+                                holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            else
+                                holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }
                     }
                 } else {
                     holder.status_spoiler_container.setVisibility(View.GONE);
@@ -1559,7 +1545,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else {
                 if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if (!status.isSpoilerShown() && !expand_cw) {
+                    if (!status.isSpoilerShown() && (!expand_cw || status.isAutoHiddenCW())) {
                         holder.status_content_container.setVisibility(View.GONE);
                         if (status.getMentions().size() > 0)
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
@@ -1567,9 +1553,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     } else {
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        if( !status.isAutoHiddenCW()) {
+                            holder.status_content_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }else {
+                            holder.status_content_container.setVisibility(View.GONE);
+                            if (status.getMentions().size() > 0)
+                                holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            else
+                                holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }
                     }
                 } else {
                     holder.status_spoiler_container.setVisibility(View.GONE);
@@ -1731,16 +1726,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if (status.isTranslationShown() && status.getContentSpanTranslated() != null) {
                 holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
-                holder.status_content.setVisibility(View.GONE);
                 holder.status_content_translated_container.setVisibility(View.VISIBLE);
             } else { //Toot is not translated
-                holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
-            if( !isConsoleMode && contentCheck.trim().length() < 2 && !contentCheck.trim().matches("\\w+"))
-                holder.status_content.setVisibility(View.GONE);
-            else
-                holder.status_content.setVisibility(View.VISIBLE);
 
             switch (status.getVisibility()) {
                 case "direct":
@@ -2150,6 +2139,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if( expand_cw && !status.isSpoilerShown() ){
+                        status.setAutoHiddenCW(true);
+                    }else{
+                        status.setAutoHiddenCW(false);
+                    }
                     status.setSpoilerShown(!status.isSpoilerShown());
                     notifyStatusChanged(status);
                 }

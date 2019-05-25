@@ -324,7 +324,7 @@
     <string name="set_save_changes">Salvează modificările</string>
     <string name="set_header_picture_overlay">Alege poză de profil</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
     <string name="note_no_space">Ai atins 160 de caractere permise!</string>
     <string name="username_no_space">Ai atins 30 de caractere permise!</string>
     <string name="settings_time_from">Între</string>
@@ -391,9 +391,8 @@
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificări instant</string>
-    <string name="settings_popup_message">"
-Vă rugăm să confirmați notificările instant pe care doriți să le primiți
-        Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    "</string>
+    <string name="settings_popup_message">Vă rugăm să confirmați notificările instant pe care doriți să le primiți
+        Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    </string>
     <string name="settings_popup_timeline">Penru notițe necitite în cronologia de acasă?</string>
     <string name="settings_popup_notification">Pentru notificări necitite?</string>
     <!-- CACHE -->
@@ -430,43 +429,37 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Date înregistrate</string>
-    <string name="privacy_data">"
-Doar infomațiile de bază ale conturilor sunt stocate pe aparat.
+    <string name="privacy_data">Doar infomațiile de bază ale conturilor sunt stocate pe aparat.
 Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
 Ștergerea aplicației duce la pierderea datelor.\n
-&#9888; Autentificarea și parolele nu sunt niciodate stocate. Sunt folosite doar într-o autentificare sigură (SSL).    "</string>
+&#9888; Autentificarea și parolele nu sunt niciodate stocate. Sunt folosite doar într-o autentificare sigură (SSL).    </string>
     <string name="privacy_authorizations_title">Permisiuni:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Folosit la detectarea daca aparatul este conectat la o rețea de WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Folosit la detectarea daca aparatul este conectat la o rețea de WIFI.\n
         - <b>INTERNET</b>: Folosit pentru intergogări la o instanță.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Folosit pentru a stoca media sau pentru a muta aplicația pe un card SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Folosit să adauge media la notițe.\n
         - <b>BOOT_COMPLETED</b>: Folosit la pornirea serviciului de notificare.\n
         - <b>WAKE_LOCK</b>: Folosit în timpul serviciului de notificare.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Permisiuni API:</string>
-    <string name="privacy_API_authorizations">"
-- <b>Citește</b>: Citește date.\n
+    <string name="privacy_API_authorizations">- <b>Citește</b>: Citește date.\n
         - <b>Scrie</b>: Postează statusuri și încarcă media pentru statusuri.\n
         - <b>Urmărește</b>: Urmărește, nu mai urmări, blochează, deblochează.\n\n
         <b>&#9888; Aceste acțiuni s efectuează doar la cererea utilizatorului.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Urmărire și biblioteci</string>
-    <string name="privacy_API">"
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Traducerea notițelor</string>
-    <string name="privacy_API_yandex_authorizations">"
-Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
+    <string name="privacy_API_yandex_authorizations">Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
         Yandex are propria politică de confidențialitate care poate fi găsită aici:
- https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text_dev">"
-Vă mulțumesc:
-    "</string>
+ https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="thanks_text_dev">Vă mulțumesc:
+    </string>
     <string name="filter_regex">Filtrează expresii usuale</string>
     <string name="search">Căutare</string>
     <string name="delete">Șterge</string>
@@ -487,14 +480,13 @@ Vă mulțumesc:
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
     <string name="issue_login_title">Authentication does not work?</string>
-    <string name="issue_login_message">"
-        <b>Here are some checks that might help:</b>\n\n
+    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
@@ -680,17 +672,14 @@ Vă mulțumesc:
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">"
-        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    "</string>
-    <string name="showcase_uid">"
-        In this field, write the email that is attached to your Mastodon account.
-    "</string>
-    <string name="showcase_pwd">"
-        Last step is to enter your password and click on Login.
-    "</string>
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
@@ -711,6 +700,7 @@ Vă mulțumesc:
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Change column name</string>
     <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
@@ -855,6 +845,9 @@ Vă mulțumesc:
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

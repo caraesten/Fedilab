@@ -387,9 +387,8 @@
     <string name="set_resize_picture">Redimensiona les fotos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificacions emergents</string>
-    <string name="settings_popup_message">"
-Sisplau, confirma les notificacions emergents que vols rebre.
-Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (Pestanya de notificacions).    "</string>
+    <string name="settings_popup_message">Sisplau, confirma les notificacions emergents que vols rebre.
+Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (Pestanya de notificacions).    </string>
     <string name="settings_popup_timeline">Per als toots no llegits a la pissarra pròpia?</string>
     <string name="settings_popup_notification">Per a notificacions no llegides?</string>
     <!-- CACHE -->
@@ -426,42 +425,36 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="owner_cached_toots_empty">No s\'han trobat toots a la base de dades. Sisplau, feu ús del botó de sincronitzar del menú per recobrar-los.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Dades gravades</string>
-    <string name="privacy_data">"
-Només es guarda al dispositiu la informació bàsica dels comptes.
+    <string name="privacy_data">Només es guarda al dispositiu la informació bàsica dels comptes.
 Aquestes dades són estrictament confidencials i només les pot usar l\'aplicació.
 Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
-&#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    "</string>
+&#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">"
-- <b>ESTAT_ACCES_XARXA</b>: Usat per detectar si el dispositiu està connectat a una xarxa WIFI.\n
+    <string name="privacy_authorizations">- <b>ESTAT_ACCES_XARXA</b>: Usat per detectar si el dispositiu està connectat a una xarxa WIFI.\n
          - <b>INTERNET</b>: Usat per a requeriments a una instància.\n
          - <b>ESCRIURE_MAGATZEM_EXTERN</b>: Usat per emmagatzemar mèdia o moure l\'app a una tarja SD.\n
          - <b>LLEGIR_MAGATZEM_EXTERN</b>: Usat per afegir mèdia als toots.\n
          - <b>BOOT_COMPLET</b>: Usat per iniciar el servei de notificació.\n
-         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificació.    "</string>
+         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificació.    </string>
     <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Lectura</b>: Lectura de dades.\n
+    <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
         - <b>Escriptura</b>: Defineix els estatus i carrega mèdia per a estatus.\n
         - <b>Seguiments</b>: segueix, desegueix, bloca, desbloca.\n\n
         <b>&#9888; Aquestes accions es realitzen només a petició de l\'usuari.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Rastreig i llibreries</string>
-    <string name="privacy_API">"
-        L\' aplicació <b>no fa ús d\'eines de rastreig</b> (mesures d\'audiència, informes d\'errors, etc.) i no conté publicitat.\n\n
+    <string name="privacy_API">        L\' aplicació <b>no fa ús d\'eines de rastreig</b> (mesures d\'audiència, informes d\'errors, etc.) i no conté publicitat.\n\n
         es minimitza l\'ús de les biblioteques: \n
         - <b>Lliscar</b>: Per gestionar els mèdia\n
         - <b>Tasques-Android</b>: Per gestionar serveis\n
         - <b>FotoVista</b>: Per gestionar imatges\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Traducció dels toots</string>
-    <string name="privacy_API_yandex_authorizations">"
-        L\'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l\'API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        L\'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l\'API Yandex.\n
         Yandex té la seva pròpia política de privacitat, disponible aquí: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Agraïments:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Agraïments:
+    </string>
     <string name="filter_regex">Filtratge mitjançant expressions regulars</string>
     <string name="search">Cerca</string>
     <string name="delete">Suprimeix</string>
@@ -482,9 +475,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="account_moved_to">%1$s s\'ha traslladat a %2$s</string>
     <string name="show_boost_count">Mostra el recompte de difusions/preferits</string>
     <string name="issue_login_title">L\'autenticació falla?</string>
-    <string name="issue_login_message">"
-        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
-- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://gitlab.com/tom79/mastalab/issues    "</string>
+    <string name="issue_login_message">        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
+- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://gitlab.com/tom79/mastalab/issues    </string>
     <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
     <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
     <string name="data_export_running">Segueix processant, espereu sisplau…</string>
@@ -639,7 +631,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="schedule_boost">Temporalitza difusió</string>
     <string name="boost_scheduled">Aquesta difusió s\'ha temporalitzat!</string>
     <string name="no_scheduled_boosts">No hi ha temporalitzacions de difusió per mostrar!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Obre el menú d\'un toot i selecciona <b>Temporalitza la difusió</b>.]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Obre el menú d'un toot i selecciona <b>Temporalitza la difusió</b>.]]></string>
     <string name="art_menu">Pissarra de l\'art</string>
     <string name="open_menu">Obrir menú</string>
     <string name="go_back">Torna</string>
@@ -670,17 +662,14 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
         <item>1 dia</item>
         <item>1 setmana</item>
     </string-array>
-    <string name="showcase_instance">"
-        En aquest camp, cal que hi escriguis el nom del servidor de la teva instància.\nPer exemple, si has creat el compte a https://mastodon.social\n Només cal escriure <b>mastodon.social</b> (sense https://)\n
+    <string name="showcase_instance">        En aquest camp, cal que hi escriguis el nom del servidor de la teva instància.\nPer exemple, si has creat el compte a https://mastodon.social\n Només cal escriure <b>mastodon.social</b> (sense https://)\n
         Pots començar amb les primeres lletres i ja se suggeriran noms.\n\n
         ⚠ El botó d\'inici de sessió només funcionarà si el nom d\'instància és vàlid i la instància està activa!
-    "</string>
-    <string name="showcase_uid">"
-        En aquest camp, hi escrius el correu electrònic associat al teu compte de mastodont.
-    "</string>
-    <string name="showcase_pwd">"
-        L\'últim pas consisteix en introduir la contrasenya i clicar a \"Inici de sessió\".
-    "</string>
+    </string>
+    <string name="showcase_uid">        En aquest camp, hi escrius el correu electrònic associat al teu compte de mastodont.
+    </string>
+    <string name="showcase_pwd">        L\'últim pas consisteix en introduir la contrasenya i clicar a \"Inici de sessió\".
+    </string>
     <string name="more_information">Més informació</string>
     <string name="showcase_2FA">Si fas ús del 2FA (autenticació de dos factors), et cal emprar aquest enllaç.\nTambé pots utilitzar-lo si no vols introduir les credencials aquí.</string>
     <!-- languages not translated -->
@@ -701,6 +690,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="some_words_any">Qualsevol d\'aquestes paraules (separades-per-espais)</string>
     <string name="some_words_all">Totes aquestes paraules (separades-per-espais)</string>
     <string name="some_words_none">Cap d\'aquestes paraules (separades per espais)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Canvi de nom de columna</string>
     <string name="no_misskey_instance">No hi ha instàncies de Misskey</string>
     <string name="misskey_instance">Instància Misskey</string>
@@ -759,12 +749,12 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> ha comentat el teu vídeo <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> segueix el teu canal <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> segueix el teu compte]]></string>
-    <string name="peertube_video_published"><![CDATA[S\'ha publicat el teu vídeo <b>%1$s</b>]]></string>
+    <string name="peertube_video_published"><![CDATA[S'ha publicat el teu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_import_success"><![CDATA[Ha reeixit la importació del teu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_import_error"><![CDATA[Ha fallat la importació del vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> ha publicat un nou vídeo: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Han posat el teu vídeo <b>%1$s</b> en una llista negra]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Han tret el teu vídeo <b>%1$s</b> d\'una llista negra]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Han tret el teu vídeo <b>%1$s</b> d'una llista negra]]></string>
     <string name="export_data">Exportar dades</string>
     <string name="import_data">Importar dades</string>
     <string name="toot_select_import">Selecciona el document a importar</string>
@@ -843,8 +833,11 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_forward_tags">Incloure etiquetes a les respostes</string>
     <string name="set_long_press_media">Pitjada llarga per emmagatzemar mèdia</string>
     <string name="set_blur_sensitive">Tornar borrosos els mèdia sensibles</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">Mostra pissarres com a llista</string>
+    <string name="display_timeline">Mostra pissarres</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>

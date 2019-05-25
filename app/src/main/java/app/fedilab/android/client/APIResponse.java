@@ -58,6 +58,8 @@ public class APIResponse {
     private String since_id, max_id;
     private Instance instance;
     private List<StoredStatus> storedStatuses;
+    private boolean fetchmore = false;
+
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -208,5 +210,13 @@ public class APIResponse {
 
     public void setResults(Results results) {
         this.results = results;
+    }
+
+    public boolean isFetchmore() {
+        return fetchmore;
+    }
+
+    public void setFetchmore(boolean fetchmore) {
+        this.fetchmore = fetchmore;
     }
 }

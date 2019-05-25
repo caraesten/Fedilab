@@ -336,7 +336,7 @@
     <string name="set_save_changes">حفظ التغييرات</string>
     <string name="set_header_picture_overlay">اختيار الصورة الرأسية</string>
     <string name="set_fit_preview">تكافؤ معاينة الصور</string>
-    <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
+    <string name="set_automatically_split_toot">تقسيم التبويقات على شكل ردود عندما تفوق عدد الحروف:</string>
     <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به!</string>
     <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به!</string>
     <string name="settings_time_from">بين</string>
@@ -403,10 +403,9 @@
     <string name="set_resize_picture">تعديل حجم الصور</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">الإشعارات المدفوعة</string>
-    <string name="settings_popup_message">"
-        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
+    <string name="settings_popup_message">        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
         بإمكانك تفعيل أو تعطيل هذه الإشعارات لاحقًا عبر الإعدادات (في تبويب الإخطارات).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">للتبويقات غير المقروءة على الخط الزمني الرئيسي ؟</string>
     <string name="settings_popup_notification">للإشعارات غير المقروءة ؟</string>
     <!-- CACHE -->
@@ -443,41 +442,36 @@
     <string name="owner_cached_toots_empty">لم يتم العثور على أي تبويق في قاعدة البيانات. يرجى استخدام زر المزامنة المتواجد في القائمة لجلبها.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">البيانات المسجلة</string>
-    <string name="privacy_data">"
-        لا يقوم التطبيق إلا بحفظ معلومات عن الحسابات في الجهاز.
+    <string name="privacy_data">        لا يقوم التطبيق إلا بحفظ معلومات عن الحسابات في الجهاز.
         تبقى هذه البايانات سرية و لا تُستخدَم إلا لتشغيل التطبيق.
         إنّ حذف التطبيق يؤدي إلى إزالة هذه البيانات.\n
         &#9888; لا يقوم التطبيق بحفظ إسم المستخدم و الكلمات السرية. يقوم التطبيق باستخدمها و فقط عند الإتصال الآمن و المصادقة عبر (SSL) مع مثيل خادوم.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">التصريحات:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: تستخدم للكشف عن إذا كان الجهاز متصلا بشبكة واي فاي.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: تستخدم للكشف عن إذا كان الجهاز متصلا بشبكة واي فاي.\n
         - <b>INTERNET</b>: تستخدم لطلبات الاستعلامات على مثيلات الخوادم.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: تستخدم لتخزين الوسائط أو نقل التطبيق على بطاقة SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: تستخدم لإضافة الوسائط في التبويقات.\n
         - <b>BOOT_COMPLETED</b>: يستخدم لبدء تشغيل خدمة الإشعار.\n
         - <b>WAKE_LOCK</b>: تستخدم في خدمة الإشعارات.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>القراءة</b>: قراءة البيانات.\n
+    <string name="privacy_API_authorizations">        - <b>القراءة</b>: قراءة البيانات.\n
         - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنشورات.\n
         - <b>المتابعة</b>: المتابعة و إلغاء المتابعة و الحظر و إلغاء الحظر.\n\n
         <b>&#9888; يقوم التطبيق بهذه الإجراءات عند طلب المُستخدِم لاستعمالها.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">التعقب و المكتبات</string>
-    <string name="privacy_API">"
-        إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
+    <string name="privacy_API">        إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
         تم التقليل من استخدام المكتبات: \n
         - <b>Glide</b>: لإدارة الوسائط\n
         - <b>Android-Job</b>: لإدارة الخدمات\n
         - <b>PhotoView</b>: لإدارة الصور\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
-    <string name="privacy_API_yandex_authorizations">"
-        يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">        يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
         لدى ياندكس سياستهم الخاصة بشأن الخصوصية و يمكن العثور عليها هنا: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
+    </string>
     <string name="thanks_text_dev">الشكر لـ :</string>
     <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
     <string name="search">البحث</string>
@@ -499,14 +493,13 @@
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
-    <string name="issue_login_message">"
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    "</string>
+    <string name="issue_login_message">        <b>وهنا بعض الاختبارات التي قد تساعدكم:</b>\n\n
+        - تحققوا من عدم وجود الأخطاء الإملائية في اسم مثيل الخادم\n\n
+        - تحققوا مِن أنّ مثيل الخادم يشتغل\n\n
+        - إذا كنتم تستخدمون المصادقة بخطوتين (2FA) الرجاء استخدام الرابط في الأسفل (يجب إدخال اسم السيرفر أولا)\n\n
+        - يمكنكم أيضا استخدام هذا الرابط بدون استخدام 2FA\n\n
+        - إذا كان لا يزال لا يعمل ، يرجى إرسال تقرير على GitLab إلى https://gitlab.com/tom79/mastalab/issues
+    </string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
     <string name="data_export_running">جارٍ التشغيل، الرجاء الانتظار…</string>
@@ -561,7 +554,7 @@
     <string name="context_public">الخطوط الزمنية العمومية</string>
     <string name="context_notification">الإشعارات</string>
     <string name="context_conversation">المحادثات</string>
-    <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
+    <string name="filter_keyword_explanations">سوف يتم العثور عليه بغض النظر عن حالة الأحرف في النص أو حتى و إن كان فيه تحذير عن المحتوى</string>
     <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
     <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
     <string name="context_whole_word_explanations">إذا كانت الكلمة أو الجملة مكونة من الأرقام والحروف فقط سوف يتم تطبيقها فقط عند مطابقة الكلمة ككل</string>
@@ -692,17 +685,14 @@
         <item>يوم واحد</item>
         <item>أسبوع واحد</item>
     </string-array>
-    <string name="showcase_instance">"
-        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    "</string>
-    <string name="showcase_uid">"
-        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
-    "</string>
-    <string name="showcase_pwd">"
-        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
-    "</string>
+    <string name="showcase_instance">        في هذا الحقل تحتاج إلى كتابة اسم المضيف.\nعلى سبيل المثال ، إن أنشأتم حسابكم على https://mastodon.social\nتكفي كتابة <b>mastodon.social</b> (دون https://)\n
+        يمكنكم الشروع في كتابة الحروف الأولى وستُقترَحُ عليكم أسماء.\n\n
+        ⚠ زِرّ \"تسجيل الدخول\" سوف يعمل فقط إذا كان الخادم شغّالاً واسمه صالح!
+    </string>
+    <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
+    </string>
+    <string name="showcase_pwd">        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
+    </string>
     <string name="more_information">تفاصيل أكثر</string>
     <string name="showcase_2FA">إن كنت قد قمت بتفعيل المصادقة بخطوتين (2FA)، يمكنك استخدام هذا الرابط.\nيمكنك استخدامه كذلك إن كنت لا ترغب في ادخال بيانات تسجيل الدخول الخاصة بك هنا.</string>
     <!-- languages not translated -->
@@ -723,6 +713,7 @@
     <string name="some_words_any">أي من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_all">كافة هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_none">لاشيء من هذه الكلمات (مفصولة بمسافة)</string>
+    <string name="some_tags">أضف بعض الكلمات للتصفية (مفصولة بمسافة)</string>
     <string name="change_tag_column">تغيير اسم العمود</string>
     <string name="no_misskey_instance">لا توجد أية مثيلات خوادم ميسكي</string>
     <string name="misskey_instance">مثيل خادم ميسكي</string>
@@ -802,7 +793,7 @@
     <string name="set_optimize_loading">تحسين مدة التحميل</string>
     <string name="all">الكل</string>
     <string name="about_opencollective">ادعم التطبيق</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="more_about_opencollective">فتح الجماعية تمكن الجماعات إلى المسارعة الجماعية ، جمع الأموال وإدارتها بشفافية.</string>
     <string name="copy_link">انسخ الرابط</string>
     <string name="connect_instance">اتصل</string>
     <string name="set_normal">عادي</string>
@@ -855,7 +846,7 @@
     <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_list_deletion">استخدم القوائم قصد حذف هذه القائمة!</string>
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">إضافة خيط زمني</string>
@@ -865,8 +856,11 @@
     <string name="set_forward_tags">نقل الوسوم في الردود</string>
     <string name="set_long_press_media">اضغط مطولاً لحفظ الوسائط</string>
     <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">عرض الخيوط الزمنية في قائمة</string>
+    <string name="display_timeline">عرض الخيوط الزمنية</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">إدارة الوسوم</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>

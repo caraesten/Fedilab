@@ -133,6 +133,10 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
             return;
         }
         final Instance instance = apiResponse.getInstance();
+        if( instance == null){
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            return;
+        }
         TextView instance_title = findViewById(R.id.instance_title);
         TextView instance_description = findViewById(R.id.instance_description);
         TextView instance_version = findViewById(R.id.instance_version);

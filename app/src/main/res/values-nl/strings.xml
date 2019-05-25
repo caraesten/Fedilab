@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Afbeeldingen schalen</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Pushmeldingen</string>
-    <string name="settings_popup_message">"
-        Bevestig de pushmeldingen die jij wilt ontvangen.
+    <string name="settings_popup_message">        Bevestig de pushmeldingen die jij wilt ontvangen.
         Je kan deze later in- en uitschakelen in jouw instellingen (onder meldingen).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Voor ongelezen toots in jouw start-tijdlijn?</string>
     <string name="settings_popup_notification">Voor ongelezen meldingen?</string>
     <!-- CACHE -->
@@ -427,44 +426,38 @@
     <string name="owner_cached_toots_empty">Er zijn geen toots in de database gevonden. Gebruik de synchronisatieknop om deze op te halen.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data:</string>
-    <string name="privacy_data">"
-        Only basic information from accounts are stored on the device.
+    <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Permissions:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">API permissions:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Read</b>: Read data.\n
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Tracking and Libraries:</string>
-    <string name="privacy_API">"
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Translation of toots</string>
-    <string name="privacy_API_yandex_authorizations">"
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Met dank aan:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Met dank aan:
+    </string>
     <string name="filter_regex">Wegfilteren met reguliere expressies</string>
     <string name="search">Zoeken</string>
     <string name="delete">Verwijderen</string>
@@ -485,14 +478,13 @@
     <string name="account_moved_to">%1$s is naar %2$s verhuisd</string>
     <string name="show_boost_count">Aantal boosts/favorieten tonen</string>
     <string name="issue_login_title">Problemen met aanmelden?</string>
-    <string name="issue_login_message">"
-        <b>Hier zijn enkele suggesties die wellicht helpen:</b>\n\n
+    <string name="issue_login_message">        <b>Hier zijn enkele suggesties die wellicht helpen:</b>\n\n
         - Controleer of er geen spelfout in de domeinnaam van de server zit\n\n
         - Controleer of er de server niet offline is\n\n
         - Wanneer je tweestapsverificatie gebruikt, gebruik dan (nadat je de domeinnaam van de server hebt ingevuld) de link daaronder.\n\n
         - Je kan deze link ook gebruiken zonder dat je van tweestapsverificatie gebruikt maakt (wanneer het op dit aanmeldscherm niet lukt).\n\n
         - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Github via https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Media is geladen. Klik hier om het te tonen.</string>
     <string name="data_export_start">Deze actie kan vrij lang duren. Je krijgt een melding wanneer het klaar is.</string>
     <string name="data_export_running">Nog steeds bezig, nog even wachten…</string>
@@ -678,14 +670,11 @@
         <item>1 dag</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">"
-In dit veld moet je de hostnaam van jouw server invullen.\nVoorbeeld: als je jouw account hebt aangemaakt op https://mastodon.social\n vul je <b>mastodon.social</b> in (dus zonder https://)\n
+    <string name="showcase_instance">In dit veld moet je de hostnaam van jouw server invullen.\nVoorbeeld: als je jouw account hebt aangemaakt op https://mastodon.social\n vul je <b>mastodon.social</b> in (dus zonder https://)\n
 Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
-⚠ De inlogknop werkt alleen als de naam van de server geldig is, en de server online is!    "</string>
-    <string name="showcase_uid">"
-In dit veld vul je het e-mailadres in dat is gekoppeld aan jouw Mastodonaccount.    "</string>
-    <string name="showcase_pwd">"
-De laatste stap is het invoeren van je wachtwoord en het klikken op inloggen.    "</string>
+⚠ De inlogknop werkt alleen als de naam van de server geldig is, en de server online is!    </string>
+    <string name="showcase_uid">In dit veld vul je het e-mailadres in dat is gekoppeld aan jouw Mastodonaccount.    </string>
+    <string name="showcase_pwd">De laatste stap is het invoeren van je wachtwoord en het klikken op inloggen.    </string>
     <string name="more_information">Meer informatie</string>
     <string name="showcase_2FA">Als je 2FA (tweestapsverificatie) gebruikt, moet je deze link gebruiken.\nJe kunt het ook gebruiken als je jouw gegevens hier niet wilt invullen.</string>
     <!-- languages not translated -->
@@ -706,6 +695,7 @@ De laatste stap is het invoeren van je wachtwoord en het klikken op inloggen.   
     <string name="some_words_any">Eén van deze woorden (door spaties gescheiden)</string>
     <string name="some_words_all">Al deze woorden (door spaties gescheiden)</string>
     <string name="some_words_none">Geen van deze woorden (door spaties gescheiden)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Kolomnaam wijzigen</string>
     <string name="no_misskey_instance">Geen Misskeyservers</string>
     <string name="misskey_instance">Misskeyserver</string>
@@ -850,6 +840,9 @@ De laatste stap is het invoeren van je wachtwoord en het klikken op inloggen.   
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>

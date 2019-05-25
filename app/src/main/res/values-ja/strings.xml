@@ -300,14 +300,14 @@
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
-    <string name="set_notif_follow_poll">投票の終了を通知する</string>
+    <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
-    <string name="set_notify">通知する？</string>
+    <string name="set_notify">通知する</string>
     <string name="set_notif_silent">サイレント通知</string>
     <string name="set_night_mode">夜間モード</string>
-    <string name="set_nsfw_timeout">NSFWビューのタイムアウト（秒、0はオフを意味します）</string>
+    <string name="set_nsfw_timeout">NSFWビューのタイムアウト(秒、0でオフ)</string>
     <string name="settings_title_profile">プロフィールを編集</string>
     <string name="settings_title_custom_sharing">カスタム共有</string>
     <string name="settings_custom_sharing_url">カスタム共有URL&#8230;</string>
@@ -332,8 +332,8 @@
     <string name="use_cookies">サードパーティのCookieを許可する</string>
     <string name="settings_ui_layout">タイムラインのレイアウト: </string>
     <string-array name="battery_profiles">
-        <item>通常のバッテリー消費</item>
-        <item>中程度のバッテリー消費</item>
+        <item>高バッテリー消費</item>
+        <item>中バッテリー消費</item>
         <item>低バッテリー消費</item>
     </string-array>
     <string-array name="settings_menu_tabs">
@@ -379,13 +379,12 @@
     <string name="request_sent">リクエスト送信</string>
     <string name="followed_by">あなたをフォロー</string>
     <string name="action_search">検索</string>
-    <string name="set_capitalize">返信用の最初の文字列</string>
+    <string name="set_capitalize">返信で最初の文字を大文字にする</string>
     <string name="set_resize_picture">画像をリサイズ</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
-    <string name="settings_popup_message">"
-受信したいプッシュ通知を確認してください。
-後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    "</string>
+    <string name="settings_popup_message">受信したいプッシュ通知を確認してください。
+後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    </string>
     <string name="settings_popup_timeline">ホームタイムラインでの未読トゥートは？</string>
     <string name="settings_popup_notification">未読の通知は？</string>
     <!-- CACHE -->
@@ -422,38 +421,32 @@
     <string name="owner_cached_toots_empty">トゥートがデータベースに見つかりませんでした。取得するには、メニューから同期ボタンを使用してください。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">記録されたデータ</string>
-    <string name="privacy_data">"
-アカウントの基本情報のみがデバイスに保存されます。
+    <string name="privacy_data">アカウントの基本情報のみがデバイスに保存されます。
          これらのデータは厳密に機密情報であり、アプリケーションによってのみ使用できます。
          アプリケーションを削除すると、すぐにこれらのデータが削除されます。\ n
-         ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    "</string>
+         ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    </string>
     <string name="privacy_authorizations_title">権限：</string>
-    <string name="privacy_authorizations">"
-        - <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
+    <string name="privacy_authorizations">        - <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
         - <b>インターネット</b>：インスタンスへのクエリに使用されます。\n
         - <b> WRITE_EXTERNAL_STORAGE </b>：メディアを保存したり、SDカードにアプリを移動したりするのに使用します。\n
         - <b> READ_EXTERNAL_STORAGE </b>：トゥートにメディアを追加するために使用します。\n
         - <b> BOOT_COMPLETED </b>：通知サービスを開始するために使用されます。\n
-        - <b> WAKE_LOCK </b>：通知サービスで使用されます。    "</string>
+        - <b> WAKE_LOCK </b>：通知サービスで使用されます。    </string>
     <string name="privacy_API_authorizations_title">API権限：</string>
-    <string name="privacy_API_authorizations">"
-        - <b>読み取り</b>：データを読み取ります。\n
+    <string name="privacy_API_authorizations">        - <b>読み取り</b>：データを読み取ります。\n
         - <b>書き込み</b>：トゥートの投稿とメディアのアップロードを行います。\n
         - <b>フォロー</b>：フォロー、フォロー解除、ブロック、ブロック解除を行います。\n\n
-        <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    "</string>
+        <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
     <string name="privacy_API_title">トラッキングとライブラリ</string>
-    <string name="privacy_API">"
-        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
+    <string name="privacy_API">        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
         ライブラリの使用は最小限です：\n
         - <b>Glide</b>: メディアの管理\n
         - <b>Android-Job</b>: サービスの管理\n
-        - <b>PhotoView</b>: 画像の管理\n    "</string>
+        - <b>PhotoView</b>: 画像の管理\n    </string>
     <string name="privacy_API_yandex_title">トゥートの翻訳</string>
-    <string name="privacy_API_yandex_authorizations">"
-        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
-        Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    "</string>
-    <string name="thanks_text_dev">"
-        感謝：    "</string>
+    <string name="privacy_API_yandex_authorizations">        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
+        Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    </string>
+    <string name="thanks_text_dev">        感謝：    </string>
     <string name="filter_regex">正規表現でフィルタする</string>
     <string name="search">検索</string>
     <string name="delete">削除</string>
@@ -474,14 +467,13 @@
     <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
     <string name="show_boost_count">ブースト/お気に入りの数を表示</string>
     <string name="issue_login_title">認証が機能していませんか？</string>
-    <string name="issue_login_message">"
-        <b>役立つかもしれない確認事項:</b>\n\n
+    <string name="issue_login_message">        <b>役立つかもしれない確認事項:</b>\n\n
         - インスタンス名の記述に間違いが無いかをチェック\n\n
         - インスタンスがダウンしていないかをチェック\n\n
         - もし2段階認証（2FA）を利用している場合は、下部のリンクを使用してください（先にインスタンス名を入力）\n\n
         - このリンクは、2FAを利用していなくても使用することができます\n\n
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
-    "</string>
+    </string>
     <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
     <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
     <string name="data_export_running">実行中です。お待ちください...</string>
@@ -576,8 +568,8 @@
     <string name="channel_notif_media">メディアのダウンロード</string>
     <string name="set_notif_sound">通知サウンドを変更</string>
     <string name="select_sound">音の選択</string>
-    <string name="set_enable_time_slot">タイムスロットを有効化</string>
-    <string name="how_to_videos">操作解説ビデオ</string>
+    <string name="set_enable_time_slot">時間帯管理を有効化</string>
+    <string name="how_to_videos">操作解説動画</string>
     <string name="retrieve_remote_conversation">リモートスレッドの取得中です！</string>
     <string name="no_blocked_domain">ブロックしたドメインはありません！</string>
     <string name="unblock_domain_confirm">ドメインのブロックを解除</string>
@@ -591,7 +583,7 @@
     <string name="comment">コメント</string>
     <string name="peertube_instance">Peertubeインスタンス</string>
     <string name="set_display_direct">プライベートメッセージのタイムラインを表示</string>
-    <string name="set_keep_background_process">アプリが閉じているときもバックグラウンドプロセスを保持</string>
+    <string name="set_keep_background_process">アプリが閉じているときもバックグラウンドプロセスを実行する</string>
     <string name="no_comments">右上のボタンをタップして最初のコメントを投稿しましょう！</string>
     <string name="number_view_video">%s 回再生</string>
     <string name="duration_video">長さ: %s</string>
@@ -611,10 +603,10 @@
     <string name="channels">チャンネル</string>
     <string name="set_display_emoji">Emoji Oneを使用する</string>
     <string name="information">情報</string>
-    <string name="set_display_card">全てのトゥートのプレビューを表示</string>
+    <string name="set_display_card">全てのトゥートでプレビューを表示する</string>
     <string name="thanks_text_ux">新しいUX/UIデザイナー</string>
-    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用</string>
-    <string name="set_display_video_preview">ビデオプレビューを表示</string>
+    <string name="set_old_direct_timeline">Mastodon 2.6以前のダイレクトタイムラインを使用する</string>
+    <string name="set_display_video_preview">動画プレビューを表示する</string>
     <string name="thanks_text_support">Gitlabでのサポート</string>
     <string name="action_bug_report">バグ報告</string>
     <string name="no_mail_client">メールクライアントがインストールされていません。</string>
@@ -667,13 +659,13 @@
         <item>1 日</item>
         <item>1 週間</item>
     </string-array>
-    <string name="showcase_instance">"        このフィールドにはサーバーのホスト名を入力してください。\n例えば、https://mastodon.socialでアカウントを作成した場合\n<b>mastodon.social</b>とだけ入力してください(https://を除く)\n
+    <string name="showcase_instance">        このフィールドにはサーバーのホスト名を入力してください。\n例えば、https://mastodon.socialでアカウントを作成した場合\n<b>mastodon.social</b>とだけ入力してください(https://を除く)\n
         最初の文字を入力するとそれに続く名前がサジェストされます。\n\n
-        ⚠ログインボタンはサーバー名が有効で、サーバーが稼働しているときのみ有効です！"</string>
-    <string name="showcase_uid">"        このフィールドには、Mastodonアカウントに関連付けられたメールアドレスを入力してください。
-    "</string>
-    <string name="showcase_pwd">"        最後にパスワードを入力してログインをタップしてください。
-    "</string>
+        ⚠ログインボタンはサーバー名が有効で、サーバーが稼働しているときのみ有効です！</string>
+    <string name="showcase_uid">        このフィールドには、Mastodonアカウントに関連付けられたメールアドレスを入力してください。
+    </string>
+    <string name="showcase_pwd">        最後にパスワードを入力してログインをタップしてください。
+    </string>
     <string name="more_information">詳しい情報</string>
     <string name="showcase_2FA">2FA(2段階認証)を利用している場合、このリンクを使用してください。\nログイン情報をここに入力したくない場合にも利用できます。</string>
     <!-- languages not translated -->
@@ -694,6 +686,7 @@
     <string name="some_words_any">これらの単語を除く(スペースで区切り)</string>
     <string name="some_words_all">含める単語(スペースで区切り)</string>
     <string name="some_words_none">除外する単語(スペースで区切り)</string>
+    <string name="some_tags">フィルターする単語を追加(スペースで区切り)</string>
     <string name="change_tag_column">カラムの名前を変更</string>
     <string name="no_misskey_instance">Misskeyのインスタンスはありません</string>
     <string name="misskey_instance">Misskeyインスタンス</string>
@@ -811,7 +804,7 @@
     <string name="settings_category_notif_customize">カスタマイズ</string>
     <string name="settings_category_notif_categories">カテゴリ</string>
     <string name="settings_category_notif_news">ニュース</string>
-    <string name="settings_category_notif_time_slot">タイムスロット</string>
+    <string name="settings_category_notif_time_slot">時間帯</string>
     <string name="settings_category_notif_advanced">上級者向け</string>
     <string name="set_display_new_badge">未読のトゥートに「new」バッジを表示する</string>
     <string name="set_display_peertube">Peertubeのタイムラインを表示する</string>
@@ -833,11 +826,14 @@
     <string name="set_sensitive_content">メディアを常に閲覧注意としてマークする</string>
     <string name="gnu_instance">GNUインスタンス</string>
     <string name="cached_status">キャッシュされたステータス</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_forward_tags">返信でタグを先頭に付加する</string>
+    <string name="set_long_press_media">長押しでメディアを保存</string>
+    <string name="set_blur_sensitive">閲覧注意のメディアをぼかす</string>
+    <string name="set_display_timeline_in_list">リストでタイムラインを表示する</string>
+    <string name="display_timeline">タイムラインを表示</string>
+    <string name="set_display_bot_icon">トゥート内でbotアカウントをマークする</string>
+    <string name="add_tags">タグ管理</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>

@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.sqlite.InstancesDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
@@ -74,6 +75,7 @@ public class ManageTimelines {
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
     private List listTimeline;
+    private String currentFilter;
 
 
     private boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
@@ -388,6 +390,17 @@ public class ManageTimelines {
                         @Override
                         public boolean onLongClick(View v) {
                             tagClick(context, tl, tabStrip, finalPosition);
+                            return true;
+                        }
+                    });
+                }
+            }else if( tl.getType() == Type.INSTANCE && (tl.getRemoteInstance().getType().equals("MASTODON") || tl.getRemoteInstance().getType().equals("PEERTUBE") || tl.getRemoteInstance().getType().equals("PLEROMA")|| tl.getRemoteInstance().getType().equals("GNU"))) {
+                if( tabStrip != null && tabStrip.getChildCount() > position) {
+                    int finalPosition = position;
+                    tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            instanceClick(context, tl, tabStrip, finalPosition);
                             return true;
                         }
                     });
@@ -936,6 +949,204 @@ public class ManageTimelines {
                 return false;
             }
         });
+        popup.show();
+
+    }
+
+
+
+    private void instanceClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
+
+
+        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
+        SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        remoteInstance = tl.getRemoteInstance();
+        if( remoteInstance == null)
+            return;
+        currentFilter = remoteInstance.getFilteredWith();
+
+        final boolean[] changes = {false};
+
+        String title;
+        if( currentFilter == null) {
+            title = "✔ " + context.getString(R.string.all);
+        }else{
+            title = context.getString(R.string.all);
+        }
+
+        MenuItem itemall = popup.getMenu().add(0, 0, Menu.NONE, title);
+
+        itemall.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                item.setActionView(new View(context));
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        return false;
+                    }
+                });
+                changes[0] = true;
+                FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                if( displayStatusFragment == null)
+                    return false;
+                tl.getRemoteInstance().setFilteredWith(null);
+                remoteInstance.setFilteredWith(null);
+                currentFilter = null;
+                new InstancesDAO(context, db).updateInstance(remoteInstance);
+                tl.setRemoteInstance(remoteInstance);
+                new TimelinesDAO(context, db).updateRemoteInstance(tl);
+                fragTransaction.detach(displayStatusFragment);
+                Bundle bundle = new Bundle();
+                bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                bundle.putInt("timelineId", tl.getId());
+                bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                displayStatusFragment.setArguments(bundle);
+                fragTransaction.attach(displayStatusFragment);
+                fragTransaction.commit();
+                popup.getMenu().close();
+                return false;
+            }
+        });
+
+
+        java.util.List<String> tags = remoteInstance.getTags();
+        if( tags != null && tags.size() > 0){
+            java.util.Collections.sort(tags);
+            for(String tag: tags){
+                if( tag == null || tag.length() == 0 )
+                    continue;
+                if( currentFilter != null && currentFilter.equals(tag)) {
+                    title = "✔ " + tag;
+                }else{
+                    title = tag;
+                }
+                MenuItem item = popup.getMenu().add(0, 0, Menu.NONE, title);
+                item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                        if( displayStatusFragment == null)
+                            return false;
+                        tl.getRemoteInstance().setFilteredWith(tag);
+                        remoteInstance.setFilteredWith(tag);
+                        new InstancesDAO(context, db).updateInstance(remoteInstance);
+                        tl.setRemoteInstance(remoteInstance);
+                        new TimelinesDAO(context, db).updateRemoteInstance(tl);
+                        currentFilter = tl.getRemoteInstance().getFilteredWith();
+                        fragTransaction.detach(displayStatusFragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                        bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                        bundle.putInt("timelineId", tl.getId());
+                        bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        displayStatusFragment.setArguments(bundle);
+                        fragTransaction.attach(displayStatusFragment);
+                        fragTransaction.commit();
+                        return false;
+                    }
+                });
+            }
+        }
+
+
+        MenuItem itemadd = popup.getMenu().add(0, 0, Menu.NONE, context.getString(R.string.add_tags));
+        itemadd.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                item.setActionView(new View(context));
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        return false;
+                    }
+                });
+                changes[0] = true;
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_instance, null);
+                dialogBuilder.setView(dialogView);
+                final EditText editText = dialogView.findViewById(R.id.filter_words);
+                if(remoteInstance.getTags() != null) {
+                    String valuesTag = "";
+                    for(String val: remoteInstance.getTags())
+                        valuesTag += val+" ";
+                    editText.setText(valuesTag);
+                    editText.setSelection(editText.getText().toString().length());
+                }
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String[] values = editText.getText().toString().trim().split("\\s+");
+                        java.util.List<String> tags =
+                                new ArrayList<>(Arrays.asList(values));
+                        remoteInstance.setTags(tags);
+                        new InstancesDAO(context, db).updateInstance(remoteInstance);
+                        tl.setRemoteInstance(remoteInstance);
+                        new TimelinesDAO(context, db).updateRemoteInstance(tl);
+                        popup.getMenu().clear();
+                        popup.getMenu().close();
+                        instanceClick(context, tl, tabStrip, position);
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
+
+        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+                if(changes[0]) {
+                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                    DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                    if( displayStatusFragment == null)
+                        return;
+                    fragTransaction.detach(displayStatusFragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                    bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                    bundle.putInt("timelineId", tl.getId());
+                    if( currentFilter == null){
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    }else{
+                        bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                    }
+                    displayStatusFragment.setArguments(bundle);
+                    fragTransaction.attach(displayStatusFragment);
+                    fragTransaction.commit();
+                }
+            }
+        });
+
         popup.show();
 
     }

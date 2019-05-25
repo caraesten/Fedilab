@@ -65,6 +65,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -72,6 +73,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Filters;
@@ -105,6 +107,7 @@ import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
@@ -1055,6 +1058,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
             }
         }
+        if (!BuildConfig.DONATIONS) {
+            MenuItem openCollectiveItem = navigationView.getMenu().findItem(R.id.nav_opencollective);
+            if( openCollectiveItem != null){
+                openCollectiveItem.setVisible(false);
+            }
+            MenuItem partnerShipItem = navigationView.getMenu().findItem(R.id.nav_partnership);
+            if( partnerShipItem != null){
+                partnerShipItem.setVisible(false);
+            }
+        }
 
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
@@ -1135,6 +1148,17 @@ public abstract class BaseMainActivity extends BaseActivity
             // Retrieves filters
             new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+
+        /* Clean cache for statuses */
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(10));
+                String dateString = Helper.dateToString(date);
+                new TimelineCacheDAO(BaseMainActivity.this, db).removeAfterDate(dateString);
+            }
+        });
+
     }
 
     private void manageTimelineList(boolean displayed){
@@ -1705,6 +1729,7 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
+
     @Override
     public void onRetrieveMetaData(boolean error, String sharedSubject, String sharedText, String image, String title, String description) {
         Bundle b = new Bundle();
@@ -2037,6 +2062,12 @@ public abstract class BaseMainActivity extends BaseActivity
                         bundle.putString("remote_instance", "peertube.social");
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                     }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
+                        if( tl.getRemoteInstance().getFilteredWith() == null){
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        }else{
+                            bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        }
                         bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
                         bundle.putString("instanceType", tl.getRemoteInstance().getType());
                     }else if( tl.getType() == ManageTimelines.Type.LIST){
@@ -2128,20 +2159,28 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     public void updateHomeCounter(){
-        if( tabLayout.getTabAt(0) == null )
-            return;
-        //noinspection ConstantConditions
-        View tabHome = tabLayout.getTabAt(0).getCustomView();
-        if( tabHome == null)
-            return;
-        TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(countNewStatus));
-        if( countNewStatus> 0){
-            //New data are available
-            //The fragment is not displayed, so the counter is displayed
-            tabCounterHome.setVisibility(View.VISIBLE);
-        }else {
-            tabCounterHome.setVisibility(View.GONE);
+        int i = 0;
+        if( timelines != null && timelines.size() > 0){
+            for(ManageTimelines tl: timelines){
+                if( tl.getType() == ManageTimelines.Type.HOME){
+                    if( tabLayout.getTabCount() > i) {
+                        View tabHome = tabLayout.getTabAt(i).getCustomView();
+                        if( tabHome != null){
+                            TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
+                            tabCounterHome.setText(String.valueOf(countNewStatus));
+                            if( countNewStatus> 0){
+                                //New data are available
+                                //The fragment is not displayed, so the counter is displayed
+                                tabCounterHome.setVisibility(View.VISIBLE);
+                            }else {
+                                tabCounterHome.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+
         }
     }
 

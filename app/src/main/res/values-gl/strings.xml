@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Escalar imaxes</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificacións Push</string>
-    <string name="settings_popup_message">"
-Por favor, confirme cales son as notificacións push que quere recibir.
+    <string name="settings_popup_message">Por favor, confirme cales son as notificacións push que quere recibir.
         Posteriormente pode activar ou desactivar estas notificacións en Axustes (pestana Notificacións).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Para os toots non lidos no Inicio?</string>
     <string name="settings_popup_notification">Para as notificacións non lidas?</string>
     <!-- CACHE -->
@@ -427,44 +426,38 @@ Por favor, confirme cales son as notificacións push que quere recibir.
     <string name="owner_cached_toots_empty">Non se atoparon toots na base de datos. Por favor, utilice o botón de sincronización no menú para obtelos.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Datos gravados</string>
-    <string name="privacy_data">"
-Só se garda no dispositivo a información básica das contas.
+    <string name="privacy_data">Só se garda no dispositivo a información básica das contas.
         Estos datos son totalmente confidenciais e só poden ser utilizados pola aplicación.
         Eliminando a aplicación eliminará inmediatamente estos datos.\n
         &#9888; Usuario e Contrasinal nunca se gardan. Só se utilizan no proceso de autenticación (SSL) coa instancia.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Utilizado para detectar si o dispositivo está conectado a unha rede WiFi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Utilizado para detectar si o dispositivo está conectado a unha rede WiFi.\n
         - <b>INTERNET</b>: Utilizado para as consultas a instancia.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Utilizado para gardar medios ou mover a app a tarxeta SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Utilizado para engadir medios aos toots.\n
         - <b>BOOT_COMPLETED</b>: Utilizado para iniciar o servizo de notificacións.\n
         - <b>WAKE_LOCK</b>: Utilizado durante o servizo de notificacións.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Permisos API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Lectura</b>: Ler datos.\n
+    <string name="privacy_API_authorizations">        - <b>Lectura</b>: Ler datos.\n
         - <b>Escritura</b>: Publicar estados e subir medios para os estados.\n
         - <b>Seguimento</b>: Seguir, deixar de seguir, bloquear, desbloquear.\n\n
         <b>&#9888; Estas accións só se realizan a petición da usuaria.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Rastrexo e Bibliotecas</string>
-    <string name="privacy_API">"
-        A aplicación <b>non utiliza ferramentas de rastrexo</b> (medida de audiencias, reporte de fallos, etc.) e non contén publicidade.\n\n
+    <string name="privacy_API">        A aplicación <b>non utiliza ferramentas de rastrexo</b> (medida de audiencias, reporte de fallos, etc.) e non contén publicidade.\n\n
         O uso de bibliotecas foi minimizado: \n
         - <b>Glide</b>: Para xestionar medios\n
         - <b>Android-Job</b>: Para xestionar servizos\n
         - <b>PhotoView</b>: Para xestionar imaxes\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Tradución dos toots</string>
-    <string name="privacy_API_yandex_authorizations">"
-A aplicación ofrece a posibilidade de traducir os toots utilizando o idioma do dispositivo e a API de Yandex.\n
+    <string name="privacy_API_yandex_authorizations">A aplicación ofrece a posibilidade de traducir os toots utilizando o idioma do dispositivo e a API de Yandex.\n
         Yandex ten a súa propia política de intimidade, que pode atopar aquí: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-Grazas a:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">Grazas a:
+    </string>
     <string name="filter_regex">Filtrado de expresións regulares</string>
     <string name="search">Buscar</string>
     <string name="delete">Eliminar</string>
@@ -485,14 +478,13 @@ Grazas a:
     <string name="account_moved_to">%1$s mudouse a %2$s</string>
     <string name="show_boost_count">Mostrar a conta de promocións/favoritos</string>
     <string name="issue_login_title">Non funciona a autenticación?</string>
-    <string name="issue_login_message">"
-        <b>Aquí ten unhas comprobacións que poderían axudarlle:</b>\n\n
+    <string name="issue_login_message">        <b>Aquí ten unhas comprobacións que poderían axudarlle:</b>\n\n
         - Comprobe que non ten fallos escribindo o nome da instancia\n\n
         - Comprobe que a súa instancia está a funcionar\n\n
         - Si utiliza autenticación de doble factor (2FA), utilice a ligazón inferior (unha vez escriba o nome da instancia)\n\n
         - Pode utilizar tamén esta ligazón sin ter que usar a 2FA\n\n
         - Si aínda non pode conectar, por favor suba o problema a Github en https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Cargáronse os medios. Pulse aquí para mostralos.</string>
     <string name="data_export_start">Esta acción podería prolongarse. Notificarémoslle cando esté rematada.</string>
     <string name="data_export_running">Aínda a traballar, agarde por favor…</string>
@@ -678,18 +670,15 @@ Grazas a:
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">"
-        En este campo, debe escribir o nome do servidor da súa instancia.\nPor exemplo, se creou a súa conta en https://mastodon.social\ndebe escribir <b>mastodon.social</b> (sen https://)\n
+    <string name="showcase_instance">        En este campo, debe escribir o nome do servidor da súa instancia.\nPor exemplo, se creou a súa conta en https://mastodon.social\ndebe escribir <b>mastodon.social</b> (sen https://)\n
         Pode iniciar a escribir o nome e irá obtendo suxestións de servidores.\n\n
         ⚠ O botón de conexión só estará activo se o nome da instancia é válido e a instancia está activa!
-    "</string>
-    <string name="showcase_uid">"
-        En este campo, escriba o correo electrónico ligado a súa conta en Mastodon.
-    "</string>
-    <string name="showcase_pwd">"
-        O último paso é introducir o contrasinal e pulsa en Conectar.
+    </string>
+    <string name="showcase_uid">        En este campo, escriba o correo electrónico ligado a súa conta en Mastodon.
+    </string>
+    <string name="showcase_pwd">        O último paso é introducir o contrasinal e pulsa en Conectar.
 
-    "</string>
+    </string>
     <string name="more_information">Máis información</string>
     <string name="showcase_2FA">Se utiliza 2FA (doble factor de autenticación), debe utilizar esta ligazón.\nTamén pode utilizalo se non quere introducir as súas credenciais aquí.</string>
     <!-- languages not translated -->
@@ -710,6 +699,7 @@ Grazas a:
     <string name="some_words_any">Calquera de estas palabras (separadas por espazos)</string>
     <string name="some_words_all">Todas estas palabras (separadas por espazos)</string>
     <string name="some_words_none">Ningunha de estas palabras (separadas por espazos)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Cambiar o nome da columna</string>
     <string name="no_misskey_instance">Sen instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
@@ -849,11 +839,14 @@ Grazas a:
     <string name="set_sensitive_content">Marcar os medios sempre como sensibles</string>
     <string name="gnu_instance">Instancia GNU</string>
     <string name="cached_status">Estado almacenado</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_forward_tags">Incluír etiquetas nas respostas</string>
+    <string name="set_long_press_media">Manter pulsado para gardar medios</string>
+    <string name="set_blur_sensitive">Difuminar medios sensibles</string>
+    <string name="set_display_timeline_in_list">Mostrar liñas temporais nunha lista</string>
+    <string name="display_timeline">Mostrar liñas temporais</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

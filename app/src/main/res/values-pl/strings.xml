@@ -395,9 +395,8 @@
     <string name="set_resize_picture">Zmniejszanie zdjęć</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Powiadomienia</string>
-    <string name="settings_popup_message">"
-Wskaż, jakie powiadomienia chcesz otrzymywać.
-        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach powiadomień.    "</string>
+    <string name="settings_popup_message">Wskaż, jakie powiadomienia chcesz otrzymywać.
+        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach powiadomień.    </string>
     <string name="settings_popup_timeline">Dla nieprzeczytanych wpisów w lokalnej osi czasu?</string>
     <string name="settings_popup_notification">Dla nieprzeczytanych powiadomień?</string>
     <!-- CACHE -->
@@ -434,43 +433,37 @@ Wskaż, jakie powiadomienia chcesz otrzymywać.
     <string name="owner_cached_toots_empty">Nie znaleziono wpisów. Proszę użyć funkcji synchronizacji w celu pobrania nowych wpisów.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Przechowywane dane</string>
-    <string name="privacy_data">"
-        Tylko podstawowe informacje o koncie są przechowywane na urządzeniu.
+    <string name="privacy_data">        Tylko podstawowe informacje o koncie są przechowywane na urządzeniu.
         Te dane nie są dostępne dla innych aplikacji.
         Dezinstalacja aplikacji natychmiastowo usuwa wszystkie dane.\n
         &#9888; Dane logowania nie są przechowywane na urządzeniu. Są użyte tylko podczas pierwszego logowania i przekazywane do instancji szyfrowanym kanałem SSL.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Uprawnienia:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Pozwala sprawdzić, czy urządzenie jest połączone z siecią WiFi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Pozwala sprawdzić, czy urządzenie jest połączone z siecią WiFi.\n
         - <b>INTERNET</b>: Pozwala na połączenie z instancją.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Pozwala na zachowywanie multimediów i przeniesienie aplikacji na kartę SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Pozwala dodać zawartość do wpisów.\n
         - <b>BOOT_COMPLETED</b>: Pozwala wyświetlać powiadomienia po włączeniu urządzenia.\n
         - <b>WAKE_LOCK</b>: Pozwala wyświetlać powiadomienia w tle.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Uprawnienia API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Odczyt</b>: Możliwość odczytu danych.\n
+    <string name="privacy_API_authorizations">        - <b>Odczyt</b>: Możliwość odczytu danych.\n
         - <b>Zapis</b>: Wysyłanie wpisów i załączanie multimediów.\n
         - <b>Śledzenie</b>: Śledzenie i blokowanie.\n\n
         <b>&#9888; Te uprawnienia są wykorzystywane wyłącznie na Twoje żądanie.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Śledzenie i biblioteki</string>
-    <string name="privacy_API">"
-        Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
+    <string name="privacy_API">        Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
         Używane biblioteki: \n
         - <b>Glide</b>: zarządzanie zawartością multimedialną\n
         - <b>Android-Job</b>: zarządzanie usługami\n
         - <b>PhotoView</b>: zarządzanie obrazami\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Automatyczne tłumaczenie wpisów:</string>
-    <string name="privacy_API_yandex_authorizations">"
-        Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
         Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-Podziękowania dla:    "</string>
+    </string>
+    <string name="thanks_text_dev">Podziękowania dla:    </string>
     <string name="filter_regex">Filtruj przez wyrażenia regularne</string>
     <string name="search">Szukaj</string>
     <string name="delete">Usuń</string>
@@ -491,14 +484,13 @@ Podziękowania dla:    "</string>
     <string name="account_moved_to">%1$s przeniósł się do %2$s</string>
     <string name="show_boost_count">Pokaż liczbę podbić i polubień</string>
     <string name="issue_login_title">Problem z uwierzytelnieniem?</string>
-    <string name="issue_login_message">"
-        <b>Spróbuj zastosować się do poniższych rad:</b>\n\n
+    <string name="issue_login_message">        <b>Spróbuj zastosować się do poniższych rad:</b>\n\n
         - Sprawdź, czy nazwa instancji została poprawnie przepisana\n\n
         - Sprawdź, czy instancja jest dostępna\n\n
         - Jeśli używasz dwustopniowego uwierzytelniania (2FA), kliknij w link poniżej (po wpisaniu nazwy instancji)\n\n
         - Możesz użyć tego linku nawet gdy nie używasz 2FA\n\n
         - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://github.com/stom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Załadowano zawartość multimedialną. Naciśnij tutaj, aby ją wyświetlić.</string>
     <string name="data_export_start">To działanie może trochę potrwać. Powiadomimy cię o jego zakończeniu.</string>
     <string name="data_export_running">Wciąż pracuję, proszę czekać…</string>
@@ -684,16 +676,11 @@ Podziękowania dla:    "</string>
         <item>1 dzień</item>
         <item>1 tydzień</item>
     </string-array>
-    <string name="showcase_instance">"
-        W tym polu, musisz wpisać nazwę hosta instancji.\nNa przykład, jeżeli konto było zakładane na https://mastodon.social\npo prostu wpisz <b>mastodon.social</b> (bez https://)\n
+    <string name="showcase_instance">        W tym polu, musisz wpisać nazwę hosta instancji.\nNa przykład, jeżeli konto było zakładane na https://mastodon.social\npo prostu wpisz <b>mastodon.social</b> (bez https://)\n
         Po wpisaniu kilku liter pojawią sie sugestie.\n\n
-        ⚠ Przycisk logowania zadziała tylko jeśli wpisana nazwa jest poprawna i a sama instancja działa!
-
-"</string>
-    <string name="showcase_uid">"
-Wpisz adres email przypisany do twojego konta Mastodon.    "</string>
-    <string name="showcase_pwd">"
-W ostatnim kroku wpisz hasło i kliknij zaloguj.    "</string>
+        ⚠ Przycisk logowania zadziała tylko jeśli wpisana nazwa jest poprawna i a sama instancja działa!</string>
+    <string name="showcase_uid">Wpisz adres email przypisany do twojego konta Mastodon.    </string>
+    <string name="showcase_pwd">W ostatnim kroku wpisz hasło i kliknij zaloguj.    </string>
     <string name="more_information">Więcej informacji</string>
     <string name="showcase_2FA">Jeśli używasz uwierzytelniania dwu-etapowego, musisz skorzystać z tego linka.\nMożesz też go użyć jeśli nie chcesz wpisywać twoich danych tutaj.</string>
     <!-- languages not translated -->
@@ -714,6 +701,7 @@ W ostatnim kroku wpisz hasło i kliknij zaloguj.    "</string>
     <string name="some_words_any">Dowolne z tych słów (oddzielone spacją)</string>
     <string name="some_words_all">Wszystkie z tych słów (rozdzielone spacją)</string>
     <string name="some_words_none">Żadne z tych słów (rozedzielone spacją)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Zmień nazwę kolumny</string>
     <string name="no_misskey_instance">Brak instancji Misskey</string>
     <string name="misskey_instance">Instancja Misskey</string>
@@ -858,6 +846,9 @@ W ostatnim kroku wpisz hasło i kliknij zaloguj.    "</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

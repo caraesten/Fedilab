@@ -103,6 +103,18 @@ public class TimelineCacheDAO {
         return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_STATUS_ID + " = \""+ statusId +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null);
     }
 
+
+    /***
+     * Remove stored status
+     * @return int
+     */
+    public int removeAfterDate(String date) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_DATE + " < \""+ date +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\"", null);
+    }
+
     /***
      * Remove stored status
      * @return int

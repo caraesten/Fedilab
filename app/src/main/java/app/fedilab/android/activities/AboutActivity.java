@@ -38,6 +38,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Relationship;
@@ -209,6 +210,11 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
+        if(BuildConfig.DONATIONS){
+            about_support.setVisibility(View.VISIBLE);
+        }else{
+            about_support.setVisibility(View.GONE);
+        }
 
         Button paypal = findViewById(R.id.about_support_paypal);
         paypal.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +224,13 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
+
+        if(BuildConfig.DONATIONS){
+            paypal.setVisibility(View.VISIBLE);
+        }else{
+            paypal.setVisibility(View.GONE);
+        }
+
 
 
         TextView about_website = findViewById(R.id.about_website);

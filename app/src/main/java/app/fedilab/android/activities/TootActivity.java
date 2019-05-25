@@ -199,7 +199,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
     private Status idRedirect;
-    private String userId, instance;
+    private String userId;
+    private static String instance;
     private Account account;
     private ArrayList<String> splitToot;
     private int stepSpliToot;
@@ -467,7 +468,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 picture_scrollview.setVisibility(View.VISIBLE);
                                 toot_picture.setEnabled(false);
                                 toot_it.setEnabled(false);
-                                new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                                new HttpsConnection(TootActivity.this, instance).upload(bs, fileMention, account, TootActivity.this);
                             }
                         });
 
@@ -513,7 +514,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                 }
                 if (image != null) {
-                    new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
+                    new HttpsConnection(TootActivity.this, instance).download(image, TootActivity.this);
                 }
                 int selectionBefore = toot_content.getSelectionStart();
                 toot_content.setText(String.format("\n%s", sharedContent));
@@ -809,7 +810,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        new asyncPicture(TootActivity.this, accountReply, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new asyncPicture(TootActivity.this, account, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -894,9 +895,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     String mime = cr.getType(data.getData());
                     if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                         InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                        new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                        new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, account, TootActivity.this);
                     } else if(mime != null && mime.toLowerCase().contains("image")) {
-                        new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new asyncPicture(TootActivity.this, account, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else {
                         Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     }
@@ -915,7 +916,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, accountReply, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -936,13 +937,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
         android.net.Uri uriFile;
-        Account accountReply;
+        Account account;
         boolean error = false;
 
-        asyncPicture(Activity activity, Account accountReply, android.net.Uri uri){
+        asyncPicture(Activity activity, Account account, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
-            this.accountReply = accountReply;
+            this.account = account;
         }
 
         @Override
@@ -979,7 +980,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_it.setEnabled(false);
                 String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 filesMap.put(filename, uriFile);
-                new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply != null ? accountReply.getToken() : null, (TootActivity) this.activityWeakReference.get());
+                new HttpsConnection(this.activityWeakReference.get(), instance).upload(bs, filename,account, (TootActivity) this.activityWeakReference.get());
             }
         }
     }
@@ -1002,9 +1003,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 String mime = cr.getType(imageUri);
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                    new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, account, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    new asyncPicture(TootActivity.this, accountReply, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
                     Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
@@ -1414,7 +1415,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
                 final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
                 final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
-                timePicker.setIs24HourView(true);
+                if (android.text.format.DateFormat.is24HourFormat(getApplicationContext()))
+                    timePicker.setIs24HourView(true);
                 Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
                 final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
                 final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);
@@ -1525,7 +1527,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }*/
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
@@ -1554,17 +1557,17 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         if( timestamp == null)
             if( scheduledstatus == null)
-                new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else {
                 toot.setScheduled_at(Helper.dateToString(scheduledstatus.getScheduled_date()));
                 scheduledstatus.setStatus(toot);
                 isScheduled = true;
                 new PostActionAsyncTask(getApplicationContext(), API.StatusAction.DELETESCHEDULED, scheduledstatus, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         else {
             toot.setScheduled_at(timestamp);
-            new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
     }
@@ -1796,7 +1799,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this).upload(bs, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+            new HttpsConnection(TootActivity.this, instance).upload(bs, filename, account, TootActivity.this);
         }
     }
 
@@ -1856,7 +1859,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), accountReply,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), account,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 attachment.setDescription(input.getText().toString());
                 addBorder();
                 dialog.dismiss();
@@ -1987,7 +1990,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
 
         int cwSize = toot_cw_content.getText().toString().trim().length();
         int size = toot_content.getText().toString().trim().length() + cwSize;
@@ -2004,7 +2007,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
             toot.setContent(tootContent);
-            new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
         }

@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-értesítések</string>
-    <string name="settings_popup_message">"
-        Kérjük erősítsd meg, mely push-értesítéseket szeretnéd megkapni.
+    <string name="settings_popup_message">        Kérjük erősítsd meg, mely push-értesítéseket szeretnéd megkapni.
         Ezeket az értesítéseket később ki- vagy bekapcsolhatod (Értesítések lapon).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
@@ -427,42 +426,36 @@
     <string name="owner_cached_toots_empty">Nem találtunk tootokat az adatbázisban. Kérjük, letöltésükhöz használd a szinkronizálás gombot.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Rögzített adatok</string>
-    <string name="privacy_data">"
-        A készüléken csak a fiókok alapadatait tároljuk.
+    <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
         Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
         Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
         &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Engedélyek:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy megállapítsuk, a kliens WiFi-hálózathoz kapcsolódik-e.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy megállapítsuk, a kliens WiFi-hálózathoz kapcsolódik-e.\n
         - <b>INTERNET</b>: Szerverek lekérdezésekor használatos.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára áthelyezéséhez használatos.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Médiát ad hozzá toothoz.\n
         - <b>BOOT_COMPLETED</b>: Az értesítési szolgáltatás indítására használatos.\n
         - <b>WAKE_LOCK</b>: Az értesítési szolgáltatás használja működés közben.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">API jogosultságok:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Olvas</b>: Adat olvasása.\n
+    <string name="privacy_API_authorizations">        - <b>Olvas</b>: Adat olvasása.\n
         - <b>Írás</b>: Posztok létrehozása és média csatolása posztokhoz..\n
         - <b>Követ</b>: Követés, követés megszűntetése, letiltás és tiltás feloldása. \n\n
         <b>&#9888; Ezek az akciók csak akkor hajtódnak végre, amikor a felhasználó kéri.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Követés és könyvtárak</string>
-    <string name="privacy_API">"
-        Az alkalmazás<b>nem használ követési eszközöket</b> (hallgatóság mérése, hibajelentés, stb.) és nem tartalmaz hirdetéseket.\n\n
+    <string name="privacy_API">        Az alkalmazás<b>nem használ követési eszközöket</b> (hallgatóság mérése, hibajelentés, stb.) és nem tartalmaz hirdetéseket.\n\n
         A könyvtárak használata minimalizált: \n
         - <b>Glide</b>: Médiák kezelése\n
         - <b>Android-Job</b>: Szolgáltatások kezelése\n
         - <b>PhotoView</b>: Képek kezelése\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Tootok fordítása</string>
-    <string name="privacy_API_yandex_authorizations">"
-Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
-A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    "</string>
-    <string name="thanks_text_dev">"
-Köszönet a következőknek:    "</string>
+    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
+A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="thanks_text_dev">Köszönet a következőknek:    </string>
     <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
     <string name="search">Keresés</string>
     <string name="delete">Törlés</string>
@@ -483,14 +476,13 @@ Köszönet a következőknek:    "</string>
     <string name="account_moved_to">%1$s elköltözött ide: %2$s</string>
     <string name="show_boost_count">Mutasd az újratootok/kedvenc posztok számát</string>
     <string name="issue_login_title">Nem sikeres a hitelesítés?</string>
-    <string name="issue_login_message">"
-        <b>Íme néhány hasznos tipp:</b>\n\n
+    <string name="issue_login_message">        <b>Íme néhány hasznos tipp:</b>\n\n
         - Ellenőrizd, hogy nem gépelted-e el a szerver nevét.\n\n
         - Ellenőrizd, hogy a szervered elérhető\n\n
         - Használd az alsó linket, ha két faktoros hitelesítést (2FA) használsz  (miután kitöltötted a szerver nevét)\n\n
         - Ezt a linket 2FA nélkül is használhatod\n\n
         - Ha még mindig nem sikerül bejelentkezni, jelentsd a GitLabon  a https://gitlab.com/tom79/mastalab/issues címen
-    "</string>
+    </string>
     <string name="media_ready">Betöltöttük a médiát. Klikkelj ide a megjelenítéshez.</string>
     <string name="data_export_start">Ez a folyamat sokáig tarthat. Értesítünk majd, amikor befejeződött.</string>
     <string name="data_export_running">Még nem fejeztük be, kérlek várj még…</string>
@@ -676,17 +668,14 @@ Köszönet a következőknek:    "</string>
         <item>1 nap</item>
         <item>1 hét</item>
     </string-array>
-    <string name="showcase_instance">"
-        Ebbe a mezőbe, írd a szervered host-nevét.\nPéldául, ha a fiókodat a  https://mastodon.social\n címen nyitottad, akkor írd, hogy  <b>mastodon.social</b> (https:// nélkül)\n
+    <string name="showcase_instance">        Ebbe a mezőbe, írd a szervered host-nevét.\nPéldául, ha a fiókodat a  https://mastodon.social\n címen nyitottad, akkor írd, hogy  <b>mastodon.social</b> (https:// nélkül)\n
         Kezdd beírni az első néhány betűt és a többit segítünk kiegészíteni.\n\n
         ⚠ A Bejelentkezés gomb csak akkor fog működni, ha a szervernév érvényes és a szerver elérhető!
-    "</string>
-    <string name="showcase_uid">"
-        Ebbe a mezőbe írd az e-mailcímet, ami a Mastodon-fiókodhoz tartozik.
-    "</string>
-    <string name="showcase_pwd">"
-        Utolsó lépésként írd be a jelszót és klikkelj a Belépés gombra.
-    "</string>
+    </string>
+    <string name="showcase_uid">        Ebbe a mezőbe írd az e-mailcímet, ami a Mastodon-fiókodhoz tartozik.
+    </string>
+    <string name="showcase_pwd">        Utolsó lépésként írd be a jelszót és klikkelj a Belépés gombra.
+    </string>
     <string name="more_information">További információ</string>
     <string name="showcase_2FA">Ha 2FA-t (kétfaktoros hitelesítést) használsz, ezt a linket kell használnod.\nAkkor is használhatod, ha nem akarod ide írni a bejelentkezési adataidat.</string>
     <!-- languages not translated -->
@@ -707,6 +696,7 @@ Köszönet a következőknek:    "</string>
     <string name="some_words_any">Bármelyik a következő szavakból (szóközzel elválasztva)</string>
     <string name="some_words_all">Minden szó (szóközzel elválasztva)</string>
     <string name="some_words_none">Egyik szó sem (szóközzel elválasztva)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Oszlop nevének megváltoztatása</string>
     <string name="no_misskey_instance">Nincs Misskey szerver</string>
     <string name="misskey_instance">Misskey szerver</string>
@@ -847,10 +837,13 @@ Köszönet a következőknek:    "</string>
     <string name="gnu_instance">GNU szerver</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Címkék továbbítasa a válaszokban</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_long_press_media">Nyomd meg hosszan a média tárolásához</string>
+    <string name="set_blur_sensitive">Érzékeny média homályosítása</string>
+    <string name="set_display_timeline_in_list">Idővonalak megjelenítése listában</string>
+    <string name="display_timeline">Idővonalak megjelenítése</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

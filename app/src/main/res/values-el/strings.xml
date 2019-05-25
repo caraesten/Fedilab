@@ -387,10 +387,9 @@
     <string name="set_resize_picture">Προσαρμογή του μεγέθους των εικόνων</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Ειδοποιήσεις προωθήσεων</string>
-    <string name="settings_popup_message">"
-        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
+    <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
         Μπορείς να ενεργοποιήσεις ή να απενεργοποιήσεις αυτές τις ειδοποιήσεις, αργότερα, στις ρυθμίσεις (στην καρτέλα Ειδοποιήσεων).
-    "</string>
+    </string>
     <string name="settings_popup_timeline">Για τις μη διαβασμένες φωνές στην σπιτική χρονοστήλη;</string>
     <string name="settings_popup_notification">Για τις μη διαβασμένες ειδοποιήσεις;</string>
     <!-- CACHE -->
@@ -427,44 +426,38 @@
     <string name="owner_cached_toots_empty">Δεν βρέθηκαν φωνές στην βάση δεδομένων. Παρακαλώ, για να τις λάβεις, χρησιμοποίησε το πλήκτρο συγχρονισμού από τον κατάλογο των επιλογών.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Αρχειοθετημένα δεδομένα</string>
-    <string name="privacy_data">"
-        Στη συσκευή, αποθηκεύονται μόνο βασικές πληροφορίες των λογαριασμών.
+    <string name="privacy_data">        Στη συσκευή, αποθηκεύονται μόνο βασικές πληροφορίες των λογαριασμών.
         Αυτά τα δεδομένα είναι αυστηρώς εμπιστευτικά, και μπορούν να χρησιμοποιηθούν μόνο από την εφαρμογή.
         Η διαγραφή της εφαρμογής άμεσα απομακρύνει και αυτά τα δεδομένα.\n
         &#9888; Ποτέ δεν αποθηκεύονται η σύνδεση και το συνθηματικό. Χρησιμοποιούνται μόνο κατά την ασφαλή ταυτοποίηση (SSL), με μία υπόσταση.
-    "</string>
+    </string>
     <string name="privacy_authorizations_title">Δικαιώματα:</string>
-    <string name="privacy_authorizations">"
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
-    "</string>
+    </string>
     <string name="privacy_API_authorizations_title">Δικαιώματα API:</string>
-    <string name="privacy_API_authorizations">"
-        - <b>Read</b>: Read data.\n
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
-    "</string>
+    </string>
     <string name="privacy_API_title">Παρακολούθηση και Βιβλιοθήκες</string>
-    <string name="privacy_API">"
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-    "</string>
+    </string>
     <string name="privacy_API_yandex_title">Μετάφραση των φωνών</string>
-    <string name="privacy_API_yandex_authorizations">"
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
+    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    "</string>
-    <string name="thanks_text_dev">"
-        Ευχαριστίες στους:
-    "</string>
+    </string>
+    <string name="thanks_text_dev">        Ευχαριστίες στους:
+    </string>
     <string name="filter_regex">Απομάκρυνση σύμφωνα με τις κανονικές εκφράσεις</string>
     <string name="search">Αναζήτηση</string>
     <string name="delete">Διαγραφή</string>
@@ -485,14 +478,13 @@
     <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
     <string name="show_boost_count">Εμφάνιση του μετρητή των ενισχυμένων και των αγαπημένων</string>
     <string name="issue_login_title">Μήπως δεν δουλεύει η έλεγχος ταυτότητας;</string>
-    <string name="issue_login_message">"
-        <b>Here are some checks that might help:</b>\n\n
+    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    "</string>
+    </string>
     <string name="media_ready">Φορτώθηκε το πολυμέσο. Κλίκαρε εδώ για να προβληθεί.</string>
     <string name="data_export_start">Αυτή η ενέργεια μπορεί να είναι χρονοβόρα. Θα ειδοποιηθείς, όταν θα ολοκληρωθεί.</string>
     <string name="data_export_running">Ακόμη τρέχει· παρακαλώ, περίμενε…</string>
@@ -678,17 +670,14 @@
         <item>1 ημέρα</item>
         <item>1 εβδομάδα</item>
     </string-array>
-    <string name="showcase_instance">"
-        Σε αυτό το πεδίο, χρειάζεται να συμπληρώσεις το όνομα του οικοδεσπότη της υπόστασής σου.\nΓια παράδειγμα, αν δημιούργησες τον λογαριασμό σου στο https://mastodon.social\nΑπλά γράψε <b>mastodon.social</b> (χωρίς το https://)\n
+    <string name="showcase_instance">        Σε αυτό το πεδίο, χρειάζεται να συμπληρώσεις το όνομα του οικοδεσπότη της υπόστασής σου.\nΓια παράδειγμα, αν δημιούργησες τον λογαριασμό σου στο https://mastodon.social\nΑπλά γράψε <b>mastodon.social</b> (χωρίς το https://)\n
         Μπορείς να ξεκινήσεις να γράφεις τα πρώτα γράμματα, και θα προταθούν ολόκληρες οι ονομασίες.\n\n
         ⚠ Το πλήκτρο Σύνδεσης λειτουργεί, μόνο όταν είναι έγκυρο το όνομα της υπόστασης, και είναι η υπόσταση σε λειτουργία!
-    "</string>
-    <string name="showcase_uid">"
-        Στο αυτό πεδίο, εισήγαγε το λογαριασμό του ηλεκτρονικού ταχυδρομείου, ο οποίος είναι συνδεμένος με το λογαριασμό σου στο Μαστόδοντο.
-    "</string>
-    <string name="showcase_pwd">"
-        Τα τελευταία βήματα, είναι η εισαγωγή του συνθηματικού, και το κλικάρισμα στη Σύνδεση.
-    "</string>
+    </string>
+    <string name="showcase_uid">        Στο αυτό πεδίο, εισήγαγε το λογαριασμό του ηλεκτρονικού ταχυδρομείου, ο οποίος είναι συνδεμένος με το λογαριασμό σου στο Μαστόδοντο.
+    </string>
+    <string name="showcase_pwd">        Τα τελευταία βήματα, είναι η εισαγωγή του συνθηματικού, και το κλικάρισμα στη Σύνδεση.
+    </string>
     <string name="more_information">Περισσότερες πληροφορίες</string>
     <string name="showcase_2FA">Αν χρησιμοποιείς 2FA (έλεγχο ταυτότητας δύο παραγόντων), θα πρέπει να χρησιμοποιήσεις και αυτόν τον δεσμό.\nΕπίσης, μπορείς να τον χρησιμοποιήσεις, αν δεν θες να εισάγεις, εδώ, τα διαπιστευτήριά σου.</string>
     <!-- languages not translated -->
@@ -709,6 +698,7 @@
     <string name="some_words_any">Με οποιαδήποτε από αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
     <string name="some_words_all">Με όλες αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
     <string name="some_words_none">Με καμία από αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Αλλαγή του ονόματος της στήλης</string>
     <string name="no_misskey_instance">Καμία υπόσταση Misskey</string>
     <string name="misskey_instance">Υπόσταση Misskey</string>
@@ -853,6 +843,9 @@
     <string name="set_blur_sensitive">Blur sensitive media</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
+    <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d ψήφοι</item>

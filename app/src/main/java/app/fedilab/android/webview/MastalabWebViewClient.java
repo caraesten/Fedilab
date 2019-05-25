@@ -17,10 +17,12 @@ package app.fedilab.android.webview;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,6 +36,7 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.WebviewActivity;
+import app.fedilab.android.helper.Helper;
 
 /**
  * Created by Thomas on 25/06/2017.
@@ -102,6 +105,16 @@ public class MastalabWebViewClient extends WebViewClient {
 
     public List<String> getDomains(){
         return this.domains;
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        String instance = Helper.getLiveInstance(activity);
+        if( instance != null && instance.endsWith(".onion")) {
+            handler.proceed();
+        }else{
+            super.onReceivedSslError(view, handler, error);
+        }
     }
 
     @Override

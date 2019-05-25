@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import app.fedilab.android.client.Entities.RemoteInstance;
+import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.Helper;
 
 
@@ -64,6 +65,28 @@ public class InstancesDAO {
         }catch (Exception ignored) {}
     }
 
+
+    //------- UPDATES  -------
+
+    /**
+     * update instance in database
+     * @param remoteInstance RemoteInstance
+     */
+    public void updateInstance(RemoteInstance remoteInstance) {
+        ContentValues values = new ContentValues();
+        List<String> tags = remoteInstance.getTags();
+        values.put(Sqlite.COL_FILTERED_WITH, remoteInstance.getFilteredWith());
+
+
+        if( tags != null && tags.size() > 0) {
+            values.put(Sqlite.COL_TAGS, Helper.arrayToStringStorage(tags));
+        }
+        try{
+            db.update(Sqlite.TABLE_INSTANCES,  values, Sqlite.COL_INSTANCE + " =  ? ", new String[]{String.valueOf(remoteInstance.getHost())});
+        }catch (Exception ignored) {ignored.printStackTrace();}
+    }
+
+
     public void insertInstance(String instanceName, String type) {
         insertInstance(instanceName, "null", type);
     }
@@ -102,6 +125,7 @@ public class InstancesDAO {
             Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, null, null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListSearch(c);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -136,7 +160,11 @@ public class InstancesDAO {
             RemoteInstance remoteInstance = new RemoteInstance();
             remoteInstance.setDbID(c.getString(c.getColumnIndex(Sqlite.COL_ID)));
             remoteInstance.setId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
+            try {
+                remoteInstance.setTags(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAGS))));
+            }catch (Exception ignored){}
             remoteInstance.setHost(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+            remoteInstance.setFilteredWith(c.getString(c.getColumnIndex(Sqlite.COL_FILTERED_WITH)));
             remoteInstance.setType(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)) == null?"MASTODON":c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)));
             remoteInstances.add(remoteInstance);
         }

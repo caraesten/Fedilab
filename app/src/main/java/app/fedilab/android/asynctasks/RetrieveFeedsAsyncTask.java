@@ -27,9 +27,11 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
+import app.fedilab.android.client.Entities.RetrieveFeedsParam;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.FilterToots;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -61,7 +63,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String instanceName,remoteInstance, name;
     private boolean cached = false;
     private int timelineId;
-    
+    private String currentfilter;
+    private String social;
+
     public enum Type{
         HOME,
         LOCAL,
@@ -76,6 +80,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CONTEXT,
         TAG,
         REMOTE_INSTANCE,
+        REMOTE_INSTANCE_FILTERED,
         ART,
         PEERTUBE,
         NOTIFICATION,
@@ -182,6 +187,24 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = Type.REMOTE_INSTANCE;
     }
 
+    public RetrieveFeedsAsyncTask(Context context, RetrieveFeedsParam retrieveFeedsParam, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onRetrieveFeedsInterface;
+        this.action = retrieveFeedsParam.getAction();
+        this.max_id = retrieveFeedsParam.getMax_id();
+        this.targetedID = retrieveFeedsParam.getTargetedID();
+        this.tag = retrieveFeedsParam.getTag();
+        this.showMediaOnly = retrieveFeedsParam.isShowMediaOnly();
+        this.showPinned = retrieveFeedsParam.isShowPinned();
+        this.showReply = retrieveFeedsParam.isShowReply();
+        this.name = retrieveFeedsParam.getName();
+        this.currentfilter = retrieveFeedsParam.getCurrentfilter();
+        this.social = retrieveFeedsParam.getSocial();
+        this.instanceName = retrieveFeedsParam.getInstanceName();
+        this.remoteInstance = retrieveFeedsParam.getRemoteInstance();
+    }
+
+
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
@@ -206,6 +229,24 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case CONVERSATION:
                 apiResponse = api.getConversationTimeline(max_id);
+                break;
+            case REMOTE_INSTANCE_FILTERED:
+                if( this.social != null && this.social.equals("MASTODON")) {
+                    apiResponse = api.getPublicTimelineTag(this.currentfilter, true, max_id,this.remoteInstance);
+                    if( apiResponse != null){
+                        List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if( statusesTemp != null){
+                            for(app.fedilab.android.client.Entities.Status status: statusesTemp){
+                                status.setType(action);
+                            }
+                        }
+                    }
+                } else if(this.social != null && this.social.equals("GNU") ) {
+                    GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+                    apiResponse = gnuapi.searchRemote(this.remoteInstance,currentfilter,max_id);
+                }else {
+                    apiResponse = api.searchPeertube(this.remoteInstance, currentfilter);
+                }
                 break;
             case REMOTE_INSTANCE:
                 if( this.name != null && this.remoteInstance != null){ //For Peertube channels

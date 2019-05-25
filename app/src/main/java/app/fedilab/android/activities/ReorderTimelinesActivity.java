@@ -90,11 +90,11 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private TextView undo_action;
     private  List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
-    private boolean actionCanBeApplied;
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
     private int theme;
+    private String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +124,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         }else {
             style = R.style.Dialog;
         }
+
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -171,15 +172,15 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                 public void run() {
                                     try {
                                         if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
                                         else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
                                         else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
                                         }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
-                                            new HttpsConnection(ReorderTimelinesActivity.this).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
+                                            new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
 
                                         runOnUiThread(new Runnable() {
@@ -278,7 +279,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                         @Override
                                         public void run() {
                                             try {
-                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
                                                 runOnUiThread(new Runnable() {
                                                     public void run() {
                                                         isLoadingInstance = false;
@@ -383,43 +384,40 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 break;
         }
         undo_action.setPaintFlags(undo_action.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        actionCanBeApplied = true;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                undo_container.setVisibility(View.GONE);
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                switch (manageTimelines.getType()){
+                    case TAG:
+                        new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
+                        new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                        break;
+                    case INSTANCE:
+                        new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getHost());
+                        new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
+                        break;
+                    case LIST:
+                        timeline = manageTimelines;
+                        new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST,null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new TimelinesDAO(getApplicationContext(), db).remove(timeline);
+                        break;
+                }
+                updated = true;
+            }
+        };
+        Handler handler = new Handler();
+        handler.postDelayed(runnable, 4000);
         undo_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timelines.add(position, manageTimelines);
                 adapter.notifyItemInserted(position);
                 undo_container.setVisibility(View.GONE);
-                actionCanBeApplied = false;
+                handler.removeCallbacks(runnable);
             }
         });
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                undo_container.setVisibility(View.GONE);
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                if( actionCanBeApplied){
-                    switch (manageTimelines.getType()){
-                        case TAG:
-                            new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
-                            new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
-                            break;
-                        case INSTANCE:
-                            new InstancesDAO(getApplicationContext(), db).remove(manageTimelines.getRemoteInstance().getHost());
-                            new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
-                            break;
-                        case LIST:
-                            timeline = manageTimelines;
-                            new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST,null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new TimelinesDAO(getApplicationContext(), db).remove(timeline);
-                            break;
-                    }
-                    updated = true;
-                }
-            }
-        }, 2000);
-
     }
 
     @Override
