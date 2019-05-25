@@ -713,6 +713,7 @@
     <string name="some_words_any">أي من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_all">كافة هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_none">لاشيء من هذه الكلمات (مفصولة بمسافة)</string>
+    <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">تغيير اسم العمود</string>
     <string name="no_misskey_instance">لا توجد أية مثيلات خوادم ميسكي</string>
     <string name="misskey_instance">مثيل خادم ميسكي</string>
@@ -857,6 +858,8 @@
     <string name="set_blur_sensitive">تعتيم الوسائط الحساسة</string>
     <string name="set_display_timeline_in_list">عرض الخيوط الزمنية في قائمة</string>
     <string name="display_timeline">عرض الخيوط الزمنية</string>
+    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="add_tags">Manage tags</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
