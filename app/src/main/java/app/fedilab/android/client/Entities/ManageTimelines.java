@@ -394,7 +394,7 @@ public class ManageTimelines {
                         }
                     });
                 }
-            }else if( tl.getType() == Type.INSTANCE && (tl.getRemoteInstance().getType().equals("MASTODON") || tl.getRemoteInstance().getType().equals("PEERTUBE") || tl.getRemoteInstance().getType().equals("PLEROMA"))) {
+            }else if( tl.getType() == Type.INSTANCE && (tl.getRemoteInstance().getType().equals("MASTODON") || tl.getRemoteInstance().getType().equals("PEERTUBE") || tl.getRemoteInstance().getType().equals("PLEROMA")|| tl.getRemoteInstance().getType().equals("GNU"))) {
                 if( tabStrip != null && tabStrip.getChildCount() > position) {
                     int finalPosition = position;
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
