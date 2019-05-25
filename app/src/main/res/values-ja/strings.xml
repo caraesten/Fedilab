@@ -300,7 +300,7 @@
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
-    <string name="set_notif_follow_poll">投票の終了を通知する</string>
+    <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
     <string name="set_wifi_only">WIFI接続時のみ通知</string>
