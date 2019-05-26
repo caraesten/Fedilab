@@ -1334,159 +1334,6 @@ public class PeertubeAPI {
 
 
     /**
-     * Get filters for the user
-     * @return APIResponse
-     */
-    public APIResponse getFilters(){
-
-        List<Filters> filters = null;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
-            filters = parseFilters(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-    /**
-     * Get a Filter by its id
-     * @return APIResponse
-     */
-    @SuppressWarnings("unused")
-    public APIResponse getFilters(String filterId){
-
-        List<Filters> filters = new ArrayList<>();
-        Filters filter;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
-            filter = parseFilter(new JSONObject(response));
-            filters.add(filter);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-
-    /**
-     * Create a filter
-     * @param filter Filter
-     * @return APIResponse
-     */
-    public APIResponse addFilters(Filters filter){
-        HashMap<String, String> params = new HashMap<>();
-        params.put("phrase", filter.getPhrase());
-        StringBuilder parameters = new StringBuilder();
-        for(String context: filter.getContext())
-            parameters.append("context[]=").append(context).append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-            params.put("context[]", parameters.toString());
-        }
-        params.put("irreversible", String.valueOf(filter.isIrreversible()));
-        params.put("whole_word", String.valueOf(filter.isWhole_word()));
-        params.put("expires_in", String.valueOf(filter.getExpires_in()));
-        ArrayList<Filters> filters = new ArrayList<>();
-        try {
-            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
-            Filters resfilter = parseFilter(new JSONObject(response));
-            filters.add(resfilter);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-    /**
-     * Delete a filter
-     * @param filter Filter
-     * @return APIResponse
-     */
-    public int deleteFilters(Filters filter){
-
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            httpsConnection.delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
-    }
-
-    /**
-     * Delete a filter
-     * @param filter Filter
-     * @return APIResponse
-     */
-    public APIResponse updateFilters(Filters filter){
-        HashMap<String, String> params = new HashMap<>();
-        params.put("phrase", filter.getPhrase());
-        StringBuilder parameters = new StringBuilder();
-        for(String context: filter.getContext())
-            parameters.append("context[]=").append(context).append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-            params.put("context[]", parameters.toString());
-        }
-        params.put("irreversible", String.valueOf(filter.isIrreversible()));
-        params.put("whole_word", String.valueOf(filter.isWhole_word()));
-        params.put("expires_in", String.valueOf(filter.getExpires_in()));
-        ArrayList<Filters> filters = new ArrayList<>();
-        try {
-            String response = new HttpsConnection(context, this.instance).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
-            Filters resfilter = parseFilter(new JSONObject(response));
-            filters.add(resfilter);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-    /**
      * Get lists for the user
      * @return APIResponse
      */
@@ -1511,6 +1358,200 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
+
+    /**
+     * Posts a Playlist
+     * @param playlist Playlist, the playlist
+     * @return APIResponse
+     */
+    public APIResponse createPlaylist(Playlist playlist){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("displayName",playlist.getDisplayName());
+        if( playlist.getDescription() != null)
+            params.put("description",playlist.getDescription());
+        if( playlist.getVideoChannelId() != null)
+            params.put("videoChannelId",playlist.getVideoChannelId());
+        if( playlist.getPrivacy() != null) {
+            Map.Entry<Integer, String> privacyM =  playlist.getPrivacy().entrySet().iterator().next();
+            Integer idPrivacy = privacyM.getKey();
+            params.put("privacy", String.valueOf(idPrivacy));
+        }
+
+        List<Playlist> playlists = new ArrayList<>();
+        Playlist playlistReply;
+        try {
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/video-playlists"), 60, params, prefKeyOauthTokenT);
+            playlistReply = parsePlaylist(context, new JSONObject(response));
+            playlists.add(playlistReply);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPlaylists(playlists);
+        return apiResponse;
+    }
+
+
+    /**
+     * Delete a Playlist
+     * @param playlistId String, the playlist id
+     * @return int
+     */
+    public int deletePlaylist(String playlistId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s", playlistId)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+    /**
+     * Update a Playlist
+     * @param playlist Playlist, the playlist
+     * @return APIResponse
+     */
+    public APIResponse updatePlaylist(Playlist playlist){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("displayName",playlist.getDisplayName());
+        if( playlist.getDescription() != null)
+            params.put("description",playlist.getDescription());
+        if( playlist.getVideoChannelId() != null)
+            params.put("videoChannelId",playlist.getVideoChannelId());
+        if( playlist.getPrivacy() != null) {
+            Map.Entry<Integer, String> privacyM =  playlist.getPrivacy().entrySet().iterator().next();
+            Integer idPrivacy = privacyM.getKey();
+            params.put("privacy", String.valueOf(idPrivacy));
+        }
+
+        List<Playlist> playlists = new ArrayList<>();
+        Playlist playlistReply;
+        try {
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(String.format("/video-playlists/%s", playlist.getId())), 60, params, prefKeyOauthTokenT);
+            playlistReply = parsePlaylist(context, new JSONObject(response));
+            playlists.add(playlistReply);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPlaylists(playlists);
+        return apiResponse;
+    }
+
+    /**
+     * Delete video in a Playlist
+     * @param playlistId String, the playlist id
+     * @param videoId String, the video id
+     * @return int
+     */
+    public int deleteVideoPlaylist(String playlistId, String videoId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s/videos/%s", playlistId, videoId)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+    /**
+     * Add video in a Playlist
+     * @param playlistId String, the playlist id
+     * @param videoId String, the video id
+     * @return int
+     */
+    public int addVideoPlaylist(String playlistId, String videoId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            HashMap<String, String> params = new HashMap<>();
+            params.put("videoId", videoId);
+            httpsConnection.post(getAbsoluteUrl(String.format("/video-playlists/%s/videos", playlistId)), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+
+
+    /**
+     * Retrieves status for the account *synchronously*
+     *
+     * @param playlistid       String Id of the playlist
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getPlaylistVideos(String playlistid, String max_id, String since_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        params.put("count", String.valueOf(tootPerPage));
+        params.put("sort","-updatedAt");
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/video-playlists/%s/videos", playlistid)), 60, params, prefKeyOauthTokenT);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
 
 
     /**

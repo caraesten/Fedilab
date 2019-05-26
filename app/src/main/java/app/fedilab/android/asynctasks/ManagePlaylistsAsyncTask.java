@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
-import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Playlist;
@@ -41,14 +40,12 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     public enum action{
         GET_PLAYLIST,
-        GET_LIST_TIMELINE,
-        GET_LIST_ACCOUNT,
+        GET_LIST_VIDEOS,
         CREATE_PLAYLIST,
-        DELETE_LIST,
-        UPDATE_LIST,
-        ADD_USERS,
-        DELETE_USERS,
-        SEARCH_USER
+        DELETE_PLAYLIST,
+        UPDATE_PLAYLIST,
+        ADD_VIDEOS,
+        DELETE_VIDEOS
     }
 
     private OnPlaylistActionInterface listener;
@@ -56,15 +53,17 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
     private int statusCode;
     private action apiAction;
     private WeakReference<Context> contextReference;
-    private String max_id, since_id;
+    private String max_id;
+    private Playlist playlist;
+    private String videoId;
 
-    public ManagePlaylistsAsyncTask(Context context, action apiAction, Playlist playlist, String max_id, String since_id, OnPlaylistActionInterface onPlaylistActionInterface){
+    public ManagePlaylistsAsyncTask(Context context, action apiAction, Playlist playlist, String videoId, String max_id, OnPlaylistActionInterface onPlaylistActionInterface){
         contextReference = new WeakReference<>(context);
         this.listener = onPlaylistActionInterface;
         this.apiAction = apiAction;
         this.max_id = max_id;
-        this.since_id = since_id;
-
+        this.playlist = playlist;
+        this.videoId = videoId;
     }
 
 
@@ -77,22 +76,18 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
         Account account = new AccountDAO(contextReference.get(), db).getAccountByUserIDInstance(userId, instance);
         if (apiAction == action.GET_PLAYLIST) {
             apiResponse = new PeertubeAPI(contextReference.get()).getPlayists(account.getUsername());
-        }else if(apiAction == action.GET_LIST_TIMELINE){
-            apiResponse = new API(contextReference.get()).getListTimeline(this.listId, this.max_id, this.since_id, this.limit);
-        }else if(apiAction == action.GET_LIST_ACCOUNT){
-            apiResponse = new API(contextReference.get()).getAccountsInList(this.listId,0);
+        }else if(apiAction == action.GET_LIST_VIDEOS){
+            apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistVideos(playlist.getId(),max_id, null);
         }else if( apiAction == action.CREATE_PLAYLIST){
-            apiResponse = new API(contextReference.get()).createPlaylist(this.title);
-        }else if(apiAction == action.DELETE_LIST){
-            statusCode = new API(contextReference.get()).deleteList(this.listId);
-        }else if(apiAction == action.UPDATE_LIST){
-            apiResponse = new API(contextReference.get()).updateList(this.listId, this.title);
-        }else if(apiAction == action.ADD_USERS){
-            apiResponse = new API(contextReference.get()).addAccountToList(this.listId, this.accountsId);
-        }else if(apiAction == action.DELETE_USERS){
-            statusCode = new API(contextReference.get()).deleteAccountFromList(this.listId, this.accountsId);
-        }else if( apiAction == action.SEARCH_USER){
-            apiResponse = new API(contextReference.get()).searchAccounts(this.search, 20, true);
+            apiResponse = new PeertubeAPI(contextReference.get()).createPlaylist(playlist);
+        }else if(apiAction == action.DELETE_PLAYLIST){
+            statusCode = new PeertubeAPI(contextReference.get()).deletePlaylist(playlist.getId());
+        }else if(apiAction == action.UPDATE_PLAYLIST){
+            apiResponse = new PeertubeAPI(contextReference.get()).updatePlaylist(playlist);
+        }else if(apiAction == action.ADD_VIDEOS){
+            statusCode = new PeertubeAPI(contextReference.get()).addVideoPlaylist(playlist.getId(),videoId);
+        }else if(apiAction == action.DELETE_VIDEOS){
+            statusCode = new PeertubeAPI(contextReference.get()).deleteVideoPlaylist(playlist.getId(),videoId);
         }
         return null;
     }

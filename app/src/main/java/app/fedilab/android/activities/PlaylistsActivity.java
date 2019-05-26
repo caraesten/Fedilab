@@ -43,14 +43,17 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Peertube;
+import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.PeertubeAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
+import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 import es.dmoral.toasty.Toasty;
 
 
@@ -59,7 +62,7 @@ import es.dmoral.toasty.Toasty;
  * Display playlists for Peertube
  */
 
-public class PlaylistsActivity extends BaseActivity implements OnListActionInterface {
+public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionInterface {
 
 
     private String title, listId;
@@ -68,6 +71,7 @@ public class PlaylistsActivity extends BaseActivity implements OnListActionInter
     private boolean swiped;
     private List<Peertube> peertubes;
     private String max_id;
+    private Playlist playlist;
     private boolean firstLoad;
     private boolean flag_loading;
     private PeertubeAdapter peertubeAdapter;
@@ -125,8 +129,7 @@ public class PlaylistsActivity extends BaseActivity implements OnListActionInter
 
         Bundle b = getIntent().getExtras();
         if(b != null){
-            title = b.getString("title");
-            listId = b.getString("id");
+            playlist = b.getParcelable("playlist");
         }else{
             Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }
@@ -268,7 +271,7 @@ public class PlaylistsActivity extends BaseActivity implements OnListActionInter
 
 
     @Override
-    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+    public void onActionDone(ManagePlaylistsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
@@ -281,9 +284,9 @@ public class PlaylistsActivity extends BaseActivity implements OnListActionInter
             flag_loading = false;
             return;
         }
-        if( actionType == ManageListsAsyncTask.action.GET_LIST_TIMELINE) {
+        if( actionType == ManagePlaylistsAsyncTask.action.GET_LIST_VIDEOS) {
 
-            int previousPosition = this.lv_playlist.size();
+            int previousPosition = this.peertubes.size();
             List<Status> statuses = apiResponse.getStatuses();
             max_id = apiResponse.getMax_id();
             flag_loading = (max_id == null);

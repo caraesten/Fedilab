@@ -952,6 +952,9 @@
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
+    <string name="display_name">Display name</string>
+    <string name="privacy">Privacy</string>
+    <string name="create">Create</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
