@@ -15,10 +15,13 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -33,24 +36,31 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.PlaylistsActivity;
+import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
+import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 
 
 /**
  * Created by Thomas on 26/05/2019.
  * Adapter for playlists
  */
-public class PlaylistAdapter extends BaseAdapter {
+public class PlaylistAdapter extends BaseAdapter implements OnPlaylistActionInterface {
 
     private List<Playlist> playlists;
     private LayoutInflater layoutInflater;
     private Context context;
+    private PlaylistAdapter playlistAdapter;
+    private RelativeLayout textviewNoAction;
 
     public PlaylistAdapter(Context context, List<Playlist> lists, RelativeLayout textviewNoAction){
         this.playlists = lists;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
+        playlistAdapter = this;
+        this.textviewNoAction = textviewNoAction;
     }
 
     @Override
@@ -113,7 +123,50 @@ public class PlaylistAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+
+        holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                builder.setTitle(context.getString(R.string.action_lists_delete) + ": " + playlist.getDisplayName());
+                builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                playlists.remove(playlist);
+                                playlistAdapter.notifyDataSetChanged();
+                                new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST,playlist, null, null,  PlaylistAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                if( playlists.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                    textviewNoAction.setVisibility(View.VISIBLE);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+                return false;
+            }
+        });
         return convertView;
+    }
+
+    @Override
+    public void onActionDone(ManagePlaylistsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+
     }
 
     private class ViewHolder {

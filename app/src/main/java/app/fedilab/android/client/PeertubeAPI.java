@@ -321,6 +321,15 @@ public class PeertubeAPI {
             peertubeInformation.setPrivacies(_pprivacies);
 
 
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/video-playlists/privacies"), 60, null, null);
+            JSONObject plprivacies = new JSONObject(response);
+            LinkedHashMap<Integer, String> _plprivacies = new LinkedHashMap<>();
+            for( int i = 1 ; i <= plprivacies.length() ; i++){
+                _plprivacies.put(i, plprivacies.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setPlaylistPrivacies(_plprivacies);
+
             response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
             JSONObject licences = new JSONObject(response);
             LinkedHashMap<Integer, String> _plicences = new LinkedHashMap<>();
@@ -1342,7 +1351,7 @@ public class PeertubeAPI {
         List<Playlist> playlists = new ArrayList<>();
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/video-playlists", username)), 60, null, prefKeyOauthTokenT);
-            playlists = parsePlaylists(context, new JSONArray(response));
+            playlists = parsePlaylists(context,  new JSONObject(response).getJSONArray("data"));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1359,45 +1368,6 @@ public class PeertubeAPI {
     }
 
 
-    /**
-     * Posts a Playlist
-     * @param playlist Playlist, the playlist
-     * @return APIResponse
-     */
-    public APIResponse createPlaylist(Playlist playlist){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("displayName",playlist.getDisplayName());
-        if( playlist.getDescription() != null)
-            params.put("description",playlist.getDescription());
-        if( playlist.getVideoChannelId() != null)
-            params.put("videoChannelId",playlist.getVideoChannelId());
-        if( playlist.getPrivacy() != null) {
-            Map.Entry<Integer, String> privacyM =  playlist.getPrivacy().entrySet().iterator().next();
-            Integer idPrivacy = privacyM.getKey();
-            params.put("privacy", String.valueOf(idPrivacy));
-        }
-
-        List<Playlist> playlists = new ArrayList<>();
-        Playlist playlistReply;
-        try {
-            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/video-playlists"), 60, params, prefKeyOauthTokenT);
-            playlistReply = parsePlaylist(context, new JSONObject(response));
-            playlists.add(playlistReply);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setPlaylists(playlists);
-        return apiResponse;
-    }
 
 
     /**
@@ -1422,45 +1392,6 @@ public class PeertubeAPI {
         return actionCode;
     }
 
-    /**
-     * Update a Playlist
-     * @param playlist Playlist, the playlist
-     * @return APIResponse
-     */
-    public APIResponse updatePlaylist(Playlist playlist){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("displayName",playlist.getDisplayName());
-        if( playlist.getDescription() != null)
-            params.put("description",playlist.getDescription());
-        if( playlist.getVideoChannelId() != null)
-            params.put("videoChannelId",playlist.getVideoChannelId());
-        if( playlist.getPrivacy() != null) {
-            Map.Entry<Integer, String> privacyM =  playlist.getPrivacy().entrySet().iterator().next();
-            Integer idPrivacy = privacyM.getKey();
-            params.put("privacy", String.valueOf(idPrivacy));
-        }
-
-        List<Playlist> playlists = new ArrayList<>();
-        Playlist playlistReply;
-        try {
-            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(String.format("/video-playlists/%s", playlist.getId())), 60, params, prefKeyOauthTokenT);
-            playlistReply = parsePlaylist(context, new JSONObject(response));
-            playlists.add(playlistReply);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setPlaylists(playlists);
-        return apiResponse;
-    }
 
     /**
      * Delete video in a Playlist
@@ -2124,13 +2055,13 @@ public class PeertubeAPI {
                 type.put(resobj.getJSONObject("type").getInt("id"), resobj.getJSONObject("type").get("label").toString());
                 playlist.setType(type);
                 playlist.setPrivacy(privacy);
-            }catch (Exception ignored){}
+            }catch (Exception ignored){ignored.printStackTrace();}
 
 
             try{
                 playlist.setUpdatedAt(Helper.stringToDate(context, resobj.getString("updatedAt")));
-            }catch (Exception ignored){}
-        }catch (Exception ignored){}
+            }catch (Exception ignored){ignored.printStackTrace();}
+        }catch (Exception ignored){ignored.printStackTrace();}
         return playlist;
     }
 

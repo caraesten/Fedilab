@@ -956,6 +956,9 @@
     <string name="privacy">Privacy</string>
     <string name="create">Create</string>
     <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="error_display_name">You must provide a display name!</string>
+    <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
+    <string name="action_playlist_create">Create a playlist</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

@@ -78,12 +78,8 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
             apiResponse = new PeertubeAPI(contextReference.get()).getPlayists(account.getUsername());
         }else if(apiAction == action.GET_LIST_VIDEOS){
             apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistVideos(playlist.getId(),max_id, null);
-        }else if( apiAction == action.CREATE_PLAYLIST){
-            apiResponse = new PeertubeAPI(contextReference.get()).createPlaylist(playlist);
         }else if(apiAction == action.DELETE_PLAYLIST){
             statusCode = new PeertubeAPI(contextReference.get()).deletePlaylist(playlist.getId());
-        }else if(apiAction == action.UPDATE_PLAYLIST){
-            apiResponse = new PeertubeAPI(contextReference.get()).updatePlaylist(playlist);
         }else if(apiAction == action.ADD_VIDEOS){
             statusCode = new PeertubeAPI(contextReference.get()).addVideoPlaylist(playlist.getId(),videoId);
         }else if(apiAction == action.DELETE_VIDEOS){
