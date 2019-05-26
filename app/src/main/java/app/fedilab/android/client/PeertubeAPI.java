@@ -17,6 +17,7 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -520,9 +521,61 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getVideos(String acct, String max_id) {
-        return getVideos(acct, max_id, null, tootPerPage);
+        return getVideos(acct, max_id, null);
     }
 
+    /**
+     * Retrieves history for videos for the account *synchronously*
+     *
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getMyHistory(String max_id) {
+        return getMyHistory(max_id, null);
+    }
+
+
+
+    /**
+     *  Retrieves history for videos for the account *synchronously*
+     *
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getMyHistory(String max_id, String since_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        params.put("count", String.valueOf(tootPerPage));
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/me/history/videos"), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
 
     /**
      * Retrieves videos for the account *synchronously*
@@ -531,7 +584,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getMyVideos(String max_id) {
-        return getMyVideos(max_id, null, tootPerPage);
+        return getMyVideos(max_id, null);
     }
 
 
@@ -541,20 +594,17 @@ public class PeertubeAPI {
      *
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getMyVideos(String max_id, String since_id, int limit) {
+    private APIResponse getMyVideos(String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
@@ -623,20 +673,17 @@ public class PeertubeAPI {
      * @param acct       String Id of the account
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getVideos(String acct, String max_id, String since_id, int limit) {
+    private APIResponse getVideos(String acct, String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -667,7 +714,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getNotifications(String max_id){
-        return getNotifications(max_id, null, 20);
+        return getNotifications(max_id, null);
     }
 
     /**
@@ -677,7 +724,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getNotificationsSince(String since_id){
-        return getNotifications(null, since_id, 20);
+        return getNotifications(null, since_id);
     }
 
     /**
@@ -685,20 +732,17 @@ public class PeertubeAPI {
      *
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getNotifications(String max_id, String since_id, int limit) {
+    private APIResponse getNotifications(String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -730,7 +774,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getVideosChannel(String acct, String max_id) {
-        return getVideosChannel(acct, max_id, null, tootPerPage);
+        return getVideosChannel(acct, max_id, null);
     }
 
     /**
@@ -739,20 +783,17 @@ public class PeertubeAPI {
      * @param acct       String Id of the account
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getVideosChannel(String acct, String max_id, String since_id, int limit) {
+    private APIResponse getVideosChannel(String acct, String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
@@ -787,7 +828,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTL( String max_id) {
-        return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null, tootPerPage);
+        return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
     }
 
     /**
@@ -796,7 +837,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getOverviewTL( String max_id) {
-        return getTL("/overviews/videos",null,null, max_id, null, null, tootPerPage);
+        return getTL("/overviews/videos",null,null, max_id, null, null);
     }
 
     /**
@@ -805,7 +846,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getTrendingTL( String max_id) {
-        return getTL("/videos/","-trending", null,max_id, null, null, tootPerPage);
+        return getTL("/videos/","-trending", null,max_id, null, null);
     }
 
     /**
@@ -814,7 +855,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getRecentlyAddedTL( String max_id) {
-        return getTL("/videos/","-publishedAt",null,max_id, null, null, tootPerPage);
+        return getTL("/videos/","-publishedAt",null,max_id, null, null);
     }
 
     /**
@@ -823,7 +864,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getLocalTL( String max_id) {
-        return getTL("/videos/","-publishedAt", "local",max_id, null, null, tootPerPage);
+        return getTL("/videos/","-publishedAt", "local",max_id, null, null);
     }
 
     /**
@@ -831,7 +872,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLSinceId(String since_id) {
-        return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null, tootPerPage);
+        return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null);
     }
 
     /**
@@ -839,7 +880,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLMinId(String min_id) {
-        return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id, tootPerPage);
+        return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id);
     }
 
 
@@ -847,10 +888,9 @@ public class PeertubeAPI {
      * Retrieves home timeline for the account *synchronously*
      * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id, int limit) {
+    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
@@ -859,9 +899,7 @@ public class PeertubeAPI {
             params.put("since_id", since_id);
         if (min_id != null)
             params.put("min_id", min_id);
-        if (0 > limit || limit > 80)
-            limit = 80;
-        params.put("count",String.valueOf(limit));
+        params.put("count",String.valueOf(tootPerPage));
         if( sort != null)
             params.put("sort",sort);
         else
@@ -1014,8 +1052,7 @@ public class PeertubeAPI {
         HashMap<String, String> params = new HashMap<>();
         if( max_id == null)
             max_id = "0";
-        params.put("start", max_id);
-        params.put("count", "50");
+        params.put("start", String.valueOf(tootPerPage));
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
@@ -1073,7 +1110,7 @@ public class PeertubeAPI {
      */
     public APIResponse searchPeertube(String instance, String query) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("count", "50");
+        params.put("count", String.valueOf(tootPerPage));
         try {
             params.put("search", URLEncoder.encode(query, "UTF-8"));
         } catch (UnsupportedEncodingException e) {

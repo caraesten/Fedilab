@@ -1590,6 +1590,21 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "MY_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, fragment, fragmentTag).commit();
+        } else if (id == R.id.nav_peertube_history) {
+            bundle = new Bundle();
+            DisplayStatusFragment fragment = new DisplayStatusFragment();
+            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PEERTUBE_HISTORY);
+            bundle.putString("instanceType","PEERTUBE");
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+            bundle.putString("targetedid",account.getUsername());
+            fragment.setArguments(bundle);
+            fragmentTag = "MY_HISTORY";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, fragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked || id == R.id.nav_pixelfed_blocked) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();

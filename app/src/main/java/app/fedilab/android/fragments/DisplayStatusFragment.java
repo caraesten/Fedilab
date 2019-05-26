@@ -460,7 +460,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( max_id == null)
                 max_id = "0";
             //max_id needs to work like an offset
-            max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+            max_id = String.valueOf(Integer.valueOf(max_id) + tootPerPage);
             if( apiResponse.getPeertubes() == null){
                 return;
             }

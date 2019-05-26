@@ -71,6 +71,10 @@
                         android:icon="@drawable/ic_video_library"
                         android:title="@string/my_videos" />
                     <item
+                        android:id="@+id/nav_peertube_history"
+                        android:icon="@drawable/ic_history_black"
+                        android:title="@string/history" />
+                    <item
                         android:id="@+id/nav_upload"
                         android:icon="@drawable/ic_cloud_upload"
                         android:title="@string/upload_video" />
