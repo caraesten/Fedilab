@@ -75,6 +75,10 @@
                         android:icon="@drawable/ic_history_black"
                         android:title="@string/history" />
                     <item
+                        android:id="@+id/nav_peertube_playlists"
+                        android:icon="@drawable/ic_list_peertube"
+                        android:title="@string/playlists" />
+                    <item
                         android:id="@+id/nav_upload"
                         android:icon="@drawable/ic_cloud_upload"
                         android:title="@string/upload_video" />

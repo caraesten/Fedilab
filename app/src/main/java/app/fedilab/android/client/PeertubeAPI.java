@@ -55,6 +55,7 @@ import app.fedilab.android.client.Entities.PeertubeComment;
 import app.fedilab.android.client.Entities.PeertubeInformation;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.client.Entities.PeertubeVideoNotification;
+import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
@@ -1489,12 +1490,12 @@ public class PeertubeAPI {
      * Get lists for the user
      * @return APIResponse
      */
-    public APIResponse getLists(){
+    public APIResponse getPlayists(String username){
 
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
+        List<Playlist> playlists = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
-            lists = parseLists(new JSONArray(response));
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/video-playlists", username)), 60, null, prefKeyOauthTokenT);
+            playlists = parsePlaylists(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1506,37 +1507,11 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setLists(lists);
+        apiResponse.setPlaylists(playlists);
         return apiResponse;
     }
 
-    /**
-     * Get lists for a user by its id
-     * @return APIResponse
-     */
-    @SuppressWarnings("unused")
-    public APIResponse getLists(String userId){
 
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
-        app.fedilab.android.client.Entities.List list;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
-            list = parseList(new JSONObject(response));
-            lists.add(list);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setLists(lists);
-        return apiResponse;
-    }
 
     /**
      * Parse json response for several howto
@@ -2062,24 +2037,24 @@ public class PeertubeAPI {
 
 
     /**
-     * Parse Lists
+     * Parse Playlists
      * @param jsonArray JSONArray
-     * @return List<List> of lists
+     * @return List<Playlist> of lists
      */
-    private List<app.fedilab.android.client.Entities.List> parseLists(JSONArray jsonArray){
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
+    private List<Playlist> parsePlaylists(Context context, JSONArray jsonArray){
+        List<Playlist> playlists = new ArrayList<>();
         try {
             int i = 0;
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                app.fedilab.android.client.Entities.List list = parseList(resobj);
-                lists.add(list);
+                Playlist playlist = parsePlaylist(context, resobj);
+                playlists.add(playlist);
                 i++;
             }
         } catch (JSONException e) {
             setDefaultError(e);
         }
-        return lists;
+        return playlists;
     }
 
 
@@ -2088,13 +2063,34 @@ public class PeertubeAPI {
      * @param resobj JSONObject
      * @return Emojis
      */
-    private static app.fedilab.android.client.Entities.List parseList(JSONObject resobj){
-        app.fedilab.android.client.Entities.List list = new app.fedilab.android.client.Entities.List();
+    private static Playlist parsePlaylist(Context context, JSONObject resobj){
+        Playlist playlist = new Playlist();
         try {
-            list.setId(resobj.get("id").toString());
-            list.setTitle(resobj.get("title").toString());
+            playlist.setId(resobj.getString("id"));
+            playlist.setUuid(resobj.getString("uuid"));
+            playlist.setCreatedAt(Helper.stringToDate(context, resobj.getString("createdAt")));
+            playlist.setDescription(resobj.getString("description"));
+            playlist.setDisplayName(resobj.getString("displayName"));
+            playlist.setLocal(resobj.getBoolean("isLocal"));
+            playlist.setVideoChannelId(resobj.getString("videoChannel"));
+            playlist.setThumbnailPath(resobj.getString("thumbnailPath"));
+            playlist.setOwnerAccount(parseAccountResponsePeertube(context, resobj.getJSONObject("ownerAccount")));
+            playlist.setVideosLength(resobj.getInt("videosLength"));
+            try {
+                LinkedHashMap<Integer, String> type = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                type.put(resobj.getJSONObject("type").getInt("id"), resobj.getJSONObject("type").get("label").toString());
+                playlist.setType(type);
+                playlist.setPrivacy(privacy);
+            }catch (Exception ignored){}
+
+
+            try{
+                playlist.setUpdatedAt(Helper.stringToDate(context, resobj.getString("updatedAt")));
+            }catch (Exception ignored){}
         }catch (Exception ignored){}
-        return list;
+        return playlist;
     }
 
     private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray){

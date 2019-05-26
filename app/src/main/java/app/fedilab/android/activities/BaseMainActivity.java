@@ -1675,6 +1675,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "LISTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_peertube_playlists){
+            toot.hide();
+            DisplayListsFragment displayListsFragment = new DisplayListsFragment();
+            fragmentTag = "PLAYLISTS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_filters){
             toot.hide();
             DisplayFiltersFragment displayFiltersFragment = new DisplayFiltersFragment();

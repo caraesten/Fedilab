@@ -951,6 +951,7 @@
     <string name="add_tags">Manage tags</string>
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <string name="history">History</string>
+    <string name="playlists">Playlists</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
