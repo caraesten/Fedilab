@@ -690,7 +690,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="some_words_any">Qualsevol d\'aquestes paraules (separades-per-espais)</string>
     <string name="some_words_all">Totes aquestes paraules (separades-per-espais)</string>
     <string name="some_words_none">Cap d\'aquestes paraules (separades per espais)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Afegir paraules al filtre (separades per espais)</string>
     <string name="change_tag_column">Canvi de nom de columna</string>
     <string name="no_misskey_instance">No hi ha instàncies de Misskey</string>
     <string name="misskey_instance">Instància Misskey</string>
@@ -835,7 +835,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_blur_sensitive">Tornar borrosos els mèdia sensibles</string>
     <string name="set_display_timeline_in_list">Mostra pissarres com a llista</string>
     <string name="display_timeline">Mostra pissarres</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
+    <string name="set_display_bot_icon">Marcar els brams fets per bots</string>
     <string name="add_tags">Manage tags</string>
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <plurals name="number_of_vote">
