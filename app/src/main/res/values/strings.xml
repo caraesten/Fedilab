@@ -955,6 +955,7 @@
     <string name="display_name">Display name</string>
     <string name="privacy">Privacy</string>
     <string name="create">Create</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

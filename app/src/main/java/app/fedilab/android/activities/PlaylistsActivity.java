@@ -56,6 +56,8 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 import es.dmoral.toasty.Toasty;
 
+import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_LIST_VIDEOS;
+
 
 /**
  * Created by Thomas on 26/05/2019.
@@ -132,6 +134,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
             playlist = b.getParcelable("playlist");
         }else{
             Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            return;
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -149,7 +152,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                     if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                         if(!flag_loading ) {
                             flag_loading = true;
-                            new ManageListsAsyncTask(PlaylistsActivity.this,listId, max_id ,null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, max_id , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -168,7 +171,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewStatus = 0;
-                new ManageListsAsyncTask(PlaylistsActivity.this,listId, null ,null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, null , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -193,7 +196,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 break;
         }
 
-        new ManageListsAsyncTask(PlaylistsActivity.this,listId, null ,null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, null , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -208,61 +211,6 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                return true;
-            case R.id.action_add_user:
-                Intent intent = new Intent(PlaylistsActivity.this, ManageAccountsInListActivity.class);
-                intent.putExtra("title", title);
-                intent.putExtra("id", listId);
-                startActivity(intent);
-                return true;
-            case R.id.action_edit_list:
-                int style;
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if (theme == Helper.THEME_DARK) {
-                    style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
-                    style = R.style.DialogBlack;
-                }else {
-                    style = R.style.Dialog;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PlaylistsActivity.this, style);
-                LayoutInflater inflater = getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
-                dialogBuilder.setView(dialogView);
-                final EditText editText = dialogView.findViewById(R.id.add_list);
-                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
-                editText.setText(title);
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        if( editText.getText() != null && editText.getText().toString().trim().length() > 0 )
-                            new ManageListsAsyncTask(PlaylistsActivity.this, ManageListsAsyncTask.action.UPDATE_LIST, null, listId, editText.getText().toString(), editText.getText().toString().trim(), PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        dialog.dismiss();
-                    }
-                });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.setTitle(getString(R.string.action_lists_create));
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        //Hide keyboard
-                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        assert imm != null;
-                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    }
-                });
-                if( alertDialog.getWindow() != null )
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                alertDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -284,13 +232,13 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
             flag_loading = false;
             return;
         }
-        if( actionType == ManagePlaylistsAsyncTask.action.GET_LIST_VIDEOS) {
+        if( actionType == GET_LIST_VIDEOS) {
 
             int previousPosition = this.peertubes.size();
-            List<Status> statuses = apiResponse.getStatuses();
+            List<Peertube> videos = apiResponse.getPeertubes();
             max_id = apiResponse.getMax_id();
             flag_loading = (max_id == null);
-            if (!swiped && firstLoad && (statuses == null || statuses.size() == 0))
+            if (!swiped && firstLoad && (videos == null || videos.size() == 0))
                 textviewNoAction.setVisibility(View.VISIBLE);
             else
                 textviewNoAction.setVisibility(View.GONE);
@@ -298,20 +246,18 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
             if (swiped) {
                 if (previousPosition > 0) {
                     for (int i = 0; i < previousPosition; i++) {
-                        this.statuses.remove(0);
+                        this.peertubes.remove(0);
                     }
-                    statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
+                    peertubeAdapter.notifyItemRangeRemoved(0, previousPosition);
                 }
                 swiped = false;
             }
-            if (statuses != null && statuses.size() > 0) {
-                this.statuses.addAll(statuses);
-                statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+            if (videos != null && videos.size() > 0) {
+                this.peertubes.addAll(videos);
+                peertubeAdapter.notifyItemRangeInserted(previousPosition, videos.size());
             }
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
-        }else if(actionType == ManageListsAsyncTask.action.UPDATE_LIST) {
-
         }
     }
 }

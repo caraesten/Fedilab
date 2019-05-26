@@ -93,6 +93,7 @@ import app.fedilab.android.fragments.DisplayListsFragment;
 import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
+import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.fragments.SettingsPeertubeFragment;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
@@ -1677,10 +1678,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_peertube_playlists){
             toot.hide();
-            DisplayListsFragment displayListsFragment = new DisplayListsFragment();
+            DisplayPlaylistsFragment displayPlaylistsFragment = new DisplayPlaylistsFragment();
             fragmentTag = "PLAYLISTS";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
+                    .replace(R.id.main_app_container, displayPlaylistsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_filters){
             toot.hide();
             DisplayFiltersFragment displayFiltersFragment = new DisplayFiltersFragment();
