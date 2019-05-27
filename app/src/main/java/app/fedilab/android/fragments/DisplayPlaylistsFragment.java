@@ -16,7 +16,6 @@ package app.fedilab.android.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,14 +44,8 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
-import net.gotev.uploadservice.UploadNotificationAction;
 import net.gotev.uploadservice.UploadNotificationConfig;
 import net.gotev.uploadservice.UploadStatusDelegate;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,11 +55,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
-import app.fedilab.android.activities.ListActivity;
 import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.PeertubeEditUploadActivity;
-import app.fedilab.android.activities.PeertubeUploadActivity;
 import app.fedilab.android.activities.PlaylistsActivity;
 import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
 import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;

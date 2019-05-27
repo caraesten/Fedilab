@@ -1658,12 +1658,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
             toot.hide();
-        }else if (id == R.id.nav_peertube_fav) {
-            DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
-            fragmentTag = "BOOKMARKS_PEERTUBE";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
-            toot.hide();
         }else if( id == R.id.nav_follow_request){
             toot.hide();
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();

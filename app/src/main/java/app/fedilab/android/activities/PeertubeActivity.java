@@ -32,10 +32,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -72,25 +74,32 @@ import com.google.android.exoplayer2.util.Util;
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Peertube;
+import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.TLSSocketFactory;
 import app.fedilab.android.drawers.StatusListAdapter;
+import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.FullScreenMediaController;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TimelinesDAO;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import es.dmoral.toasty.Toasty;
@@ -103,6 +112,10 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
+import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
+import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_LIST_VIDEOS;
+import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST;
+import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST_FOR_VIDEO;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
@@ -111,12 +124,12 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Peertube activity
  */
 
-public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
+public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface, OnPlaylistActionInterface {
 
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
     private RelativeLayout loader;
-    private TextView peertube_view_count, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
+    private TextView peertube_view_count, peertube_playlist, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
     private int stopPosition;
     private Peertube peertube;
@@ -135,7 +148,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private TextView add_comment_read;
     private EditText add_comment_write;
     private  String instance;
-
+    private List<String> playlistForVideo;
+    private List<Playlist> playlists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +170,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 setTheme(R.style.AppThemeDark);
         }
         fullScreenMode = false;
+        playlistForVideo = new ArrayList<>();
         setContentView(R.layout.activity_peertube);
         loader = findViewById(R.id.loader);
         peertube_view_count = findViewById(R.id.peertube_view_count);
@@ -173,6 +188,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         my_pp = findViewById(R.id.my_pp);
         add_comment_read = findViewById(R.id.add_comment_read);
         add_comment_write = findViewById(R.id.add_comment_write);
+        peertube_playlist = findViewById(R.id.peertube_playlist);
         send  = findViewById(R.id.send);
         add_comment_read.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +205,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             write_comment_container.setVisibility(View.GONE);
         }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            peertube_playlist.setVisibility(View.VISIBLE);
+            peertube_bookmark.setVisibility(View.GONE);
+        }
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +224,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 }
             }
         });
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
@@ -296,7 +317,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             initFullscreenButton();
         }
 
-
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            new ManagePlaylistsAsyncTask(PeertubeActivity.this,GET_PLAYLIST, null, null, null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
 
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -475,6 +498,66 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
         peertube = apiResponse.getPeertubes().get(0);
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            new ManagePlaylistsAsyncTask(PeertubeActivity.this,GET_PLAYLIST_FOR_VIDEO, null, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+
+
+        peertube_playlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( playlists != null && peertube.getId() != null) {
+                    PopupMenu popup = new PopupMenu(PeertubeActivity.this, peertube_playlist);
+
+                    for(Playlist playlist: playlists){
+                        String title = null;
+                        for (String id : playlistForVideo) {
+                            if (playlist.getId().equals(id)) {
+                                title = "✔ " + playlist.getDisplayName();
+                                break;
+                            }
+                        }
+                        if( title == null){
+                            title = playlist.getDisplayName();
+                        }
+                        MenuItem item = popup.getMenu().add(0, 0, Menu.NONE, title);
+                        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                                item.setActionView(new View(getApplicationContext()));
+                                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                    @Override
+                                    public boolean onMenuItemActionExpand(MenuItem item) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                                        return false;
+                                    }
+                                });
+                                if(playlistForVideo.contains(playlist.getId())){
+                                    item.setTitle(playlist.getDisplayName());
+                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this,ManagePlaylistsAsyncTask.action.DELETE_VIDEOS, playlist, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    playlistForVideo.remove(playlist.getId());
+                                }else{
+                                    item.setTitle( "✔ " + playlist.getDisplayName());
+                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this,ManagePlaylistsAsyncTask.action.ADD_VIDEOS, playlist, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    playlistForVideo.add(playlist.getId());
+                                }
+                                return false;
+                            }
+                        });
+                        popup.show();
+                    }
+                }
+            }
+        });
+
+
+
         if( peertube.isCommentsEnabled()) {
             new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
@@ -869,5 +952,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         Drawable thumbDown = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_down_peertube);
         peertube_like_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbUp, null, null);
         peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbDown, null, null);
+    }
+
+    @Override
+    public void onActionDone(ManagePlaylistsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+
+        if( actionType == GET_PLAYLIST_FOR_VIDEO && apiResponse != null) {
+            playlistForVideo = apiResponse.getPlaylistForVideos();
+        }else if( actionType == GET_PLAYLIST && apiResponse != null){
+            playlists = apiResponse.getPlaylists();
+        }
     }
 }

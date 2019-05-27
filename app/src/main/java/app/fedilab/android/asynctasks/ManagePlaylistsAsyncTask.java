@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -45,7 +46,8 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
         DELETE_PLAYLIST,
         UPDATE_PLAYLIST,
         ADD_VIDEOS,
-        DELETE_VIDEOS
+        DELETE_VIDEOS,
+        GET_PLAYLIST_FOR_VIDEO,
     }
 
     private OnPlaylistActionInterface listener;
@@ -84,6 +86,8 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
             statusCode = new PeertubeAPI(contextReference.get()).addVideoPlaylist(playlist.getId(),videoId);
         }else if(apiAction == action.DELETE_VIDEOS){
             statusCode = new PeertubeAPI(contextReference.get()).deleteVideoPlaylist(playlist.getId(),videoId);
+        }else if(apiAction == action.GET_PLAYLIST_FOR_VIDEO){
+            apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistForVideo(videoId);
         }
         return null;
     }

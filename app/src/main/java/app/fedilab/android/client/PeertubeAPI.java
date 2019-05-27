@@ -17,7 +17,6 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1340,6 +1339,46 @@ public class PeertubeAPI {
     }
 
 
+    /**
+     * Video is in play lists
+     * @return APIResponse
+     */
+    public APIResponse getPlaylistForVideo(String videoId){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("videoIds",videoId);
+        List<String> ids = new ArrayList<>();
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me/video-playlists/videos-exist"), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray(videoId);
+            try {
+                int i = 0;
+                while (i < jsonArray.length() ) {
+                    JSONObject resobj = jsonArray.getJSONObject(i);
+                    String playlistId = resobj.getString("playlistId");
+                    ids.add(playlistId);
+                    i++;
+                }
+            } catch (JSONException e) {
+                setDefaultError(e);
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse = new APIResponse();
+        apiResponse.setPlaylistForVideos(ids);
+        return apiResponse;
+    }
 
 
     /**
@@ -1431,6 +1470,7 @@ public class PeertubeAPI {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {

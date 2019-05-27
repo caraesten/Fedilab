@@ -61,6 +61,7 @@ public class APIResponse {
     private Instance instance;
     private List<StoredStatus> storedStatuses;
     private boolean fetchmore = false;
+    private List<String> playlistForVideos;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -228,5 +229,13 @@ public class APIResponse {
 
     public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
+    }
+
+    public List<String> getPlaylistForVideos() {
+        return playlistForVideos;
+    }
+
+    public void setPlaylistForVideos(List<String> playlistForVideos) {
+        this.playlistForVideos = playlistForVideos;
     }
 }
