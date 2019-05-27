@@ -699,7 +699,7 @@
     <string name="some_words_any">Calquera de estas palabras (separadas por espazos)</string>
     <string name="some_words_all">Todas estas palabras (separadas por espazos)</string>
     <string name="some_words_none">Ningunha de estas palabras (separadas por espazos)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Engade algunha palabra para filtrar (separadas por espazos)</string>
     <string name="change_tag_column">Cambiar o nome da columna</string>
     <string name="no_misskey_instance">Sen instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
@@ -844,9 +844,9 @@
     <string name="set_blur_sensitive">Difuminar medios sensibles</string>
     <string name="set_display_timeline_in_list">Mostrar liñas temporais nunha lista</string>
     <string name="display_timeline">Mostrar liñas temporais</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
+    <string name="set_display_bot_icon">Marcar contas de bots nos toots</string>
+    <string name="add_tags">Xestionar etiquetas</string>
+    <string name="set_remember_position">Lembrar posición da liña temporal de Inicio</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
