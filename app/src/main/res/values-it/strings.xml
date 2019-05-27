@@ -698,7 +698,7 @@
     <string name="some_words_any">Qualsiasi tra queste parole (separate da spazi)</string>
     <string name="some_words_all">Tutte queste parole (separate da spazi)</string>
     <string name="some_words_none">Nessuna di queste parole (separate da spazi)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Aggiungi alcune parole da filtrare (separate da spazio)</string>
     <string name="change_tag_column">Rinomina colonna</string>
     <string name="no_misskey_instance">Nessuna istanza Misskey</string>
     <string name="misskey_instance">Istanza Misskey</string>
@@ -843,9 +843,9 @@
     <string name="set_blur_sensitive">Sfoca media con contenuti sensibili</string>
     <string name="set_display_timeline_in_list">Mostra le timeline in un elenco</string>
     <string name="display_timeline">Mostra timeline</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
+    <string name="set_display_bot_icon">Segna account bot nei toot</string>
+    <string name="add_tags">Gestisci etichette</string>
+    <string name="set_remember_position">Ricorda la posizione nella timeline principale</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
