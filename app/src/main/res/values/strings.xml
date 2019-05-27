@@ -959,6 +959,7 @@
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
+    <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

@@ -56,6 +56,7 @@ import java.util.Map;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.PeertubeUploadActivity;
 import app.fedilab.android.activities.PlaylistsActivity;
 import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
 import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
@@ -373,13 +374,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
         //Populate channels
         List<Account> accounts = apiResponse.getAccounts();
-        String[] channelName = new String[accounts.size()+1];
-        String[] channelId = new String[accounts.size()+1];
-        int i = 1;
-        channelName[0] = "";
-        channelId[0] = "";
-        for (Account account : accounts) {
-            channels.put(account.getUsername(), account.getId());
+        String[] channelName = new String[accounts.size()];
+        String[] channelId= new String[accounts.size()];
+        int i = 0;
+        for(Account account: accounts){
+            channels.put(account.getUsername(),account.getId());
             channelName[i] = account.getUsername();
             channelId[i] = account.getId();
             i++;
@@ -430,6 +429,25 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     if (i == position) {
                         privacyToSend = new HashMap<>();
                         privacyToSend.put((Integer) pair.getKey(), (String) pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+        //Manage languages
+        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
+                Iterator it = channelsCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        channelToSend = new HashMap<>();
+                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
                         break;
                     }
                     it.remove();

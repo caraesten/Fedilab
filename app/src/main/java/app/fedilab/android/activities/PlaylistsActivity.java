@@ -15,44 +15,36 @@
 package app.fedilab.android.activities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputFilter;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.Playlist;
-import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.PeertubeAdapter;
-import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 import es.dmoral.toasty.Toasty;
 
@@ -67,7 +59,6 @@ import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET
 public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionInterface {
 
 
-    private String title, listId;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
@@ -97,6 +88,29 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 break;
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);
+        }
+        if( getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if( actionBar != null ) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            toolbar_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            toolbar_title.setText(R.string.upload_video);
+            if (theme == Helper.THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, PlaylistsActivity.this);
+            }
         }
         setContentView(R.layout.activity_playlists);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -139,7 +153,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle(title);
+        setTitle(playlist.getDisplayName());
 
 
         lv_playlist.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -200,11 +214,6 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_list, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
