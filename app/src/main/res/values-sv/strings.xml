@@ -846,11 +846,11 @@
     <string name="set_display_bot_icon">Markera robotkonton i toot</string>
     <string name="add_tags">Hantera taggar</string>
     <string name="set_remember_position">Kom ihåg positionen i hemtidslinjen</string>
-    <string name="history">History</string>
-    <string name="playlists">Playlists</string>
-    <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
-    <string name="create">Create</string>
+    <string name="history">Historik</string>
+    <string name="playlists">Spellistor</string>
+    <string name="display_name">Visningsnamn</string>
+    <string name="privacy">Sekretess</string>
+    <string name="create">Skapa</string>
     <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
