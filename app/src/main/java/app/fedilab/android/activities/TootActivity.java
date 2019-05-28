@@ -163,6 +163,7 @@ import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import static app.fedilab.android.helper.Helper.countWithEmoji;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -534,8 +535,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
 
         attachments = new ArrayList<>();
-        int charsInCw = 0;
-        int charsInToot = 0;
 
         if (!sharedUri.isEmpty()) {
             uploadSharedImage(sharedUri);
@@ -1539,7 +1538,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength()  < split_toot_size)){
             tootContent = toot_content.getText().toString().trim();
         }else{
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
@@ -2119,7 +2118,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                             if (currentCursorPosition < oldContent.length() )
                                 newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
-                            toot_space_left.setText(countLength());
+                            toot_space_left.setText(String.valueOf(countLength()));
                             toot_content.setSelection(newPosition);
                             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
                             toot_content.setThreshold(1);
@@ -3042,14 +3041,4 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         return cwLength + contentLength;
     }
 
-    private int countWithEmoji(String text){
-        int emojiCount = 0;
-        for (int i = 0; i < text.length(); i++) {
-            int type = Character.getType(text.charAt(i));
-            if (type == Character.SURROGATE || type == Character.OTHER_SYMBOL) {
-                emojiCount++;
-            }
-        }
-        return emojiCount/2;
-    }
 }

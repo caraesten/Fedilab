@@ -3288,7 +3288,7 @@ public class Helper {
      * @return ArrayList<String> split toot
      */
     public static ArrayList<String> splitToots(String content, int maxChars){
-        String[] splitContent = content.split("(\\.\\s){1}");
+        String[] splitContent = content.split("((\\.\\s)|(,\\s)|(;\\s)|(\\?\\s)|(!\\s)){1}");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
         ArrayList<String> mentions = new ArrayList<>();
@@ -3309,7 +3309,7 @@ public class Helper {
         int mentionLength = mentionString.length();
         int maxCharsMention = maxChars - mentionLength;
         for(int i= 0 ; i < splitContent.length ; i++){
-            if (i < (splitContent.length - 1) && (tempContent.length() + splitContent[i + 1].length()) < (maxChars - 10)) {
+            if (i < (splitContent.length - 1) && (countLength(tempContent.toString()) + countLength(splitContent[i + 1])) < (maxChars - 10)) {
                 tempContent.append(". ").append(splitContent[i + 1]);
             } else {
                 splitToot.add(tempContent.toString());
@@ -3333,6 +3333,37 @@ public class Helper {
     }
 
 
+
+    public static int countLength(String text){
+        if( text == null) {
+            return 0;
+        }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+            Matcher matcherALink = Patterns.WEB_URL.matcher(text);
+            while (matcherALink.find()){
+                int matchStart = matcherALink.start();
+                int matchEnd = matcherALink.end();
+                final String url = text.substring(matcherALink.start(1), matcherALink.end(1));
+                if( matchEnd <= text.length() && matchEnd >= matchStart){
+                    if( url.length() > 23){
+                        text = text.replaceFirst(url,"abcdefghijklmnopkrstuvw");
+                    }
+                }
+            }
+        }
+        return text.length() - countWithEmoji(text);
+    }
+
+    public static int countWithEmoji(String text){
+        int emojiCount = 0;
+        for (int i = 0; i < text.length(); i++) {
+            int type = Character.getType(text.charAt(i));
+            if (type == Character.SURROGATE || type == Character.OTHER_SYMBOL) {
+                emojiCount++;
+            }
+        }
+        return emojiCount/2;
+    }
 
     public static boolean filterToots(Context context, Status status, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
         String filter;
