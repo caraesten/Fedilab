@@ -311,7 +311,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Silenciar notificações</string>
     <string name="set_night_mode">Modo noturno</string>
-    <string name="set_nsfw_timeout">Segundos para expirar a visualização de NSFW, 0 para desativar.</string>
+    <string name="set_nsfw_timeout">Segundos para a visualização de NSFW expirar, 0 para desativar</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
@@ -683,7 +683,7 @@
     <!-- languages not translated -->
     <string name="languages">Idiomas</string>
     <string name="show_media_only">Apenas mídia</string>
-    <string name="show_media_nsfw">Mostrar NSFW</string>
+    <string name="show_media_nsfw">Mostrar mídia sensível</string>
     <string name="crowdin_translations">Traduções no Crowdin</string>
     <string name="crowdin_manager">Administrador do Crowdin</string>
     <string name="translation_app">Tradução do aplicativo</string>
@@ -698,7 +698,7 @@
     <string name="some_words_any">Qualquer uma destas palavras (separadas por espaço)</string>
     <string name="some_words_all">Todas estas palavras (separadas por espaço)</string>
     <string name="some_words_none">Nenhuma destas palavras (separadas por espaço)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Adicione palavras para filtrar (separadas por espaço)</string>
     <string name="change_tag_column">Mudar nome da aba</string>
     <string name="no_misskey_instance">Sem instâncias Misskey</string>
     <string name="misskey_instance">Instância Misskey</string>
@@ -733,7 +733,7 @@
     <string name="delete_video">Excluir vídeo</string>
     <string name="delete_video_confirmation">Tem certeza de que deseja excluir este vídeo?</string>
     <string name="no_video_uploaded">Sem vídeos enviados!</string>
-    <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
+    <string name="display_nsfw_videos">Mostrar vídeos sensíveis</string>
     <string name="default_channel_of">Canal %s por padrão</string>
     <string name="no_video_to_display">Sem vídeos!</string>
     <string name="add_image_to_favorite">Favoritar mídia</string>
