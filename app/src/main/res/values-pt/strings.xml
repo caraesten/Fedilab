@@ -332,7 +332,7 @@
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
     <string name="use_javascript">Ativar Javascript</string>
-    <string name="expand_cw">Expandir ac automaticamente</string>
+    <string name="expand_cw">Expandir AC automaticamente</string>
     <string name="use_cookies">Permitir cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
     <string-array name="battery_profiles">
