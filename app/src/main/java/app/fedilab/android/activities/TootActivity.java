@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,7 +47,11 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.style.ClickableSpan;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -154,6 +159,9 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 
+import static app.fedilab.android.helper.Helper.THEME_BLACK;
+import static app.fedilab.android.helper.Helper.THEME_DARK;
+import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 /**
@@ -449,7 +457,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( mentionAccount != null){
             toot_content.setText(String.format("@%s\n", mentionAccount));
             toot_content.setSelection(toot_content.getText().length());
-            toot_space_left.setText(String.valueOf(toot_content.length()));
+            toot_space_left.setText(String.valueOf(countLength()));
         }
         if( tootMention != null && urlMention != null) {
             if (fileMention != null) {
@@ -476,7 +484,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 });
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
-            toot_space_left.setText(String.valueOf(toot_content.length()));
+            toot_space_left.setText(String.valueOf(countLength()));
         }
 
 
@@ -511,7 +519,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_content.setText(sharedContent);
                     if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                         toot_content.setSelection(selectionBefore);
-                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_space_left.setText(String.valueOf(countLength()));
                 }
                 if (image != null) {
                     new HttpsConnection(TootActivity.this, instance).download(image, TootActivity.this);
@@ -520,7 +528,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_content.setText(String.format("\n%s", sharedContent));
                 if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                     toot_content.setSelection(selectionBefore);
-                toot_space_left.setText(String.valueOf(toot_content.length()));
+                toot_space_left.setText(String.valueOf(countLength()));
             }
         }
 
@@ -561,7 +569,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
         });
 
-        toot_space_left.setText(String.valueOf(charsInToot + charsInCw));
+        toot_space_left.setText(String.valueOf(countLength()));
         toot_cw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -674,8 +682,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                int totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf(totalChar));
+                toot_space_left.setText(String.valueOf(countLength()));
             }
         });
 
@@ -700,7 +707,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     }else {
                         searchLength = 15;
                     }
-                    int totalChar = toot_cw_content.length() + toot_content.length();
+                    int totalChar = countLength();
                     toot_space_left.setText(String.valueOf(totalChar));
                     if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
@@ -747,7 +754,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     }
 
 
-                    totalChar = toot_cw_content.length() + toot_content.length();
+                    totalChar = countLength();
                     toot_space_left.setText(String.valueOf(totalChar));
                 }
             });
@@ -766,7 +773,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
         });
 
-        toot_space_left.setText(String.valueOf(toot_content.length()));
+        toot_space_left.setText(String.valueOf(countLength()));
     }
 
     @Override
@@ -1740,7 +1747,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
                 toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
-                toot_space_left.setText(String.valueOf(toot_content.length()));
+                toot_space_left.setText(String.valueOf(countLength()));
                 //Moves the cursor
                 toot_content.setSelection(selectionBefore);
             }
@@ -1897,7 +1904,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                             //Clears the text_url at the end of the toot  for this attachment
                             int selectionBefore = toot_content.getSelectionStart();
                             toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
-                            toot_space_left.setText(String.valueOf(toot_content.length()));
+                            toot_space_left.setText(String.valueOf(countLength()));
                             //Moves the cursor
                             if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                                 toot_content.setSelection(selectionBefore);
@@ -2112,7 +2119,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                             if (currentCursorPosition < oldContent.length() )
                                 newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
-                            toot_space_left.setText(String.valueOf(toot_content.length()));
+                            toot_space_left.setText(countLength());
                             toot_content.setSelection(newPosition);
                             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
                             toot_content.setThreshold(1);
@@ -2183,7 +2190,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_space_left.setText(String.valueOf(countLength()));
                     toot_content.setSelection(newPosition);
                     EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
@@ -2237,7 +2244,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_space_left.setText(String.valueOf(countLength()));
                     toot_content.setSelection(newPosition);
                     TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
@@ -2367,7 +2374,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
 
         toot_content.setText(content);
-        toot_space_left.setText(String.valueOf(toot_content.length()));
+        toot_space_left.setText(String.valueOf(countLength()));
         toot_content.setSelection(toot_content.getText().length());
         switch (status.getVisibility()){
             case "public":
@@ -2410,7 +2417,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         invalidateOptionsMenu();
         initialContent = toot_content.getText().toString();
-        toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
+        toot_space_left.setText(String.valueOf(countLength()));
     }
 
 
@@ -2517,7 +2524,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
 
         toot_content.setText(content);
-        toot_space_left.setText(String.valueOf(toot_content.length()));
+        toot_space_left.setText(String.valueOf(countLength()));
         toot_content.setSelection(toot_content.getText().length());
         switch (status.getVisibility()){
             case "public":
@@ -2552,7 +2559,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         invalidateOptionsMenu();
         initialContent = toot_content.getText().toString();
-        toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
+        toot_space_left.setText(String.valueOf(countLength()));
     }
 
     private void tootReply(){
@@ -2676,7 +2683,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     else
                         toot_content.append(" ");
                 }
-                toot_space_left.setText(String.valueOf(toot_content.length()));
+                toot_space_left.setText(String.valueOf(countLength()));
                 toot_content.requestFocus();
 
                 if( capitalize) {
@@ -2700,7 +2707,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_content.setText(toot_content.getText() +" #"+tag.getName());
                 }
                 toot_content.setSelection(currentCursorPosition);
-                toot_space_left.setText(String.valueOf(toot_content.length()));
+                toot_space_left.setText(String.valueOf(countLength()));
             }
 
         }
@@ -3011,4 +3018,38 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
     }
 
+    private int countLength(){
+        if( toot_content == null || toot_cw_content == null) {
+            return -1;
+        }
+        String content = toot_content.getText().toString();
+        String cwContent = toot_cw_content.getText().toString();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+            Matcher matcherALink = Patterns.WEB_URL.matcher(content);
+            while (matcherALink.find()){
+                int matchStart = matcherALink.start();
+                int matchEnd = matcherALink.end();
+                final String url = content.substring(matcherALink.start(1), matcherALink.end(1));
+                if( matchEnd <= content.length() && matchEnd >= matchStart){
+                    if( url.length() > 23){
+                        content = content.replaceFirst(url,"abcdefghijklmnopkrstuvw");
+                    }
+                }
+            }
+        }
+        int contentLength = content.length() - countWithEmoji(content);
+        int cwLength = cwContent.length() - countWithEmoji(cwContent);
+        return cwLength + contentLength;
+    }
+
+    private int countWithEmoji(String text){
+        int emojiCount = 0;
+        for (int i = 0; i < text.length(); i++) {
+            int type = Character.getType(text.charAt(i));
+            if (type == Character.SURROGATE || type == Character.OTHER_SYMBOL) {
+                emojiCount++;
+            }
+        }
+        return emojiCount/2;
+    }
 }
