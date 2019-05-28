@@ -865,6 +865,6 @@
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Stream direto</item>
+        <item>Transmissão direta</item>
     </string-array>
 </resources>
