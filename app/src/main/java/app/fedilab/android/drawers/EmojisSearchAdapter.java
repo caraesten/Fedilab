@@ -85,12 +85,13 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
-        //Profile picture
-        Glide.with(holder.emoji_icon.getContext())
-                .load(emoji.getUrl())
-                .into(holder.emoji_icon);
+        if( emoji != null) {
+            holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
+            //Profile picture
+            Glide.with(holder.emoji_icon.getContext())
+                    .load(emoji.getUrl())
+                    .into(holder.emoji_icon);
+        }
         return convertView;
     }
 
@@ -124,15 +125,18 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            ArrayList<Emojis> c = (ArrayList<Emojis>) results.values;
-            if (results.count > 0) {
-                clear();
-                addAll(c);
-                notifyDataSetChanged();
-            } else{
-                clear();
-                notifyDataSetChanged();
-            }
+            try{
+                ArrayList<Emojis> c = (ArrayList<Emojis>) results.values;
+                if (results.count > 0) {
+                    clear();
+                    addAll(c);
+                    notifyDataSetChanged();
+                } else{
+                    clear();
+                    notifyDataSetChanged();
+                }
+            }catch (Exception ignored){}
+
         }
     };
 
