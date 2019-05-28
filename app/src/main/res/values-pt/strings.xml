@@ -563,7 +563,7 @@
     <string name="adding_account_list_trunk">Adicionando contas à lista</string>
     <string name="action_list_add">Sem listas. Você pode criar uma tocando no botão \"+\".</string>
     <string name="action_remote_instance_add">Sem instâncias. Você pode seguir uma tocando no botão \"+\".</string>
-    <string name="about_trunk">Quem seguir</string>
+    <string name="about_trunk">Quem seguir:</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Desculpe, é impossível seguir</string>
     <string name="retrieve_remote_account">Carregando conta remota!</string>
