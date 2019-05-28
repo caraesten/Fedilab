@@ -555,7 +555,32 @@ public class Status implements Parcelable{
         SpannableString spannableStringContent, spannableStringCW;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
-        spannableStringContent = new SpannableString(status.getReblog() != null ?status.getReblog().getContent():status.getContent());
+        
+        String content = status.getReblog() != null ?status.getReblog().getContent():status.getContent();
+        
+        Pattern aLink = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        Matcher matcherALink = aLink.matcher(content);
+
+        while (matcherALink.find()){
+            String beforemodification;
+            String urlText = matcherALink.group(2);
+            //urlText += content.substring(matcherALink.start(3), matcherALink.end(3));
+            urlText = urlText.substring(1);
+            beforemodification = urlText;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                urlText = new SpannableString(Html.fromHtml(urlText, Html.FROM_HTML_MODE_LEGACY)).toString();
+            else
+                urlText = new SpannableString(Html.fromHtml(urlText)).toString();
+            if( urlText.startsWith("http") ){
+                urlText = urlText.replace("http://","").replace("https://","").replace("www.","");
+                if( urlText.length() > 31){
+                    urlText = urlText.substring(0,30);
+                    urlText += '…';
+                }
+            }
+            content = content.replaceAll(beforemodification,urlText);
+        }
+        spannableStringContent = new SpannableString(content);
         String spoilerText = "";
         if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null)
             spoilerText = status.getReblog().getSpoiler_text();
