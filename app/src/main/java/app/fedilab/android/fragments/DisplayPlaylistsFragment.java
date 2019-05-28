@@ -118,7 +118,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
 
         LinkedHashMap<String, String> translations = null;
-        if( peertubeInformation.getTranslations() != null)
+        if( peertubeInformation != null && peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
         LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -170,7 +170,6 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     Helper.changeMaterialSpinnerColor(context, set_upload_channel);
 
                     new RetrievePeertubeChannelsAsyncTask(context, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    channels = new HashMap<>();
 
                     display_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(120)});
                     description.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1000)});
@@ -374,9 +373,12 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
         //Populate channels
         List<Account> accounts = apiResponse.getAccounts();
-        String[] channelName = new String[accounts.size()];
-        String[] channelId= new String[accounts.size()];
-        int i = 0;
+        String[] channelName = new String[accounts.size()+1];
+        String[] channelId= new String[accounts.size()+1];
+        int i = 1;
+        channelName[0] = "";
+        channelId[0] = "";
+        channels = new HashMap<>();
         for(Account account: accounts){
             channels.put(account.getUsername(),account.getId());
             channelName[i] = account.getUsername();
