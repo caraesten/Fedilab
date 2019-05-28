@@ -46,7 +46,7 @@
     <string name="delete_all">Excluir tudo</string>
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
-    <string name="text_size">Tamanho dos textos e dos ícones</string>
+    <string name="text_size">Tamanho dos textos e ícones</string>
     <string name="text_size_change">Mudar o tamanho atual dos textos:</string>
     <string name="icon_size_change">Mudar o tamanho atual dos ícones:</string>
     <string name="next">Próximo</string>
@@ -311,7 +311,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Silenciar notificações</string>
     <string name="set_night_mode">Modo noturno</string>
-    <string name="set_nsfw_timeout">Segundos para a visualização de NSFW expirar, 0 para desativar</string>
+    <string name="set_nsfw_timeout">Segundos para expirar a prévia de mídia sensível, 0 para desativar.</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
@@ -638,7 +638,7 @@
     <string name="set_display_art">Mostrar timeline de Arte</string>
     <string name="schedule_boost">Agendar boost</string>
     <string name="boost_scheduled">Boost agendado!</string>
-    <string name="no_scheduled_boosts">Sem boost agendado!</string>
+    <string name="no_scheduled_boosts">Sem boosts agendados!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
     <string name="open_menu">Abrir menu</string>
