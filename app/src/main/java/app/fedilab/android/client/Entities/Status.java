@@ -560,11 +560,10 @@ public class Status implements Parcelable{
         
         Pattern aLink = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
-
         while (matcherALink.find()){
             String beforemodification;
             String urlText = matcherALink.group(2);
-            //urlText += content.substring(matcherALink.start(3), matcherALink.end(3));
+
             urlText = urlText.substring(1);
             beforemodification = urlText;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -578,7 +577,7 @@ public class Status implements Parcelable{
                     urlText += '…';
                 }
             }
-            content = content.replaceAll(beforemodification,urlText);
+            content = content.replaceAll(Pattern.quote(beforemodification),urlText);
         }
         spannableStringContent = new SpannableString(content);
         String spoilerText = "";
