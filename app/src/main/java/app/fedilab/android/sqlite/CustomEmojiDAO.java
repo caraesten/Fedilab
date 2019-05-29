@@ -117,6 +117,18 @@ public class CustomEmojiDAO {
         }
     }
 
+    /**
+     * Returns all emojis in db for an instance
+     * @return emojis List<Emojis>
+     */
+    public List<Emojis> getAllEmojis(String instance){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, Sqlite.COL_SHORTCODE , null, Sqlite.COL_SHORTCODE + " ASC", null);
+            return cursorToListEmojis(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * Returns an emoji by its shortcode in db

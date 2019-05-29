@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -86,10 +85,7 @@ import com.github.stom79.localepicker.CountryPickerListener;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
-import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.EmojiPopup;
-import com.vanniktech.emoji.emoji.Emoji;
-import com.vanniktech.emoji.one.EmojiOneProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -158,10 +154,6 @@ import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
-
-import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
 
@@ -1274,7 +1266,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
             case R.id.action_emoji:
-                final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
+                final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis(account.getInstance());
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;
                 float density = getResources().getDisplayMetrics().density;
