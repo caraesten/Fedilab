@@ -233,55 +233,6 @@ public class PeertubeAPI {
 
 
     /***
-     * Update credential of the authenticated user *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, HashMap<String, String> customFields) {
-
-        HashMap<String, String> requestParams = new HashMap<>();
-        if( display_name != null)
-            try {
-                requestParams.put("display_name",URLEncoder.encode(display_name, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("display_name",display_name);
-            }
-        if( note != null)
-            try {
-                requestParams.put("note",URLEncoder.encode(note, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("note",note);
-            }
-        if( privacy != null)
-            requestParams.put("locked",privacy== API.accountPrivacy.LOCKED?"true":"false");
-        int i = 0;
-        if( customFields != null && customFields.size() > 0){
-            Iterator it = customFields.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                requestParams.put("fields_attributes["+i+"][name]",(String)pair.getKey());
-                requestParams.put("fields_attributes["+i+"][value]",(String)pair.getValue());
-                it.remove();
-                i++;
-            }
-        }
-        try {
-            new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            e.printStackTrace();
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
-
-
-
-    /***
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
@@ -624,42 +575,6 @@ public class PeertubeAPI {
             peertubes = parsePeertube(jsonArray);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
-            if( e.getStatusCode() == 401){ //Avoid the issue with the refresh token
-
-                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                HashMap<String, String> values = new PeertubeAPI(context).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
-                if( values != null) {
-                    String newtoken = values.get("access_token");
-                    String refresh_token = values.get("refresh_token");
-                    if (newtoken != null)
-                        account.setToken(newtoken);
-                    if (refresh_token != null)
-                        account.setRefresh_token(refresh_token);
-                    new AccountDAO(context, db).updateAccount(account);
-                    prefKeyOauthTokenT = newtoken;
-                }
-                HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-                String response;
-                try {
-                    response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
-                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-                    peertubes = parsePeertube(jsonArray);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
-                } catch (HttpsConnection.HttpsConnectionException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-            }
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -837,7 +752,37 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTL( String max_id) {
-        return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+        try {
+            return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            if( e.getStatusCode() == 401 || e.getStatusCode() == 403) {
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                if (values.containsKey("access_token") && values.get("access_token") != null) {
+                    targetedAccount.setToken(values.get("access_token"));
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    //This account is currently logged in, the token is updated
+                    if (prefKeyOauthTokenT.equals(token)) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                        editor.apply();
+                    }
+                }
+                if (values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                    targetedAccount.setRefresh_token(values.get("refresh_token"));
+                new AccountDAO(context, db).updateAccount(targetedAccount);
+                try {
+                    return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+                } catch (HttpsConnection.HttpsConnectionException e1) {
+                    setError(e.getStatusCode(), e);
+                    return apiResponse;
+                }
+            }
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -846,7 +791,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getOverviewTL( String max_id) {
-        return getTL("/overviews/videos",null,null, max_id, null, null);
+        try {
+            return getTL("/overviews/videos",null,null, max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -855,7 +805,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getTrendingTL( String max_id) {
-        return getTL("/videos/","-trending", null,max_id, null, null);
+        try {
+            return getTL("/videos/","-trending", null,max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -864,7 +819,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getRecentlyAddedTL( String max_id) {
-        return getTL("/videos/","-publishedAt",null,max_id, null, null);
+        try {
+            return getTL("/videos/","-publishedAt",null,max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -873,7 +833,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getLocalTL( String max_id) {
-        return getTL("/videos/","-publishedAt", "local",max_id, null, null);
+        try {
+            return getTL("/videos/","-publishedAt", "local",max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -881,7 +846,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLSinceId(String since_id) {
-        return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null);
+        try {
+            return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -889,7 +859,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLMinId(String min_id) {
-        return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id);
+        try {
+            return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
 
@@ -899,7 +874,7 @@ public class PeertubeAPI {
      * @param since_id String since the id
      * @return APIResponse
      */
-    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id) {
+    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id) throws HttpsConnection.HttpsConnectionException {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
@@ -973,12 +948,7 @@ public class PeertubeAPI {
                     peertubes4.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes4);
                 }
-
-
-
             }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
