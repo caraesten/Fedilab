@@ -732,9 +732,16 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 } else {
                     searchLength = 15;
                 }
+
+
+                int totalChar = countLength();
+                toot_space_left.setText(String.valueOf(totalChar));
+                if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                    return;
+
                 String patternh = "^(.|\\s)*(:fedilab_hugs:)$";
                 final Pattern hPattern = Pattern.compile(patternh);
-                Matcher mh = hPattern.matcher(s.toString());
+                Matcher mh = hPattern.matcher((s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)));
 
                 if (mh.matches()) {
                     autocomplete = true;
@@ -742,10 +749,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     return;
                 }
 
-                int totalChar = countLength();
-                toot_space_left.setText(String.valueOf(totalChar));
-                if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
-                    return;
                 Matcher m, mt;
                 if (s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
