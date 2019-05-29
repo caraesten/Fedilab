@@ -1,0 +1,13 @@
+Added
+- Peertube playlists
+- Video history timeline for Peertube
+- URLs shortened in toots
+
+Changed
+- Emoji count one char
+- URL length is 23 max in counter
+- Improve split feature
+
+Fixed
+- App name not clickable in toots
+- Custom emoji with cross-account actions
