@@ -460,7 +460,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( max_id == null)
                 max_id = "0";
             //max_id needs to work like an offset
-            max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+            max_id = String.valueOf(Integer.valueOf(max_id) + tootPerPage);
             if( apiResponse.getPeertubes() == null){
                 return;
             }
@@ -953,7 +954,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         ArrayList<Status> tmpStatuses = new ArrayList<>();
         for (Status tmpStatus : statuses) {
             //Put the toot at its place in the list (id desc)
-            if( !apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus) &&  tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
+            if( !apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus) &&  tmpStatus.getCreated_at() != null && this.statuses.get(0).getCreated_at() != null && tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
                 if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);

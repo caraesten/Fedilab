@@ -16,6 +16,8 @@ import com.vanniktech.emoji.emoji.Emoji;
 
 import app.fedilab.android.R;
 
+import static app.fedilab.android.activities.TootActivity.autocomplete;
+
 public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppCompatAutoCompleteTextView implements EmojiEditTextInterface {
 
     private float emojiSize;
@@ -56,7 +58,7 @@ public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppC
     protected void onTextChanged(final CharSequence text, final int start, final int lengthBefore, final int lengthAfter) {
         final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
         final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
-        if( emoji) {
+        if( emoji && !autocomplete) {
             EmojiManager.getInstance().replaceWithImages(getContext(), getText(), emojiSize, defaultEmojiSize);
         }
     }

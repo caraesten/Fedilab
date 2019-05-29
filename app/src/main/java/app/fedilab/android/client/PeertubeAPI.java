@@ -54,6 +54,7 @@ import app.fedilab.android.client.Entities.PeertubeComment;
 import app.fedilab.android.client.Entities.PeertubeInformation;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.client.Entities.PeertubeVideoNotification;
+import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
@@ -232,55 +233,6 @@ public class PeertubeAPI {
 
 
     /***
-     * Update credential of the authenticated user *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, HashMap<String, String> customFields) {
-
-        HashMap<String, String> requestParams = new HashMap<>();
-        if( display_name != null)
-            try {
-                requestParams.put("display_name",URLEncoder.encode(display_name, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("display_name",display_name);
-            }
-        if( note != null)
-            try {
-                requestParams.put("note",URLEncoder.encode(note, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("note",note);
-            }
-        if( privacy != null)
-            requestParams.put("locked",privacy== API.accountPrivacy.LOCKED?"true":"false");
-        int i = 0;
-        if( customFields != null && customFields.size() > 0){
-            Iterator it = customFields.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                requestParams.put("fields_attributes["+i+"][name]",(String)pair.getKey());
-                requestParams.put("fields_attributes["+i+"][value]",(String)pair.getValue());
-                it.remove();
-                i++;
-            }
-        }
-        try {
-            new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            e.printStackTrace();
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
-
-
-
-    /***
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
@@ -318,6 +270,15 @@ public class PeertubeAPI {
             }
             peertubeInformation.setPrivacies(_pprivacies);
 
+
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/video-playlists/privacies"), 60, null, null);
+            JSONObject plprivacies = new JSONObject(response);
+            LinkedHashMap<Integer, String> _plprivacies = new LinkedHashMap<>();
+            for( int i = 1 ; i <= plprivacies.length() ; i++){
+                _plprivacies.put(i, plprivacies.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setPlaylistPrivacies(_plprivacies);
 
             response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
             JSONObject licences = new JSONObject(response);
@@ -520,9 +481,61 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getVideos(String acct, String max_id) {
-        return getVideos(acct, max_id, null, tootPerPage);
+        return getVideos(acct, max_id, null);
     }
 
+    /**
+     * Retrieves history for videos for the account *synchronously*
+     *
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getMyHistory(String max_id) {
+        return getMyHistory(max_id, null);
+    }
+
+
+
+    /**
+     *  Retrieves history for videos for the account *synchronously*
+     *
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getMyHistory(String max_id, String since_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        params.put("count", String.valueOf(tootPerPage));
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/me/history/videos"), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
 
     /**
      * Retrieves videos for the account *synchronously*
@@ -531,7 +544,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getMyVideos(String max_id) {
-        return getMyVideos(max_id, null, tootPerPage);
+        return getMyVideos(max_id, null);
     }
 
 
@@ -541,20 +554,17 @@ public class PeertubeAPI {
      *
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getMyVideos(String max_id, String since_id, int limit) {
+    private APIResponse getMyVideos(String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
@@ -565,42 +575,6 @@ public class PeertubeAPI {
             peertubes = parsePeertube(jsonArray);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
-            if( e.getStatusCode() == 401){ //Avoid the issue with the refresh token
-
-                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                HashMap<String, String> values = new PeertubeAPI(context).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
-                if( values != null) {
-                    String newtoken = values.get("access_token");
-                    String refresh_token = values.get("refresh_token");
-                    if (newtoken != null)
-                        account.setToken(newtoken);
-                    if (refresh_token != null)
-                        account.setRefresh_token(refresh_token);
-                    new AccountDAO(context, db).updateAccount(account);
-                    prefKeyOauthTokenT = newtoken;
-                }
-                HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-                String response;
-                try {
-                    response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
-                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-                    peertubes = parsePeertube(jsonArray);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
-                } catch (HttpsConnection.HttpsConnectionException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-            }
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -623,20 +597,17 @@ public class PeertubeAPI {
      * @param acct       String Id of the account
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getVideos(String acct, String max_id, String since_id, int limit) {
+    private APIResponse getVideos(String acct, String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -667,7 +638,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getNotifications(String max_id){
-        return getNotifications(max_id, null, 20);
+        return getNotifications(max_id, null);
     }
 
     /**
@@ -677,7 +648,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getNotificationsSince(String since_id){
-        return getNotifications(null, since_id, 20);
+        return getNotifications(null, since_id);
     }
 
     /**
@@ -685,20 +656,17 @@ public class PeertubeAPI {
      *
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getNotifications(String max_id, String since_id, int limit) {
+    private APIResponse getNotifications(String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -730,7 +698,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getVideosChannel(String acct, String max_id) {
-        return getVideosChannel(acct, max_id, null, tootPerPage);
+        return getVideosChannel(acct, max_id, null);
     }
 
     /**
@@ -739,20 +707,17 @@ public class PeertubeAPI {
      * @param acct       String Id of the account
      * @param max_id          String id max
      * @param since_id        String since the id
-     * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getVideosChannel(String acct, String max_id, String since_id, int limit) {
+    private APIResponse getVideosChannel(String acct, String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 < limit || limit > 40)
-            limit = 40;
-        params.put("count", String.valueOf(limit));
+        params.put("count", String.valueOf(tootPerPage));
         List<Peertube> peertubes = new ArrayList<>();
         try {
 
@@ -787,7 +752,37 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTL( String max_id) {
-        return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null, tootPerPage);
+        try {
+            return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            if( e.getStatusCode() == 401 || e.getStatusCode() == 403) {
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                if (values.containsKey("access_token") && values.get("access_token") != null) {
+                    targetedAccount.setToken(values.get("access_token"));
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    //This account is currently logged in, the token is updated
+                    if (prefKeyOauthTokenT.equals(token)) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                        editor.apply();
+                    }
+                }
+                if (values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                    targetedAccount.setRefresh_token(values.get("refresh_token"));
+                new AccountDAO(context, db).updateAccount(targetedAccount);
+                try {
+                    return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+                } catch (HttpsConnection.HttpsConnectionException e1) {
+                    setError(e.getStatusCode(), e);
+                    return apiResponse;
+                }
+            }
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -796,7 +791,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getOverviewTL( String max_id) {
-        return getTL("/overviews/videos",null,null, max_id, null, null, tootPerPage);
+        try {
+            return getTL("/overviews/videos",null,null, max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -805,7 +805,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getTrendingTL( String max_id) {
-        return getTL("/videos/","-trending", null,max_id, null, null, tootPerPage);
+        try {
+            return getTL("/videos/","-trending", null,max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -814,7 +819,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getRecentlyAddedTL( String max_id) {
-        return getTL("/videos/","-publishedAt",null,max_id, null, null, tootPerPage);
+        try {
+            return getTL("/videos/","-publishedAt",null,max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -823,7 +833,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getLocalTL( String max_id) {
-        return getTL("/videos/","-publishedAt", "local",max_id, null, null, tootPerPage);
+        try {
+            return getTL("/videos/","-publishedAt", "local",max_id, null, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -831,7 +846,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLSinceId(String since_id) {
-        return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null, tootPerPage);
+        try {
+            return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
     /**
@@ -839,7 +859,12 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLMinId(String min_id) {
-        return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id, tootPerPage);
+        try {
+            return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            return apiResponse;
+        }
     }
 
 
@@ -847,10 +872,9 @@ public class PeertubeAPI {
      * Retrieves home timeline for the account *synchronously*
      * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id, int limit) {
+    private APIResponse getTL(String action, String sort, String filter, String max_id, String since_id, String min_id) throws HttpsConnection.HttpsConnectionException {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
@@ -859,9 +883,7 @@ public class PeertubeAPI {
             params.put("since_id", since_id);
         if (min_id != null)
             params.put("min_id", min_id);
-        if (0 > limit || limit > 80)
-            limit = 80;
-        params.put("count",String.valueOf(limit));
+        params.put("count",String.valueOf(tootPerPage));
         if( sort != null)
             params.put("sort",sort);
         else
@@ -926,12 +948,7 @@ public class PeertubeAPI {
                     peertubes4.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes4);
                 }
-
-
-
             }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1014,8 +1031,7 @@ public class PeertubeAPI {
         HashMap<String, String> params = new HashMap<>();
         if( max_id == null)
             max_id = "0";
-        params.put("start", max_id);
-        params.put("count", "50");
+        params.put("start", String.valueOf(tootPerPage));
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
@@ -1073,7 +1089,7 @@ public class PeertubeAPI {
      */
     public APIResponse searchPeertube(String instance, String query) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("count", "50");
+        params.put("count", String.valueOf(tootPerPage));
         try {
             params.put("search", URLEncoder.encode(query, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -1293,85 +1309,58 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
-     * Get filters for the user
+     * Video is in play lists
      * @return APIResponse
      */
-    public APIResponse getFilters(){
+    public APIResponse getPlaylistForVideo(String videoId){
 
-        List<Filters> filters = null;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
-            filters = parseFilters(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-    /**
-     * Get a Filter by its id
-     * @return APIResponse
-     */
-    @SuppressWarnings("unused")
-    public APIResponse getFilters(String filterId){
-
-        List<Filters> filters = new ArrayList<>();
-        Filters filter;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
-            filter = parseFilter(new JSONObject(response));
-            filters.add(filter);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setFilters(filters);
-        return apiResponse;
-    }
-
-
-    /**
-     * Create a filter
-     * @param filter Filter
-     * @return APIResponse
-     */
-    public APIResponse addFilters(Filters filter){
         HashMap<String, String> params = new HashMap<>();
-        params.put("phrase", filter.getPhrase());
-        StringBuilder parameters = new StringBuilder();
-        for(String context: filter.getContext())
-            parameters.append("context[]=").append(context).append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-            params.put("context[]", parameters.toString());
-        }
-        params.put("irreversible", String.valueOf(filter.isIrreversible()));
-        params.put("whole_word", String.valueOf(filter.isWhole_word()));
-        params.put("expires_in", String.valueOf(filter.getExpires_in()));
-        ArrayList<Filters> filters = new ArrayList<>();
+        params.put("videoIds",videoId);
+        List<String> ids = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
-            Filters resfilter = parseFilter(new JSONObject(response));
-            filters.add(resfilter);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me/video-playlists/videos-exist"), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray(videoId);
+            try {
+                int i = 0;
+                while (i < jsonArray.length() ) {
+                    JSONObject resobj = jsonArray.getJSONObject(i);
+                    String playlistId = resobj.getString("playlistId");
+                    ids.add(playlistId);
+                    i++;
+                }
+            } catch (JSONException e) {
+                setDefaultError(e);
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse = new APIResponse();
+        apiResponse.setPlaylistForVideos(ids);
+        return apiResponse;
+    }
+
+
+    /**
+     * Get lists for the user
+     * @return APIResponse
+     */
+    public APIResponse getPlayists(String username){
+
+        List<Playlist> playlists = new ArrayList<>();
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/video-playlists", username)), 60, null, prefKeyOauthTokenT);
+            playlists = parsePlaylists(context,  new JSONObject(response).getJSONArray("data"));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1383,20 +1372,46 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setFilters(filters);
+        apiResponse.setPlaylists(playlists);
         return apiResponse;
     }
 
-    /**
-     * Delete a filter
-     * @param filter Filter
-     * @return APIResponse
-     */
-    public int deleteFilters(Filters filter){
 
+
+
+    /**
+     * Delete a Playlist
+     * @param playlistId String, the playlist id
+     * @return int
+     */
+    public int deletePlaylist(String playlistId){
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            httpsConnection.delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
+            httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s", playlistId)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+
+    /**
+     * Delete video in a Playlist
+     * @param playlistId String, the playlist id
+     * @param videoId String, the video id
+     * @return int
+     */
+    public int deleteVideoPlaylist(String playlistId, String videoId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s/videos/%s", playlistId, videoId)), 60, null, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1411,30 +1426,61 @@ public class PeertubeAPI {
     }
 
     /**
-     * Delete a filter
-     * @param filter Filter
+     * Add video in a Playlist
+     * @param playlistId String, the playlist id
+     * @param videoId String, the video id
+     * @return int
+     */
+    public int addVideoPlaylist(String playlistId, String videoId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            HashMap<String, String> params = new HashMap<>();
+            params.put("videoId", videoId);
+            httpsConnection.post(getAbsoluteUrl(String.format("/video-playlists/%s/videos", playlistId)), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+
+
+    /**
+     * Retrieves status for the account *synchronously*
+     *
+     * @param playlistid       String Id of the playlist
+     * @param max_id          String id max
+     * @param since_id        String since the id
      * @return APIResponse
      */
-    public APIResponse updateFilters(Filters filter){
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getPlaylistVideos(String playlistid, String max_id, String since_id) {
+
         HashMap<String, String> params = new HashMap<>();
-        params.put("phrase", filter.getPhrase());
-        StringBuilder parameters = new StringBuilder();
-        for(String context: filter.getContext())
-            parameters.append("context[]=").append(context).append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-            params.put("context[]", parameters.toString());
-        }
-        params.put("irreversible", String.valueOf(filter.isIrreversible()));
-        params.put("whole_word", String.valueOf(filter.isWhole_word()));
-        params.put("expires_in", String.valueOf(filter.getExpires_in()));
-        ArrayList<Filters> filters = new ArrayList<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        params.put("count", String.valueOf(tootPerPage));
+        params.put("sort","-updatedAt");
+        List<Peertube> peertubes = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context, this.instance).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
-            Filters resfilter = parseFilter(new JSONObject(response));
-            filters.add(resfilter);
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/video-playlists/%s/videos", playlistid)), 60, params, prefKeyOauthTokenT);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1444,62 +1490,10 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setFilters(filters);
+        apiResponse.setPeertubes(peertubes);
         return apiResponse;
     }
 
-    /**
-     * Get lists for the user
-     * @return APIResponse
-     */
-    public APIResponse getLists(){
-
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
-            lists = parseLists(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setLists(lists);
-        return apiResponse;
-    }
-
-    /**
-     * Get lists for a user by its id
-     * @return APIResponse
-     */
-    @SuppressWarnings("unused")
-    public APIResponse getLists(String userId){
-
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
-        app.fedilab.android.client.Entities.List list;
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
-            list = parseList(new JSONObject(response));
-            lists.add(list);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setLists(lists);
-        return apiResponse;
-    }
 
     /**
      * Parse json response for several howto
@@ -2025,24 +2019,24 @@ public class PeertubeAPI {
 
 
     /**
-     * Parse Lists
+     * Parse Playlists
      * @param jsonArray JSONArray
-     * @return List<List> of lists
+     * @return List<Playlist> of lists
      */
-    private List<app.fedilab.android.client.Entities.List> parseLists(JSONArray jsonArray){
-        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
+    private List<Playlist> parsePlaylists(Context context, JSONArray jsonArray){
+        List<Playlist> playlists = new ArrayList<>();
         try {
             int i = 0;
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                app.fedilab.android.client.Entities.List list = parseList(resobj);
-                lists.add(list);
+                Playlist playlist = parsePlaylist(context, resobj);
+                playlists.add(playlist);
                 i++;
             }
         } catch (JSONException e) {
             setDefaultError(e);
         }
-        return lists;
+        return playlists;
     }
 
 
@@ -2051,13 +2045,34 @@ public class PeertubeAPI {
      * @param resobj JSONObject
      * @return Emojis
      */
-    private static app.fedilab.android.client.Entities.List parseList(JSONObject resobj){
-        app.fedilab.android.client.Entities.List list = new app.fedilab.android.client.Entities.List();
+    private static Playlist parsePlaylist(Context context, JSONObject resobj){
+        Playlist playlist = new Playlist();
         try {
-            list.setId(resobj.get("id").toString());
-            list.setTitle(resobj.get("title").toString());
-        }catch (Exception ignored){}
-        return list;
+            playlist.setId(resobj.getString("id"));
+            playlist.setUuid(resobj.getString("uuid"));
+            playlist.setCreatedAt(Helper.stringToDate(context, resobj.getString("createdAt")));
+            playlist.setDescription(resobj.getString("description"));
+            playlist.setDisplayName(resobj.getString("displayName"));
+            playlist.setLocal(resobj.getBoolean("isLocal"));
+            playlist.setVideoChannelId(resobj.getString("videoChannel"));
+            playlist.setThumbnailPath(resobj.getString("thumbnailPath"));
+            playlist.setOwnerAccount(parseAccountResponsePeertube(context, resobj.getJSONObject("ownerAccount")));
+            playlist.setVideosLength(resobj.getInt("videosLength"));
+            try {
+                LinkedHashMap<Integer, String> type = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                type.put(resobj.getJSONObject("type").getInt("id"), resobj.getJSONObject("type").get("label").toString());
+                playlist.setType(type);
+                playlist.setPrivacy(privacy);
+            }catch (Exception ignored){ignored.printStackTrace();}
+
+
+            try{
+                playlist.setUpdatedAt(Helper.stringToDate(context, resobj.getString("updatedAt")));
+            }catch (Exception ignored){ignored.printStackTrace();}
+        }catch (Exception ignored){ignored.printStackTrace();}
+        return playlist;
     }
 
     private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray){

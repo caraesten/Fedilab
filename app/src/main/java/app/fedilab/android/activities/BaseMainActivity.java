@@ -93,6 +93,7 @@ import app.fedilab.android.fragments.DisplayListsFragment;
 import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
+import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.fragments.SettingsPeertubeFragment;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
@@ -1540,7 +1541,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.show();
         }
-        if( id != R.id.nav_list && id != R.id.nav_filters){
+        if( id != R.id.nav_list && id != R.id.nav_filters && id != R.id.nav_peertube_playlists){
             add_new.hide();
         }else{
             add_new.show();
@@ -1588,6 +1589,21 @@ public abstract class BaseMainActivity extends BaseActivity
             bundle.putBoolean("ownvideos", true);
             fragment.setArguments(bundle);
             fragmentTag = "MY_VIDEOS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, fragment, fragmentTag).commit();
+        } else if (id == R.id.nav_peertube_history) {
+            bundle = new Bundle();
+            DisplayStatusFragment fragment = new DisplayStatusFragment();
+            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PEERTUBE_HISTORY);
+            bundle.putString("instanceType","PEERTUBE");
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+            bundle.putString("targetedid",account.getUsername());
+            fragment.setArguments(bundle);
+            fragmentTag = "MY_HISTORY";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, fragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked || id == R.id.nav_pixelfed_blocked) {
@@ -1642,12 +1658,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
             toot.hide();
-        }else if (id == R.id.nav_peertube_fav) {
-            DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
-            fragmentTag = "BOOKMARKS_PEERTUBE";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
-            toot.hide();
         }else if( id == R.id.nav_follow_request){
             toot.hide();
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
@@ -1660,6 +1670,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "LISTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_peertube_playlists){
+            toot.hide();
+            DisplayPlaylistsFragment displayPlaylistsFragment = new DisplayPlaylistsFragment();
+            fragmentTag = "PLAYLISTS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayPlaylistsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_filters){
             toot.hide();
             DisplayFiltersFragment displayFiltersFragment = new DisplayFiltersFragment();

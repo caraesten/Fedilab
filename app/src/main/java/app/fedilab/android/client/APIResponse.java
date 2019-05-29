@@ -28,6 +28,7 @@ import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
+import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
@@ -51,6 +52,7 @@ public class APIResponse {
     private List<Peertube> peertubes = null;
     private List<PeertubeNotification> peertubeNotifications = null;
     private List<Filters> filters = null;
+    private List<Playlist> playlists = null;
     private List<String> domains = null;
     private List<app.fedilab.android.client.Entities.List> lists = null;
     private List<Emojis> emojis = null;
@@ -59,6 +61,7 @@ public class APIResponse {
     private Instance instance;
     private List<StoredStatus> storedStatuses;
     private boolean fetchmore = false;
+    private List<String> playlistForVideos;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -218,5 +221,21 @@ public class APIResponse {
 
     public void setFetchmore(boolean fetchmore) {
         this.fetchmore = fetchmore;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public List<String> getPlaylistForVideos() {
+        return playlistForVideos;
+    }
+
+    public void setPlaylistForVideos(List<String> playlistForVideos) {
+        this.playlistForVideos = playlistForVideos;
     }
 }

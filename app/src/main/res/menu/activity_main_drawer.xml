@@ -63,13 +63,18 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                        android:id="@+id/nav_peertube_fav"
-                        android:icon="@drawable/ic_favorite_peertube_full"
-                        android:title="@string/peertube_favorites" />
+                        android:id="@+id/nav_peertube_playlists"
+                        android:icon="@drawable/ic_list_peertube"
+                        android:title="@string/playlists" />
                     <item
                         android:id="@+id/nav_my_video"
                         android:icon="@drawable/ic_video_library"
                         android:title="@string/my_videos" />
+                    <item
+                        android:id="@+id/nav_peertube_history"
+                        android:icon="@drawable/ic_history_black"
+                        android:title="@string/history" />
+
                     <item
                         android:id="@+id/nav_upload"
                         android:icon="@drawable/ic_cloud_upload"

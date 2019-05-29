@@ -25,7 +25,9 @@ public class PeertubeInformation {
     private LinkedHashMap<String, String> languages;
     private LinkedHashMap<Integer, String> licences;
     private LinkedHashMap<Integer, String> privacies;
+    private LinkedHashMap<Integer, String> playlistPrivacies;
     private LinkedHashMap<String, String> translations;
+
 
     public static final LinkedHashMap<String, String> langueMapped;
     static {
@@ -85,5 +87,13 @@ public class PeertubeInformation {
 
     public void setPrivacies(LinkedHashMap<Integer, String> privacies) {
         this.privacies = privacies;
+    }
+
+    public LinkedHashMap<Integer, String> getPlaylistPrivacies() {
+        return playlistPrivacies;
+    }
+
+    public void setPlaylistPrivacies(LinkedHashMap<Integer, String> playlistPrivacies) {
+        this.playlistPrivacies = playlistPrivacies;
     }
 }

@@ -46,7 +46,7 @@
     <string name="delete_all">Excluir tudo</string>
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
-    <string name="text_size">Tamanho dos textos e dos ícones</string>
+    <string name="text_size">Tamanho dos textos e ícones</string>
     <string name="text_size_change">Mudar o tamanho atual dos textos:</string>
     <string name="icon_size_change">Mudar o tamanho atual dos ícones:</string>
     <string name="next">Próximo</string>
@@ -311,7 +311,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Silenciar notificações</string>
     <string name="set_night_mode">Modo noturno</string>
-    <string name="set_nsfw_timeout">Segundos para expirar a visualização de NSFW, 0 para desativar.</string>
+    <string name="set_nsfw_timeout">Segundos para expirar a prévia de mídia sensível, 0 para desativar.</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
@@ -332,7 +332,7 @@
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
     <string name="use_javascript">Ativar Javascript</string>
-    <string name="expand_cw">Expandir ac automaticamente</string>
+    <string name="expand_cw">Expandir AC automaticamente</string>
     <string name="use_cookies">Permitir cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
     <string-array name="battery_profiles">
@@ -563,7 +563,7 @@
     <string name="adding_account_list_trunk">Adicionando contas à lista</string>
     <string name="action_list_add">Sem listas. Você pode criar uma tocando no botão \"+\".</string>
     <string name="action_remote_instance_add">Sem instâncias. Você pode seguir uma tocando no botão \"+\".</string>
-    <string name="about_trunk">Quem seguir</string>
+    <string name="about_trunk">Quem seguir:</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Desculpe, é impossível seguir</string>
     <string name="retrieve_remote_account">Carregando conta remota!</string>
@@ -638,7 +638,7 @@
     <string name="set_display_art">Mostrar timeline de Arte</string>
     <string name="schedule_boost">Agendar boost</string>
     <string name="boost_scheduled">Boost agendado!</string>
-    <string name="no_scheduled_boosts">Sem boost agendado!</string>
+    <string name="no_scheduled_boosts">Sem boosts agendados!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
     <string name="open_menu">Abrir menu</string>
@@ -683,7 +683,7 @@
     <!-- languages not translated -->
     <string name="languages">Idiomas</string>
     <string name="show_media_only">Apenas mídia</string>
-    <string name="show_media_nsfw">Mostrar NSFW</string>
+    <string name="show_media_nsfw">Mostrar mídia sensível</string>
     <string name="crowdin_translations">Traduções no Crowdin</string>
     <string name="crowdin_manager">Administrador do Crowdin</string>
     <string name="translation_app">Tradução do aplicativo</string>
@@ -698,7 +698,7 @@
     <string name="some_words_any">Qualquer uma destas palavras (separadas por espaço)</string>
     <string name="some_words_all">Todas estas palavras (separadas por espaço)</string>
     <string name="some_words_none">Nenhuma destas palavras (separadas por espaço)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Adicione palavras para filtrar (separadas por espaço)</string>
     <string name="change_tag_column">Mudar nome da aba</string>
     <string name="no_misskey_instance">Sem instâncias Misskey</string>
     <string name="misskey_instance">Instância Misskey</string>
@@ -733,7 +733,7 @@
     <string name="delete_video">Excluir vídeo</string>
     <string name="delete_video_confirmation">Tem certeza de que deseja excluir este vídeo?</string>
     <string name="no_video_uploaded">Sem vídeos enviados!</string>
-    <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
+    <string name="display_nsfw_videos">Mostrar vídeos sensíveis</string>
     <string name="default_channel_of">Canal %s por padrão</string>
     <string name="no_video_to_display">Sem vídeos!</string>
     <string name="add_image_to_favorite">Favoritar mídia</string>
@@ -839,13 +839,23 @@
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
     <string name="set_forward_tags">Encaminhar tags nas respostas</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
+    <string name="set_long_press_media">Toque longo para salvar mídia</string>
+    <string name="set_blur_sensitive">Blur na mídia sensível</string>
+    <string name="set_display_timeline_in_list">Mostrar timelines em uma lista</string>
+    <string name="display_timeline">Mostrar timelines</string>
+    <string name="set_display_bot_icon">Marcar robôs em toots</string>
+    <string name="add_tags">Gerenciar tags</string>
+    <string name="set_remember_position">Lembrar a posição na página inicial</string>
+    <string name="history">History</string>
+    <string name="playlists">Playlists</string>
+    <string name="display_name">Display name</string>
+    <string name="privacy">Privacy</string>
+    <string name="create">Create</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="error_display_name">You must provide a display name!</string>
+    <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
+    <string name="action_playlist_create">Create a playlist</string>
+    <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
@@ -865,6 +875,6 @@
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Stream direto</item>
+        <item>Transmissão direta</item>
     </string-array>
 </resources>
