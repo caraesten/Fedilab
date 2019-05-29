@@ -846,6 +846,16 @@
     <string name="set_display_bot_icon">Markera robotkonton i toot</string>
     <string name="add_tags">Hantera taggar</string>
     <string name="set_remember_position">Kom ihåg positionen i hemtidslinjen</string>
+    <string name="history">Historik</string>
+    <string name="playlists">Spellistor</string>
+    <string name="display_name">Visningsnamn</string>
+    <string name="privacy">Sekretess</string>
+    <string name="create">Skapa</string>
+    <string name="action_playlist_add">Du har inte några spellistor. Klicka på \"+\"-ikonen för att lägga till en ny spellista</string>
+    <string name="error_display_name">Du måste ange ett visningsnamn!</string>
+    <string name="error_channel_mandatory">Kanalen krävs när spellistan är offentliga.</string>
+    <string name="action_playlist_create">Skapa spellista</string>
+    <string name="action_playlist_empty_content">Det finns ingenting i denna spellista ännu.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
