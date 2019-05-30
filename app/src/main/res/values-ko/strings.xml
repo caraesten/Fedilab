@@ -852,6 +852,22 @@
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
+    <string name="edit_media">Edit media</string>
+    <string name="redo">redo</string>
+    <string name="gallery">Gallery</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Sticker</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_adjust">Adjust</string>
+    <string name="label_brush">Brush</string>
+    <string name="confirm_exit_editing">Are you want to exit without saving image?</string>
+    <string name="discard">Discard</string>
+    <string name="saving">Saving...</string>
+    <string name="image_saved">Image Saved Successfully!</string>
+    <string name="save_image_failed">Failed to save Image</string>
+    <string name="opacity">Opacity</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
