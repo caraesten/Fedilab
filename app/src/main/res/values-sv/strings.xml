@@ -872,6 +872,7 @@
     <string name="image_saved">Bilden har sparats!</string>
     <string name="save_image_failed">Kunde inte spara bilden</string>
     <string name="opacity">Genomskinlighet</string>
+    <string name="label_crop">Crop</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
