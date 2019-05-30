@@ -868,6 +868,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
+    <string name="label_crop">Crop</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
