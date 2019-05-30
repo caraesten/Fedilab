@@ -852,6 +852,22 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="error_channel_mandatory">當播放清單公開時，頻道為必填。</string>
     <string name="action_playlist_create">建立播放清單</string>
     <string name="action_playlist_empty_content">目前播放清單內還沒有東西。</string>
+    <string name="edit_media">Edit media</string>
+    <string name="redo">redo</string>
+    <string name="gallery">Gallery</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Sticker</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_adjust">Adjust</string>
+    <string name="label_brush">Brush</string>
+    <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
+    <string name="discard">Discard</string>
+    <string name="saving">Saving…</string>
+    <string name="image_saved">Image Saved Successfully!</string>
+    <string name="save_image_failed">Failed to save Image</string>
+    <string name="opacity">Opacity</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
