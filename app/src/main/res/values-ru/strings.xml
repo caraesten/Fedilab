@@ -872,14 +872,14 @@
     <string name="label_eraser">Ластик</string>
     <string name="label_text">Текст</string>
     <string name="label_filter">Фильтр</string>
-    <string name="label_adjust">Adjust</string>
+    <string name="label_adjust">Подогнать</string>
     <string name="label_brush">Кисть</string>
     <string name="confirm_exit_editing">Вы уверены, что хотите выйти без сохранения изображения?</string>
     <string name="discard">Сбросить</string>
     <string name="saving">Сохранение…</string>
     <string name="image_saved">Изображение сохранено успешно!</string>
     <string name="save_image_failed">Не удалось сохранить изображение</string>
-    <string name="opacity">Opacity</string>
+    <string name="opacity">Затенение</string>
     <string name="label_crop">Обрезка</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
