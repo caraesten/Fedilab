@@ -103,4 +103,5 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
     implementation 'ja.burhanrashid52:photoeditor:0.3.3'
+    implementation 'com.github.yalantis:ucrop:2.2.3'
 }

@@ -59,8 +59,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.yalantis.ucrop.UCrop;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.SaveSettings;
@@ -74,7 +79,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         StickerBSFragment.StickerListener, EditingToolsAdapter.OnItemSelected, FilterListener {
 
 
-    public static final String EXTRA_IMAGE_PATHS = "extra_image_paths";
     private static final int CAMERA_REQUEST = 52;
     private static final int PICK_REQUEST = 53;
     private PhotoEditor mPhotoEditor;
@@ -83,7 +87,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     private EmojiBSFragment mEmojiBSFragment;
     private StickerBSFragment mStickerBSFragment;
     private TextView mTxtCurrentTool;
-    private Typeface mWonderFont;
     private RecyclerView mRvTools, mRvFilters;
     private EditingToolsAdapter mEditingToolsAdapter = new EditingToolsAdapter(this);
     private FilterViewAdapter mFilterViewAdapter = new FilterViewAdapter(this);
@@ -91,6 +94,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
     private Uri uri;
+    private String tempname;
     private boolean exit;
 
     @SuppressLint("MissingPermission")
@@ -133,7 +137,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
         initViews();
 
-        mWonderFont = Typeface.createFromAsset(getAssets(), "beyond_wonderland.ttf");
+        Typeface mWonderFont = Typeface.createFromAsset(getAssets(), "beyond_wonderland.ttf");
 
         mPropertiesBSFragment = new PropertiesBSFragment();
         mEmojiBSFragment = new EmojiBSFragment();
@@ -157,7 +161,11 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                 .setPinchTextScalable(true) // set flag to make text scalable when pinch
                 .setDefaultEmojiTypeface(mEmojiTypeFace)
+                .setDefaultTextTypeface(mWonderFont)
                 .build(); // build photo editor sdk
+
+
+
         mPhotoEditor.setOnPhotoEditorListener(this);
 
         //Set Image Dynamically
@@ -323,6 +331,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CAMERA_REQUEST:
@@ -338,6 +347,20 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                         mPhotoEditorView.getSource().setImageBitmap(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }
+                    break;
+                case UCrop.REQUEST_CROP:
+                    final Uri resultUri = UCrop.getOutput(data);
+                    if( resultUri != null) {
+                        mPhotoEditorView.getSource().setImageURI(resultUri);
+                        File fdelete = new File(uri.getPath());
+                        if (fdelete.exists()) {
+                           fdelete.delete();
+                        }
+                        uri = resultUri;
+                        String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
+                        tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
+
                     }
                     break;
             }
@@ -445,8 +468,16 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
             case STICKER:
                 mStickerBSFragment.show(getSupportFragmentManager(), mStickerBSFragment.getTag());
                 break;
+            case CROP:
+                String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
+                tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
+                UCrop.of(uri, Uri.fromFile(new File(getCacheDir(),tempname)))
+                        .start(PhotoEditorActivity.this);
+                break;
         }
     }
+
+
 
 
     void showFilter(boolean isVisible) {
