@@ -836,10 +836,10 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="display_timeline">Zeitleisten anzeigen</string>
     <string name="set_display_bot_icon">Toots von Bot-Konten kennzeichnen</string>
     <string name="add_tags">Schlagwörter verwalten</string>
-    <string name="set_remember_position">Position der Startseiten-Zeitleiste merken</string>
+    <string name="set_remember_position">Position innerhalb der Start-Zeitleiste merken</string>
     <string name="history">Verlauf</string>
     <string name="playlists">Wiedergabelisten</string>
-    <string name="display_name">Anzeigenamen</string>
+    <string name="display_name">Anzeigename</string>
     <string name="privacy">Datenschutz</string>
     <string name="create">Erstellen</string>
     <string name="action_playlist_add">Sie haben noch keine Wiedergabelisten. Klicken Sie auf das Symbol „➕”, um eine neue Wiedergabeliste hinzuzufügen.</string>
