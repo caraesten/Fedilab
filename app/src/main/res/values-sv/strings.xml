@@ -856,7 +856,7 @@
     <string name="error_channel_mandatory">Kanalen krävs när spellistan är offentliga.</string>
     <string name="action_playlist_create">Skapa spellista</string>
     <string name="action_playlist_empty_content">Det finns ingenting i denna spellista ännu.</string>
-    <string name="edit_media">Edit media</string>
+    <string name="edit_media">Editera media</string>
     <string name="redo">redo</string>
     <string name="gallery">Gallery</string>
     <string name="label_emoji">Emoji</string>
