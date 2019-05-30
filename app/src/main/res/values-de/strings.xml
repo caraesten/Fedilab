@@ -857,11 +857,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Anpassen</string>
     <string name="label_brush">Pinsel</string>
-    <string name="confirm_exit_editing">Möchten Sie beenden ohne das Bild zu speichern?</string>
+    <string name="confirm_exit_editing">Möchten Sie die Grafik wirklich verlassen, ohne sie zu speichern?</string>
     <string name="discard">Verwerfen</string>
-    <string name="saving">Speichern...</string>
-    <string name="image_saved">Das Bild wurde erfolgreich gespeichert!</string>
-    <string name="save_image_failed">Das Bild konnte nicht gespeichert werden</string>
+    <string name="saving">Speichern …</string>
+    <string name="image_saved">Grafik erfolgreich gespeichert!</string>
+    <string name="save_image_failed">Grafik konnte nicht gespeichert werden</string>
     <string name="opacity">Deckkraft</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
