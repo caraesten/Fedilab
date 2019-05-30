@@ -1,7 +1,6 @@
 package app.fedilab.android.imageeditor.tools;
 
 import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +28,10 @@ public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapte
         mOnItemSelected = onItemSelected;
         mToolList.add(new ToolModel("Brush", R.drawable.ic_brush_edit, ToolType.BRUSH));
         mToolList.add(new ToolModel("Text", R.drawable.ic_text, ToolType.TEXT));
-        mToolList.add(new ToolModel("Eraser", R.drawable.ic_eraser, ToolType.ERASER));
+       // mToolList.add(new ToolModel("Eraser", R.drawable.ic_eraser, ToolType.ERASER));
         mToolList.add(new ToolModel("Filter", R.drawable.ic_photo_filter, ToolType.FILTER));
-        mToolList.add(new ToolModel("Emoji", R.drawable.ic_insert_emoticon, ToolType.EMOJI));
-        mToolList.add(new ToolModel("Sticker", R.drawable.ic_sticker, ToolType.STICKER));
+        mToolList.add(new ToolModel("Emoji", R.drawable.ic_insert_emoticon_media, ToolType.EMOJI));
+        //mToolList.add(new ToolModel("Sticker", R.drawable.ic_sticker, ToolType.STICKER));
     }
 
     public interface OnItemSelected {

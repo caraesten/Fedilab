@@ -22,7 +22,7 @@
         android:id="@+id/txtFilterName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#90000000"
+        android:background="#606984"
         android:gravity="center"
         android:padding="4dp"
         android:textColor="@android:color/white"

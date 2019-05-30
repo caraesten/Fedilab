@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.Window;
 
 
@@ -52,13 +51,10 @@ import android.support.transition.TransitionManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 
 
 import java.io.File;
@@ -128,8 +124,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
 
 
-
-       // makeFullScreen();
         setContentView(R.layout.activity_photoeditor);
 
         initViews();
@@ -214,27 +208,22 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
     @Override
     public void onAddViewListener(ViewType viewType, int numberOfAddedViews) {
-        Log.d(Helper.TAG, "onAddViewListener() called with: viewType = [" + viewType + "], numberOfAddedViews = [" + numberOfAddedViews + "]");
     }
 
     @Override
     public void onRemoveViewListener(int numberOfAddedViews) {
-        Log.d(Helper.TAG, "onRemoveViewListener() called with: numberOfAddedViews = [" + numberOfAddedViews + "]");
     }
 
     @Override
     public void onRemoveViewListener(ViewType viewType, int numberOfAddedViews) {
-        Log.d(Helper.TAG, "onRemoveViewListener() called with: viewType = [" + viewType + "], numberOfAddedViews = [" + numberOfAddedViews + "]");
     }
 
     @Override
     public void onStartViewChangeListener(ViewType viewType) {
-        Log.d(Helper.TAG, "onStartViewChangeListener() called with: viewType = [" + viewType + "]");
     }
 
     @Override
     public void onStopViewChangeListener(ViewType viewType) {
-        Log.d(Helper.TAG, "onStopViewChangeListener() called with: viewType = [" + viewType + "]");
     }
 
     @Override
@@ -266,7 +255,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_REQUEST);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.toot_select_image)), PICK_REQUEST);
                 break;
         }
     }
@@ -274,7 +263,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     @SuppressLint("MissingPermission")
     private void saveImage() {
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            showLoading("Saving...");
+            showLoading(getString(R.string.saving));
             File file = new File(Environment.getExternalStorageDirectory()
                     + File.separator + ""
                     + System.currentTimeMillis() + ".png");
@@ -290,14 +279,14 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                     @Override
                     public void onSuccess(@NonNull String imagePath) {
                         hideLoading();
-                        showSnackbar("Image Saved Successfully");
+                        showSnackbar(getString(R.string.image_saved));
                         mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
                     }
 
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         hideLoading();
-                        showSnackbar("Failed to save Image");
+                        showSnackbar(getString(R.string.save_image_failed));
                     }
                 });
             } catch (IOException e) {
@@ -371,21 +360,21 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
     private void showSaveDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you want to exit without saving image ?");
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        builder.setMessage( getString(R.string.confirm_exit_editing));
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 saveImage();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
 
-        builder.setNeutralButton("Discard", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.discard, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
