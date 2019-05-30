@@ -863,6 +863,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="image_saved">Grafik erfolgreich gespeichert!</string>
     <string name="save_image_failed">Grafik konnte nicht gespeichert werden</string>
     <string name="opacity">Deckkraft</string>
+    <string name="label_crop">Crop</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
