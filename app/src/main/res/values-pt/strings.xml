@@ -847,14 +847,14 @@
     <string name="add_tags">Gerenciar tags</string>
     <string name="set_remember_position">Lembrar a posição na página inicial</string>
     <string name="history">Histórico</string>
-    <string name="playlists">Playlists</string>
+    <string name="playlists">Listas de reprodução</string>
     <string name="display_name">Nome de exibição</string>
     <string name="privacy">Privacidade</string>
     <string name="create">Criar</string>
     <string name="action_playlist_add">Sem listas de reprodução. Você pode criar uma tocando no botão \"+\".</string>
-    <string name="error_display_name">Você deve ter um Nome de Exibição!</string>
+    <string name="error_display_name">Você deve inserir um nome de exibição!</string>
     <string name="error_channel_mandatory">O canal é necessário quando a lista é pública.</string>
-    <string name="action_playlist_create">Criar lista</string>
+    <string name="action_playlist_create">Criar uma lista</string>
     <string name="action_playlist_empty_content">Lista vazia.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
