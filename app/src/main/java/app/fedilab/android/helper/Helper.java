@@ -408,6 +408,7 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
+
     //Proxy
     public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
     public static final String SET_PROXY_TYPE = "set_proxy_type";
@@ -427,6 +428,7 @@ public class Helper {
     public static final String INTENT_ACTION = "intent_action";
     public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
     public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
+    public static final String INTENT_SEND_MODIFIED_IMAGE = "intent_send_modified_image";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_ACTION = "receive_action";

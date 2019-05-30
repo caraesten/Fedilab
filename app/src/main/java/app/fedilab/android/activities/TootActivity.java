@@ -18,10 +18,13 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,6 +43,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -108,6 +112,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -813,11 +818,26 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         });
 
         toot_space_left.setText(String.valueOf(countLength()));
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(imageReceiver,
+                        new IntentFilter(Helper.INTENT_SEND_MODIFIED_IMAGE));
     }
 
+
+    private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String imgpath = intent.getStringExtra("imgpath");
+            if( imgpath != null)
+                new asyncPicture(TootActivity.this, account, Uri.fromFile(new File(imgpath))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    };
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(imageReceiver);
     }
 
 

@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Window;
 
 
@@ -53,6 +54,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,6 +90,8 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     private ConstraintLayout mRootView;
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
+    private Uri uri;
+    private boolean exit;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -120,9 +124,10 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         if( path == null) {
             finish();
         }
-        Uri uri = Uri.parse(path);
+        uri = Uri.parse(path);
 
 
+        exit = false;
 
         setContentView(R.layout.activity_photoeditor);
 
@@ -157,6 +162,17 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
         //Set Image Dynamically
         mPhotoEditorView.getSource().setImageURI(uri);
+
+
+        Button send = findViewById(R.id.send);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exit = true;
+                saveImage();
+            }
+        });
     }
 
     private void initViews() {
@@ -264,9 +280,11 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     private void saveImage() {
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading(getString(R.string.saving));
-            File file = new File(Environment.getExternalStorageDirectory()
-                    + File.separator + ""
-                    + System.currentTimeMillis() + ".png");
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+            String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
+
+            File file = new File(myDir+"/"+filename);
             try {
                 file.createNewFile();
 
@@ -281,6 +299,12 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                         hideLoading();
                         showSnackbar(getString(R.string.image_saved));
                         mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
+                        if( exit ){
+                            Intent intentImage = new Intent(Helper.INTENT_SEND_MODIFIED_IMAGE);
+                            intentImage.putExtra("imgpath", imagePath);
+                            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentImage);
+                            finish();
+                        }
                     }
 
                     @Override
