@@ -864,9 +864,9 @@
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Adjust</string>
     <string name="label_brush">Brush</string>
-    <string name="confirm_exit_editing">Are you want to exit without saving image?</string>
+    <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
     <string name="discard">Discard</string>
-    <string name="saving">Saving...</string>
+    <string name="saving">Saving…</string>
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
