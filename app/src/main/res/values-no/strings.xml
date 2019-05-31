@@ -862,6 +862,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="save_image_failed">Klarte ikke å lagre bildet</string>
     <string name="opacity">Opasitet</string>
     <string name="label_crop">Beskjær</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
