@@ -865,11 +865,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="label_brush">Pinceau</string>
     <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
     <string name="discard">Annuler</string>
-    <string name="saving">Saving…</string>
-    <string name="image_saved">Image Saved Successfully!</string>
-    <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
+    <string name="saving">Enregistrement …</string>
+    <string name="image_saved">Image enregistrée avec succès !</string>
+    <string name="save_image_failed">Échec de l\'enregistrement de l\'image</string>
+    <string name="opacity">Transparence</string>
+    <string name="label_crop">Rogner</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
