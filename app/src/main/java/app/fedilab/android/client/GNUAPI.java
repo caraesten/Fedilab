@@ -1395,7 +1395,8 @@ public class GNUAPI {
                 intentBC.putExtras(b);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                new TimelineCacheDAO(context, db).update(targetedId, resp);
+                Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                new TimelineCacheDAO(context, db).update(targetedId, resp, account.getId(), account.getToken());
             }else if( statusAction == API.StatusAction.UNSTATUS){
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new TimelineCacheDAO(context, db).remove(targetedId);

@@ -819,7 +819,8 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", statusId)), 60, null, prefKeyOauthTokenT);
             Status status = parseStatuses(context, new JSONObject(response));
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            new TimelineCacheDAO(context, db).update(status.getId(), response);
+            Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+            new TimelineCacheDAO(context, db).update(status.getId(), response, account.getId(), account.getInstance());
             statuses.add(status);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1078,7 +1079,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response), true);
+            statuses = parseStatusesForCache(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -2203,7 +2204,8 @@ public class API {
                     intentBC.putExtras(b);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    new TimelineCacheDAO(context, db).update(targetedId, resp);
+                    Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                    new TimelineCacheDAO(context, db).update(targetedId, resp, account.getId(), account.getInstance());
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
@@ -2366,8 +2368,9 @@ public class API {
             intentBC.putExtras(b);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
+            Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
             if (alreadyCached != null) {
-                new TimelineCacheDAO(context, db).update(status.getId(), response);
+                new TimelineCacheDAO(context, db).update(status.getId(), response, account.getId(), account.getInstance());
             }
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             return parsePoll(context, new JSONObject(response));
@@ -3856,7 +3859,7 @@ public class API {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private static List<Status> parseStatuses(Context context, JSONArray jsonArray, boolean cached){
+    private List<Status> parseStatusesForCache(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -3865,12 +3868,11 @@ public class API {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
-                if( cached) {
-                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
-                    if (alreadyCached == null) {
-                        new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString());
-                    }
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
+                if (alreadyCached == null) {
+                    Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                    new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString(), account.getId(), account.getInstance());
                 }
                 i++;
                 statuses.add(status);
