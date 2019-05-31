@@ -16,4 +16,5 @@
     <dimen name="settings_category_label_margin">2dp</dimen>
     <dimen name="activity_vertical_margin_login">50dp</dimen>
     <dimen name="badge_count_textsize">12sp</dimen>
+    <dimen name="editor_size">35dp</dimen>
 </resources>

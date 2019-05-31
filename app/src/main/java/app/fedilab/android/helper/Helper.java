@@ -384,6 +384,7 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EXPAND_MEDIA = "set_expand_media";
+    public static final String SET_PHOTO_EDITOR = "set_photo_editor";
     public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_DISPLAY_NEW_BADGE = "set_display_new_badge";
     public static final String SET_DISPLAY_BOT_ICON = "set_display_bot_icon";
@@ -408,6 +409,7 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
+
     //Proxy
     public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
     public static final String SET_PROXY_TYPE = "set_proxy_type";
@@ -427,6 +429,7 @@ public class Helper {
     public static final String INTENT_ACTION = "intent_action";
     public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
     public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
+    public static final String INTENT_SEND_MODIFIED_IMAGE = "intent_send_modified_image";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_ACTION = "receive_action";

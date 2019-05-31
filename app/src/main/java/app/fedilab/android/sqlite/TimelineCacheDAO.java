@@ -53,10 +53,7 @@ public class TimelineCacheDAO {
      * Insert a status in database
      * @return boolean
      */
-    public long insert(String statusId, String jsonString) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = Helper.getLiveInstance(context);
+    public long insert(String statusId, String jsonString, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_STATUS_ID, statusId);
@@ -78,10 +75,7 @@ public class TimelineCacheDAO {
     /**
      * Update a status in database
      */
-    public void update(String statusId, String jsonString) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = Helper.getLiveInstance(context);
+    public void update(String statusId, String jsonString, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_DATE, Helper.dateToString(new Date()));
         values.put(Sqlite.COL_CACHE, jsonString);

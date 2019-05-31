@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 274
-        versionName "2.2.0"
+        versionCode 276
+        versionName "2.3.0"
         multiDexEnabled true
         renderscriptTargetApi 28 as int
         renderscriptSupportModeEnabled true
@@ -102,4 +102,6 @@ dependencies {
     implementation 'com.github.stom79:horizontalbargraph:1.5'
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
+    implementation 'ja.burhanrashid52:photoeditor:0.3.3'
+    implementation 'com.github.yalantis:ucrop:2.2.3'
 }

@@ -464,6 +464,20 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean photo_editor = sharedpreferences.getBoolean(Helper.SET_PHOTO_EDITOR, true);
+        final CheckBox set_photo_editor = rootView.findViewById(R.id.set_photo_editor);
+        set_photo_editor.setChecked(photo_editor);
+
+        set_photo_editor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_PHOTO_EDITOR, set_photo_editor.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
         final CheckBox set_remember_position = rootView.findViewById(R.id.set_remember_position);
         set_remember_position.setChecked(remember_position_home);
