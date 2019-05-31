@@ -112,6 +112,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -908,9 +909,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoFileUri = FileProvider.getUriForFile(this,
-                        "app.fedilab.android.fileProvider",
-                        photoFile);
+                if (!BuildConfig.DONATIONS) {
+                    photoFileUri = FileProvider.getUriForFile(this,
+                            "app.fedilab.android.fileProvider",
+                            photoFile);
+                }else {
+                    photoFileUri = FileProvider.getUriForFile(this,
+                            "fr.gouv.etalab.mastodon.fileProvider",
+                            photoFile);
+                }
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
