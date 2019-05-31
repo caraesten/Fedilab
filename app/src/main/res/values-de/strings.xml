@@ -864,7 +864,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="save_image_failed">Grafik konnte nicht gespeichert werden</string>
     <string name="opacity">Deckkraft</string>
     <string name="label_crop">Zuschneiden</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="set_photo_editor">Fotobearbeitung aktivieren</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
