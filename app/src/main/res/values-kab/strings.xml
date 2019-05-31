@@ -873,6 +873,7 @@
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
     <string name="label_crop">Gzem</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
