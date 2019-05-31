@@ -836,11 +836,11 @@
     <string name="cached_status">高速缓冲的状态</string>
     <string name="set_forward_tags">在回复中转发标签</string>
     <string name="set_long_press_media">长按来存储媒体</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_blur_sensitive">模糊敏感媒体</string>
+    <string name="set_display_timeline_in_list">在一个列表中显示时间线</string>
+    <string name="display_timeline">显示时间线</string>
+    <string name="set_display_bot_icon">在嘟文中标记机器人账户</string>
+    <string name="add_tags">管理标签</string>
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
