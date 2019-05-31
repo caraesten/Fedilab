@@ -3154,7 +3154,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 int matchEnd = matcherALink.end();
                 final String url = content.substring(matcherALink.start(1), matcherALink.end(1));
                 if( matchEnd <= content.length() && matchEnd >= matchStart){
-                    content = content.replaceFirst(url,"abcdefghijklmnopkrstuvw");
+                    content = content.replaceAll(Pattern.quote(url),"abcdefghijklmnopkrstuvw");
                 }
             }
         }
