@@ -977,6 +977,8 @@
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
+    <string name="move_media_left">Move the media to the left</string>
+    <string name="move_media_right">Move the media to the right</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

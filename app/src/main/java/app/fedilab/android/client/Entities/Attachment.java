@@ -32,28 +32,7 @@ public class Attachment implements Parcelable{
     private String meta;
     private String text_url;
     private String description;
-
-    public Attachment(Parcel in) {
-        id = in.readString();
-        type = in.readString();
-        url = in.readString();
-        remote_url = in.readString();
-        preview_url = in.readString();
-        text_url = in.readString();
-        description = in.readString();
-    }
-
-    public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
-        @Override
-        public Attachment createFromParcel(Parcel in) {
-            return new Attachment(in);
-        }
-
-        @Override
-        public Attachment[] newArray(int size) {
-            return new Attachment[size];
-        }
-    };
+    private String file_name;
 
     public Attachment() {
 
@@ -107,22 +86,6 @@ public class Attachment implements Parcelable{
         this.text_url = text_url;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(type);
-        dest.writeString(url);
-        dest.writeString(remote_url);
-        dest.writeString(preview_url);
-        dest.writeString(text_url);
-        dest.writeString(description);
-    }
-
     public String getDescription() {
         return description;
     }
@@ -138,4 +101,54 @@ public class Attachment implements Parcelable{
     public void setMeta(String meta) {
         this.meta = meta;
     }
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.type);
+        dest.writeString(this.url);
+        dest.writeString(this.remote_url);
+        dest.writeString(this.preview_url);
+        dest.writeString(this.meta);
+        dest.writeString(this.text_url);
+        dest.writeString(this.description);
+        dest.writeString(this.file_name);
+    }
+
+    protected Attachment(Parcel in) {
+        this.id = in.readString();
+        this.type = in.readString();
+        this.url = in.readString();
+        this.remote_url = in.readString();
+        this.preview_url = in.readString();
+        this.meta = in.readString();
+        this.text_url = in.readString();
+        this.description = in.readString();
+        this.file_name = in.readString();
+    }
+
+    public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
+        @Override
+        public Attachment createFromParcel(Parcel source) {
+            return new Attachment(source);
+        }
+
+        @Override
+        public Attachment[] newArray(int size) {
+            return new Attachment[size];
+        }
+    };
 }

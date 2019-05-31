@@ -52,6 +52,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -102,6 +103,7 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -234,6 +236,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private String newContent;
     private TextWatcher textWatcher;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -346,8 +349,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_picture_container.setLayoutParams(params);
                 } else {
                     ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
-                    params.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                    params.width = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                    params.height = (int) Helper.convertDpToPixel(200, getApplicationContext());
+                    params.width = (int) Helper.convertDpToPixel(200, getApplicationContext());
                     toot_picture_container.setLayoutParams(params);
                 }
             }
@@ -978,56 +981,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         intent.putExtra("imageUri", data.getData().toString());
                         intent.putExtras(b);
                         startActivity(intent);
-
-                       /* AlertDialog.Builder alertMedia = new AlertDialog.Builder(TootActivity.this, style);
-                        alertMedia.setTitle(R.string.edit_media);
-                        View view = getLayoutInflater().inflate(R.layout.popup_picture, null);
-                        alertMedia.setView(view);
-                        PhotoEditorView mPhotoEditorView = view.findViewById(R.id.photoEditorView);
-
-                        mPhotoEditorView.getSource().setImageURI(data.getData());
-
-                        PhotoEditor mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                                .setPinchTextScalable(true)
-                                .build();
-
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-                        filename = Helper.getFileName(TootActivity.this, data.getData());
-
-                        mPhotoEditor.saveAsFile(myDir + "/"+ filename, new PhotoEditor.OnSaveListener() {
-                            @Override
-                            public void onSuccess(@NonNull String imagePath) {
-                                new asyncPicture(TootActivity.this, account, Uri.fromFile(new File(imagePath))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-
-                            }
-                        });
-
-                        alertMedia.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                if( poll != null)
-                                    poll = null;
-                                poll_action.setVisibility(View.GONE);
-                                toot_picture.setVisibility(View.VISIBLE);
-                                if( attachments != null && attachments.size() > 0)
-                                    picture_scrollview.setVisibility(View.VISIBLE);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alertMedia.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-
-
-                            }
-                        });
-                        alertMedia.show();*/
                     }else {
                         Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     }
@@ -1683,6 +1636,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( poll != null) {
             toot.setPoll(poll);
         }else{
+            for(Attachment a: attachments)
+                Log.v(Helper.TAG,"--> getId: " + a.getId());
             toot.setMedia_attachments(attachments);
         }
         if( timestamp == null)
@@ -1823,81 +1778,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         if( !alreadyAdded){
             toot_picture_container.setVisibility(View.VISIBLE);
-            String url = attachment.getPreview_url();
-            if (url == null || url.trim().equals(""))
-                url = attachment.getUrl();
-
-
-            final ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setId(Integer.parseInt(attachment.getId()));
-
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                if( fileName != null && filesMap.containsKey(fileName)){
-                    Uri uri = filesMap.get(fileName);
-                    Glide.with(imageView.getContext())
-                            .asBitmap()
-                            .load(uri)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    imageView.setImageBitmap(resource);
-                                }
-                            });
-                }
-
-            }else {
-                Glide.with(imageView.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                imageView.setImageBitmap(resource);
-                            }
-                        });
-            }
-
-
-
-            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            imParams.setMargins(20, 5, 20, 5);
-            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-            if (show_media_urls) {
-                //Adds the shorter text_url of attachment at the end of the toot 
-                int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
-                toot_space_left.setText(String.valueOf(countLength()));
-                //Moves the cursor
-                toot_content.setSelection(selectionBefore);
-            }
-            imageView.setTag(attachment.getId());
-            toot_picture_container.addView(imageView, attachments.size(), imParams);
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    showRemove(imageView.getId());
-                    return false;
-                }
-            });
-            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-            if (instanceVersion != null) {
-                Version currentVersion = new Version(instanceVersion);
-                Version minVersion = new Version("2.0");
-                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showAddDescription(attachment);
-                        }
-                    });
-                }
-            }
+            attachment.setFile_name(fileName);
             attachments.add(attachment);
-            addBorder();
+            redrawAttachment();
             if (attachments.size() < max_media_count)
                 toot_picture.setEnabled(true);
             toot_it.setEnabled(true);
@@ -1910,6 +1793,127 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             if( attachments.size() > index && attachment.getDescription() != null) {
                 attachments.get(index).setDescription(attachment.getDescription());
             }
+        }
+    }
+
+    private void redrawAttachment(){
+        toot_picture_container.removeAllViews();
+        for(Attachment attachment : attachments){
+            Log.v(Helper.TAG,attachment.getUrl());
+            View media = getLayoutInflater().inflate(R.layout.toot_media, null);
+
+            ImageView imgmedia = media.findViewById(R.id.media_img);
+            ImageView back = media.findViewById(R.id.move_left);
+            ImageView next = media.findViewById(R.id.move_right);
+
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                Helper.changeDrawableColor(TootActivity.this, back, R.color.dark_text);
+                Helper.changeDrawableColor(TootActivity.this,  next, R.color.dark_text);
+            }else {
+                Helper.changeDrawableColor(TootActivity.this,  back, R.color.black);
+                Helper.changeDrawableColor(TootActivity.this,  next, R.color.black);
+            }
+            imgmedia.setId(Integer.parseInt(attachment.getId()));
+
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int positionAttachment = 0;
+                    for(Attachment val: attachments){
+                        if( Integer.parseInt(val.getId()) == imgmedia.getId()){
+                            break;
+                        }
+                        positionAttachment++;
+                    }
+                    if( positionAttachment > 0 ){
+                        Collections.swap(attachments, positionAttachment, positionAttachment-1);
+                        redrawAttachment();
+                    }
+
+
+                }
+            });
+
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int positionAttachment = 0;
+                    for(Attachment val: attachments){
+                        if( Integer.parseInt(val.getId()) == imgmedia.getId()){
+                            break;
+                        }
+                        positionAttachment++;
+                    }
+                    if( positionAttachment < (attachments.size()-1)){
+                        Collections.swap(attachments, positionAttachment, positionAttachment+1);
+                        redrawAttachment();
+                    }
+                }
+            });
+            for(Attachment a: attachments)
+                Log.v(Helper.TAG,"getId: " + a.getId());
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                if( attachment.getFile_name() != null && filesMap.containsKey(attachment.getFile_name())){
+                    Uri uri = filesMap.get(attachment.getFile_name());
+                    Glide.with(imgmedia.getContext())
+                            .asBitmap()
+                            .load(uri)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    imgmedia.setImageBitmap(resource);
+                                }
+                            });
+                }
+
+            }else {
+                Glide.with(imgmedia.getContext())
+                        .asBitmap()
+                        .load(attachment.getUrl())
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                imgmedia.setImageBitmap(resource);
+                            }
+                        });
+            }
+
+
+            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
+            if (show_media_urls) {
+                //Adds the shorter text_url of attachment at the end of the toot 
+                int selectionBefore = toot_content.getSelectionStart();
+                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
+                toot_space_left.setText(String.valueOf(countLength()));
+                //Moves the cursor
+                toot_content.setSelection(selectionBefore);
+            }
+            imgmedia.setTag(attachment.getId());
+            toot_picture_container.addView(media);
+            imgmedia.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    showRemove(imgmedia.getId());
+                    return false;
+                }
+            });
+            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+            if (instanceVersion != null) {
+                Version currentVersion = new Version(instanceVersion);
+                Version minVersion = new Version("2.0");
+                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                    imgmedia.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showAddDescription(attachment);
+                        }
+                    });
+                }
+            }
+            addBorder();
         }
     }
 
@@ -2426,63 +2430,10 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
-            int i = 0 ;
-            for(final Attachment attachment: attachments){
-                String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
-                    url = attachment.getUrl();
-                final ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setId(Integer.parseInt(attachment.getId()));
-
-                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                imParams.setMargins(20, 5, 20, 5);
-                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                imageView.setAdjustViewBounds(true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                toot_picture_container.addView(imageView, i, imParams);
-
-                Glide.with(imageView.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                imageView.setImageBitmap(resource);
-                            }
-                        });
-                imageView.setTag(attachment.getId());
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                        if (instanceVersion != null) {
-                            Version currentVersion = new Version(instanceVersion);
-                            Version minVersion = new Version("2.0");
-                            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                                imageView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        showAddDescription(attachment);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
-                imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        showRemove(imageView.getId());
-                        return false;
-                    }
-                });
-                addBorder();
-                if( attachments.size() < max_media_count)
-                    toot_picture.setEnabled(true);
-                toot_sensitive.setVisibility(View.VISIBLE);
-                i++;
-            }
+            redrawAttachment();
+            if( attachments.size() < max_media_count)
+                toot_picture.setEnabled(true);
+            toot_sensitive.setVisibility(View.VISIBLE);
         }else {
             toot_picture_container.setVisibility(View.GONE);
         }
@@ -2576,63 +2527,10 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
-            int i = 0 ;
-            for(final Attachment attachment: attachments){
-                String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
-                    url = attachment.getUrl();
-                final ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setId(Integer.parseInt(attachment.getId()));
-
-                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                imParams.setMargins(20, 5, 20, 5);
-                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                imageView.setAdjustViewBounds(true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                toot_picture_container.addView(imageView, i, imParams);
-
-                Glide.with(imageView.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                imageView.setImageBitmap(resource);
-                            }
-                        });
-                imageView.setTag(attachment.getId());
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                        if (instanceVersion != null) {
-                            Version currentVersion = new Version(instanceVersion);
-                            Version minVersion = new Version("2.0");
-                            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                                imageView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        showAddDescription(attachment);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
-                imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        showRemove(imageView.getId());
-                        return false;
-                    }
-                });
-                addBorder();
-                if( attachments.size() < max_media_count)
-                    toot_picture.setEnabled(true);
-                toot_sensitive.setVisibility(View.VISIBLE);
-                i++;
-            }
+            redrawAttachment();
+            if( attachments.size() < max_media_count)
+                toot_picture.setEnabled(true);
+            toot_sensitive.setVisibility(View.VISIBLE);
         }else {
             toot_picture_container.setVisibility(View.GONE);
         }
@@ -3048,12 +2946,16 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
+            Helper.changeDrawableColor(TootActivity.this,  R.drawable.ic_arrow_back, R.color.dark_text);
+            Helper.changeDrawableColor(TootActivity.this,  R.drawable.ic_arrow_forward, R.color.dark_text);
             //bottom action
             changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.dark_text);
             changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.dark_text);
             changeDrawableColor(TootActivity.this, findViewById(R.id.toot_visibility), R.color.dark_text);
             changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.dark_text);
             Helper.changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.dark_text);
+
+
 
         }else {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
@@ -3065,6 +2967,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
+            Helper.changeDrawableColor(TootActivity.this,  R.drawable.ic_arrow_back, R.color.black);
+            Helper.changeDrawableColor(TootActivity.this,  R.drawable.ic_arrow_forward, R.color.black);
             //bottom action
             changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.black);
             changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.black);
@@ -3119,22 +3023,19 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     }
 
     private void addBorder(){
-        for (int i = 0; i < toot_picture_container.getChildCount(); i++) {
-            View v = toot_picture_container.getChildAt(i);
+        for (int i = 0; i < attachments.size(); i++) {
+            View v = toot_picture_container.findViewById(Integer.parseInt(attachments.get(i).getId()));
             if (v instanceof ImageView) {
-                for(Attachment attachment: attachments){
-                    if(attachment.getType().toLowerCase().equals("image"))
-                    if( v.getTag().toString().trim().equals(attachment.getId().trim())){
+                if(attachments.get(i).getType().toLowerCase().equals("image"))
+                    if( v.getTag().toString().trim().equals(attachments.get(i).getId().trim())){
                         int borderSize = (int) Helper.convertDpToPixel(1, TootActivity.this);
                         int borderSizeTop = (int) Helper.convertDpToPixel(6, TootActivity.this);
                         v.setPadding(borderSize,borderSizeTop,borderSize,borderSizeTop);
-                        if( attachment.getDescription() == null ||attachment.getDescription().trim().equals("null") || attachment.getDescription().trim().equals("")) {
+                        if( attachments.get(i).getDescription() == null ||attachments.get(i).getDescription().trim().equals("null") || attachments.get(i).getDescription().trim().equals("")) {
                             v.setBackgroundColor( ContextCompat.getColor(TootActivity.this, R.color.red_1));
                         }else
                             v.setBackgroundColor(ContextCompat.getColor(TootActivity.this, R.color.green_1));
                     }
-                }
-
             }
         }
 

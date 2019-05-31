@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 
 import com.google.gson.JsonArray;
@@ -2405,6 +2406,7 @@ public class API {
             for(Attachment attachment: status.getMedia_attachments())
                 mediaArray.add(attachment.getId());
             jsonObject.add("media_ids", mediaArray);
+            Log.v(Helper.TAG,"jsonObject: " + jsonObject);
         }
         if( status.getScheduled_at() != null)
             jsonObject.addProperty("scheduled_at", status.getScheduled_at());
