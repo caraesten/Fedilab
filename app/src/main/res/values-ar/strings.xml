@@ -888,6 +888,7 @@
     <string name="save_image_failed">فشل في حفظ الصورة</string>
     <string name="opacity">الشفافيّة</string>
     <string name="label_crop">اقتصاص</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
