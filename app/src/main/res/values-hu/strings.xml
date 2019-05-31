@@ -871,6 +871,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="save_image_failed">Nem sikerült elmenteni a képet</string>
     <string name="opacity">Áttetszőség</string>
     <string name="label_crop">Crop</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
