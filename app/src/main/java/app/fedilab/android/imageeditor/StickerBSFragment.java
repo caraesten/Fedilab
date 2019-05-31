@@ -82,7 +82,7 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
 
     public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHolder> {
 
-        int[] stickerList = new int[]{R.drawable.aa, R.drawable.bb};
+        int[] stickerList = new int[]{R.drawable.mastodonlogo, R.drawable.fedilab_notification_icon};
 
         @NotNull
         @Override
