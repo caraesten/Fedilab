@@ -113,7 +113,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.BuildConfig;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -161,8 +160,6 @@ import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
-import ja.burhanrashid52.photoeditor.PhotoEditor;
-import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
@@ -943,6 +940,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean photo_editor = sharedpreferences.getBoolean(Helper.SET_PHOTO_EDITOR, true);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null) {
@@ -972,12 +971,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         InputStream inputStream = getContentResolver().openInputStream(data.getData());
                         new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, account, TootActivity.this);
                     } else if (mime != null && mime.toLowerCase().contains("image")) {
-
-                        Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
-                        Bundle b = new Bundle();
-                        intent.putExtra("imageUri", data.getData().toString());
-                        intent.putExtras(b);
-                        startActivity(intent);
+                        if( photo_editor) {
+                            Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
+                            Bundle b = new Bundle();
+                            intent.putExtra("imageUri", data.getData().toString());
+                            intent.putExtras(b);
+                            startActivity(intent);
+                        }else{
+                            new asyncPicture(TootActivity.this, account, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                     }else {
                         Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     }
@@ -996,12 +998,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
-            Bundle b = new Bundle();
-            intent.putExtra("imageUri", photoFileUri.toString());
-            intent.putExtras(b);
-            startActivity(intent);
-            //new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if( photo_editor) {
+                Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
+                Bundle b = new Bundle();
+                intent.putExtra("imageUri", photoFileUri.toString());
+                intent.putExtras(b);
+                startActivity(intent);
+            }else {
+                new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         }
     }
 

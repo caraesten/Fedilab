@@ -384,6 +384,7 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EXPAND_MEDIA = "set_expand_media";
+    public static final String SET_PHOTO_EDITOR = "set_photo_editor";
     public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_DISPLAY_NEW_BADGE = "set_display_new_badge";
     public static final String SET_DISPLAY_BOT_ICON = "set_display_bot_icon";
