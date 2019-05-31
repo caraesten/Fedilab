@@ -860,6 +860,7 @@
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
+    <string name="label_crop">Crop</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
