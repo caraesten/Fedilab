@@ -137,7 +137,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
 
         initViews();
 
-        Typeface mWonderFont = Typeface.createFromAsset(getAssets(), "beyond_wonderland.ttf");
 
         mPropertiesBSFragment = new PropertiesBSFragment();
         mEmojiBSFragment = new EmojiBSFragment();
@@ -161,7 +160,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
                 .setPinchTextScalable(true) // set flag to make text scalable when pinch
                 .setDefaultEmojiTypeface(mEmojiTypeFace)
-                .setDefaultTextTypeface(mWonderFont)
                 .build(); // build photo editor sdk
 
 

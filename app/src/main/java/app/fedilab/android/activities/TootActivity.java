@@ -978,56 +978,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         intent.putExtra("imageUri", data.getData().toString());
                         intent.putExtras(b);
                         startActivity(intent);
-
-                       /* AlertDialog.Builder alertMedia = new AlertDialog.Builder(TootActivity.this, style);
-                        alertMedia.setTitle(R.string.edit_media);
-                        View view = getLayoutInflater().inflate(R.layout.popup_picture, null);
-                        alertMedia.setView(view);
-                        PhotoEditorView mPhotoEditorView = view.findViewById(R.id.photoEditorView);
-
-                        mPhotoEditorView.getSource().setImageURI(data.getData());
-
-                        PhotoEditor mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                                .setPinchTextScalable(true)
-                                .build();
-
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-                        filename = Helper.getFileName(TootActivity.this, data.getData());
-
-                        mPhotoEditor.saveAsFile(myDir + "/"+ filename, new PhotoEditor.OnSaveListener() {
-                            @Override
-                            public void onSuccess(@NonNull String imagePath) {
-                                new asyncPicture(TootActivity.this, account, Uri.fromFile(new File(imagePath))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-
-                            }
-                        });
-
-                        alertMedia.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                if( poll != null)
-                                    poll = null;
-                                poll_action.setVisibility(View.GONE);
-                                toot_picture.setVisibility(View.VISIBLE);
-                                if( attachments != null && attachments.size() > 0)
-                                    picture_scrollview.setVisibility(View.VISIBLE);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alertMedia.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-
-
-                            }
-                        });
-                        alertMedia.show();*/
                     }else {
                         Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     }
@@ -1046,7 +996,12 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
+            Bundle b = new Bundle();
+            intent.putExtra("imageUri", photoFileUri.toString());
+            intent.putExtras(b);
+            startActivity(intent);
+            //new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
