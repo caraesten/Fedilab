@@ -870,6 +870,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="save_image_failed">Échec de l\'enregistrement de l\'image</string>
     <string name="opacity">Transparence</string>
     <string name="label_crop">Rogner</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
