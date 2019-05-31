@@ -873,8 +873,8 @@
     <string name="action_playlist_empty_content">قائمة التشغيل هذه فارغة حاليا.</string>
     <string name="edit_media">Edit media</string>
     <string name="redo">redo</string>
-    <string name="gallery">Gallery</string>
-    <string name="label_emoji">Emoji</string>
+    <string name="gallery">المعرض</string>
+    <string name="label_emoji">إيموجي</string>
     <string name="label_sticker">Sticker</string>
     <string name="label_eraser">Eraser</string>
     <string name="label_text">Text</string>
