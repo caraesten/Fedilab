@@ -867,6 +867,7 @@ và %d toots khác để khám phá</item>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>

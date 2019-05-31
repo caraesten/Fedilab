@@ -864,7 +864,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="image_saved">Imatge desada amb èxit!</string>
     <string name="save_image_failed">No s\'ha pogut desar la imatge</string>
     <string name="opacity">Opacitat</string>
-    <string name="label_crop">Crop</string>
+    <string name="label_crop">Retalla</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>

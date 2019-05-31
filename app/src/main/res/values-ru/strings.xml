@@ -881,6 +881,7 @@
     <string name="save_image_failed">Не удалось сохранить изображение</string>
     <string name="opacity">Затенение</string>
     <string name="label_crop">Обрезка</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

@@ -498,7 +498,7 @@
     <!-- Proxy -->
     <string name="proxy_set">Apṛuksi</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_enable">Rmed apṛuksi?</string>
     <string name="poxy_host">Asenneftaγ</string>
     <string name="poxy_port">Awwur</string>
     <string name="poxy_login">Isem n useqdac</string>
@@ -642,7 +642,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Ldi umuγ</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Uγal</string>
     <string name="app_logo">Alugu n wesnas</string>
     <string name="profile_picture">Tugna n umaγnu</string>
     <string name="profile_banner">Profile banner</string>
@@ -730,15 +730,15 @@
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
     <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
+    <string name="delete_video">Kkes tabidyutt</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
+    <string name="no_video_to_display">Ulac kra n tibidyutin ara d-nesken!</string>
     <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
+    <string name="share">Bḍu</string>
     <string name="my_pictures">Tugniwin-iw</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">From device</string>
@@ -753,7 +753,7 @@
     <string name="settings_category_label_interface">Agrudem</string>
     <string name="settings_category_label_hiddencontent">Hidden content</string>
     <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
+    <string name="contact">Inermisen</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
@@ -771,7 +771,7 @@
     <string name="add_public_comment">Add a public comment</string>
     <string name="send_comment">Send comment</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Aḍris aččuran</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logout account</string>
@@ -779,9 +779,9 @@
     <string name="all">Akk</string>
     <string name="about_opencollective">Support the app</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Normal</string>
+    <string name="copy_link">Nγel aseγwen</string>
+    <string name="connect_instance">Qqen</string>
+    <string name="set_normal">Amagnu</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
     <string name="set_mode">Set display mode</string>
@@ -806,7 +806,7 @@
     <string name="poll_choice_3">Choice 3</string>
     <string name="poll_choice_4">Choice 4</string>
     <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
-    <string name="done">Done</string>
+    <string name="done">Immed</string>
     <string name="poll_finish_at">end at %s</string>
     <string name="refresh_poll">Refresh poll</string>
     <string name="vote">Vote</string>
@@ -814,13 +814,13 @@
     <string name="notif_poll">A poll you have voted in has ended</string>
     <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_categories">Taggayin</string>
+    <string name="settings_category_notif_news">Isalen</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_advanced">Talqayt</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
-    <string name="peertube_menu">Peertube</string>
+    <string name="peertube_menu">PeerTube</string>
     <string name="hide_tab">Hide the tab</string>
     <string name="move_timeline">Move timeline</string>
     <string name="hide_timeline">Hide timeline</string>
@@ -849,7 +849,7 @@
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
     <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
+    <string name="privacy">Tabaḍnit</string>
     <string name="create">Create</string>
     <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
@@ -857,14 +857,14 @@
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
     <string name="edit_media">Edit media</string>
-    <string name="redo">redo</string>
+    <string name="redo">err-d</string>
     <string name="gallery">Gallery</string>
     <string name="label_emoji">Emoji</string>
     <string name="label_sticker">Sticker</string>
     <string name="label_eraser">Eraser</string>
-    <string name="label_text">Text</string>
+    <string name="label_text">Aḍris</string>
     <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
+    <string name="label_adjust">Seggem</string>
     <string name="label_brush">Brush</string>
     <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
     <string name="discard">Discard</string>
@@ -872,7 +872,8 @@
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
+    <string name="label_crop">Gzem</string>
+    <string name="set_photo_editor">Enable photo editor</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
@@ -882,13 +883,13 @@
         <item>Multiple choices</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 n tesdatin</item>
+        <item>30 n tesdatin</item>
+        <item>1 n usrag</item>
+        <item>6 n isragen</item>
+        <item>1 wass</item>
+        <item>3 n wussan</item>
+        <item>7 n wussan</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
