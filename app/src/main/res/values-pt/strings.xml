@@ -873,7 +873,7 @@
     <string name="save_image_failed">Falha ao salvar imagem.</string>
     <string name="opacity">Transparência</string>
     <string name="label_crop">Recortar</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="set_photo_editor">Ativar editor de fotos</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
