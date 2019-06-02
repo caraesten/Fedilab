@@ -276,14 +276,14 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
-            SpannableString name = new SpannableString("@tom79@mastodon.social");
+            SpannableString name = new SpannableString("@fedilab@framapiaf.org");
             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
             txt_developers.setText(name);
             txt_developers.setVisibility(View.VISIBLE);
             txt_developers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@tom79");
+                    Helper.openBrowser(AboutActivity.this, "https://framapiaf.org/@fedilab");
                 }
             });
             name = new SpannableString("@mmarif@mastodon.social");
