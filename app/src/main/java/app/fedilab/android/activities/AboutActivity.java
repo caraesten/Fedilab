@@ -152,7 +152,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/tom79/mastalab"));
+               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://framagit.org/tom79/fedilab"));
                startActivity(browserIntent);
            }
         });
@@ -268,7 +268,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         lv_support.setAdapter(accountSearchWebAdapterSupport);
 
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {
-            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "framapiaf.org", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "NateLikesSheep", "mastodon.art", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -276,14 +276,14 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
-            SpannableString name = new SpannableString("@tom79@mastodon.social");
+            SpannableString name = new SpannableString("@fedilab@framapiaf.org");
             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
             txt_developers.setText(name);
             txt_developers.setVisibility(View.VISIBLE);
             txt_developers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@tom79");
+                    Helper.openBrowser(AboutActivity.this, "https://framapiaf.org/@fedilab");
                 }
             });
             name = new SpannableString("@mmarif@mastodon.social");
@@ -375,7 +375,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             account = accounts.get(0);
             account.setFollowing(true);
             switch (account.getUsername()) {
-                case "tom79":
+                case "fedilab":
                     developers.add(account);
                     accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                     break;
