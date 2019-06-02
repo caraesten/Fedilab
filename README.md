@@ -1,4 +1,4 @@
-[![pipeline status](https://gitlab.com/tom79/mastalab/badges/develop/pipeline.svg)](https://gitlab.com/tom79/mastalab/commits/develop)
+[![pipeline status](https://framagit.org/tom79/fedilab/badges/develop/pipeline.svg)](https://framagit.org/tom79/fedilab/commits/develop)
 &nbsp;&nbsp;&nbsp;[![Crowdin](https://d322cqt584bo4o.cloudfront.net/mastalab/localized.svg)](https://crowdin.com/project/mastalab)
 &nbsp;&nbsp;&nbsp;[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 # Mastalab is a multi-accounts client for Mastodon, Pleroma, Peertube, GNU Social, Friendica and Pixelfed 
@@ -11,15 +11,15 @@
 
 ## Download
 
-[<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80"/>](https://play.google.com/store/apps/details?id=app.fedilab.android)
-&nbsp;&nbsp;[<img alt='Get it on Google Play' src='https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
+[<img alt='Get it on Google Play' src='./images/get-it-on-play.png' height="80"/>](https://play.google.com/store/apps/details?id=app.fedilab.android)
+&nbsp;&nbsp;[<img alt='Get it on F-Droid' src='./images/get-it-on-fdroid.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
 
 
 ## Resources
 
 [WIKI](https://fedilab.app/wiki/home/)
 
-[Release notes](https://gitlab.com/tom79/mastalab/tags)
+[Release notes](https://framagit.org/tom79/fedilab/tags)
 
 
 
@@ -38,9 +38,9 @@
 <img src="./images/device-2019-02-02-114910.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-Lead developer: [@tom79](https://mastodon.social/@tom79)
+Lead developer: [framapiaf.org/@fedilab](https://framapiaf.org/@fedilab)
 <br>
-Developer: [@kasun](https://mastodon.social/@kasun)
+Developer: [mastodon.social@kasun](https://mastodon.social/@kasun)
 
 ## Backers
 
