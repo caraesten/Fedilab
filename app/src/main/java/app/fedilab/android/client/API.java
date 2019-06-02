@@ -231,6 +231,7 @@ public class API {
                             case "PLEROMA":
                                 name = "MASTODON";
                                 break;
+                            case "GNUSOCIAL":
                             case "HUBZILLA":
                             case "REDMATRIX":
                             case "FRIENDICA":
