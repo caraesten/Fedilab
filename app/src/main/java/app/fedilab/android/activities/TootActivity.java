@@ -1717,7 +1717,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
         }
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
             MenuItem itemPoll = menu.findItem(R.id.action_poll);
             if( itemPoll != null)
                 itemPoll.setVisible(false);
