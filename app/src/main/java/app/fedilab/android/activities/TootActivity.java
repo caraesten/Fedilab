@@ -906,15 +906,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                if (!BuildConfig.DONATIONS) {
-                    photoFileUri = FileProvider.getUriForFile(this,
-                            "app.fedilab.android.fileProvider",
-                            photoFile);
-                }else {
-                    photoFileUri = FileProvider.getUriForFile(this,
-                            "fr.gouv.etalab.mastodon.fileProvider",
-                            photoFile);
-                }
+                photoFileUri = FileProvider.getUriForFile(this,
+                        "app.fedilab.android.fileProvider",
+                        photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
