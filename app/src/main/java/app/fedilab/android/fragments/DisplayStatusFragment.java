@@ -954,7 +954,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         ArrayList<Status> tmpStatuses = new ArrayList<>();
         for (Status tmpStatus : statuses) {
             //Put the toot at its place in the list (id desc)
-            if( !apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus) &&  tmpStatus.getCreated_at() != null && this.statuses.get(0).getCreated_at() != null && tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
+            if( !apiResponse.isFetchmore() && this.statuses.size() > 0 && !this.statuses.contains(tmpStatus) &&  tmpStatus.getCreated_at() != null && this.statuses.get(0).getCreated_at() != null && tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
                 if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);
