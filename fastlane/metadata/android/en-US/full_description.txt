@@ -1,4 +1,4 @@
-⚠️ The first field when logging in should be your instance hostname. For example: "mastodon.social" for the most popular Instance
+/!\ The first field when logging in should be your instance hostname. For example: "mastodon.social" for the most popular Instance
 
 
 - You need to create an account on an Instance first
