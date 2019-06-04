@@ -791,8 +791,7 @@
     <string name="create_poll">アンケートを作成</string>
     <string name="poll_choice_1">選択肢1</string>
     <string name="poll_choice_2">選択肢2</string>
-    <string name="poll_choice_3">選択肢3</string>
-    <string name="poll_choice_4">選択肢4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">アンケートには最低でも選択肢が2つ必要です！</string>
     <string name="done">完了</string>
     <string name="poll_finish_at">%sで締め切り</string>
@@ -862,6 +861,8 @@
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
     <string name="set_photo_editor">Enable photo editor</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
