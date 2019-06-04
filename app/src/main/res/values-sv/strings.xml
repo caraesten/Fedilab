@@ -803,7 +803,7 @@
     <string name="create_poll">Skapa en enkät</string>
     <string name="poll_choice_1">Val 1</string>
     <string name="poll_choice_2">Val 2</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">Val %d</string>
     <string name="poll_invalid_choices">Du behöver minst två val för mätningen!</string>
     <string name="done">Klar</string>
     <string name="poll_finish_at">sluta på %s</string>
@@ -873,8 +873,8 @@
     <string name="opacity">Genomskinlighet</string>
     <string name="label_crop">Beskär</string>
     <string name="set_photo_editor">Aktivera bildeditor</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">Lägg till ett val</string>
+    <string name="remove_poll_item">Ta bort det sista valet</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
