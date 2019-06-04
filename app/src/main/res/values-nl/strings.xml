@@ -800,8 +800,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="create_poll">Een poll maken</string>
     <string name="poll_choice_1">Keuze 1</string>
     <string name="poll_choice_2">Keuze 2</string>
-    <string name="poll_choice_3">Keuze 3</string>
-    <string name="poll_choice_4">Keuze 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Je hebt tenminste twee keuzes nodig voor een poll!</string>
     <string name="done">Klaar</string>
     <string name="poll_finish_at">eindigt op %s</string>
@@ -871,6 +870,8 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
     <string name="set_photo_editor">Enable photo editor</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
