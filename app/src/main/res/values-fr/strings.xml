@@ -800,8 +800,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="create_poll">Créer un sondage</string>
     <string name="poll_choice_1">Choix 1</string>
     <string name="poll_choice_2">Choix 2</string>
-    <string name="poll_choice_3">Choix 3</string>
-    <string name="poll_choice_4">Choix 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Vous avez besoin d\'au moins deux choix pour le sondage !</string>
     <string name="done">Fait</string>
     <string name="poll_finish_at">fin à %s</string>
@@ -871,6 +870,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="opacity">Transparence</string>
     <string name="label_crop">Rogner</string>
     <string name="set_photo_editor">Enable photo editor</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
