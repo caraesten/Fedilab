@@ -792,8 +792,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="create_poll">Lag en avstemming</string>
     <string name="poll_choice_1">Valg 1</string>
     <string name="poll_choice_2">Valg 2</string>
-    <string name="poll_choice_3">Valg 3</string>
-    <string name="poll_choice_4">Valg 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Du trenger minst to valg i avstemmingen!</string>
     <string name="done">Ferdig</string>
     <string name="poll_finish_at">steng %s</string>
@@ -862,7 +861,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="save_image_failed">Klarte ikke å lagre bildet</string>
     <string name="opacity">Opasitet</string>
     <string name="label_crop">Beskjær</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="set_photo_editor">Aktiver bilderedigering</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
