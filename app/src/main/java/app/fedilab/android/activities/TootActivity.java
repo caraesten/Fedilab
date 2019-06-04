@@ -3104,12 +3104,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
             Matcher matcherALink = Patterns.WEB_URL.matcher(content);
             while (matcherALink.find()){
-                int matchStart = matcherALink.start();
-                int matchEnd = matcherALink.end();
                 final String url = content.substring(matcherALink.start(1), matcherALink.end(1));
-                if( matchEnd <= content.length() && matchEnd >= matchStart){
-                    content = content.replaceAll(Pattern.quote(url),"abcdefghijklmnopkrstuvw");
-                }
+                content = content.replaceAll(Pattern.quote(url),"abcdefghijklmnopkrstuvw");
             }
         }
         int contentLength = content.length() - countWithEmoji(content);
