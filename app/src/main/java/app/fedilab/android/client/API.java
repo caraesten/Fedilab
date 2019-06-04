@@ -4288,8 +4288,18 @@ public class API {
             instance.setDescription(resobj.get("description").toString());
             instance.setEmail(resobj.get("email").toString());
             instance.setVersion(resobj.get("version").toString());
+
+            if(resobj.has("poll_limits")){
+                HashMap<String, Integer> poll_limits = new HashMap<>();
+                JSONObject polllimits = resobj.getJSONObject("poll_limits");
+                poll_limits.put("min_expiration",polllimits.getInt("min_expiration"));
+                poll_limits.put("max_options",polllimits.getInt("max_options"));
+                poll_limits.put("max_option_chars",polllimits.getInt("max_option_chars"));
+                poll_limits.put("max_expiration",polllimits.getInt("max_expiration"));
+                instance.setPoll_limits(poll_limits);
+            }
         } catch (JSONException e) {
-            setDefaultError(e);
+            e.printStackTrace();
         }
         return instance;
     }

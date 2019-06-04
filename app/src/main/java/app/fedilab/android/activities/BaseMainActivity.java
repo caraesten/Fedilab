@@ -169,6 +169,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
     private static boolean notificationChecked = false;
+    public static HashMap<String, Integer> poll_limits = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1766,6 +1767,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         if( apiResponse.getInstance() == null || apiResponse.getInstance().getVersion() == null || apiResponse.getInstance().getVersion().trim().length() == 0)
             return;
+        poll_limits = apiResponse.getInstance().getPoll_limits();
         Version currentVersion = new Version(apiResponse.getInstance().getVersion());
         Version minVersion = new Version("1.6");
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);

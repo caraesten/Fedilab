@@ -230,7 +230,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     public static boolean autocomplete;
     private String newContent;
     private TextWatcher textWatcher;
-
+    private int pollCountItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -2801,8 +2801,62 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         Spinner poll_duration = view.findViewById(R.id.poll_duration);
         EditText choice_1 = view.findViewById(R.id.choice_1);
         EditText choice_2 = view.findViewById(R.id.choice_2);
-        EditText choice_3 = view.findViewById(R.id.choice_3);
-        EditText choice_4 = view.findViewById(R.id.choice_4);
+        ImageButton add = view.findViewById(R.id.add_poll_item);
+        ImageButton remove = view.findViewById(R.id.remove_poll_item);
+        LinearLayout poll_items_container = view.findViewById(R.id.poll_items_container);
+        int max_entry = 4;
+        int max_length = 25;
+        pollCountItem = 2;
+        if( MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_options")){
+            max_entry = MainActivity.poll_limits.get("max_options")!=null?MainActivity.poll_limits.get("max_options"):4;
+        }
+        if( MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_option_chars")){
+            max_length = MainActivity.poll_limits.get("max_option_chars")!=null?MainActivity.poll_limits.get("max_option_chars"):25;
+        }
+        InputFilter[] fArray = new InputFilter[1];
+        fArray[0] = new InputFilter.LengthFilter(max_length);
+        choice_1.setFilters(fArray);
+        choice_2.setFilters(fArray);
+
+        int finalMax_entry = max_entry;
+        int finalMax_length = max_length;
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( pollCountItem < finalMax_entry){
+                    EditText poll_item = new EditText(TootActivity.this);
+                    InputFilter[] fArray = new InputFilter[1];
+                    fArray[0] = new InputFilter.LengthFilter(finalMax_length);
+                    poll_item.setFilters(fArray);
+                    poll_item.setHint(getString(R.string.poll_choice_s,(pollCountItem+1)));
+                    poll_items_container.addView(poll_item);
+                }
+                pollCountItem++;
+                if( pollCountItem >= finalMax_entry){
+                    add.setVisibility(View.GONE);
+                }else{
+                    add.setVisibility(View.VISIBLE);
+                }
+                remove.setVisibility(View.VISIBLE);
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( pollCountItem > 2){
+                    int childCount = poll_items_container.getChildCount();
+                    poll_items_container.removeViewAt(childCount -1);
+                }
+                pollCountItem--;
+                if( pollCountItem <= 2){
+                    remove.setVisibility(View.GONE);
+                }else{
+                    remove.setVisibility(View.VISIBLE);
+                }
+                add.setVisibility(View.VISIBLE);
+            }
+        });
+
         ArrayAdapter<CharSequence> pollduration = ArrayAdapter.createFromResource(TootActivity.this,
                 R.array.poll_duration, android.R.layout.simple_spinner_item);
 
@@ -2815,23 +2869,23 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( poll != null){
             int i = 1;
             for(PollOptions pollOptions: poll.getOptionsList()){
-                switch (i){
-                    case 1:
-                        if( pollOptions.getTitle() != null)
-                            choice_1.setText(pollOptions.getTitle());
-                        break;
-                    case 2:
-                        if( pollOptions.getTitle() != null)
-                            choice_2.setText(pollOptions.getTitle());
-                        break;
-                    case 3:
-                        if( pollOptions.getTitle() != null)
-                            choice_3.setText(pollOptions.getTitle());
-                        break;
-                    case 4:
-                        if( pollOptions.getTitle() != null)
-                            choice_4.setText(pollOptions.getTitle());
-                        break;
+                if( i == 1){
+                    if( pollOptions.getTitle() != null)
+                        choice_1.setText(pollOptions.getTitle());
+                }else if(i == 2){
+                    if( pollOptions.getTitle() != null)
+                        choice_2.setText(pollOptions.getTitle());
+                }else{
+                    EditText poll_item = new EditText(TootActivity.this);
+                    fArray = new InputFilter[1];
+                    fArray[0] = new InputFilter.LengthFilter(finalMax_length);
+                    poll_item.setFilters(fArray);
+                    poll_item.setHint(getString(R.string.poll_choice_s,(pollCountItem+1)));
+                    if( pollOptions.getTitle() != null){
+                        poll_item.setText(pollOptions.getTitle());
+                    }
+                    poll_items_container.addView(poll_item);
+                    pollCountItem++;
                 }
                 i++;
             }
@@ -2884,8 +2938,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 int poll_choice_pos = poll_choice.getSelectedItemPosition();
                 String choice1 = choice_1.getText().toString().trim();
                 String choice2 = choice_2.getText().toString().trim();
-                String choice3 = choice_3.getText().toString().trim();
-                String choice4 = choice_4.getText().toString().trim();
 
                 if( choice1.isEmpty() && choice2.isEmpty()){
                     Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
@@ -2929,13 +2981,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     pollOption2.setTitle(choice2);
                     pollOptions.add(pollOption2);
 
-                    PollOptions pollOption3 = new PollOptions();
-                    pollOption3.setTitle(choice3);
-                    pollOptions.add(pollOption3);
+                    int childCount = poll_items_container.getChildCount();
+                    if( childCount > 2){
+                        for( int i = 2 ; i < childCount; i++){
+                            PollOptions pollItem = new PollOptions();
+                            pollItem.setTitle(((EditText)poll_items_container.getChildAt(i)).getText().toString());
+                            pollOptions.add(pollItem);
+                        }
+                    }
 
-                    PollOptions pollOption4 = new PollOptions();
-                    pollOption4.setTitle(choice4);
-                    pollOptions.add(pollOption4);
                     poll.setOptionsList(pollOptions);
 
                     dialog.dismiss();

@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.client.Entities;
 
+import java.util.HashMap;
+
 /**
  * Created by Thomas on 05/06/2017.
  * Describes instance
@@ -26,6 +28,7 @@ public class Instance {
     private String description;
     private String email;
     private String version;
+    private HashMap<String, Integer> poll_limits;
 
     public String getUri() {
         return uri;
@@ -65,5 +68,13 @@ public class Instance {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public HashMap<String, Integer> getPoll_limits() {
+        return poll_limits;
+    }
+
+    public void setPoll_limits(HashMap<String, Integer> poll_limits) {
+        this.poll_limits = poll_limits;
     }
 }
