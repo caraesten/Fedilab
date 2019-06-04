@@ -76,7 +76,7 @@ public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppC
     }
 
     @Override @CallSuper public void input(final Emoji emoji) {
-        if (emoji != null) {
+        if (emoji != null && !autocomplete) {
             final int start = getSelectionStart();
             final int end = getSelectionEnd();
 
@@ -97,7 +97,7 @@ public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppC
     public final void setEmojiSize(@Px final int pixels, final boolean shouldInvalidate) {
         emojiSize = pixels;
 
-        if (shouldInvalidate) {
+        if (shouldInvalidate && !autocomplete) {
             setText(getText());
         }
     }
