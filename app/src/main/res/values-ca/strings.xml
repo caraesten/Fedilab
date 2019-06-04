@@ -795,8 +795,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="create_poll">Crea una enquesta</string>
     <string name="poll_choice_1">Opció 1</string>
     <string name="poll_choice_2">Opció 2</string>
-    <string name="poll_choice_3">Opció 3</string>
-    <string name="poll_choice_4">Opció 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Per a una enquesta, cal que hi hagi almenys dues opcions!</string>
     <string name="done">Fet</string>
     <string name="poll_finish_at">acaba a %s</string>
@@ -866,6 +865,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="opacity">Opacitat</string>
     <string name="label_crop">Retalla</string>
     <string name="set_photo_editor">Habilita l\'editor de fotos</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
