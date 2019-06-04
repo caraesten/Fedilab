@@ -2807,6 +2807,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         int max_entry = 4;
         int max_length = 25;
         pollCountItem = 2;
+        remove.setVisibility(View.GONE);
         if( MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_options")){
             max_entry = MainActivity.poll_limits.get("max_options")!=null?MainActivity.poll_limits.get("max_options"):4;
         }
@@ -2888,6 +2889,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     pollCountItem++;
                 }
                 i++;
+            }
+            remove.setVisibility(View.VISIBLE);
+            add.setVisibility(View.VISIBLE);
+            if(poll.getOptionsList().size() >= max_entry){
+                add.setVisibility(View.GONE);
+            }else if( poll.getOptionsList().size() <= 2 ){
+                remove.setVisibility(View.GONE);
             }
             switch (poll.getExpires_in()){
                 case 300:
