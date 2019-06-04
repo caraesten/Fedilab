@@ -801,8 +801,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="create_poll">Szavazás létrehozása</string>
     <string name="poll_choice_1">1. lehetőség</string>
     <string name="poll_choice_2">2. lehetőség</string>
-    <string name="poll_choice_3">3. lehetőség</string>
-    <string name="poll_choice_4">4. lehetőség</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Legalább két lehetőséget kell megadni egy szavazás létrehozásához!</string>
     <string name="done">Kész</string>
     <string name="poll_finish_at">%s-kor ér véget</string>
@@ -843,7 +842,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="display_timeline">Idővonalak megjelenítése</string>
     <string name="set_display_bot_icon">Bot-fiókok megjelölése a tootokban</string>
     <string name="add_tags">Címkék kezelése</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
+    <string name="set_remember_position">Pozíció megjegyzése a kezdőlap idővonalán</string>
     <string name="history">Előzmények</string>
     <string name="playlists">Lejátszási listák</string>
     <string name="display_name">Megjelenítendő név</string>
@@ -870,8 +869,10 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="image_saved">A kép sikeresen elmentve!</string>
     <string name="save_image_failed">Nem sikerült elmenteni a képet</string>
     <string name="opacity">Áttetszőség</string>
-    <string name="label_crop">Crop</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="label_crop">Körbevágás</string>
+    <string name="set_photo_editor">Fényképszerkesztő bekapcsolása</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
