@@ -698,7 +698,7 @@
     <string name="some_words_any">Qualquer uma destas palavras (separadas por espaço)</string>
     <string name="some_words_all">Todas estas palavras (separadas por espaço)</string>
     <string name="some_words_none">Nenhuma destas palavras (separadas por espaço)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Adicione algumas palavras ao filtro (separados por espaço)</string>
     <string name="change_tag_column">Mudar nome da aba</string>
     <string name="no_misskey_instance">Sem instâncias Misskey</string>
     <string name="misskey_instance">Instância Misskey</string>
@@ -803,7 +803,7 @@
     <string name="create_poll">Criar uma enquete</string>
     <string name="poll_choice_1">Opção 1</string>
     <string name="poll_choice_2">Opção 2</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">Escolha %d</string>
     <string name="poll_invalid_choices">Você precisa de pelo menos duas opções para a enquete!</string>
     <string name="done">Feito</string>
     <string name="poll_finish_at">termina em %s</string>
@@ -837,9 +837,9 @@
     <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_forward_tags">Encaminhar tags nas respostas</string>
+    <string name="set_long_press_media">Pressionar e segurar para armazenar mídia</string>
+    <string name="set_blur_sensitive">Desfocar mídia sensível</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
     <string name="set_display_bot_icon">Mark bot accounts in toots</string>
