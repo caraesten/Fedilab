@@ -713,26 +713,26 @@
     <string name="delete_comment_confirm">Ziur iruzkin hau ezabatu nahi duzula?</string>
     <string name="fullscreen">Pantaila osoko bideoa</string>
     <string name="set_video_mode">Bideorako modua</string>
-    <string name="file_to_upload">Igo nahi duzun fitxategia aukeratu</string>
+    <string name="file_to_upload">Hautatu igo nahi duzun fitxategia</string>
     <string name="my_videos">Nire bideoak</string>
     <string name="title">Izenburua</string>
     <string name="categories">Kategoriak</string>
     <string name="license">Lizentzia</string>
     <string name="category">Kategoria</string>
     <string name="language">Hizkuntza</string>
-    <string name="peertube_nsfw">Bideo honetan helduei zuzendutako edukia du</string>
-    <string name="peertube_enable_comments">Bideo - iruzkinak gaitu</string>
-    <string name="update_video">Bideoa eguneratu</string>
+    <string name="peertube_nsfw">Bideo honek helduei zuzendutako edukia du</string>
+    <string name="peertube_enable_comments">Gaitu bideoen iruzkinak</string>
+    <string name="update_video">Eguneratu bideoa</string>
     <string name="description">Deskribapena</string>
     <string name="toast_peertube_video_updated">Bideoa eguneratua izan da!</string>
-    <string name="toast_cancelled">Igoera baliogabetua!</string>
+    <string name="toast_cancelled">Igoera ezeztatuta!</string>
     <string name="upload_video_success">Bideoa igo da!</string>
     <string name="uploading">Igotzen, itxaron mesedez…</string>
-    <string name="video_uploaded_action">Klikatu hemen bideo datuak editatzeko.</string>
-    <string name="delete_video">Bideoa ezabatu</string>
+    <string name="video_uploaded_action">Sakatu hemen bideoaren datuak editatzeko.</string>
+    <string name="delete_video">Ezabatu bideoa</string>
     <string name="delete_video_confirmation">Bideo hau ezabatu nahi duzula ziur al zaude?</string>
     <string name="no_video_uploaded">Oraindik ez duzu bideorik igo!</string>
-    <string name="display_nsfw_videos">NSFW bideoak erakutsi</string>
+    <string name="display_nsfw_videos">Erakutsi bideo hunkigarriak</string>
     <string name="default_channel_of">%s kanal lehenetsia</string>
     <string name="no_video_to_display">Ez dago bideorik bistaratzeko!</string>
     <string name="add_image_to_favorite">Gehitu multimedia gogokoetara</string>
@@ -802,8 +802,7 @@
     <string name="create_poll">Sortu inkesta bat</string>
     <string name="poll_choice_1">1. aukera</string>
     <string name="poll_choice_2">2. aukera</string>
-    <string name="poll_choice_3">3. aukera</string>
-    <string name="poll_choice_4">4. aukera</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Gutxienez bi aukera behar dira inkesta bat egiteko!</string>
     <string name="done">Egina</string>
     <string name="poll_finish_at">amaiera: %s</string>
@@ -836,7 +835,7 @@
     <string name="add_timeline">Gehitu denbora-lerro bat</string>
     <string name="set_sensitive_content">Beti markatu multimedia mingarri gisa</string>
     <string name="gnu_instance">GNU instantzia</string>
-    <string name="cached_status">Cacheatutako mezua</string>
+    <string name="cached_status">Cachean gordetako mezua</string>
     <string name="set_forward_tags">Birbidali etiketak erantzunetan</string>
     <string name="set_long_press_media">Sakatu luze multimedia gordetzeko</string>
     <string name="set_blur_sensitive">Lausotu multimedia hunkigarria</string>
@@ -855,24 +854,26 @@
     <string name="error_channel_mandatory">Kanala beharrezkoa da erreprodukzio-zerrenda publikoa bada.</string>
     <string name="action_playlist_create">Sortu erreprodukzio-zerrenda</string>
     <string name="action_playlist_empty_content">Ez dago ezer erreprodukzio-zerrenda honetan oraindik.</string>
-    <string name="edit_media">Edit media</string>
-    <string name="redo">redo</string>
-    <string name="gallery">Gallery</string>
+    <string name="edit_media">Editatu multimedia</string>
+    <string name="redo">berregin</string>
+    <string name="gallery">Galeria</string>
     <string name="label_emoji">Emoji</string>
-    <string name="label_sticker">Sticker</string>
-    <string name="label_eraser">Eraser</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
-    <string name="label_brush">Brush</string>
-    <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
-    <string name="discard">Discard</string>
-    <string name="saving">Saving…</string>
-    <string name="image_saved">Image Saved Successfully!</string>
-    <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="label_sticker">Eranskailua</string>
+    <string name="label_eraser">Ezabagailua</string>
+    <string name="label_text">Testua</string>
+    <string name="label_filter">Iragazi</string>
+    <string name="label_adjust">Doitu</string>
+    <string name="label_brush">Brotxa</string>
+    <string name="confirm_exit_editing">Ziur al zaude irudia gorde gabe atera nahi duzula?</string>
+    <string name="discard">Baztertu</string>
+    <string name="saving">Gordetzen…</string>
+    <string name="image_saved">Irudia ongi gorde da!</string>
+    <string name="save_image_failed">Huts egin du irudia gordetzean</string>
+    <string name="opacity">Opakutasuna</string>
+    <string name="label_crop">Moztu</string>
+    <string name="set_photo_editor">Gaitu argazki-editorea</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
@@ -891,7 +892,7 @@
         <item>7 egun</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
-        <item>Web ikuspegia</item>
+        <item>Webview</item>
+        <item>Jario zuzena</item>
     </string-array>
 </resources>
