@@ -794,8 +794,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="create_poll">Umfrage erstellen</string>
     <string name="poll_choice_1">Möglichkeit 1</string>
     <string name="poll_choice_2">Möglichkeit 2</string>
-    <string name="poll_choice_3">Möglichkeit 3</string>
-    <string name="poll_choice_4">Möglichkeit 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Sie benötigen mindestens zwei Möglichkeiten für die Umfrage!</string>
     <string name="done">Fertig</string>
     <string name="poll_finish_at">endet um %s</string>
@@ -865,6 +864,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="opacity">Deckkraft</string>
     <string name="label_crop">Zuschneiden</string>
     <string name="set_photo_editor">Fotobearbeitung aktivieren</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
