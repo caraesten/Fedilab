@@ -799,7 +799,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="create_poll">建立投票</string>
     <string name="poll_choice_1">第一種選擇</string>
     <string name="poll_choice_2">第二種選擇</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">第 %d 種選擇</string>
     <string name="poll_invalid_choices">建立投票至少需要兩個選擇！</string>
     <string name="done">完成</string>
     <string name="poll_finish_at">在 %s 結束投票</string>
@@ -869,8 +869,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="opacity">不透明度</string>
     <string name="label_crop">裁剪</string>
     <string name="set_photo_editor">啟用圖片編輯器</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">新增投票項目</string>
+    <string name="remove_poll_item">移除末尾投票項目</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
