@@ -808,8 +808,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="create_poll">Vytvořit anketu</string>
     <string name="poll_choice_1">Volba 1</string>
     <string name="poll_choice_2">Volba 2</string>
-    <string name="poll_choice_3">Volba 3</string>
-    <string name="poll_choice_4">Volba 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">Pro anketu potřebujete alespoň dvě volby!</string>
     <string name="done">Hotovo</string>
     <string name="poll_finish_at">skončit po %s</string>
@@ -879,6 +878,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
     <string name="set_photo_editor">Enable photo editor</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>
