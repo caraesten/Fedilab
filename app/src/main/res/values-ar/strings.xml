@@ -818,8 +818,7 @@
     <string name="create_poll">إنشاء استطلاع</string>
     <string name="poll_choice_1">الخيار 1</string>
     <string name="poll_choice_2">الخيار 2</string>
-    <string name="poll_choice_3">الخيار 3</string>
-    <string name="poll_choice_4">الخيار 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">يجب أن يتوفر استطلاع الرأي على خيارين على الأقل!</string>
     <string name="done">تم</string>
     <string name="poll_finish_at">ينتهي في %s</string>
@@ -868,7 +867,7 @@
     <string name="create">إنشاء</string>
     <string name="action_playlist_add">ليس لديك أي قوائم تشغيل. انقر على أيقونة \"+\" لإضافة قائمة تشغيل جديدة</string>
     <string name="error_display_name">يجب عليك إدخال اسم علني!</string>
-    <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
+    <string name="error_channel_mandatory">القناة لازمة إن كانت قائمة التشغيل متاحة للعامة.</string>
     <string name="action_playlist_create">إنشاء قائمة تشغيل</string>
     <string name="action_playlist_empty_content">قائمة التشغيل هذه فارغة حاليا.</string>
     <string name="edit_media">تحرير الوسائط</string>
@@ -888,7 +887,9 @@
     <string name="save_image_failed">فشل في حفظ الصورة</string>
     <string name="opacity">الشفافيّة</string>
     <string name="label_crop">اقتصاص</string>
-    <string name="set_photo_editor">Enable photo editor</string>
+    <string name="set_photo_editor">تمكين محرر الصور</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
