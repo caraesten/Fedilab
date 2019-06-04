@@ -806,8 +806,7 @@
     <string name="create_poll">Create a poll</string>
     <string name="poll_choice_1">Choice 1</string>
     <string name="poll_choice_2">Choice 2</string>
-    <string name="poll_choice_3">Choice 3</string>
-    <string name="poll_choice_4">Choice 4</string>
+    <string name="poll_choice_s">Choice %d</string>
     <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
     <string name="done">Done</string>
     <string name="poll_finish_at">end at %s</string>
@@ -877,6 +876,8 @@
     <string name="opacity">Opacity</string>
     <string name="label_crop">Crop</string>
     <string name="set_photo_editor">Enable photo editor</string>
+    <string name="add_poll_item">Add a poll item</string>
+    <string name="remove_poll_item">Remove last poll item</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
