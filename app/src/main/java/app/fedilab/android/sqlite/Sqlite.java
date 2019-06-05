@@ -45,7 +45,7 @@ import app.fedilab.android.R;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 31;
+    public static final int DB_VERSION = 32;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -55,6 +55,7 @@ public class Sqlite extends SQLiteOpenHelper {
      */
     //Table of owned accounts
     static final String TABLE_USER_ACCOUNT = "USER_ACCOUNT";
+    private static final String TABLE_USER_ACCOUNT_TEMP = "USER_ACCOUNT_TEMP";
     //Table of stored status
     static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
     //Table for custom emoji
@@ -122,7 +123,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_SENSITIVE = "SENSITIVE";
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
-            + COL_USER_ID + " TEXT PRIMARY KEY, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
+            + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
             + COL_DISPLAYED_NAME + " TEXT NOT NULL, " + COL_LOCKED + " INTEGER NOT NULL, "
             + COL_FOLLOWERS_COUNT + " INTEGER NOT NULL, " + COL_FOLLOWING_COUNT + " INTEGER NOT NULL, " + COL_STATUSES_COUNT + " INTEGER NOT NULL, "
             + COL_NOTE + " TEXT NOT NULL, "+ COL_URL + " TEXT NOT NULL, "
@@ -421,6 +422,39 @@ public class Sqlite extends SQLiteOpenHelper {
                     db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_TAGS + " TEXT");
                     db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_FILTERED_WITH + " TEXT");
                 }
+            case 31:
+                String CREATE_TABLE_USER_ACCOUNT_TEMP = "CREATE TABLE " + TABLE_USER_ACCOUNT_TEMP + " ("
+                        + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
+                        + COL_DISPLAYED_NAME + " TEXT NOT NULL, " + COL_LOCKED + " INTEGER NOT NULL, "
+                        + COL_FOLLOWERS_COUNT + " INTEGER NOT NULL, " + COL_FOLLOWING_COUNT + " INTEGER NOT NULL, " + COL_STATUSES_COUNT + " INTEGER NOT NULL, "
+                        + COL_NOTE + " TEXT NOT NULL, "+ COL_URL + " TEXT NOT NULL, "
+                        + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
+                        + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
+                        + COL_EMOJIS + " TEXT, "
+                        + COL_SOCIAL + " TEXT, "
+                        + COL_IS_MODERATOR + " INTEGER  DEFAULT 0, "
+                        + COL_IS_ADMIN + " INTEGER  DEFAULT 0, "
+                        + COL_CLIENT_ID + " TEXT, " + COL_CLIENT_SECRET + " TEXT, " + COL_REFRESH_TOKEN + " TEXT,"
+                        + COL_UPDATED_AT + " TEXT, "
+                        + COL_PRIVACY + " TEXT, "
+                        + COL_SENSITIVE + " INTEGER DEFAULT 0, "
+                        + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
+                db.execSQL(CREATE_TABLE_USER_ACCOUNT_TEMP);
+
+                String insert = "INSERT INTO "+TABLE_USER_ACCOUNT_TEMP+" ("
+                        +COL_USER_ID+", "+COL_USERNAME+", "+COL_ACCT+", "+COL_DISPLAYED_NAME+", "+COL_LOCKED+", "+COL_FOLLOWERS_COUNT+", "
+                        +COL_FOLLOWING_COUNT+", "+COL_STATUSES_COUNT+", "+COL_NOTE+", "+COL_URL+", "+COL_AVATAR+", "+COL_AVATAR_STATIC+", "
+                        +COL_HEADER+", "+COL_HEADER_STATIC+", "+COL_EMOJIS+", "+COL_SOCIAL+", "+COL_IS_MODERATOR+", "+COL_IS_ADMIN+", "
+                        +COL_CLIENT_ID+", "+COL_CLIENT_SECRET+", "+COL_REFRESH_TOKEN+", "+COL_UPDATED_AT+", "+COL_PRIVACY+", "+COL_SENSITIVE+", "
+                        +COL_INSTANCE+", "+COL_OAUTHTOKEN+", "+COL_CREATED_AT+") "
+                        +" SELECT "+COL_USER_ID+", "+COL_USERNAME+", "+COL_ACCT+", "+COL_DISPLAYED_NAME+", "+COL_LOCKED+", "+COL_FOLLOWERS_COUNT+", "
+                        +COL_FOLLOWING_COUNT+", "+COL_STATUSES_COUNT+", "+COL_NOTE+", "+COL_URL+", "+COL_AVATAR+", "+COL_AVATAR_STATIC+", "
+                        +COL_HEADER+", "+COL_HEADER_STATIC+", "+COL_EMOJIS+", "+COL_SOCIAL+", "+COL_IS_MODERATOR+", "+COL_IS_ADMIN+", "
+                        +COL_CLIENT_ID+", "+COL_CLIENT_SECRET+", "+COL_REFRESH_TOKEN+", "+COL_UPDATED_AT+", "+COL_PRIVACY+", "+COL_SENSITIVE+", "
+                        +COL_INSTANCE+", "+COL_OAUTHTOKEN+", "+COL_CREATED_AT+ " FROM " + TABLE_USER_ACCOUNT;
+                db.execSQL(insert);
+                db.execSQL("DROP TABLE "+TABLE_USER_ACCOUNT);
+                db.execSQL("ALTER TABLE "+TABLE_USER_ACCOUNT_TEMP + " RENAME TO "+ TABLE_USER_ACCOUNT);
             default:
                 break;
         }

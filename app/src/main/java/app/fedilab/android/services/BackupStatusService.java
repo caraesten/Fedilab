@@ -101,8 +101,9 @@ public class BackupStatusService extends IntentService {
         String message;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(BackupStatusService.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         try {
             String fullPath;

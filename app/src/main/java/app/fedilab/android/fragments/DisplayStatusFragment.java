@@ -190,7 +190,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
         //For Home timeline, fetch stored values for bookmark and last read toot

@@ -397,13 +397,16 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             invalidateOptionsMenu();
         }
 
-        String userIdReply;
-        if (accountReply == null)
+        String userIdReply, instanceReply;
+        if (accountReply == null) {
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        else
+            instanceReply = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        }else {
             userIdReply = accountReply.getId();
+            instanceReply = accountReply.getInstance();
+        }
         if (accountReply == null)
-            account = new AccountDAO(getApplicationContext(), db).getAccountByID(userIdReply);
+            account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userIdReply, instanceReply);
         else
             account = accountReply;
 

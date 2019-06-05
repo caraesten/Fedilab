@@ -1443,7 +1443,7 @@ public class GNUAPI {
             //Current user
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account currentAccount = new AccountDAO(context, db).getAccountByUserIDInstance(userId, Helper.getLiveInstance(context));
+            Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, Helper.getLiveInstance(context));
             params.put("user_id", currentAccount.getId());
             params.put("screen_name", currentAccount.getAcct());
 

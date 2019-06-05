@@ -58,7 +58,7 @@ public class ScheduledBoostsSyncJob extends Job {
             String userId = storedStatus.getUserId();
             String instance = storedStatus.getInstance();
             if( instance != null && userId != null){
-                Account account = new AccountDAO(getContext(), db).getAccountByUserIDInstance(userId, instance);
+                Account account = new AccountDAO(getContext(), db).getUniqAccount(userId, instance);
                 if( account != null){
                     //Retrieves the linked status to toot
                     Status status = storedStatus.getStatus();

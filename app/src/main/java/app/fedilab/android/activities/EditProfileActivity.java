@@ -153,7 +153,8 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
@@ -172,7 +173,6 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_header_picture_overlay = findViewById(R.id.set_header_picture_overlay);
         set_lock_account = findViewById(R.id.set_lock_account);
         set_sensitive_content = findViewById(R.id.set_sensitive_content);
-        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.3");

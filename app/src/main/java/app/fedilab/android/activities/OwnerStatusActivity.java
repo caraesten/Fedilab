@@ -163,6 +163,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         boolean isOnWifi = Helper.isOnWIFI(OwnerStatusActivity.this);
         lv_status.addItemDecoration(new DividerItemDecoration(OwnerStatusActivity.this, DividerItemDecoration.VERTICAL));
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(OwnerStatusActivity.this);
@@ -176,7 +177,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         }
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(OwnerStatusActivity.this,db).getAccountByID(userId);
+        Account account = new AccountDAO(OwnerStatusActivity.this,db).getUniqAccount(userId, instance);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(OwnerStatusActivity.this) + account.getAvatar();

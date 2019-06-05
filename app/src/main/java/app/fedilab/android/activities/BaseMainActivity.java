@@ -1210,12 +1210,13 @@ public abstract class BaseMainActivity extends BaseActivity
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
-        String userIdIntent;
+        String userIdIntent, instanceIntent;
         if( extras != null && extras.containsKey(Helper.INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(Helper.PREF_KEY_ID); //Id of the account in the intent
+            instanceIntent = extras.getString(Helper.PREF_INSTANCE);
             if (extras.getInt(Helper.INTENT_ACTION) == Helper.NOTIFICATION_INTENT){
-                Helper.changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
+                Helper.changeUser(BaseMainActivity.this, userIdIntent, instanceIntent,true); //Connects the account which is related to the notification
                 Helper.unCheckAllMenuItems(navigationView);
                 notificationChecked = true;
                 if( extras.getString(Helper.INTENT_TARGETED_ACCOUNT) != null ){
@@ -1263,7 +1264,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.setVisibility(View.GONE);
                 toolbarTitle.setText(instance);
             }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.HOME_TIMELINE_INTENT){
-                Helper.changeUser(BaseMainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                Helper.changeUser(BaseMainActivity.this, userIdIntent, instanceIntent,false); //Connects the account which is related to the notification
             }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.BACK_TO_SETTINGS){
                 Helper.unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
@@ -1736,7 +1737,7 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
         }else {
             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
             Helper.updateHeaderAccountInfo(activity, account, headerLayout);
         }
     }

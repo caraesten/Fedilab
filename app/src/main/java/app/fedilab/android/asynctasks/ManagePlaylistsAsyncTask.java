@@ -75,7 +75,7 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(contextReference.get()));
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(contextReference.get(), db).getAccountByUserIDInstance(userId, instance);
+        Account account = new AccountDAO(contextReference.get(), db).getUniqAccount(userId, instance);
         if (apiAction == action.GET_PLAYLIST) {
             apiResponse = new PeertubeAPI(contextReference.get()).getPlayists(account.getUsername());
         }else if(apiAction == action.GET_LIST_VIDEOS){

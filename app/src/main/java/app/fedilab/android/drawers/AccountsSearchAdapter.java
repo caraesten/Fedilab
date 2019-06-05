@@ -112,8 +112,9 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            String instance = (account.getInstance() !=null)?account.getInstance():currentAccount.getInstance();
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+            Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
+            instance = (account.getInstance() !=null)?account.getInstance():currentAccount.getInstance();
             holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + instance));
             holder.account_dn.setVisibility(View.GONE);
         }else {

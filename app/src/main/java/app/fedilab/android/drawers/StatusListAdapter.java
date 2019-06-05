@@ -1273,7 +1273,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if (status.getAccount() == null) {
                 final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account account = new AccountDAO(context, db).getAccountByID(userId);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                 status.setAccount(account);
             }
             //Displays name & emoji in toot header
@@ -2438,7 +2439,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 String targeted_id = status.getAccount().getId();
                                                 Date date_mute = new Date(time);
                                                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                                Account account = new AccountDAO(context, db).getAccountByID(userId);
+                                                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                                                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                                                 new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
                                                 if (timedMute != null && !timedMute.contains(account.getId()))
                                                     timedMute.add(targeted_id);

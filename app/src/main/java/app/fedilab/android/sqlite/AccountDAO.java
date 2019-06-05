@@ -86,7 +86,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
         //Inserts account
         try{
-            db.insert(Sqlite.TABLE_USER_ACCOUNT, null, values);
+            db.insertOrThrow(Sqlite.TABLE_USER_ACCOUNT, null, values);
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +120,6 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER,account.getHeader());
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
-        values.put(Sqlite.COL_INSTANCE, account.getInstance());
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         values.put(Sqlite.COL_SOCIAL, account.getSocial());
         if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
@@ -131,8 +130,8 @@ public class AccountDAO {
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
         return db.update(Sqlite.TABLE_USER_ACCOUNT,
-                values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_USERNAME + " =?",
-                new String[]{account.getId(), account.getUsername()});
+                values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =?",
+                new String[]{account.getId(), account.getInstance()});
     }
 
 
@@ -161,7 +160,6 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER,account.getHeader());
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
-        values.put(Sqlite.COL_INSTANCE, account.getInstance());
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         values.put(Sqlite.COL_SOCIAL, account.getSocial());
         if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
@@ -174,30 +172,16 @@ public class AccountDAO {
         values.put(Sqlite.COL_SENSITIVE, account.isSensitive());
         values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
         return db.update(Sqlite.TABLE_USER_ACCOUNT,
-                values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_USERNAME + " =?",
-                new String[]{account.getId(), account.getUsername()});
+                values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =?",
+                new String[]{account.getId(), account.getInstance()});
     }
 
 
     public int removeUser(Account account){
         return db.delete(Sqlite.TABLE_USER_ACCOUNT,  Sqlite.COL_USER_ID + " = '" +account.getId() +
-                "' AND " + Sqlite.COL_USERNAME + " = '" +  account.getUsername()+ "'", null);
+                "' AND " + Sqlite.COL_INSTANCE + " = '" +  account.getInstance()+ "'", null);
     }
 
-    /**
-     * Returns an Account by id
-     * @param accountId String
-     * @return Account
-     */
-    public Account getAccountByID(String accountId){
-
-        try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "'", null, null, null, null, "1");
-            return cursorToUser(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     /**
      * Returns last used account
@@ -228,20 +212,7 @@ public class AccountDAO {
         }
     }
 
-    /**
-     * Returns an Account by id and instance
-     * @param accountId String
-     * @param instance String
-     * @return Account
-     */
-    public Account getAccountByUserIDInstance(String accountId, String instance){
-        try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "' AND " + Sqlite.COL_INSTANCE + "= '"+ instance +"'", null, null, null, null, "1");
-            return cursorToUser(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
+
 
     /**
      * Returns all Account in db
@@ -315,6 +286,7 @@ public class AccountDAO {
             return null;
         }
     }
+
 
     /**
      * Test if the current user is already stored in data base

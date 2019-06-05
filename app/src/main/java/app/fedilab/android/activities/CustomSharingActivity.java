@@ -121,7 +121,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();

@@ -389,6 +389,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra(Helper.INTENT_ACTION, Helper.NOTIFICATION_INTENT);
                             intent.putExtra(Helper.PREF_KEY_ID, account.getId());
+                            intent.putExtra(Helper.PREF_INSTANCE, account.getInstance());
                             if (targeted_account != null) {
                                 intent.putExtra(Helper.INTENT_TARGETED_ACCOUNT, targeted_account);
                             }

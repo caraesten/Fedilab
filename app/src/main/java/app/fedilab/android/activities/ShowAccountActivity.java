@@ -360,8 +360,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
         //Timed muted account
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, accountId);
         if( isTimedMute){
             String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, accountId);

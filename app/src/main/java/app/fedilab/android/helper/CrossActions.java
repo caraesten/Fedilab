@@ -72,7 +72,8 @@ public class CrossActions {
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountstmp = new AccountDAO(context, db).getAllAccountCrossAction();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
         List<Account> accounts = new ArrayList<>();
         if( accountstmp != null && !limitedToOwner && accountstmp.size() > 1 ){
             //It's for a reply
@@ -111,7 +112,7 @@ public class CrossActions {
             return accounts;
         }else {
             List<Account> oneAccount = new ArrayList<>();
-            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             oneAccount.add(account);
             return  oneAccount;
         }
@@ -141,8 +142,9 @@ public class CrossActions {
             confirmation = false;
         if(type != null && type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+            Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
             if (confirmation)
                 displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface, baseAdapter);
             else {
@@ -232,8 +234,9 @@ public class CrossActions {
                 public void onClick(DialogInterface dialog, int which) {
                     Account selectedAccount = accountArray[which];
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
+                    Account loggedAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
                     if( targetedAccount == null){
                         if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
                             new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -308,8 +311,9 @@ public class CrossActions {
     public static void doCrossProfile(final Context context, Account remoteAccount){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
             private WeakReference<Context> contextReference = new WeakReference<>(context);
@@ -357,8 +361,9 @@ public class CrossActions {
     public static void doCrossConversation(final Context context, Status remoteStatus){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
             private WeakReference<Context> contextReference = new WeakReference<>(context);
@@ -397,8 +402,9 @@ public class CrossActions {
     public static void doCrossConversation(final Context context, String url){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
             private WeakReference<Context> contextReference = new WeakReference<>(context);
@@ -632,8 +638,9 @@ public class CrossActions {
             }else{
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account account = new AccountDAO(context, db).getAccountByID(userId);
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
                 new AsyncTask<Void, Void, Void>() {
                     private List<app.fedilab.android.client.Entities.Status> remoteStatuses;

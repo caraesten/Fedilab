@@ -56,6 +56,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
 
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = null;
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             account = new API(this.contextReference.get()).verifyCredentials();
@@ -71,7 +72,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         if( userExists) {
-            Account accountDb = new AccountDAO(this.contextReference.get(), db).getAccountByID(userId);
+            Account accountDb = new AccountDAO(this.contextReference.get(), db).getUniqAccount(userId, instance);
 
             if( accountDb != null){
                 account.setInstance(accountDb.getInstance());

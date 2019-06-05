@@ -221,7 +221,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
         if( account.getAvatar() == null){
             Toasty.error(ShowConversationActivity.this,getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();

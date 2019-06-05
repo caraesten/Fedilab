@@ -85,7 +85,8 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
         final SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account currentAccount = new AccountDAO(this.contextReference.get(), db).getAccountByID(userId);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        Account currentAccount = new AccountDAO(this.contextReference.get(), db).getUniqAccount(userId, instance);
         return acct != null && !acct.equals(currentAccount.getAcct()) && !addedAccounts.contains(acct);
     }
 

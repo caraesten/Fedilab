@@ -1344,9 +1344,8 @@ public class Helper {
                         public boolean onMenuItemClick(MenuItem item) {
                             if( ! activity.isFinishing() ) {
                                 menuAccountsOpened = false;
-                                String userId = account.getId();
                                 Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, userId, false);
+                                changeUser(activity, account.getId(), account.getInstance(), false);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
                             }
@@ -1477,7 +1476,7 @@ public class Helper {
      * @param activity Activity
      * @param userID String - the new user id
      */
-    public static void changeUser(Activity activity, String userID, boolean notificationIntent) {
+    public static void changeUser(Activity activity, String userID, String instance, boolean notificationIntent) {
 
 
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
@@ -1488,7 +1487,7 @@ public class Helper {
         hideMenuItem(navigationView.getMenu());
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(activity,db).getAccountByID(userID);
+        Account account = new AccountDAO(activity,db).getUniqAccount(userID, instance);
         //Can happen when an account has been deleted and there is a click on an old notification
         if( account == null)
             return;
@@ -2874,8 +2873,9 @@ public class Helper {
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
         android.support.design.widget.TabLayout tableLayout = activity.findViewById(R.id.tabLayout);
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(activity,db).getAccountByID(userID);
+        Account account = new AccountDAO(activity,db).getUniqAccount(userID, instance);
         if( account != null) {
             if (account.isLocked()) {
                 if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
@@ -2886,8 +2886,6 @@ public class Helper {
             }
 
         }
-        //Check instance release for lists
-        String instance = Helper.getLiveInstance(activity);
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userID + instance, null);
         if (instanceVersion != null && navigationView.getMenu().findItem(R.id.nav_list) != null) {
             Version currentVersion = new Version(instanceVersion);
