@@ -30,7 +30,6 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -92,13 +91,21 @@ import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
 import com.vanniktech.emoji.EmojiPopup;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.ServerResponse;
+import net.gotev.uploadservice.UploadInfo;
+import net.gotev.uploadservice.UploadNotificationConfig;
+import net.gotev.uploadservice.UploadStatusDelegate;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,7 +119,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.BuildConfig;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -128,6 +134,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.Version;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.drawers.AccountsReplyAdapter;
 import app.fedilab.android.drawers.AccountsSearchAdapter;
@@ -135,6 +142,7 @@ import app.fedilab.android.drawers.CustomEmojiAdapter;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
 import app.fedilab.android.drawers.TagsSearchAdapter;
+import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
@@ -169,7 +177,7 @@ import static app.fedilab.android.helper.Helper.countWithEmoji;
  * Toot activity class
  */
 
-public class TootActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
+public class TootActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface {
 
 
     private String visibility;
@@ -466,29 +474,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_space_left.setText(String.valueOf(countLength()));
         }
         if (tootMention != null && urlMention != null) {
-            if (fileMention != null) {
-                Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                        byte[] bitmapdata = bos.toByteArray();
-                        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                toot_picture_container.setVisibility(View.VISIBLE);
-                                picture_scrollview.setVisibility(View.VISIBLE);
-                                toot_picture.setEnabled(false);
-                                toot_it.setEnabled(false);
-                                new HttpsConnection(TootActivity.this, instance).upload(bs, fileMention, account, TootActivity.this);
-                            }
-                        });
-
-                    }
-                });
-            }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(countLength()));
         }
@@ -960,30 +945,23 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 }
                 uploadSharedImage(mArrayUri);
             } else {
-                try {
-                    String filename = Helper.getFileName(TootActivity.this, data.getData());
-                    ContentResolver cr = getContentResolver();
-                    String mime = cr.getType(data.getData());
-                    if (mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif"))) {
-                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                        new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, account, TootActivity.this);
-                    } else if (mime != null && mime.toLowerCase().contains("image")) {
-                        if( photo_editor) {
-                            Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
-                            Bundle b = new Bundle();
-                            intent.putExtra("imageUri", data.getData().toString());
-                            intent.putExtras(b);
-                            startActivity(intent);
-                        }else{
-                            new asyncPicture(TootActivity.this, account, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }
-                    }else {
-                        Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                String filename = Helper.getFileName(TootActivity.this, data.getData());
+                ContentResolver cr = getContentResolver();
+                String mime = cr.getType(data.getData());
+                if (mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif"))) {
+                    upload(TootActivity.this, data.getData(), filename);
+                } else if (mime != null && mime.toLowerCase().contains("image")) {
+                    if( photo_editor) {
+                        Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
+                        Bundle b = new Bundle();
+                        intent.putExtra("imageUri", data.getData().toString());
+                        intent.putExtras(b);
+                        startActivity(intent);
+                    }else{
+                        upload(TootActivity.this, data.getData(), filename);
                     }
-                } catch (FileNotFoundException e) {
+                }else {
                     Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                    toot_picture.setEnabled(true);
-                    toot_it.setEnabled(true);
                 }
             }
 
@@ -1019,7 +997,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
 
 
-    static class asyncPicture extends AsyncTask<Void, Void, Void> {
+    class asyncPicture extends AsyncTask<Void, Void, Void> {
 
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
@@ -1067,7 +1045,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_it.setEnabled(false);
                 String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 filesMap.put(filename, uriFile);
-                new HttpsConnection(this.activityWeakReference.get(), instance).upload(bs, filename,account, (TootActivity) this.activityWeakReference.get());
+                upload(activityWeakReference.get(), uriFile, filename);
             }
         }
     }
@@ -1084,22 +1062,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
-            try {
-                String filename =  Helper.getFileName(TootActivity.this, imageUri);
-                ContentResolver cr = getContentResolver();
-                String mime = cr.getType(imageUri);
-                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
-                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                    new HttpsConnection(TootActivity.this, instance).upload(inputStream, filename, account, TootActivity.this);
-                } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else {
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                }
-            } catch (FileNotFoundException e) {
+            String filename =  Helper.getFileName(TootActivity.this, imageUri);
+            ContentResolver cr = getContentResolver();
+            String mime = cr.getType(imageUri);
+            if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
+                upload(TootActivity.this, imageUri, filename);
+            } else if(mime != null && mime.toLowerCase().contains("image")) {
+                new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else {
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                toot_picture.setEnabled(true);
-                toot_it.setEnabled(true);
             }
         }
 
@@ -1755,139 +1726,21 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         return true;
     }
 
-    @Override
-    public void onRetrieveAttachment(final Attachment attachment, String fileName, Error error) {
-        if( error != null || attachment == null){
-            if( error != null)
-                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            else
-                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            if( attachments.size() == 0 )
-                toot_picture_container.setVisibility(View.GONE);
-            toot_picture.setEnabled(true);
-            toot_it.setEnabled(true);
-            return;
-        }
-
-        boolean alreadyAdded = false;
-        int index = 0;
-        for(Attachment attach_: this.attachments){
-            if( attach_.getId().equals(attachment.getId())){
-                alreadyAdded = true;
-                break;
-            }
-            index++;
-        }
-        if( !alreadyAdded){
-            toot_picture_container.setVisibility(View.VISIBLE);
-            String url = attachment.getPreview_url();
-            if (url == null || url.trim().equals(""))
-                url = attachment.getUrl();
-
-
-            final ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setId(Integer.parseInt(attachment.getId()));
-
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                if( fileName != null && filesMap.containsKey(fileName)){
-                    Uri uri = filesMap.get(fileName);
-                    Glide.with(imageView.getContext())
-                            .asBitmap()
-                            .load(uri)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    imageView.setImageBitmap(resource);
-                                }
-                            });
-                }
-
-            }else {
-                Glide.with(imageView.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                imageView.setImageBitmap(resource);
-                            }
-                        });
-            }
-
-
-
-            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            imParams.setMargins(20, 5, 20, 5);
-            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-            if (show_media_urls) {
-                //Adds the shorter text_url of attachment at the end of the toot 
-                int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
-                toot_space_left.setText(String.valueOf(countLength()));
-                //Moves the cursor
-                toot_content.setSelection(selectionBefore);
-            }
-            imageView.setTag(attachment.getId());
-            toot_picture_container.addView(imageView, attachments.size(), imParams);
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    showRemove(imageView.getId());
-                    return false;
-                }
-            });
-            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-            if (instanceVersion != null) {
-                Version currentVersion = new Version(instanceVersion);
-                Version minVersion = new Version("2.0");
-                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showAddDescription(attachment);
-                        }
-                    });
-                }
-            }
-            attachments.add(attachment);
-            addBorder();
-            if (attachments.size() < max_media_count)
-                toot_picture.setEnabled(true);
-            toot_it.setEnabled(true);
-            toot_sensitive.setVisibility(View.VISIBLE);
-            if( account.isSensitive()){
-                toot_sensitive.setChecked(true);
-            }
-            picture_scrollview.setVisibility(View.VISIBLE);
-        }else {
-            if( attachments.size() > index && attachment.getDescription() != null) {
-                attachments.get(index).setDescription(attachment.getDescription());
-            }
-        }
-    }
 
     @Override
     public void onDownloaded(String pathToFile, String url, Error error) {
         picture_scrollview.setVisibility(View.VISIBLE);
-        Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
-        if( pictureMention != null) {
-            String filename = pathToFile.substring(pathToFile.lastIndexOf("/") + 1);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            if( filename.contains(".png") || filename.contains(".PNG"))
-                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            else
-                pictureMention.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            byte[] bitmapdata = bos.toByteArray();
-            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-            toot_picture_container.setVisibility(View.VISIBLE);
-            toot_picture.setEnabled(false);
-            toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this, instance).upload(bs, filename, account, TootActivity.this);
-        }
+        Uri uri = Uri.fromFile(new File(pathToFile));
+        String filename = FileNameCleaner.cleanFileName(url);
+        toot_picture_container.setVisibility(View.VISIBLE);
+        toot_picture.setEnabled(false);
+        toot_it.setEnabled(false);
+        upload(TootActivity.this, uri, filename);
+    }
+
+    @Override
+    public void onRetrieveAttachment(Attachment attachment, String fileName, Error error) {
+
     }
 
     @Override
@@ -2277,6 +2130,180 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     toot_content.setAdapter(emojisSearchAdapter);
                 }
             });
+        }
+    }
+
+
+    private void upload(Context context, Uri uri, String fname){
+        try {
+            final String fileName = FileNameCleaner.cleanFileName(fname);
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance(context), "https");
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            String url = null;
+            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/v1/media";
+            }else {
+                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/media/upload.json";
+            }
+            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+            uploadConfig
+                    .setClearOnActionForAllStatuses(true);
+            uploadConfig.getProgress().message = getString(R.string.uploading);
+            uploadConfig.getCompleted().autoClear = true;
+            MultipartUploadRequest request = new MultipartUploadRequest(context, url)
+                    .addHeader("Authorization", "Bearer " + token)
+                    .setNotificationConfig(uploadConfig);
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                request.addFileToUpload(uri.toString().replace("file://",""), "file");
+            }else {
+                request.addFileToUpload(uri.toString().replace("file://",""), "media");
+            };
+            request.addParameter("filename", fileName).setMaxRetries(1)
+                .setDelegate(new UploadStatusDelegate() {
+                    @Override
+                    public void onProgress(Context context, UploadInfo uploadInfo) {
+                        // your code here
+                    }
+
+                    @Override
+                    public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
+                                        Exception exception) {
+                        Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                        if( attachments.size() == 0 )
+                            toot_picture_container.setVisibility(View.GONE);
+                        toot_picture.setEnabled(true);
+                        toot_it.setEnabled(true);
+                        exception.printStackTrace();
+                    }
+
+                    @Override
+                    public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
+                        Attachment attachment;
+                        JSONObject response = null;
+                        try {
+                            response = new JSONObject(serverResponse.getBodyAsString());
+                            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                                attachment = API.parseAttachmentResponse(response);
+                            else
+                                attachment = GNUAPI.parseUploadedAttachmentResponse(response);
+
+
+                            boolean alreadyAdded = false;
+                            int index = 0;
+                            for(Attachment attach_: attachments){
+                                if( attach_.getId().equals(attachment.getId())){
+                                    alreadyAdded = true;
+                                    break;
+                                }
+                                index++;
+                            }
+                            if( !alreadyAdded){
+                                toot_picture_container.setVisibility(View.VISIBLE);
+                                String url = attachment.getPreview_url();
+                                if (url == null || url.trim().equals(""))
+                                    url = attachment.getUrl();
+
+
+                                final ImageView imageView = new ImageView(getApplicationContext());
+                                imageView.setId(Integer.parseInt(attachment.getId()));
+
+                                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                                    if( fileName != null && filesMap.containsKey(fileName)){
+                                        Uri uri = filesMap.get(fileName);
+                                        Glide.with(imageView.getContext())
+                                                .asBitmap()
+                                                .load(uri)
+                                                .into(new SimpleTarget<Bitmap>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                                        imageView.setImageBitmap(resource);
+                                                    }
+                                                });
+                                    }
+
+                                }else {
+                                    Glide.with(imageView.getContext())
+                                            .asBitmap()
+                                            .load(url)
+                                            .into(new SimpleTarget<Bitmap>() {
+                                                @Override
+                                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                                    imageView.setImageBitmap(resource);
+                                                }
+                                            });
+                                }
+
+
+
+                                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                                imParams.setMargins(20, 5, 20, 5);
+                                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                                imageView.setAdjustViewBounds(true);
+                                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                                boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
+                                if (show_media_urls) {
+                                    //Adds the shorter text_url of attachment at the end of the toot 
+                                    int selectionBefore = toot_content.getSelectionStart();
+                                    toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
+                                    toot_space_left.setText(String.valueOf(countLength()));
+                                    //Moves the cursor
+                                    toot_content.setSelection(selectionBefore);
+                                }
+                                imageView.setTag(attachment.getId());
+                                toot_picture_container.addView(imageView, attachments.size(), imParams);
+                                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View view) {
+                                        showRemove(imageView.getId());
+                                        return false;
+                                    }
+                                });
+                                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                                if (instanceVersion != null) {
+                                    Version currentVersion = new Version(instanceVersion);
+                                    Version minVersion = new Version("2.0");
+                                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                                        imageView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                showAddDescription(attachment);
+                                            }
+                                        });
+                                    }
+                                }
+                                attachments.add(attachment);
+                                addBorder();
+                                if (attachments.size() < max_media_count)
+                                    toot_picture.setEnabled(true);
+                                toot_it.setEnabled(true);
+                                toot_sensitive.setVisibility(View.VISIBLE);
+                                if( account.isSensitive()){
+                                    toot_sensitive.setChecked(true);
+                                }
+                                picture_scrollview.setVisibility(View.VISIBLE);
+                            }else {
+                                if( attachments.size() > index && attachment.getDescription() != null) {
+                                    attachments.get(index).setDescription(attachment.getDescription());
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(Context context, UploadInfo uploadInfo) {
+                        // your code here
+                    }
+                })
+                .startUpload();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

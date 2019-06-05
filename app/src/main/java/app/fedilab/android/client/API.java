@@ -4904,7 +4904,7 @@ public class API {
      * @param resobj JSONObject
      * @return Relationship
      */
-    static Attachment parseAttachmentResponse(JSONObject resobj){
+    public static Attachment parseAttachmentResponse(JSONObject resobj){
 
         Attachment attachment = new Attachment();
         try {

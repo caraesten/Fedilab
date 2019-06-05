@@ -2265,7 +2265,7 @@ public class GNUAPI {
      * @param resobj JSONObject
      * @return Relationship
      */
-    static Attachment parseUploadedAttachmentResponse(JSONObject resobj){
+    public static Attachment parseUploadedAttachmentResponse(JSONObject resobj){
 
         Attachment attachment = new Attachment();
         try {
