@@ -3166,7 +3166,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
             Matcher matcherALink = Patterns.WEB_URL.matcher(content);
             while (matcherALink.find()){
-                final String url = content.substring(matcherALink.start(1), matcherALink.end(1));
+                final String url = matcherALink.group(1);
                 content = content.replaceAll(Pattern.quote(url),"abcdefghijklmnopkrstuvw");
             }
         }
