@@ -40,7 +40,7 @@
 
 Lead developer: [framapiaf.org/@fedilab](https://framapiaf.org/@fedilab)
 <br>
-Developer: [mastodon.social@kasun](https://mastodon.social/@kasun)
+Developer: [mastodon.social/@kasun](https://mastodon.social/@kasun)
 
 ## Backers
 
