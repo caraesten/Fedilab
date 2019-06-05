@@ -1,0 +1,10 @@
+Added
+- Extends polls for Pleroma (not limited to 4 choices)
+
+Changed
+- Media are load in background with a notification for upload
+- Improve polls
+
+Fixed
+- Fix an issue with media upload when the instance uses Cloudflare
+- Several crashes
