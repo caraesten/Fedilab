@@ -811,7 +811,7 @@
     <string name="create_poll">Создать опрос</string>
     <string name="poll_choice_1">Вариант 1</string>
     <string name="poll_choice_2">Вариант 2</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">Вариант %d</string>
     <string name="poll_invalid_choices">Необходимо добавить не менее двух вариантов для создания опроса!</string>
     <string name="done">Готово</string>
     <string name="poll_finish_at">заканчивается в %s</string>
@@ -881,8 +881,8 @@
     <string name="opacity">Затенение</string>
     <string name="label_crop">Обрезка</string>
     <string name="set_photo_editor">Включить редактор фотографий</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">Добавить элемент опроса</string>
+    <string name="remove_poll_item">Удалить последний элемент опроса</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

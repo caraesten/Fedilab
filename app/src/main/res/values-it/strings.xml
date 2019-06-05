@@ -803,7 +803,7 @@
     <string name="create_poll">Crea un sondaggio</string>
     <string name="poll_choice_1">Scelta 1</string>
     <string name="poll_choice_2">Scelta 2</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">Scelta %d</string>
     <string name="poll_invalid_choices">Hai bisogno di almeno due scelte per il sondaggio!</string>
     <string name="done">Fatto</string>
     <string name="poll_finish_at">termina tra %s</string>
@@ -873,8 +873,8 @@
     <string name="opacity">Opacità</string>
     <string name="label_crop">Ritaglia</string>
     <string name="set_photo_editor">Abilita editor foto</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">Aggiungi una voce al sondaggio</string>
+    <string name="remove_poll_item">Rimuovi l\'ultima voce del sondaggio</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>

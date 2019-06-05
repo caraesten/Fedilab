@@ -818,7 +818,7 @@
     <string name="create_poll">إنشاء استطلاع</string>
     <string name="poll_choice_1">الخيار 1</string>
     <string name="poll_choice_2">الخيار 2</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">الخيار %d</string>
     <string name="poll_invalid_choices">يجب أن يتوفر استطلاع الرأي على خيارين على الأقل!</string>
     <string name="done">تم</string>
     <string name="poll_finish_at">ينتهي في %s</string>
@@ -888,8 +888,8 @@
     <string name="opacity">الشفافيّة</string>
     <string name="label_crop">اقتصاص</string>
     <string name="set_photo_editor">تمكين محرر الصور</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">إضافة خيار إلى الإستطلاع</string>
+    <string name="remove_poll_item">إزالة آخر عنصر في الإستطلاع</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>
