@@ -252,7 +252,7 @@
     <string name="toast_block">Nutzer wurde blockiert!</string>
     <string name="toast_unblock">Der Nutzer wird nicht länger blockiert!</string>
     <string name="toast_mute">Nutzer wurde stummgeschaltet!</string>
-    <string name="toast_unmute">Nutzer wird nicht länger stummgeschaltet!</string>
+    <string name="toast_unmute">Lautlosmodus für dieses Konto aufgehoben!</string>
     <string name="toast_follow">Du folgst dem Nutzer!</string>
     <string name="toast_unfollow">Du folgst dem Nutzer nicht mehr!</string>
     <string name="toast_reblog">Der Toot wurde geteilt!</string>
