@@ -655,7 +655,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="custom_emoji_picker">Egyéni emoji-választó</string>
     <string name="play_video">Videó lejátszása</string>
     <string name="new_toot">Új toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Hivatkozás előnézete</string>
     <string name="hide_media">Média elrejtése</string>
     <string name="favicon">Könyvjelzőikon</string>
     <string name="media_description">Média-leírás hozzáadása (látássérültek hasznára)</string>
@@ -801,7 +801,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="create_poll">Szavazás létrehozása</string>
     <string name="poll_choice_1">1. lehetőség</string>
     <string name="poll_choice_2">2. lehetőség</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">%d. lehetőség</string>
     <string name="poll_invalid_choices">Legalább két lehetőséget kell megadni egy szavazás létrehozásához!</string>
     <string name="done">Kész</string>
     <string name="poll_finish_at">%s-kor ér véget</string>
@@ -871,12 +871,12 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="opacity">Áttetszőség</string>
     <string name="label_crop">Körbevágás</string>
     <string name="set_photo_editor">Fényképszerkesztő bekapcsolása</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="add_poll_item">Elem hozzáadása</string>
+    <string name="remove_poll_item">Elem eltávolítása</string>
+    <string name="mute_conversation">Beszélgetés némítása</string>
+    <string name="unmute_conversation">Beszélgetés némításának visszavonása</string>
+    <string name="toast_unmute_conversation">A beszélgetés már nincs némítva!</string>
+    <string name="toast_mute_conversation">A beszélgetés némítva van</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
