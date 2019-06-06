@@ -49,6 +49,7 @@ import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
 import net.gotev.uploadservice.UploadNotificationAction;
 import net.gotev.uploadservice.UploadNotificationConfig;
+import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
 import org.json.JSONException;
@@ -60,6 +61,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -71,7 +73,7 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
 import static app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 
-public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
+public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface, UploadStatusDelegate {
 
 
     private final int PICK_IVDEO = 52378;
@@ -84,7 +86,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     private String filename;
     private HashMap<Integer, String> privacyToSend;
     private HashMap<String, String> channelToSend;
-    private String videoID;
+    private UploadServiceSingleBroadcastReceiver uploadReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,8 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         channels = new HashMap<>();
 
+        uploadReceiver = new UploadServiceSingleBroadcastReceiver(this);
+        uploadReceiver.register(this);
 
     }
 
@@ -181,6 +185,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             }
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        uploadReceiver.unregister(this);
     }
 
     @Override
@@ -345,57 +355,59 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
                         uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
-
-                        String uploadId =
-                                new MultipartUploadRequest(PeertubeUploadActivity.this, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
-                                        .addFileToUpload(uri.toString().replace("file://",""), "videofile")
-                                        .addHeader("Authorization", "Bearer " + token)
-                                        .setNotificationConfig(uploadConfig)
-                                        .addParameter("name", filename)
-                                        .addParameter("channelId", idChannel)
-                                        .addParameter("privacy", String.valueOf(idPrivacy))
-                                        .addParameter("nsfw", "false")
-                                        .addParameter("commentsEnabled", "true")
-                                        .addParameter("waitTranscoding", "true")
-                                        .setMaxRetries(2)
-                                        .setDelegate(new UploadStatusDelegate() {
-                                            @Override
-                                            public void onProgress(Context context, UploadInfo uploadInfo) {
-                                                // your code here
-                                            }
-
-                                            @Override
-                                            public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
-                                                                Exception exception) {
-                                                // your code here
-                                                exception.printStackTrace();
-                                            }
-
-                                            @Override
-                                            public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
-                                                try {
-                                                    JSONObject response = new JSONObject(serverResponse.getBodyAsString());
-                                                    videoID = response.getJSONObject("video").get("id").toString();
-                                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                    editor.putString(Helper.VIDEO_ID, videoID);
-                                                    editor.commit();
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(Context context, UploadInfo uploadInfo) {
-                                                // your code here
-                                            }
-                                        })
-                                        .startUpload();
-                                        finish();
+                        String uploadId = UUID.randomUUID().toString();
+                        uploadReceiver.setUploadID(uploadId);
+                        new MultipartUploadRequest(PeertubeUploadActivity.this, uploadId, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
+                                .addFileToUpload(uri.toString().replace("file://",""), "videofile")
+                                .addHeader("Authorization", "Bearer " + token)
+                                .setNotificationConfig(uploadConfig)
+                                .addParameter("name", filename)
+                                .addParameter("channelId", idChannel)
+                                .addParameter("privacy", String.valueOf(idPrivacy))
+                                .addParameter("nsfw", "false")
+                                .addParameter("commentsEnabled", "true")
+                                .addParameter("waitTranscoding", "true")
+                                .setMaxRetries(2)
+                                .startUpload();
+                                finish();
                     } catch (Exception exc) {
                         exc.printStackTrace();
                     }
                 }
             }
         });
+    }
+
+
+
+    @Override
+    public void onProgress(Context context, UploadInfo uploadInfo) {
+        // your code here
+    }
+
+    @Override
+    public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
+                        Exception exception) {
+        // your code here
+        exception.printStackTrace();
+    }
+
+    @Override
+    public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
+        try {
+            JSONObject response = new JSONObject(serverResponse.getBodyAsString());
+            String videoID = response.getJSONObject("video").get("id").toString();
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.VIDEO_ID, videoID);
+            editor.commit();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCancelled(Context context, UploadInfo uploadInfo) {
+        // your code here
     }
 }
