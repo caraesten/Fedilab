@@ -872,6 +872,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_photo_editor">Activer l\'éditeur d\'images</string>
     <string name="add_poll_item">Ajouter un élément de sondage</string>
     <string name="remove_poll_item">Supprimer le dernier élément de sondage</string>
+    <string name="mute_conversation">Mute conversation</string>
+    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
+    <string name="toast_mute_conversation">The conversation is muted</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
