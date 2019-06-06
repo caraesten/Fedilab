@@ -883,6 +883,10 @@
     <string name="set_photo_editor">Включить редактор фотографий</string>
     <string name="add_poll_item">Добавить элемент опроса</string>
     <string name="remove_poll_item">Удалить последний элемент опроса</string>
+    <string name="mute_conversation">Mute conversation</string>
+    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
+    <string name="toast_mute_conversation">The conversation is muted</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
