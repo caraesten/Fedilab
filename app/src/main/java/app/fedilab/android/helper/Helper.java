@@ -894,6 +894,10 @@ public class Helper {
                 message = context.getString(R.string.toast_mute);
             }else if(statusAction == API.StatusAction.UNMUTE){
                 message = context.getString(R.string.toast_unmute);
+            }else if(statusAction == API.StatusAction.MUTE_CONVERSATION){
+                message = context.getString(R.string.toast_mute_conversation);
+            }else if(statusAction == API.StatusAction.UNMUTE_CONVERSATION){
+                message = context.getString(R.string.toast_unmute_conversation);
             }else if(statusAction == API.StatusAction.FOLLOW){
                 message = context.getString(R.string.toast_follow);
             }else if(statusAction == API.StatusAction.UNFOLLOW){

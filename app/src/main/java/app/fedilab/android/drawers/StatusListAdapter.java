@@ -2203,6 +2203,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
                     else
                         popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
+                    if (status.isMuted())
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.unmute_conversation);
+                    else
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.mute_conversation);
+
+
                     final String[] stringArrayConf;
                     if (status.getVisibility().equals("direct") || (status.getVisibility().equals("private") && !isOwner))
                         popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
@@ -2215,10 +2221,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     } else {
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (isAdmin || isModerator))
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
+                        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (isAdmin || isModerator)) {
                             popup.getMenu().findItem(R.id.action_remove).setVisible(true);
-                        else
+                        }else {
                             popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                        }
                         //Same instance
                         if (status.getAccount().getAcct().split("@").length < 2)
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
@@ -2228,7 +2236,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_info).setVisible(false);
                         popup.getMenu().findItem(R.id.action_report).setVisible(false);
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
-
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                     }
                     boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
                     if( custom_sharing && status.getVisibility().equals("public"))
@@ -2374,6 +2382,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setMessage(status.getAccount().getAcct());
                                     doAction = API.StatusAction.MUTE;
                                     break;
+                                case R.id.action_mute_conversation:
+                                    if( status.isMuted())
+                                        doAction = API.StatusAction.UNMUTE_CONVERSATION;
+                                    else
+                                        doAction = API.StatusAction.MUTE_CONVERSATION;
+
+                                    new PostActionAsyncTask(context, doAction, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    return true;
                                 case R.id.action_bookmark:
                                     if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
                                         status.setBookmarked(!status.isBookmarked());
@@ -3182,6 +3198,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.MUTE_CONVERSATION ){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setMuted(true);
+                    notifyStatusChanged(status);
+                    break;
+                }
+            }
+        }else if( statusAction == API.StatusAction.UNMUTE_CONVERSATION ){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setMuted(false);
+                    notifyStatusChanged(status);
+                    break;
+                }
+            }
         }else  if( statusAction == API.StatusAction.UNSTATUS ){
             int position = 0;
             for(Status status: statuses){

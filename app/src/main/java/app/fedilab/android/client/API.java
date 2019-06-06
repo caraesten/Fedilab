@@ -118,6 +118,8 @@ public class API {
         MUTE,
         MUTE_NOTIFICATIONS,
         UNMUTE,
+        MUTE_CONVERSATION,
+        UNMUTE_CONVERSATION,
         BLOCK,
         UNBLOCK,
         FOLLOW,
@@ -2119,6 +2121,12 @@ public class API {
                 break;
             case UNMUTE:
                 action = String.format("/accounts/%s/unmute", targetedId);
+                break;
+            case MUTE_CONVERSATION:
+                action = String.format("/statuses/%s/mute", targetedId);
+                break;
+            case UNMUTE_CONVERSATION:
+                action = String.format("/statuses/%s/unmute", targetedId);
                 break;
             case PIN:
                 action = String.format("/statuses/%s/pin", targetedId);

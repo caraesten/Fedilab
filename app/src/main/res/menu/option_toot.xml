@@ -32,6 +32,14 @@
         android:title="@string/copy_link"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_mute_conversation"
+        android:title="@string/mute_conversation"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mute"
+        android:title="@string/more_action_1"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_timed_mute"
         android:title="@string/more_action_8"
         app:showAsAction="never" />
@@ -39,10 +47,7 @@
         android:id="@+id/action_schedule_boost"
         android:title="@string/schedule_boost"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_mute"
-        android:title="@string/more_action_1"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_block"
         android:title="@string/more_action_2"
