@@ -1729,13 +1729,16 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
     @Override
     public void onDownloaded(String pathToFile, String url, Error error) {
-        picture_scrollview.setVisibility(View.VISIBLE);
-        Uri uri = Uri.fromFile(new File(pathToFile));
-        String filename = FileNameCleaner.cleanFileName(url);
-        toot_picture_container.setVisibility(View.VISIBLE);
-        toot_picture.setEnabled(false);
-        toot_it.setEnabled(false);
-        upload(TootActivity.this, uri, filename);
+
+        if( error == null && pathToFile != null) {
+            picture_scrollview.setVisibility(View.VISIBLE);
+            Uri uri = Uri.fromFile(new File(pathToFile));
+            String filename = FileNameCleaner.cleanFileName(url);
+            toot_picture_container.setVisibility(View.VISIBLE);
+            toot_picture.setEnabled(false);
+            toot_it.setEnabled(false);
+            upload(TootActivity.this, uri, filename);
+        }
     }
 
     @Override
