@@ -864,10 +864,10 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_photo_editor">Aktiver bilderedigering</string>
     <string name="add_poll_item">Legg til valg</string>
     <string name="remove_poll_item">Fjern siste valg</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="mute_conversation">Demp samtalen</string>
+    <string name="unmute_conversation">Fjern demping av samtalen</string>
+    <string name="toast_unmute_conversation">Denne samtalen er ikke lenger dempet!</string>
+    <string name="toast_mute_conversation">Samtalen er dempet</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
