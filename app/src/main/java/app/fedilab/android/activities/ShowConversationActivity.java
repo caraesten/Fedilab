@@ -75,6 +75,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     private boolean expanded;
     private BroadcastReceiver receive_action;
     private String conversationId;
+    private boolean spoilerShown, spoilerBehaviour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         if( theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black));
         setSupportActionBar(toolbar);
-
+        spoilerShown = spoilerBehaviour =sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
         Bundle b = getIntent().getExtras();
         statuses = new ArrayList<>();
         if(b != null) {
@@ -187,11 +188,19 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                 @Override
                 public void onClick(View v) {
                     if( statuses != null && statuses.size() > 0) {
+                        spoilerShown = !spoilerShown;
                         for (Status status : statuses) {
-                            status.setShowSpoiler(!status.isShowSpoiler());
+                            if( spoilerBehaviour && !status.isSpoilerShown() ){
+                                status.setAutoHiddenCW(true);
+                            }else{
+                                status.setAutoHiddenCW(false);
+                            }
+                            status.setSpoilerShown(spoilerShown);
+                            status.setShowSpoiler(spoilerShown);
                         }
                         statusListAdapter.notifyItemRangeChanged(0, statuses.size());
                     }
+
                 }
             });
             action_expand.setOnClickListener(new View.OnClickListener() {

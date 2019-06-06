@@ -1024,10 +1024,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 }
             });
+            holder.status_spoiler.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && !view.hasFocus()) {
+                        try {
+                            view.requestFocus();
+                        } catch (Exception ignored) {
+                        }
+                    }
+                    return false;
+                }
+            });
             //Click on a conversation
 
             if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
-                holder.status_spoiler_container.setOnClickListener(new View.OnClickListener() {
+                holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
