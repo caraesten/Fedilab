@@ -228,6 +228,17 @@ public class API {
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
                     String name = jsonObject.getString("name").toUpperCase();
+
+                    if( resobj.has("features") ) {
+                        JSONArray features = resobj.getJSONArray("features");
+                        for( int counter = 0; counter < features.length(); counter++ ) {
+                            if( features.getString(counter).toUpperCase().equals("MASTODON_API") ) {
+                                name = "MASTODON";
+                                break;
+                            }
+                        }
+                    }
+                    
                     if( jsonObject.getString("name") != null ){
                         switch (jsonObject.getString("name").toUpperCase()){
                             case "PLEROMA":
