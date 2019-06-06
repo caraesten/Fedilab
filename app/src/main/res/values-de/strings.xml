@@ -866,8 +866,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_photo_editor">Fotobearbeitung aktivieren</string>
     <string name="add_poll_item">Umfrageelement hinzufügen</string>
     <string name="remove_poll_item">Letztes Umfrageergebnis entfernen</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="mute_conversation">Thema nicht mehr benachrichtigen</string>
+    <string name="unmute_conversation">Thema erneut benachrichtigen</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
     <string name="toast_mute_conversation">The conversation is muted</string>
     <plurals name="number_of_vote">
