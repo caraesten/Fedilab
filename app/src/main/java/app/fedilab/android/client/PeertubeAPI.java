@@ -17,12 +17,9 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -764,11 +761,10 @@ public class PeertubeAPI {
                     targetedAccount.setToken(values.get("access_token"));
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     //This account is currently logged in, the token is updated
-                    if (prefKeyOauthTokenT.equals(token)) {
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
-                        editor.apply();
-                    }
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    prefKeyOauthTokenT = targetedAccount.getToken();
+                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                    editor.apply();
                 }
                 if (values.containsKey("refresh_token") && values.get("refresh_token") != null)
                     targetedAccount.setRefresh_token(values.get("refresh_token"));
