@@ -871,6 +871,10 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_photo_editor">啟用圖片編輯器</string>
     <string name="add_poll_item">新增投票項目</string>
     <string name="remove_poll_item">移除末尾投票項目</string>
+    <string name="mute_conversation">Mute conversation</string>
+    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
+    <string name="toast_mute_conversation">The conversation is muted</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
