@@ -69,14 +69,19 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         Account account;
         if( social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            account.setSocial(account.getSocial());
+            if( account != null)
+                account.setSocial(account.getSocial());
         }else if( social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            account.setSocial("PEERTUBE");
+            if( account != null)
+                account.setSocial("PEERTUBE");
         }else{
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            account.setSocial(account.getSocial());
+            if( account != null)
+                account.setSocial(account.getSocial());
         }
+        if (account == null)
+            return null;
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");
