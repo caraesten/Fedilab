@@ -874,10 +874,10 @@
     <string name="set_photo_editor">Gaitu argazki-editorea</string>
     <string name="add_poll_item">Gehitu elementu bat inkestara</string>
     <string name="remove_poll_item">Kendu inkestako azken elementua</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="mute_conversation">Mututu elkarrizketa</string>
+    <string name="unmute_conversation">Desmututu elkarrizketa</string>
+    <string name="toast_unmute_conversation">Elkarrizketa ez dago jada mutututa!</string>
+    <string name="toast_mute_conversation">Elkarrizketa mutututa dago</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
