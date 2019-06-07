@@ -890,6 +890,10 @@
     <string name="set_photo_editor">تمكين محرر الصور</string>
     <string name="add_poll_item">إضافة خيار إلى الإستطلاع</string>
     <string name="remove_poll_item">إزالة آخر عنصر في الإستطلاع</string>
+    <string name="mute_conversation">اكتم المحادثة</string>
+    <string name="unmute_conversation">ألغِ كتم المحادثة</string>
+    <string name="toast_unmute_conversation">لقد تم إلغاء الكتم عن هذه المحادثة!</string>
+    <string name="toast_mute_conversation">المحادثة مكتومة</string>
     <plurals name="number_of_vote">
         <item quantity="zero">لا صوت</item>
         <item quantity="one">صوت واحد</item>

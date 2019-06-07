@@ -875,6 +875,10 @@
     <string name="set_photo_editor">Ativar editor de fotos</string>
     <string name="add_poll_item">Adicionar um item</string>
     <string name="remove_poll_item">Excluir último item</string>
+    <string name="mute_conversation">Mute conversation</string>
+    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
+    <string name="toast_mute_conversation">The conversation is muted</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

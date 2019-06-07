@@ -117,10 +117,10 @@
     <string name="more_action_5">Kopieren</string>
     <string name="more_action_6">Teilen</string>
     <string name="more_action_7">Erwähnen</string>
-    <string name="more_action_8">Zeitlich begrenzt stummschalten</string>
+    <string name="more_action_8">Zeitlich begrenzt lautlos schalten</string>
     <string name="more_action_9">Löschen &amp; neu entwerfen</string>
     <string-array name="more_action_confirm">
-        <item>Nutzer stummschalten?</item>
+        <item>Lautlosmodus für dieses Konto aktivieren?</item>
         <item>Diesen Nutzer blockieren?</item>
         <item>Diesen Toot melden?</item>
         <item>Diese Domäne blockieren?</item>
@@ -217,8 +217,8 @@
     <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Die Zeit zum stummschalten sollte größer sein als eine Minute.</string>
-    <string name="timed_mute_date">%1$s wurde bis %2$s stumm geschaltet.\n Du kannst dieses Konto wieder freigeben, indem du sein/ihr Profil besuchst.</string>
-    <string name="timed_mute_profile">%1$s ist stumm geschaltet bis %2$s.\n Hier drücken um Stumm schalten zu entfernen.</string>
+    <string name="timed_mute_date">%1$s wurde bis %2$s lautlos geschaltet.\n Sie können den Lautlosmodus für diesen Nutzer beenden, indem Sie sein/ihr Profil besuchen.</string>
+    <string name="timed_mute_profile">%1$s ist bis %2$s lautlos geschaltet.\n Hier antippen, um den Lautlosmodus zu beenden.</string>
     <!-- Notifications -->
     <string name="no_notifications">Keine Benachrichtigungen</string>
     <string name="notif_mention">hat deinen Beitrag erwähnt</string>
@@ -251,8 +251,8 @@
     <string name="no_internet">Keine Internetverbindung!</string>
     <string name="toast_block">Nutzer wurde blockiert!</string>
     <string name="toast_unblock">Der Nutzer wird nicht länger blockiert!</string>
-    <string name="toast_mute">Nutzer wurde stummgeschaltet!</string>
-    <string name="toast_unmute">Nutzer wird nicht länger stummgeschaltet!</string>
+    <string name="toast_mute">Nutzer wurde lautlos geschaltet!</string>
+    <string name="toast_unmute">Lautlosmodus für dieses Konto aufgehoben!</string>
     <string name="toast_follow">Du folgst dem Nutzer!</string>
     <string name="toast_unfollow">Du folgst dem Nutzer nicht mehr!</string>
     <string name="toast_reblog">Der Toot wurde geteilt!</string>
@@ -377,9 +377,9 @@
     <string name="action_unfollow">Entfolgen</string>
     <string name="action_block">Blockieren</string>
     <string name="action_unblock">Nicht mehr blockieren</string>
-    <string name="action_mute">Stummschalten</string>
+    <string name="action_mute">Lautlos</string>
     <string name="action_no_action">Keine Aktion</string>
-    <string name="action_unmute">Nicht mehr stummschalten</string>
+    <string name="action_unmute">Lautlosmodus beenden</string>
     <string name="request_sent">Anfrage gesendet</string>
     <string name="followed_by">folgt dir</string>
     <string name="action_search">Suche</string>
@@ -865,7 +865,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="label_crop">Zuschneiden</string>
     <string name="set_photo_editor">Fotobearbeitung aktivieren</string>
     <string name="add_poll_item">Umfrageelement hinzufügen</string>
-    <string name="remove_poll_item">Letztes Umfrageergebnis entfernen</string>
+    <string name="remove_poll_item">Letztes Umfrageelement entfernen</string>
+    <string name="mute_conversation">Thema nicht mehr benachrichtigen</string>
+    <string name="unmute_conversation">Thema erneut benachrichtigen</string>
+    <string name="toast_unmute_conversation">Nachrichten zu diesem Thema werden wieder benachrichtigt!</string>
+    <string name="toast_mute_conversation">Nachrichten zu diesem Thema werden nicht mehr benachrichtigt</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
