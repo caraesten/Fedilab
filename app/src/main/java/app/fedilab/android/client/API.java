@@ -223,33 +223,36 @@ public class API {
                     nodeInfos.add(nodeInfo);
                 }
                 if( nodeInfos.size() > 0){
-                    NodeInfo nodeInfo = nodeInfos.get(0);
+                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size()-1);
                     response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
-                    String name = jsonObject.getString("name").toUpperCase();
-
-                    if( resobj.has("features") ) {
-                        JSONArray features = resobj.getJSONArray("features");
-                        for( int counter = 0; counter < features.length(); counter++ ) {
-                            if( features.getString(counter).toUpperCase().equals("MASTODON_API") ) {
-                                name = "MASTODON";
-                                break;
+                    String name= null;
+                    if( resobj.has("metadata") && resobj.getJSONObject("metadata").has("features") ) {
+                        JSONArray features = resobj.getJSONObject("metadata").getJSONArray("features");
+                        if( features != null && features.length() > 0){
+                            for( int counter = 0; counter < features.length(); counter++ ) {
+                                if( features.getString(counter).toUpperCase().equals("MASTODON_API") ) {
+                                    name = "MASTODON";
+                                    break;
+                                }
                             }
                         }
                     }
-                    
-                    if( jsonObject.getString("name") != null ){
-                        switch (jsonObject.getString("name").toUpperCase()){
-                            case "PLEROMA":
-                                name = "MASTODON";
-                                break;
-                            case "GNUSOCIAL":
-                            case "HUBZILLA":
-                            case "REDMATRIX":
-                            case "FRIENDICA":
-                                name = "GNU";
-                                break;
+                    if( name == null) {
+                        name = jsonObject.getString("name").toUpperCase();
+                        if (jsonObject.getString("name") != null) {
+                            switch (jsonObject.getString("name").toUpperCase()) {
+                                case "PLEROMA":
+                                    name = "MASTODON";
+                                    break;
+                                case "GNUSOCIAL":
+                                case "HUBZILLA":
+                                case "REDMATRIX":
+                                case "FRIENDICA":
+                                    name = "GNU";
+                                    break;
+                            }
                         }
                     }
                     instanceNodeInfo.setName(name);
