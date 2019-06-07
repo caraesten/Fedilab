@@ -875,10 +875,10 @@
     <string name="set_photo_editor">Abilita editor foto</string>
     <string name="add_poll_item">Aggiungi una voce al sondaggio</string>
     <string name="remove_poll_item">Rimuovi l\'ultima voce del sondaggio</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="mute_conversation">Silenzia conversazione</string>
+    <string name="unmute_conversation">Smetti di silenziare conversazione</string>
+    <string name="toast_unmute_conversation">La conversazione non è più silenziata!</string>
+    <string name="toast_mute_conversation">La conversazione è silenziata</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
