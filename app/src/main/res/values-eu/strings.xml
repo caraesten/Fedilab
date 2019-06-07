@@ -802,7 +802,7 @@
     <string name="create_poll">Sortu inkesta bat</string>
     <string name="poll_choice_1">1. aukera</string>
     <string name="poll_choice_2">2. aukera</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">%d. aukera</string>
     <string name="poll_invalid_choices">Gutxienez bi aukera behar dira inkesta bat egiteko!</string>
     <string name="done">Egina</string>
     <string name="poll_finish_at">amaiera: %s</string>
@@ -872,8 +872,8 @@
     <string name="opacity">Opakutasuna</string>
     <string name="label_crop">Moztu</string>
     <string name="set_photo_editor">Gaitu argazki-editorea</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">Gehitu elementu bat inkestara</string>
+    <string name="remove_poll_item">Kendu inkestako azken elementua</string>
     <string name="mute_conversation">Mute conversation</string>
     <string name="unmute_conversation">Unmute conversation</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
