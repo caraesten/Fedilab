@@ -27,6 +27,7 @@ public class PeertubeAccountNotification {
     private String displayName;
     private String name;
     private String type;
+    private String host;
 
     public String getId() {
         return id;
@@ -66,5 +67,13 @@ public class PeertubeAccountNotification {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }

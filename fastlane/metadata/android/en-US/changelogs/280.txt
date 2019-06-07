@@ -1,0 +1,8 @@
+Added
+- Allow to mute a conversation
+
+Changed
+- Improve the upload for Peertube
+
+Fixed
+- Fix an issue when using GIF from keyboard

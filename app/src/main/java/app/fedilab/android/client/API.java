@@ -1195,6 +1195,7 @@ public class API {
             accounts = parseAccountResponsePeertube(context, instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {

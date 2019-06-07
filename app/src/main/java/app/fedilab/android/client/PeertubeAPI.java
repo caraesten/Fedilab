@@ -17,6 +17,7 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -426,6 +427,7 @@ public class PeertubeAPI {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponsePeertube(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -1559,6 +1561,9 @@ public class PeertubeAPI {
                     peertubeAccountNotification.setDisplayName(account.get("displayName").toString());
                     peertubeAccountNotification.setName(account.get("name").toString());
                     peertubeAccountNotification.setId(account.get("id").toString());
+                    if( account.has("host")) {
+                        peertubeAccountNotification.setHost(account.get("host").toString());
+                    }
                     peertubeAccountNotification.setAvatar(account.getJSONObject("avatar").get("path").toString());
                     peertubeComment.setPeertubeAccountNotification(peertubeAccountNotification);
                 }
@@ -1606,6 +1611,9 @@ public class PeertubeAPI {
                 peertubeAccountNotification.setDisplayName(follower.get("displayName").toString());
                 peertubeAccountNotification.setName(follower.get("name").toString());
                 peertubeAccountNotification.setId(follower.get("id").toString());
+                if( follower.has("host")) {
+                    peertubeAccountNotification.setHost(follower.get("host").toString());
+                }
                 if( follower.has("avatar")){
                     peertubeAccountNotification.setAvatar(follower.getJSONObject("avatar").get("path").toString());
                 }

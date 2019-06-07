@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,7 +189,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
                 b.putBoolean("peertubeaccount", true);
-                b.putString("accountId", finalAccountAction.getName());
+                b.putString("accountId", finalAccountAction.getName() + "@" + finalAccountAction.getHost());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }

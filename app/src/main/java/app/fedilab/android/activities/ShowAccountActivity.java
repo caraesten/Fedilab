@@ -716,12 +716,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( (account.getAvatar() == null || account.getAvatar().equals("null"))&& MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             Glide.with(getApplicationContext()).load(R.drawable.missing_peertube).apply(RequestOptions.circleCropTransform()).into(account_pp);
         }else{
+            String url = account.getAvatar();
+            if( url != null && url.startsWith("/")){
+                url = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + url;
+            }
             if( !disableGif)
-                Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
-            else
+                Glide.with(getApplicationContext()).load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
+            else {
                 Glide.with(getApplicationContext())
                         .asBitmap()
-                        .load(account.getAvatar())
+                        .load(url)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -730,6 +734,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 account_pp.setImageDrawable(circularBitmapDrawable);
                             }
                         });
+            }
         }
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -899,8 +904,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
                         bundle.putString("targetedid", account.getId());
-                        bundle.putString("instance",account.getAcct().split("@")[1]);
-                        bundle.putString("name",account.getAcct().split("@")[0]);
+                        bundle.putString("instance", Helper.getLiveInstance(ShowAccountActivity.this));
+                        bundle.putString("name",account.getAcct());
                         displayAccountsFragment.setArguments(bundle);
                         return displayAccountsFragment;
                     }else{
