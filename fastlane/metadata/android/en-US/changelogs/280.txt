@@ -6,3 +6,4 @@ Changed
 
 Fixed
 - Fix an issue when using GIF from keyboard
+- Fix issues with Peertube notifications
