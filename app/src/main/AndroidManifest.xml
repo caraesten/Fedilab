@@ -56,6 +56,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name="app.fedilab.android.services.PeertubeUploadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="app.fedilab.android.uploadservice.broadcast.status" />
+            </intent-filter>
+        </receiver>
         <receiver android:name="app.fedilab.android.services.StopLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>
