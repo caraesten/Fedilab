@@ -882,7 +882,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="mention_account">Fiók megemlítése</string>
     <string name="refresh_cache">Gyorsítótár frissítése</string>
     <string name="see_boost_and_fav">Nézd meg ki osztotta újra vagy adta hozzá a kedvencekhez</string>
-    <string name="mention_status">Mention the status</string>
+    <string name="mention_status">Üzenet megemlítese</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
