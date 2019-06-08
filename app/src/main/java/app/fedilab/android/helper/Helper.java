@@ -2333,6 +2333,8 @@ public class Helper {
      * @param hexaColor example 0xffff00
      */
     public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor){
+        if( imageView == null)
+            return;
         imageView.setColorFilter(context.getResources().getColor(hexaColor));
     }
 
@@ -2342,6 +2344,8 @@ public class Helper {
      * @param hexaColor example 0xffff00
      */
     public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor){
+        if( imageButton == null)
+            return;
         imageButton.setColorFilter(context.getResources().getColor(hexaColor));
     }
 
@@ -2351,6 +2355,8 @@ public class Helper {
      * @param hexaColor example 0xffff00
      */
     public static void changeButtonTextColor(Context context, Button button, int hexaColor){
+        if( button == null)
+            return;
         button.setTextColor(context.getResources().getColor(hexaColor));
     }
     /**

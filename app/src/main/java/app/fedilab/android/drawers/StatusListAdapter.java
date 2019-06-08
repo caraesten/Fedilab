@@ -54,6 +54,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -365,7 +366,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_peertube_container;
         TextView status_peertube_reply, status_peertube_delete, show_more_content;
         ImageView cached_status, status_account_bot;
-
+        ImageView fedilab_features;
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
@@ -461,7 +462,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_peertube_container = itemView.findViewById(R.id.status_peertube_container);
             status_peertube_reply = itemView.findViewById(R.id.status_peertube_reply);
             status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
-
+            fedilab_features = itemView.findViewById(R.id.fedilab_features);
             poll_container = itemView.findViewById(R.id.poll_container);
             single_choice = itemView.findViewById(R.id.single_choice);
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
@@ -473,6 +474,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             refresh_poll = itemView.findViewById(R.id.refresh_poll);
             cached_status = itemView.findViewById(R.id.cached_status);
             status_account_bot = itemView.findViewById(R.id.status_account_bot);
+
+
         }
     }
 
@@ -580,10 +583,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
-                holder.status_bookmark.setVisibility(View.VISIBLE);
-            else
-                holder.status_bookmark.setVisibility(View.GONE);
+
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
@@ -939,22 +939,102 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.light_black));
             }
-            if (status.isBookmarked())
-                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
-            else
-                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
 
-            if( status.iscached()){
-                holder.cached_status.setVisibility(View.VISIBLE);
-            }else{
-                holder.cached_status.setVisibility(View.GONE);
+
+
+            if( holder.status_bookmark != null) {
+                if (status.isBookmarked())
+                    holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
+                else
+                    holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
+                if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
+                    holder.status_bookmark.setVisibility(View.VISIBLE);
+                else
+                    holder.status_bookmark.setVisibility(View.GONE);
+
+                holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                            status.setBookmarked(!status.isBookmarked());
+                            try {
+                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                if (status.isBookmarked()) {
+                                    new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                    Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
+                                } else {
+                                    new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                    Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
+                                }
+                                notifyStatusChanged(status);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            int position = 0;
+                            for (Status statustmp : statuses) {
+                                if (statustmp.getId().equals(status.getId())) {
+                                    statuses.remove(status);
+                                    statusListAdapter.notifyItemRemoved(position);
+                                    final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                    new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                    Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
+                                    break;
+                                }
+                                position++;
+                            }
+                        }
+                    }
+                });
+                holder.status_bookmark.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                        return false;
+                    }
+                });
             }
-            holder.cached_status.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new ManageCachedStatusAsyncTask(context, status.getId(),  StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+            if( holder.cached_status != null) {
+                if (status.iscached()) {
+                    holder.cached_status.setVisibility(View.VISIBLE);
+                } else {
+                    holder.cached_status.setVisibility(View.GONE);
                 }
-            });
+                holder.cached_status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                });
+            }
+
+            if( holder.fedilab_features != null) {
+                holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int style;
+                        if (theme == Helper.THEME_DARK) {
+                            style = R.style.DialogDark;
+                        } else if (theme == Helper.THEME_BLACK) {
+                            style = R.style.DialogBlack;
+                        } else {
+                            style = R.style.Dialog;
+                        }
+                        AlertDialog.Builder dialogBuilderFeatures = new AlertDialog.Builder(context, style);
+                        LayoutInflater inflaterBoost = ((Activity) context).getLayoutInflater();
+                        @SuppressLint("InflateParams") View dialogViewBoost = inflaterBoost.inflate(R.layout.custom_fedilab_features, null);
+                        dialogBuilderFeatures.setView(dialogViewBoost);
+                        AlertDialog dialogFeatures = dialogBuilderFeatures.create();
+                        dialogFeatures.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialogFeatures.setCancelable(true);
+                        dialogFeatures.show();
+                    }
+                });
+            }
+
+
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
@@ -1107,14 +1187,39 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
+            if( holder.status_translate != null) {
+                holder.status_translate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        translateToot(status);
+                    }
+                });
+                boolean differentLanguage;
+                if (status.getReblog() == null)
+                    differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
+                else
+                    differentLanguage = status.getReblog().getLanguage() != null && !status.getReblog().getLanguage().trim().equals(currentLocale);
 
-
-            holder.status_translate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    translateToot(status);
+                if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
+                        if (status.isSpoilerShown() || expand_cw  || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                            holder.status_translate.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.status_translate.setVisibility(View.GONE);
+                        }
+                    } else if (status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
+                        if (status.isSpoilerShown() || expand_cw   || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
+                            holder.status_translate.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.status_translate.setVisibility(View.GONE);
+                        }
+                    } else {
+                        holder.status_translate.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    holder.status_translate.setVisibility(View.GONE);
                 }
-            });
+            }
 
             if( isConsoleMode){
                 String starting = "";
@@ -1223,6 +1328,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
                 holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             }
+
+
+
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             if (truncate_toots_size > 0) {
@@ -1260,48 +1368,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
-                        status.setBookmarked(!status.isBookmarked());
-                        try {
-                            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                            if (status.isBookmarked()) {
-                                new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
-                            } else {
-                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
-                            }
-                            notifyStatusChanged(status);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        int position = 0;
-                        for (Status statustmp : statuses) {
-                            if (statustmp.getId().equals(status.getId())) {
-                                statuses.remove(status);
-                                statusListAdapter.notifyItemRemoved(position);
-                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
-                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
-                                break;
-                            }
-                            position++;
-                        }
-                    }
-                }
-            });
-            holder.status_bookmark.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    CrossActions.doCrossBookmark(context, status, statusListAdapter);
-                    return false;
-                }
-            });
+
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
@@ -1513,31 +1580,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Helper.loadGiF(context, status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
                 }
             }
-            boolean differentLanguage;
-            if (status.getReblog() == null)
-                differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
-            else
-                differentLanguage = status.getReblog().getLanguage() != null && !status.getReblog().getLanguage().trim().equals(currentLocale);
 
-            if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
-                if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || expand_cw  || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
-                        holder.status_translate.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.status_translate.setVisibility(View.GONE);
-                    }
-                } else if (status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
-                    if (status.isSpoilerShown() || expand_cw   || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
-                        holder.status_translate.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.status_translate.setVisibility(View.GONE);
-                    }
-                } else {
-                    holder.status_translate.setVisibility(View.VISIBLE);
-                }
-            } else {
-                holder.status_translate.setVisibility(View.GONE);
-            }
+
             /*if (expand_cw)
                 holder.status_spoiler_button.setVisibility(View.GONE);*/
             String contentCheck = "";

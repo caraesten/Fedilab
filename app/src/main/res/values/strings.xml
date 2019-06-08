@@ -983,6 +983,9 @@
     <string name="unmute_conversation">Unmute conversation</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
     <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="app_features">Open application features</string>
+    <string name="timed_mute">Timed mute</string>
+    <string name="mention_account">Mention the account</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
