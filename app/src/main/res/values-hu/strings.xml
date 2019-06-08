@@ -877,6 +877,13 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="unmute_conversation">Beszélgetés némításának visszavonása</string>
     <string name="toast_unmute_conversation">A beszélgetés már nincs némítva!</string>
     <string name="toast_mute_conversation">A beszélgetés némítva van</string>
+    <string name="app_features">Open application features</string>
+    <string name="timed_mute">Időzített elnémítás</string>
+    <string name="mention_account">Fiók megemlítése</string>
+    <string name="refresh_cache">Gyorsítótár frissítése</string>
+    <string name="see_boost_and_fav">Nézd meg ki osztotta újra vagy adta hozzá a kedvencekhez</string>
+    <string name="mention_status">Üzenet megemlítese</string>
+    <string name="action_news">News</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

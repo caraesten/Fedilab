@@ -870,6 +870,13 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="unmute_conversation">Thema erneut benachrichtigen</string>
     <string name="toast_unmute_conversation">Nachrichten zu diesem Thema werden wieder benachrichtigt!</string>
     <string name="toast_mute_conversation">Nachrichten zu diesem Thema werden nicht mehr benachrichtigt</string>
+    <string name="app_features">Anwendungseinstellungen öffnen</string>
+    <string name="timed_mute">Zeitgesteuert lautlos schalten</string>
+    <string name="mention_account">Konto erwähnen</string>
+    <string name="refresh_cache">Zwischenspeicher aktualisieren</string>
+    <string name="see_boost_and_fav">Erfahren, wer die Favoriten unterstützt und hinzugefügt hat</string>
+    <string name="mention_status">Status erwähnen</string>
+    <string name="action_news">News</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
