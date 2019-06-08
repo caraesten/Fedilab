@@ -166,7 +166,7 @@
     <string name="toot_delete_media">Διαγραφή αυτού του πολυμέσου;</string>
     <string name="toot_error_no_content">Η φωνή σου είναι άδεια.</string>
     <string name="toot_visibility_tilte">Αναγνωσιμότητα της φωνής</string>
-    <string name="toots_visibility_tilte">Αναγνωσιμότητα των φωνών, κατά προεπιλογή: </string>
+    <string name="toots_visibility_tilte">Προώθηση των φωνών (προεπιλογή): </string>
     <string name="toot_sent">Η φωνή στάλθηκε!</string>
     <string name="toot_reply_content_title">Αποκρίνεσαι σε αυτή τη φωνή:</string>
     <string name="toot_sensitive">Ευαίσθητο περιεχόμενο;</string>
@@ -362,7 +362,7 @@
         <item>1 Μεγαμπάιτιο</item>
         <item>2 Μεγαμπάιτια</item>
     </string-array>
-    <string name="set_led_colour">Ορισμός του χρώματος του λεντιού:</string>
+    <string name="set_led_colour">Το χρώμα του λεντιού:</string>
     <string-array name="led_colours">
         <item>Μπλε</item>
         <item>Γαλάζιο</item>
