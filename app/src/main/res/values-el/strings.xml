@@ -539,13 +539,13 @@
     <string name="context_public">Δημόσια χρονοστήλη</string>
     <string name="context_notification">Ειδοποιήσεις</string>
     <string name="context_conversation">Συζητήσεις</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
+    <string name="filter_keyword_explanations">Θα εφαρμοστεί, ασχέτως από μικρά ή κεφαλαία, καί στο κείμενο καί στην προειδοποίηση περιεχόμενου των φωνών</string>
+    <string name="context_drop">Πέταμα, αντί για απλό κρύψιμο</string>
     <string name="context_drop_explanations">Οι κοσκινισμένες φωνές θα εξαφανιστούν, αμετάκλητα, ακόμη και αν, αργότερα, απομακρυνθεί αυτό το κόσκινο</string>
     <string name="context_whole_word_explanations">Όταν η λέξη κλειδί είναι μοναχά αλφαριθμητική, θα έχει εφαρμογή μόνο αν ταιριάζει με ολόκληρη λέξη</string>
     <string name="context_whole_word">Ολόκληρη λέξη</string>
-    <string name="filter_context">Κοσκίνισμα των περιεχομένων</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context">Προς κοσκίνισμα</string>
+    <string name="filter_context_explanations">Μία ή περισσότερες περιοχές, όπου θα εφαρμόζεται το κόσκινο</string>
     <string name="filter_expire">Λήγει μετά από</string>
     <string name="add_new_filter">Προσθήκη Νέου Κόσκινου</string>
     <string name="action_filter_delete">Διαγραφή του κόσκινου;</string>
