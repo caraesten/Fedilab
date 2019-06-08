@@ -12,7 +12,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:tooltipText="@string/translate"
         android:contentDescription="@string/translate"/>
     <ImageButton
@@ -20,7 +20,7 @@
         android:src="@drawable/ic_bookmark_white"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:tooltipText="@string/bookmark_add"
         style="@style/Widget.AppCompat.Button.Colored"
         android:contentDescription="@string/bookmark_add"/>
@@ -30,7 +30,7 @@
         android:layout_width="40dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:tooltipText="@string/timed_mute"
         android:contentDescription="@string/timed_mute"/>
     <ImageButton
@@ -39,17 +39,17 @@
         android:layout_width="40dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:tooltipText="@string/schedule_boost"
         android:contentDescription="@string/schedule"/>
     <ImageButton
         android:id="@+id/custom_feature_mention"
-        android:src="@drawable/ic_schedule"
+        android:src="@drawable/ic_mention_white"
         android:layout_width="40dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:tooltipText="@string/mention_account"
+        android:layout_margin="5dp"
+        android:tooltipText="@string/mention_status"
         android:contentDescription="@string/mention_account"/>
     <ImageButton
         android:id="@+id/custom_feature_cache"
@@ -57,7 +57,16 @@
         android:layout_width="40dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:tooltipText="@string/action_cache"
-        android:contentDescription="@string/action_cache"/>
+        android:layout_margin="5dp"
+        android:tooltipText="@string/refresh_cache"
+        android:contentDescription="@string/refresh_cache"/>
+    <ImageButton
+        android:id="@+id/custom_feature_information"
+        android:src="@drawable/ic_info_white"
+        android:layout_width="40dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:tooltipText="@string/see_boost_and_fav"
+        android:contentDescription="@string/see_boost_and_fav"/>
 </LinearLayout>
