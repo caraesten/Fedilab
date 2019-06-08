@@ -886,7 +886,7 @@
     <string name="see_boost_and_fav">Se vem som boostat och lagt till i favoriter</string>
     <string name="mention_status">Omnämn status</string>
     <string name="action_news">Nyheter</string>
-    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
+    <string name="set_display_news_from_fedilab">Visa nyheter från Fedilabkontot</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
