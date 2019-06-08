@@ -9,11 +9,15 @@
             >
             <menu>
                 <group android:checkableBehavior="single">
-
                     <item
                         android:id="@+id/menu_none"
                         android:title=""
                         android:visible="false"/>
+                    <item
+                        android:id="@+id/nav_news"
+                        android:icon="@drawable/ic_new_releases_black"
+                        app:actionLayout="@layout/item_menu_news"
+                        android:title="@string/action_news" />
                     <item
                         android:id="@+id/nav_list"
                         android:icon="@drawable/ic_list"
@@ -34,11 +38,6 @@
                         android:id="@+id/nav_bookmarks"
                         android:icon="@drawable/ic_bookmark_menu"
                         android:title="@string/bookmarks" />
-                    <item
-                        android:id="@+id/nav_news"
-                        android:icon="@drawable/ic_new_releases_black"
-                        app:actionLayout="@layout/item_menu_news"
-                        android:title="@string/action_news" />
                     <item
                         android:id="@+id/nav_peertube"
                         android:icon="@drawable/ic_favorite_peertube_full"

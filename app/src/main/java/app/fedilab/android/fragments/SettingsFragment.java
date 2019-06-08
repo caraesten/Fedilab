@@ -31,12 +31,14 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -570,6 +572,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
+        final CheckBox set_display_news = rootView.findViewById(R.id.set_display_news);
+        set_display_news.setChecked(display_news);
+
+        set_display_news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_news.isChecked());
+                editor.apply();
+                NavigationView navigationView = ((MainActivity) context).findViewById(R.id.nav_view);
+                MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
+                if( news != null){
+                    news.setVisible(set_display_news.isChecked());
+                }
+            }
+        });
 
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);

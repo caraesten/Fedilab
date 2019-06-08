@@ -1050,6 +1050,18 @@ public abstract class BaseMainActivity extends BaseActivity
         } else {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
+        MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
+        if( news != null){
+            boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
+            if( ! display_news ){
+                news.setVisible(false);
+            }
+        }
+        if (account.isLocked()) {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        }
 
         //Check instance release for lists
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
