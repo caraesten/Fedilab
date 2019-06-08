@@ -889,6 +889,7 @@
     <string name="refresh_cache">Refresh cache</string>
     <string name="see_boost_and_fav">See who boosted and added to favorites</string>
     <string name="mention_status">Mention the status</string>
+    <string name="action_news">News</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
