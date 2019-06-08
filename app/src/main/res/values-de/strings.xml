@@ -877,6 +877,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="see_boost_and_fav">Erfahren, wer die Favoriten unterstützt und hinzugefügt hat</string>
     <string name="mention_status">Status erwähnen</string>
     <string name="action_news">News</string>
+    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
