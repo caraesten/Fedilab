@@ -124,7 +124,7 @@
         <item>Φραγή αυτού του λογαριασμού;</item>
         <item>Αναφορά αυτής της φωνής;</item>
         <item>Φραγή αυτού του τομέα;</item>
-        <item>Unmute this account?</item>
+        <item>Ξεφίμωμα αυτού του λογαριασμού;</item>
     </string-array>
     <string-array name="action_notification">
         <item>Ειδοποίηση</item>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Ειδοποίηση όταν κάποιος ενισχύει την κατάστασή σου</string>
     <string name="set_notif_follow_add">Ειδοποίηση όταν σε κάποιον αρέσει η κατάστασή σου</string>
     <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Ειδοποίηση όταν τελειώνει μια ψηφοφορία</string>
     <string name="set_share_validation">Προβολή του διαλόγου επιβεβαίωσης, πριν από την ενίσχυση</string>
     <string name="set_share_validation_fav">Προβολή του διαλόγου επιβεβαίωσης, πριν να γίνει προσθήκη στα Αγαπημένα</string>
     <string name="set_wifi_only">Ειδοποίηση μόνο όταν σε Γουάι-Φάι</string>
@@ -573,7 +573,7 @@
     <string name="channel_notif_boost">Νέα Ενίσχυση</string>
     <string name="channel_notif_fav">Νέο Αγαπημένο</string>
     <string name="channel_notif_mention">Νέα Μνημόνευση</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Η Ψηφοφορία Τελείωσε</string>
     <string name="channel_notif_toot">Νέα Φωνή</string>
     <string name="channel_notif_backup">Αντίγραφο των Φωνών</string>
     <string name="channel_notif_media">Κατέβασμα Πολυμέσων</string>
@@ -615,7 +615,7 @@
     <string name="set_display_emoji">Χρήση του Πρώτου Ιδεογράμματος</string>
     <string name="information">Πληροφορίες</string>
     <string name="set_display_card">Εμφάνιση των προεπισκοπήσεων σε όλες τις φωνές</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">Σχεδιαστής της νέας Εμπειρίας Χρήστη κ´ του νέου Περιβάλλοντος Χρήσης</string>
     <string name="set_old_direct_timeline">Χρήση της απ\' ευθείας χρονοστήλης, πριν το Μαστόδοντα 2.6</string>
     <string name="set_display_video_preview">Προβολή των προεπισκοπήσεων των βίντεων</string>
     <string name="thanks_text_support">Gitlab Υποστήριξη</string>
@@ -642,7 +642,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Άνοιξε το κατάστιχο των επιλογών μίας φωνής και επέλεξε τον <b>Προγραμματισμό της ανύψωσης</b> .]]></string>
     <string name="art_menu">Χρονοστήλη καλλιτεχνίας</string>
     <string name="open_menu">Άνοιγμα του κατάλογου επιλογών</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Επιστροφή</string>
     <string name="app_logo">Το λογότυπο της εφαρμογής</string>
     <string name="profile_picture">Εικόνα του προσώπου</string>
     <string name="profile_banner">Σημαία του προσώπου</string>
@@ -698,7 +698,7 @@
     <string name="some_words_any">Με οποιαδήποτε από αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
     <string name="some_words_all">Με όλες αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
     <string name="some_words_none">Με καμία από αυτές τις λέξεις (διαχωρισμένες με κενά)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Πρόσθεσε μερικές λέξεις για το κόσκινο (χωρισμένες με κενά)</string>
     <string name="change_tag_column">Αλλαγή του ονόματος της στήλης</string>
     <string name="no_misskey_instance">Καμία υπόσταση Misskey</string>
     <string name="misskey_instance">Υπόσταση Misskey</string>
@@ -799,11 +799,11 @@
     <string name="set_retrieve_metadata_share_from_extras">Προσκόλληση μιας εικόνας, όταν κοινοποιείται διεύθυνση URL</string>
     <!-- end languages -->
     <string name="poll">Ψηφοφορία</string>
-    <string name="polls">Polls</string>
+    <string name="polls">Ψηφοφορίες</string>
     <string name="create_poll">Δημιουργία ψηφοφορίας</string>
     <string name="poll_choice_1">1η επιλογή</string>
     <string name="poll_choice_2">2η επιλογή</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">Επιλογή %d</string>
     <string name="poll_invalid_choices">Απαιτούνται τουλάχιστον δύο επιλογές για μία ψηφοφορία.</string>
     <string name="done">Έγινε</string>
     <string name="poll_finish_at">τελειώνει στις %s</string>
@@ -811,7 +811,7 @@
     <string name="vote">Ψήφισμα</string>
     <string name="poll_not_private">Μία ψηφοφορίας δεν μπορεί να προσκολληθεί σε ένα άμεσο μήνυμα.</string>
     <string name="notif_poll">Μία ψηφοφορία στην οποία συμμετείχες έχει τελειώσει</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
+    <string name="notif_poll_self">Μια ψηφοφορία που κάλεσες τελείωσε</string>
     <string name="settings_category_notif_customize">Προσαρμογή</string>
     <string name="settings_category_notif_categories">Κατηγορίες</string>
     <string name="settings_category_notif_news">Νέα</string>
@@ -824,18 +824,18 @@
     <string name="move_timeline">Μετακίνηση της χρονοστήλης</string>
     <string name="hide_timeline">Απόκρυψη της χρονοστήλης</string>
     <string name="reorder_timelines">Αναδιάταξη των χρονοστήλων</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
+    <string name="reorder_list_deleted">Το κατάστιχο διαγράφηκε οριστικά</string>
+    <string name="reorder_instance_removed">Η ακολουθούμενη υπόσταση απομακρύνθηκε</string>
+    <string name="reorder_tag_removed">Η καρφιτσωμένη καρτέλα απομακρύνθηκε</string>
     <string name="undo">Αναίρεση</string>
     <string name="visible_tabs_needed">Θα πρέπει να διατηρείς δύο καρτέλες ορατές.</string>
     <string name="action_reorder_timeline">Αναδιάταξη των χρονοστήλων</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_list_deletion">Χρησιμοποίησε την εισαγωγή των κατάστιχων, για να διαγράψεις αυτό το κατάστιχο.</string>
     <string name="warning_main_timeline">Η κύρια χρονοστήλη μπορεί, μονάχα, να κρυφτεί.</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
+    <string name="add_timeline">Προσθήκη χρονοστήλης</string>
+    <string name="set_sensitive_content">Πάντα σημείωση των πολυμέσων ως περιέχοντα ευαίσθητο περιεχόμενο</string>
+    <string name="gnu_instance">Υπόσταση GNU</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
