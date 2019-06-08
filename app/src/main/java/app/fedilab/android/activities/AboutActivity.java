@@ -237,7 +237,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         about_website.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tom79.bitbucket.io"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://fedilab.app"));
                 startActivity(browserIntent);
             }
         });

@@ -1524,6 +1524,59 @@ public class API {
     }
 
 
+
+    /**
+     * Retrieves news coming from Fedilab's account *synchronously*
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    public APIResponse getNews(String max_id){
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+
+        params.put("exclude_replies", "true");
+        params.put("limit", "40");
+        params.put("tagged", "Fedilab");
+        statuses = new ArrayList<>();
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+
+        String accountID = sharedpreferences.getString(Helper.NEWS_ACCOUNT_ID+userId+instance, null);
+        if( accountID == null){
+            APIResponse response = search("https://framapiaf.org/@fedilab");
+            Results res = response.getResults();
+            if( res != null && res.getAccounts() != null && res.getAccounts().size() > 0 ){
+                accountID = res.getAccounts().get(0).getId();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.NEWS_ACCOUNT_ID+userId+instance, accountID);
+                editor.apply();
+            }
+        }
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountID)), 60, params, prefKeyOauthTokenT);
+            statuses = parseStatuses(context, new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
     /**
      * Retrieves discover timeline for the account *synchronously*
      * @param local boolean only local timeline
