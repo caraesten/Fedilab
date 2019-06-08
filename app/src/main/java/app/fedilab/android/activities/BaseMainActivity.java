@@ -1621,6 +1621,14 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "MY_HISTORY";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, fragment, fragmentTag).commit();
+        } else if (id == R.id.nav_news) {
+            toot.hide();
+            statusFragment = new DisplayStatusFragment();
+            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.NEWS);
+            statusFragment.setArguments(bundle);
+            fragmentTag = "NEWS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked || id == R.id.nav_pixelfed_blocked) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();

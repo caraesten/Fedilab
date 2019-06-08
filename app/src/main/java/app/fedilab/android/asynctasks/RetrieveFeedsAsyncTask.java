@@ -85,6 +85,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         PEERTUBE,
         NOTIFICATION,
         SEARCH,
+        NEWS,
 
         PSUBSCRIPTIONS,
         POVERVIEW,
@@ -221,6 +222,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case PUBLIC:
                 apiResponse = api.getPublicTimeline(false, max_id);
+                break;
+            case NEWS:
+                apiResponse = api.getNews(max_id);
                 break;
             case SCHEDULED_TOOTS:
                 apiResponse = api.scheduledAction("GET", null, max_id, null);
