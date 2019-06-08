@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <RelativeLayout
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_width="match_parent"
             >
             <ImageView
@@ -138,6 +138,7 @@
                 android:id="@+id/status_account_bot"
                 android:layout_alignParentStart="true" />
             <ImageView
+                android:layout_marginTop="5dp"
                 android:id="@+id/new_element"
                 android:src="@drawable/ic_fiber_new"
                 android:layout_width="24dp"
@@ -163,8 +164,8 @@
                 android:padding="2dp"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="#FF2b90d9"
                 android:src="@drawable/ic_logo_button"
                 android:contentDescription="@string/app_features" />
