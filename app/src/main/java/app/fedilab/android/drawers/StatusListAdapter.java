@@ -366,7 +366,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_peertube_container;
         TextView status_peertube_reply, status_peertube_delete, show_more_content;
         ImageView cached_status, status_account_bot;
-        ImageView fedilab_features;
+        ImageButton fedilab_features;
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
@@ -1005,6 +1005,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         ImageButton custom_feature_information = dialogViewFeatures.findViewById(R.id.custom_feature_information);
                         dialogBuilderFeatures.setView(dialogViewFeatures);
                         AlertDialog dialogFeatures = dialogBuilderFeatures.create();
+                        if (status.isBookmarked())
+                            custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white_full));
+                        else
+                            custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white));
 
                         custom_feature_translate.setOnClickListener(view -> {
                             translateToot(status);
@@ -2298,6 +2302,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                     }
+                    if( holder.getItemViewType() == DISPLAYED_STATUS){
+                        popup.getMenu().findItem(R.id.action_translate).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_bookmark).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_mention).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_info).setVisible(false);
+                    }
+
+
                     boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
                     if( custom_sharing && status.getVisibility().equals("public"))
                         popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);

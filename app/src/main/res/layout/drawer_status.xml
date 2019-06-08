@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <RelativeLayout
-            android:layout_height="70dp"
+            android:layout_height="65dp"
             android:layout_width="match_parent"
             >
             <ImageView
@@ -159,15 +159,15 @@
             android:gravity="center"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/fedilab_features"
                 android:padding="2dp"
                 android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="#FF2b90d9"
+                android:layout_width="40dp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_logo_button"
+                android:tooltipText="@string/app_features"
                 android:contentDescription="@string/app_features" />
 
             <ImageView
