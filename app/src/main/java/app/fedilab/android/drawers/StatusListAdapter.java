@@ -1002,7 +1002,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         ImageButton custom_feature_schedule = dialogViewFeatures.findViewById(R.id.custom_feature_schedule);
                         ImageButton custom_feature_mention = dialogViewFeatures.findViewById(R.id.custom_feature_mention);
                         ImageButton custom_feature_cache = dialogViewFeatures.findViewById(R.id.custom_feature_cache);
-                        ImageButton custom_feature_information = dialogViewFeatures.findViewById(R.id.custom_feature_information);
                         dialogBuilderFeatures.setView(dialogViewFeatures);
                         AlertDialog dialogFeatures = dialogBuilderFeatures.create();
                         if (status.isBookmarked())
@@ -1040,11 +1039,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                         custom_feature_cache.setOnClickListener(view -> {
                             new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            dialogFeatures.dismiss();
-                        });
-
-                        custom_feature_information.setOnClickListener(view -> {
-                            tootInformation(status);
                             dialogFeatures.dismiss();
                         });
 
