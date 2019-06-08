@@ -235,7 +235,7 @@
         <item quantity="other">και ακόμη %d άλλες φωνές για να εξερευνήσεις</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
+        <item quantity="one">%d, άρεσε</item>
         <item quantity="other">%d, άρεσε</item>
     </plurals>
     <string name="delete_notification_ask">Διαγραφή μιας ειδοποίησης;</string>
