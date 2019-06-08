@@ -577,7 +577,7 @@ public class Status implements Parcelable{
                     urlText += '…';
                 }
             }
-            content = content.replaceAll(Pattern.quote(beforemodification),urlText);
+            content = content.replace(beforemodification,urlText);
         }
         spannableStringContent = new SpannableString(content);
         String spoilerText = "";

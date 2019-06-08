@@ -3219,7 +3219,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             Matcher matcherALink = Patterns.WEB_URL.matcher(content);
             while (matcherALink.find()){
                 final String url = matcherALink.group(1);
-                content = content.replaceAll(Pattern.quote(url),"abcdefghijklmnopkrstuvw");
+                content = content.replace(url,"abcdefghijklmnopkrstuvw");
             }
         }
         int contentLength = content.length() - countWithEmoji(content);
