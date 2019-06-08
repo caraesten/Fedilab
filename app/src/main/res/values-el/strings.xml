@@ -191,7 +191,7 @@
     <string name="about_license">Άδεια: </string>
     <string name="about_license_action">GNU Γενική Δημόσια Άδεια, Έκδοση 3η</string>
     <string name="about_code">Πηγαίος κώδικας: </string>
-    <string name="about_yandex">Μετάφραση των φωνών:</string>
+    <string name="about_yandex">Μετάφραση με... :</string>
     <string name="about_thekinrar">Αναζήτηση για υποστάσεις:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Σχεδιαστής εικονιδίου:</string>
@@ -384,7 +384,7 @@
     <string name="followed_by">Σε παρακολουθεί</string>
     <string name="action_search">Αναζήτηση</string>
     <string name="set_capitalize">Το πρώτο γράμμα κεφαλαίο, στις απαντήσεις</string>
-    <string name="set_resize_picture">Προσαρμογή του μεγέθους των εικόνων</string>
+    <string name="set_resize_picture">Προσαρμογή των εικόνων</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Ειδοποιήσεις προωθήσεων</string>
     <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
@@ -857,7 +857,7 @@
     <string name="action_playlist_empty_content">Δεν υπάρχει τίποτα στο κατάστιχο αναπαραγωγής, ακόμη.</string>
     <string name="edit_media">Επεξεργασία του πολυμέσου</string>
     <string name="redo">επαναφορά</string>
-    <string name="gallery">Gallery</string>
+    <string name="gallery">Εικονοθήκη</string>
     <string name="label_emoji">Ιδεόγραμμα</string>
     <string name="label_sticker">Αυτοκόλλητο</string>
     <string name="label_eraser">Σβήστρα</string>
