@@ -227,7 +227,7 @@
     <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
     <string name="notif_pouet">Νέα φωνή από %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
+        <item quantity="one">και ακόμη μία ειδοποίηση</item>
         <item quantity="other">και %d άλλες ειδοποιήσεις</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
@@ -323,8 +323,8 @@
     <string name="set_automatically_split_toot">Στις απαντήσεις, αυτόματο κομμάτιασμα των φωνών, που έχουν περισσότερους από 500 χαρακτήρες</string>
     <string name="note_no_space">Έχεις χρησιμοποιήσει το πλήθος των 160 επιτρεπόμενων χαρακτήρων.</string>
     <string name="username_no_space">Έχεις χρησιμοποιήσει το πλήθος των 30 επιτρεπόμενων χαρακτήρων.</string>
-    <string name="settings_time_from">Μεταξύ</string>
-    <string name="settings_time_to">και</string>
+    <string name="settings_time_from">Από</string>
+    <string name="settings_time_to">ως</string>
     <string name="settings_time_greater">Η ώρα θα πρέπει να είναι αργότερα από τις %1$s</string>
     <string name="settings_time_lower">Η ώρα θα πρέπει να είναι νωρίτερα από τις %1$s</string>
     <string name="settings_hour_init">Ώρα έναρξης</string>
@@ -880,7 +880,7 @@
     <string name="toast_unmute_conversation">Η συζήτηση δεν είναι, πια, φιμωμένη!</string>
     <string name="toast_mute_conversation">Η συζήτηση είναι σιωπηρή</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
+        <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>
     </plurals>
     <string-array name="poll_choice_type">
