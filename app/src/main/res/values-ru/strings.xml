@@ -837,7 +837,7 @@
     <string name="reorder_tag_removed">Закрепленный тег удален</string>
     <string name="undo">Вернуть</string>
     <string name="visible_tabs_needed">Необходимо сохранить две видимые вкладки!</string>
-    <string name="action_reorder_timeline">Изменить порядок лент</string>
+    <string name="action_reorder_timeline">Изменение порядка лент</string>
     <string name="warning_list_deletion">Используйте элемент списка для удаления этого списка!</string>
     <string name="warning_main_timeline">Основные ленты могут быть только скрыты!</string>
     <string name="action_bbcode">BBCode</string>
