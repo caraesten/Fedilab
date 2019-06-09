@@ -1309,7 +1309,8 @@ public class Helper {
             SubMenu currentSubmenu = null;
             if( accounts != null)
             for(final Account account: accounts) {
-                if( !currrentUserId.equals(account.getId()) ) {
+
+                if( !currrentUserId.equals(account.getId()) || !getLiveInstance(activity).equals(account.getInstance()) ) {
                     if( !lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())){
                         lastInstance = account.getInstance().toUpperCase();
                         currentSubmenu = mainMenu.addSubMenu(account.getInstance().toUpperCase());
@@ -1752,7 +1753,7 @@ public class Helper {
             for(final Account accountChoice: accounts) {
                 if( !accountChoice.getAvatar().startsWith("http"))
                     accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
-                if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
+                if (currrentUserId != null && (!currrentUserId.equals(accountChoice.getId()) || !getLiveInstance(activity).equals(accountChoice.getInstance()))) {
                     icon = new ImageView(activity);
                     ImageView finalIcon = icon;
                     Glide.with(activity.getApplicationContext())
