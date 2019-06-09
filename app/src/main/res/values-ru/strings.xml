@@ -7,7 +7,7 @@
     <string name="action_about_instance">Об этом инстансе</string>
     <string name="action_privacy">Конфиденциальность</string>
     <string name="action_cache">Кэш</string>
-    <string name="action_logout">Выйти</string>
+    <string name="action_logout">Выход</string>
     <string name="login">Войти</string>
     <!-- common -->
     <string name="close">Закрыть</string>
@@ -33,7 +33,7 @@
     <string name="instance">Инстанс</string>
     <string name="instance_example">Инстанс: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Теперь работает с аккаунтом %1$s</string>
-    <string name="add_account">Добавить аккаунт</string>
+    <string name="add_account">Добавление аккаунта</string>
     <string name="clipboard">Содержимое тута было скопировано в буфер обмена</string>
     <string name="clipboard_url">URL тута был скопирован в буфер обмена</string>
     <string name="change">Изменить</string>
@@ -395,13 +395,13 @@
     <string name="set_resize_picture">Изменить размер изображений</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
-    <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
+    <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получать.
         Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').
     </string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
     <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
-    <string name="cache_title">Очистить кэш</string>
+    <string name="cache_title">Очистка кэша</string>
     <string name="cache_message">Данными кэша занято %1$s.\n\nВы хотите их удалить?</string>
     <string name="cache_units">МБ</string>
     <string name="toast_cache_clear">Кэш очишен! Освобождено %1$s</string>
@@ -433,7 +433,7 @@
     </string-array>
     <string name="owner_cached_toots_empty">В базе данных тутов не найдено. Пожалуйста, используйте кнопку синхронизации в меню для их получения.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Записанные данные</string>
+    <string name="privacy_data_title">Собираемые данные</string>
     <string name="privacy_data">        На устройстве хранятся только основные сведения из аккаунтов.
         Эти данные являются строго конфиденциальными и могут использоваться только приложением.
         Удаление приложения немедленно удалит эти данные.\n
@@ -680,7 +680,7 @@
     </string-array>
     <string name="showcase_instance">        В этом поле вам нужно указать имя хоста вашего инстанса.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nпросто напишите <b>mastodon.social</b> (без https://)\n
         Вы можете начать писать первые буквы, чтобы получить предложения.\n\n
-        ⚠ Кнопка входа в систему будет работать только случае, если инстанс включен и его имя корректно!
+        ⚠ Кнопка входа будет работать только случае, если инстанс включен и его имя корректно!
     </string>
     <string name="showcase_uid">        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
     </string>
@@ -788,7 +788,7 @@
     <string name="about_opencollective">Поддержать это приложение</string>
     <string name="more_about_opencollective">Open Collective позволяет группам быстро создавать коллектив, собирать средства и прозрачно управлять ими.</string>
     <string name="copy_link">Копировать ссылку</string>
-    <string name="connect_instance">Подключить</string>
+    <string name="connect_instance">Подключиться</string>
     <string name="set_normal">Нормальный</string>
     <string name="set_compact">Компактный</string>
     <string name="set_console">Консольный</string>
@@ -837,7 +837,7 @@
     <string name="reorder_tag_removed">Закрепленный тег удален</string>
     <string name="undo">Вернуть</string>
     <string name="visible_tabs_needed">Необходимо сохранить две видимые вкладки!</string>
-    <string name="action_reorder_timeline">Изменить порядок лент</string>
+    <string name="action_reorder_timeline">Изменение порядка лент</string>
     <string name="warning_list_deletion">Используйте элемент списка для удаления этого списка!</string>
     <string name="warning_main_timeline">Основные ленты могут быть только скрыты!</string>
     <string name="action_bbcode">BBCode</string>
