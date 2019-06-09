@@ -874,6 +874,7 @@
     <string name="see_boost_and_fav">ブーストまたはお気に入りに追加したユーザーを表示</string>
     <string name="mention_status">ステータスをメンション</string>
     <string name="action_news">News</string>
+    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
