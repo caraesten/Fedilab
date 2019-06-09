@@ -863,7 +863,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="label_adjust">Ajuster</string>
     <string name="label_brush">Pinceau</string>
     <string name="confirm_exit_editing">Êtes-vous sûr de vouloir quitter sans enregistrer l\'image ?</string>
-    <string name="discard">Annuler</string>
+    <string name="discard">Abandonner</string>
     <string name="saving">Enregistrement …</string>
     <string name="image_saved">Image enregistrée avec succès !</string>
     <string name="save_image_failed">Échec de l\'enregistrement de l\'image</string>
