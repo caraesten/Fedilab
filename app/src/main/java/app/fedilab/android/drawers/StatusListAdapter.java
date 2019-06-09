@@ -1002,6 +1002,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         ImageButton custom_feature_schedule = dialogViewFeatures.findViewById(R.id.custom_feature_schedule);
                         ImageButton custom_feature_mention = dialogViewFeatures.findViewById(R.id.custom_feature_mention);
                         ImageButton custom_feature_cache = dialogViewFeatures.findViewById(R.id.custom_feature_cache);
+                        if( !status.iscached()){
+                            custom_feature_cache.setVisibility(View.GONE);
+                        }
                         dialogBuilderFeatures.setView(dialogViewFeatures);
                         AlertDialog dialogFeatures = dialogBuilderFeatures.create();
                         if (status.isBookmarked())
@@ -2302,7 +2305,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
-                        popup.getMenu().findItem(R.id.action_info).setVisible(false);
                     }
 
 
