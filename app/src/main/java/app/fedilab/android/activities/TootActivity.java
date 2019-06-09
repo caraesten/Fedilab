@@ -2110,12 +2110,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
 
         }
-        if(restored != -1){
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            new StatusStoredDAO(getApplicationContext(), db).remove(restored);
-        }else if(currentToId != -1){
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            new StatusStoredDAO(getApplicationContext(), db).remove(currentToId);
+        if(   apiResponse.getError() == null || apiResponse.getError().getStatusCode() != -33) {
+            if (restored != -1) {
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new StatusStoredDAO(getApplicationContext(), db).remove(restored);
+            } else if (currentToId != -1) {
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new StatusStoredDAO(getApplicationContext(), db).remove(currentToId);
+            }
         }
         //Clear the toot
         toot_content.setText("");
