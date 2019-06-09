@@ -16,6 +16,8 @@ package app.fedilab.android.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
@@ -55,6 +57,7 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
+        Log.v(Helper.TAG,"url: " + this.url);
         APIResponse apiResponse = api.search(this.url);
         if( apiResponse.getResults() != null)
             results = apiResponse.getResults();
