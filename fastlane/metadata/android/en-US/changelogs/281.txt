@@ -1,0 +1,8 @@
+Added
+- Add a button to access custom features in statuses
+- Add a News timeline for Fedilab that can be disabled in settings
+
+Fixed
+- Fix an issue with boosts when cached
+- Fix an issue for toots no longer stored in drafts when there is no Internet connection
+- Fix potential crashes on some devices
