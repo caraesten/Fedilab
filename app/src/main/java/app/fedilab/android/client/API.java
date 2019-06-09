@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -2282,7 +2281,11 @@ public class API {
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
-                    new TimelineCacheDAO(context, db).update(targetedId, resp, account.getId(), account.getInstance());
+                    Status indb = new TimelineCacheDAO(context, db).getSingle(targetedId);
+                    if( indb != null) {
+                        String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", targetedId)), 60, null, prefKeyOauthTokenT);
+                        new TimelineCacheDAO(context, db).update(targetedId, response, account.getId(), account.getInstance());
+                    }
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);

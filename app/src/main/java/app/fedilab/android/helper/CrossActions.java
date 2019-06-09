@@ -138,9 +138,7 @@ public class CrossActions {
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
         else if (doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG)
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-        else if (doAction == API.StatusAction.FOLLOW || doAction == API.StatusAction.UNFOLLOW)
-            confirmation = false;
-        if(type != null && type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
+        if(type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
