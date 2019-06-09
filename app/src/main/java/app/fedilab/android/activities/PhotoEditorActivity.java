@@ -404,7 +404,17 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     }
 
     private void showSaveDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int style;
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
         builder.setMessage( getString(R.string.confirm_exit_editing));
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
