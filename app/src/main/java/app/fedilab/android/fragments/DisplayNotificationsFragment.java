@@ -409,6 +409,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
         }
         if( notifications != null && notifications.size() > 0) {
+            if( textviewNoAction.getVisibility() == View.VISIBLE){
+                textviewNoAction.setVisibility(View.GONE);
+                lv_notifications.setVisibility(View.VISIBLE);
+            }
             int inserted = 0;
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications != null && this.notifications.size() == 0 ||
