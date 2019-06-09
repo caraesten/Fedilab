@@ -1536,6 +1536,7 @@ public class API {
             params.put("max_id", max_id);
 
         params.put("exclude_replies", "true");
+        params.put("reblogs","false");
         params.put("limit", "40");
         params.put("tagged", "Fedilab");
         statuses = new ArrayList<>();
@@ -1545,13 +1546,31 @@ public class API {
 
         String accountID = sharedpreferences.getString(Helper.NEWS_ACCOUNT_ID+userId+instance, null);
         if( accountID == null){
-            APIResponse response = search("https://framapiaf.org/@fedilab");
-            Results res = response.getResults();
-            if( res != null && res.getAccounts() != null && res.getAccounts().size() > 0 ){
-                accountID = res.getAccounts().get(0).getId();
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.NEWS_ACCOUNT_ID+userId+instance, accountID);
-                editor.apply();
+            try {
+                params.put("q", URLEncoder.encode("https://framapiaf.org/@fedilab", "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", "https://framapiaf.org/@fedilab");
+            }
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            try {
+                String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
+                Results res = parseResultsResponse(new JSONObject(response));
+                if( res != null && res.getAccounts() != null && res.getAccounts().size() > 0 ){
+                    accountID = res.getAccounts().get(0).getId();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.NEWS_ACCOUNT_ID+userId+instance, accountID);
+                    editor.apply();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
         try {
