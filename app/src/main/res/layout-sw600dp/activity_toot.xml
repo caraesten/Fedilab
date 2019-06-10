@@ -19,7 +19,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,21 +38,33 @@
             android:hint="@string/toot_cw_placeholder"
             android:visibility="gone" />
 
-        <app.fedilab.android.helper.MastalabAutoCompleteTextView
-            android:id="@+id/toot_content"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:gravity="top|start"
-            android:hint="@string/toot_placeholder"
-            android:inputType="textMultiLine|textCapSentences"
-            android:minLines="4" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_bar_tooting"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:fillViewport="true">
 
+            <app.fedilab.android.helper.MastalabAutoCompleteTextView
+                android:id="@+id/toot_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="top|start"
+                android:hint="@string/toot_placeholder"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="4" />
+        </ScrollView>
         <LinearLayout
+            android:id="@+id/bottom_bar_tooting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -203,5 +215,5 @@
                 android:text="@string/toot_sensitive"
                 android:visibility="gone" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

@@ -195,7 +195,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private ImageView pp_actionBar;
     private ProgressBar pp_progress;
     private Toast mToast;
-    private LinearLayout drawer_layout;
+    private RelativeLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
