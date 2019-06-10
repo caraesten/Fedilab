@@ -137,6 +137,7 @@ public class Status implements Parcelable{
     private int media_height;
     private boolean cached = false;
     private boolean autoHiddenCW = false;
+    private boolean customFeaturesDisplayed = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -197,6 +198,7 @@ public class Status implements Parcelable{
         dest.writeInt(this.media_height);
         dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
         dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
     }
 
     protected Status(Parcel in) {
@@ -259,6 +261,7 @@ public class Status implements Parcelable{
         this.media_height = in.readInt();
         this.cached = in.readByte() != 0;
         this.autoHiddenCW = in.readByte() != 0;
+        this.customFeaturesDisplayed = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1397,5 +1400,13 @@ public class Status implements Parcelable{
 
     public void setAutoHiddenCW(boolean autoHiddenCW) {
         this.autoHiddenCW = autoHiddenCW;
+    }
+
+    public boolean isCustomFeaturesDisplayed() {
+        return customFeaturesDisplayed;
+    }
+
+    public void setCustomFeaturesDisplayed(boolean customFeaturesDisplayed) {
+        this.customFeaturesDisplayed = customFeaturesDisplayed;
     }
 }
