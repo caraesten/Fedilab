@@ -145,4 +145,7 @@
     <color name="ucrop_color_active_controls_color">#FFFFFF</color>
     <color name="ucrop_color_widget_rotate_mid_line">#000000</color>
     <color name="ucrop_color_widget_background">#000000</color>
+
+    <color name="custom_features_panel_background">#14161B</color>
+    <color name="custom_features_panel_background_light">#E0E0E0</color>
 </resources>
