@@ -1025,35 +1025,42 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 holder.custom_feature_translate.setOnClickListener(view -> {
                     translateToot(status);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
                 holder.custom_feature_bookmark.setOnClickListener(view -> {
                     bookmark(status);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
                 holder.custom_feature_bookmark.setOnLongClickListener(view -> {
                     CrossActions.doCrossBookmark(context, status, statusListAdapter);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                     return false;
                 });
                 holder.custom_feature_timed_mute.setOnClickListener(view -> {
                     timedMuteAction(status);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
 
                 holder.custom_feature_schedule.setOnClickListener(view -> {
                     scheduleBoost(status);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
 
                 holder.custom_feature_mention.setOnClickListener(view -> {
                     mention(status);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
 
                 holder.custom_feature_cache.setOnClickListener(view -> {
                     new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    holder.fedilab_features_panel.setVisibility(View.GONE);
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyStatusChanged(status);
                 });
             }
 
