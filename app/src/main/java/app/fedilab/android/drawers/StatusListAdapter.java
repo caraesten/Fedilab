@@ -34,6 +34,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -367,6 +368,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_peertube_reply, status_peertube_delete, show_more_content;
         ImageView cached_status, status_account_bot;
         ImageButton fedilab_features;
+        ImageButton custom_feature_translate;
+        ImageButton custom_feature_bookmark;
+        ImageButton custom_feature_timed_mute;
+        ImageButton custom_feature_schedule;
+        ImageButton custom_feature_mention;
+        ImageButton custom_feature_cache;
+        ConstraintLayout fedilab_features_panel;
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
@@ -463,6 +471,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_peertube_reply = itemView.findViewById(R.id.status_peertube_reply);
             status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
             fedilab_features = itemView.findViewById(R.id.fedilab_features);
+            fedilab_features_panel = itemView.findViewById(R.id.fedilab_features_panel);
+            custom_feature_translate = itemView.findViewById(R.id.custom_feature_translate);
+            custom_feature_bookmark = itemView.findViewById(R.id.custom_feature_bookmark);
+            custom_feature_timed_mute = itemView.findViewById(R.id.custom_feature_timed_mute);
+            custom_feature_schedule = itemView.findViewById(R.id.custom_feature_schedule);
+            custom_feature_mention = itemView.findViewById(R.id.custom_feature_mention);
+            custom_feature_cache = itemView.findViewById(R.id.custom_feature_cache);
             poll_container = itemView.findViewById(R.id.poll_container);
             single_choice = itemView.findViewById(R.id.single_choice);
             multiple_choice = itemView.findViewById(R.id.multiple_choice);
@@ -985,69 +1000,59 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int style;
-                        if (theme == Helper.THEME_DARK) {
-                            style = R.style.DialogDark;
-                        } else if (theme == Helper.THEME_BLACK) {
-                            style = R.style.DialogBlack;
-                        } else {
-                            style = R.style.Dialog;
-                        }
-                        AlertDialog.Builder dialogBuilderFeatures = new AlertDialog.Builder(context, style);
-                        LayoutInflater inflaterBoost = ((Activity) context).getLayoutInflater();
-                        @SuppressLint("InflateParams") View dialogViewFeatures = inflaterBoost.inflate(R.layout.custom_fedilab_features, null);
-                        ImageButton custom_feature_translate = dialogViewFeatures.findViewById(R.id.custom_feature_translate);
-                        ImageButton custom_feature_bookmark = dialogViewFeatures.findViewById(R.id.custom_feature_bookmark);
-                        ImageButton custom_feature_timed_mute = dialogViewFeatures.findViewById(R.id.custom_feature_timed_mute);
-                        ImageButton custom_feature_schedule = dialogViewFeatures.findViewById(R.id.custom_feature_schedule);
-                        ImageButton custom_feature_mention = dialogViewFeatures.findViewById(R.id.custom_feature_mention);
-                        ImageButton custom_feature_cache = dialogViewFeatures.findViewById(R.id.custom_feature_cache);
-                        if( !status.iscached()){
-                            custom_feature_cache.setVisibility(View.GONE);
-                        }
-                        dialogBuilderFeatures.setView(dialogViewFeatures);
-                        AlertDialog dialogFeatures = dialogBuilderFeatures.create();
-                        if (status.isBookmarked())
-                            custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white_full));
-                        else
-                            custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white));
 
-                        custom_feature_translate.setOnClickListener(view -> {
+
+                        if (holder.fedilab_features_panel.getVisibility() != View.VISIBLE) {
+                            holder.fedilab_features_panel.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
+                        }
+
+                        if (theme == Helper.THEME_LIGHT) {
+                            // Todo: use the color 'custom_features_panel_background_light' for white theme
+                        }
+
+                        if( !status.iscached()){
+                            holder.custom_feature_cache.setVisibility(View.GONE);
+                        }
+
+                        if (status.isBookmarked())
+                            holder.custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white_full));
+                        else
+                            holder.custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white));
+
+                        holder.custom_feature_translate.setOnClickListener(view -> {
                             translateToot(status);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
-                        custom_feature_bookmark.setOnClickListener(view -> {
+                        holder.custom_feature_bookmark.setOnClickListener(view -> {
                             bookmark(status);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
-                        custom_feature_bookmark.setOnLongClickListener(view -> {
+                        holder.custom_feature_bookmark.setOnLongClickListener(view -> {
                             CrossActions.doCrossBookmark(context, status, statusListAdapter);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                             return false;
                         });
-                        custom_feature_timed_mute.setOnClickListener(view -> {
+                        holder.custom_feature_timed_mute.setOnClickListener(view -> {
                             timedMuteAction(status);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
 
-                        custom_feature_schedule.setOnClickListener(view -> {
+                        holder.custom_feature_schedule.setOnClickListener(view -> {
                             scheduleBoost(status);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
 
-                        custom_feature_mention.setOnClickListener(view -> {
+                        holder.custom_feature_mention.setOnClickListener(view -> {
                             mention(status);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
 
-                        custom_feature_cache.setOnClickListener(view -> {
+                        holder.custom_feature_cache.setOnClickListener(view -> {
                             new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            dialogFeatures.dismiss();
+                            holder.fedilab_features_panel.setVisibility(View.GONE);
                         });
-
-                        dialogFeatures.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialogFeatures.setCancelable(true);
-                        dialogFeatures.show();
                     }
                 });
             }
