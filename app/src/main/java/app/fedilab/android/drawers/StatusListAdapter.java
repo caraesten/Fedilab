@@ -1009,7 +1009,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
 
                         if (theme == Helper.THEME_LIGHT) {
-                            // Todo: use the color 'custom_features_panel_background_light' for white theme
+                            holder.fedilab_features_panel.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_panel_background_light));
                         }
 
                         if( !status.iscached()){

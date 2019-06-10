@@ -186,7 +186,10 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
             max_id = "0";
         max_id = String.valueOf(Integer.valueOf(max_id) + 20);
         lv_search_tags.setVisibility(View.VISIBLE);
-        List<String> newTags = apiResponse.getResults().getHashtags();
+        List<String> newTags = new ArrayList<>();
+        if(  apiResponse.getResults() != null) {
+            newTags = apiResponse.getResults().getHashtags();
+        }
         tags.addAll(newTags);
         SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(context, tags);
         lv_search_tags.setAdapter(searchTagsAdapter);
