@@ -841,7 +841,7 @@
         </LinearLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/status_actions_section"
+            android:id="@+id/status_action_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
