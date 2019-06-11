@@ -1000,6 +1000,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        closePanels();
                         status.setCustomFeaturesDisplayed(!status.isCustomFeaturesDisplayed());
                         notifyStatusChanged(status);
                     }
@@ -1154,6 +1155,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
+                            closePanels();
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1176,6 +1178,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
+                            closePanels();
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1198,6 +1201,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
+                            closePanels();
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -3037,6 +3041,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_show_more.setVisibility(View.GONE);
         }
 
+    }
+
+    private void closePanels(){
+        if( statuses != null && statuses.size() > 0){
+            int position = 0;
+            for(Status status: statuses){
+                if( status.isCustomFeaturesDisplayed()) {
+                    status.setCustomFeaturesDisplayed(false);
+                    notifyItemChanged(position);
+                    break;
+                }
+                position++;
+            }
+
+        }
     }
 
     private void timedMuteAction(Status status){
