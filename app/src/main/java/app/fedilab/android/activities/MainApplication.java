@@ -17,9 +17,9 @@ package app.fedilab.android.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
-import android.support.v4.content.ContextCompat;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+import androidx.core.content.ContextCompat;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;

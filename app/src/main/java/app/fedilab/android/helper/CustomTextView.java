@@ -19,9 +19,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.support.annotation.DimenRes;
-import android.support.annotation.Px;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.annotation.DimenRes;
+import androidx.annotation.Px;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 

@@ -23,7 +23,7 @@
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:orientation="vertical">
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/search_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         app:tabMode="fixed"
         app:tabGravity="fill"
         />
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/search_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

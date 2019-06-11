@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.support.annotation.CallSuper;
-import android.support.annotation.DimenRes;
-import android.support.annotation.Px;
+import androidx.annotation.CallSuper;
+import androidx.annotation.DimenRes;
+import androidx.annotation.Px;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
@@ -18,7 +18,7 @@ import app.fedilab.android.R;
 
 import static app.fedilab.android.activities.TootActivity.autocomplete;
 
-public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppCompatAutoCompleteTextView implements EmojiEditTextInterface {
+public class MastalabAutoCompleteTextView extends androidx.appcompat.widget.AppCompatAutoCompleteTextView implements EmojiEditTextInterface {
 
     private float emojiSize;
     private boolean emoji;

@@ -53,7 +53,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_gravity="center"
         app:fabSize="mini"
         android:contentDescription="@string/follow_account"

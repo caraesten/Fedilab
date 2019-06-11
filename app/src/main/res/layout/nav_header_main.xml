@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"

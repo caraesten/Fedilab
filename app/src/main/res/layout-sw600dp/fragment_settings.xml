@@ -777,7 +777,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/use_javascript"/>
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/set_javascript"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
@@ -796,7 +796,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/use_cookies"/>
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/set_cookies"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"

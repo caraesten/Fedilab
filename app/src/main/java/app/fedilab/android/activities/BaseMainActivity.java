@@ -18,7 +18,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,26 +29,26 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,7 +66,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Method;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -108,7 +106,6 @@ import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
@@ -265,13 +262,13 @@ public abstract class BaseMainActivity extends BaseActivity
         delete_instance = findViewById(R.id.delete_instance);
         display_timeline = findViewById(R.id.display_timeline);
         if( theme == Helper.THEME_LIGHT) {
-            ImageView icon = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_button);
-            ImageView close = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+            ImageView icon = toolbar_search.findViewById(R.id.search_button);
+            ImageView close = toolbar_search.findViewById(R.id.search_close_btn);
             if( icon != null)
                 icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
             if( close != null)
                 close.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-            EditText editText = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            EditText editText = toolbar_search.findViewById(R.id.search_src_text);
             editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
             editText.setTextColor(getResources().getColor(R.color.dark_icon));
             changeDrawableColor(BaseMainActivity.this,delete_instance, R.color.dark_icon);
@@ -857,7 +854,7 @@ public abstract class BaseMainActivity extends BaseActivity
         iconbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawer.openDrawer(Gravity.START);
+                drawer.openDrawer(GravityCompat.START);
             }
         });
         Helper.loadPictureIcon(BaseMainActivity.this, account.getAvatar(),iconbar);

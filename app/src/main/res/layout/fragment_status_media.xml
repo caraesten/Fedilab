@@ -25,7 +25,7 @@ android:paddingRight="@dimen/fab_margin"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
     <!-- GridView media -->
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview_media"
         android:layout_width="match_parent"

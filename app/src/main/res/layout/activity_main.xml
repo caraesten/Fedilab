@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>
 -->
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,18 +25,18 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="app.fedilab.android.activities.MainActivity">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
             >
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:id="@+id/toolbar_title" />
-                    <android.support.design.widget.TabLayout
+                    <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayout"
                         app:tabMode="scrollable"
                         android:layout_width="0dp"
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp" />
-                    <android.support.v7.widget.SearchView
+                    <androidx.appcompat.widget.SearchView
                         android:background="@null"
                         android:id="@+id/toolbar_search"
                         android:gravity="end"
@@ -100,13 +100,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-            </android.support.v7.widget.Toolbar>
+            </androidx.appcompat.widget.Toolbar>
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <!-- Framelayout to display Fragments -->
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewpager"
             xmlns:tools="http://schemas.android.com/tools"
@@ -115,7 +115,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="app.fedilab.android.activities.MainActivity"
             >
-        </android.support.v4.view.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
 
         <!-- Framelayout to display Fragments -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -128,7 +128,7 @@
             tools:context="app.fedilab.android.activities.MainActivity"
             >
         </RelativeLayout>
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/toot"
             android:contentDescription="@string/toot_it"
             android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_margin="@dimen/fab_margin_floating"
             app:srcCompat="@drawable/ic_edit"
             tools:ignore="VectorDrawableCompat" />
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/delete_all"
             android:visibility="gone"
             android:contentDescription="@string/delete_all"
@@ -147,7 +147,7 @@
             android:layout_margin="@dimen/fab_margin_floating"
             app:srcCompat="@drawable/ic_delete_floating"
             tools:ignore="VectorDrawableCompat" />
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new"
             android:visibility="gone"
             android:contentDescription="@string/add_new"
@@ -157,9 +157,9 @@
             android:layout_margin="@dimen/fab_margin_floating"
             app:srcCompat="@drawable/ic_action_add_new"
             tools:ignore="VectorDrawableCompat" />
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -168,4 +168,4 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

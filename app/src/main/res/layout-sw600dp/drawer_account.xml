@@ -155,7 +155,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_follow"
             android:visibility="gone"
             app:fabSize="mini"
@@ -166,7 +166,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             />
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_mute_notification"
             android:visibility="gone"
             app:fabSize="mini"

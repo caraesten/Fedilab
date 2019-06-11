@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/account_container"
     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         app:layout_constraintLeft_toRightOf="@id/account_pp"
         app:layout_constraintTop_toBottomOf="@id/account_dn" />
 
-    <android.support.constraint.Barrier
+    <androidx.constraintlayout.widget.Barrier
         android:id="@+id/btn_top_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,4 +85,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

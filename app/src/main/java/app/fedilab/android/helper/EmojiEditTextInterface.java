@@ -1,7 +1,7 @@
 package app.fedilab.android.helper;
 
-import android.support.annotation.DimenRes;
-import android.support.annotation.Px;
+import androidx.annotation.DimenRes;
+import androidx.annotation.Px;
 
 import com.vanniktech.emoji.emoji.Emoji;
 

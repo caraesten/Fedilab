@@ -2,9 +2,8 @@ package app.fedilab.android.helper;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageButton;
 
-public class SquareImageButton extends android.support.v7.widget.AppCompatImageButton {
+public class SquareImageButton extends androidx.appcompat.widget.AppCompatImageButton {
     public SquareImageButton(Context context) {
         super(context);
     }

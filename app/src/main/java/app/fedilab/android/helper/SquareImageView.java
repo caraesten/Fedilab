@@ -23,7 +23,7 @@ import android.util.AttributeSet;
  * Created by Thomas on 05/09/2018.
  * Create square imageview
  */
-public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
+public class SquareImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public SquareImageView(Context context) {
         super(context);

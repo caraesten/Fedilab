@@ -3,7 +3,7 @@ package app.fedilab.android.helper;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class SquareButton extends android.support.v7.widget.AppCompatButton {
+public class SquareButton extends androidx.appcompat.widget.AppCompatButton {
 
     public SquareButton(Context context) {
         super(context);

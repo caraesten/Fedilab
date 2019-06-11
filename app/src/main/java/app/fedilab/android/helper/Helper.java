@@ -57,20 +57,20 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.NavigationView;
-import android.support.media.ExifInterface;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.menu.ActionMenuItemView;
-import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.browser.customtabs.CustomTabsIntent;
+import com.google.android.material.navigation.NavigationView;
+import androidx.exifinterface.media.ExifInterface;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.menu.ActionMenuItemView;
+import androidx.appcompat.widget.ActionMenuView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -111,6 +111,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.tabs.TabLayout;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -2884,7 +2885,7 @@ public class Helper {
         //Check if the class calling the method is an instance of MainActivity
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
-        android.support.design.widget.TabLayout tableLayout = activity.findViewById(R.id.tabLayout);
+        TabLayout tableLayout = activity.findViewById(R.id.tabLayout);
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -3556,7 +3557,7 @@ public class Helper {
                 if (outViews.isEmpty()) {
                     return;
                 }
-                android.support.v7.widget.AppCompatImageView overflow=(android.support.v7.widget.AppCompatImageView) outViews.get(0);
+                androidx.appcompat.widget.AppCompatImageView overflow=(androidx.appcompat.widget.AppCompatImageView) outViews.get(0);
                 overflow.setColorFilter(colorFilter);
                 removeOnGlobalLayoutListener(decorView,this);
             }

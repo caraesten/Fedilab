@@ -1,6 +1,6 @@
 package app.fedilab.android.client.Entities;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 
 

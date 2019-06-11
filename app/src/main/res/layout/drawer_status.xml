@@ -30,11 +30,11 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/status_pp_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                 app:constraint_referenced_ids="status_account_profile,conversation_pp,status_account_profile_boost,status_account_profile_boost_by,new_element" />
             -->
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <!-- Fedilab Features button -->
@@ -840,7 +840,7 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/status_action_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -942,9 +942,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fedilab_features_panel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -1057,8 +1057,8 @@
                 app:layout_constraintStart_toEndOf="@id/custom_feature_mention"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

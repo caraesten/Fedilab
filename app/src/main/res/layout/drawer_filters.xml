@@ -39,7 +39,7 @@
         android:layout_weight="2"
         android:layout_height="wrap_content"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_margin="5dp"
         android:id="@+id/edit_filter"
         app:fabSize="mini"
@@ -48,7 +48,7 @@
         tools:ignore="VectorDrawableCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         app:fabSize="mini"
         android:layout_margin="5dp"
         android:id="@+id/delete_filter"

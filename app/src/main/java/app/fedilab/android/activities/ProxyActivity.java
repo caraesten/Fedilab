@@ -19,7 +19,7 @@ package app.fedilab.android.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;

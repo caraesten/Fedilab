@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,13 +23,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="app.fedilab.android.activities.ShowAccountActivity">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         >
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
             android:id="@+id/collapsingToolbarLayout"
@@ -62,7 +62,7 @@
                         android:background="@drawable/circle_background_white"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/profile_picture" />
-                    <android.support.design.widget.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/account_follow"
                         android:visibility="gone"
                         app:fabSize="mini"
@@ -76,7 +76,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         />
-                    <android.support.design.widget.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/header_edit_profile"
                         android:visibility="gone"
                         app:fabSize="mini"
@@ -391,9 +391,9 @@
                 </LinearLayout>
             </RelativeLayout>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -450,21 +450,21 @@
                 android:text="@string/disclaimer_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            </android.support.v7.widget.Toolbar>
-        <android.support.design.widget.TabLayout
+            </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/account_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
             app:tabGravity="fill"
             />
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/account_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
