@@ -117,7 +117,7 @@
     <string name="more_action_5">Copiar</string>
     <string name="more_action_6">Compartilhar</string>
     <string name="more_action_7">Mencionar</string>
-    <string name="more_action_8">Silenciar até</string>
+    <string name="more_action_8">Silenciar até...</string>
     <string name="more_action_9">Excluir &amp; rascunhar</string>
     <string-array name="more_action_confirm">
         <item>Silenciar esta conta?</item>
