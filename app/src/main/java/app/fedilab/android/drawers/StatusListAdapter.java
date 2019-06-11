@@ -55,7 +55,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -1000,8 +999,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        boolean state = status.isCustomFeaturesDisplayed();
                         closePanels();
-                        status.setCustomFeaturesDisplayed(!status.isCustomFeaturesDisplayed());
+                        status.setCustomFeaturesDisplayed(!state);
                         notifyStatusChanged(status);
                     }
                 });
@@ -1155,7 +1155,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
-                            closePanels();
+                            int position = closePanels();
+                            if(  holder.getAdapterPosition() == position)
+                                return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1178,7 +1180,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
-                            closePanels();
+                            int position = closePanels();
+                            if(  holder.getAdapterPosition() == position)
+                                return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1201,7 +1205,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
-                            closePanels();
+                            int position = closePanels();
+                            if(  holder.getAdapterPosition() == position)
+                                return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -3043,19 +3049,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-    private void closePanels(){
+    private int closePanels(){
+        int position = -1;
         if( statuses != null && statuses.size() > 0){
-            int position = 0;
             for(Status status: statuses){
+                position++;
                 if( status.isCustomFeaturesDisplayed()) {
                     status.setCustomFeaturesDisplayed(false);
                     notifyItemChanged(position);
                     break;
                 }
-                position++;
             }
-
         }
+        return position;
     }
 
     private void timedMuteAction(Status status){
