@@ -1546,14 +1546,15 @@ public class API {
 
         String accountID = sharedpreferences.getString(Helper.NEWS_ACCOUNT_ID+userId+instance, null);
         if( accountID == null){
+            HashMap<String, String> params2 = new HashMap<>();
             try {
-                params.put("q", URLEncoder.encode("https://framapiaf.org/@fedilab", "UTF-8"));
+                params2.put("q", URLEncoder.encode("https://framapiaf.org/@fedilab", "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                params.put("q", "https://framapiaf.org/@fedilab");
+                params2.put("q", "https://framapiaf.org/@fedilab");
             }
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             try {
-                String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
+                String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params2, prefKeyOauthTokenT);
                 Results res = parseResultsResponse(new JSONObject(response));
                 if( res != null && res.getAccounts() != null && res.getAccounts().size() > 0 ){
                     accountID = res.getAccounts().get(0).getId();
