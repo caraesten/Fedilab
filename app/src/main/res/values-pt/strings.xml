@@ -80,7 +80,7 @@
     <string name="blocked_menu">Usuários bloqueados</string>
     <string name="remote_follow_menu">Seguir remotamente</string>
     <string name="notifications">Notificações</string>
-    <string name="follow_request">Solicitações de seguidor</string>
+    <string name="follow_request">Solicitações para seguir</string>
     <string name="optimization">Otimização</string>
     <string name="settings">Configurações</string>
     <string name="profile">Perfil</string>
@@ -156,9 +156,9 @@
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">ac</string>
-    <string name="toot_title">Digite um toot</string>
-    <string name="toot_title_reply">Responder um toot</string>
-    <string name="queet_title">Digite um queet</string>
+    <string name="toot_title">Compor toot</string>
+    <string name="toot_title_reply">Responder toot</string>
+    <string name="queet_title">Compor queet</string>
     <string name="queet_title_reply">Responder queet</string>
     <string name="toot_no_space">Você excedeu os 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecionar mídia</string>
@@ -192,15 +192,15 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_thekinrar">Pesquisar instâncias:</string>
+    <string name="about_thekinrar">Procure instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
     <string name="thanks_text_banner">Designer da capa:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
-    <string name="no_accounts">Sem contas</string>
-    <string name="no_follow_request">Sem solicitações de seguidores</string>
+    <string name="no_accounts">Sem conta</string>
+    <string name="no_follow_request">Sem solicitações para seguir</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Seguindo \n %1$s</string>
     <string name="followers_cnt">Seguidores \n %1$s</string>
@@ -222,7 +222,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
     <string name="notif_mention">te mencionou</string>
-    <string name="notif_reblog">compartilhou seu toot</string>
+    <string name="notif_reblog">deu boost no seu toot</string>
     <string name="notif_favourite">favoritou seu toot</string>
     <string name="notif_follow">te seguiu</string>
     <string name="notif_pouet">Novo toot de %1$s</string>
@@ -257,8 +257,8 @@
     <string name="toast_unfollow">Você deixou de seguir a conta!</string>
     <string name="toast_reblog">Toot compartilhado!</string>
     <string name="toast_unreblog">Boost desfeito!</string>
-    <string name="toast_favourite">Toot adicionado aos favoritos!</string>
-    <string name="toast_unfavourite">Toot removido dos favoritos!</string>
+    <string name="toast_favourite">Toot favoritado!</string>
+    <string name="toast_unfavourite">Toot desfavoritado!</string>
     <string name="toast_report">Toot denunciado!</string>
     <string name="toast_unstatus">Toot excluído!</string>
     <string name="toast_pin">Toot fixado!</string>
@@ -291,7 +291,7 @@
     <string name="load_attachment_spoiler">Mostrar mais…</string>
     <string name="load_attachment_spoiler_less">Mostrar menos…</string>
     <string name="load_sensitive_attachment">Conteúdo sensível</string>
-    <string name="set_display_reply">Mostrar toot anterior nas respostas</string>
+    <string name="set_display_reply">Mostrar toot anterior ao responder</string>
     <string name="set_display_local">Mostrar timeline local</string>
     <string name="set_display_global">Mostrar timeline global</string>
     <string name="set_disable_gif">Desativar GIF</string>
@@ -311,7 +311,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Silenciar notificações</string>
     <string name="set_night_mode">Modo noturno</string>
-    <string name="set_nsfw_timeout">Segundos para a visualização de NSFW expirar, 0 para desativar</string>
+    <string name="set_nsfw_timeout">Segundos para expirar a prévia de mídia sensível, 0 para desativar.</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
@@ -327,8 +327,8 @@
     <string name="settings_time_to">e</string>
     <string name="settings_time_greater">O tempo deve ser maior que %1$s</string>
     <string name="settings_time_lower">O tempo deve ser menor que %1$s</string>
-    <string name="settings_hour_init">Horário de início</string>
-    <string name="settings_hour_end">Horário de término</string>
+    <string name="settings_hour_init">Horário inicial</string>
+    <string name="settings_hour_end">Horário final</string>
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
     <string name="use_javascript">Ativar Javascript</string>
@@ -579,7 +579,7 @@
     <string name="channel_notif_media">Baixar mídia</string>
     <string name="set_notif_sound">Mudar som de notificação</string>
     <string name="select_sound">Selecionar toque</string>
-    <string name="set_enable_time_slot">Ativar intervalo de tempo</string>
+    <string name="set_enable_time_slot">Ativar definição de momento</string>
     <string name="how_to_videos">Tutoriais em vídeo</string>
     <string name="retrieve_remote_conversation">Carregando sequência remota!</string>
     <string name="no_blocked_domain">Não há domínios bloqueados!</string>
@@ -593,7 +593,7 @@
     <string name="retrieve_remote_status">Carregando toot remoto</string>
     <string name="comment">Comentar</string>
     <string name="peertube_instance">Instância Peertube</string>
-    <string name="set_display_direct">Mostrar timeline de mensagens privadas</string>
+    <string name="set_display_direct">Mostrar timeline de mensagens diretas</string>
     <string name="set_keep_background_process">Manter processo em segundo plano quando o aplicativo for fechado</string>
     <string name="no_comments">Seja o primeiro a comentar o vídeo tocando no botão superior direito!</string>
     <string name="number_view_video">%s visualizações</string>
@@ -815,7 +815,7 @@
     <string name="settings_category_notif_customize">Personalizar</string>
     <string name="settings_category_notif_categories">Categorias</string>
     <string name="settings_category_notif_news">Notícias</string>
-    <string name="settings_category_notif_time_slot">Intervalo de tempo para notificações</string>
+    <string name="settings_category_notif_time_slot">Definição de momento para notificações</string>
     <string name="settings_category_notif_advanced">Avançado</string>
     <string name="set_display_new_badge">Mostrar etiqueta \'new\' em toots não lidos</string>
     <string name="set_display_peertube">Mostrar timeline do Peertube</string>
