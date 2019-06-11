@@ -327,8 +327,8 @@
     <string name="settings_time_to">e</string>
     <string name="settings_time_greater">O tempo deve ser maior que %1$s</string>
     <string name="settings_time_lower">O tempo deve ser menor que %1$s</string>
-    <string name="settings_hour_init">Horário de início</string>
-    <string name="settings_hour_end">Horário de término</string>
+    <string name="settings_hour_init">Horário inicial</string>
+    <string name="settings_hour_end">Horário final</string>
     <string name="embedded_browser">Usar navegador interno</string>
     <string name="custom_tabs">Abas personalizadas</string>
     <string name="use_javascript">Ativar Javascript</string>
