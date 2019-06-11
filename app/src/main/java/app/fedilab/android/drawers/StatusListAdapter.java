@@ -345,7 +345,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
-        LinearLayout status_action_container;
+        ConstraintLayout status_action_container;
         Button fetch_more;
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;

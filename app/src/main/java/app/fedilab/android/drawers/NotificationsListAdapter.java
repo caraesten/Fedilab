@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -1321,7 +1322,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView status_date;
         TextView status_reply;
         LinearLayout status_document_container;
-        LinearLayout status_action_container;
+        ConstraintLayout status_action_container;
         Button status_show_more;
         ImageView status_prev1;
         ImageView status_prev2;
