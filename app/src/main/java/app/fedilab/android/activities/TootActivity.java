@@ -14,6 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,7 +30,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -121,6 +121,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.PostStatusAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountsForReplyAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveEmojiAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveSearchAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -147,21 +156,6 @@ import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
-import app.fedilab.android.jobs.ScheduledTootsSyncJob;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.CustomEmojiDAO;
-import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.StatusStoredDAO;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.PostStatusAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountsForReplyAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveEmojiAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveSearchAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -170,6 +164,12 @@ import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
+import app.fedilab.android.jobs.ScheduledTootsSyncJob;
+import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.CustomEmojiDAO;
+import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusStoredDAO;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
@@ -700,16 +700,27 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     Thread thread = new Thread() {
                         @Override
                         public void run() {
-                            int currentCount = countLength();
-                            while (currentCount < 500) {
-                                newContent = newContent + new String(Character.toChars(0x1F917));
-                                toot_content.setText(newContent);
-                                currentCount++;
+                            String fedilabHugsTrigger = ":fedilab_hugs:";
+
+                            int currentLength = countLength();
+                            int toFill = 500 + fedilabHugsTrigger.length() - currentLength;
+                            if(toFill <= 0) {
+                                return;
                             }
+
+                            newContent = s.toString().replaceAll(fedilabHugsTrigger, "");
+
+                            StringBuilder hugs = new StringBuilder();
+                            for(int i = 0; i < toFill; i++) {
+                                hugs.append(new String(Character.toChars(0x1F917)));
+                            }
+
+                            newContent = newContent + hugs.toString();
+                            toot_content.setText(newContent);
                             toot_content.setSelection(toot_content.getText().length());
                             toot_content.addTextChangedListener(textWatcher);
                             autocomplete = false;
-                            toot_space_left.setText(String.valueOf(currentCount));
+                            toot_space_left.setText(String.valueOf(countLength()));
                         }
                     };
                     thread.start();
@@ -739,7 +750,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 if (mh.matches()) {
                     autocomplete = true;
-                    newContent = s.toString().replaceAll(":fedilab_hugs:", " ");
                     return;
                 }
 
