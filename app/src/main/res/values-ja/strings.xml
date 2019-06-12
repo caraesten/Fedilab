@@ -325,7 +325,7 @@
     <string name="settings_time_lower">時間は %1$s より前でなければなりません</string>
     <string name="settings_hour_init">開始時刻</string>
     <string name="settings_hour_end">終了時刻</string>
-    <string name="embedded_browser">ビルトインブラウザを使用する</string>
+    <string name="embedded_browser">アプリ内ブラウザを使用する</string>
     <string name="custom_tabs">カスタム タブ</string>
     <string name="use_javascript">Javascript を有効にする</string>
     <string name="expand_cw">CWを自動的に展開する</string>

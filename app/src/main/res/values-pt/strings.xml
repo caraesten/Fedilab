@@ -36,7 +36,7 @@
     <string name="add_account">Adicionar conta</string>
     <string name="clipboard">O conteúdo do toot foi copiado para a área de transferência</string>
     <string name="clipboard_url">O link do toot foi copiado para a área de transferência</string>
-    <string name="change">Mudar</string>
+    <string name="change">Alterar</string>
     <string name="choose_picture">Selecione uma imagem…</string>
     <string name="clear">Limpar</string>
     <string name="microphone">Microfone</string>
@@ -47,8 +47,8 @@
     <string name="translate_toot">Traduzir este toot.</string>
     <string name="schedule">Agendar</string>
     <string name="text_size">Tamanho dos textos e ícones</string>
-    <string name="text_size_change">Mudar o tamanho atual dos textos:</string>
-    <string name="icon_size_change">Mudar o tamanho atual dos ícones:</string>
+    <string name="text_size_change">Alterar tamanho atual dos textos:</string>
+    <string name="icon_size_change">Alterar tamanho atual dos ícones:</string>
     <string name="next">Próximo</string>
     <string name="previous">Anterior</string>
     <string name="open_with">Abrir com</string>
@@ -80,7 +80,7 @@
     <string name="blocked_menu">Usuários bloqueados</string>
     <string name="remote_follow_menu">Seguir remotamente</string>
     <string name="notifications">Notificações</string>
-    <string name="follow_request">Solicitação para seguir</string>
+    <string name="follow_request">Solicitações para seguir</string>
     <string name="optimization">Otimização</string>
     <string name="settings">Configurações</string>
     <string name="profile">Perfil</string>
@@ -90,7 +90,7 @@
     <string name="send_email">Mandar um e-mail</string>
     <string name="choose_file">Por favor, selecione um arquivo</string>
     <string name="choose_file_error">Nenhum gerenciador de arquivo encontrado!</string>
-    <string name="click_to_change">Toque no caminho para mudá-lo</string>
+    <string name="click_to_change">Toque no caminho para alterá-lo</string>
     <string name="failed">Falhou!</string>
     <string name="scheduled_toots">Toots agendados</string>
     <string name="disclaimer_full">As informações abaixo podem refletir incompletamente o perfil do usuário.</string>
@@ -124,7 +124,7 @@
         <item>Bloquear esta conta?</item>
         <item>Denunciar este toot?</item>
         <item>Bloquear este domínio?</item>
-        <item>Desativar silêncio desta conta?</item>
+        <item>Desativar silêncio da conta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -181,7 +181,7 @@
     <string name="choose_accounts">Escolha uma conta</string>
     <string name="select_accounts">Selecionar contas</string>
     <string name="remove_draft">Excluir rascunho?</string>
-    <string name="show_reply">Clique no botão para mostrar toot original</string>
+    <string name="show_reply">Toque no botão para mostrar toot original</string>
     <string name="upload_form_description">Descreva para os deficientes visuais</string>
     <!-- Instance -->
     <string name="instance_no_description">Sem descrição!</string>
@@ -206,7 +206,7 @@
     <string name="followers_cnt">Seguidores \n %1$s</string>
     <string name="pins_cnt">Fixado \n %d</string>
     <string name="authorize">Permitir</string>
-    <string name="reject">Rejeitar</string>
+    <string name="reject">Recusar</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Sem toots agendados!</string>
     <string name="no_scheduled_toots_indications">Componha um toot e toque em <b>Agendar</b> no topo do menu.</string>
@@ -216,8 +216,8 @@
     <string name="toot_scheduled_date">A data de agendamento deve ser após o horário atual!</string>
     <string name="warning_battery">Economia de bateria ativada! Pode não funcionar como esperado.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">O tempo de silenciamento deve ser maior do que um minuto.</string>
-    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode desativá-lo no perfil do usuário.</string>
+    <string name="timed_mute_date_error">O tempo de silêncio deve ser maior do que um minuto.</string>
+    <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode desativar no perfil do usuário.</string>
     <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Toque aqui para desativar o silêncio.</string>
     <!-- Notifications -->
     <string name="no_notifications">Sem notificações</string>
@@ -275,7 +275,7 @@
     <string name="toast_error_translate">Ocorreu um erro na tradução!</string>
     <string name="toast_error_translations_disabled">Tradução está desativada nas configurações</string>
     <string name="toast_toot_saved">Rascunho salvo!</string>
-    <string name="toast_error_char_limit">Você tem certeza que sua instância permite esse número de caracteres? Geralmente, são 500 caracteres.</string>
+    <string name="toast_error_char_limit">Você tem certeza de que sua instância permite esse número de caracteres? Geralmente, são 500 caracteres.</string>
     <string name="toast_visibility_changed">Visibilidade dos toots foi alterada na conta %1$s</string>
     <string name="toast_empty_search">Nome da instância e nome de exibição não podem ser vazios!</string>
     <!-- Settings -->
@@ -317,10 +317,10 @@
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
     <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Trancar conta</string>
-    <string name="set_save_changes">Salvar mudanças</string>
+    <string name="set_save_changes">Salvar alterações</string>
     <string name="set_header_picture_overlay">Escolher capa</string>
     <string name="set_fit_preview">Ajustar prévias de imagens</string>
-    <string name="set_automatically_split_toot">Transformar toots que excedem o valor definido em sequência:</string>
+    <string name="set_automatically_split_toot">Transformar toot em sequência ao exceder o valor definido:</string>
     <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
     <string name="username_no_space">Você excedeu os 30 caracteres permitidos!</string>
     <string name="settings_time_from">Entre</string>
@@ -420,7 +420,7 @@
     <string name="data_backup_success">%1$s novos toots foram importados</string>
     <string-array name="filter_select">
         <item>Não</item>
-        <item>Apenas</item>
+        <item>Somente</item>
         <item>Ambos</item>
     </string-array>
     <string name="owner_cached_toots_empty">Nenhum toot foi encontrado no banco de dados. Por favor, use o botão de sincronização no menu para recuperá-los.</string>
@@ -539,10 +539,10 @@
     <string name="context_public">Timelines públicas</string>
     <string name="context_notification">Notificações</string>
     <string name="context_conversation">Conversas</string>
-    <string name="filter_keyword_explanations">Serão correspondidas independente de maiúsculas ou minúsculas no texto ou no alerta de conteúdo de um toot</string>
-    <string name="context_drop">Apagar ao invés de ocultar</string>
+    <string name="filter_keyword_explanations">Serão correspondidas independente de maiúsculas ou minúsculas no texto ou no aviso de conteúdo de um toot</string>
+    <string name="context_drop">Apagar em vez de ocultar</string>
     <string name="context_drop_explanations">Os toots filtrados desaparecerão irreversivelmente, mesmo se o filtro for removido mais tarde</string>
-    <string name="context_whole_word_explanations">Quando a palavra-chave ou frase só é alfanumérico, ela será apenas aplicada se combinar com a palavra inteira</string>
+    <string name="context_whole_word_explanations">Quando a palavra-chave ou frase só tem alfanuméricos, ela será aplicada somente se combinar com a palavra inteira</string>
     <string name="context_whole_word">Palavra inteira</string>
     <string name="filter_context">Contextos do filtro</string>
     <string name="filter_context_explanations">Um ou mais contextos onde o filtro deve ser aplicado</string>
@@ -577,7 +577,7 @@
     <string name="channel_notif_toot">Novo toot</string>
     <string name="channel_notif_backup">Backup de Toots</string>
     <string name="channel_notif_media">Download de mídia</string>
-    <string name="set_notif_sound">Mudar som de notificação</string>
+    <string name="set_notif_sound">Alterar som de notificação</string>
     <string name="select_sound">Selecionar toque</string>
     <string name="set_enable_time_slot">Ativar definição de momento</string>
     <string name="how_to_videos">Tutoriais em vídeo</string>
@@ -602,8 +602,8 @@
     <string name="comment_no_allowed_peertube">Os comentários deste vídeo foram desativados!</string>
     <string name="pickup_resolution">Selecione uma resolução</string>
     <string name="peertube_favorites">Favoritos Peertube</string>
-    <string name="bookmark_add_peertube">O vídeo foi favoritado!</string>
-    <string name="bookmark_remove_peertube">O vídeo foi removido dos favoritos!</string>
+    <string name="bookmark_add_peertube">Vídeo favoritado!</string>
+    <string name="bookmark_remove_peertube">Vídeo desfavoritado!</string>
     <string name="bookmark_peertube_empty">Não há vídeos do Peertube em seus favoritos!</string>
     <string name="channel">Canal</string>
     <string name="no_peertube_channels">Sem canais Peertube</string>
@@ -624,7 +624,7 @@
     <string name="bug_report_mail">Enviar relatório de erros</string>
     <string name="account_id_clipbloard">O nome de usuário foi copiado para a área de transferência!</string>
     <string name="settings_title_battery">Otimização da bateria</string>
-    <string name="set_change_locale">Mudar o idioma</string>
+    <string name="set_change_locale">Alterar idioma</string>
     <string name="default_language">Idioma padrão</string>
     <string name="truncate_long_toots">Delimitar toots longos</string>
     <string name="set_truncate_toot">Delimitar toots por nº de linhas, 0 para desativar.</string>
@@ -699,7 +699,7 @@
     <string name="some_words_all">Todas estas palavras (separadas por espaço)</string>
     <string name="some_words_none">Nenhuma destas palavras (separadas por espaço)</string>
     <string name="some_tags">Adicione palavras para filtrar (separadas por espaço)</string>
-    <string name="change_tag_column">Mudar nome da aba</string>
+    <string name="change_tag_column">Alterar nome da aba</string>
     <string name="no_misskey_instance">Sem instâncias Misskey</string>
     <string name="misskey_instance">Instância Misskey</string>
     <string name="toast_no_apps">Nenhum aplicativo instalado suporta este link.</string>
@@ -759,10 +759,10 @@
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> está seguindo sua conta]]></string>
     <string name="peertube_video_published"><![CDATA[Seu vídeo <b>%1$s</b> foi publicado]]></string>
     <string name="peertube_video_import_success"><![CDATA[Seu vídeo <b>%1$s</b> foi importado com sucesso]]></string>
-    <string name="peertube_video_import_error"><![CDATA[A importação do seu vídeo <b>%1$s</b> falhou]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Falha ao importar seu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicou um novo vídeo: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi adicionado na lista negra]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi removido da lista negra]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi bloqueado]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi desbloqueado]]></string>
     <string name="export_data">Exportar dados</string>
     <string name="import_data">Importar dados</string>
     <string name="toot_select_import">Selecione o arquivo para importar</string>
@@ -778,7 +778,7 @@
     <string name="set_optimize_loading">Otimizar o tempo de carregamento</string>
     <string name="all">Tudo</string>
     <string name="about_opencollective">Apoie o aplicativo</string>
-    <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerí-los de forma transparente.</string>
+    <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerenciá-los de forma transparente.</string>
     <string name="copy_link">Copiar link</string>
     <string name="connect_instance">Conectar</string>
     <string name="set_normal">Normal</string>
@@ -837,7 +837,7 @@
     <string name="set_sensitive_content">Sempre marcar mídia como sensível</string>
     <string name="gnu_instance">Instância GNU</string>
     <string name="cached_status">Toots em cache</string>
-    <string name="set_forward_tags">Encaminhar tags nas respostas</string>
+    <string name="set_forward_tags">Repetir tags nas respostas</string>
     <string name="set_long_press_media">Toque longo para salvar mídia</string>
     <string name="set_blur_sensitive">Blur na mídia sensível</string>
     <string name="set_display_timeline_in_list">Mostrar timelines em uma lista</string>
@@ -863,9 +863,9 @@
     <string name="label_eraser">Borracha</string>
     <string name="label_text">Texto</string>
     <string name="label_filter">Filtro</string>
-    <string name="label_adjust">Ajuste</string>
+    <string name="label_adjust">Ajustes</string>
     <string name="label_brush">Pincel</string>
-    <string name="confirm_exit_editing">Tem certeza de que deseja fechar sem salvar a imagem?</string>
+    <string name="confirm_exit_editing">Você tem certeza de que deseja sair sem salvar?</string>
     <string name="discard">Cancelar</string>
     <string name="saving">Salvando…</string>
     <string name="image_saved">Imagem salva!</string>
@@ -876,9 +876,9 @@
     <string name="add_poll_item">Adicionar um item</string>
     <string name="remove_poll_item">Excluir último item</string>
     <string name="mute_conversation">Silenciar conversa</string>
-    <string name="unmute_conversation">Desfazer silêncio na conversa</string>
-    <string name="toast_unmute_conversation">A conversa não está mais silenciada!</string>
-    <string name="toast_mute_conversation">A conversa foi silenciada</string>
+    <string name="unmute_conversation">Desativar silêncio</string>
+    <string name="toast_unmute_conversation">Silêncio desativado!</string>
+    <string name="toast_mute_conversation">Silêncio ativado!</string>
     <string name="app_features">Abrir recursos do aplicativo</string>
     <string name="timed_mute">Silêncio temporário</string>
     <string name="mention_account">Mencionar conta</string>
