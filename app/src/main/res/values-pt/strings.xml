@@ -759,14 +759,14 @@
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> está seguindo sua conta]]></string>
     <string name="peertube_video_published"><![CDATA[Seu vídeo <b>%1$s</b> foi publicado]]></string>
     <string name="peertube_video_import_success"><![CDATA[Seu vídeo <b>%1$s</b> foi importado com sucesso]]></string>
-    <string name="peertube_video_import_error"><![CDATA[A importação do seu vídeo <b>%1$s</b> falhou]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Falha ao importar seu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicou um novo vídeo: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi adicionado na lista negra]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi removido da lista negra]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi bloqueado]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi desbloqueado]]></string>
     <string name="export_data">Exportar dados</string>
     <string name="import_data">Importar dados</string>
     <string name="toot_select_import">Selecione o ficheiro a importar</string>
-    <string name="toot_select_file_error">Ocorreu um erro ao selecionar o arquivo de backup!</string>
+    <string name="toot_select_file_error">Ocorreu um erro ao selecionar o ficheiro de backup!</string>
     <string name="data_import_start">Por favor, não feche o aplicativo, não vai demorar muito.</string>
     <string name="add_public_comment">Adicionar um comentário público</string>
     <string name="send_comment">Enviar comentário</string>
@@ -776,7 +776,7 @@
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Sair da conta</string>
     <string name="set_optimize_loading">Otimizar o tempo de carregamento</string>
-    <string name="all">Todos</string>
+    <string name="all">Tudo</string>
     <string name="about_opencollective">Apoie o aplicativo</string>
     <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerí-los de forma transparente.</string>
     <string name="copy_link">Copiar link</string>
