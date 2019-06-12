@@ -37,6 +37,8 @@ import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
 
+import static app.fedilab.android.helper.Helper.initNetCipher;
+
 /**
  * Created by Thomas on 29/04/2017.
  * Main application, jobs are launched here.
@@ -77,6 +79,7 @@ public class MainApplication extends MultiDexApplication {
         }catch (Exception ignored){}
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
+        initNetCipher(this);
         Toasty.Config.getInstance()
                 .setErrorColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
                 .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
@@ -85,7 +88,7 @@ public class MainApplication extends MultiDexApplication {
                 .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_text))
                 .apply();
                     Toasty.Config.getInstance().apply();
-                }
+        }
 
 
 

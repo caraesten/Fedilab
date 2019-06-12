@@ -51,6 +51,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -95,6 +96,7 @@ import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
 import net.gotev.uploadservice.UploadNotificationConfig;
+import net.gotev.uploadservice.UploadService;
 import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
@@ -121,6 +123,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
@@ -173,6 +176,8 @@ import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
+import static app.fedilab.android.helper.Helper.initNetCipher;
+import static app.fedilab.android.helper.Helper.orbotConnected;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -422,7 +427,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userIdReply, instanceReply);
         else
             account = accountReply;
-
 
         if (MainActivity.social == null) {
 

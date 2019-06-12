@@ -129,6 +129,7 @@ import com.tonyodev.fetch2.Request;
 import com.tonyodev.fetch2core.DownloadBlock;
 
 import net.gotev.uploadservice.UploadService;
+import net.gotev.uploadservice.okhttp.OkHttpStack;
 
 import org.conscrypt.Conscrypt;
 import org.jetbrains.annotations.NotNull;
@@ -163,8 +164,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.net.ssl.SSLContext;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
@@ -179,6 +183,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
+import app.fedilab.android.client.Tls12SocketFactory;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
@@ -197,7 +202,9 @@ import app.fedilab.android.sqlite.Sqlite;
 import info.guardianproject.netcipher.client.StrongBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
+import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
+import okhttp3.TlsVersion;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
@@ -4030,7 +4037,7 @@ public class Helper {
             StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
                 @Override
                 public void onConnected(OkHttpClient okHttpClient) {
-                    UploadService.HTTP_STACK = new OkHttpStack(okHttpClient);
+                    UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
                     orbotConnected = true;
                     Log.i("NetCipherClient", "Connection to orbot established!");
                     // from now on, you can create upload requests
@@ -4059,5 +4066,44 @@ public class Helper {
         } catch (Exception exc) {
             Log.e("Error", "Error while initializing TOR Proxy OkHttpClient", exc);
         }
+    }
+
+
+    public static OkHttpClient getHttpClient(Context context) {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .cache(null);
+
+        return enableTls12OnPreLollipop(clientBuilder).build();
+    }
+
+    private static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
+        if (Build.VERSION.SDK_INT < 22) {
+            try {
+                SSLContext sc = SSLContext.getInstance("TLSv1.2");
+                sc.init(null, null, null);
+                client.sslSocketFactory(new Tls12SocketFactory(sc.getSocketFactory()));
+
+                ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                        .tlsVersions(TlsVersion.TLS_1_2)
+                        .build();
+
+                List<ConnectionSpec> specs = new ArrayList<>();
+                specs.add(cs);
+                specs.add(ConnectionSpec.COMPATIBLE_TLS);
+                specs.add(ConnectionSpec.CLEARTEXT);
+
+                client.connectionSpecs(specs);
+            } catch (Exception exc) {
+                Log.e("OkHttpTLSCompat", "Error while setting TLS 1.2", exc);
+            }
+        }
+
+        return client;
     }
 }

@@ -96,7 +96,6 @@ dependencies {
     implementation 'com.elconfidencial.bubbleshowcase:bubbleshowcase:1.3.1'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
-    implementation 'com.github.stom79:android-upload-service:3.4.2-Mastalab'
     implementation 'org.apache.poi:poi:3.16'
     implementation 'com.github.mabbas007:TagsEditText:1.0.5'
     implementation 'com.jaredrummler:material-spinner:1.3.1'
@@ -107,6 +106,8 @@ dependencies {
     implementation 'ja.burhanrashid52:photoeditor:0.3.3'
     implementation 'com.github.yalantis:ucrop:2.2.3'
 
+    implementation "net.gotev:uploadservice:$uploadServiceVersion"
+    implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
     implementation "info.guardianproject.netcipher:netcipher:$netCipherVersion"
     implementation "info.guardianproject.netcipher:netcipher-okhttp3:$netCipherVersion"
 }
