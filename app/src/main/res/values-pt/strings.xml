@@ -19,7 +19,7 @@
     <string name="download_over">Download completo</string>
     <string name="save_file">Salvar %1$s</string>
     <string name="save_over">Mídia salva</string>
-    <string name="download_from" formatted="false">Ficheiro: %1$s</string>
+    <string name="download_from" formatted="false">Arquivo: %1$s</string>
     <string name="password">Senha</string>
     <string name="email">E-mail</string>
     <string name="accounts">Contas</string>
@@ -36,7 +36,7 @@
     <string name="add_account">Adicionar conta</string>
     <string name="clipboard">O conteúdo do toot foi copiado para a área de transferência</string>
     <string name="clipboard_url">O link do toot foi copiado para a área de transferência</string>
-    <string name="change">Mudar</string>
+    <string name="change">Alterar</string>
     <string name="choose_picture">Selecione uma imagem…</string>
     <string name="clear">Limpar</string>
     <string name="microphone">Microfone</string>
@@ -88,8 +88,8 @@
     <string name="delete_account_title">Remover conta</string>
     <string name="delete_account_message" formatted="false">Remover a conta %1$s do aplicativo?</string>
     <string name="send_email">Mandar um e-mail</string>
-    <string name="choose_file">Por favor, selecione um ficheiro</string>
-    <string name="choose_file_error">Nenhum explorador de ficheiros encontrado!</string>
+    <string name="choose_file">Por favor, selecione um arquivo</string>
+    <string name="choose_file_error">Nenhum gerenciador de arquivo encontrado!</string>
     <string name="click_to_change">Toque no caminho para alterá-lo</string>
     <string name="failed">Falhou!</string>
     <string name="scheduled_toots">Toots agendados</string>
@@ -144,7 +144,7 @@
     <string name="bookmark_remove">Remover dos Salvos</string>
     <string name="bookmarks_empty">Sem toots salvos</string>
     <string name="status_bookmarked">Toot foi salvo!</string>
-    <string name="status_unbookmarked">Toot foi removido dos Salvos!</string>
+    <string name="status_unbookmarked">Toot foi removido do Salvos!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -255,7 +255,7 @@
     <string name="toast_unmute">Silêncio desativado!</string>
     <string name="toast_follow">Você seguiu a conta!</string>
     <string name="toast_unfollow">Você deixou de seguir a conta!</string>
-    <string name="toast_reblog">Toot compartilhado!</string>
+    <string name="toast_reblog">Você deu boost!</string>
     <string name="toast_unreblog">Boost desfeito!</string>
     <string name="toast_favourite">Toot favoritado!</string>
     <string name="toast_unfavourite">Toot desfavoritado!</string>
@@ -263,7 +263,7 @@
     <string name="toast_unstatus">Toot excluído!</string>
     <string name="toast_pin">Toot fixado!</string>
     <string name="toast_unpin">Toot desafixado!</string>
-    <string name="toast_error">Oops! Ocorreu um erro!</string>
+    <string name="toast_error">Opa! Ocorreu um erro!</string>
     <string name="toast_code_error">Ocorreu um erro! A instância não retornou um código de autorização!</string>
     <string name="toast_error_instance">Parece que o domínio da instância não é válido!</string>
     <string name="toast_error_loading_account">Ocorreu um erro ao alternar entre as contas!</string>
@@ -315,12 +315,12 @@
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento externo personalizado</string>
     <string name="settings_custom_sharing_url">Seu link de compartilhamento externo&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Trancar conta</string>
     <string name="set_save_changes">Salvar alterações</string>
-    <string name="set_header_picture_overlay">Escolher cabeçalho</string>
-    <string name="set_fit_preview">Ajustar visualização de imagens</string>
-    <string name="set_automatically_split_toot">Transformar toots com mais de 500 caracteres em sequências</string>
+    <string name="set_header_picture_overlay">Escolher capa</string>
+    <string name="set_fit_preview">Ajustar prévias de imagens</string>
+    <string name="set_automatically_split_toot">Transformar toots que excedem o valor definido em sequência:</string>
     <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
     <string name="username_no_space">Você excedeu os 30 caracteres permitidos!</string>
     <string name="settings_time_from">Entre</string>
@@ -489,7 +489,7 @@
     <string name="data_export_start">Esta ação pode ser demorada. Você será notificado quando ela terminar.</string>
     <string name="data_export_running">Ainda em execução, por favor, aguarde…</string>
     <string name="data_export">Exportar toots</string>
-    <string name="data_export_toots">Exportar toots para %1$s</string>
+    <string name="data_export_toots">Exportar toots de %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
     <string name="data_export_error">Algo deu errado enquanto exportava dados de %1$s</string>
     <string name="data_export_error_simple">Algo deu errado ao exportar dados!</string>
@@ -501,7 +501,7 @@
     <string name="proxy_enable">Ativar proxy?</string>
     <string name="poxy_host">Servidor</string>
     <string name="poxy_port">Porta</string>
-    <string name="poxy_login">Login</string>
+    <string name="poxy_login">Entrar</string>
     <string name="poxy_password">Senha</string>
     <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Modo compacto</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_poll">Enquete terminada</string>
     <string name="channel_notif_toot">Novo toot</string>
     <string name="channel_notif_backup">Backup de Toots</string>
-    <string name="channel_notif_media">Baixar mídia</string>
+    <string name="channel_notif_media">Download de mídia</string>
     <string name="set_notif_sound">Alterar som de notificação</string>
     <string name="select_sound">Selecionar toque</string>
     <string name="set_enable_time_slot">Ativar definição de momento</string>
@@ -614,17 +614,17 @@
     <string name="channels">Canais</string>
     <string name="set_display_emoji">Usar Emoji One</string>
     <string name="information">Informação</string>
-    <string name="set_display_card">Mostrar pré-visualizações em todos os toots</string>
+    <string name="set_display_card">Mostrar prévias em todos os toots</string>
     <string name="thanks_text_ux">Designer da nova UX/UI</string>
     <string name="set_old_direct_timeline">Usar a timeline direta anterior ao Mastodon 2.6</string>
-    <string name="set_display_video_preview">Mostrar pré-visualizações do vídeo</string>
+    <string name="set_display_video_preview">Mostrar prévias de vídeo</string>
     <string name="thanks_text_support">Suporte no Gitlab</string>
     <string name="action_bug_report">Relatório de erros</string>
     <string name="no_mail_client">Não há nenhum cliente de email instalado.</string>
     <string name="bug_report_mail">Enviar relatório de erros</string>
     <string name="account_id_clipbloard">O nome de usuário foi copiado para a área de transferência!</string>
     <string name="settings_title_battery">Otimização da bateria</string>
-    <string name="set_change_locale">Mudar o idioma</string>
+    <string name="set_change_locale">Alterar idioma</string>
     <string name="default_language">Idioma padrão</string>
     <string name="truncate_long_toots">Delimitar toots longos</string>
     <string name="set_truncate_toot">Delimitar toots por nº de linhas, 0 para desativar.</string>
@@ -641,7 +641,7 @@
     <string name="no_scheduled_boosts">Sem boosts agendados!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menu de um toot e escolha <b>Agendar boost</b>.]]></string>
     <string name="art_menu">Timeline de Arte</string>
-    <string name="open_menu">Abrir um menu</string>
+    <string name="open_menu">Abrir menu</string>
     <string name="go_back">Voltar</string>
     <string name="app_logo">Logo do aplicativo</string>
     <string name="profile_picture">Foto do perfil</string>
@@ -651,16 +651,16 @@
     <string name="mastohost_logo">Logo do MastoHost</string>
     <string name="emoji_picker">Seletor de emoji</string>
     <string name="refresh">Atualizar</string>
-    <string name="expand_conversation">Expandir a conversa</string>
+    <string name="expand_conversation">Expandir conversa</string>
     <string name="remove_account">Sair de uma conta</string>
-    <string name="delete_domain">Remover o domínio bloqueado</string>
+    <string name="delete_domain">Desbloquear instância</string>
     <string name="custom_emoji_picker">Seletor de emoji personalizado</string>
     <string name="play_video">Reproduzir vídeo</string>
     <string name="new_toot">Novo toot</string>
     <string name="card_view_image">Imagem do cartão</string>
     <string name="hide_media">Ocultar mídia</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Adicionar descrição da mídia</string>
+    <string name="media_description">Adicionar descrição da mídia (para deficientes visuais)</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
@@ -714,7 +714,7 @@
     <string name="delete_comment_confirm">Tem certeza de que deseja excluir este comentário?</string>
     <string name="fullscreen">Vídeo em tela cheia</string>
     <string name="set_video_mode">Modo para vídeos</string>
-    <string name="file_to_upload">Selecione o ficheiro a enviar</string>
+    <string name="file_to_upload">Selecione o arquivo para enviar</string>
     <string name="my_videos">Meus vídeos</string>
     <string name="title">Título</string>
     <string name="categories">Categorias</string>
@@ -728,7 +728,7 @@
     <string name="toast_peertube_video_updated">O vídeo foi atualizado!</string>
     <string name="toast_cancelled">Envio cancelado!</string>
     <string name="upload_video_success">O vídeo foi enviado!</string>
-    <string name="uploading">Enviando, por favor aguarde…</string>
+    <string name="uploading">Enviando, por favor, aguarde…</string>
     <string name="video_uploaded_action">Toque aqui para editar os dados do vídeo.</string>
     <string name="delete_video">Excluir vídeo</string>
     <string name="delete_video_confirmation">Tem certeza de que deseja excluir este vídeo?</string>
@@ -765,8 +765,8 @@
     <string name="peertube_video_unblacklist"><![CDATA[Seu vídeo <b>%1$s</b> foi desbloqueado]]></string>
     <string name="export_data">Exportar dados</string>
     <string name="import_data">Importar dados</string>
-    <string name="toot_select_import">Selecione o ficheiro a importar</string>
-    <string name="toot_select_file_error">Ocorreu um erro ao selecionar o ficheiro de backup!</string>
+    <string name="toot_select_import">Selecione o arquivo para importar</string>
+    <string name="toot_select_file_error">Ocorreu um erro ao selecionar o arquivo de backup!</string>
     <string name="data_import_start">Por favor, não feche o aplicativo, não vai demorar muito.</string>
     <string name="add_public_comment">Adicionar um comentário público</string>
     <string name="send_comment">Enviar comentário</string>
@@ -778,7 +778,7 @@
     <string name="set_optimize_loading">Otimizar o tempo de carregamento</string>
     <string name="all">Tudo</string>
     <string name="about_opencollective">Apoie o aplicativo</string>
-    <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerí-los de forma transparente.</string>
+    <string name="more_about_opencollective">Open Collective permite aos grupos criar rapidamente um coletivo, angariar fundos e gerenciá-los de forma transparente.</string>
     <string name="copy_link">Copiar link</string>
     <string name="connect_instance">Conectar</string>
     <string name="set_normal">Normal</string>
