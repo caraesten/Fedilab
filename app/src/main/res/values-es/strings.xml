@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Ahora funciona con la cuenta %1$s</string>
     <string name="add_account">Agregar una cuenta</string>
     <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">La dirección URL del toot ha sido copiada al portapapeles</string>
     <string name="change">Cambiar</string>
     <string name="choose_picture">Seleccionar una imagen…</string>
     <string name="clear">Borrar</string>
@@ -124,7 +124,7 @@
         <item>¿Bloquear esta cuenta?</item>
         <item>¿Reportar este toot?</item>
         <item>¿Bloquear este dominio?</item>
-        <item>Unmute this account?</item>
+        <item>¿des silenciar esta cuenta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -158,7 +158,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Escribe un toot</string>
     <string name="toot_title_reply">Responder a un toot</string>
-    <string name="queet_title">Write a queet</string>
+    <string name="queet_title">Escribir un queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecciona un medio</string>
@@ -235,8 +235,8 @@
         <item quantity="other">y %d otros toot para descubrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d me gusta</item>
+        <item quantity="other">%d Me gusta</item>
     </plurals>
     <string name="delete_notification_ask">¿Eliminar una notificación?</string>
     <string name="delete_notification_ask_all">¿Eliminar todas las notificaciones?</string>
@@ -273,7 +273,7 @@
     <string name="nothing_to_do">Ninguna acción puede ser tomada</string>
     <string name="toast_saved">¡El contenido multimedia ha sido guardado!</string>
     <string name="toast_error_translate">¡Un error ocurrió mientras se traducía!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Las traducciones están desactivadas en la configuración</string>
     <string name="toast_toot_saved">¡Borrador guardado!</string>
     <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
     <string name="toast_visibility_changed">La visibilidad de los toots ha sido cambiado para la cuenta %1$s</string>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
     <string name="set_notif_follow_add">Notificar cuando alguien agrega a favoritos tu estado</string>
     <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Noificar cuando una encuesta ha terminado</string>
     <string name="set_share_validation">Mostrar diálogo de confirmación antes de retootear</string>
     <string name="set_share_validation_fav">Mostrar diálogo de confirmación antes de agregar a favoritos</string>
     <string name="set_wifi_only">Notificaciones en WI-FI solamente</string>
@@ -313,7 +313,7 @@
     <string name="set_night_mode">Modo nocturno</string>
     <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
     <string name="settings_title_profile">Editar perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_title_custom_sharing">Compartir personalizado</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear cuenta</string>
