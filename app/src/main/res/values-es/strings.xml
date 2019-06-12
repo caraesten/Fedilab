@@ -255,7 +255,7 @@
     <string name="toast_unmute">¡La cuenta ya no esta silenciada!</string>
     <string name="toast_follow">¡La cuenta fue seguida!</string>
     <string name="toast_unfollow">¡La cuenta ya no esta seguida!</string>
-    <string name="toast_reblog">¡El toot fue promovido!</string>
+    <string name="toast_reblog">¡El toot fue retooteado!</string>
     <string name="toast_unreblog">¡El toot ya no está retooteado!</string>
     <string name="toast_favourite">¡El toot fue agregado a tus favoritos!</string>
     <string name="toast_unfavourite">¡El toot fue removido de tus favoritos!</string>
