@@ -31,32 +31,10 @@ public class TLSSocketFactory extends SSLSocketFactory {
     private SSLContext sslContext;
     private boolean isOnion;
 
-    public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
-
-
-        if( instance == null || !instance.endsWith(".onion")) {
-            sslContext = SSLContext.getInstance("TLS");
-            isOnion = false;
-            sslContext.init(null, null, null);
-        }else{
-            sslContext = SSLContext.getInstance("SSL");
-            isOnion = true;
-            TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return null;
-                        }
-                        public void checkClientTrusted(
-                                java.security.cert.X509Certificate[] certs, String authType) {
-                        }
-                        public void checkServerTrusted(
-                                java.security.cert.X509Certificate[] certs, String authType) {
-                        }
-                    }
-            };
-            sslContext.init(null, trustAllCerts, null);
-
-        }
+    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
+        sslContext = SSLContext.getInstance("TLS");
+        isOnion = false;
+        sslContext.init(null, null, null);
         sSLSocketFactory = sslContext.getSocketFactory();
 
     }

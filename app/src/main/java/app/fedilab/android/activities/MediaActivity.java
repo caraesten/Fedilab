@@ -447,7 +447,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
                 try {
-                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(instance));
+                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {

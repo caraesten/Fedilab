@@ -622,7 +622,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
         try {
-            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(instance));
+            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

@@ -149,6 +149,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -185,6 +186,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
+import app.fedilab.android.client.TLSSocketFactory;
 import app.fedilab.android.client.Tls12SocketFactory;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
@@ -4028,8 +4030,6 @@ public class Helper {
         Context appContext = context.getApplicationContext();
 
         if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
-            orbotConnected = false;
-            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
             return;
         }
 
@@ -4060,40 +4060,6 @@ public class Helper {
     }
 
 
-    public static void initNetCipherHttp(Context context) {
-        Context appContext = context.getApplicationContext();
-
-        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
-            orbotConnected = false;
-            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
-            return;
-        }
-
-        try {
-            StrongConnectionBuilder.forMaxSecurity(appContext).build(new StrongConnectionBuilder.Callback<HttpURLConnection>() {
-
-                @Override
-                public void onConnected(HttpURLConnection httpURLConnection) {
-
-                }
-
-                @Override
-                public void onConnectionException(Exception e) {
-
-                }
-
-                @Override
-                public void onTimeout() {
-
-                }
-
-                @Override
-                public void onInvalid() {
-
-                }
-            });
-        } catch (Exception ignored) { }
-    }
 
 
     public static OkHttpClient getHttpClient(Context context) {

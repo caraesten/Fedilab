@@ -36,6 +36,7 @@ import app.fedilab.android.jobs.NotificationsSyncJob;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
+import info.guardianproject.netcipher.proxy.OrbotHelper;
 
 import static app.fedilab.android.helper.Helper.initNetCipher;
 

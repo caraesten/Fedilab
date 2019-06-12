@@ -32,7 +32,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -193,10 +192,6 @@ public class API {
                 editor.apply();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e) {
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -263,11 +258,7 @@ public class API {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (HttpsConnection.HttpsConnectionException e) {
+        }   catch (HttpsConnection.HttpsConnectionException e) {
             try {
                 response = new HttpsConnection(context, this.instance).get(scheme+"://" + domain + "/api/v1/instance", 30, null, null);
                 JSONObject jsonObject = new JSONObject(response);
@@ -275,10 +266,6 @@ public class API {
                 instanceNodeInfo.setVersion(jsonObject.getString("version"));
                 instanceNodeInfo.setOpenRegistrations(true);
             } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
                 instanceNodeInfo.setName("GNU");
@@ -333,13 +320,9 @@ public class API {
             apiResponse.setInstance(instanceEntity);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -387,11 +370,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -443,10 +422,6 @@ public class API {
                     }
                 } catch (IOException e1) {
                     e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 } catch (HttpsConnection.HttpsConnectionException e1) {
@@ -454,13 +429,9 @@ public class API {
                     setError(e.getStatusCode(), e);
                 }
             }
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return account;
@@ -488,13 +459,9 @@ public class API {
             newValues.put("access_token",token);
             newValues.put("refresh_token",refresh_token);
 
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -521,13 +488,9 @@ public class API {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return account;
@@ -552,13 +515,9 @@ public class API {
                 relationship = relationships.get(0);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return relationship;
@@ -590,13 +549,9 @@ public class API {
                 apiResponse.setMax_id(httpsConnection.getMax_id());
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
+            }  catch (IOException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            }  catch (JSONException e) {
                 e.printStackTrace();
             }
             apiResponse.setRelationships(relationships);
@@ -702,13 +657,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -741,13 +692,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -779,13 +726,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -809,13 +752,9 @@ public class API {
             statuses.add(status);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -840,13 +779,9 @@ public class API {
             statuses.add(status);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -867,13 +802,9 @@ public class API {
             statusContext = parseContext(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return statusContext;
@@ -932,13 +863,9 @@ public class API {
             conversations = parseConversations(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setConversations(conversations);
@@ -979,13 +906,9 @@ public class API {
             statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1098,13 +1021,9 @@ public class API {
             statuses = parseStatusesForCache(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         if( apiResponse == null)
@@ -1133,13 +1052,9 @@ public class API {
                 apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
                 apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
             }
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -1166,13 +1081,9 @@ public class API {
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -1195,13 +1106,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1223,13 +1130,9 @@ public class API {
             peertubes = parsePeertube(instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1258,11 +1161,7 @@ public class API {
             peertubes = parsePeertube(instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1286,13 +1185,9 @@ public class API {
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         List<Peertube> peertubes = new ArrayList<>();
@@ -1326,13 +1221,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1351,13 +1242,9 @@ public class API {
             statuses = parseSinglePeertubeComments(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1378,13 +1265,9 @@ public class API {
             howToVideos = parseHowTos(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setHowToVideos(howToVideos);
@@ -1422,13 +1305,9 @@ public class API {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1509,13 +1388,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1564,11 +1439,7 @@ public class API {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e) {
+            }   catch (HttpsConnection.HttpsConnectionException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1583,13 +1454,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1638,13 +1505,9 @@ public class API {
             statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1816,13 +1679,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1902,13 +1761,9 @@ public class API {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1930,13 +1785,9 @@ public class API {
             accounts = parseOpencollectiveAccountResponse(context, type, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         results.setAccounts(accounts);
@@ -1966,13 +1817,9 @@ public class API {
             domains = parseDomains(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setDomains(domains);
@@ -1997,13 +1844,9 @@ public class API {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -2042,13 +1885,9 @@ public class API {
             accounts = parseAccountResponse(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -2091,13 +1930,9 @@ public class API {
             statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -2132,13 +1967,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -2309,13 +2140,9 @@ public class API {
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
+            }  catch (IOException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
+            } 
         }else{
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -2325,13 +2152,9 @@ public class API {
                 new TimelineCacheDAO(context, db).remove(targetedId);
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
+            }  catch (IOException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
+            } 
         }
         return actionCode;
     }
@@ -2404,13 +2227,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStoredStatuses(storedStatus);
@@ -2438,13 +2257,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -2477,13 +2292,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -2539,13 +2350,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -2572,13 +2379,9 @@ public class API {
             new HttpsConnection(context, this.instance).post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return apiResponse;
     }
 
@@ -2716,13 +2519,9 @@ public class API {
             notifications = parseNotificationResponse(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setNotifications(notifications);
@@ -2753,13 +2552,9 @@ public class API {
             attachment = parseAttachmentResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return attachment;
@@ -2791,13 +2586,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -2845,13 +2636,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -2897,13 +2684,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -2928,13 +2711,9 @@ public class API {
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         //Add custom emoji for Pleroma
@@ -2981,13 +2760,9 @@ public class API {
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setEmojis(emojis);
@@ -3006,13 +2781,9 @@ public class API {
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
@@ -3034,13 +2805,9 @@ public class API {
             filters.add(filter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
@@ -3073,13 +2840,9 @@ public class API {
             filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
@@ -3099,13 +2862,9 @@ public class API {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -3134,13 +2893,9 @@ public class API {
             filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
@@ -3159,13 +2914,9 @@ public class API {
             lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setLists(lists);
@@ -3187,11 +2938,7 @@ public class API {
             lists.add(list);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -3228,13 +2975,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -3265,11 +3008,7 @@ public class API {
             apiResponse.setMax_id(httpsConnection.getMax_id());
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -3296,11 +3035,7 @@ public class API {
             lists.add(list);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -3332,13 +3067,9 @@ public class API {
             new HttpsConnection(context, this.instance).post(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return apiResponse;
     }
 
@@ -3364,13 +3095,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -3391,13 +3118,9 @@ public class API {
             lists.add(list);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setLists(lists);
@@ -3424,13 +3147,9 @@ public class API {
             lists.add(list);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setLists(lists);
@@ -3475,13 +3194,9 @@ public class API {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -3506,13 +3221,9 @@ public class API {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);

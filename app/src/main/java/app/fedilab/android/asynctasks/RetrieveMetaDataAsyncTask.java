@@ -114,11 +114,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                         if( descriptionEncoded != null)
                             description = Html.fromHtml(descriptionEncoded).toString();
                     }
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (HttpsConnection.HttpsConnectionException e) {
+                }catch (HttpsConnection.HttpsConnectionException e) {
                     e.printStackTrace();
                 }
             }

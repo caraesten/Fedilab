@@ -147,13 +147,9 @@ public class PeertubeAPI {
             apiResponse.setInstance(instanceEntity);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -218,13 +214,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         apiResponse.setPeertubes(peertubes);
         return apiResponse;
     }
@@ -308,13 +300,9 @@ public class PeertubeAPI {
                 peertubeInformation.setTranslations(_translations);
             }
 
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return peertubeInformation;
@@ -330,13 +318,9 @@ public class PeertubeAPI {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
             JSONObject accountObject = new JSONObject(response).getJSONObject("account");
             account = parseAccountResponsePeertube(context, accountObject);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }catch (HttpsConnection.HttpsConnectionException e) {
             if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
@@ -363,10 +347,6 @@ public class PeertubeAPI {
                     JSONObject accountObject = new JSONObject(response).getJSONObject("account");
                     account = parseAccountResponsePeertube(context, accountObject);
                 } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
                     e1.printStackTrace();
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -400,13 +380,9 @@ public class PeertubeAPI {
                 refresh_token = resobj.get("refresh_token").toString();
             newValues.put("access_token",token);
             newValues.put("refresh_token",refresh_token);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -429,13 +405,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return account;
@@ -459,13 +431,9 @@ public class PeertubeAPI {
             return new JSONObject(response).getBoolean(uri);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return false;
@@ -523,13 +491,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -576,13 +540,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -617,13 +577,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -675,13 +631,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubeNotifications(peertubeNotifications);
@@ -729,13 +681,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -947,13 +895,9 @@ public class PeertubeAPI {
                     peertubes.addAll(peertubes4);
                 }
             }
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -978,13 +922,9 @@ public class PeertubeAPI {
             accounts = parseAccountResponsePeertube(context, instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1006,13 +946,9 @@ public class PeertubeAPI {
             peertubes = parsePeertube(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1037,13 +973,9 @@ public class PeertubeAPI {
             peertubes = parsePeertube(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1064,13 +996,9 @@ public class PeertubeAPI {
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         List<Peertube> peertubes = new ArrayList<>();
@@ -1102,13 +1030,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1127,13 +1051,9 @@ public class PeertubeAPI {
             statuses = parseSinglePeertubeComments(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1157,13 +1077,9 @@ public class PeertubeAPI {
             return new JSONObject(response).get("rating").toString();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -1261,13 +1177,9 @@ public class PeertubeAPI {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -1294,13 +1206,9 @@ public class PeertubeAPI {
             attachment = parseAttachmentResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return attachment;
@@ -1334,13 +1242,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse = new APIResponse();
@@ -1361,13 +1265,9 @@ public class PeertubeAPI {
             playlists = parsePlaylists(context,  new JSONObject(response).getJSONArray("data"));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPlaylists(playlists);
@@ -1389,13 +1289,9 @@ public class PeertubeAPI {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -1413,13 +1309,9 @@ public class PeertubeAPI {
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -1439,13 +1331,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } 
         return actionCode;
     }
 
@@ -1479,13 +1367,9 @@ public class PeertubeAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);

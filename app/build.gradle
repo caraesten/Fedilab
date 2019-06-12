@@ -108,6 +108,6 @@ dependencies {
 
     implementation "net.gotev:uploadservice:$uploadServiceVersion"
     implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
-    implementation "info.guardianproject.netcipher:netcipher:$netCipherVersion"
+    implementation "info.guardianproject.netcipher:netcipher:2.0.0-beta1"
     implementation "info.guardianproject.netcipher:netcipher-okhttp3:$netCipherVersion"
 }
