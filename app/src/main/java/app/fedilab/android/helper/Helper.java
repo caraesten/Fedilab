@@ -147,6 +147,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -168,6 +169,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import app.fedilab.android.client.API;
@@ -200,6 +202,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import info.guardianproject.netcipher.client.StrongBuilder;
+import info.guardianproject.netcipher.client.StrongConnectionBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import okhttp3.ConnectionSpec;
@@ -4024,9 +4027,9 @@ public class Helper {
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
 
-        if (!OrbotHelper.get(appContext).init()) {
+        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
             orbotConnected = false;
-            appContext.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
+            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
             return;
         }
 
@@ -4051,6 +4054,42 @@ public class Helper {
                 @Override
                 public void onInvalid() {
                     orbotConnected = false;
+                }
+            });
+        } catch (Exception ignored) { }
+    }
+
+
+    public static void initNetCipherHttp(Context context) {
+        Context appContext = context.getApplicationContext();
+
+        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
+            orbotConnected = false;
+            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
+            return;
+        }
+
+        try {
+            StrongConnectionBuilder.forMaxSecurity(appContext).build(new StrongConnectionBuilder.Callback<HttpURLConnection>() {
+
+                @Override
+                public void onConnected(HttpURLConnection httpURLConnection) {
+
+                }
+
+                @Override
+                public void onConnectionException(Exception e) {
+
+                }
+
+                @Override
+                public void onTimeout() {
+
+                }
+
+                @Override
+                public void onInvalid() {
+
                 }
             });
         } catch (Exception ignored) { }
