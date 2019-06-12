@@ -4022,9 +4022,6 @@ public class Helper {
     public static volatile boolean orbotConnected = false;
 
     public static void initNetCipher(Context context) {
-        final String LOG_TAG = "NetCipherClient";
-        Log.i(LOG_TAG, "Initializing NetCipher client");
-
         Context appContext = context.getApplicationContext();
 
         if (!OrbotHelper.get(appContext).init()) {
@@ -4039,33 +4036,24 @@ public class Helper {
                 public void onConnected(OkHttpClient okHttpClient) {
                     UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
                     orbotConnected = true;
-                    Log.i("NetCipherClient", "Connection to orbot established!");
-                    // from now on, you can create upload requests
-                    // as usual, and they will be proxied through TOR.
-                    // Bear in mind that
                 }
 
                 @Override
                 public void onConnectionException(Exception exc) {
                     orbotConnected = false;
-                    Log.e("NetCipherClient", "onConnectionException()", exc);
                 }
 
                 @Override
                 public void onTimeout() {
                     orbotConnected = false;
-                    Log.e("NetCipherClient", "onTimeout()");
                 }
 
                 @Override
                 public void onInvalid() {
                     orbotConnected = false;
-                    Log.e("NetCipherClient", "onInvalid()");
                 }
             });
-        } catch (Exception exc) {
-            Log.e("Error", "Error while initializing TOR Proxy OkHttpClient", exc);
-        }
+        } catch (Exception ignored) { }
     }
 
 
@@ -4078,7 +4066,6 @@ public class Helper {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .cache(null);
-
         return enableTls12OnPreLollipop(clientBuilder).build();
     }
 
@@ -4099,9 +4086,7 @@ public class Helper {
                 specs.add(ConnectionSpec.CLEARTEXT);
 
                 client.connectionSpecs(specs);
-            } catch (Exception exc) {
-                Log.e("OkHttpTLSCompat", "Error while setting TLS 1.2", exc);
-            }
+            } catch (Exception ignored) {}
         }
 
         return client;
