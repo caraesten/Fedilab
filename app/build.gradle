@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 28
         versionCode 281
         versionName "2.5.1"
@@ -66,6 +66,7 @@ ext.ratethisappLibraryVersion = '1.2.0'
 ext.uploadServiceVersion = "3.5.2"
 ext.torrentstreamVersion = "2.5.0"
 
+ext.netCipherVersion = "2.0.0-alpha1"
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -105,4 +106,7 @@ dependencies {
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
     implementation 'ja.burhanrashid52:photoeditor:0.3.3'
     implementation 'com.github.yalantis:ucrop:2.2.3'
+
+    implementation "info.guardianproject.netcipher:netcipher:$netCipherVersion"
+    implementation "info.guardianproject.netcipher:netcipher-okhttp3:$netCipherVersion"
 }

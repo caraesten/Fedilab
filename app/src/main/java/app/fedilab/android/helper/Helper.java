@@ -128,6 +128,8 @@ import com.tonyodev.fetch2.Priority;
 import com.tonyodev.fetch2.Request;
 import com.tonyodev.fetch2core.DownloadBlock;
 
+import net.gotev.uploadservice.UploadService;
+
 import org.conscrypt.Conscrypt;
 import org.jetbrains.annotations.NotNull;
 
@@ -192,6 +194,10 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import info.guardianproject.netcipher.client.StrongBuilder;
+import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
+import info.guardianproject.netcipher.proxy.OrbotHelper;
+import okhttp3.OkHttpClient;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
@@ -4005,4 +4011,53 @@ public class Helper {
         return Uri.parse(path);
     }
 
+
+    public static volatile boolean orbotConnected = false;
+
+    public static void initNetCipher(Context context) {
+        final String LOG_TAG = "NetCipherClient";
+        Log.i(LOG_TAG, "Initializing NetCipher client");
+
+        Context appContext = context.getApplicationContext();
+
+        if (!OrbotHelper.get(appContext).init()) {
+            orbotConnected = false;
+            appContext.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
+            return;
+        }
+
+        try {
+            StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
+                @Override
+                public void onConnected(OkHttpClient okHttpClient) {
+                    UploadService.HTTP_STACK = new OkHttpStack(okHttpClient);
+                    orbotConnected = true;
+                    Log.i("NetCipherClient", "Connection to orbot established!");
+                    // from now on, you can create upload requests
+                    // as usual, and they will be proxied through TOR.
+                    // Bear in mind that
+                }
+
+                @Override
+                public void onConnectionException(Exception exc) {
+                    orbotConnected = false;
+                    Log.e("NetCipherClient", "onConnectionException()", exc);
+                }
+
+                @Override
+                public void onTimeout() {
+                    orbotConnected = false;
+                    Log.e("NetCipherClient", "onTimeout()");
+                }
+
+                @Override
+                public void onInvalid() {
+                    orbotConnected = false;
+                    Log.e("NetCipherClient", "onInvalid()");
+                }
+            });
+        } catch (Exception exc) {
+            Log.e("Error", "Error while initializing TOR Proxy OkHttpClient", exc);
+        }
+    }
 }
