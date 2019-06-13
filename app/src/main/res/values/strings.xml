@@ -991,6 +991,16 @@
     <string name="mention_status">Mention the status</string>
     <string name="action_news">News</string>
     <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
+    <string name="category_general">General</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_art">Art</string>
+    <string name="category_journalism">Journalism</string>
+    <string name="category_activism">Activism</string>
+    <string name="category_games">Gaming</string>
+    <string name="category_tech">Technology</string>
+    <string name="category_adult">Adult content</string>
+    <string name="category_furry">Furry</string>
+    <string name="category_food">Food</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
