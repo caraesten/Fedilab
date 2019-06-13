@@ -40,9 +40,9 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
+import java.net.SocketAddress;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -62,6 +62,7 @@ import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnHttpResponseInterface;
+import info.guardianproject.netcipher.NetCipher;
 import info.guardianproject.netcipher.client.StrongConnectionBuilder;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 
@@ -87,14 +88,20 @@ public class HttpsConnection implements OnHttpResponseInterface {
     public HttpsConnection(Context context, String instance){
         this.instance  = instance;
         this.context = context;
+    }
+
+    private HttpURLConnection initialize(URL url){
+
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
         proxy = null;
+        String host = null;
+        int port = 8118;
         if( proxyEnabled ){
             try {
-                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
                 if( type == 0 )
                     proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
                 else
@@ -115,23 +122,21 @@ public class HttpsConnection implements OnHttpResponseInterface {
                 proxy = null;
             }
         }
-    }
-
-    private HttpURLConnection initialize(URL url){
-
         try {
-            Log.v(Helper.TAG,"is installed: " + OrbotHelper.isOrbotInstalled(context));
-            Log.v(Helper.TAG,"is OrbotHelper.get(context).init(): " + OrbotHelper.get(context).init());
-            if (OrbotHelper.isOrbotInstalled(context) && OrbotHelper.get(context).init()) {
-                httpURLConnection = StrongConnectionBuilder.forMaxSecurity(context).connectTo(url).build(new Intent().putExtra(OrbotHelper.EXTRA_STATUS,OrbotHelper.STATUS_ON));
-            }else{
-                httpURLConnection = StrongConnectionBuilder.forMaxSecurity(context).connectTo(url).build(new Intent().putExtra(OrbotHelper.EXTRA_STATUS,OrbotHelper.STATUS_OFF));
+            httpURLConnection = NetCipher.getHttpURLConnection(url);
+            if( proxyEnabled){
+                SocketAddress sa = new InetSocketAddress(host, port);
+                if( type == 0 ) {
+                    NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+                }else{
+                    NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+                }
             }
-
-            ((HttpsURLConnection)httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());
+            if( url.toString().startsWith("https")) {
+                ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.v(Helper.TAG,"err: " + e.getMessage());
         }
         Log.v(Helper.TAG,"httpURLConnection: " + httpURLConnection);
         return httpURLConnection;
@@ -140,8 +145,6 @@ public class HttpsConnection implements OnHttpResponseInterface {
 
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, HttpsConnectionException {
-
-
 
         Map<String, Object> params = new LinkedHashMap<>();
         if (paramaters != null) {

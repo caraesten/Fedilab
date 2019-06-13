@@ -4029,10 +4029,6 @@ public class Helper {
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
 
-        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
-            return;
-        }
-
         try {
             StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
                 @Override
