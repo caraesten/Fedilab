@@ -2,13 +2,12 @@ package app.fedilab.android.client;
 
 
 import android.content.SharedPreferences;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
@@ -21,20 +20,35 @@ import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.helper.Helper;
 
 /**
- * Created by Thomas on 29/08/2017.
+ * Created by Thomas on 13/06/2019
  *
  */
 
-public class TLSSocketFactory extends SSLSocketFactory {
+public class TLSSocketFactoryTor extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
     private SSLContext sslContext;
     private boolean isOnion;
 
-    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
-        sslContext = SSLContext.getInstance("TLS");
-        isOnion = false;
-        sslContext.init(null, null, null);
+    public TLSSocketFactoryTor() throws KeyManagementException, NoSuchAlgorithmException {
+        sslContext = SSLContext.getInstance("SSL");
+        isOnion = true;
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+        sslContext.init(null, trustAllCerts, null);
+
+
         sSLSocketFactory = sslContext.getSocketFactory();
 
     }
@@ -100,7 +114,7 @@ public class TLSSocketFactory extends SSLSocketFactory {
                 else
                     ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.2"});
             }else{
-                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.2",});
+                ((SSLSocket)socket).setEnabledProtocols(new String[] { "TLSv1.2",});
             }
         }
         return socket;

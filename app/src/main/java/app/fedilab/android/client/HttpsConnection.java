@@ -80,32 +80,30 @@ public class HttpsConnection implements OnHttpResponseInterface {
     private String since_id, max_id;
     private Context context;
     private int CHUNK_SIZE = 4096;
-    private SharedPreferences sharedpreferences;
-    private Proxy proxy;
     private String instance;
-    public static volatile boolean orbotConnected = false;
 
     public HttpsConnection(Context context, String instance){
-        this.instance  = instance;
         this.context = context;
+        this.instance = instance;
     }
 
     private HttpURLConnection initialize(URL url){
 
-        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
-        proxy = null;
-        String host = null;
-        int port = 8118;
-        if( proxyEnabled ){
-            try {
-                host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-                port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-                if( type == 0 )
-                    proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
-                else
-                    proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+
+        try {
+            httpURLConnection = NetCipher.getHttpURLConnection(url);
+            if( proxyEnabled){
+                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                SocketAddress sa = new InetSocketAddress(host, port);
+                if( type == 0 ) {
+                    NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+                }else{
+                    NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+                }
                 final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
                 final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
                 if( login != null) {
@@ -118,22 +116,13 @@ public class HttpsConnection implements OnHttpResponseInterface {
                     };
                     Authenticator.setDefault(authenticator);
                 }
-            }catch (Exception e){
-                proxy = null;
-            }
-        }
-        try {
-            httpURLConnection = NetCipher.getHttpURLConnection(url);
-            if( proxyEnabled){
-                SocketAddress sa = new InetSocketAddress(host, port);
-                if( type == 0 ) {
-                    NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
-                }else{
-                    NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
-                }
             }
             if( url.toString().startsWith("https")) {
-                ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());
+                if( this.instance == null || !this.instance.endsWith(".onion")) {
+                    ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());
+                }else{
+                    ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactoryTor());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

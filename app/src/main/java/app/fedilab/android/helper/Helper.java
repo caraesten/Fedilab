@@ -4024,35 +4024,37 @@ public class Helper {
     }
 
 
-    public static volatile boolean orbotConnected = false;
+    public static boolean netCipherInit = false;
 
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
+        if( !netCipherInit) {
+            try {
+                StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
+                    @Override
+                    public void onConnected(OkHttpClient okHttpClient) {
+                        UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
+                        netCipherInit = true;
+                    }
 
-        try {
-            StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
-                @Override
-                public void onConnected(OkHttpClient okHttpClient) {
-                    UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
-                    orbotConnected = true;
-                }
+                    @Override
+                    public void onConnectionException(Exception exc) {
+                        netCipherInit = false;
+                    }
 
-                @Override
-                public void onConnectionException(Exception exc) {
-                    orbotConnected = false;
-                }
+                    @Override
+                    public void onTimeout() {
+                        netCipherInit = false;
+                    }
 
-                @Override
-                public void onTimeout() {
-                    orbotConnected = false;
-                }
-
-                @Override
-                public void onInvalid() {
-                    orbotConnected = false;
-                }
-            });
-        } catch (Exception ignored) { }
+                    @Override
+                    public void onInvalid() {
+                        netCipherInit = false;
+                    }
+                });
+            } catch (Exception ignored) {
+            }
+        }
     }
 
 

@@ -177,7 +177,6 @@ import es.dmoral.toasty.Toasty;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
 import static app.fedilab.android.helper.Helper.initNetCipher;
-import static app.fedilab.android.helper.Helper.orbotConnected;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -282,6 +281,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         } else {
             max_media_count = 4;
         }
+        initNetCipher(getApplicationContext());
         autocomplete = false;
         setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();

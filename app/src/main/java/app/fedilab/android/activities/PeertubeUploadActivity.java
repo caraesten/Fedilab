@@ -72,6 +72,7 @@ import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
 import static app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
+import static app.fedilab.android.helper.Helper.initNetCipher;
 
 public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface, UploadStatusDelegate {
 
@@ -131,7 +132,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             }
         }
         setContentView(R.layout.activity_peertube_upload);
-
+        initNetCipher(getApplicationContext());
         set_upload_file = findViewById(R.id.set_upload_file);
         set_upload_file_name = findViewById(R.id.set_upload_file_name);
         set_upload_channel = findViewById(R.id.set_upload_channel);
