@@ -3319,7 +3319,7 @@ public class Helper {
      * @return ArrayList<String> split toot
      */
     public static ArrayList<String> splitToots(String content, int maxChars){
-        String[] splitContent = content.split("((\\.\\s)|(,\\s)|(;\\s)|(\\?\\s)|(!\\s)){1}");
+        String[] splitContent = content.split("\\s");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
         ArrayList<String> mentions = new ArrayList<>();
@@ -3341,7 +3341,7 @@ public class Helper {
         int maxCharsMention = maxChars - mentionLength;
         for(int i= 0 ; i < splitContent.length ; i++){
             if (i < (splitContent.length - 1) && (countLength(tempContent.toString()) + countLength(splitContent[i + 1])) < (maxChars - 10)) {
-                tempContent.append(". ").append(splitContent[i + 1]);
+                tempContent.append(" ").append(splitContent[i + 1]);
             } else {
                 splitToot.add(tempContent.toString());
                 if (i < (splitContent.length - 1)) {
