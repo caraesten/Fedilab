@@ -36,6 +36,7 @@ import app.fedilab.android.jobs.NotificationsSyncJob;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
+import info.guardianproject.netcipher.NetCipher;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 
 import static app.fedilab.android.helper.Helper.initNetCipher;
@@ -80,7 +81,9 @@ public class MainApplication extends MultiDexApplication {
         }catch (Exception ignored){}
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
-        initNetCipher(this);
+        if( OrbotHelper.isOrbotInstalled(getApplicationContext()) && OrbotHelper.isOrbotRunning(getApplicationContext())){
+            NetCipher.useTor();
+        }
         Toasty.Config.getInstance()
                 .setErrorColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
                 .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
