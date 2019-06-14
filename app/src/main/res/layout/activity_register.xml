@@ -15,15 +15,18 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="@dimen/fab_margin"
-   >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent"
+    android:orientation="vertical">
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <!-- category -->
         <TextView
@@ -41,6 +44,109 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reg_category_view"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
-</ScrollView>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/form_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/host_reg"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:id="@+id/change_instance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:labelFor="@+id/username"
+            android:text="@string/username"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/username"
+            android:inputType="text"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/email"
+            android:text="@string/email"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/email"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/password"
+            android:text="@string/password"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/password_confirm"
+            android:text="@string/password_confirm"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/password_confirm"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/agreement_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/signup"
+            android:text="@string/sign_up"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

@@ -14,25 +14,43 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
-import java.util.HashMap;
-import java.util.Iterator;
+
+import org.apache.poi.sl.usermodel.Line;
+
 import java.util.List;
-import java.util.Map;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
 import app.fedilab.android.client.APIResponse;
@@ -56,7 +74,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -90,12 +107,14 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                     finish();
                 }
             });
-            toolbar_title.setText(R.string.add_account);
+            toolbar_title.setText(R.string.sign_up);
             if (theme == Helper.THEME_LIGHT){
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, MastodonRegisterActivity.this);
             }
         }
+
+
 
         MaterialSpinner reg_category = findViewById(R.id.reg_category);
         Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
@@ -162,6 +181,71 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         lv_instances.setLayoutManager(mLayoutManager);
         lv_instances.setNestedScrollingEnabled(false);
         lv_instances.setAdapter(instanceRegAdapter);
+
+
+    }
+
+    public void pickupInstance(String instance){
+
+
+        LinearLayout form_container = findViewById(R.id.form_container);
+        LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
+
+        TextView host_reg = findViewById(R.id.host_reg);
+        host_reg.setText(instance);
+
+
+        drawer_layout.animate()
+                .translationY(0)
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        drawer_layout.setVisibility(View.GONE);
+                        form_container.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        TextView change_instance = findViewById(R.id.change_instance);
+        final SpannableString change = new SpannableString(String.format("(%s)", getString(R.string.change)));
+        change.setSpan(new UnderlineSpan(), 0, change.length(), 0);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK)
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.dark_link_toot)), 0, change.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == Helper.THEME_BLACK)
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.black_link_toot)), 0, change.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == Helper.THEME_LIGHT)
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.mastodonC4)), 0, change.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        change_instance.setText(change);
+        change_instance.setOnClickListener(view -> {
+            drawer_layout.setVisibility(View.VISIBLE);
+            drawer_layout.animate()
+                    .translationY(0)
+                    .alpha(1.f)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            form_container.setVisibility(View.GONE);
+                        }
+                    });
+        });
+
+        TextView agreement_text = findViewById(R.id.agreement_text);
+
+        String tos = getString(R.string.tos);
+        String serverrules = getString(R.string.server_rules);
+        String content_agreement = getString(R.string.agreement_check,
+                "<a href='https://" + instance + "/about/more' >"+serverrules +"</a>",
+                 "<a href='https://" + instance + "/terms' >"+tos +"</a>"
+                );
+        agreement_text.setMovementMethod(LinkMovementMethod.getInstance());
+        agreement_text.setText(Html.fromHtml(content_agreement));
 
 
     }

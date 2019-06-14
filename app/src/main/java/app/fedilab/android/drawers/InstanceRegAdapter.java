@@ -34,6 +34,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 import app.fedilab.android.R;
+import app.fedilab.android.activities.MastodonRegisterActivity;
 import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.helper.Helper;
 
@@ -75,14 +76,13 @@ public class InstanceRegAdapter extends RecyclerView.Adapter {
         final InstanceRegAdapter.ViewHolder holder = (InstanceRegAdapter.ViewHolder) viewHolder;
 
         holder.instance_choose.setOnClickListener(v -> {
-
+            ((MastodonRegisterActivity)context).pickupInstance(instanceReg.getDomain());
         });
 
         holder.instance_count_user.setText(context.getString(R.string.users,Helper.withSuffix(instanceReg.getTotal_users())));
         holder.instance_description.setText(instanceReg.getDescription());
         holder.instance_host.setText(instanceReg.getDomain());
         holder.instance_version.setText(String.format("%s - %s", instanceReg.getCategory(),instanceReg.getVersion()));
-        Log.v(Helper.TAG,"p: " + instanceReg.getProxied_thumbnail());
         Glide.with(context)
                 .load(instanceReg.getProxied_thumbnail())
                 .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
