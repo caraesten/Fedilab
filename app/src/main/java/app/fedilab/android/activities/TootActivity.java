@@ -100,13 +100,16 @@ import net.gotev.uploadservice.UploadService;
 import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
+import org.apache.poi.util.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
@@ -2309,9 +2312,39 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void upload(Context context, Uri uri, String fname){
+    private void upload(Context context, Uri inUri, String fname){
         String uploadId = UUID.randomUUID().toString();
         uploadReceiver.setUploadID(uploadId);
+        Uri uri = inUri;
+
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            tempInput = getContentResolver().openInputStream(inUri);
+            File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read = 0;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            uri = FileProvider.getUriForFile(this,
+                    "app.fedilab.android.fileProvider",
+                    file);
+            tempInput.close();
+            tempOut.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
         try {
             final String fileName = FileNameCleaner.cleanFileName(fname);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
