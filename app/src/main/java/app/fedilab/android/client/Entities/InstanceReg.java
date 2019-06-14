@@ -24,6 +24,7 @@ public class InstanceReg {
     private String proxied_thumbnail;
     private int total_users;
     private int last_week_users;
+    private boolean selected = false;
 
     public String getDomain() {
         return domain;
@@ -87,5 +88,13 @@ public class InstanceReg {
 
     public void setLast_week_users(int last_week_users) {
         this.last_week_users = last_week_users;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

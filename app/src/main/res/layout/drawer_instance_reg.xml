@@ -19,12 +19,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/main_container"
-    android:divider="?android:dividerHorizontal"
     android:orientation="horizontal"
+    android:background="@drawable/border_bottom"
+    android:divider="@null"
+    android:layout_margin="10dp"
+    android:paddingBottom="10dp"
     android:baselineAligned="false">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -35,13 +38,16 @@
                 android:id="@+id/instance_pp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/instance_logo" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/instance_host"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -56,15 +62,26 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
+        android:layout_marginStart="20dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/instance_choose"/>
+        <ImageButton
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/instance_choose"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:background="@color/mastodonC4"
+            android:contentDescription="@string/validate"
+            android:src="@drawable/ic_check"
+            android:tooltipText="@string/validate" />
         <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
             android:id="@+id/instance_count_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

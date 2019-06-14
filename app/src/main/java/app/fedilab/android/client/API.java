@@ -352,6 +352,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getInstanceReg(String category) {
+        apiResponse = new APIResponse();
         try {
             String response = new HttpsConnection(context, null).get(String.format("https://api.joinmastodon.org/servers?category=%s", category));
             List<InstanceReg> instanceRegs = parseInstanceReg(new JSONArray(response));

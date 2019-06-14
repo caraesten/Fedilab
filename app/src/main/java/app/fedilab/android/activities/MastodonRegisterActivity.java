@@ -53,23 +53,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
 
 
-    private  Map<String,String> categories;
-
-    private void createMap() {
-        categories = new HashMap<>();
-        categories.put("general", getString(R.string.category_general));
-        categories.put("regional", getString(R.string.category_regional));
-        categories.put("art", getString(R.string.category_art));
-        categories.put("journalism", getString(R.string.category_journalism));
-        categories.put("activism", getString(R.string.category_activism));
-        categories.put("lgbt", "LGBTQ+");
-        categories.put("games", getString(R.string.category_games));
-        categories.put("tech", getString(R.string.category_tech));
-        categories.put("adult", getString(R.string.category_adult));
-        categories.put("furry", getString(R.string.category_furry));
-        categories.put("food", getString(R.string.category_food));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +73,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             default:
                 setTheme(R.style.AppThemeDark);
         }
-        createMap();
+
         setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ) {
@@ -116,27 +99,44 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
         MaterialSpinner reg_category = findViewById(R.id.reg_category);
         Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
+        String[] categoriesA = {
+                getString(R.string.category_general),
+                getString(R.string.category_regional),
+                getString(R.string.category_art),
+                getString(R.string.category_journalism),
+                getString(R.string.category_activism),
+                "LGBTQ+",
+                getString(R.string.category_games),
+                getString(R.string.category_tech),
+                getString(R.string.category_adult),
+                getString(R.string.category_furry),
+                getString(R.string.category_food)
 
-        String[] categoriesA = new String[categories.size()];
-        String[] itemA = new String[categories.size()];
-        Iterator it = categories.entrySet().iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            itemA[i]  = (String)pair.getKey();
-            categoriesA[i]  = (String)pair.getValue();
-            i++;
-            it.remove();
-        }
+        };
+        String[] itemA = {
+                "general",
+                "regional",
+                "art",
+                "journalism",
+                "activism",
+                "lgbt",
+                "games",
+                "tech",
+                "adult",
+                "furry",
+                "food",
+        };
         ArrayAdapter<String> adcategories = new ArrayAdapter<>(MastodonRegisterActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, categoriesA);
 
         reg_category.setAdapter(adcategories);
 
+        reg_category.setSelectedIndex(0);
         //Manage privacies
         reg_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, itemA[position], MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
 
             }
         });

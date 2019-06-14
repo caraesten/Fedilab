@@ -1004,6 +1004,8 @@
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category</string>
+    <string name="users">%1$s users</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
