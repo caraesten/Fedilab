@@ -541,11 +541,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final ViewHolder holder = (ViewHolder) viewHolder;
+        final Status status = statuses.get(viewHolder.getAdapterPosition());
 
-        if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
-            final ViewHolder holder = (ViewHolder) viewHolder;
-            final Status status = statuses.get(viewHolder.getAdapterPosition());
-
+        if( viewHolder.getItemViewType() != HIDDEN_STATUS && status != null) {
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null) {
                 status.setVisibility("public");
