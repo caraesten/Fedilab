@@ -898,7 +898,7 @@
     <string name="timed_mute">فترة الكتم</string>
     <string name="mention_account">اذكر الحساب</string>
     <string name="refresh_cache">تحديث ذاكرة التخزين المؤقت</string>
-    <string name="see_boost_and_fav">See who boosted and added to favorites</string>
+    <string name="see_boost_and_fav">اعرض من رقاه أو أضافه إلى مفضلته</string>
     <string name="mention_status">اذكر هذا المنشور</string>
     <string name="action_news">الأخبار</string>
     <string name="set_display_news_from_fedilab">عرض أخبار حساب Fedilab</string>
