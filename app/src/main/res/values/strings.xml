@@ -1001,6 +1001,9 @@
     <string name="category_adult">Adult content</string>
     <string name="category_furry">Furry</string>
     <string name="category_food">Food</string>
+    <string name="instance_logo">Logo of the instance</string>
+    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
+    <string name="join_mastodon">Join Mastodon</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

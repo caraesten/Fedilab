@@ -20,27 +20,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.InstanceReg;
+import app.fedilab.android.drawers.InstanceRegAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
+import es.dmoral.toasty.Toasty;
+
+import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 
 /**
  * Created by Thomas on 13/06/2019.
  * Register activity class
  */
 
-public class MastodonRegisterActivity extends BaseActivity {
+public class MastodonRegisterActivity extends BaseActivity implements OnRetrieveInstanceInterface {
 
 
 
+    private  Map<String,String> categories;
 
-    private Map<String, String> createMap() {
-        Map<String,String> categories = new HashMap<>();
+    private void createMap() {
+        categories = new HashMap<>();
         categories.put("general", getString(R.string.category_general));
         categories.put("regional", getString(R.string.category_regional));
         categories.put("art", getString(R.string.category_art));
@@ -52,7 +68,6 @@ public class MastodonRegisterActivity extends BaseActivity {
         categories.put("adult", getString(R.string.category_adult));
         categories.put("furry", getString(R.string.category_furry));
         categories.put("food", getString(R.string.category_food));
-        return categories;
     }
 
     @Override
@@ -75,8 +90,8 @@ public class MastodonRegisterActivity extends BaseActivity {
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
-        setContentView(R.layout.activity_login);
+        createMap();
+        setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -98,6 +113,35 @@ public class MastodonRegisterActivity extends BaseActivity {
                 Helper.colorizeToolbar(toolbar, R.color.black, MastodonRegisterActivity.this);
             }
         }
+
+        MaterialSpinner reg_category = findViewById(R.id.reg_category);
+        Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
+
+        String[] categoriesA = new String[categories.size()];
+        String[] itemA = new String[categories.size()];
+        Iterator it = categories.entrySet().iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            itemA[i]  = (String)pair.getKey();
+            categoriesA[i]  = (String)pair.getValue();
+            i++;
+            it.remove();
+        }
+        ArrayAdapter<String> adcategories = new ArrayAdapter<>(MastodonRegisterActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, categoriesA);
+
+        reg_category.setAdapter(adcategories);
+
+        //Manage privacies
+        reg_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+
+            }
+        });
+
+        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, "general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -105,4 +149,20 @@ public class MastodonRegisterActivity extends BaseActivity {
         super.onResume();
     }
 
+    @Override
+    public void onRetrieveInstance(APIResponse apiResponse) {
+        if( apiResponse.getError() != null ){
+            Toasty.error(MastodonRegisterActivity.this, getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
+            return;
+        }
+        List<InstanceReg> instanceRegs = apiResponse.getInstanceRegs();
+        RecyclerView lv_instances = findViewById(R.id.reg_category_view);
+        InstanceRegAdapter instanceRegAdapter = new InstanceRegAdapter(MastodonRegisterActivity.this, instanceRegs);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(MastodonRegisterActivity.this);
+        lv_instances.setLayoutManager(mLayoutManager);
+        lv_instances.setNestedScrollingEnabled(false);
+        lv_instances.setAdapter(instanceRegAdapter);
+
+
+    }
 }

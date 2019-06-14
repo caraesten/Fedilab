@@ -58,6 +58,7 @@ import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
+import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.InstanceSocial;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.NodeInfo;
@@ -331,6 +332,30 @@ public class API {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/instance"), 30, null, prefKeyOauthTokenT);
             Instance instanceEntity = parseInstance(new JSONObject(response));
             apiResponse.setInstance(instanceEntity);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+
+    /***
+     * Get instance for registering an account *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstanceReg(String category) {
+        try {
+            String response = new HttpsConnection(context, null).get(String.format("https://api.joinmastodon.org/servers?category=%s", category));
+            List<InstanceReg> instanceRegs = parseInstanceReg(new JSONArray(response));
+            apiResponse.setInstanceRegs(instanceRegs);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -4402,6 +4427,54 @@ public class API {
         }
         return instance;
     }
+
+
+
+    /**
+     * Parse json response for several instance reg
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public List<InstanceReg> parseInstanceReg(JSONArray jsonArray){
+
+        List<InstanceReg> instanceRegs = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                InstanceReg instanceReg = parseInstanceReg(resobj);
+                i++;
+                instanceRegs.add(instanceReg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceRegs;
+    }
+
+    /**
+     * Parse json response an unique instance for registering
+     * @param resobj JSONObject
+     * @return InstanceReg
+     */
+    private InstanceReg parseInstanceReg(JSONObject resobj){
+        InstanceReg instanceReg = new InstanceReg();
+        try {
+            instanceReg.setDomain(resobj.getString("domain"));
+            instanceReg.setVersion(resobj.getString("version"));
+            instanceReg.setDescription(resobj.getString("description"));
+            instanceReg.setLanguage(resobj.getString("language"));
+            instanceReg.setCategory(resobj.getString("category"));
+            instanceReg.setProxied_thumbnail(resobj.getString("proxied_thumbnail"));
+            instanceReg.setTotal_users(resobj.getInt("total_users"));
+            instanceReg.setLast_week_users(resobj.getInt("last_week_users"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceReg;
+    }
+
+
 
     /**
      * Parse Pleroma emojis
