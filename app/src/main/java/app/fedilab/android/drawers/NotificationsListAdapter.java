@@ -382,8 +382,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             if (status.getFavourites_count() > 0)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+            else
+                holder.status_favorite_count.setText("");
             if (status.getReblogs_count() > 0)
                 holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+            else
+                holder.status_reblog_count.setText("");
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
