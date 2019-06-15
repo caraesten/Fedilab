@@ -36,17 +36,18 @@ public class CreateMastodonAccountAsyncTask extends AsyncTask<Void, Void, Void> 
     private app.fedilab.android.client.Entities.Status status;
     private AccountCreation accountCreation;
     private WeakReference<Context> contextReference;
+    private String instance;
 
-
-    public CreateMastodonAccountAsyncTask(Context context, AccountCreation accountCreation, OnPostStatusActionInterface onPostStatusActionInterface){
+    public CreateMastodonAccountAsyncTask(Context context, AccountCreation accountCreation, String instance, OnPostStatusActionInterface onPostStatusActionInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.accountCreation = accountCreation;
+        this.instance = instance;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(contextReference.get()).createAccount(accountCreation);
+        apiResponse = new API(contextReference.get(), instance, null).createAccount(accountCreation);
         return null;
     }
 

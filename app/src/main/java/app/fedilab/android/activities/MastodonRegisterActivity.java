@@ -49,6 +49,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -81,6 +83,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
     private Button signup;
     private String instance;
+    private TextView error_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,14 +182,16 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         EditText password = findViewById(R.id.password);
         EditText password_confirm = findViewById(R.id.password_confirm);
         CheckBox agreement = findViewById(R.id.agreement);
+        error_message = findViewById(R.id.error_message);
 
         signup.setOnClickListener(view->{
+            error_message.setVisibility(View.GONE);
             if( username.getText().toString().trim().length() == 0 || email.getText().toString().trim().length() == 0 ||
                     password.getText().toString().trim().length() == 0 ||  password_confirm.getText().toString().trim().length() == 0 || !agreement.isChecked()){
                 Toasty.error(MastodonRegisterActivity.this, getString(R.string.all_field_filled)).show();
                 return;
             }
-            if(!password.getText().toString().trim().equals(password_confirm.toString().trim())){
+            if(!password.getText().toString().trim().equals(password_confirm.getText().toString().trim())){
                 Toasty.error(MastodonRegisterActivity.this, getString(R.string.password_error)).show();
                 return;
             }
@@ -208,7 +213,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 
@@ -311,11 +316,24 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
+            String errorMessage;
             if( apiResponse.getError().getError() != null){
-                Toasty.error(MastodonRegisterActivity.this,apiResponse.getError().getError()).show();
+                try{
+                    String[] resp = apiResponse.getError().getError().split(":");
+                    if( resp.length == 2)
+                        errorMessage = apiResponse.getError().getError().split(":")[1];
+                    else if( resp.length == 3)
+                        errorMessage = apiResponse.getError().getError().split(":")[2];
+                    else
+                        errorMessage = getString(R.string.toast_error);
+                }catch (Exception e){
+                    errorMessage = getString(R.string.toast_error);
+                }
             }else {
-                Toasty.error(MastodonRegisterActivity.this,getString(R.string.toast_error)).show();
+                errorMessage = getString(R.string.toast_error);
             }
+            error_message.setText(errorMessage);
+            error_message.setVisibility(View.VISIBLE);
             signup.setEnabled(true);
             return;
         }
@@ -330,9 +348,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             style = R.style.Dialog;
         }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MastodonRegisterActivity.this, style);
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.setTitle(getString(R.string.account_created));
-        alertDialog.setMessage(getString(R.string.account_created_message, this.instance));
         dialogBuilder.setCancelable(false);
         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
@@ -341,6 +356,9 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                 finish();
             }
         });
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setTitle(getString(R.string.account_created));
+        alertDialog.setMessage(getString(R.string.account_created_message, this.instance));
         alertDialog.show();
     }
 

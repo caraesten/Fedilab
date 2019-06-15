@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.JsonArray;
@@ -45,6 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.LoginActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -532,14 +534,33 @@ public class API {
 
     public APIResponse createAccount(AccountCreation accountCreation){
         apiResponse = new APIResponse();
-        HashMap<String, String> params = new HashMap<>();
-        params.put("username", accountCreation.getUsername());
-        params.put("email", accountCreation.getEmail());
-        params.put("password", accountCreation.getPassword());
-        params.put("agreement", "true");
-        params.put("locale", Locale.getDefault().getLanguage());
+
         try {
-            new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, null);
+            HashMap<String, String> params = new HashMap<>();
+            params.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
+            params.put(Helper.REDIRECT_URIS, Helper.REDIRECT_CONTENT);
+            params.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+            params.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/apps"), 30, params, null);
+            JSONObject resobj = new JSONObject(response);
+            String client_id = resobj.getString("client_id");
+            String client_secret = resobj.getString("client_secret");
+
+            params = new HashMap<>();
+            params.put("grant_type", "client_credentials");
+            params.put("client_id", client_id);
+            params.put("client_secret", client_secret);
+            params.put("scope", "read write");
+            response = new HttpsConnection(context, this.instance).post("https://" + this.instance + "/oauth/token", 30, params, null);
+            JSONObject res = new JSONObject(response);
+            String app_token = res.getString("access_token");
+            params = new HashMap<>();
+            params.put("username", accountCreation.getUsername());
+            params.put("email", accountCreation.getEmail());
+            params.put("password", accountCreation.getPassword());
+            params.put("agreement", "true");
+            params.put("locale", Locale.getDefault().getLanguage());
+            new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, app_token);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -548,6 +569,8 @@ public class API {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
