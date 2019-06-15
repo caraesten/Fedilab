@@ -908,11 +908,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="password_too_short">Das Passwort muss mindestens 8 Zeichen lang sein</string>
     <string name="username_error">Der Benutzername darf nur Buchstaben, Ziffern und Unterstriche enthalten</string>
     <string name="account_created">Konto erfolgreich erstellt.</string>
-    <string name="account_created_message">        Your account has been created!\n\n
-        Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
-        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
-    </string>
+    <string name="account_created_message">Ihr Konto wurde erfolgreich erstellt!\n\nDenken Sie daran, Ihre E-Mail-Adresse innerhalb der nächsten 48 Stunden zu bestätigen.\n\nSie können nun Ihr Konto verbinden, indem Sie <b>%1$s</b> in das erste Feld schreiben und auf die Schaltfläche <b>Verbinden</b> klicken.\n\n<b>Wichtig</b>: Wenn Ihre Instanz eine Bestätigung benötigt, erhalten Sie eine E-Mail, sobald sie geprüft wurde!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
