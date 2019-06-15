@@ -4027,12 +4027,6 @@ public class Helper {
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
 
-        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
-            orbotConnected = false;
-            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
-            return;
-        }
-
         try {
             StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
                 @Override
@@ -4054,42 +4048,6 @@ public class Helper {
                 @Override
                 public void onInvalid() {
                     orbotConnected = false;
-                }
-            });
-        } catch (Exception ignored) { }
-    }
-
-
-    public static void initNetCipherHttp(Context context) {
-        Context appContext = context.getApplicationContext();
-
-        if (!OrbotHelper.get(appContext).init() && OrbotHelper.isOrbotInstalled(appContext)) {
-            orbotConnected = false;
-            context.startActivity(OrbotHelper.getOrbotInstallIntent(appContext));
-            return;
-        }
-
-        try {
-            StrongConnectionBuilder.forMaxSecurity(appContext).build(new StrongConnectionBuilder.Callback<HttpURLConnection>() {
-
-                @Override
-                public void onConnected(HttpURLConnection httpURLConnection) {
-
-                }
-
-                @Override
-                public void onConnectionException(Exception e) {
-
-                }
-
-                @Override
-                public void onTimeout() {
-
-                }
-
-                @Override
-                public void onInvalid() {
-
                 }
             });
         } catch (Exception ignored) { }

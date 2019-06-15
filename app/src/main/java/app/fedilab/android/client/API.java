@@ -4102,7 +4102,9 @@ public class API {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
                 i++;
-                statuses.add(status);
+                if( status != null) {
+                    statuses.add(status);
+                }
             }
 
         } catch (JSONException e) {

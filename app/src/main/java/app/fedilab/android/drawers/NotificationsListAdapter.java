@@ -566,7 +566,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 bar.setHeight1(30);
                                 items.add(bar);
                             }else {
-                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
+                                BarItem bar;
+                                if( theme == Helper.THEME_LIGHT)
+                                    bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.BLACK);
+                                else
+                                    bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
                                 bar.setRounded(true);
                                 bar.setHeight1(30);
                                 items.add(bar);
