@@ -1541,15 +1541,32 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
-                if (status.getReblog() == null)
-                    holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
-                else
-                    holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
-                if (status.getReblog() == null)
-                    holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
-                else
-                    holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS && getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
+                if (status.getReblog() == null) {
+                    if (status.getFavourites_count() > 0)
+                        holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+                    else
+                        holder.status_favorite_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getFavourites_count() > 0)
+                        holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
+                    else
+                        holder.status_favorite_count.setText("");
+                }
+
+                if (status.getReblog() == null) {
+                    if (status.getReblogs_count() > 0)
+                        holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+                    else
+                        holder.status_reblog_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getReblogs_count() > 0)
+                        holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+                    else
+                        holder.status_reblog_count.setText("");
+                }
             }
             if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
