@@ -19,6 +19,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -353,6 +354,9 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             @Override
             public void onClick(DialogInterface dialog,int which) {
                 dialog.dismiss();
+                Intent mainActivity = new Intent(MastodonRegisterActivity.this, MainActivity.class);
+                mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
+                startActivity(mainActivity);
                 finish();
             }
         });

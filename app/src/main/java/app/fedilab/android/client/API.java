@@ -560,7 +560,31 @@ public class API {
             params.put("password", accountCreation.getPassword());
             params.put("agreement", "true");
             params.put("locale", Locale.getDefault().getLanguage());
-            new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, app_token);
+            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, app_token);
+
+            res = new JSONObject(response);
+            String access_token = res.getString("access_token");
+
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            account.setToken(access_token);
+            account.setClient_id(client_id);
+            account.setClient_secret(client_secret);
+            account.setRefresh_token(null);
+            account.setInstance(instance);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            boolean userExists = new AccountDAO(context, db).userExist(account);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.PREF_KEY_ID, account.getId());
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, account.isModerator());
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
+            editor.putString(Helper.PREF_INSTANCE, instance);
+            editor.apply();
+            if( userExists)
+                new AccountDAO(context, db).updateAccountCredential(account);
+            else {
+                if( account.getUsername() != null && account.getCreated_at() != null)
+                    new AccountDAO(context, db).insertAccount(account);
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
