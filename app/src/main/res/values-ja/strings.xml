@@ -251,13 +251,13 @@
     <string name="toast_unmute">アカウントはミュートされません！</string>
     <string name="toast_follow">アカウントがフォローされました！</string>
     <string name="toast_unfollow">アカウントはフォローされていません！</string>
-    <string name="toast_reblog">トゥートがブーストされました！</string>
+    <string name="toast_reblog">トゥートをブーストしました</string>
     <string name="toast_unreblog">トゥートはブーストされていません！</string>
-    <string name="toast_favourite">お気に入りにトゥートが追加されました！</string>
-    <string name="toast_unfavourite">お気に入りからトゥートが削除されました！</string>
-    <string name="toast_report">トゥートが報告されました！</string>
-    <string name="toast_unstatus">トゥートが削除されました！</string>
-    <string name="toast_pin">トゥートがピン留めされました！</string>
+    <string name="toast_favourite">トゥートをお気に入りに追加しました</string>
+    <string name="toast_unfavourite">トゥートをお気に入りから削除しました</string>
+    <string name="toast_report">トゥートを報告しました</string>
+    <string name="toast_unstatus">トゥートを削除しました</string>
+    <string name="toast_pin">トゥートをピン留めしました</string>
     <string name="toast_unpin">トゥートはピン留めを解除されました！</string>
     <string name="toast_error">エラーが発生しました！</string>
     <string name="toast_code_error">エラーが発生しました！ インスタンスは認証コードを返しませんでした！</string>
@@ -297,8 +297,8 @@
     <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
     <string name="set_notif_follow">フォローされたときに通知</string>
     <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
-    <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
-    <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
+    <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
+    <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
     <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
@@ -412,7 +412,7 @@
     <string name="show_pinned">ピン留めトゥートを表示</string>
     <string name="filter_no_result">一致するものは見つかりませんでした！</string>
     <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
-    <string name="data_backup_success">%1$s 個の新しいトゥートがインポートされました</string>
+    <string name="data_backup_success">%1$s 件の新しいトゥートをインポートしました</string>
     <string-array name="filter_select">
         <item>しない</item>
         <item>のみ</item>
@@ -479,7 +479,7 @@
     <string name="data_export_running">実行中です。お待ちください...</string>
     <string name="data_export">トゥートをエクスポート</string>
     <string name="data_export_toots">%1$s のトゥートをエクスポート</string>
-    <string name="data_export_success">%2$s 個中 %1$s トゥートがエクスポートされました。</string>
+    <string name="data_export_success">%2$s 件中 %1$s 件のトゥートをエクスポートしました。</string>
     <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
     <string name="data_export_error_simple">データのエクスポート中に問題が発生しました！</string>
     <string name="data_import_success_simple">データがインポートされました！</string>
