@@ -166,7 +166,7 @@
     <string name="toot_error_no_content">あなたのトゥートは空です！</string>
     <string name="toot_visibility_tilte">トゥートの公開範囲</string>
     <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
-    <string name="toot_sent">トゥートが送信されました！</string>
+    <string name="toot_sent">トゥートを送信しました</string>
     <string name="toot_reply_content_title">このトゥートに返信中：</string>
     <string name="toot_sensitive">閲覧に注意を要するコンテンツ？</string>
     <string-array name="toot_visibility">
@@ -180,7 +180,7 @@
     <string name="choose_accounts">アカウントを選択</string>
     <string name="select_accounts">複数のアカウントを選択</string>
     <string name="remove_draft">下書きを削除しますか？</string>
-    <string name="show_reply">ボタンをクリックすると元のトゥートが表示されます</string>
+    <string name="show_reply">ボタンをタップするとオリジナルのトゥートが表示されます</string>
     <string name="upload_form_description">視覚障害者のための説明</string>
     <!-- Instance -->
     <string name="instance_no_description">説明はありません！</string>
@@ -251,13 +251,13 @@
     <string name="toast_unmute">アカウントはミュートされません！</string>
     <string name="toast_follow">アカウントがフォローされました！</string>
     <string name="toast_unfollow">アカウントはフォローされていません！</string>
-    <string name="toast_reblog">トゥートがブーストされました！</string>
+    <string name="toast_reblog">トゥートをブーストしました</string>
     <string name="toast_unreblog">トゥートはブーストされていません！</string>
-    <string name="toast_favourite">お気に入りにトゥートが追加されました！</string>
-    <string name="toast_unfavourite">お気に入りからトゥートが削除されました！</string>
-    <string name="toast_report">トゥートが報告されました！</string>
-    <string name="toast_unstatus">トゥートが削除されました！</string>
-    <string name="toast_pin">トゥートがピン留めされました！</string>
+    <string name="toast_favourite">トゥートをお気に入りに追加しました</string>
+    <string name="toast_unfavourite">トゥートをお気に入りから削除しました</string>
+    <string name="toast_report">トゥートを報告しました</string>
+    <string name="toast_unstatus">トゥートを削除しました</string>
+    <string name="toast_pin">トゥートをピン留めしました</string>
     <string name="toast_unpin">トゥートはピン留めを解除されました！</string>
     <string name="toast_error">エラーが発生しました！</string>
     <string name="toast_code_error">エラーが発生しました！ インスタンスは認証コードを返しませんでした！</string>
@@ -297,8 +297,8 @@
     <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
     <string name="set_notif_follow">フォローされたときに通知</string>
     <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
-    <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
-    <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
+    <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
+    <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
     <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
@@ -412,7 +412,7 @@
     <string name="show_pinned">ピン留めトゥートを表示</string>
     <string name="filter_no_result">一致するものは見つかりませんでした！</string>
     <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
-    <string name="data_backup_success">%1$s 個の新しいトゥートがインポートされました</string>
+    <string name="data_backup_success">%1$s 件の新しいトゥートをインポートしました</string>
     <string-array name="filter_select">
         <item>しない</item>
         <item>のみ</item>
@@ -479,7 +479,7 @@
     <string name="data_export_running">実行中です。お待ちください...</string>
     <string name="data_export">トゥートをエクスポート</string>
     <string name="data_export_toots">%1$s のトゥートをエクスポート</string>
-    <string name="data_export_success">%2$s 個中 %1$s トゥートがエクスポートされました。</string>
+    <string name="data_export_success">%2$s 件中 %1$s 件のトゥートをエクスポートしました。</string>
     <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
     <string name="data_export_error_simple">データのエクスポート中に問題が発生しました！</string>
     <string name="data_import_success_simple">データがインポートされました！</string>
@@ -875,6 +875,41 @@
     <string name="mention_status">ステータスをメンション</string>
     <string name="action_news">ニュース</string>
     <string name="set_display_news_from_fedilab">Fedilab公式アカウントからのニュースを表示する</string>
+    <string name="category_general">General</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_art">Art</string>
+    <string name="category_journalism">Journalism</string>
+    <string name="category_activism">Activism</string>
+    <string name="category_games">Gaming</string>
+    <string name="category_tech">Technology</string>
+    <string name="category_adult">Adult content</string>
+    <string name="category_furry">Furry</string>
+    <string name="category_food">Food</string>
+    <string name="instance_logo">Logo of the instance</string>
+    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
+    <string name="join_mastodon">Join Mastodon</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="users">%1$s users</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="agreement_check">I agree to %1$s and %2$s</string>
+    <string name="server_rules">server rules</string>
+    <string name="tos">terms of service</string>
+    <string name="sign_up">Sign up</string>
+    <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
+    <string name="all_field_filled">Please, fill all the fields!</string>
+    <string name="password_error">Passwords don\'t match!</string>
+    <string name="email_error">The email doesn\'t seem to be valid!</string>
+    <string name="username_indicator">Your username will be unique on %1$s</string>
+    <string name="email_indicator">You will be sent a confirmation e-mail</string>
+    <string name="password_indicator">Use at least 8 characters</string>
+    <string name="password_too_short">Password should contain at least 8 characters</string>
+    <string name="username_error">Username should only contain letters, numbers and underscores</string>
+    <string name="account_created">Account created!</string>
+    <string name="account_created_message">        Your account has been created!\n\n
+        Think to validate your email within the 48 next hours.\n\n
+        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
+        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    </string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>

@@ -879,6 +879,41 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="mention_status">Esmenta l\'estatus</string>
     <string name="action_news">Notícies</string>
     <string name="set_display_news_from_fedilab">Mostra notícies del compte de Fedilab</string>
+    <string name="category_general">General</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_art">Art</string>
+    <string name="category_journalism">Journalism</string>
+    <string name="category_activism">Activism</string>
+    <string name="category_games">Gaming</string>
+    <string name="category_tech">Technology</string>
+    <string name="category_adult">Adult content</string>
+    <string name="category_furry">Furry</string>
+    <string name="category_food">Food</string>
+    <string name="instance_logo">Logo of the instance</string>
+    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
+    <string name="join_mastodon">Join Mastodon</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="users">%1$s users</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="agreement_check">I agree to %1$s and %2$s</string>
+    <string name="server_rules">server rules</string>
+    <string name="tos">terms of service</string>
+    <string name="sign_up">Sign up</string>
+    <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
+    <string name="all_field_filled">Please, fill all the fields!</string>
+    <string name="password_error">Passwords don\'t match!</string>
+    <string name="email_error">The email doesn\'t seem to be valid!</string>
+    <string name="username_indicator">Your username will be unique on %1$s</string>
+    <string name="email_indicator">You will be sent a confirmation e-mail</string>
+    <string name="password_indicator">Use at least 8 characters</string>
+    <string name="password_too_short">Password should contain at least 8 characters</string>
+    <string name="username_error">Username should only contain letters, numbers and underscores</string>
+    <string name="account_created">Account created!</string>
+    <string name="account_created_message">        Your account has been created!\n\n
+        Think to validate your email within the 48 next hours.\n\n
+        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
+        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    </string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
