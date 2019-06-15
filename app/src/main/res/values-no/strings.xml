@@ -906,11 +906,10 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="password_too_short">Passordet må inneholde minst 8 tegn</string>
     <string name="username_error">Brukernavn skal bare inneholde bokstaver, tall og understrek</string>
     <string name="account_created">Konto opprettet!</string>
-    <string name="account_created_message">        Your account has been created!\n\n
-        Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
-        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
-    </string>
+    <string name="account_created_message">        Din konto har blitt opprettet!\n\n
+        Vurder å bekreft e-postadressen din innen 48 timer.\n\n
+        Du kan nå koble kontoen din ved å skrive <b>%1$s</b> i det første feltet og klikk på <b>Koble til</b>.\n\n
+        <b>Viktig</b>: Hvis instansen krever invitasjon, vil du motta en e-post når kontoen er godkjent!    </string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
