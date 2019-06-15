@@ -137,7 +137,7 @@
     <plurals name="preview_replies">
         <item quantity="zero">%d رد</item>
         <item quantity="one">ردّ واحد %d</item>
-        <item quantity="two">ردّين</item>
+        <item quantity="two">%d ردّين</item>
         <item quantity="few">%d ردود</item>
         <item quantity="many">%d ردود</item>
         <item quantity="other">%d ردود</item>
@@ -239,7 +239,7 @@
         <item quantity="other">و %d إشعارات أخرى</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
+        <item quantity="zero">وتبويقين %d آخرين لاكتشافهما</item>
         <item quantity="one">وتبويق آخر لاكتشافه</item>
         <item quantity="two">وتبويقين آخرين لاكتشافهما</item>
         <item quantity="few">و %d تبويقات أخرى لاكتشافها</item>
@@ -493,12 +493,12 @@
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
-    <string name="issue_login_message">        <b>وهنا بعض الاختبارات التي قد تساعدكم:</b>\n\n
+    <string name="issue_login_message"> b&gt;وهنا بعض الاختبارات التي قد تساعدكم:&lt;/b&gt;\n\n
         - تحققوا من عدم وجود الأخطاء الإملائية في اسم مثيل الخادم\n\n
         - تحققوا مِن أنّ مثيل الخادم يشتغل\n\n
         - إذا كنتم تستخدمون المصادقة بخطوتين (2FA) الرجاء استخدام الرابط في الأسفل (يجب إدخال اسم السيرفر أولا)\n\n
         - يمكنكم أيضا استخدام هذا الرابط بدون استخدام 2FA\n\n
-        - إذا كان لا يزال لا يعمل ، يرجى إرسال تقرير على GitLab إلى https://gitlab.com/tom79/mastalab/issues
+        - إذا كان لا يزال لا يعمل ، يرجى إرسال تقرير على FramaGit إلى https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
@@ -888,8 +888,8 @@
     <string name="opacity">الشفافيّة</string>
     <string name="label_crop">اقتصاص</string>
     <string name="set_photo_editor">تمكين محرر الصور</string>
-    <string name="add_poll_item">إضافة خيار إلى الإستطلاع</string>
-    <string name="remove_poll_item">إزالة آخر عنصر في الإستطلاع</string>
+    <string name="add_poll_item">إضافة خيار إلى الاستطلاع</string>
+    <string name="remove_poll_item">إزالة آخر عنصر في الاستطلاع</string>
     <string name="mute_conversation">اكتم المحادثة</string>
     <string name="unmute_conversation">ألغِ كتم المحادثة</string>
     <string name="toast_unmute_conversation">لقد تم إلغاء الكتم عن هذه المحادثة!</string>
@@ -903,9 +903,9 @@
     <string name="action_news">الأخبار</string>
     <string name="set_display_news_from_fedilab">عرض أخبار حساب Fedilab</string>
     <plurals name="number_of_vote">
-        <item quantity="zero">لا صوت</item>
+        <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>
-        <item quantity="two">صوتين</item>
+        <item quantity="two">%d صوت</item>
         <item quantity="few">%d أصوات</item>
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d صوتا</item>
