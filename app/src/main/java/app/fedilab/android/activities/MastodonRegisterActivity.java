@@ -32,8 +32,6 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,9 +47,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
-
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -60,9 +55,7 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.CreateMastodonAccountAsyncTask;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
-import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.InstanceReg;
@@ -354,9 +347,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             @Override
             public void onClick(DialogInterface dialog,int which) {
                 dialog.dismiss();
-                Intent mainActivity = new Intent(MastodonRegisterActivity.this, MainActivity.class);
-                mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
-                startActivity(mainActivity);
                 finish();
             }
         });

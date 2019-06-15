@@ -562,9 +562,15 @@ public class API {
             params.put("locale", Locale.getDefault().getLanguage());
             response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, app_token);
 
-            res = new JSONObject(response);
+            /*res = new JSONObject(response);
             String access_token = res.getString("access_token");
+            prefKeyOauthTokenT = access_token;
 
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+            if( account.getSocial().equals("PLEROMA")){
+                isPleromaAdmin(account.getAcct());
+            }
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             account.setToken(access_token);
             account.setClient_id(client_id);
@@ -584,7 +590,7 @@ public class API {
             else {
                 if( account.getUsername() != null && account.getCreated_at() != null)
                     new AccountDAO(context, db).insertAccount(account);
-            }
+            }*/
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
