@@ -73,7 +73,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/invitation"
+            android:textColor="@color/red_1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/validation_needed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_marginTop="20dp"
@@ -85,9 +93,15 @@
             android:id="@+id/username"
             android:inputType="text"
             android:singleLine="true"
+            android:maxLength="30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+        <TextView
+            android:id="@+id/username_indicator"
+            android:layout_width="match_parent"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="10dp"
             android:labelFor="@+id/email"
@@ -102,6 +116,12 @@
             android:layout_height="wrap_content"
             />
         <TextView
+            android:id="@+id/email_indicator"
+            android:layout_width="match_parent"
+            android:text="@string/email_indicator"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+        <TextView
             android:layout_marginTop="10dp"
             android:labelFor="@+id/password"
             android:text="@string/password"
@@ -114,6 +134,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+        <TextView
+            android:id="@+id/password_indicator"
+            android:layout_width="match_parent"
+            android:text="@string/password_indicator"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="10dp"
             android:labelFor="@+id/password_confirm"

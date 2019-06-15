@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import app.fedilab.android.R;
@@ -48,6 +49,7 @@ import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
@@ -528,6 +530,28 @@ public class API {
         return newValues;
     }
 
+    public APIResponse createAccount(AccountCreation accountCreation){
+        apiResponse = new APIResponse();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", accountCreation.getUsername());
+        params.put("email", accountCreation.getEmail());
+        params.put("password", accountCreation.getPassword());
+        params.put("agreement", "true");
+        params.put("locale", Locale.getDefault().getLanguage());
+        try {
+            new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, null);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
 
     /**
      * Returns an account

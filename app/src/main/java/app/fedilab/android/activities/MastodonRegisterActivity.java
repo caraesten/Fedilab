@@ -17,7 +17,10 @@ package app.fedilab.android.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableString;
@@ -25,38 +28,44 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionManager;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
-import org.apache.poi.sl.usermodel.Line;
-
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+
 import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.CreateMastodonAccountAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
+import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.drawers.InstanceRegAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
 import es.dmoral.toasty.Toasty;
 
@@ -67,9 +76,11 @@ import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
  * Register activity class
  */
 
-public class MastodonRegisterActivity extends BaseActivity implements OnRetrieveInstanceInterface {
+public class MastodonRegisterActivity extends BaseActivity implements OnRetrieveInstanceInterface, OnPostStatusActionInterface {
 
 
+    private Button signup;
+    private String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +172,46 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         });
 
         new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, "general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+
+        signup = findViewById(R.id.signup);
+        EditText username = findViewById(R.id.username);
+        EditText email = findViewById(R.id.email);
+        EditText password = findViewById(R.id.password);
+        EditText password_confirm = findViewById(R.id.password_confirm);
+        CheckBox agreement = findViewById(R.id.agreement);
+
+        signup.setOnClickListener(view->{
+            if( username.getText().toString().trim().length() == 0 || email.getText().toString().trim().length() == 0 ||
+                    password.getText().toString().trim().length() == 0 ||  password_confirm.getText().toString().trim().length() == 0 || !agreement.isChecked()){
+                Toasty.error(MastodonRegisterActivity.this, getString(R.string.all_field_filled)).show();
+                return;
+            }
+            if(!password.getText().toString().trim().equals(password_confirm.toString().trim())){
+                Toasty.error(MastodonRegisterActivity.this, getString(R.string.password_error)).show();
+                return;
+            }
+            if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+                Toasty.error(MastodonRegisterActivity.this, getString(R.string.email_error)).show();
+                return;
+            }
+            if(password.getText().toString().trim().length() < 8 ){
+                Toasty.error(MastodonRegisterActivity.this, getString(R.string.password_too_short)).show();
+                return;
+            }
+            if(username.getText().toString().matches("[a-zA-Z0-9_]")){
+                Toasty.error(MastodonRegisterActivity.this, getString(R.string.username_error)).show();
+                return;
+            }
+            signup.setEnabled(false);
+            AccountCreation accountCreation = new AccountCreation();
+            accountCreation.setEmail(email.getText().toString().trim());
+            accountCreation.setPassword(password.getText().toString().trim());
+            accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
+            accountCreation.setUsername(username.getText().toString().trim());
+            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+        });
+
+
     }
 
     @Override
@@ -187,13 +238,13 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
     public void pickupInstance(String instance){
 
-
+        checkInstance(MastodonRegisterActivity.this, instance);
         LinearLayout form_container = findViewById(R.id.form_container);
         LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
 
         TextView host_reg = findViewById(R.id.host_reg);
         host_reg.setText(instance);
-
+        this.instance = instance;
 
         drawer_layout.animate()
                 .translationY(0)
@@ -231,12 +282,16 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
+                            findViewById(R.id.invitation).setVisibility(View.GONE);
                             form_container.setVisibility(View.GONE);
                         }
                     });
         });
 
         TextView agreement_text = findViewById(R.id.agreement_text);
+
+        TextView username_indicator = findViewById(R.id.username_indicator);
+        username_indicator.setText(getString(R.string.username_indicator, instance));
 
         String tos = getString(R.string.tos);
         String serverrules = getString(R.string.server_rules);
@@ -246,7 +301,88 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                 );
         agreement_text.setMovementMethod(LinkMovementMethod.getInstance());
         agreement_text.setText(Html.fromHtml(content_agreement));
+    }
 
 
+    private void checkInstance(Context context, String instance){
+        new checkRegistration(context, instance).executeOnExecutor(THREAD_POOL_EXECUTOR);
+    }
+
+    @Override
+    public void onPostStatusAction(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
+            if( apiResponse.getError().getError() != null){
+                Toasty.error(MastodonRegisterActivity.this,apiResponse.getError().getError()).show();
+            }else {
+                Toasty.error(MastodonRegisterActivity.this,getString(R.string.toast_error)).show();
+            }
+            signup.setEnabled(true);
+            return;
+        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MastodonRegisterActivity.this, style);
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setTitle(getString(R.string.account_created));
+        alertDialog.setMessage(getString(R.string.account_created_message, this.instance));
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog,int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        alertDialog.show();
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private class checkRegistration extends AsyncTask<Void, Void, String> {
+
+        private String instance;
+        private WeakReference<Context> weakReference;
+
+        checkRegistration(Context context, String instance){
+            this.instance = instance;
+            this.weakReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String response = null;
+            try {
+                URL url = new URL("https://" + instance + "/auth/sign_up");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    java.util.Scanner s = new java.util.Scanner(connection.getInputStream()).useDelimiter("\\A");
+                    response =  s.hasNext() ? s.next() : "";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+
+            if( result != null && result.contains("invite_request_attributes")){
+                TextView invitation = ((MastodonRegisterActivity)(weakReference.get())).findViewById(R.id.invitation);
+                if( invitation != null){
+                    invitation.setVisibility(View.VISIBLE);
+                }
+            }
+
+        }
     }
 }
