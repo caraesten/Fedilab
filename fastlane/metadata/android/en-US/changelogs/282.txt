@@ -9,4 +9,5 @@ Fixed
 - Proxy with upload
 - Long text with the compose activity
 - Overlay with error message and notifications
+- Fix error when uploading image
 - Some other crashes
