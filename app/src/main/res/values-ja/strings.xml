@@ -166,7 +166,7 @@
     <string name="toot_error_no_content">あなたのトゥートは空です！</string>
     <string name="toot_visibility_tilte">トゥートの公開範囲</string>
     <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
-    <string name="toot_sent">トゥートが送信されました！</string>
+    <string name="toot_sent">トゥートを送信しました</string>
     <string name="toot_reply_content_title">このトゥートに返信中：</string>
     <string name="toot_sensitive">閲覧に注意を要するコンテンツ？</string>
     <string-array name="toot_visibility">
@@ -180,7 +180,7 @@
     <string name="choose_accounts">アカウントを選択</string>
     <string name="select_accounts">複数のアカウントを選択</string>
     <string name="remove_draft">下書きを削除しますか？</string>
-    <string name="show_reply">ボタンをクリックすると元のトゥートが表示されます</string>
+    <string name="show_reply">ボタンをタップするとオリジナルのトゥートが表示されます</string>
     <string name="upload_form_description">視覚障害者のための説明</string>
     <!-- Instance -->
     <string name="instance_no_description">説明はありません！</string>
