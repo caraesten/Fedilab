@@ -3357,7 +3357,11 @@ public class Helper {
         int i=1;
         ArrayList<String> reply = new ArrayList<>();
         for(String newContent : splitToot){
-            reply.add((i-1), newContent + " - " + i + "/" + splitToot.size());
+            if( splitToot.size() > 1 ) {
+                reply.add((i - 1), newContent + " - " + i + "/" + splitToot.size());
+            }else{
+                reply.add((i - 1), newContent);
+            }
             i++;
         }
         return reply;

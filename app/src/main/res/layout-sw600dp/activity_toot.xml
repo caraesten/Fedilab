@@ -39,6 +39,7 @@
             android:visibility="gone" />
 
         <ScrollView
+            android:layout_below="@+id/toot_cw_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
