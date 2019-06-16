@@ -294,13 +294,22 @@
                     android:padding="@dimen/drawer_padding"
                     android:visibility="gone">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/status_reply"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="2dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_reply"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/status_reply_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/status_reply"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.varunest.sparkbutton.SparkButton
@@ -308,9 +317,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/status_reply"
+                        app:layout_constraintStart_toEndOf="@id/status_reply_count"
                         app:layout_constraintTop_toTopOf="parent"
                         app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
                         app:sparkbutton_iconSize="20dp"
@@ -330,7 +338,6 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/status_reblog_count"
                         app:layout_constraintTop_toTopOf="parent"
@@ -352,7 +359,6 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginRight="15dp"
                         android:contentDescription="@string/toot_visibility_tilte"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/status_more"
