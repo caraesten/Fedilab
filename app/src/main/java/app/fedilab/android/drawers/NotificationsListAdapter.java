@@ -371,7 +371,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            holder.status_reply.setText("");
             if( !status.isClickable())
                 Status.transform(context, status);
             if( !status.isEmojiFound())
@@ -380,6 +379,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
+            if (status.getReplies_count() > 0)
+                holder.status_reply_count.setText(String.valueOf(status.getReplies_count()));
+            else
+                holder.status_reply_count.setText("");
             if (status.getFavourites_count() > 0)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             else
@@ -421,7 +424,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-            Drawable imgReply;
             if( !status.isFavAnimated() ) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     holder.spark_button_fav.setChecked(true);
@@ -451,12 +453,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
             if( theme == Helper.THEME_DARK)
-                Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
+                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_dark);
             else if(theme == Helper.THEME_BLACK)
-                Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_black);
+                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_black);
             else
-                Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
-            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_light);
 
             if( status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
@@ -495,22 +496,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             }
 
-            assert imgReply != null;
-            imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
 
             if( theme == Helper.THEME_DARK ){
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
             }else if(theme == Helper.THEME_BLACK){
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_black));
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
             }else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_light));
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
             }
             if( type.equals("favourite") || type.equals("reblog")){
                 holder.status_document_container.setVisibility(View.GONE);
@@ -1330,7 +1329,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_date;
-        TextView status_reply;
+        TextView status_reply_count;
         LinearLayout status_document_container;
         ConstraintLayout status_action_container;
         Button status_show_more;
@@ -1351,6 +1350,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         ImageView status_privacy;
         LinearLayout status_spoiler_mention_container;
         TextView status_mention_spoiler;
+        ImageView status_reply;
         SparkButton spark_button_fav, spark_button_reblog;
 
         //Poll
@@ -1376,7 +1376,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
             status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
             status_date = itemView.findViewById(R.id.status_date);
-            status_reply = itemView.findViewById(R.id.status_reply);
+            status_reply_count = itemView.findViewById(R.id.status_reply_count);
             status_privacy = itemView.findViewById(R.id.status_privacy);
             notification_delete = itemView.findViewById(R.id.notification_delete);
             status_show_more = itemView.findViewById(R.id.status_show_more);
@@ -1398,6 +1398,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
+            status_reply = itemView.findViewById(R.id.status_reply);
             spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
             spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
 

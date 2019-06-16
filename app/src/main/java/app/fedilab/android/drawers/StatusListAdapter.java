@@ -304,6 +304,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_account_profile;
         ImageView status_account_profile_boost;
         ImageView status_account_profile_boost_by;
+        TextView status_reply_count;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
@@ -334,7 +335,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView conversation_pp_4;
         LinearLayout conversation_pp;
         RelativeLayout status_prev4_container;
-        TextView status_reply;
+        ImageView status_reply;
         ImageView status_pin;
         ImageView status_remove;
         ImageView status_privacy;
@@ -401,6 +402,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_account_profile = itemView.findViewById(R.id.status_account_profile);
             status_account_profile_boost = itemView.findViewById(R.id.status_account_profile_boost);
             status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
+            status_reply_count = itemView.findViewById(R.id.status_reply_count);
             status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
             status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
             status_pin = itemView.findViewById(R.id.status_pin);
@@ -602,7 +604,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 holder.rated.setVisibility(View.GONE);
@@ -813,6 +814,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.new_element.setVisibility(View.GONE);
 
 
+            holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+            holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
@@ -861,16 +864,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (theme == Helper.THEME_BLACK) {
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_black);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
                 Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_black));
 
 
                 Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
@@ -889,16 +892,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else if (theme == Helper.THEME_DARK) {
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_dark);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
 
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.dark_text_toot_header);
 
@@ -918,7 +921,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_light);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_more_horiz, R.color.action_light);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
@@ -926,9 +929,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_light));
 
                 holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
@@ -1540,7 +1543,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
+            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
+                Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
+                holder.status_reply_count.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            }
+
             if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS && getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
+                if (status.getReblog() == null) {
+                    if (status.getReplies_count() > 0)
+                        holder.status_reply_count.setText(String.valueOf(status.getReplies_count()));
+                    else
+                        holder.status_reply_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getReplies_count() > 0)
+                        holder.status_reply_count.setText(String.valueOf(status.getReblog().getReplies_count()));
+                    else
+                        holder.status_reply_count.setText("");
+                }
+
                 if (status.getReblog() == null) {
                     if (status.getFavourites_count() > 0)
                         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -1908,7 +1929,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     break;
             }
 
-            Drawable imgReply;
 
             if (!status.isFavAnimated()) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
@@ -1941,26 +1961,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
             else
                 Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
-            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-
-
-            assert imgReply != null;
-            imgReply.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
-
-
-            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
-                Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
-                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, img, null);
-            } else {
-                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, null, null);
-            }
-            if ((isCompactMode || isConsoleMode) ) {
-                if (((status.getReblog() == null && status.getReplies_count() == 1) || (status.getReblog() != null && status.getReblog().getReplies_count() == 1)))
-                    holder.status_reply.setText(String.valueOf(status.getReblog() != null ? status.getReblog().getReplies_count() : status.getReplies_count()));
-            } else {
-                if (status.getReplies_count() > 0 || (status.getReblog() != null && status.getReblog().getReplies_count() > 0))
-                    holder.status_reply.setText(String.valueOf(status.getReblog() != null ? status.getReblog().getReplies_count() : status.getReplies_count()));
-            }
 
             boolean isOwner = status.getAccount().getId().equals(userId);
 
