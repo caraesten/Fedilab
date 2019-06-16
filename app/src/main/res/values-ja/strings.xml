@@ -822,7 +822,7 @@
     <string name="warning_main_timeline">メインタイムラインは表示できません！</string>
     <string name="action_bbcode">BBコード</string>
     <string name="add_timeline">タイムラインを追加</string>
-    <string name="set_sensitive_content">メディアを常に閲覧注意としてマークする</string>
+    <string name="set_sensitive_content">メディアを常に閲覧注意に設定する</string>
     <string name="gnu_instance">GNUインスタンス</string>
     <string name="cached_status">キャッシュされたステータス</string>
     <string name="set_forward_tags">返信でタグを先頭に付加する</string>
