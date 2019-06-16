@@ -409,9 +409,7 @@ public class API {
                 i++;
             }
         }
-        if(sensitive){
-            requestParams.put("source[sensitive]", String.valueOf(sensitive));
-        }
+        requestParams.put("source[sensitive]", String.valueOf(sensitive));
         try {
             new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
