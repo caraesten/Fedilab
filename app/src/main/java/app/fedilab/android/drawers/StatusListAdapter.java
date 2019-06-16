@@ -804,8 +804,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             }
 
-            if (status.isNew() && new_badge)
+            if (status.isNew() && new_badge){
+                if (theme == Helper.THEME_BLACK)
+                    holder.new_element.setImageResource(R.drawable.ic_fiber_new_dark);
                 holder.new_element.setVisibility(View.VISIBLE);
+            }
             else
                 holder.new_element.setVisibility(View.GONE);
 
@@ -847,10 +850,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            if (theme == Helper.THEME_BLACK)
-                Helper.changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.dark_icon);
-            else
-                Helper.changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.mastodonC4);
             Helper.changeDrawableColor(context, R.drawable.ic_http, R.color.mastodonC4);
             if (getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS )
                 holder.status_privacy.setVisibility(View.GONE);
