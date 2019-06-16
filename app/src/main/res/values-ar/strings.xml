@@ -922,12 +922,12 @@
     <string name="server_rules">قواعد الخادم</string>
     <string name="tos">شروط الخدمة</string>
     <string name="sign_up">إنشاء حساب</string>
-    <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
+    <string name="validation_needed">مثيل الخادم هذا يعمل بنظام الدعوات. لكي يكون باستطاعتك استخدام حسابك ، يجب على أحد مدراء الخادم مراجعة طلب انضمامك يدويا.</string>
     <string name="all_field_filled">يرجى ملء جميع الحقول!</string>
     <string name="password_error">كلمتي المرور غير متطابقتين!</string>
     <string name="email_error">يبدو أنّ عنوان البريد الإلكتروني غير صالح!</string>
-    <string name="username_indicator">Your username will be unique on %1$s</string>
-    <string name="email_indicator">You will be sent a confirmation e-mail</string>
+    <string name="username_indicator">اسم المستخدم الخاص بك سوف يكون فريدا من نوعه على %1$s</string>
+    <string name="email_indicator">سيتم إرسال رسالة إلكترونية للتأكيد</string>
     <string name="password_indicator">استخدم 8 أحرف على الأقل</string>
     <string name="password_too_short">يجب أن تكون الكلمة السرية مكوّنة مِن 8 أحرف على الأقل</string>
     <string name="username_error">Username should only contain letters, numbers and underscores</string>
