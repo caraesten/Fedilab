@@ -560,7 +560,7 @@ public class Status implements Parcelable{
             return;
         
         String content = status.getReblog() != null ?status.getReblog().getContent():status.getContent();
-        
+
         Pattern aLink = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
         while (matcherALink.find()){
@@ -569,18 +569,20 @@ public class Status implements Parcelable{
 
             urlText = urlText.substring(1);
             beforemodification = urlText;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                urlText = new SpannableString(Html.fromHtml(urlText, Html.FROM_HTML_MODE_LEGACY)).toString();
-            else
-                urlText = new SpannableString(Html.fromHtml(urlText)).toString();
-            if( urlText.startsWith("http") ){
-                urlText = urlText.replace("http://","").replace("https://","").replace("www.","");
-                if( urlText.length() > 31){
-                    urlText = urlText.substring(0,30);
-                    urlText += '…';
+            if( !beforemodification.startsWith("http")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    urlText = new SpannableString(Html.fromHtml(urlText, Html.FROM_HTML_MODE_LEGACY)).toString();
+                else
+                    urlText = new SpannableString(Html.fromHtml(urlText)).toString();
+                if (urlText.startsWith("http")) {
+                    urlText = urlText.replace("http://", "").replace("https://", "").replace("www.", "");
+                    if (urlText.length() > 31) {
+                        urlText = urlText.substring(0, 30);
+                        urlText += '…';
+                    }
                 }
+                content = content.replace(beforemodification, urlText);
             }
-            content = content.replace(beforemodification,urlText);
         }
         spannableStringContent = new SpannableString(content);
         String spoilerText = "";
