@@ -59,6 +59,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -172,6 +173,7 @@ import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
+import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
@@ -301,7 +303,42 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     assert inputMethodManager != null;
                     inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
-                    finish();
+                    boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+                    if( !storeToot ) {
+                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+                            finish();
+                        }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                                finish();
+                        }else {
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
+                            dialogBuilder.setMessage(R.string.save_draft);
+                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (accountReply == null) {
+                                        storeToot(true, false);
+                                    } else {
+                                        storeToot(false, false);
+                                    }
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.show();
+                        }
+
+                    }else{
+                        finish();
+                    }
                 }
             });
             if (theme == Helper.THEME_LIGHT) {
@@ -2073,10 +2110,51 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         super.onPause();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-        if( storeToot && accountReply == null)
+        if( storeToot && accountReply == null) {
             storeToot(true, false);
-        else if( storeToot)
+        }else if( storeToot) {
             storeToot(false, false);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+        if( !storeToot ){
+            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+                finish();
+            }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                finish();
+            }else {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
+                dialogBuilder.setMessage(R.string.save_draft);
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (accountReply == null) {
+                            storeToot(true, false);
+                        } else {
+                            storeToot(false, false);
+                        }
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setCancelable(false);
+                alertDialog.show();
+            }
+        }else{
+            super.onBackPressed();
+        }
 
     }
 
