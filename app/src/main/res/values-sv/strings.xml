@@ -922,6 +922,7 @@
         Anslut till ditt konto genom att skriva <b>%1$s</b> i det första fältet och klicka på <b>Anslut</b>.\n\n
         <b>Viktigt</b>: Om din instans kräver validering så kommer du att få ett e-postmeddelande när det är validerad!
     </string>
+    <string name="save_draft">Save the message in drafts?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
