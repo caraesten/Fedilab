@@ -1050,6 +1050,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 });
 
+                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+                    holder.custom_feature_timed_mute.setVisibility(View.GONE);
+                    holder.custom_feature_schedule.setVisibility(View.GONE);
+                    holder.custom_feature_cache.setVisibility(View.GONE);
+                }
                 TooltipCompat.setTooltipText(holder.custom_feature_timed_mute, context.getString(R.string.timed_mute));
                 holder.custom_feature_timed_mute.setOnClickListener(view -> {
                     timedMuteAction(status);
