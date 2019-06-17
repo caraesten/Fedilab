@@ -914,14 +914,14 @@
     <string name="email_error">O correo-e non semella ser válido!</string>
     <string name="username_indicator">O seu nome de usuaria será único en %1$s</string>
     <string name="email_indicator">Enviarémoslle un correo-e de confirmación</string>
-    <string name="password_indicator">Use at least 8 characters</string>
-    <string name="password_too_short">Password should contain at least 8 characters</string>
-    <string name="username_error">Username should only contain letters, numbers and underscores</string>
-    <string name="account_created">Account created!</string>
-    <string name="account_created_message">        Your account has been created!\n\n
-        Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
-        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    <string name="password_indicator">Utilice 8 caracteres ao menos</string>
+    <string name="password_too_short">O contrasinal debe conter ao menos 8 caracteres</string>
+    <string name="username_error">O nome de usuaria debería ter só letras, números e guión baixo</string>
+    <string name="account_created">Conta creada!</string>
+    <string name="account_created_message">        Xa ten unha conta!\n\n
+        Lembre validar o correo-e nas seguintes48 horas.\n\n
+        Xa pode conectar coa súa conta escribindo <b>%1$s</b> no primeiro campo e pulsando <b>Conectar</b>.\n\n
+        <b>Importante</b>: se a súa instancia require validación, recibirá un correo unha vez sexa validada!
     </string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
