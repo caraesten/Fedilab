@@ -909,7 +909,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="username_error">Der Benutzername darf nur Buchstaben, Ziffern und Unterstriche enthalten</string>
     <string name="account_created">Konto erfolgreich erstellt.</string>
     <string name="account_created_message">Ihr Konto wurde erfolgreich erstellt!\n\nDenken Sie daran, Ihre E-Mail-Adresse innerhalb der nächsten 48 Stunden zu bestätigen.\n\nSie können nun Ihr Konto verbinden, indem Sie <b>%1$s</b> in das erste Feld schreiben und auf die Schaltfläche <b>Verbinden</b> klicken.\n\n<b>Wichtig</b>: Wenn Ihre Instanz eine Bestätigung benötigt, erhalten Sie eine E-Mail, sobald sie geprüft wurde!</string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">Möchten Sie die Nachricht als Entwurf speichern?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
