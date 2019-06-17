@@ -34,6 +34,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -1001,6 +1002,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if( holder.fedilab_features != null) {
+                TooltipCompat.setTooltipText(holder.fedilab_features, context.getString(R.string.app_features));
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1029,11 +1031,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white));
 
+                TooltipCompat.setTooltipText(holder.custom_feature_translate, context.getString(R.string.translate));
                 holder.custom_feature_translate.setOnClickListener(view -> {
                     translateToot(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
+
                 holder.custom_feature_bookmark.setOnClickListener(view -> {
                     bookmark(status);
                     status.setCustomFeaturesDisplayed(false);
@@ -1045,24 +1049,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     notifyStatusChanged(status);
                     return false;
                 });
+
+                TooltipCompat.setTooltipText(holder.custom_feature_timed_mute, context.getString(R.string.timed_mute));
                 holder.custom_feature_timed_mute.setOnClickListener(view -> {
                     timedMuteAction(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_schedule, context.getString(R.string.schedule_boost));
                 holder.custom_feature_schedule.setOnClickListener(view -> {
                     scheduleBoost(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_mention, context.getString(R.string.mention_status));
                 holder.custom_feature_mention.setOnClickListener(view -> {
                     mention(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_cache, context.getString(R.string.refresh_cache));
                 holder.custom_feature_cache.setOnClickListener(view -> {
                     new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     status.setCustomFeaturesDisplayed(false);
