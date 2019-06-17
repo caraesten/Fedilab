@@ -862,7 +862,7 @@
     <string name="label_sticker">Figurinha</string>
     <string name="label_eraser">Borracha</string>
     <string name="label_text">Texto</string>
-    <string name="label_filter">Filtro</string>
+    <string name="label_filter">Filtros</string>
     <string name="label_adjust">Ajustes</string>
     <string name="label_brush">Pincel</string>
     <string name="confirm_exit_editing">Você tem certeza de que deseja sair sem salvar?</string>
