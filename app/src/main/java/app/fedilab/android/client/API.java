@@ -33,6 +33,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -346,11 +347,7 @@ public class API {
             apiResponse.setInstanceRegs(instanceRegs);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -556,11 +553,7 @@ public class API {
                 if( account.getUsername() != null && account.getCreated_at() != null)
                     new AccountDAO(context, db).insertAccount(account);
             }*/
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
