@@ -930,7 +930,7 @@
         Теперь вы можете подключить ваш аккаунт, написав <b>%1$s</b> в первом поле и кликнув <b>Подключить</b>.\n\n
         <b>Важно</b>: Если ваш инстанс требует проверки, вы получите письмо после ее завершения!
     </string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">Сохранить сообщение в черновиках?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
