@@ -34,6 +34,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -304,6 +305,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_account_profile;
         ImageView status_account_profile_boost;
         ImageView status_account_profile_boost_by;
+        TextView status_reply_count;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
@@ -334,7 +336,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView conversation_pp_4;
         LinearLayout conversation_pp;
         RelativeLayout status_prev4_container;
-        TextView status_reply;
+        ImageView status_reply;
         ImageView status_pin;
         ImageView status_remove;
         ImageView status_privacy;
@@ -401,6 +403,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_account_profile = itemView.findViewById(R.id.status_account_profile);
             status_account_profile_boost = itemView.findViewById(R.id.status_account_profile_boost);
             status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
+            status_reply_count = itemView.findViewById(R.id.status_reply_count);
             status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
             status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
             status_pin = itemView.findViewById(R.id.status_pin);
@@ -543,8 +546,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
+
             final ViewHolder holder = (ViewHolder) viewHolder;
-            final Status status = statuses.get(viewHolder.getAdapterPosition());
+            final Status status = statuses.get(i);
+            if( status == null)
+                return;
 
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null) {
@@ -599,7 +605,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 holder.rated.setVisibility(View.GONE);
@@ -801,12 +806,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             }
 
-            if (status.isNew() && new_badge)
+            if (status.isNew() && new_badge){
+                if (theme == Helper.THEME_BLACK)
+                    holder.new_element.setImageResource(R.drawable.ic_fiber_new_dark);
                 holder.new_element.setVisibility(View.VISIBLE);
+            }
             else
                 holder.new_element.setVisibility(View.GONE);
 
 
+            holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+            holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
@@ -844,10 +854,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            if (theme == Helper.THEME_BLACK)
-                Helper.changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.dark_icon);
-            else
-                Helper.changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.mastodonC4);
             Helper.changeDrawableColor(context, R.drawable.ic_http, R.color.mastodonC4);
             if (getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS )
                 holder.status_privacy.setVisibility(View.GONE);
@@ -859,16 +865,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (theme == Helper.THEME_BLACK) {
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_black);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
                 Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_black));
 
 
                 Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
@@ -887,16 +893,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else if (theme == Helper.THEME_DARK) {
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_dark);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
 
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.dark_text_toot_header);
 
@@ -916,7 +922,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, holder.cached_status, R.color.action_light);
                 Helper.changeDrawableColor(context, holder.status_remove, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_more_horiz, R.color.action_light);
                 Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
@@ -924,9 +930,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_light));
 
                 holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
@@ -996,6 +1002,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if( holder.fedilab_features != null) {
+                TooltipCompat.setTooltipText(holder.fedilab_features, context.getString(R.string.app_features));
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1024,11 +1031,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.custom_feature_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_white));
 
+                TooltipCompat.setTooltipText(holder.custom_feature_translate, context.getString(R.string.translate));
                 holder.custom_feature_translate.setOnClickListener(view -> {
                     translateToot(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
+
                 holder.custom_feature_bookmark.setOnClickListener(view -> {
                     bookmark(status);
                     status.setCustomFeaturesDisplayed(false);
@@ -1040,24 +1049,34 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     notifyStatusChanged(status);
                     return false;
                 });
+
+                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+                    holder.custom_feature_timed_mute.setVisibility(View.GONE);
+                    holder.custom_feature_schedule.setVisibility(View.GONE);
+                    holder.custom_feature_cache.setVisibility(View.GONE);
+                }
+                TooltipCompat.setTooltipText(holder.custom_feature_timed_mute, context.getString(R.string.timed_mute));
                 holder.custom_feature_timed_mute.setOnClickListener(view -> {
                     timedMuteAction(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_schedule, context.getString(R.string.schedule_boost));
                 holder.custom_feature_schedule.setOnClickListener(view -> {
                     scheduleBoost(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_mention, context.getString(R.string.mention_status));
                 holder.custom_feature_mention.setOnClickListener(view -> {
                     mention(status);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
 
+                TooltipCompat.setTooltipText(holder.custom_feature_cache, context.getString(R.string.refresh_cache));
                 holder.custom_feature_cache.setOnClickListener(view -> {
                     new ManageCachedStatusAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     status.setCustomFeaturesDisplayed(false);
@@ -1538,15 +1557,50 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
-                if (status.getReblog() == null)
-                    holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
-                else
-                    holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
-                if (status.getReblog() == null)
-                    holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
-                else
-                    holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
+                Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
+                holder.status_reply_count.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            }
+
+            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS && getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
+                if (status.getReblog() == null) {
+                    if (status.getReplies_count() > 0)
+                        holder.status_reply_count.setText(String.valueOf(status.getReplies_count()));
+                    else
+                        holder.status_reply_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getReplies_count() > 0)
+                        holder.status_reply_count.setText(String.valueOf(status.getReblog().getReplies_count()));
+                    else
+                        holder.status_reply_count.setText("");
+                }
+
+                if (status.getReblog() == null) {
+                    if (status.getFavourites_count() > 0)
+                        holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+                    else
+                        holder.status_favorite_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getFavourites_count() > 0)
+                        holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
+                    else
+                        holder.status_favorite_count.setText("");
+                }
+
+                if (status.getReblog() == null) {
+                    if (status.getReblogs_count() > 0)
+                        holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+                    else
+                        holder.status_reblog_count.setText("");
+                }
+                else {
+                    if (status.getReblog().getReblogs_count() > 0)
+                        holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+                    else
+                        holder.status_reblog_count.setText("");
+                }
             }
             if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
@@ -1889,7 +1943,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     break;
             }
 
-            Drawable imgReply;
 
             if (!status.isFavAnimated()) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
@@ -1922,26 +1975,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
             else
                 Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
-            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-
-
-            assert imgReply != null;
-            imgReply.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
-
-
-            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
-                Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
-                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, img, null);
-            } else {
-                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, null, null);
-            }
-            if ((isCompactMode || isConsoleMode) ) {
-                if (((status.getReblog() == null && status.getReplies_count() == 1) || (status.getReblog() != null && status.getReblog().getReplies_count() == 1)))
-                    holder.status_reply.setText(String.valueOf(status.getReblog() != null ? status.getReblog().getReplies_count() : status.getReplies_count()));
-            } else {
-                if (status.getReplies_count() > 0 || (status.getReblog() != null && status.getReblog().getReplies_count() > 0))
-                    holder.status_reply.setText(String.valueOf(status.getReblog() != null ? status.getReblog().getReplies_count() : status.getReplies_count()));
-            }
 
             boolean isOwner = status.getAccount().getId().equals(userId);
 

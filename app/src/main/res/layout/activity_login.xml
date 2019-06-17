@@ -104,6 +104,18 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/connect_instance" />
+
+
+                <TextView
+                    android:id="@+id/create_an_account"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:text="@string/join_mastodon"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
             <LinearLayout
                 android:visibility="gone"

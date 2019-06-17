@@ -883,6 +883,41 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="mention_status">提及此嘟文</string>
     <string name="action_news">新聞</string>
     <string name="set_display_news_from_fedilab">顯示從 Fedilab 帳號而來的新聞</string>
+    <string name="category_general">一般</string>
+    <string name="category_regional">地區</string>
+    <string name="category_art">藝術</string>
+    <string name="category_journalism">新聞</string>
+    <string name="category_activism">行動</string>
+    <string name="category_games">遊戲</string>
+    <string name="category_tech">科技</string>
+    <string name="category_adult">成人內容</string>
+    <string name="category_furry">獸</string>
+    <string name="category_food">食物</string>
+    <string name="instance_logo">站台的圖示</string>
+    <string name="toast_error_instance_reg">在檢查可用站台時發生了一點問題！</string>
+    <string name="join_mastodon">加入 Mastodon</string>
+    <string name="pickup_instance_category">透過挑選分類，然點擊按鈕來選擇站台。</string>
+    <string name="users">%1$s 個使用者</string>
+    <string name="password_confirm">確認密碼</string>
+    <string name="agreement_check">我同意 %1$s 與 %2$s</string>
+    <string name="server_rules">伺服器規則</string>
+    <string name="tos">服務條款</string>
+    <string name="sign_up">註冊</string>
+    <string name="validation_needed">本站台是以邀請制運作。您的帳號在可以正式開始使用前將會由管理員手動驗證。</string>
+    <string name="all_field_filled">請填寫所有欄位！</string>
+    <string name="password_error">密碼不符合！</string>
+    <string name="email_error">電子郵件似乎是無效的！</string>
+    <string name="username_indicator">您的使用者名稱在 %1$s 將會是獨一無二的</string>
+    <string name="email_indicator">您將會收到一封確認用的電子郵件</string>
+    <string name="password_indicator">使用至少 8 個字元</string>
+    <string name="password_too_short">密碼應該包含至少 8 個字元</string>
+    <string name="username_error">使用者名稱應僅包含字母、數字與底線</string>
+    <string name="account_created">已建立帳號！</string>
+    <string name="account_created_message">        已建立您的帳號！\n\n
+        將會在接下來的 48 小時內驗證您的電子郵件。\n\n
+        您現在可以在第一欄中填寫 <b>%1$s</b> 並按下<b>連線</b>來連線到您的帳號。\n\n
+        <b>重要</b>：如果您的站台需要驗證，您將會在驗證完成後收到電子郵件！
+    </string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

@@ -1,0 +1,13 @@
+Added
+- Sign up on Mastodon with instance suggestions
+
+Changed
+- Panel of features next to the button
+
+Fixed
+- Automatic split toot feature
+- Proxy with upload
+- Long text with the compose activity
+- Overlay with error message and notifications
+- Fix error when uploading image
+- Some other crashes

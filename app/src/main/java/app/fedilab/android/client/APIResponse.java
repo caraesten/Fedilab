@@ -25,6 +25,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.client.Entities.Instance;
+import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
@@ -62,6 +63,8 @@ public class APIResponse {
     private List<StoredStatus> storedStatuses;
     private boolean fetchmore = false;
     private List<String> playlistForVideos;
+    private List<InstanceReg> instanceRegs = null;
+
 
     public List<Account> getAccounts() {
         return accounts;
@@ -237,5 +240,13 @@ public class APIResponse {
 
     public void setPlaylistForVideos(List<String> playlistForVideos) {
         this.playlistForVideos = playlistForVideos;
+    }
+
+    public List<InstanceReg> getInstanceRegs() {
+        return instanceRegs;
+    }
+
+    public void setInstanceRegs(List<InstanceReg> instanceRegs) {
+        this.instanceRegs = instanceRegs;
     }
 }

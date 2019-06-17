@@ -137,7 +137,7 @@
     <plurals name="preview_replies">
         <item quantity="zero">%d رد</item>
         <item quantity="one">ردّ واحد %d</item>
-        <item quantity="two">ردّين</item>
+        <item quantity="two">%d ردّين</item>
         <item quantity="few">%d ردود</item>
         <item quantity="many">%d ردود</item>
         <item quantity="other">%d ردود</item>
@@ -239,7 +239,7 @@
         <item quantity="other">و %d إشعارات أخرى</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
+        <item quantity="zero">وتبويقين %d آخرين لاكتشافهما</item>
         <item quantity="one">وتبويق آخر لاكتشافه</item>
         <item quantity="two">وتبويقين آخرين لاكتشافهما</item>
         <item quantity="few">و %d تبويقات أخرى لاكتشافها</item>
@@ -493,12 +493,12 @@
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
-    <string name="issue_login_message">        <b>وهنا بعض الاختبارات التي قد تساعدكم:</b>\n\n
+    <string name="issue_login_message"> b&gt;وهنا بعض الاختبارات التي قد تساعدكم:&lt;/b&gt;\n\n
         - تحققوا من عدم وجود الأخطاء الإملائية في اسم مثيل الخادم\n\n
         - تحققوا مِن أنّ مثيل الخادم يشتغل\n\n
         - إذا كنتم تستخدمون المصادقة بخطوتين (2FA) الرجاء استخدام الرابط في الأسفل (يجب إدخال اسم السيرفر أولا)\n\n
         - يمكنكم أيضا استخدام هذا الرابط بدون استخدام 2FA\n\n
-        - إذا كان لا يزال لا يعمل ، يرجى إرسال تقرير على GitLab إلى https://gitlab.com/tom79/mastalab/issues
+        - إذا كان لا يزال لا يعمل ، يرجى إرسال تقرير على FramaGit إلى https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
@@ -888,24 +888,59 @@
     <string name="opacity">الشفافيّة</string>
     <string name="label_crop">اقتصاص</string>
     <string name="set_photo_editor">تمكين محرر الصور</string>
-    <string name="add_poll_item">إضافة خيار إلى الإستطلاع</string>
-    <string name="remove_poll_item">إزالة آخر عنصر في الإستطلاع</string>
+    <string name="add_poll_item">إضافة خيار إلى الاستطلاع</string>
+    <string name="remove_poll_item">إزالة آخر عنصر في الاستطلاع</string>
     <string name="mute_conversation">اكتم المحادثة</string>
     <string name="unmute_conversation">ألغِ كتم المحادثة</string>
     <string name="toast_unmute_conversation">لقد تم إلغاء الكتم عن هذه المحادثة!</string>
     <string name="toast_mute_conversation">المحادثة مكتومة</string>
-    <string name="app_features">Open application features</string>
-    <string name="timed_mute">Timed mute</string>
-    <string name="mention_account">Mention the account</string>
-    <string name="refresh_cache">Refresh cache</string>
-    <string name="see_boost_and_fav">See who boosted and added to favorites</string>
-    <string name="mention_status">Mention the status</string>
-    <string name="action_news">News</string>
-    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
+    <string name="app_features">افتح ميزات التطبيق</string>
+    <string name="timed_mute">فترة الكتم</string>
+    <string name="mention_account">اذكر الحساب</string>
+    <string name="refresh_cache">تحديث ذاكرة التخزين المؤقت</string>
+    <string name="see_boost_and_fav">اعرض من رقاه أو أضافه إلى مفضلته</string>
+    <string name="mention_status">اذكر هذا المنشور</string>
+    <string name="action_news">الأخبار</string>
+    <string name="set_display_news_from_fedilab">عرض أخبار حساب Fedilab</string>
+    <string name="category_general">عام</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_art">فن</string>
+    <string name="category_journalism">صحافة</string>
+    <string name="category_activism">للنشطاء</string>
+    <string name="category_games">ألعاب</string>
+    <string name="category_tech">تكنولوجيا</string>
+    <string name="category_adult">محتوى للكبار</string>
+    <string name="category_furry">فروي</string>
+    <string name="category_food">طعام</string>
+    <string name="instance_logo">شعار مثيل الخادم</string>
+    <string name="toast_error_instance_reg">حدث خطأ أثناء التحقق من توفر مثيلات الخوادم!</string>
+    <string name="join_mastodon">انضم إلى ماستدون</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="users">%1$s مستخدم</string>
+    <string name="password_confirm">تأكيد الكلمة السرية</string>
+    <string name="agreement_check">أوافق على %1$s وعلى %2$s</string>
+    <string name="server_rules">قواعد الخادم</string>
+    <string name="tos">شروط الخدمة</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="validation_needed">مثيل الخادم هذا يعمل بنظام الدعوات. لكي يكون باستطاعتك استخدام حسابك ، يجب على أحد مدراء الخادم مراجعة طلب انضمامك يدويا.</string>
+    <string name="all_field_filled">يرجى ملء جميع الحقول!</string>
+    <string name="password_error">كلمتي المرور غير متطابقتين!</string>
+    <string name="email_error">يبدو أنّ عنوان البريد الإلكتروني غير صالح!</string>
+    <string name="username_indicator">اسم المستخدم الخاص بك سوف يكون فريدا من نوعه على %1$s</string>
+    <string name="email_indicator">سيتم إرسال رسالة إلكترونية للتأكيد</string>
+    <string name="password_indicator">استخدم 8 أحرف على الأقل</string>
+    <string name="password_too_short">يجب أن تكون الكلمة السرية مكوّنة مِن 8 أحرف على الأقل</string>
+    <string name="username_error">Username should only contain letters, numbers and underscores</string>
+    <string name="account_created">تم إنشاء الحساب!</string>
+    <string name="account_created_message">        Your account has been created!\n\n
+        Think to validate your email within the 48 next hours.\n\n
+        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
+        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    </string>
     <plurals name="number_of_vote">
-        <item quantity="zero">لا صوت</item>
+        <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>
-        <item quantity="two">صوتين</item>
+        <item quantity="two">%d صوت</item>
         <item quantity="few">%d أصوات</item>
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d صوتا</item>

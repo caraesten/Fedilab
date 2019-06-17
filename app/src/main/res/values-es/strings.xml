@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Ahora funciona con la cuenta %1$s</string>
     <string name="add_account">Agregar una cuenta</string>
     <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">La dirección URL del toot ha sido copiada al portapapeles</string>
     <string name="change">Cambiar</string>
     <string name="choose_picture">Seleccionar una imagen…</string>
     <string name="clear">Borrar</string>
@@ -124,7 +124,7 @@
         <item>¿Bloquear esta cuenta?</item>
         <item>¿Reportar este toot?</item>
         <item>¿Bloquear este dominio?</item>
-        <item>Unmute this account?</item>
+        <item>¿des silenciar esta cuenta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -158,7 +158,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Escribe un toot</string>
     <string name="toot_title_reply">Responder a un toot</string>
-    <string name="queet_title">Write a queet</string>
+    <string name="queet_title">Escribir un queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecciona un medio</string>
@@ -235,8 +235,8 @@
         <item quantity="other">y %d otros toot para descubrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d me gusta</item>
+        <item quantity="other">%d Me gusta</item>
     </plurals>
     <string name="delete_notification_ask">¿Eliminar una notificación?</string>
     <string name="delete_notification_ask_all">¿Eliminar todas las notificaciones?</string>
@@ -273,7 +273,7 @@
     <string name="nothing_to_do">Ninguna acción puede ser tomada</string>
     <string name="toast_saved">¡El contenido multimedia ha sido guardado!</string>
     <string name="toast_error_translate">¡Un error ocurrió mientras se traducía!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Las traducciones están desactivadas en la configuración</string>
     <string name="toast_toot_saved">¡Borrador guardado!</string>
     <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
     <string name="toast_visibility_changed">La visibilidad de los toots ha sido cambiado para la cuenta %1$s</string>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
     <string name="set_notif_follow_add">Notificar cuando alguien agrega a favoritos tu estado</string>
     <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Noificar cuando una encuesta ha terminado</string>
     <string name="set_share_validation">Mostrar diálogo de confirmación antes de retootear</string>
     <string name="set_share_validation_fav">Mostrar diálogo de confirmación antes de agregar a favoritos</string>
     <string name="set_wifi_only">Notificaciones en WI-FI solamente</string>
@@ -313,8 +313,8 @@
     <string name="set_night_mode">Modo nocturno</string>
     <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
     <string name="settings_title_profile">Editar perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Compartir personalizado</string>
+    <string name="settings_custom_sharing_url">Tu URL para compartir personalizado&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear cuenta</string>
     <string name="set_save_changes">Guardar cambios</string>
@@ -397,12 +397,12 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">¡Fue borrando el cache! %1$s liberados</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Título</string>
+    <string name="title_hint_custom_sharing">Título&#8230;</string>
+    <string name="description_header_custom_sharing">Descripción</string>
+    <string name="description_hint_custom_sharing">Descripción&#8230;</string>
+    <string name="keywords_header_custom_sharing">Palabras Claves</string>
+    <string name="keywords_hint_custom_sharing">Palabras clave&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronizar</string>
     <string name="action_filter">Filtrar</string>
@@ -568,19 +568,19 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="channel_notif_boost">Nuevo Boost</string>
     <string name="channel_notif_fav">Nuevo Favorito</string>
     <string name="channel_notif_mention">Nueva Mención</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">La Encuesta Terminó</string>
     <string name="channel_notif_toot">Nuevo Toot</string>
     <string name="channel_notif_backup">Respaldo de toots</string>
     <string name="channel_notif_media">Descargar contenido multimedia</string>
     <string name="set_notif_sound">Modificar la notificación de sonido</string>
     <string name="select_sound">Seleccionar tono</string>
     <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
+    <string name="how_to_videos">Videos de cómo se hace</string>
     <string name="retrieve_remote_conversation">! Obteniendo hilo remoto!</string>
     <string name="no_blocked_domain">! No hay dominios bloqueados!</string>
     <string name="unblock_domain_confirm">Desbloquear dominio</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
+    <string name="unblock_domain_confirm_message">¿Estás seguro de que quieres desbloquear a %s?</string>
+    <string name="block_domain_confirm_message">¿Está seguro de bloquear %s?\n\nNo verá ningún contenido de ese dominio en ninguna línea de tiempo pública o en sus notificaciones. Tus seguidores de ese dominio serán eliminados.</string>
     <string name="blocked_domains">Dominios bloqueados</string>
     <string name="block_domain">Bloquear dominio</string>
     <string name="toast_block_domain">El dominio está bloqueado</string>
@@ -622,7 +622,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_change_locale">Cambiar idioma</string>
     <string name="default_language">Idioma predeterminado</string>
     <string name="truncate_long_toots">Truncar toots largos</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">Truncar los toots sobre \'x\' líneas. Cero significa deshabilitado.</string>
     <string name="display_toot_truncate">Mostrar más</string>
     <string name="hide_toot_truncate">Mostrar menos</string>
     <string name="manage_tags">Gestionar etiquetas</string>
@@ -633,11 +633,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_display_art">Mostrar la línea de tiempo de arte</string>
     <string name="schedule_boost">Aumento de horario</string>
     <string name="boost_scheduled">¡El impulso está programado!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="no_scheduled_boosts">¡Ningúna promoción programada para mostrar!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Abra el menú de un toot y, a continuación, elija <b>boost programado</b>.]]></string>
     <string name="art_menu">Línea de tiempo de arte</string>
     <string name="open_menu">Abrir menú</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Regresar</string>
     <string name="app_logo">Logo de la aplicación</string>
     <string name="profile_picture">Imagen del perfil</string>
     <string name="profile_banner">Banner de perfil</string>
@@ -692,7 +692,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="some_words_any">Cualquiera de estas palabras (separados por espacios)</string>
     <string name="some_words_all">Todas estas palabras (separados por espacios)</string>
     <string name="some_words_none">Ninguna de estas palabras (separados por espacios)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Agregar algunas palabras para filtrar (separados por espacios)</string>
     <string name="change_tag_column">Cambiar nombre de columna</string>
     <string name="no_misskey_instance">No hay instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
@@ -728,7 +728,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="delete_video_confirmation">¿Está seguro de eliminar este video?</string>
     <string name="no_video_uploaded">! Todavía no se ha subido ningún vídeo!</string>
     <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="default_channel_of">Canal por defecto %s</string>
     <string name="no_video_to_display">¡No hay videos para ver!</string>
     <string name="add_image_to_favorite">Añadir media a favoritos</string>
     <string name="leave_a_comment">Dejar un comentario</string>
@@ -740,7 +740,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toots_server">Toots (Servidor)</string>
     <string name="toots_client">Toots (Dispositivo)</string>
     <string name="modify">Modificar</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Mostrar nuevos toots sobre el botón \"Obtener más\"</string>
     <string name="settings_category_label_confirmations">Confirmaciones</string>
     <string name="settings_category_label_timelines">Líneas de tiempo</string>
     <string name="settings_category_label_notification">Servicio de notificaciones</string>
@@ -748,12 +748,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="settings_category_label_hiddencontent">Contenido oculto</string>
     <string name="settings_category_label_composing">Composición</string>
     <string name="contact">Contactos</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> comentó tu vídeo <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> está siguiendo tu canal <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> está siguiendo tu cuenta]]></string>
+    <string name="peertube_video_published"><![CDATA[Tu vídeo <b>%1$s</b> ha sido publicado]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Tu importación de vídeo <b>%1$s</b> ha tenido éxito]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Tu importación de vídeo <b>%1$s</b> falló]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicó un nuevo video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Su video <b>%1$s</b> esta en lista negra]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Su video <b>%1$s</b> ha sido unblacklisted]]></string>
@@ -768,22 +768,22 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="action_plain_text">Texto plano</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
+    <string name="action_logout_account">Cerrar de sesión de la cuenta</string>
+    <string name="set_optimize_loading">Optimizar el tiempo de carga</string>
+    <string name="all">Todo</string>
+    <string name="about_opencollective">Apoya la aplicación</string>
+    <string name="more_about_opencollective">Open Collective, permite a los grupos rápidamente establecer un colectivo, recaudar fondos y administrarlos de forma transparente.</string>
+    <string name="copy_link">Copiar enlace</string>
+    <string name="connect_instance">Conectar</string>
     <string name="set_normal">Normal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_compact">Compacta</string>
+    <string name="set_console">Consola</string>
+    <string name="set_mode">Establecer el modo de visualización</string>
+    <string name="set_security_provider">Parchar el Proveedor de Seguridad</string>
     <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="tracking_db_updated">¡La base de datos de seguimiento ha sido actualizada!</string>
+    <string name="calls_blocked">Llamadas http bloqueadas por la aplicación</string>
+    <string name="list_of_blocked_domains">Lista de llamadas bloqueadas</string>
     <string name="submit">Submit</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
@@ -831,75 +831,110 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
-    <string name="history">History</string>
-    <string name="playlists">Playlists</string>
-    <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
-    <string name="create">Create</string>
-    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
-    <string name="error_display_name">You must provide a display name!</string>
-    <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
-    <string name="action_playlist_create">Create a playlist</string>
-    <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
-    <string name="edit_media">Edit media</string>
-    <string name="redo">redo</string>
-    <string name="gallery">Gallery</string>
+    <string name="set_forward_tags">Reenviar etiquetas en respuestas</string>
+    <string name="set_long_press_media">Pulsación larga para almacenar medios</string>
+    <string name="set_blur_sensitive">Desenfocar las imágenes sensibles</string>
+    <string name="set_display_timeline_in_list">Mostrar líneas de tiempo en una lista</string>
+    <string name="display_timeline">Mostrar líneas de tiempo</string>
+    <string name="set_display_bot_icon">Marcar las cuentas de bots en los toots</string>
+    <string name="add_tags">Gestionar etiquetas</string>
+    <string name="set_remember_position">Recordar la posición en la línea de tiempo de inicio</string>
+    <string name="history">Historia</string>
+    <string name="playlists">Listas de reproducción</string>
+    <string name="display_name">Nombra para mostrar</string>
+    <string name="privacy">Privacidad</string>
+    <string name="create">Crear</string>
+    <string name="action_playlist_add">Usted no tiene ninguna lista de reproducción. Haga clic en el icono \"+\" para agregar una nueva lista de reproducción</string>
+    <string name="error_display_name">¡Debes proporcionar un nombre a mostrar!</string>
+    <string name="error_channel_mandatory">El canal es necesario cuando la lista de reproducción es pública.</string>
+    <string name="action_playlist_create">Crear una lista de reproducción</string>
+    <string name="action_playlist_empty_content">No hay nada en esta lista de reproducción todavía.</string>
+    <string name="edit_media">Editar multimedia</string>
+    <string name="redo">rehacer</string>
+    <string name="gallery">Galería</string>
     <string name="label_emoji">Emoji</string>
-    <string name="label_sticker">Sticker</string>
-    <string name="label_eraser">Eraser</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
-    <string name="label_brush">Brush</string>
-    <string name="confirm_exit_editing">Are you sure to exit without saving the image?</string>
-    <string name="discard">Discard</string>
-    <string name="saving">Saving…</string>
-    <string name="image_saved">Image Saved Successfully!</string>
-    <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
-    <string name="set_photo_editor">Enable photo editor</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
-    <string name="app_features">Open application features</string>
-    <string name="timed_mute">Timed mute</string>
-    <string name="mention_account">Mention the account</string>
-    <string name="refresh_cache">Refresh cache</string>
-    <string name="see_boost_and_fav">See who boosted and added to favorites</string>
-    <string name="mention_status">Mention the status</string>
-    <string name="action_news">News</string>
-    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
+    <string name="label_sticker">Calcomanía</string>
+    <string name="label_eraser">Borrador</string>
+    <string name="label_text">Texto</string>
+    <string name="label_filter">Filtrar</string>
+    <string name="label_adjust">Ajustar</string>
+    <string name="label_brush">Pincel</string>
+    <string name="confirm_exit_editing">¿Estás seguro de que deseas salir sin guardar la imagen?</string>
+    <string name="discard">Descartar</string>
+    <string name="saving">Guardando…</string>
+    <string name="image_saved">¡Imagen guardada con éxito!</string>
+    <string name="save_image_failed">Error al guardar la Imagen</string>
+    <string name="opacity">Opacidad</string>
+    <string name="label_crop">Cortar</string>
+    <string name="set_photo_editor">Habilitar el editor de fotos</string>
+    <string name="add_poll_item">Añadir un elemento de encuesta</string>
+    <string name="remove_poll_item">Eliminar último elemento de la encuesta</string>
+    <string name="mute_conversation">Silenciar conversación</string>
+    <string name="unmute_conversation">Desactivar el silencio de la conversación</string>
+    <string name="toast_unmute_conversation">¡La conversación ya no está silenciada!</string>
+    <string name="toast_mute_conversation">La conversación está silenciada</string>
+    <string name="app_features">Abrir las características de la Aplicación</string>
+    <string name="timed_mute">Silenciador temporizado</string>
+    <string name="mention_account">Mencionar la cuenta</string>
+    <string name="refresh_cache">Actualizar el caché</string>
+    <string name="see_boost_and_fav">Ver quién ha promovido y añadido a favoritos</string>
+    <string name="mention_status">Mencionar el estatus</string>
+    <string name="action_news">Noticias</string>
+    <string name="set_display_news_from_fedilab">Mostrar noticias de la cuenta de Fedilab</string>
+    <string name="category_general">General</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_art">Art</string>
+    <string name="category_journalism">Journalism</string>
+    <string name="category_activism">Activism</string>
+    <string name="category_games">Gaming</string>
+    <string name="category_tech">Technology</string>
+    <string name="category_adult">Adult content</string>
+    <string name="category_furry">Furry</string>
+    <string name="category_food">Food</string>
+    <string name="instance_logo">Logo of the instance</string>
+    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
+    <string name="join_mastodon">Join Mastodon</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="users">%1$s users</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="agreement_check">I agree to %1$s and %2$s</string>
+    <string name="server_rules">server rules</string>
+    <string name="tos">terms of service</string>
+    <string name="sign_up">Sign up</string>
+    <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
+    <string name="all_field_filled">Please, fill all the fields!</string>
+    <string name="password_error">Passwords don\'t match!</string>
+    <string name="email_error">The email doesn\'t seem to be valid!</string>
+    <string name="username_indicator">Your username will be unique on %1$s</string>
+    <string name="email_indicator">You will be sent a confirmation e-mail</string>
+    <string name="password_indicator">Use at least 8 characters</string>
+    <string name="password_too_short">Password should contain at least 8 characters</string>
+    <string name="username_error">Username should only contain letters, numbers and underscores</string>
+    <string name="account_created">Account created!</string>
+    <string name="account_created_message">        Your account has been created!\n\n
+        Think to validate your email within the 48 next hours.\n\n
+        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
+        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    </string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d voto</item>
+        <item quantity="other">%d voto</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Selección única</item>
+        <item>Opciones múltiples</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>6 horas</item>
+        <item>1 día</item>
+        <item>3 días</item>
+        <item>7 días</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>WebView</item>
-        <item>Direct stream</item>
+        <item>Flujo directo</item>
     </string-array>
 </resources>

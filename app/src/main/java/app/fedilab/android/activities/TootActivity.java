@@ -51,7 +51,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,6 +59,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -100,13 +100,16 @@ import net.gotev.uploadservice.UploadService;
 import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
+import org.apache.poi.util.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
@@ -170,6 +173,7 @@ import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
+import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
@@ -299,7 +303,42 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     assert inputMethodManager != null;
                     inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
-                    finish();
+                    boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+                    if( !storeToot ) {
+                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+                            finish();
+                        }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                                finish();
+                        }else {
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
+                            dialogBuilder.setMessage(R.string.save_draft);
+                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (accountReply == null) {
+                                        storeToot(true, false);
+                                    } else {
+                                        storeToot(false, false);
+                                    }
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.show();
+                        }
+
+                    }else{
+                        finish();
+                    }
                 }
             });
             if (theme == Helper.THEME_LIGHT) {
@@ -2071,10 +2110,51 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         super.onPause();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-        if( storeToot && accountReply == null)
+        if( storeToot && accountReply == null) {
             storeToot(true, false);
-        else if( storeToot)
+        }else if( storeToot) {
             storeToot(false, false);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+        if( !storeToot ){
+            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+                finish();
+            }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                finish();
+            }else {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
+                dialogBuilder.setMessage(R.string.save_draft);
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (accountReply == null) {
+                            storeToot(true, false);
+                        } else {
+                            storeToot(false, false);
+                        }
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setCancelable(false);
+                alertDialog.show();
+            }
+        }else{
+            super.onBackPressed();
+        }
 
     }
 
@@ -2309,9 +2389,39 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void upload(Context context, Uri uri, String fname){
+    private void upload(Context context, Uri inUri, String fname){
         String uploadId = UUID.randomUUID().toString();
         uploadReceiver.setUploadID(uploadId);
+        Uri uri = inUri;
+
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            tempInput = getContentResolver().openInputStream(inUri);
+            File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read = 0;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            uri = FileProvider.getUriForFile(this,
+                    "app.fedilab.android.fileProvider",
+                    file);
+            tempInput.close();
+            tempOut.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
         try {
             final String fileName = FileNameCleaner.cleanFileName(fname);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

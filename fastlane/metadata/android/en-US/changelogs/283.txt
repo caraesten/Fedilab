@@ -1,0 +1,8 @@
+Changed
+- Reply icon
+
+Fixed
+- CW when composing
+- Error with shortened URLs
+- Always mark media as sensitive
+- NEW badge's letters being transparent

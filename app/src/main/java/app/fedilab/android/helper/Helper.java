@@ -3321,7 +3321,7 @@ public class Helper {
      * @return ArrayList<String> split toot
      */
     public static ArrayList<String> splitToots(String content, int maxChars){
-        String[] splitContent = content.split("((\\.\\s)|(,\\s)|(;\\s)|(\\?\\s)|(!\\s)){1}");
+        String[] splitContent = content.split("\\s");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
         ArrayList<String> mentions = new ArrayList<>();
@@ -3343,7 +3343,7 @@ public class Helper {
         int maxCharsMention = maxChars - mentionLength;
         for(int i= 0 ; i < splitContent.length ; i++){
             if (i < (splitContent.length - 1) && (countLength(tempContent.toString()) + countLength(splitContent[i + 1])) < (maxChars - 10)) {
-                tempContent.append(". ").append(splitContent[i + 1]);
+                tempContent.append(" ").append(splitContent[i + 1]);
             } else {
                 splitToot.add(tempContent.toString());
                 if (i < (splitContent.length - 1)) {
@@ -3359,7 +3359,11 @@ public class Helper {
         int i=1;
         ArrayList<String> reply = new ArrayList<>();
         for(String newContent : splitToot){
-            reply.add((i-1), newContent + " - " + i + "/" + splitToot.size());
+            if( splitToot.size() > 1 ) {
+                reply.add((i - 1), newContent + " - " + i + "/" + splitToot.size());
+            }else{
+                reply.add((i - 1), newContent);
+            }
             i++;
         }
         return reply;
@@ -4024,40 +4028,36 @@ public class Helper {
     }
 
 
-    public static boolean netCipherInit = false;
+    public static volatile boolean orbotConnected = false;
 
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
-        if( !netCipherInit) {
-            try {
-                StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
-                    @Override
-                    public void onConnected(OkHttpClient okHttpClient) {
-                        UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
-                        netCipherInit = true;
-                    }
 
-                    @Override
-                    public void onConnectionException(Exception exc) {
-                        netCipherInit = false;
-                    }
+        try {
+            StrongOkHttpClientBuilder.forMaxSecurity(appContext).build(new StrongBuilder.Callback<OkHttpClient>() {
+                @Override
+                public void onConnected(OkHttpClient okHttpClient) {
+                    UploadService.HTTP_STACK = new OkHttpStack(getHttpClient(context));
+                    orbotConnected = true;
+                }
 
-                    @Override
-                    public void onTimeout() {
-                        netCipherInit = false;
-                    }
+                @Override
+                public void onConnectionException(Exception exc) {
+                    orbotConnected = false;
+                }
 
-                    @Override
-                    public void onInvalid() {
-                        netCipherInit = false;
-                    }
-                });
-            } catch (Exception ignored) {
-            }
-        }
+                @Override
+                public void onTimeout() {
+                    orbotConnected = false;
+                }
+
+                @Override
+                public void onInvalid() {
+                    orbotConnected = false;
+                }
+            });
+        } catch (Exception ignored) { }
     }
-
-
 
 
     public static OkHttpClient getHttpClient(Context context) {

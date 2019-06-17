@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.JsonArray;
@@ -40,13 +41,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.LoginActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
@@ -57,6 +61,7 @@ import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
+import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.InstanceSocial;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.NodeInfo;
@@ -329,6 +334,31 @@ public class API {
     }
 
 
+    /***
+     * Get instance for registering an account *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstanceReg(String category) {
+        apiResponse = new APIResponse();
+        try {
+            String response = new HttpsConnection(context, null).get(String.format("https://api.joinmastodon.org/servers?category=%s", category));
+            List<InstanceReg> instanceRegs = parseInstanceReg(new JSONArray(response));
+            apiResponse.setInstanceRegs(instanceRegs);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+
 
     /***
      * Update credential of the authenticated user *synchronously*
@@ -362,9 +392,7 @@ public class API {
                 i++;
             }
         }
-        if(sensitive){
-            requestParams.put("source[sensitive]", String.valueOf(sensitive));
-        }
+        requestParams.put("source[sensitive]", String.valueOf(sensitive));
         try {
             new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -469,6 +497,79 @@ public class API {
         return newValues;
     }
 
+    public APIResponse createAccount(AccountCreation accountCreation){
+        apiResponse = new APIResponse();
+
+        try {
+            HashMap<String, String> params = new HashMap<>();
+            params.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
+            params.put(Helper.REDIRECT_URIS, Helper.REDIRECT_CONTENT);
+            params.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+            params.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/apps"), 30, params, null);
+            JSONObject resobj = new JSONObject(response);
+            String client_id = resobj.getString("client_id");
+            String client_secret = resobj.getString("client_secret");
+
+            params = new HashMap<>();
+            params.put("grant_type", "client_credentials");
+            params.put("client_id", client_id);
+            params.put("client_secret", client_secret);
+            params.put("scope", "read write");
+            response = new HttpsConnection(context, this.instance).post("https://" + this.instance + "/oauth/token", 30, params, null);
+            JSONObject res = new JSONObject(response);
+            String app_token = res.getString("access_token");
+            params = new HashMap<>();
+            params.put("username", accountCreation.getUsername());
+            params.put("email", accountCreation.getEmail());
+            params.put("password", accountCreation.getPassword());
+            params.put("agreement", "true");
+            params.put("locale", Locale.getDefault().getLanguage());
+            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 60, params, app_token);
+
+            /*res = new JSONObject(response);
+            String access_token = res.getString("access_token");
+            prefKeyOauthTokenT = access_token;
+
+            response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+            if( account.getSocial().equals("PLEROMA")){
+                isPleromaAdmin(account.getAcct());
+            }
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            account.setToken(access_token);
+            account.setClient_id(client_id);
+            account.setClient_secret(client_secret);
+            account.setRefresh_token(null);
+            account.setInstance(instance);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            boolean userExists = new AccountDAO(context, db).userExist(account);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.PREF_KEY_ID, account.getId());
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, account.isModerator());
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
+            editor.putString(Helper.PREF_INSTANCE, instance);
+            editor.apply();
+            if( userExists)
+                new AccountDAO(context, db).updateAccountCredential(account);
+            else {
+                if( account.getUsername() != null && account.getCreated_at() != null)
+                    new AccountDAO(context, db).insertAccount(account);
+            }*/
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
 
     /**
      * Returns an account
@@ -3710,7 +3811,9 @@ public class API {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
                 i++;
-                statuses.add(status);
+                if( status != null) {
+                    statuses.add(status);
+                }
             }
 
         } catch (JSONException e) {
@@ -4113,6 +4216,54 @@ public class API {
         }
         return instance;
     }
+
+
+
+    /**
+     * Parse json response for several instance reg
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public List<InstanceReg> parseInstanceReg(JSONArray jsonArray){
+
+        List<InstanceReg> instanceRegs = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                InstanceReg instanceReg = parseInstanceReg(resobj);
+                i++;
+                instanceRegs.add(instanceReg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceRegs;
+    }
+
+    /**
+     * Parse json response an unique instance for registering
+     * @param resobj JSONObject
+     * @return InstanceReg
+     */
+    private InstanceReg parseInstanceReg(JSONObject resobj){
+        InstanceReg instanceReg = new InstanceReg();
+        try {
+            instanceReg.setDomain(resobj.getString("domain"));
+            instanceReg.setVersion(resobj.getString("version"));
+            instanceReg.setDescription(resobj.getString("description"));
+            instanceReg.setLanguage(resobj.getString("language"));
+            instanceReg.setCategory(resobj.getString("category"));
+            instanceReg.setProxied_thumbnail(resobj.getString("proxied_thumbnail"));
+            instanceReg.setTotal_users(resobj.getInt("total_users"));
+            instanceReg.setLast_week_users(resobj.getInt("last_week_users"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceReg;
+    }
+
+
 
     /**
      * Parse Pleroma emojis

@@ -876,6 +876,40 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="mention_status">Nevn statusen</string>
     <string name="action_news">Nyheter</string>
     <string name="set_display_news_from_fedilab">Vis nyheter fra Fedilab-kontoen</string>
+    <string name="category_general">Generelt</string>
+    <string name="category_regional">Regionalt</string>
+    <string name="category_art">Kunst</string>
+    <string name="category_journalism">Journalistikk</string>
+    <string name="category_activism">Aktivisme</string>
+    <string name="category_games">Spilling</string>
+    <string name="category_tech">Teknologi</string>
+    <string name="category_adult">Voksent innhold</string>
+    <string name="category_furry">Furry</string>
+    <string name="category_food">Mat</string>
+    <string name="instance_logo">Instansens logo</string>
+    <string name="toast_error_instance_reg">Noe gikk galt under henting av tilgjengelige instanser!</string>
+    <string name="join_mastodon">Opprett Mastodon-konto</string>
+    <string name="pickup_instance_category">Velg en instans fra en av kategoriene.</string>
+    <string name="users">%1$s brukere</string>
+    <string name="password_confirm">Bekreft passord</string>
+    <string name="agreement_check">Jeg er enig i %1$s og %2$s</string>
+    <string name="server_rules">regler for instansen</string>
+    <string name="tos">vilkår for tjenesten</string>
+    <string name="sign_up">Registrer deg</string>
+    <string name="validation_needed">Instansen tillater bare nye medlemmer som er invitert. Kontoen din må manuelt godkjennes av en administrator før den kan brukes.</string>
+    <string name="all_field_filled">Vennligst fyll ut alle feltene!</string>
+    <string name="password_error">Passordene er ikke like!</string>
+    <string name="email_error">E-postadressen ser ikke ut til å være gyldig!</string>
+    <string name="username_indicator">Brukernavnet ditt vil være unikt på %1$s</string>
+    <string name="email_indicator">Du vil få tilsendt en bekreftelse på e-post</string>
+    <string name="password_indicator">Bruk minst 8 tegn</string>
+    <string name="password_too_short">Passordet må inneholde minst 8 tegn</string>
+    <string name="username_error">Brukernavn skal bare inneholde bokstaver, tall og understrek</string>
+    <string name="account_created">Konto opprettet!</string>
+    <string name="account_created_message">        Din konto har blitt opprettet!\n\n
+        Vurder å bekreft e-postadressen din innen 48 timer.\n\n
+        Du kan nå koble kontoen din ved å skrive <b>%1$s</b> i det første feltet og klikk på <b>Koble til</b>.\n\n
+        <b>Viktig</b>: Hvis instansen krever invitasjon, vil du motta en e-post når kontoen er godkjent!    </string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

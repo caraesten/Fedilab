@@ -35,8 +35,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -62,6 +64,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -212,6 +215,25 @@ public class LoginActivity extends BaseActivity {
             } else {
                 changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
             }
+
+            TextView create_an_account_message = findViewById(R.id.create_an_account);
+             SpannableString content_create = new SpannableString(getString(R.string.join_mastodon));
+            content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
+            if( theme == Helper.THEME_DARK)
+                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.dark_link_toot)), 0, content_create.length(),
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            else if( theme == Helper.THEME_BLACK)
+                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.black_link_toot)), 0, content_create.length(),
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            else if( theme == Helper.THEME_LIGHT)
+                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4)), 0, content_create.length(),
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            create_an_account_message.setText(content_create);
+            create_an_account_message.setOnClickListener(v -> {
+                Intent mainActivity = new Intent(LoginActivity.this, MastodonRegisterActivity.class);
+                startActivity(mainActivity);
+            });
+
 
             login_instance = findViewById(R.id.login_instance);
             login_uid = findViewById(R.id.login_uid);
