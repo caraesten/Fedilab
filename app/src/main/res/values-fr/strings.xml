@@ -919,6 +919,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
         You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
         <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
     </string>
+    <string name="save_draft">Save the message in drafts?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
