@@ -1856,7 +1856,7 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void syncedTimelines(List<ManageTimelines> manageTimelines, int position) {
         ReorderTimelinesActivity.updated = false;
-        new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
+        tabLayout = new ManageTimelines().createTabs(BaseMainActivity.this, tabLayout, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final NavigationView navigationView = findViewById(R.id.nav_view);
@@ -1874,8 +1874,7 @@ public abstract class BaseMainActivity extends BaseActivity
             toolbarTitle.setVisibility(View.GONE);
         viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
-        adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+
         boolean iconOnly = true;
         for(ManageTimelines tl: timelines){
             if( tl.getType() == ManageTimelines.Type.INSTANCE || tl.getType() == ManageTimelines.Type.TAG || tl.getType() == ManageTimelines.Type.LIST){
@@ -1892,7 +1891,8 @@ public abstract class BaseMainActivity extends BaseActivity
         boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
         displayTimelineMoreButton(display_timeline_in_list);
 
-        adapter.notifyDataSetChanged();
+        adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

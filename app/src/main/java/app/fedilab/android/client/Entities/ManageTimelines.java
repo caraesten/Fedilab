@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -289,9 +290,7 @@ public class ManageTimelines {
     }
 
 
-    public void createTabs(Context context, java.util.List<ManageTimelines> manageTimelines){
-
-        TabLayout tabLayout = ((BaseMainActivity)context).findViewById(R.id.tabLayout);
+    public TabLayout createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines){
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -423,6 +422,7 @@ public class ManageTimelines {
             }
             position++;
         }
+        return tabLayout;
     }
 
 
