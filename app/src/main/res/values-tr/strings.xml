@@ -17,7 +17,7 @@
     <string name="download">İndir</string>
     <string name="download_file">İndirme: %1$s</string>
     <string name="download_over">İndirme tamamlandı</string>
-    <string name="save_file">%1$s\'i kaydet</string>
+    <string name="save_file">%1$s dosyasını kaydet</string>
     <string name="save_over">Medya kaydedildi</string>
     <string name="download_from" formatted="false">Dosya: %1$s</string>
     <string name="password">Şifre</string>
@@ -123,12 +123,12 @@
         <item>Bu hesabı sustur?</item>
         <item>Bu hesabı engelle?</item>
         <item>Bu toot\'u bildir?</item>
-        <item>Block this domain?</item>
-        <item>Unmute this account?</item>
+        <item>Bu alan adı engellensin mi?</item>
+        <item>Bu hesabın susturulması açılsın mı?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Bilgilendir</item>
+        <item>Sessiz</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Bu toot\'u sil?</item>
@@ -506,8 +506,8 @@
     <string name="toast_instance_unavailable">Bu sunucuda hiç zaman tüneli bulunamadı!</string>
     <string name="delete_instance">Bu sunucuyu sil?</string>
     <string name="warning_delete_instance">%s\'i takip edilen sunuculardan çıkaracaksın.</string>
-    <string name="which_language">Tercüme et</string>
-    <string name="crash_title">Fedilab has stopped :(</string>
+    <string name="which_language">Şu dile çevir: </string>
+    <string name="crash_title">Fedilab durdu :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
@@ -668,10 +668,9 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        Bu alana, Mastodon hesabına bağlantılı olan e-posta adresini yaz.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_pwd">        Son adım şifreni girmek ve Giriş Yap\'a tıklamaktır.    </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
