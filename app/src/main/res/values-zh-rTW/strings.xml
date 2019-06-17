@@ -918,6 +918,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         您現在可以在第一欄中填寫 <b>%1$s</b> 並按下<b>連線</b>來連線到您的帳號。\n\n
         <b>重要</b>：如果您的站台需要驗證，您將會在驗證完成後收到電子郵件！
     </string>
+    <string name="save_draft">Save the message in drafts?</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
