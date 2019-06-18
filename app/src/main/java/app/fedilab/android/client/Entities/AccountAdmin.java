@@ -30,6 +30,8 @@ public class AccountAdmin implements Parcelable {
     private boolean suspended;
     private boolean silenced;
     private boolean disabled;
+    private Account account;
+
 
     public String getId() {
         return id;
@@ -119,7 +121,7 @@ public class AccountAdmin implements Parcelable {
         this.account = account;
     }
 
-    private Account account;
+
 
 
     @Override

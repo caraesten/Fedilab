@@ -19,6 +19,7 @@ import android.content.Context;
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountAdmin;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
@@ -31,6 +32,7 @@ import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
+import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
@@ -64,7 +66,8 @@ public class APIResponse {
     private boolean fetchmore = false;
     private List<String> playlistForVideos;
     private List<InstanceReg> instanceRegs = null;
-
+    private List<AccountAdmin> accountAdmins = null;
+    private List<Report> reports = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -248,5 +251,21 @@ public class APIResponse {
 
     public void setInstanceRegs(List<InstanceReg> instanceRegs) {
         this.instanceRegs = instanceRegs;
+    }
+
+    public List<AccountAdmin> getAccountAdmins() {
+        return accountAdmins;
+    }
+
+    public void setAccountAdmins(List<AccountAdmin> accountAdmins) {
+        this.accountAdmins = accountAdmins;
+    }
+
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 }

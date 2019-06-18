@@ -51,6 +51,7 @@ import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountAdmin;
 import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
@@ -112,6 +113,24 @@ public class API {
         TAGS,
         STATUSES,
         ACCOUNTS
+    }
+
+
+    public enum adminAction{
+        ENABLE,
+        APPROVE,
+        REJECT,
+        UNSILENCE,
+        UNSUSPEND,
+        ASSIGN_TO_SELF,
+        UNASSIGN,
+        REOPEN,
+        RESOLVE,
+        MODERATION_ACTION,
+        GET_ACCOUNTS,
+        GET_ONE_ACCOUNT,
+        GET_REPORTS,
+        GET_ONE_REPORT
     }
 
     public enum StatusAction{
@@ -182,6 +201,106 @@ public class API {
         }
         apiResponse = new APIResponse();
         APIError = null;
+    }
+
+
+
+
+    /**
+     * Execute admin get actions
+     * @param action type of the action
+     * @param id String can for an account or a status
+     * @return APIResponse
+     */
+    public APIResponse adminGet(adminAction action, String id, HashMap<String, String> params){
+        apiResponse = new APIResponse();
+        String endpoint = null;
+        switch (action){
+            case GET_ACCOUNTS:
+                endpoint = "/admin/accounts";
+                break;
+            case GET_ONE_ACCOUNT:
+                endpoint = String.format("/admin/accounts/%s", id);
+                break;
+            case GET_REPORTS:
+                endpoint = "/admin/reports";
+                break;
+            case GET_ONE_REPORT:
+                endpoint = String.format("/admin/reports/%s", id);
+                break;
+        }
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }
+
+        return apiResponse;
+    }
+
+
+
+
+    /**
+     * Execute admin post actions
+     * @param action type of the action
+     * @param id String can for an account or a status
+     * @return APIResponse
+     */
+    public APIResponse adminDo(adminAction action, String id, HashMap<String, String> params){
+        apiResponse = new APIResponse();
+        String endpoint = null;
+        switch (action){
+            case ENABLE:
+                endpoint = String.format("/admin/accounts/%s/enable", id);
+                break;
+            case APPROVE:
+                endpoint = String.format("/admin/accounts/%s/approve", id);
+                break;
+            case REJECT:
+                endpoint = String.format("/admin/accounts/%s/reject", id);
+                break;
+            case UNSILENCE:
+                endpoint = String.format("/admin/accounts/%s/unsilence", id);
+                break;
+            case UNSUSPEND:
+                endpoint = String.format("/admin/accounts/%s/unsuspend", id);
+                break;
+            case ASSIGN_TO_SELF:
+                endpoint = String.format("/admin/accounts/%s/assign_to_self", id);
+                break;
+            case UNASSIGN:
+                endpoint = String.format("/admin/accounts/%s/unassign", id);
+                break;
+            case REOPEN:
+                endpoint = String.format("/admin/accounts/%s/reopen", id);
+                break;
+            case RESOLVE:
+                endpoint = String.format("/admin/accounts/%s/resolve", id);
+                break;
+            case MODERATION_ACTION:
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                break;
+        }
+        try {
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }
+
+        return apiResponse;
     }
 
     public InstanceNodeInfo getNodeInfo(String domain){
@@ -325,6 +444,9 @@ public class API {
         apiResponse = new APIResponse();
         APIError = null;
     }
+
+
+
 
 
     /***
@@ -4814,6 +4936,75 @@ public class API {
         return account;
     }
 
+
+    /**
+     * Parse json response for list of accounts for admins
+     * @param jsonArray JSONArray
+     * @return List<Account>
+     */
+    private List<AccountAdmin> parseAccountAdminResponse(JSONArray jsonArray){
+
+        List<AccountAdmin> accountAdmins = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                AccountAdmin accountAdmin = parseAccountAdminResponse(context, resobj);
+                accountAdmins.add(accountAdmin);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accountAdmins;
+    }
+
+    /**
+     * Parse json response an unique account for admins
+     * @param resobj JSONObject
+     * @return Account
+     */
+    private static AccountAdmin parseAccountAdminResponse(Context context, JSONObject resobj){
+
+        AccountAdmin accountAdmin = new AccountAdmin();
+        try {
+            accountAdmin.setId(resobj.get("id").toString());
+            accountAdmin.setUsername(resobj.getString("username"));
+            accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            accountAdmin.setEmail(resobj.getString("email"));
+            accountAdmin.setRole(resobj.getString("role"));
+            accountAdmin.setIp(resobj.getString("ip"));
+            accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
+            accountAdmin.setSuspended(resobj.getBoolean("suspended"));
+            accountAdmin.setSilenced(resobj.getBoolean("silenced"));
+            accountAdmin.setDisabled(resobj.getBoolean("disabled"));
+            accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+        }catch (Exception ignored){}
+        return accountAdmin;
+    }
+
+    /**
+     * Parse json response for list of accounts
+     * @param jsonArray JSONArray
+     * @return List<Account>
+     */
+    private List<Account> parseAccountResponse(JSONArray jsonArray){
+
+        List<Account> accounts = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Account account = parseAccountResponse(context, resobj);
+                accounts.add(account);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accounts;
+    }
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
@@ -5029,27 +5220,7 @@ public class API {
         } catch (JSONException ignored) {}
         return account;
     }
-    /**
-     * Parse json response for list of accounts
-     * @param jsonArray JSONArray
-     * @return List<Account>
-     */
-    private List<Account> parseAccountResponse(JSONArray jsonArray){
 
-        List<Account> accounts = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Account account = parseAccountResponse(context, resobj);
-                accounts.add(account);
-                i++;
-            }
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return accounts;
-    }
 
 
     /**
