@@ -72,6 +72,7 @@ import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.Poll;
 import app.fedilab.android.client.Entities.PollOptions;
 import app.fedilab.android.client.Entities.Relationship;
+import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Schedule;
 import app.fedilab.android.client.Entities.Status;
@@ -4938,9 +4939,55 @@ public class API {
 
 
     /**
+     * Parse json response for list of reports for admins
+     * @param jsonArray JSONArray
+     * @return List<Report>
+     */
+    private List<Report> parseReportAdminResponse(JSONArray jsonArray){
+
+        List<Report> reports = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Report report = parseReportAdminResponse(context, resobj);
+                reports.add(report);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return reports;
+    }
+
+    /**
+     * Parse json response an unique report for admins
+     * @param resobj JSONObject
+     * @return AccountAdmin
+     */
+    private static Report parseReportAdminResponse(Context context, JSONObject resobj){
+
+        Report report = new Report();
+        try {
+            report.setId(resobj.getString("id"));
+            report.setAction_taken(resobj.getString("action_taken"));
+            report.setComment(resobj.getString("comment"));
+            report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
+            report.setAccount_id(resobj.getString("account_id"));
+            report.setTarget_account_id(resobj.getString("target_account_id"));
+            report.setAssigned_account_id(resobj.getString("assigned_account_id"));
+            report.setAction_taken_by_account_id(resobj.getString("action_taken_by_account_id"));
+            report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
+        }catch (Exception ignored){}
+        return report;
+    }
+
+
+    /**
      * Parse json response for list of accounts for admins
      * @param jsonArray JSONArray
-     * @return List<Account>
+     * @return List<AccountAdmin>
      */
     private List<AccountAdmin> parseAccountAdminResponse(JSONArray jsonArray){
 
