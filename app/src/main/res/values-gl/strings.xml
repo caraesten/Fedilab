@@ -923,7 +923,7 @@
         Xa pode conectar coa súa conta escribindo <b>%1$s</b> no primeiro campo e pulsando <b>Conectar</b>.\n\n
         <b>Importante</b>: se a súa instancia require validación, recibirá un correo unha vez sexa validada!
     </string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">¿Gardar mensaxe en borradores?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
