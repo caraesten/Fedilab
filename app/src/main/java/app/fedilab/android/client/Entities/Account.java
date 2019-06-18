@@ -120,6 +120,11 @@ public class Account implements Parcelable {
     private String privacy = "public";
     private boolean sensitive = false;
 
+    private String locale;
+    private String invite_request;
+    private String created_by_application_id;
+    private String invited_by_account_id;
+
 
 
 
@@ -176,6 +181,10 @@ public class Account implements Parcelable {
         dest.writeByte(this.isAdmin ? (byte) 1 : (byte) 0);
         dest.writeString(this.privacy);
         dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
+        dest.writeString(this.locale);
+        dest.writeString(this.invite_request);
+        dest.writeString(this.created_by_application_id);
+        dest.writeString(this.invited_by_account_id);
     }
 
     public Account() {
@@ -231,6 +240,10 @@ public class Account implements Parcelable {
         this.isAdmin = in.readByte() != 0;
         this.privacy = in.readString();
         this.sensitive =in.readByte() != 0;
+        this.locale = in.readString();
+        this.invite_request = in.readString();
+        this.created_by_application_id = in.readString();
+        this.invited_by_account_id = in.readString();
     }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
@@ -404,6 +417,38 @@ public class Account implements Parcelable {
 
     public void setSensitive(boolean sensitive) {
         this.sensitive = sensitive;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String getInvite_request() {
+        return invite_request;
+    }
+
+    public void setInvite_request(String invite_request) {
+        this.invite_request = invite_request;
+    }
+
+    public String getCreated_by_application_id() {
+        return created_by_application_id;
+    }
+
+    public void setCreated_by_application_id(String created_by_application_id) {
+        this.created_by_application_id = created_by_application_id;
+    }
+
+    public String getInvited_by_account_id() {
+        return invited_by_account_id;
+    }
+
+    public void setInvited_by_account_id(String invited_by_account_id) {
+        this.invited_by_account_id = invited_by_account_id;
     }
 
 
