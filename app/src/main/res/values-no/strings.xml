@@ -910,7 +910,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
         Vurder å bekreft e-postadressen din innen 48 timer.\n\n
         Du kan nå koble kontoen din ved å skrive <b>%1$s</b> i det første feltet og klikk på <b>Koble til</b>.\n\n
         <b>Viktig</b>: Hvis instansen krever invitasjon, vil du motta en e-post når kontoen er godkjent!    </string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">Lagre meldingen som kladd?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
