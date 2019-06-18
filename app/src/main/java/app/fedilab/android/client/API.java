@@ -232,6 +232,28 @@ public class API {
         }
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            switch (action){
+                case GET_ACCOUNTS:
+                    List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case GET_ONE_ACCOUNT:
+                    AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                    accountAdmins = new ArrayList<>();
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case GET_REPORTS:
+                    List<Report> reports = parseReportAdminResponse(new JSONArray(response));
+                    apiResponse.setReports(reports);
+                    break;
+                case GET_ONE_REPORT:
+                    reports = new ArrayList<>();
+                    Report report = parseReportAdminResponse(context, new JSONObject(response));
+                    reports.add(report);
+                    apiResponse.setReports(reports);
+                    break;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -240,6 +262,8 @@ public class API {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         return apiResponse;
@@ -274,16 +298,16 @@ public class API {
                 endpoint = String.format("/admin/accounts/%s/unsuspend", id);
                 break;
             case ASSIGN_TO_SELF:
-                endpoint = String.format("/admin/accounts/%s/assign_to_self", id);
+                endpoint = String.format("/admin/reports/%s/assign_to_self", id);
                 break;
             case UNASSIGN:
-                endpoint = String.format("/admin/accounts/%s/unassign", id);
+                endpoint = String.format("/admin/reports/%s/unassign", id);
                 break;
             case REOPEN:
-                endpoint = String.format("/admin/accounts/%s/reopen", id);
+                endpoint = String.format("/admin/reports/%s/reopen", id);
                 break;
             case RESOLVE:
-                endpoint = String.format("/admin/accounts/%s/resolve", id);
+                endpoint = String.format("/admin/reports/%s/resolve", id);
                 break;
             case MODERATION_ACTION:
                 endpoint = String.format("/admin/accounts/%s/action", id);
@@ -291,6 +315,42 @@ public class API {
         }
         try {
             String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            switch (action){
+                case ENABLE:
+                case APPROVE:
+                case REJECT:
+                case UNSILENCE:
+                case UNSUSPEND:
+                    List<AccountAdmin> accountAdmins = null;
+                    try {
+                        AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                        accountAdmins = new ArrayList<>();
+                        accountAdmins.add(accountAdmin);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case ASSIGN_TO_SELF:
+                case UNASSIGN:
+                case REOPEN:
+                case RESOLVE:
+                    List<Report> reports = null;
+                    Report report;
+                    try {
+                        reports = new ArrayList<>();
+                        report = parseReportAdminResponse(context, new JSONObject(response));
+                        reports.add(report);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    apiResponse.setReports(reports);
+
+                    break;
+                case MODERATION_ACTION:
+                    break;
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
