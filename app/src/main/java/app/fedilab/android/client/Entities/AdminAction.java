@@ -13,42 +13,46 @@ package app.fedilab.android.client.Entities;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
-public class AccountCreation {
+public class AdminAction {
 
-    private String username;
-    private String email;
-    private String password;
-    private String passwordConfirm;
 
-    public String getUsername() {
-        return username;
+    public enum adminActionType{
+        NONE,
+        DISABLE,
+        SILENCE,
+        SUSPEND
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    private adminActionType type;
+    private boolean send_email_notification;
+    private String text;
+
+
+    public adminActionType getType() {
+        return type;
     }
 
-    public String getEmail() {
-        return email;
+    public void setType(adminActionType type) {
+        this.type = type;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public boolean isSend_email_notification() {
+        return send_email_notification;
     }
 
-    public String getPassword() {
-        return password;
+    public void setSend_email_notification(boolean send_email_notification) {
+        this.send_email_notification = send_email_notification;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getText() {
+        return text;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
+
+
+
 }

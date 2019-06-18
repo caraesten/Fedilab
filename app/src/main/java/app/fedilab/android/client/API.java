@@ -48,11 +48,13 @@ import java.util.Map;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.LoginActivity;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.AccountAdmin;
 import app.fedilab.android.client.Entities.AccountCreation;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
@@ -278,9 +280,10 @@ public class API {
      * @param id String can for an account or a status
      * @return APIResponse
      */
-    public APIResponse adminDo(adminAction action, String id, HashMap<String, String> params){
+    public APIResponse adminDo(adminAction action, String id, AdminAction adminAction){
         apiResponse = new APIResponse();
         String endpoint = null;
+        HashMap<String, String> params = null;
         switch (action){
             case ENABLE:
                 endpoint = String.format("/admin/accounts/%s/enable", id);
@@ -310,7 +313,26 @@ public class API {
                 endpoint = String.format("/admin/reports/%s/resolve", id);
                 break;
             case MODERATION_ACTION:
+                params = new HashMap<>();
+                switch (adminAction.getType()){
+                    case NONE:
+                        params.put("type","none");
+                        break;
+                    case DISABLE:
+                        params.put("type","disable");
+                        break;
+                    case SILENCE:
+                        params.put("type","silence");
+                        break;
+                    case SUSPEND:
+                        params.put("type","suspend");
+                        break;
+                }
                 endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
                 break;
         }
         try {
