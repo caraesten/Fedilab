@@ -127,7 +127,7 @@
         <item>Fjern dæmpning på denne konto?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Meddel</item>
+        <item>Underret</item>
         <item>Tavs</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
@@ -211,17 +211,17 @@
     <string name="no_scheduled_toots">Ingen planlagte toots at vise!</string>
     <string name="no_scheduled_toots_indications">Skriv et toot og vælg derefter <b>Planlæg</b> fra top menuen.</string>
     <string name="remove_scheduled">Slet planlagt toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="media_count">Medie: %d</string>
+    <string name="toot_scheduled">Toot\'et er blevet planlagt!</string>
+    <string name="toot_scheduled_date">Den planlagte dato skal være senere end indeværende time!</string>
+    <string name="warning_battery">Strømsparetilstand er aktiveret! Det virker måske ikke som forventet.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Tid for dæmpning skal være mere end et minut.</string>
+    <string name="timed_mute_date">%1$s er blevet dæmpet indtil %2$s.\n Du kan fjerne dæmpningen fra profilens side.</string>
+    <string name="timed_mute_profile">%1$s er dæmpet indtil %2$s.\n Klik her for at fjerne dæmpningen.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="no_notifications">Ingen underretninger at vise</string>
+    <string name="notif_mention">nævnte dig</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">fulgte dig</string>
@@ -311,27 +311,27 @@
     <string name="set_notify">Underret?</string>
     <string name="set_notif_silent">Stille Underretninger</string>
     <string name="set_night_mode">Nattilstand</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="set_nsfw_timeout">NSFW visnings-timeout (sekunder, 0 betyder slået fra)</string>
+    <string name="settings_title_profile">Rediger profil</string>
+    <string name="settings_title_custom_sharing">Tilpasset deling</string>
+    <string name="settings_custom_sharing_url">Din tilpassede dele-URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="set_lock_account">Lås konto</string>
+    <string name="set_save_changes">Gem ændringer</string>
+    <string name="set_header_picture_overlay">Vælg et header billede</string>
+    <string name="set_fit_preview">Tilpas forhåndvisningsbilleder</string>
+    <string name="set_automatically_split_toot">Split automatisk toots ud i svar når antal tegn er over:</string>
+    <string name="note_no_space">Du har nået de 160 tilladte tegn!</string>
+    <string name="username_no_space">Du har nået de 30 tilladte tegn!</string>
+    <string name="settings_time_from">Mellem</string>
+    <string name="settings_time_to">og</string>
+    <string name="settings_time_greater">Tiden skal være senere end %1$s</string>
+    <string name="settings_time_lower">Tiden skal være tidligere end %1$s</string>
+    <string name="settings_hour_init">Starttid</string>
+    <string name="settings_hour_end">Sluttid</string>
+    <string name="embedded_browser">Brug den indbyggede browser</string>
+    <string name="custom_tabs">Tilpassede faner</string>
+    <string name="use_javascript">Aktivér JavaScript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
