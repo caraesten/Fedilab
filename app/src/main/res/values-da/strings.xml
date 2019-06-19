@@ -598,17 +598,17 @@
     <string name="no_comments">Vær den første til at skrive en kommentar til denne video via den øverste, højre knap!</string>
     <string name="number_view_video">%s visninger</string>
     <string name="duration_video">Varighed: %s</string>
-    <string name="add_remote_instance">Tilføj en forekomst</string>
+    <string name="add_remote_instance">Tilføj en instans</string>
     <string name="comment_no_allowed_peertube">Kommentarer er ikke aktiveret for denne video!</string>
     <string name="pickup_resolution">Vælg en opløsning</string>
-    <string name="peertube_favorites">Peertube-favoritter</string>
+    <string name="peertube_favorites">Peertube favoritter</string>
     <string name="bookmark_add_peertube">Videoen er tilføjet bogmærker!</string>
     <string name="bookmark_remove_peertube">Videoen er fjernet fra bogmærker!</string>
-    <string name="bookmark_peertube_empty">Der er ingen Peertube-videoer i dine favoritter!</string>
+    <string name="bookmark_peertube_empty">Der er ingen Peertube videoer i dine favoritter!</string>
     <string name="channel">Kanal</string>
-    <string name="no_peertube_channels">Ingen Peertube-kanaler</string>
-    <string name="no_peertube_instances">Ingen Peertube-forekomster</string>
-    <string name="no_mastodon_instances">Ingen Mastodon-forekomster</string>
+    <string name="no_peertube_channels">Ingen Peertube kanaler</string>
+    <string name="no_peertube_instances">Ingen Peertube instanser</string>
+    <string name="no_mastodon_instances">Ingen Mastodon instanser</string>
     <string name="no_lists">Ingen lister</string>
     <string name="videos">Videoer</string>
     <string name="channels">Kanaler</string>
@@ -622,7 +622,7 @@
     <string name="action_bug_report">Fejlrapport</string>
     <string name="no_mail_client">Ingen e-mail klienter installeret.</string>
     <string name="bug_report_mail">Indsend fejlrapport</string>
-    <string name="account_id_clipbloard">Konto-ID\'en kopieret til Udklipsholder!</string>
+    <string name="account_id_clipbloard">Konto-ID\'en kopieret til udklipsholder!</string>
     <string name="settings_title_battery">Batterioptimering</string>
     <string name="set_change_locale">Skift sprog</string>
     <string name="default_language">Standardsprog</string>
@@ -643,10 +643,10 @@
     <string name="art_menu">Kunsttidslinje</string>
     <string name="open_menu">Åbn menu</string>
     <string name="go_back">Gå tilbage</string>
-    <string name="app_logo">App\'ens Logo</string>
+    <string name="app_logo">App\'ens logo</string>
     <string name="profile_picture">Profilbillede</string>
     <string name="profile_banner">Profilbanner</string>
-    <string name="contact_instance_admin">Kontakt admin for forekomsten</string>
+    <string name="contact_instance_admin">Kontakt admin for instansen</string>
     <string name="add_new">Tilføj ny</string>
     <string name="mastohost_logo">MastoHost-logo</string>
     <string name="emoji_picker">Emoji-vælger</string>
@@ -670,9 +670,9 @@
         <item>1 dag</item>
         <item>1 uge</item>
     </string-array>
-    <string name="showcase_instance">        I dette felt skal du angive din forekomsts værtsnavn.\nOprettede du f.eks. din konto på https://mastodon.social\nSå angiv <b>mastodon.social</b> (uden https://)\n
+    <string name="showcase_instance">        I dette felt skal du angive din instans værtsnavn.\nOprettede du f.eks. din konto på https://mastodon.social\nSå angiv <b>mastodon.social</b> (uden https://)\n
         Du kan begynde at skrive, hvorefter navneforslag vises.\n\n
-        ⚠ Forbind-knappen vil kun fungere, hvis forekomstnavnet er korrekt og forekomsten er online!
+        ⚠ Forbind-knappen vil kun fungere, hvis instansnavnet er korrekt og instansen er online!
     </string>
     <string name="showcase_uid">        Angiv den til din Mastodon-konto tilknyttede e-mail i dette felt.
     </string>
@@ -702,26 +702,26 @@
     <string name="change_tag_column">Skift kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey instanser</string>
     <string name="misskey_instance">Misskey instans</string>
-    <string name="toast_no_apps">Ingen app der understøtter dette link, er installeret på din enhed.</string>
+    <string name="toast_no_apps">Ingen tilgængelig app på din enhed understøtter dette link.</string>
     <string name="subscriptions">Abonnementer</string>
     <string name="overview">Oversigt</string>
     <string name="trending">Populære</string>
-    <string name="recently_added">Tilføjet for nyligt</string>
+    <string name="recently_added">Nyligt tilføjet</string>
     <string name="local">Lokalt</string>
     <string name="upload_video">Upload</string>
     <string name="reply">Besvar</string>
     <string name="delete_comment">Slet kommentar</string>
-    <string name="delete_comment_confirm">Er du sikker på du vil slette denne kommentar?</string>
-    <string name="fullscreen">Fuld skærm video</string>
-    <string name="set_video_mode">Tilstand for videoer</string>
-    <string name="file_to_upload">Vælg fil at overføre</string>
+    <string name="delete_comment_confirm">Sikker på, at du vil slette denne kommentar?</string>
+    <string name="fullscreen">Fuldskærmsvideo</string>
+    <string name="set_video_mode">Videotilstande</string>
+    <string name="file_to_upload">Vælg fil til upload</string>
     <string name="my_videos">Mine videoer</string>
     <string name="title">Titel</string>
     <string name="categories">Kategorier</string>
     <string name="license">Licens</string>
     <string name="category">Kategori</string>
     <string name="language">Sprog</string>
-    <string name="peertube_nsfw">Denne video indeholder pornografisk eller anstødeligt indhold</string>
+    <string name="peertube_nsfw">Denne video har erotisk eller anstødeligt indhold</string>
     <string name="peertube_enable_comments">Aktivér video kommentarer</string>
     <string name="update_video">Opdater video</string>
     <string name="description">Beskrivelse</string>
