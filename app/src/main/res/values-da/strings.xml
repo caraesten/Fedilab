@@ -72,7 +72,7 @@
     <!--- Menu -->
     <string name="home_menu">Hjem</string>
     <string name="local_menu">Lokal tidslinje</string>
-    <string name="global_menu">Samlet tidslinje</string>
+    <string name="global_menu">Forenet tidslinje</string>
     <string name="neutral_menu_title">Valgmuligheder</string>
     <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Kommunikation</string>
@@ -387,23 +387,23 @@
     <string name="set_resize_picture">Ændr billedstørrelse</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-adviseringer</string>
-    <string name="settings_popup_message">        Bekræft de push-notifikationer, du ønsker at modtage.
-        Du kan senere slå disse notifikationer til/fra i indstillinger (fanen Notifikationer).
+    <string name="settings_popup_message">        Bekræft de push-adviseringer, du ønsker at modtage.
+        Du kan senere slå disse adviseringer til/fra i indstillinger (fanen Notifikationer).
     </string>
-    <string name="settings_popup_timeline">For ulæste toots i hjemmetidslinjen?</string>
-    <string name="settings_popup_notification">For ulæste underretninger?</string>
+    <string name="settings_popup_timeline">Til ulæste toots i Hjem-tidslinjen?</string>
+    <string name="settings_popup_notification">Til ulæste adviseringer?</string>
     <!-- CACHE -->
     <string name="cache_title">Ryd Cache</string>
-    <string name="cache_message">Der findes %1$s af data i cachen.\n\nØnsker du at slette det?</string>
+    <string name="cache_message">Cachen indeholder %1$s data.\n\nVil du slette dataene?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cachen blev ryddet! %1$s blev frigjort</string>
+    <string name="toast_cache_clear">Cachen er ryddet! %1$s er frigivet</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Titel</string>
     <string name="title_hint_custom_sharing">Titel&#8230;</string>
     <string name="description_header_custom_sharing">Beskrivelse</string>
     <string name="description_hint_custom_sharing">Beskrivelse&#8230;</string>
-    <string name="keywords_header_custom_sharing">Nøgleord</string>
-    <string name="keywords_hint_custom_sharing">Nøgleord&#8230;</string>
+    <string name="keywords_header_custom_sharing">Søgeord</string>
+    <string name="keywords_hint_custom_sharing">Søgeord&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synkronisér</string>
     <string name="action_filter">Filtrér</string>
@@ -412,12 +412,12 @@
     <string name="v_unlisted">Ikke listet</string>
     <string name="v_private">Privat</string>
     <string name="v_direct">Direkte</string>
-    <string name="v_keywords">Nogle nøgleord…</string>
-    <string name="show_media">Vis medie</string>
-    <string name="show_pinned">Vis fastgjort</string>
+    <string name="v_keywords">Nogle søgeord…</string>
+    <string name="show_media">Vis medier</string>
+    <string name="show_pinned">Vis fastgjorte</string>
     <string name="filter_no_result">Ingen matchende resultater!</string>
-    <string name="data_backup_toots">Sikkerhedskopiér toots for %1$s</string>
-    <string name="data_backup_success">%1$s nye toots blev importeret</string>
+    <string name="data_backup_toots">Sikkerhedskopiér toots fra %1$s</string>
+    <string name="data_backup_success">%1$s nye toots er importeret</string>
     <string-array name="filter_select">
         <item>Nej</item>
         <item>Kun</item>
