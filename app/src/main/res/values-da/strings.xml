@@ -84,8 +84,8 @@
     <string name="optimization">Optimering</string>
     <string name="settings">Indstillinger</string>
     <string name="profile">Profil</string>
-    <string name="make_a_choice">Hvad vil du foretage dig?</string>
-    <string name="delete_account_title">Slette en konto</string>
+    <string name="make_a_choice">Hvad ønsker du at foretage dig?</string>
+    <string name="delete_account_title">Slet en konto</string>
     <string name="delete_account_message" formatted="false">Slet kontoen %1$s fra app\'en?</string>
     <string name="send_email">Send en e-mail</string>
     <string name="choose_file">Vælg en fil</string>
@@ -217,41 +217,41 @@
     <string name="warning_battery">Strømsparetilstand er aktiveret! Den fungerer måske ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tidspunkt for at gøre tavs skal udgøre over et minut.</string>
-    <string name="timed_mute_date">%1$s er blevet dæmpet indtil %2$s.\n Du kan fjerne dæmpningen fra profilens side.</string>
-    <string name="timed_mute_profile">%1$s er dæmpet indtil %2$s.\n Klik her for at fjerne dæmpningen.</string>
+    <string name="timed_mute_date">%1$s er blevet gjort tavs indtil %2$s.\n Du kan fjerne dette fra profilensiden.</string>
+    <string name="timed_mute_profile">%1$s er gjort stum indtil %2$s.\n Tryk hér for at fjerne forstumningen.</string>
     <!-- Notifications -->
-    <string name="no_notifications">Ingen underretninger at vise</string>
+    <string name="no_notifications">Ingen adviseringer at vise</string>
     <string name="notif_mention">nævnte dig</string>
     <string name="notif_reblog">boostede din status</string>
     <string name="notif_favourite">favoriserede din status</string>
     <string name="notif_follow">fulgte dig</string>
     <string name="notif_pouet">Nyt toot fra %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">og en anden underretning</item>
-        <item quantity="other">og %d andre underretninger</item>
+        <item quantity="one">og en anden advisering</item>
+        <item quantity="other">og %d andre adviseringer</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">og et andet toot at opdage</item>
         <item quantity="other">og %d andre toots at opdage</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d Like</item>
+        <item quantity="other">%d Likes</item>
     </plurals>
-    <string name="delete_notification_ask">Slet en underretning?</string>
-    <string name="delete_notification_ask_all">Slet alle underretninger?</string>
-    <string name="delete_notification">Underretningen er blevet slettet!</string>
-    <string name="delete_notification_all">Alle underretninger er blevet slettet!</string>
+    <string name="delete_notification_ask">Slet en advisering?</string>
+    <string name="delete_notification_ask_all">Slet alle adviseringer?</string>
+    <string name="delete_notification">Adviseringen er slettet!</string>
+    <string name="delete_notification_all">Alle adviseringer er slettet!</string>
     <!-- HEADER -->
     <string name="following">Følger</string>
     <string name="followers">Følgere</string>
     <string name="pinned_toots">Fastgjort</string>
     <!-- TOAST -->
-    <string name="client_error">Kan ikke få fat i klient id!</string>
-    <string name="no_internet">Ingen internet forbindelse!</string>
-    <string name="toast_block">Kontoen var blokeret!</string>
+    <string name="client_error">Kan ikke hente klient-ID!</string>
+    <string name="no_internet">Ingen Internetforbindelse!</string>
+    <string name="toast_block">Kontoen blev blokeret!</string>
     <string name="toast_unblock">Kontoen er ikke længere blokeret!</string>
-    <string name="toast_mute">Kontoen var dæmpet!</string>
+    <string name="toast_mute">Kontoen blev forstummet!</string>
     <string name="toast_unmute">Kontoen er ikke længere dæmpet!</string>
     <string name="toast_follow">Kontoen blev fulgt!</string>
     <string name="toast_unfollow">Kontoen bliver ikke længere fulgt!</string>
