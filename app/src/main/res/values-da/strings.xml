@@ -491,7 +491,7 @@
     <string name="data_export">Eksportér statusser</string>
     <string name="data_export_toots">Eksportér statusser for %1$s</string>
     <string name="data_export_success">%1$s toots ud af %2$s er eksporteret.</string>
-    <string name="data_export_error">Noget gik galt under dataeksporten til %1$s</string>
+    <string name="data_export_error">Noget gik galt under dataeksporten for %1$s</string>
     <string name="data_export_error_simple">Noget gik galt under dataeksporten!</string>
     <string name="data_import_success_simple">Data er importeret!</string>
     <string name="data_import_error_simple">Noget gik galt under dataimporten!</string>
@@ -539,7 +539,7 @@
     <string name="context_public">Offentlige tidslinjer</string>
     <string name="context_notification">Notifikationer</string>
     <string name="context_conversation">Samtaler</string>
-    <string name="filter_keyword_explanations">Matches uafhængigt af minuskler/versaler i tekst eller inholdsadvarsel i et toot</string>
+    <string name="filter_keyword_explanations">Matcher uafhængigt af minuskler/versaler i tekst eller inholdsadvarsel i et toot</string>
     <string name="context_drop">Forkast i stedet for at skjule</string>
     <string name="context_drop_explanations">Filtrerede toots forsvinder uigenkaldeligt, selv hvis filtret senere fjernes</string>
     <string name="context_whole_word_explanations">Er søgeordet/-sætningen rent alfanumerisk, anvendes det/den kun ved match af hele ordet</string>
@@ -602,7 +602,7 @@
     <string name="comment_no_allowed_peertube">Kommentarer er ikke aktiveret for denne video!</string>
     <string name="pickup_resolution">Vælg en opløsning</string>
     <string name="peertube_favorites">Peertube favoritter</string>
-    <string name="bookmark_add_peertube">Videoen er tilføjet bogmærker!</string>
+    <string name="bookmark_add_peertube">Videoen er føjet til bogmærker!</string>
     <string name="bookmark_remove_peertube">Videoen er fjernet fra bogmærker!</string>
     <string name="bookmark_peertube_empty">Der er ingen Peertube videoer i dine favoritter!</string>
     <string name="channel">Kanal</string>
@@ -648,7 +648,7 @@
     <string name="profile_banner">Profilbanner</string>
     <string name="contact_instance_admin">Kontakt admin for instansen</string>
     <string name="add_new">Tilføj ny</string>
-    <string name="mastohost_logo">MastoHost-logo</string>
+    <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji-vælger</string>
     <string name="refresh">Opfrisk</string>
     <string name="expand_conversation">Udvid samtalen</string>
@@ -723,9 +723,9 @@
     <string name="language">Sprog</string>
     <string name="peertube_nsfw">Denne video har erotisk eller anstødeligt indhold</string>
     <string name="peertube_enable_comments">Aktivér video kommentarer</string>
-    <string name="update_video">Opdater video</string>
+    <string name="update_video">Opdatér video</string>
     <string name="description">Beskrivelse</string>
-    <string name="toast_peertube_video_updated">Videoen er blevet opdateret!</string>
+    <string name="toast_peertube_video_updated">Denne video er opdateret!</string>
     <string name="toast_cancelled">Upload annulleret!</string>
     <string name="upload_video_success">Videoen er blevet uploadet!</string>
     <string name="uploading">Uploader, vent venligst…</string>
