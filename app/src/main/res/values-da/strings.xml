@@ -59,7 +59,7 @@
     <string name="replies">Svar</string>
     <string name="username">Brugernavn</string>
     <string name="drafts">Kladder</string>
-    <string name="new_data">Nye data er tilgængelige! Ønsker du at vise dem?</string>
+    <string name="new_data">Nye data tilgængelige! Ønsker du at vise dem?</string>
     <string name="favourite">Favoritter</string>
     <string name="follow">Nye følgere</string>
     <string name="mention">Omtaler</string>
@@ -76,7 +76,7 @@
     <string name="neutral_menu_title">Valgmuligheder</string>
     <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Kommunikation</string>
-    <string name="muted_menu">Ignorerede brugere</string>
+    <string name="muted_menu">Tavse brugere</string>
     <string name="blocked_menu">Blokerede brugere</string>
     <string name="remote_follow_menu">Fjernfølgning</string>
     <string name="notifications">Adviseringer</string>
@@ -432,12 +432,12 @@
         &#9888; Loginoplysninger lagres aldrig, da de alene benyttes ifm. en sikker godkendelse (SSL) med en forekomst.
     </string>
     <string name="privacy_authorizations_title">Tilladelser:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Benyttes til at fastslå, om enheden er tilsluttet et Wi-Fi netværk.\n
+        - <b>INTERNET</b>: Benyttes ved forespørgsler til en forekomst.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Benyttes til lagring af medier eller til at flytte app\'en til et SD-kort.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Benyttes til at tilføje medier til toots.\n
+        - <b>BOOT_COMPLETED</b>: Benyttes til starte notifikationstjenesten.\n
+        - <b>WAKE_LOCK</b>: Benyttes, når notifikationstjenesten kører.
     </string>
     <string name="privacy_API_authorizations_title">API-tilladelser:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
