@@ -579,24 +579,24 @@
     <string name="channel_notif_media">Medie nedhentning</string>
     <string name="set_notif_sound">Skift underretningslyd</string>
     <string name="select_sound">Vælg lyd</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
+    <string name="set_enable_time_slot">Slå tidsplan til</string>
+    <string name="how_to_videos">Instruktionsvideoer</string>
+    <string name="retrieve_remote_conversation">Henter fjern-tråd!</string>
+    <string name="no_blocked_domain">Ingen blokerede domæner!</string>
+    <string name="unblock_domain_confirm">Fjern blokeringen af domæne</string>
+    <string name="unblock_domain_confirm_message">Er du sikker på du vil fjerne blokeringen af %s?</string>
+    <string name="block_domain_confirm_message">Er du sikker på at du vil blokere %s?\n\n\Du vil ikke være i stand til at se indhold fra det domæne i nogen offentlig tidslinje eller i dine underretninger. Dine følgere fra det domæne vil blive fjernet.</string>
+    <string name="blocked_domains">Blokerede domæner</string>
+    <string name="block_domain">Blokér domæne</string>
+    <string name="toast_block_domain">Domænet er blokeret</string>
+    <string name="toast_unblock_domain">Domænet er ikke længere blokeret!</string>
+    <string name="retrieve_remote_status">Henter fjern-status</string>
+    <string name="comment">Kommentar</string>
+    <string name="peertube_instance">Peertube instans</string>
+    <string name="set_display_direct">Vis \'private beskeder\' tidslinje</string>
+    <string name="set_keep_background_process">Behold baggrundsprocessen kørende når app\'en er lukket</string>
+    <string name="no_comments">Vær den første til at efterlade en kommentar på denne video med den øverste højre knap!</string>
+    <string name="number_view_video">%s visninger</string>
     <string name="duration_video">Duration: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
@@ -644,31 +644,31 @@
     <string name="open_menu">Open menu</string>
     <string name="go_back">Go back</string>
     <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="profile_picture">Profilbillede</string>
+    <string name="profile_banner">Profil banner</string>
+    <string name="contact_instance_admin">Kontakt administratoren for instansen</string>
+    <string name="add_new">Tilføj ny</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Add description for media (for the visually impaired)</string>
+    <string name="emoji_picker">Emoji-vælger</string>
+    <string name="refresh">Genopfrisk</string>
+    <string name="expand_conversation">Udvid samtalen</string>
+    <string name="remove_account">Fjern en konto</string>
+    <string name="delete_domain">Slet det blokerede domæne</string>
+    <string name="custom_emoji_picker">Brugerdefineret emoji-vælger</string>
+    <string name="play_video">Afspil video</string>
+    <string name="new_toot">Nyt toot</string>
+    <string name="card_view_image">Billede på kortet</string>
+    <string name="hide_media">Skjul medie</string>
+    <string name="favicon">Favikon</string>
+    <string name="media_description">Føj en beskrivelse til medie (for synshandicappede)</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Aldrig</item>
+        <item>30 minutter</item>
+        <item>1 time</item>
+        <item>6 timer</item>
+        <item>12 timer</item>
+        <item>1 dag</item>
+        <item>1 uge</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -678,10 +678,10 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Mere information</string>
+    <string name="showcase_2FA">Hvis du bruger 2FA (To-faktor-godkendelse), skal du bruge dette link.\nDu kan også bruge det, hvis du ikke ønsker at indtaste dine loginoplysninger her.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Sprog</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
