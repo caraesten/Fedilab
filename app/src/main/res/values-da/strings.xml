@@ -160,15 +160,15 @@
     <string name="toot_title_reply">Besvar et toot</string>
     <string name="queet_title">Skriv en queet</string>
     <string name="queet_title_reply">Besvar et queet</string>
-    <string name="toot_no_space">Du har nået de 500 tilladte tegn!</string>
+    <string name="toot_no_space">Du har nået de tilladte 500 tegn!</string>
     <string name="toot_select_image">Vælg et medie</string>
-    <string name="toot_select_image_error">Der opstod en fejl under valg af medie!</string>
+    <string name="toot_select_image_error">En fejl opstod under valg af medie!</string>
     <string name="toot_delete_media">Slette dette medie?</string>
     <string name="toot_error_no_content">Dit toot er tomt!</string>
-    <string name="toot_visibility_tilte">Synlighed for toot\'et</string>
-    <string name="toots_visibility_tilte">Standardsynlighed for toots: </string>
+    <string name="toot_visibility_tilte">Ttoot\'ets synlighed</string>
+    <string name="toots_visibility_tilte">Toots standardsynlighed: </string>
     <string name="toot_sent">Toot\'et er sendt!</string>
-    <string name="toot_reply_content_title">Du svarer på følgende toot:</string>
+    <string name="toot_reply_content_title">Du besvarer flg. toot:</string>
     <string name="toot_sensitive">Følsomt indhold?</string>
     <string-array name="toot_visibility">
         <item>Udgiv på offentlige tidslinjer</item>
@@ -176,7 +176,7 @@
         <item>Udgiv kun til følgere</item>
         <item>Udgiv kun til nævnte brugere</item>
     </string-array>
-    <string name="no_draft">Ingen træk!</string>
+    <string name="no_draft">Ingen udkast!</string>
     <string name="choose_toot">Vælg et toot</string>
     <string name="choose_accounts">Vælg en konto</string>
     <string name="select_accounts">Vælg nogle konti</string>
@@ -227,11 +227,11 @@
     <string name="notif_follow">fulgte dig</string>
     <string name="notif_pouet">Nyt toot fra %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
+        <item quantity="one">og en anden underretning</item>
         <item quantity="other">og %d andre underretninger</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
+        <item quantity="one">og et andet toot at opdage</item>
         <item quantity="other">og %d andre toots at opdage</item>
     </plurals>
     <plurals name="likes">
@@ -795,7 +795,7 @@
     <string name="featured_hashtags">Fremhævede hashtags</string>
     <string name="filter_timeline_with_a_tag">Filtrer tidslinje med tags</string>
     <string name="no_tags">Ingen tags</string>
-    <string name="set_hide_delete_notification_on_tab">Skjul \"slet\"-knappen i underretnings-tab\'en</string>
+    <string name="set_hide_delete_notification_on_tab">Skjul \"slet\"-knappen i underretningsfanen</string>
     <string name="set_retrieve_metadata_share_from_extras">Vedhæft et billede nå der deles en URL</string>
     <!-- end languages -->
     <string name="poll">Afstemning</string>
@@ -811,28 +811,28 @@
     <string name="vote">Stem</string>
     <string name="poll_not_private">En aftemning kan ikke vedhæftes en direkte besked!</string>
     <string name="notif_poll">En aftemning du har stemt i er afsluttet</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="notif_poll_self">En afstemning du har tootet er afsluttet</string>
+    <string name="settings_category_notif_customize">Tilpas</string>
+    <string name="settings_category_notif_categories">Kategorier</string>
+    <string name="settings_category_notif_news">Nyheder</string>
+    <string name="settings_category_notif_time_slot">Tidsplan</string>
+    <string name="settings_category_notif_advanced">Avanceret</string>
+    <string name="set_display_new_badge">Vis \'nyt\' badge på ulæste toots</string>
+    <string name="set_display_peertube">Vis Peertube tidslinje</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
+    <string name="hide_tab">Skjule fanen</string>
+    <string name="move_timeline">Flyt tidslinje</string>
+    <string name="hide_timeline">Skjul tidslinje</string>
+    <string name="reorder_timelines">Omarranger tidslinjer</string>
+    <string name="reorder_list_deleted">Listen slettet permanent</string>
+    <string name="reorder_instance_removed">Fulgt instans fjernet</string>
+    <string name="reorder_tag_removed">Fastgjort tag fjernet</string>
+    <string name="undo">Fortryd</string>
+    <string name="visible_tabs_needed">Du skal beholde to synlige faner!</string>
+    <string name="action_reorder_timeline">Omarranger tidslinjer</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
-    <string name="action_bbcode">BBCode</string>
+    <string name="warning_main_timeline">Hovedtidslinjer kan kun skjules!</string>
+    <string name="action_bbcode">BBkode</string>
     <string name="add_timeline">Tilføj en tidslinje</string>
     <string name="set_sensitive_content">Marker altid medier som følsomme</string>
     <string name="gnu_instance">GNU instans</string>
@@ -924,7 +924,7 @@
     </string>
     <string name="save_draft">Gemm beskeden i kladder?</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
+        <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
     </plurals>
     <string-array name="poll_choice_type">
@@ -934,14 +934,14 @@
     <string-array name="poll_duration">
         <item>5 minutter</item>
         <item>30 minutter</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>1 time</item>
+        <item>6 timer</item>
+        <item>1 dag</item>
+        <item>3 dage</item>
+        <item>7 dage</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Direkte streamet</item>
     </string-array>
 </resources>
