@@ -31,7 +31,7 @@
     <string name="two_factor_authentification">Tofaktorgodkendelse?</string>
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Instans</string>
-    <string name="instance_example">Instans: matodon.social</string>
+    <string name="instance_example">Instans: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Bruger nu kontoen: %1$s</string>
     <string name="add_account">Tilføj en konto</string>
     <string name="clipboard">Indhold af dette toot er kopieret til udklipsholder</string>
@@ -117,7 +117,7 @@
     <string name="more_action_5">Kopiér</string>
     <string name="more_action_6">Del</string>
     <string name="more_action_7">Nævn</string>
-    <string name="more_action_8">Gjort tavs tidsbegænset</string>
+    <string name="more_action_8">Tidsbegænset tavshed</string>
     <string name="more_action_9">Slet og omformulér</string>
     <string-array name="more_action_confirm">
         <item>Gør denne konto tavs?</item>
@@ -213,7 +213,7 @@
     <string name="remove_scheduled">Slet planlagt toot?</string>
     <string name="media_count">Medie: %d</string>
     <string name="toot_scheduled">Toot\'et er nu planlagt!</string>
-    <string name="toot_scheduled_date">Planlagningstidspunkt skal ligge efter det aktuelle tidspunkt!</string>
+    <string name="toot_scheduled_date">Det planlagte tidspunkt skal ligge efter det aktuelle tidspunkt!</string>
     <string name="warning_battery">Strømsparetilstand er aktiveret! Den fungerer måske ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tidspunkt for at gøre tavs skal være om mindst et minut.</string>
@@ -255,10 +255,10 @@
     <string name="toast_unmute">Kontoen er ikke længere tavs!</string>
     <string name="toast_follow">Kontoen blev fulgt!</string>
     <string name="toast_unfollow">Kontoen følges ikke længere!</string>
-    <string name="toast_reblog">Toot\'et blev boostet!</string>
+    <string name="toast_reblog">Toot\'et blev Boostet!</string>
     <string name="toast_unreblog">Toot\'et boostes ikke længere!</string>
     <string name="toast_favourite">Toot\'et blev føjet til dine favoritter!</string>
-    <string name="toast_unfavourite">Tootet blev fjernet fra dine favoritter!</string>
+    <string name="toast_unfavourite">Toot\'et blev fjernet fra dine favoritter!</string>
     <string name="toast_report">Toot\'et blev anmeldt!</string>
     <string name="toast_unstatus">Toot\'et er slettet!</string>
     <string name="toast_pin">Toot\'et er fastgjort!</string>
@@ -308,7 +308,7 @@
     <string name="set_share_validation">Vis bekræftelsesdialog inden boosting</string>
     <string name="set_share_validation_fav">Vis bekræftelsesdialog inden favorittilføjelse</string>
     <string name="set_wifi_only">Advisér kun via Wi-Fi</string>
-    <string name="set_notify">Underret?</string>
+    <string name="set_notify">Advisér?</string>
     <string name="set_notif_silent">Stille Underretninger</string>
     <string name="set_night_mode">Nattilstand</string>
     <string name="set_nsfw_timeout">NSFW visnings-timeout (sekunder, 0 betyder slået fra)</string>
