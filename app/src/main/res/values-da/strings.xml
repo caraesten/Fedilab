@@ -319,7 +319,7 @@
     <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Gem ændringer</string>
     <string name="set_header_picture_overlay">Vælg et overskriftsbillede</string>
-    <string name="set_fit_preview">Tilpas forhåndvisningsbilleder</string>
+    <string name="set_fit_preview">Tilpas forhåndsvisningsbilleder</string>
     <string name="set_automatically_split_toot">Opdel automatisk toots i svar, når tegnantal overstiger:</string>
     <string name="note_no_space">Du har nået de tilladte 160 tegn!</string>
     <string name="username_no_space">Du har nået de tilladte 30 tegn!</string>
@@ -377,9 +377,9 @@
     <string name="action_unfollow">Stop følgning</string>
     <string name="action_block">Blokér</string>
     <string name="action_unblock">Afblokér</string>
-    <string name="action_mute">Forstum</string>
+    <string name="action_mute">Gør tavs</string>
     <string name="action_no_action">Ingen handling</string>
-    <string name="action_unmute">Fjern \"Gør stum\"</string>
+    <string name="action_unmute">Fjern \"Gør tavs\"</string>
     <string name="request_sent">Forespørgsel sendt</string>
     <string name="followed_by">Følger dig</string>
     <string name="action_search">Søg</string>
@@ -446,32 +446,32 @@
         <b>&#9888; Disse handlinger udføres kun på brugerforlangende.</b>
     </string>
     <string name="privacy_API_title">Sporing og Biblioteker</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        App\'en <b>benytter ikke sporingsværktøjer</b> (publikumsmåling, fejlrapportering mv.), og den indeholder ingen reklamer.\n\n
+        Brugen af biblioteker er minimeret: \n
+        - <b>Glide</b>: Til mediehåndtering\n
+        - <b>Android-Job</b>: Til tjenestehåndtering\n
+        - <b>PhotoView</b>: Til billedhåndtering\n
     </string>
     <string name="privacy_API_yandex_title">Oversættelse af toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_authorizations">        App\'en giver mulighed for at oversætte toots ved brug af enhedslokaliseringen og Yandex-API\'en.\n
+        Yandex har en passende fortrolighedspolitik, der kan findes hér: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">        Tak til:
     </string>
-    <string name="filter_regex">Filtrér med regulære udtryk</string>
+    <string name="filter_regex">Bortfiltrér efter regulære udtryk</string>
     <string name="search">Søg</string>
     <string name="delete">Slet</string>
     <string name="fetch_more_toots">Hent flere toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lister</string>
-    <string name="action_lists_confirm_delete">Er du sikker på du vil slette denne liste permanent?</string>
-    <string name="action_lists_empty_content">Der er intet i denne liste endnu. Når medlemmer af denne liste udgiver nye status\'er, vil de blive vist her.</string>
+    <string name="action_lists_confirm_delete">Sikker på, at du vil slette denne liste permanent?</string>
+    <string name="action_lists_empty_content">Der er intet i denne liste endnu. Når listemedlemmer poster nye statusser, vil de fremgå her.</string>
     <string name="action_lists_add_to">Føj til liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
-    <string name="action_lists_create">Tilføj liste</string>
+    <string name="action_lists_create">Føj liste</string>
     <string name="action_lists_delete">Slet liste</string>
-    <string name="action_lists_update">Rediger liste</string>
-    <string name="action_lists_title_placeholder">Ny liste-titel</string>
+    <string name="action_lists_update">Redigér liste</string>
+    <string name="action_lists_title_placeholder">Ny listetitel</string>
     <string name="action_lists_search_users">Søg blandt personer, du følger</string>
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
