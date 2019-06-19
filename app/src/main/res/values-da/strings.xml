@@ -32,7 +32,7 @@
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: matodon.social</string>
-    <string name="toast_account_changed" formatted="false">Fungerer nu med %1$s-kontoen</string>
+    <string name="toast_account_changed" formatted="false">Bruger nu kontoen: %1$s</string>
     <string name="add_account">Tilføj en konto</string>
     <string name="clipboard">Indhold af dette toot er kopieret til udklipsholder</string>
     <string name="clipboard_url">URL\'en til dette toot er kopieret til udklipsholder</string>
@@ -165,7 +165,7 @@
     <string name="toot_select_image_error">En fejl opstod under valg af medie!</string>
     <string name="toot_delete_media">Slette dette medie?</string>
     <string name="toot_error_no_content">Dit toot er tomt!</string>
-    <string name="toot_visibility_tilte">Ttoot\'ets synlighed</string>
+    <string name="toot_visibility_tilte">Toot\'ets synlighed</string>
     <string name="toots_visibility_tilte">Toots standardsynlighed: </string>
     <string name="toot_sent">Toot\'et er sendt!</string>
     <string name="toot_reply_content_title">Du besvarer flg. toot:</string>
@@ -213,7 +213,7 @@
     <string name="remove_scheduled">Slet planlagt toot?</string>
     <string name="media_count">Medie: %d</string>
     <string name="toot_scheduled">Toot\'et er nu planlagt!</string>
-    <string name="toot_scheduled_date">Planlagningstidsdato skal ligge efter den aktuelle dato!</string>
+    <string name="toot_scheduled_date">Planlagningstidspunkt skal ligge efter det aktuelle tidspunkt!</string>
     <string name="warning_battery">Strømsparetilstand er aktiveret! Den fungerer måske ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tidspunkt for at gøre tavs skal være om mindst et minut.</string>
@@ -277,37 +277,37 @@
     <string name="toast_toot_saved">Kladde gemt!</string>
     <string name="toast_error_char_limit">Sikker på, at denne forekomst tillader dette antal tegn? Normalt er denne værdi tæt på 500 tegn.</string>
     <string name="toast_visibility_changed">Toots-synlighed er ændret for kontoen %1$s</string>
-    <string name="toast_empty_search">Instansnavn og kaldenavn må ikke være tomt!</string>
+    <string name="toast_empty_search">Forekomsts- og kaldenavn er obligatoriske!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimering af indlæsning</string>
-    <string name="set_toots_page">Antal toots per indlæsning</string>
-    <string name="set_accounts_page">Antal konti per indlæsning</string>
-    <string name="set_notifications_page">Antal meddelelser per indlæsning</string>
+    <string name="set_toots_page">Antal toots pr. indlæsning</string>
+    <string name="set_accounts_page">Antal konti pr. indlæsning</string>
+    <string name="set_notifications_page">Antal adviseringer pr. indlæsning</string>
     <string name="set_attachment_always">Altid</string>
-    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">Spørg</string>
-    <string name="set_attachment_action">Indlæs mediefilerne</string>
+    <string name="set_attachment_action">Indlæs medierne</string>
     <string name="load_attachment">Indlæs billederne</string>
     <string name="load_attachment_spoiler">Vis flere…</string>
-    <string name="load_attachment_spoiler_less">Vis mindre…</string>
+    <string name="load_attachment_spoiler_less">Vis færre…</string>
     <string name="load_sensitive_attachment">Følsomt indhold</string>
-    <string name="set_display_reply">Vis forrige besked i svar</string>
+    <string name="set_display_reply">Vis foregående besked i besvarelse</string>
     <string name="set_display_local">Vis lokal tidslinje</string>
-    <string name="set_display_global">Vis fødereret tidslinje</string>
-    <string name="set_disable_gif">Slå GIF-avatarer fra</string>
+    <string name="set_display_global">Vis samlet tidslinje</string>
+    <string name="set_disable_gif">Deaktivér GIF-avatarer</string>
     <string name="set_folder_title">Sti: </string>
     <string name="set_auto_store_toot">Gem kladder automatisk</string>
     <string name="set_bubble_counter">Vis tællere</string>
     <string name="set_auto_add_media_url">Tilføj URL på medier i toots</string>
-    <string name="set_notif_follow">Giv besked, når en person følger dig</string>
-    <string name="set_notif_follow_ask">Giv besked, når en person anmoder om at følge dig</string>
-    <string name="set_notif_follow_share">Giv besked, når en person, booster din status</string>
-    <string name="set_notif_follow_add">Giv besked, når nogen favoritter din status</string>
-    <string name="set_notif_follow_mention">Giv besked, når nogen nævner dig</string>
-    <string name="set_notif_follow_poll">Giv besked, når en afstemning afsluttet</string>
-    <string name="set_share_validation">Vis bekræftelsesdialog før boost\'ning</string>
-    <string name="set_share_validation_fav">Vis bekræftelsesdialog før tilføjelse til favoritter</string>
-    <string name="set_wifi_only">Beskeder kun ved WIFI</string>
+    <string name="set_notif_follow">Advisér, når en person følger dig</string>
+    <string name="set_notif_follow_ask">Advisér, når en person anmoder om at følge dig</string>
+    <string name="set_notif_follow_share">Advisér, når nogen booster din status</string>
+    <string name="set_notif_follow_add">Advisér, når nogen favoriserer din status</string>
+    <string name="set_notif_follow_mention">Advisér, når nogen nævner dig</string>
+    <string name="set_notif_follow_poll">Advisér, når en afstemning er afsluttet</string>
+    <string name="set_share_validation">Vis bekræftelsesdialog inden boosting</string>
+    <string name="set_share_validation_fav">Vis bekræftelsesdialog inden favorittilføjelse</string>
+    <string name="set_wifi_only">Advisér kun via Wi-Fi</string>
     <string name="set_notify">Underret?</string>
     <string name="set_notif_silent">Stille Underretninger</string>
     <string name="set_night_mode">Nattilstand</string>
@@ -880,7 +880,7 @@
     <string name="toast_unmute_conversation">Samtalen er ikke længere gjort tavs!</string>
     <string name="toast_mute_conversation">Samtalen er gjort tavs</string>
     <string name="app_features">Åbn app-funktioner</string>
-    <string name="timed_mute">Planlagt dæmpning</string>
+    <string name="timed_mute">Planlagt tavshed</string>
     <string name="mention_account">Nævn kontoen</string>
     <string name="refresh_cache">Opdater cache</string>
     <string name="see_boost_and_fav">Se hvem der har boostet og tilføjet til favoritter</string>
