@@ -76,7 +76,7 @@
     <string name="neutral_menu_title">Valgmuligheder</string>
     <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Kommunikation</string>
-    <string name="muted_menu">Ignorerede brugere</string>
+    <string name="muted_menu">Dæmpede brugere</string>
     <string name="blocked_menu">Blokerede brugere</string>
     <string name="remote_follow_menu">Fjernfølg</string>
     <string name="notifications">Underretninger</string>
@@ -100,48 +100,48 @@
     <!-- Status -->
     <string name="no_status">Ingen toot at vise</string>
     <string name="fav_added">Toot\'et blev føjet til favoritter</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
+    <string name="fav_removed">Toot\'et blev fjernet fra favoritter!</string>
+    <string name="reblog_added">Toot\'et blev boostet!</string>
+    <string name="reblog_removed">Toot\'et er ikke længere boostet!</string>
+    <string name="reblog_by">Boostet af %1$s</string>
+    <string name="favourite_add">Føj dette toot til dine favoritter?</string>
+    <string name="favourite_remove">Fjern dette toot fra dine favoritter?</string>
+    <string name="reblog_add">Boost dette toot?</string>
+    <string name="reblog_remove">Fjern boost fra dette toot?</string>
+    <string name="pin_add">Fastgør dette toot?</string>
+    <string name="pin_remove">Frigør dette toot?</string>
+    <string name="more_action_1">Dæmp</string>
     <string name="more_action_2">Blok</string>
     <string name="more_action_3">Rapport</string>
     <string name="more_action_4">Fjern</string>
     <string name="more_action_5">Kopi</string>
     <string name="more_action_6">Dele</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_7">Nævn</string>
+    <string name="more_action_8">Tidsbegænset dæmp</string>
+    <string name="more_action_9">Slet &amp; genskriv</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
-        <item>Unmute this account?</item>
+        <item>Dæmp denne konto?</item>
+        <item>Bloker denne konto?</item>
+        <item>Anmeld dette toot?</item>
+        <item>Blokér dette domæne?</item>
+        <item>Fjern dæmpning på denne konto?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Meddel</item>
+        <item>Tavs</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Fjern dette toot?</item>
+        <item>Slet &amp; genskriv dette toot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="other">%d svar</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
+    <string name="set_display_bookmark_button">Vis bogmærke-knappen</string>
+    <string name="bookmarks">Bogmærker</string>
+    <string name="bookmark_add">Tilføj bogmærke</string>
+    <string name="bookmark_remove">Fjern bogmærke</string>
     <string name="bookmarks_empty">Ingen bogmærker at vise</string>
     <string name="status_bookmarked">Status blev føjet til bogmærker!</string>
     <string name="status_unbookmarked">Status blev fjernet fra bogmærker!</string>
@@ -165,33 +165,33 @@
     <string name="toot_select_image_error">Der opstod en fejl under valg af medie!</string>
     <string name="toot_delete_media">Slette dette medie?</string>
     <string name="toot_error_no_content">Dit toot er tomt!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_visibility_tilte">Synlighed for toot\'et</string>
+    <string name="toots_visibility_tilte">Standardsynlighed for toots: </string>
+    <string name="toot_sent">Toot\'et er sendt!</string>
+    <string name="toot_reply_content_title">Du svarer på følgende toot:</string>
+    <string name="toot_sensitive">Følsomt indhold?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Udgiv på offentlige tidslinjer</item>
+        <item>Udgiv ikke på offentlige tidslinjer</item>
+        <item>Udgiv kun til følgere</item>
+        <item>Udgiv kun til nævnte brugere</item>
     </string-array>
     <string name="no_draft">Ingen træk!</string>
-    <string name="choose_toot">Choose a toot</string>
+    <string name="choose_toot">Vælg et toot</string>
     <string name="choose_accounts">Vælg en konto</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="select_accounts">Vælg nogle konti</string>
+    <string name="remove_draft">Fjern udkast?</string>
+    <string name="show_reply">Klik på knappen for at vise det oprindelige toot</string>
+    <string name="upload_form_description">Beskriv for synshandicappede</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Ingen beskrivelse tilgængelig!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Udvikler:</string>
     <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kildekoden: </string>
-    <string name="about_yandex">Translation of toots:</string>
+    <string name="about_yandex">Oversættelse af toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
