@@ -886,7 +886,7 @@
     <string name="see_boost_and_fav">Se, hvem der har boostet og føjet til favoritter</string>
     <string name="mention_status">Nævn statussen</string>
     <string name="action_news">Nyheder</string>
-    <string name="set_display_news_from_fedilab">Vis nyheder fra Fedilabs konto</string>
+    <string name="set_display_news_from_fedilab">Vis nyheder fra Fedilab\'s konto</string>
     <string name="category_general">Generelt</string>
     <string name="category_regional">Regionalt</string>
     <string name="category_art">Kunst</string>
@@ -909,18 +909,18 @@
     <string name="sign_up">Tilmeld</string>
     <string name="validation_needed">Denne instans fungerer vha. invitationer. Din konto skal først manuelt godkendes af en administrator, før den kan tages i brug.</string>
     <string name="all_field_filled">Udfyld venligst alle felter!</string>
-    <string name="password_error">Adgangskoderne er ikke ens!</string>
-    <string name="email_error">E-mail ser ikke ud til at være gyldig!</string>
-    <string name="username_indicator">Dit brugernavn er unikt på %1$s</string>
-    <string name="email_indicator">Du vil blive tilsendt en bekræftelses-e-mail</string>
+    <string name="password_error">Adgangskoder matcher ikke!</string>
+    <string name="email_error">E-mailen ser ud til at være ugyldig!</string>
+    <string name="username_indicator">Dit brugernavn vil være unikt på %1$s</string>
+    <string name="email_indicator">Du vil blive tilsendt en bekræftelses e-mail</string>
     <string name="password_indicator">Brug mindst 8 tegn</string>
-    <string name="password_too_short">Adgangskoden skal være på mindst 8 tegn</string>
+    <string name="password_too_short">Adgangskoden skal udgøre mindst 8 tegn</string>
     <string name="username_error">Brugernavn må kun indeholde bogstaver, tal og understregninger</string>
     <string name="account_created">Konto oprettet!</string>
-    <string name="account_created_message">        Din konto er blevet oprettet!\n\n
-        Sørg for at validere din email indenfor de næste 48 timer.\n\n
-        Du kan nu forbinde til din konto ved at skrive <b>%1$s</b> i det første felt og klikke på <b>Forbind</b>.\n\n
-        <b>Vigtigt</b>: Hvis din instans kræver validering, vil du modtage en email så snart den er valideret!
+    <string name="account_created_message">        Din konto er nu oprettet!\n\n
+        Husk at bekræfte din e-mail indenfor de næste 48 timer.\n\n
+        Du kan nu forbinde til din konto ved at angive <b>%1$s</b> i det første felt og trykke på <b>Forbind</b>.\n\n
+        <b>Vigtigt</b>: Kræver din instans bekræftelse, vil du modtage en e-mail, så snart den er bekræftet!
     </string>
     <string name="save_draft">Gem beskeden i kladder?</string>
     <plurals name="number_of_vote">
