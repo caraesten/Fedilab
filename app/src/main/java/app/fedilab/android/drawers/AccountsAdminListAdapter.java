@@ -96,7 +96,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
             holder.account_ac.setVisibility(View.VISIBLE);
 
         holder.report_action_taken.setText(accountAdmin.getIp());
-
+        Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
     }
 
     @Override

@@ -139,7 +139,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface, OnAdminActionInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
 
 
     private FloatingActionButton toot, delete_all, add_new;
@@ -283,9 +283,6 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = findViewById(R.id.viewpager);
-
-        new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ACCOUNTS, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_REPORTS, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         display_timeline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2076,11 +2073,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 i++;
             }
         }
-    }
-
-    @Override
-    public void onAdminAction(APIResponse apiResponse) {
-
     }
 
     /**

@@ -89,7 +89,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         <TextView
             android:layout_marginStart="10dp"
-            android:visibility="gone"
             android:id="@+id/report_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

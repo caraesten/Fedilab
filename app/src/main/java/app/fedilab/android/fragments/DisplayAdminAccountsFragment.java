@@ -49,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Thomas on 19/06/2019.
- * Fragment to display content related to reports
+ * Fragment to display content related to accounts
  */
 public class DisplayAdminAccountsFragment extends Fragment implements OnAdminActionInterface {
 
@@ -104,7 +104,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -122,7 +122,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -148,7 +148,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                 break;
         }
 
-        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 

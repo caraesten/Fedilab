@@ -72,8 +72,8 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         Account target_account = report.getTarget_account().getAccount();
 
 
-        /*account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
-        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);*/
+        account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
+        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn_reporter.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
