@@ -264,10 +264,10 @@ public class API {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return apiResponse;
     }
 
@@ -372,7 +372,6 @@ public class API {
                 case MODERATION_ACTION:
                     break;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -382,7 +381,6 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }
-
         return apiResponse;
     }
 

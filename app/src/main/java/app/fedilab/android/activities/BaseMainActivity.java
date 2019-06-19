@@ -74,8 +74,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
+import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Results;
@@ -103,6 +106,7 @@ import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
+import app.fedilab.android.interfaces.OnAdminActionInterface;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -134,7 +138,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface, OnAdminActionInterface {
 
 
     private FloatingActionButton toot, delete_all, add_new;
@@ -279,6 +283,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         viewPager = findViewById(R.id.viewpager);
 
+        new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ACCOUNTS, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         display_timeline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2065,6 +2070,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 i++;
             }
         }
+    }
+
+    @Override
+    public void onAdminAction(APIResponse apiResponse) {
+
     }
 
     /**

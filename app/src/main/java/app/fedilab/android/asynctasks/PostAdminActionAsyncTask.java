@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AdminAction;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
 
 
@@ -52,7 +53,18 @@ public class PostAdminActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(contextReference.get()).adminDo(action, id, adminAction);
+        switch (action){
+            case GET_ACCOUNTS:
+            case GET_ONE_ACCOUNT:
+            case GET_REPORTS:
+            case GET_ONE_REPORT:
+                apiResponse = new API(contextReference.get()).adminGet(action, id, null);
+                break;
+            default:
+                apiResponse = new API(contextReference.get()).adminDo(action, id, adminAction);
+        }
+
+
         return null;
     }
 

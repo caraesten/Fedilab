@@ -228,6 +228,7 @@ public class Helper {
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
+    public static final String OAUTH_SCOPES_ADMIN = "read write follow admin:read admin:write admin";
     public static final String OAUTH_SCOPES_PIXELFED = "write follow";
     public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
