@@ -111,7 +111,7 @@
     <string name="pin_add">Fastgør dette toot?</string>
     <string name="pin_remove">Frigør dette toot?</string>
     <string name="more_action_1">Dæmp</string>
-    <string name="more_action_2">Blok</string>
+    <string name="more_action_2">Blokér</string>
     <string name="more_action_3">Rapport</string>
     <string name="more_action_4">Fjern</string>
     <string name="more_action_5">Kopi</string>
@@ -121,7 +121,7 @@
     <string name="more_action_9">Slet &amp; genskriv</string>
     <string-array name="more_action_confirm">
         <item>Dæmp denne konto?</item>
-        <item>Bloker denne konto?</item>
+        <item>Blokér denne konto?</item>
         <item>Anmeld dette toot?</item>
         <item>Blokér dette domæne?</item>
         <item>Fjern dæmpning på denne konto?</item>
@@ -374,48 +374,48 @@
     </string-array>
     <string name="set_notification_news">Underret om nye toots på hjemme-tidslinjen</string>
     <string name="action_follow">Følg</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
+    <string name="action_unfollow">Stop med at følge</string>
+    <string name="action_block">Blokér</string>
+    <string name="action_unblock">Fjern blokering</string>
+    <string name="action_mute">Dæmp</string>
+    <string name="action_no_action">Ingen handling</string>
+    <string name="action_unmute">Fjern dæmpning</string>
+    <string name="request_sent">Forespørgsel sendt</string>
+    <string name="followed_by">Følger dig</string>
     <string name="action_search">Søg</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">Første bogstav med stort for svar</string>
+    <string name="set_resize_picture">Formindsk billeder</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
+    <string name="settings_popup_title">Push-meddelelser</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_timeline">For ulæste toots i hjemmetidslinjen?</string>
+    <string name="settings_popup_notification">For ulæste underretninger?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Ryd Cache</string>
+    <string name="cache_message">Der findes %1$s af data i cachen.\n\nØnsker du at slette det?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Cachen blev ryddet! %1$s blev frigjort</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Titel</string>
+    <string name="title_hint_custom_sharing">Titel&#8230;</string>
+    <string name="description_header_custom_sharing">Beskrivelse</string>
+    <string name="description_hint_custom_sharing">Beskrivelse&#8230;</string>
+    <string name="keywords_header_custom_sharing">Nøgleord</string>
+    <string name="keywords_hint_custom_sharing">Nøgleord&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="action_sync">Synkronisér</string>
+    <string name="action_filter">Filtrér</string>
+    <string name="owner_cached_toots">Dine toots</string>
+    <string name="v_public">Offentlig</string>
+    <string name="v_unlisted">Ikke listet</string>
+    <string name="v_private">Privat</string>
+    <string name="v_direct">Direkte</string>
+    <string name="v_keywords">Nogle nøgleord…</string>
+    <string name="show_media">Vis medie</string>
+    <string name="show_pinned">Vis fastgjort</string>
+    <string name="filter_no_result">Ingen matchende resultater!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
