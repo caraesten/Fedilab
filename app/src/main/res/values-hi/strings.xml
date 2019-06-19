@@ -124,7 +124,7 @@
         <item>इस खाते को अवरुद्ध करें?</item>
         <item>इस संदेश को रिपोर्ट करें?</item>
         <item>इस इंस्टेंस को अवरुद्ध करें?</item>
-        <item>Unmute this account?</item>
+        <item>इस खाते को मौन करें?</item>
     </string-array>
     <string-array name="action_notification">
         <item>सूचित करें</item>
@@ -399,9 +399,9 @@
     <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">शीर्षक</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_hint_custom_sharing">शीर्षक&#8230;</string>
     <string name="description_header_custom_sharing">विवरण</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="description_hint_custom_sharing">विवरण&#8230;</string>
     <string name="keywords_header_custom_sharing">Keywords</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
@@ -566,7 +566,7 @@
     <string name="channel_notif_boost">नया बूस्ट</string>
     <string name="channel_notif_fav">नया पसंदीदा</string>
     <string name="channel_notif_mention">नया उल्लेख</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">चुनाव समाप्त हो गया</string>
     <string name="channel_notif_toot">नया लेख</string>
     <string name="channel_notif_backup">लेखों का बैकअप</string>
     <string name="channel_notif_media">मीडिया डाउंलोड</string>
@@ -635,7 +635,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट शैड्यूल करें</b>।]]></string>
     <string name="art_menu">कला टाइम्लाइन</string>
     <string name="open_menu">मेन्यू खोलें</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">वापस जाएं</string>
     <string name="app_logo">एेप का चिह्न</string>
     <string name="profile_picture">प्रोफ़ाइल चित्र</string>
     <string name="profile_banner">प्रोफ़ाइल बैनर</string>
@@ -693,15 +693,15 @@
     <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
+    <string name="subscriptions">सदस्यता</string>
     <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="trending">चर्चित</string>
+    <string name="recently_added">हाल ही में जोडा हुआ</string>
+    <string name="local">स्थानीय</string>
+    <string name="upload_video">अपलोड</string>
+    <string name="reply">उत्तर</string>
+    <string name="delete_comment">टिप्पणी हटाएँ</string>
+    <string name="delete_comment_confirm">क्या आप सचमुच इस टिप्पणी को हटाना चाहते हैं?</string>
     <string name="fullscreen">पूर्ण स्क्रीन वीडियो</string>
     <string name="set_video_mode">वीडियो के लिए मोड</string>
     <string name="file_to_upload">अपलोड करने के लिए फ़ाइल का चयन करें</string>
@@ -713,25 +713,25 @@
     <string name="language">भाषा</string>
     <string name="peertube_nsfw">इस वीडियो में परिपक्व या स्पष्ट सामग्री है</string>
     <string name="peertube_enable_comments">वीडियो टिप्पणियों को सक्षम करें</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
+    <string name="update_video">वीडियो अपडेट करें</string>
+    <string name="description">विवरण</string>
     <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
+    <string name="toast_cancelled">अपलोड रद्द कर दिया गया</string>
+    <string name="upload_video_success">वीडियो अपलोड हो गया है</string>
     <string name="uploading">Uploading, please wait…</string>
     <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
+    <string name="delete_video">वीडियो हटाएँ</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
+    <string name="no_video_uploaded">अभी तक कोई वीडियो अपलोड नहीं किया गया!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
+    <string name="add_image_to_favorite">पसंदीदा में जोड़ें</string>
+    <string name="leave_a_comment">कोई टिप्पणी लिखें</string>
+    <string name="share">शेयर करें</string>
+    <string name="my_pictures">मेरे चित्र</string>
+    <string name="choose_schedule">चुनें एक कार्यक्रम मोड</string>
+    <string name="device_schedule">डिवाइस से</string>
     <string name="server_schedule">From server</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
