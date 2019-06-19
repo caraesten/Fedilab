@@ -295,10 +295,6 @@ public class LoginActivity extends BaseActivity {
                         return;
                     }
                     instance = login_instance.getText().toString().trim().toLowerCase();
-                    if(instance.endsWith(".gab.com") || instance.equals("gab.com") || instance.endsWith(".gab.ai") || instance.equals("gab.ai")){
-                        Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
-                        return;
-                    }
                     connect_button.setEnabled(false);
                     new Thread(new Runnable(){
                         @Override
