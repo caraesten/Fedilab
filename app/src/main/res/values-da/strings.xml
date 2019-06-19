@@ -329,12 +329,12 @@
     <string name="settings_time_lower">Tiden skal være tidligere end %1$s</string>
     <string name="settings_hour_init">Starttid</string>
     <string name="settings_hour_end">Sluttid</string>
-    <string name="embedded_browser">Brug den indbyggede browser</string>
+    <string name="embedded_browser">Benyt indbygget browser</string>
     <string name="custom_tabs">Tilpassede faner</string>
     <string name="use_javascript">Aktivér JavaScript</string>
     <string name="expand_cw">Udvid automatisk cw</string>
-    <string name="use_cookies">Tillader tredjeparts-cookies</string>
-    <string name="settings_ui_layout">Layout for tidslinjer: </string>
+    <string name="use_cookies">Tillad tredjeparts-cookies</string>
+    <string name="settings_ui_layout">Tidslinjelayouts: </string>
     <string-array name="battery_profiles">
         <item>Normalt batteriforbrug</item>
         <item>Medium batteriforbrug</item>
@@ -350,7 +350,7 @@
         <item>DeepL</item>
         <item>Nej</item>
     </string-array>
-    <string name="your_api_key">Din API nøgle, efterlad blank for Yandex</string>
+    <string name="your_api_key">Din API-nøgle, kan være tom for Yandex</string>
     <string-array name="settings_theme">
         <item>Mørk</item>
         <item>Lys</item>
@@ -372,12 +372,12 @@
         <item>Gul</item>
         <item>Hvid</item>
     </string-array>
-    <string name="set_notification_news">Underret om nye toots på hjemme-tidslinjen</string>
+    <string name="set_notification_news">Advisér om nye toots på Hjem-tidslinjen</string>
     <string name="action_follow">Følg</string>
-    <string name="action_unfollow">Stop med at følge</string>
+    <string name="action_unfollow">Stop følgning</string>
     <string name="action_block">Blokér</string>
-    <string name="action_unblock">Fjern blokering</string>
-    <string name="action_mute">Gør tavs</string>
+    <string name="action_unblock">Afblokér</string>
+    <string name="action_mute">Gør stum</string>
     <string name="action_no_action">Ingen handling</string>
     <string name="action_unmute">Fjern \"Gør tavs\"</string>
     <string name="request_sent">Forespørgsel sendt</string>
