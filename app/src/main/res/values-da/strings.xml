@@ -34,14 +34,14 @@
     <string name="instance_example">Instans: matodon.social</string>
     <string name="toast_account_changed" formatted="false">Fungerer nu med %1$s-kontoen</string>
     <string name="add_account">Tilføj en konto</string>
-    <string name="clipboard">Indhold af dette toot er kopieret til Udklipsholder</string>
-    <string name="clipboard_url">URL\'en til dette toot er kopieret til Udklipsholder</string>
+    <string name="clipboard">Indhold af dette toot er kopieret til udklipsholder</string>
+    <string name="clipboard_url">URL\'en til dette toot er kopieret til udklipsholder</string>
     <string name="change">Skift</string>
     <string name="choose_picture">Vælg et billede…</string>
     <string name="clear">Ryd</string>
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
-    <string name="speech_prompt">Sig et eller andet</string>
+    <string name="speech_prompt">Sig noget</string>
     <string name="speech_not_supported">Beklager! Din enhed understøtter ikke stemmeinput!</string>
     <string name="delete_all">Slet alle</string>
     <string name="translate_toot">Oversæt dette toot.</string>
@@ -59,7 +59,7 @@
     <string name="replies">Svar</string>
     <string name="username">Brugernavn</string>
     <string name="drafts">Kladder</string>
-    <string name="new_data">Nye data tilgængelige! Vi du vise dem?</string>
+    <string name="new_data">Nye data er tilgængelige! Ønsker du at vise dem?</string>
     <string name="favourite">Favoritter</string>
     <string name="follow">Nye følgere</string>
     <string name="mention">Omtaler</string>
@@ -68,7 +68,7 @@
     <string name="show_replies">Vis svar</string>
     <string name="action_open_in_web">Åbn i browser</string>
     <string name="translate">Oversæt</string>
-    <string name="please_wait">Afvent nogle sekunder inden udførelse af denne handling.</string>
+    <string name="please_wait">Vent nogle sekunder før du foretager denne handling.</string>
     <!--- Menu -->
     <string name="home_menu">Hjem</string>
     <string name="local_menu">Lokal tidslinje</string>
@@ -76,7 +76,7 @@
     <string name="neutral_menu_title">Valgmuligheder</string>
     <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Kommunikation</string>
-    <string name="muted_menu">Brugere, som er gjort tavse</string>
+    <string name="muted_menu">Ignorerede brugere</string>
     <string name="blocked_menu">Blokerede brugere</string>
     <string name="remote_follow_menu">Fjernfølgning</string>
     <string name="notifications">Adviseringer</string>
@@ -213,10 +213,10 @@
     <string name="remove_scheduled">Slet planlagt toot?</string>
     <string name="media_count">Medie: %d</string>
     <string name="toot_scheduled">Toot\'et er nu planlagt!</string>
-    <string name="toot_scheduled_date">Den planlagte dato skal være senere end indeværende time!</string>
-    <string name="warning_battery">Strømsparetilstand er aktiveret! Det virker måske ikke som forventet.</string>
+    <string name="toot_scheduled_date">Planlagningstidsdato skal ligge efter den aktuelle dato!</string>
+    <string name="warning_battery">Strømsparetilstand er aktiveret! Den fungerer måske ikke som forventet.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Tid for dæmpning skal være mere end et minut.</string>
+    <string name="timed_mute_date_error">Tidspunkt for at gøre tavs skal udgøre over et minut.</string>
     <string name="timed_mute_date">%1$s er blevet dæmpet indtil %2$s.\n Du kan fjerne dæmpningen fra profilens side.</string>
     <string name="timed_mute_profile">%1$s er dæmpet indtil %2$s.\n Klik her for at fjerne dæmpningen.</string>
     <!-- Notifications -->
@@ -423,7 +423,7 @@
         <item>Kun</item>
         <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">Ingen toots blev fundet i databasen. Brug venligst synkroniser-knappen i menuen for at hente dem.</string>
+    <string name="owner_cached_toots_empty">Ingen toots blev fundet i databasen. Brug synkroniser-knappen i menuen for at hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Gemte data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
