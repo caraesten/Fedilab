@@ -228,7 +228,7 @@
     <string name="notif_pouet">Nyt toot fra %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">og en anden notifikation</item>
-        <item quantity="other">og %d andre adviseringer</item>
+        <item quantity="other">og %d andre notifikationer</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">og et andet toot at opdage</item>
@@ -238,10 +238,10 @@
         <item quantity="one">%d Like</item>
         <item quantity="other">%d Likes</item>
     </plurals>
-    <string name="delete_notification_ask">Slet en advisering?</string>
-    <string name="delete_notification_ask_all">Slet alle adviseringer?</string>
-    <string name="delete_notification">Adviseringen er slettet!</string>
-    <string name="delete_notification_all">Alle adviseringer er slettet!</string>
+    <string name="delete_notification_ask">Slet en notifikation?</string>
+    <string name="delete_notification_ask_all">Slet alle notifikationer?</string>
+    <string name="delete_notification">Notifikationen er slettet!</string>
+    <string name="delete_notification_all">Alle notifikationer er slettet!</string>
     <!-- HEADER -->
     <string name="following">Følger</string>
     <string name="followers">Følgere</string>
@@ -282,7 +282,7 @@
     <string name="settings_title_optimisation">Optimering af indlæsning</string>
     <string name="set_toots_page">Antal toots pr. indlæsning</string>
     <string name="set_accounts_page">Antal konti pr. indlæsning</string>
-    <string name="set_notifications_page">Antal adviseringer pr. indlæsning</string>
+    <string name="set_notifications_page">Antal notifikationer pr. indlæsning</string>
     <string name="set_attachment_always">Altid</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">Spørg</string>
@@ -299,17 +299,17 @@
     <string name="set_auto_store_toot">Gem kladder automatisk</string>
     <string name="set_bubble_counter">Vis tællere</string>
     <string name="set_auto_add_media_url">Tilføj URL på medier i toots</string>
-    <string name="set_notif_follow">Advisér, når en person følger dig</string>
-    <string name="set_notif_follow_ask">Advisér, når en person anmoder om at følge dig</string>
-    <string name="set_notif_follow_share">Advisér, når nogen booster din status</string>
-    <string name="set_notif_follow_add">Advisér, når nogen favoriserer din status</string>
-    <string name="set_notif_follow_mention">Advisér, når nogen nævner dig</string>
+    <string name="set_notif_follow">Notificér, når en person følger dig</string>
+    <string name="set_notif_follow_ask">Notificér, når en person anmoder om at følge dig</string>
+    <string name="set_notif_follow_share">Notificér, når nogen booster din status</string>
+    <string name="set_notif_follow_add">Notificér, når nogen favoriserer din status</string>
+    <string name="set_notif_follow_mention">Notificér, når nogen nævner dig</string>
     <string name="set_notif_follow_poll">Advisér, når en afstemning er afsluttet</string>
     <string name="set_share_validation">Vis bekræftelsesdialog inden boosting</string>
     <string name="set_share_validation_fav">Vis bekræftelsesdialog inden favorittilføjelse</string>
-    <string name="set_wifi_only">Advisér kun via Wi-Fi</string>
-    <string name="set_notify">Advisér?</string>
-    <string name="set_notif_silent">Tavse Adviseringer</string>
+    <string name="set_wifi_only">Notificér kun via Wi-Fi</string>
+    <string name="set_notify">Notificér?</string>
+    <string name="set_notif_silent">Tavse Notifikationer</string>
     <string name="set_night_mode">Nattilstand</string>
     <string name="set_nsfw_timeout">NSFW-visningstimeout (sekunder, 0 betyder slået fra)</string>
     <string name="settings_title_profile">Redigér profil</string>
@@ -372,7 +372,7 @@
         <item>Gul</item>
         <item>Hvid</item>
     </string-array>
-    <string name="set_notification_news">Advisér om nye toots på Hjem-tidslinjen</string>
+    <string name="set_notification_news">Notificér om nye toots på Hjem-tidslinjen</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Stop følgning</string>
     <string name="action_block">Blokér</string>
@@ -386,12 +386,12 @@
     <string name="set_capitalize">Begyndelsesbogstav med stort for svar</string>
     <string name="set_resize_picture">Ændr billedstørrelse</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push-adviseringer</string>
-    <string name="settings_popup_message">        Bekræft de push-adviseringer, du ønsker at modtage.
-        Du kan senere slå disse adviseringer til/fra i indstillinger (fanen Notifikationer).
+    <string name="settings_popup_title">Push-notifikationer</string>
+    <string name="settings_popup_message">        Bekræft de push-notifikationer, du ønsker at modtage.
+        Du kan senere slå disse notifikationer til/fra i indstillinger (fanen Notifikationer).
     </string>
     <string name="settings_popup_timeline">Til ulæste toots i Hjem-tidslinjen?</string>
-    <string name="settings_popup_notification">Til ulæste adviseringer?</string>
+    <string name="settings_popup_notification">Til ulæste notifikationer?</string>
     <!-- CACHE -->
     <string name="cache_title">Ryd Cache</string>
     <string name="cache_message">Cachen indeholder %1$s data.\n\nVil du slette dataene?</string>
@@ -584,31 +584,31 @@
     <string name="retrieve_remote_conversation">Henter fjerntråd!</string>
     <string name="no_blocked_domain">Ingen blokerede domæner!</string>
     <string name="unblock_domain_confirm">Afblokér domæne</string>
-    <string name="unblock_domain_confirm_message">Er du sikker på du vil fjerne blokeringen af %s?</string>
-    <string name="block_domain_confirm_message">Er du sikker på at du vil blokere %s?\n\n\Du vil ikke være i stand til at se indhold fra det domæne i nogen offentlig tidslinje eller i dine underretninger. Dine følgere fra det domæne vil blive fjernet.</string>
+    <string name="unblock_domain_confirm_message">Sikker på, at du vil afblokere %s?</string>
+    <string name="block_domain_confirm_message">Sikker på, at du vil blokere %s?\n\n\Du vil ikke se indhold fra domænet i nogen offentlig tidslinje eller i dine adviseringer. Dine følgere fra domænet fjernes.</string>
     <string name="blocked_domains">Blokerede domæner</string>
     <string name="block_domain">Blokér domæne</string>
     <string name="toast_block_domain">Domænet er blokeret</string>
     <string name="toast_unblock_domain">Domænet er ikke længere blokeret!</string>
     <string name="retrieve_remote_status">Henter fjernstatus</string>
-    <string name="comment">Kommentar</string>
-    <string name="peertube_instance">Peertube instans</string>
-    <string name="set_display_direct">Vis \'private beskeder\' tidslinje</string>
-    <string name="set_keep_background_process">Behold baggrundsprocessen kørende når app\'en er lukket</string>
-    <string name="no_comments">Vær den første til at efterlade en kommentar på denne video med den øverste højre knap!</string>
+    <string name="comment">Kommentere</string>
+    <string name="peertube_instance">Peertube-forekomst</string>
+    <string name="set_display_direct">Vis private beskeder-tidslinje</string>
+    <string name="set_keep_background_process">Bevar baggrundsprocessen, når app\'en lukkes</string>
+    <string name="no_comments">Vær den første til at skrive en kommentar til denne video via den øverste, højre knap!</string>
     <string name="number_view_video">%s visninger</string>
     <string name="duration_video">Varighed: %s</string>
-    <string name="add_remote_instance">Tilføj en instans</string>
+    <string name="add_remote_instance">Tilføj en forekomst</string>
     <string name="comment_no_allowed_peertube">Kommentarer er ikke aktiveret for denne video!</string>
     <string name="pickup_resolution">Vælg en opløsning</string>
-    <string name="peertube_favorites">Peertube favoritter</string>
-    <string name="bookmark_add_peertube">Videoen er blevet føjet til favoritter!</string>
-    <string name="bookmark_remove_peertube">Videoen er blevet fjernet fra bogmærker!</string>
-    <string name="bookmark_peertube_empty">Der er ingen Peertube videoer i dine favoritter!</string>
+    <string name="peertube_favorites">Peertube-favoritter</string>
+    <string name="bookmark_add_peertube">Videoen er tilføjet bogmærker!</string>
+    <string name="bookmark_remove_peertube">Videoen er fjernet fra bogmærker!</string>
+    <string name="bookmark_peertube_empty">Der er ingen Peertube-videoer i dine favoritter!</string>
     <string name="channel">Kanal</string>
-    <string name="no_peertube_channels">Ingen Peertube kanaler</string>
-    <string name="no_peertube_instances">Ingen Peertube instanser</string>
-    <string name="no_mastodon_instances">Ingen Mastodon instanser</string>
+    <string name="no_peertube_channels">Ingen Peertube-kanaler</string>
+    <string name="no_peertube_instances">Ingen Peertube-forekomster</string>
+    <string name="no_mastodon_instances">Ingen Mastodon-forekomster</string>
     <string name="no_lists">Ingen lister</string>
     <string name="videos">Videoer</string>
     <string name="channels">Kanaler</string>
@@ -620,14 +620,14 @@
     <string name="set_display_video_preview">Vis videoforhåndsvisninger</string>
     <string name="thanks_text_support">Gitlab Support</string>
     <string name="action_bug_report">Fejlrapport</string>
-    <string name="no_mail_client">Der er ingen email-klient installeret.</string>
+    <string name="no_mail_client">Ingen e-mail klienter installeret.</string>
     <string name="bug_report_mail">Indsend fejlrapport</string>
-    <string name="account_id_clipbloard">Konto id\'et er blevet kopieret til klippebordet!</string>
+    <string name="account_id_clipbloard">Konto-ID\'en kopieret til Udklipsholder!</string>
     <string name="settings_title_battery">Batterioptimering</string>
     <string name="set_change_locale">Skift sprog</string>
     <string name="default_language">Standardsprog</string>
     <string name="truncate_long_toots">Afkort lange toots</string>
-    <string name="set_truncate_toot">Afkort toots på mere end \'x\' linjer. Nul betyder slået fra.</string>
+    <string name="set_truncate_toot">Afkort toots på flere end \'x\' linjer. Nul betyder deaktiveret.</string>
     <string name="display_toot_truncate">Vis mere</string>
     <string name="hide_toot_truncate">Vis mindre</string>
     <string name="manage_tags">Administrer tags</string>
