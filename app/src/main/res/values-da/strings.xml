@@ -318,11 +318,11 @@
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Gem ændringer</string>
-    <string name="set_header_picture_overlay">Vælg et sidehovedbillede</string>
+    <string name="set_header_picture_overlay">Vælg et overskriftsbillede</string>
     <string name="set_fit_preview">Tilpas forhåndvisningsbilleder</string>
-    <string name="set_automatically_split_toot">Split automatisk toots ud i svar når antal tegn er over:</string>
-    <string name="note_no_space">Du har nået de 160 tilladte tegn!</string>
-    <string name="username_no_space">Du har nået de 30 tilladte tegn!</string>
+    <string name="set_automatically_split_toot">Opdel automatisk toots i svar, når tegnantal overstiger:</string>
+    <string name="note_no_space">Du har nået de tilladte 160 tegn!</string>
+    <string name="username_no_space">Du har nået de tilladte 30 tegn!</string>
     <string name="settings_time_from">Mellem</string>
     <string name="settings_time_to">og</string>
     <string name="settings_time_greater">Tiden skal være senere end %1$s</string>
@@ -426,10 +426,10 @@
     <string name="owner_cached_toots_empty">Ingen toots blev fundet i databasen. Brug synkroniser-knappen i menuen for at hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Gemte data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data">        Kun grundlæggende oplysninger fra konti, er gemt på enheden.
+        Disse data er strengt fortrolige og kan kun bruges af app\'en.
+        Sletning af app\'en med fjerner straks disse data.\n
+        &#9888; Brugernavn og kodeord bliver aldrig gemt. De bliver kun brugt i løbet af en sikker autentifikation (SSL) med en instans.
     </string>
     <string name="privacy_authorizations_title">Tilladelser:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
