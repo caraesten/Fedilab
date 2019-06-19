@@ -179,12 +179,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else
-                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+                holder.account_dn.setText(account.getUsername().replace("@",""));
         }else
             holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
-        if( account.getDisplay_name().equals(account.getAcct()))
+        if( account.getUsername().equals(account.getAcct()))
             holder.account_ac.setVisibility(View.GONE);
         else
             holder.account_ac.setVisibility(View.VISIBLE);

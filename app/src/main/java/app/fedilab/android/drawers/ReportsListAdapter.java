@@ -72,28 +72,34 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final ReportsListAdapter.ViewHolder holder = (ReportsListAdapter.ViewHolder) viewHolder;
         Report report = reports.get(position);
-        Account account = report.getStatuses().get(0).getAccount();
+        Account account = report.getAccount();
+        Account target_account = report.getTarget_account();
 
 
         account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
+        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
-                holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+                holder.account_dn_reporter.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else
-                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+                holder.account_dn_reporter.setText(account.getUsername().replace("@",""));
         }else
-            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            holder.account_dn_reporter.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
-        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
-                holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+        if( target_account.getdisplayNameSpan() == null || target_account.getdisplayNameSpan().toString().trim().equals("")) {
+            if( target_account.getDisplay_name() != null && !target_account.getDisplay_name().trim().equals(""))
+                holder.account_dn.setText(Helper.shortnameToUnicode(target_account.getDisplay_name(), true));
             else
-                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+                holder.account_dn.setText(target_account.getUsername().replace("@",""));
         }else
-            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            holder.account_dn.setText( target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+
+
+        Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
+        Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
-        if( account.getDisplay_name().equals(account.getAcct()))
+        if( account.getUsername().equals(account.getAcct()))
             holder.account_ac.setVisibility(View.GONE);
         else
             holder.account_ac.setVisibility(View.VISIBLE);
@@ -138,9 +144,9 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
 
 
     private class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView account_pp;
+        ImageView account_pp, account_pp_reporter;
         TextView account_ac;
-        TextView account_dn;
+        TextView account_dn, account_dn_reporter;
         TextView account_un;
         TextView report_action_taken;
 
@@ -149,7 +155,9 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         ViewHolder(View itemView) {
             super(itemView);
             account_pp = itemView.findViewById(R.id.account_pp);
+            account_pp_reporter = itemView.findViewById(R.id.account_pp_reporter);
             account_dn = itemView.findViewById(R.id.account_dn);
+            account_dn_reporter = itemView.findViewById(R.id.account_dn_reporter);
             account_ac = itemView.findViewById(R.id.account_ac);
             account_un = itemView.findViewById(R.id.account_un);
             report_action_taken = itemView.findViewById(R.id.report_action_taken);

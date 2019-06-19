@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -235,7 +234,6 @@ public class API {
         }
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,response);
             switch (action){
                 case GET_ACCOUNTS:
                     List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));
@@ -5056,9 +5054,15 @@ public class API {
             report.setComment(resobj.getString("comment"));
             report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
             report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
-            report.setAccount_id(resobj.getString("account_id"));
-            report.setTarget_account_id(resobj.getString("target_account_id"));
-            report.setAssigned_account_id(resobj.getString("assigned_account_id"));
+            if( !resobj.isNull("account")) {
+                report.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            }
+            if( !resobj.isNull("target_account")) {
+                report.setTarget_account(parseAccountResponse(context, resobj.getJSONObject("target_account")));
+            }
+            if( !resobj.isNull("assigned_account")) {
+                report.setAssigned_account(parseAccountResponse(context, resobj.getJSONObject("assigned_account")));
+            }
             report.setAction_taken_by_account_id(resobj.getString("action_taken_by_account_id"));
             report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
         }catch (Exception ignored){}

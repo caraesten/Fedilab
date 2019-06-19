@@ -28,9 +28,9 @@ public class Report implements Parcelable {
     private String comment;
     private Date created_at;
     private Date updated_at;
-    private String account_id;
-    private String target_account_id;
-    private String assigned_account_id;
+    private Account account;
+    private Account target_account;
+    private Account assigned_account;
     private String action_taken_by_account_id;
     private List<Status> statuses;
 
@@ -75,29 +75,6 @@ public class Report implements Parcelable {
         this.updated_at = updated_at;
     }
 
-    public String getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(String account_id) {
-        this.account_id = account_id;
-    }
-
-    public String getTarget_account_id() {
-        return target_account_id;
-    }
-
-    public void setTarget_account_id(String target_account_id) {
-        this.target_account_id = target_account_id;
-    }
-
-    public String getAssigned_account_id() {
-        return assigned_account_id;
-    }
-
-    public void setAssigned_account_id(String assigned_account_id) {
-        this.assigned_account_id = assigned_account_id;
-    }
 
     public String getAction_taken_by_account_id() {
         return action_taken_by_account_id;
@@ -116,6 +93,33 @@ public class Report implements Parcelable {
     }
 
 
+    public Report() {
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Account getTarget_account() {
+        return target_account;
+    }
+
+    public void setTarget_account(Account target_account) {
+        this.target_account = target_account;
+    }
+
+    public Account getAssigned_account() {
+        return assigned_account;
+    }
+
+    public void setAssigned_account(Account assigned_account) {
+        this.assigned_account = assigned_account;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -128,14 +132,11 @@ public class Report implements Parcelable {
         dest.writeString(this.comment);
         dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
         dest.writeLong(this.updated_at != null ? this.updated_at.getTime() : -1);
-        dest.writeString(this.account_id);
-        dest.writeString(this.target_account_id);
-        dest.writeString(this.assigned_account_id);
+        dest.writeParcelable(this.account, flags);
+        dest.writeParcelable(this.target_account, flags);
+        dest.writeParcelable(this.assigned_account, flags);
         dest.writeString(this.action_taken_by_account_id);
         dest.writeTypedList(this.statuses);
-    }
-
-    public Report() {
     }
 
     protected Report(Parcel in) {
@@ -146,14 +147,14 @@ public class Report implements Parcelable {
         this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
         long tmpUpdated_at = in.readLong();
         this.updated_at = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
-        this.account_id = in.readString();
-        this.target_account_id = in.readString();
-        this.assigned_account_id = in.readString();
+        this.account = in.readParcelable(Account.class.getClassLoader());
+        this.target_account = in.readParcelable(Account.class.getClassLoader());
+        this.assigned_account = in.readParcelable(Account.class.getClassLoader());
         this.action_taken_by_account_id = in.readString();
         this.statuses = in.createTypedArrayList(Status.CREATOR);
     }
 
-    public static final Parcelable.Creator<Report> CREATOR = new Parcelable.Creator<Report>() {
+    public static final Creator<Report> CREATOR = new Creator<Report>() {
         @Override
         public Report createFromParcel(Parcel source) {
             return new Report(source);
