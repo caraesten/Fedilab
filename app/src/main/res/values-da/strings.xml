@@ -502,19 +502,19 @@
     <string name="poxy_host">Vært</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Brugernavn</string>
-    <string name="poxy_password">Kodeord</string>
+    <string name="poxy_password">Adgangskode</string>
     <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Kompakt tilstand</string>
+    <string name="set_compact_mode">Kompakt-tilstand</string>
     <string name="set_share_details">Tilføj toot-detaljer ved deling</string>
     <string name="support_the_app_on_liberapay">Støt app\'en på Liberapay</string>
     <string name="alert_regex">Der er en fejl i det regulære udtryk!</string>
-    <string name="no_account_yet">Har du endnu ingen konto?</string>
-    <string name="toast_instance_unavailable">Ingen tidslinjer blev fundet på denne instans!</string>
-    <string name="delete_instance">Slet denne instans?</string>
-    <string name="warning_delete_instance">Du er ved at slette %s fra dine fulgte instanser.</string>
+    <string name="no_account_yet">Ingen konto endnu?</string>
+    <string name="toast_instance_unavailable">Ingen tidslinjer fundet for denne forekomst!</string>
+    <string name="delete_instance">Slet denne forekomst?</string>
+    <string name="warning_delete_instance">Du er ved at slette %s fra dine fulgte-forekomster.</string>
     <string name="which_language">Oversæt til</string>
-    <string name="crash_title">Fedilab er stoppet :(</string>
-    <string name="crash_message">Du kan sende sammenbrudsrapporten til mig via email. Det vil bidrage til at løse problemet :)\n\nDu kan også tilføje yderlige relevant info om problemet. Mange tak!</string>
+    <string name="crash_title">Fedilab er stoppet :-(</string>
+    <string name="crash_message">Du kan sende mig nedbrudsrapporten på e-mail. Det vil bidrage til problemløsningen :-)\n\nDu kan selv tilføje yderlige info. Mange tak!</string>
     <string name="send_crash_report">Spørg før udsendelse af nedbrudsrapporter via email?</string>
     <string name="follow_instance">Følg instans</string>
     <string name="toast_instance_already_added">Du følger allerede denne instans!</string>
@@ -590,7 +590,7 @@
     <string name="block_domain">Blokér domæne</string>
     <string name="toast_block_domain">Domænet er blokeret</string>
     <string name="toast_unblock_domain">Domænet er ikke længere blokeret!</string>
-    <string name="retrieve_remote_status">Henter fjern-status</string>
+    <string name="retrieve_remote_status">Henter fjernstatus</string>
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube instans</string>
     <string name="set_display_direct">Vis \'private beskeder\' tidslinje</string>
@@ -643,7 +643,7 @@
     <string name="art_menu">Kunst-tidslinje</string>
     <string name="open_menu">Åbn menu</string>
     <string name="go_back">Gå tilbage</string>
-    <string name="app_logo">Logo for programmet</string>
+    <string name="app_logo">Logo for app\'en</string>
     <string name="profile_picture">Profilbillede</string>
     <string name="profile_banner">Profil banner</string>
     <string name="contact_instance_admin">Kontakt administratoren for instansen</string>
@@ -670,13 +670,13 @@
         <item>1 dag</item>
         <item>1 uge</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        I dette felt skal du skrive din instans\' host-navn.\nF.eks., hvis du oprettede en konto på\' https://mastodon.social\n så skriv <b>mastodon.social</b> (uden https://)\n
+        Du kan begynde at skrive og så vil navne blive foreslået.\n\n
+        ⚠ Forbind knappen vil kun virke hvis instansnavnet er korrekt og instansen er online!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        Skriv den email din Mastodon konto er forbindet med i dette felt.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Sidste skridt er at skrive dit koderod og klikke på Log ind.
     </string>
     <string name="more_information">Mere information</string>
     <string name="showcase_2FA">Hvis du bruger 2FA (To-faktor-godkendelse), skal du bruge dette link.\nDu kan også bruge det, hvis du ikke ønsker at indtaste dine loginoplysninger her.</string>
@@ -686,7 +686,7 @@
     <string name="show_media_nsfw">Vis NSFW</string>
     <string name="crowdin_translations">Crowdin oversættelser</string>
     <string name="crowdin_manager">Crowdin håndtering</string>
-    <string name="translation_app">Oversættelse af programmet</string>
+    <string name="translation_app">Oversættelse af app\'en</string>
     <string name="about_crowdin">Om Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instans</string>
@@ -702,7 +702,7 @@
     <string name="change_tag_column">Skift kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey instanser</string>
     <string name="misskey_instance">Misskey instans</string>
-    <string name="toast_no_apps">Ingen app, der understøtter dette link, er installeret på din enhed.</string>
+    <string name="toast_no_apps">Ingen app der understøtter dette link, er installeret på din enhed.</string>
     <string name="subscriptions">Abonnementer</string>
     <string name="overview">Oversigt</string>
     <string name="trending">Populære</string>
