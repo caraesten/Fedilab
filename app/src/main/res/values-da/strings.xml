@@ -377,18 +377,18 @@
     <string name="action_unfollow">Stop følgning</string>
     <string name="action_block">Blokér</string>
     <string name="action_unblock">Afblokér</string>
-    <string name="action_mute">Gør stum</string>
+    <string name="action_mute">Forstum</string>
     <string name="action_no_action">Ingen handling</string>
-    <string name="action_unmute">Fjern \"Gør tavs\"</string>
+    <string name="action_unmute">Fjern \"Gør stum\"</string>
     <string name="request_sent">Forespørgsel sendt</string>
     <string name="followed_by">Følger dig</string>
     <string name="action_search">Søg</string>
-    <string name="set_capitalize">Første bogstav med stort for svar</string>
-    <string name="set_resize_picture">Formindsk billeder</string>
+    <string name="set_capitalize">Begyndelsesbogstav med stort for svar</string>
+    <string name="set_resize_picture">Ændr billedstørrelse</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push-meddelelser</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Push-adviseringer</string>
+    <string name="settings_popup_message">        Bekræft de push-notifikationer, du ønsker at modtage.
+        Du kan senere slå disse notifikationer til/fra i indstillinger (fanen Notifikationer).
     </string>
     <string name="settings_popup_timeline">For ulæste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For ulæste underretninger?</string>
