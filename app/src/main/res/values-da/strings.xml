@@ -222,40 +222,40 @@
     <!-- Notifications -->
     <string name="no_notifications">Ingen underretninger at vise</string>
     <string name="notif_mention">nævnte dig</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_reblog">boostede din status</string>
+    <string name="notif_favourite">favoriserede din status</string>
     <string name="notif_follow">fulgte dig</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">Nyt toot fra %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">og %d andre underretninger</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="other">og %d andre toots at opdage</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">Slet en underretning?</string>
+    <string name="delete_notification_ask_all">Slet alle underretninger?</string>
+    <string name="delete_notification">Underretningen er blevet slettet!</string>
+    <string name="delete_notification_all">Alle underretninger er blevet slettet!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">Følger</string>
+    <string name="followers">Følgere</string>
+    <string name="pinned_toots">Fastgjort</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
+    <string name="client_error">Kan ikke få fat i klient id!</string>
+    <string name="no_internet">Ingen internet forbindelse!</string>
+    <string name="toast_block">Kontoen var blokeret!</string>
+    <string name="toast_unblock">Kontoen er ikke længere blokeret!</string>
+    <string name="toast_mute">Kontoen var dæmpet!</string>
+    <string name="toast_unmute">Kontoen er ikke længere dæmpet!</string>
+    <string name="toast_follow">Kontoen blev fulgt!</string>
+    <string name="toast_unfollow">Kontoen bliver ikke længere fulgt!</string>
+    <string name="toast_reblog">Toot\'et blev boostet!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
