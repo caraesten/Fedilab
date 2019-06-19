@@ -96,7 +96,7 @@
     <string name="disclaimer_full">Informationen nedenfor afspejler måske ikke brugerens profil fuldstændigt.</string>
     <string name="insert_emoji">Indsæt emoji</string>
     <string name="no_emoji">App\'en indsamlede ikke tilpassede emojis i øjeblikket.</string>
-    <string name="live_notif">Live-adviseringer</string>
+    <string name="live_notif">Live-notifikationer</string>
     <!-- Status -->
     <string name="no_status">Ingen toot at vise</string>
     <string name="fav_added">Toot\'et blev føjet til favoritter</string>
@@ -127,7 +127,7 @@
         <item>Fjern \"Gør tavs\" for denne konto?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Advisér</item>
+        <item>Notificér</item>
         <item>Undertryk</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
@@ -220,14 +220,14 @@
     <string name="timed_mute_date">%1$s er blevet gjort tavs indtil %2$s.\n Du kan fjerne dette fra profilensiden.</string>
     <string name="timed_mute_profile">%1$s er gjort tavs indtil %2$s.\n Tryk hér for at fjerne det igen.</string>
     <!-- Notifications -->
-    <string name="no_notifications">Ingen adviseringer at vise</string>
+    <string name="no_notifications">Ingen notifikationer at vise</string>
     <string name="notif_mention">nævnte dig</string>
     <string name="notif_reblog">boostede din status</string>
     <string name="notif_favourite">favoriserede din status</string>
     <string name="notif_follow">fulgte dig</string>
     <string name="notif_pouet">Nyt toot fra %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">og en anden advisering</item>
+        <item quantity="one">og en anden notifikation</item>
         <item quantity="other">og %d andre adviseringer</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
@@ -534,39 +534,39 @@
     <string name="direct_message">Direkte besked</string>
     <string name="filters">Filtre</string>
     <string name="action_filters_empty_content">Ingen filtre at vise. Du kan oprette et ved at trykke på \"+\"-knappen.</string>
-    <string name="filter_keyword">Nøgleord eller udtryk</string>
-    <string name="context_home">Hjemmetidslinje</string>
+    <string name="filter_keyword">Søgeord eller -udtryk</string>
+    <string name="context_home">Hjem-tidslinje</string>
     <string name="context_public">Offentlige tidslinjer</string>
-    <string name="context_notification">Underretninger</string>
+    <string name="context_notification">Adviseringer</string>
     <string name="context_conversation">Samtaler</string>
-    <string name="filter_keyword_explanations">Matcher uafhængigt af store og små bogstaver i tekst eller Inholdsadvarsel på et toot</string>
+    <string name="filter_keyword_explanations">Matches uafhængigt af minuskler/versaler i tekst eller inholdsadvarsel i et toot</string>
     <string name="context_drop">Forkast i stedet for at skjule</string>
     <string name="context_drop_explanations">Filtrerede toots forsvinder uigenkaldeligt, selv hvis filtret senere fjernes</string>
-    <string name="context_whole_word_explanations">Hvis søgefeltet udelukkende er alfanumerisk, vil det kun blive brugt når det matcher hele ord</string>
-    <string name="context_whole_word">Hele ord</string>
-    <string name="filter_context">Filterkontekst</string>
-    <string name="filter_context_explanations">En eller flere sammenhænge som filteret skal bruges i</string>
+    <string name="context_whole_word_explanations">Er søgeordet/-sætningen rent alfanumerisk, anvendes det/den kun ved match af hele ordet</string>
+    <string name="context_whole_word">Helt ord</string>
+    <string name="filter_context">Filterkontekster</string>
+    <string name="filter_context_explanations">Én eller flere kontekster, hvortil filteret skal benyttes</string>
     <string name="filter_expire">Udløber efter</string>
     <string name="add_new_filter">Tilføj nyt filter</string>
     <string name="action_filter_delete">Slet filter?</string>
-    <string name="action_update_filter">Opdater filter</string>
+    <string name="action_update_filter">Opdatér filter</string>
     <string name="action_filter_create">Opret filter</string>
-    <string name="how_to_follow">Hvem der kan følges</string>
-    <string name="action_who_to_follow_empty_content">Der er ikke angivet nogen konti her i øjeblikket!</string>
+    <string name="how_to_follow">Hvem der skal følges</string>
+    <string name="action_who_to_follow_empty_content">Ingen konti opført i øjeblikket!</string>
     <string name="follow_account">Følg</string>
     <string name="select_all">Vælg alle</string>
     <string name="unselect_all">Fravælg alle</string>
     <string name="follow_trunk">%s følges!</string>
     <string name="create_list_trunk">Opretter listen %s</string>
     <string name="add_account_list_trunk">Tilføjer konti til listen</string>
-    <string name="account_added_list_trunk">Konti blev tilføjet til listen</string>
-    <string name="adding_account_list_trunk">Tilføjer konti til listen</string>
-    <string name="action_list_add">Du har endnu ikke oprettet en liste. Klik på \"+\" knappen for at oprette en ny.</string>
-    <string name="action_remote_instance_add">Du følger ikke nogen fjern-instanser. Klik på \"+\" knappen for at tilføje en ny.</string>
-    <string name="about_trunk">Hvem man kan følge</string>
+    <string name="account_added_list_trunk">Konti blev føjet til listen</string>
+    <string name="adding_account_list_trunk">Føjer konti til listen</string>
+    <string name="action_list_add">Du har endnu ikke oprettet en liste. Tryk på \"+\"-knappen for at oprette en ny.</string>
+    <string name="action_remote_instance_add">Du følger ingen fjernforekomstser. Trykk på \"+\"-knappen for at tilføje en ny.</string>
+    <string name="about_trunk">Hvem skal følges</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Konto(er) kan ikke følges</string>
-    <string name="retrieve_remote_account">Henter fjern-konto</string>
+    <string name="toast_impossible_to_follow">Kont(o)/(i) kan ikke følges</string>
+    <string name="retrieve_remote_account">Henter fjernkonto</string>
     <string name="expand_image">Udvid automatisk skjulte medier</string>
     <string name="set_display_follow_instance">Vis knappen \"Følg instanser\"</string>
     <string name="channel_notif_follow">Ny følger</string>
@@ -575,15 +575,15 @@
     <string name="channel_notif_mention">Ny omtale</string>
     <string name="channel_notif_poll">Afstemning afsluttet</string>
     <string name="channel_notif_toot">Nyt toot</string>
-    <string name="channel_notif_backup">Toot-backup</string>
-    <string name="channel_notif_media">Mediedownload</string>
-    <string name="set_notif_sound">Skift underretningslyd</string>
+    <string name="channel_notif_backup">Toot-sikkerhedskopiering</string>
+    <string name="channel_notif_media">Medie-download</string>
+    <string name="set_notif_sound">Skift adviseringslyd</string>
     <string name="select_sound">Vælg lyd</string>
-    <string name="set_enable_time_slot">Aktivér tidsplan</string>
-    <string name="how_to_videos">Instruktionsvideoer</string>
-    <string name="retrieve_remote_conversation">Henter fjern-tråd!</string>
+    <string name="set_enable_time_slot">Aktivér tidsinterval</string>
+    <string name="how_to_videos">Videoguider</string>
+    <string name="retrieve_remote_conversation">Henter fjerntråd!</string>
     <string name="no_blocked_domain">Ingen blokerede domæner!</string>
-    <string name="unblock_domain_confirm">Fjern blokeringen af domæne</string>
+    <string name="unblock_domain_confirm">Afblokér domæne</string>
     <string name="unblock_domain_confirm_message">Er du sikker på du vil fjerne blokeringen af %s?</string>
     <string name="block_domain_confirm_message">Er du sikker på at du vil blokere %s?\n\n\Du vil ikke være i stand til at se indhold fra det domæne i nogen offentlig tidslinje eller i dine underretninger. Dine følgere fra det domæne vil blive fjernet.</string>
     <string name="blocked_domains">Blokerede domæner</string>
@@ -810,7 +810,7 @@
     <string name="refresh_poll">Opdater afstemning</string>
     <string name="vote">Stem</string>
     <string name="poll_not_private">En afstemning kan ikke vedhæftes en direkte besked!</string>
-    <string name="notif_poll">En aftemning du har stemt i er afsluttet</string>
+    <string name="notif_poll">En afstemning du har stemt i er afsluttet</string>
     <string name="notif_poll_self">En afstemning du har tootet er afsluttet</string>
     <string name="settings_category_notif_customize">Tilpas</string>
     <string name="settings_category_notif_categories">Kategorier</string>
@@ -843,7 +843,7 @@
     <string name="set_display_timeline_in_list">Vis tidslinjer i en liste</string>
     <string name="display_timeline">Vis tidslinjer</string>
     <string name="set_display_bot_icon">Markér bot-konti i toots</string>
-    <string name="add_tags">Administrer tags</string>
+    <string name="add_tags">Administrér tags</string>
     <string name="set_remember_position">Husk position i Hjemmetidslinje</string>
     <string name="history">Historik</string>
     <string name="playlists">Afspilningslister</string>
@@ -872,7 +872,7 @@
     <string name="save_image_failed">Kunne ikke gemme billede</string>
     <string name="opacity">Opacitet</string>
     <string name="label_crop">Beskær</string>
-    <string name="set_photo_editor">Aktiver foto editor</string>
+    <string name="set_photo_editor">Aktiver foto-editor</string>
     <string name="add_poll_item">Tilføj en afstemning</string>
     <string name="remove_poll_item">Fjern sidste afstemning</string>
     <string name="mute_conversation">Gør samtale tavs</string>
@@ -883,7 +883,7 @@
     <string name="timed_mute">Planlagt tavshed</string>
     <string name="mention_account">Nævn kontoen</string>
     <string name="refresh_cache">Opdater cache</string>
-    <string name="see_boost_and_fav">Se hvem der har boostet og tilføjet til favoritter</string>
+    <string name="see_boost_and_fav">Se hvem der har boostet og føjet til favoritter</string>
     <string name="mention_status">Nævn statusen</string>
     <string name="action_news">Nyheder</string>
     <string name="set_display_news_from_fedilab">Vis nyheder fra Fedilab\'s konto</string>
@@ -912,7 +912,7 @@
     <string name="password_error">Adgangskoderne er ikke ens!</string>
     <string name="email_error">E-mail ser ikke ud til at være gyldig!</string>
     <string name="username_indicator">Dit brugernavn er unikt på %1$s</string>
-    <string name="email_indicator">Du vil blive sendt en bekræftelses-e-mail</string>
+    <string name="email_indicator">Du vil blive tilsendt en bekræftelses-e-mail</string>
     <string name="password_indicator">Brug mindst 8 tegn</string>
     <string name="password_too_short">Adgangskoden skal være på mindst 8 tegn</string>
     <string name="username_error">Brugernavn må kun indeholde bogstaver, tal og understregninger</string>
@@ -922,7 +922,7 @@
         Du kan nu forbinde til din konto ved at skrive <b>%1$s</b> i det første felt og klikke på <b>Forbind</b>.\n\n
         <b>Vigtigt</b>: Hvis din instans kræver validering, vil du modtage en email så snart den er valideret!
     </string>
-    <string name="save_draft">Gemm beskeden i kladder?</string>
+    <string name="save_draft">Gem beskeden i kladder?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
