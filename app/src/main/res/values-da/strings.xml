@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Åbn menuen</string>
     <string name="navigation_drawer_close">Luk menuen</string>
     <string name="action_about">Om</string>
-    <string name="action_about_instance">Om denne forekomst</string>
+    <string name="action_about_instance">Om denne instans</string>
     <string name="action_privacy">Privatliv</string>
     <string name="action_cache">Cache</string>
     <string name="action_logout">Log ud</string>
@@ -30,8 +30,8 @@
     <string name="restore">Gendan</string>
     <string name="two_factor_authentification">Tofaktorgodkendelse?</string>
     <string name="no_result">Ingen resultater!</string>
-    <string name="instance">Forekomst</string>
-    <string name="instance_example">Forekomst: matodon.social</string>
+    <string name="instance">Instans</string>
+    <string name="instance_example">Instans: matodon.social</string>
     <string name="toast_account_changed" formatted="false">Fungerer nu med %1$s-kontoen</string>
     <string name="add_account">Tilføj en konto</string>
     <string name="clipboard">Indhold af dette toot er kopieret til Udklipsholder</string>
@@ -181,7 +181,7 @@
     <string name="choose_accounts">Vælg en konto</string>
     <string name="select_accounts">Vælg nogle konti</string>
     <string name="remove_draft">Fjern udkast?</string>
-    <string name="show_reply">Klik på knappen for at vise det oprindelige toot</string>
+    <string name="show_reply">Vælg knappen for at vise det oprindelige toot</string>
     <string name="upload_form_description">Beskriv for synshandicappede</string>
     <!-- Instance -->
     <string name="instance_no_description">Ingen beskrivelse tilgængelig!</string>
@@ -190,12 +190,12 @@
     <string name="about_developer">Udvikler:</string>
     <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Kildekoden: </string>
+    <string name="about_code">Kildekode: </string>
     <string name="about_yandex">Oversættelse af toots:</string>
-    <string name="about_thekinrar">Søg instanser:</string>
+    <string name="about_thekinrar">Søg forekomster:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Ikon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Ikondesigner:</string>
+    <string name="thanks_text_banner">Bannerdesigner:</string>
     <!-- Conversation -->
     <string name="conversation">Samtale</string>
     <!-- Accounts -->
@@ -209,10 +209,10 @@
     <string name="reject">Afvis</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Ingen planlagte toots at vise!</string>
-    <string name="no_scheduled_toots_indications">Skriv et toot og vælg derefter <b>Planlæg</b> fra top menuen.</string>
+    <string name="no_scheduled_toots_indications">Skriv et toot og vælg derefter <b>Planlæg</b> fra topmenuen.</string>
     <string name="remove_scheduled">Slet planlagt toot?</string>
     <string name="media_count">Medie: %d</string>
-    <string name="toot_scheduled">Toot\'et er blevet planlagt!</string>
+    <string name="toot_scheduled">Toot\'et er nu planlagt!</string>
     <string name="toot_scheduled_date">Den planlagte dato skal være senere end indeværende time!</string>
     <string name="warning_battery">Strømsparetilstand er aktiveret! Det virker måske ikke som forventet.</string>
     <!-- timed mute -->
@@ -830,7 +830,7 @@
     <string name="undo">Fortryd</string>
     <string name="visible_tabs_needed">Du skal beholde to synlige faner!</string>
     <string name="action_reorder_timeline">Omarranger tidslinjer</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
+    <string name="warning_list_deletion">Brug \"Lister\" for at slette denne liste!</string>
     <string name="warning_main_timeline">Hovedtidslinjer kan kun skjules!</string>
     <string name="action_bbcode">BBkode</string>
     <string name="add_timeline">Tilføj en tidslinje</string>
