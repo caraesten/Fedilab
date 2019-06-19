@@ -563,9 +563,9 @@
     <string name="adding_account_list_trunk">Føjer konti til listen</string>
     <string name="action_list_add">Du har endnu ikke oprettet en liste. Tryk på \"+\"-knappen for at oprette en ny.</string>
     <string name="action_remote_instance_add">Du følger ingen fjernforekomstser. Trykk på \"+\"-knappen for at tilføje en ny.</string>
-    <string name="about_trunk">Hvem skal følges</string>
+    <string name="about_trunk">Hvem man følger</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Kont(o)/(i) kan ikke følges</string>
+    <string name="toast_impossible_to_follow">Konto(er) kan ikke følges</string>
     <string name="retrieve_remote_account">Henter fjernkonto</string>
     <string name="expand_image">Udvid automatisk skjulte medier</string>
     <string name="set_display_follow_instance">Vis knappen \"Følg instanser\"</string>
@@ -577,7 +577,7 @@
     <string name="channel_notif_toot">Nyt toot</string>
     <string name="channel_notif_backup">Toot-sikkerhedskopiering</string>
     <string name="channel_notif_media">Medie-download</string>
-    <string name="set_notif_sound">Skift adviseringslyd</string>
+    <string name="set_notif_sound">Skift notifikationslyd</string>
     <string name="select_sound">Vælg lyd</string>
     <string name="set_enable_time_slot">Aktivér tidsinterval</string>
     <string name="how_to_videos">Videoguider</string>
@@ -585,15 +585,15 @@
     <string name="no_blocked_domain">Ingen blokerede domæner!</string>
     <string name="unblock_domain_confirm">Afblokér domæne</string>
     <string name="unblock_domain_confirm_message">Sikker på, at du vil afblokere %s?</string>
-    <string name="block_domain_confirm_message">Sikker på, at du vil blokere %s?\n\n\Du vil ikke se indhold fra domænet i nogen offentlig tidslinje eller i dine adviseringer. Dine følgere fra domænet fjernes.</string>
+    <string name="block_domain_confirm_message">Sikker på, at du vil blokere %s?\n\n\Du vil ikke se indhold fra domænet i nogen offentlig tidslinje eller i dine notifikationer. Dine følgere fra domænet fjernes.</string>
     <string name="blocked_domains">Blokerede domæner</string>
     <string name="block_domain">Blokér domæne</string>
     <string name="toast_block_domain">Domænet er blokeret</string>
     <string name="toast_unblock_domain">Domænet er ikke længere blokeret!</string>
     <string name="retrieve_remote_status">Henter fjernstatus</string>
-    <string name="comment">Kommentere</string>
-    <string name="peertube_instance">Peertube-forekomst</string>
-    <string name="set_display_direct">Vis private beskeder-tidslinje</string>
+    <string name="comment">Kommentar</string>
+    <string name="peertube_instance">Peertube instans</string>
+    <string name="set_display_direct">Vis \'private beskeder\'-tidslinje</string>
     <string name="set_keep_background_process">Bevar baggrundsprocessen, når app\'en lukkes</string>
     <string name="no_comments">Vær den første til at skrive en kommentar til denne video via den øverste, højre knap!</string>
     <string name="number_view_video">%s visninger</string>
@@ -679,13 +679,13 @@
     <string name="showcase_pwd">        Sidste trin er at angive dit adgangskode og trykke på Log ind.
     </string>
     <string name="more_information">Mere information</string>
-    <string name="showcase_2FA">Hvis du bruger 2FA (To-faktor-godkendelse), skal du bruge dette link.\nDu kan også bruge det, hvis du ikke ønsker at indtaste dine loginoplysninger her.</string>
+    <string name="showcase_2FA">Anvender du 2FA (Tofaktorgodkendelse), skal du benytte dette link.\nDu kan også benytte det, hvis du ikke ønsker at angive dine legitimationsoplysninger her.</string>
     <!-- languages not translated -->
     <string name="languages">Sprog</string>
     <string name="show_media_only">Kun medier</string>
     <string name="show_media_nsfw">Vis NSFW</string>
-    <string name="crowdin_translations">Crowdin oversættelser</string>
-    <string name="crowdin_manager">Crowdin håndtering</string>
+    <string name="crowdin_translations">Crowdin-oversættelser</string>
+    <string name="crowdin_manager">Crowdin-administrator</string>
     <string name="translation_app">Oversættelse af app\'en</string>
     <string name="about_crowdin">Om Crowdin</string>
     <string name="bot">Bot</string>
