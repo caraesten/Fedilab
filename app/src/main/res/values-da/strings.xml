@@ -928,7 +928,7 @@
         <item quantity="other">%d stemmer</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Enkelt valg</item>
+        <item>Enkeltvalg</item>
         <item>Multivalg</item>
     </string-array>
     <string-array name="poll_duration">
@@ -942,6 +942,6 @@
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direkte streamet</item>
+        <item>Direkte stream</item>
     </string-array>
 </resources>
