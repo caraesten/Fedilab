@@ -509,16 +509,16 @@
     <string name="support_the_app_on_liberapay">Støt app\'en på Liberapay</string>
     <string name="alert_regex">Der er en fejl i det regulære udtryk!</string>
     <string name="no_account_yet">Ingen konto endnu?</string>
-    <string name="toast_instance_unavailable">Ingen tidslinjer fundet for denne forekomst!</string>
-    <string name="delete_instance">Slet denne forekomst?</string>
-    <string name="warning_delete_instance">Du er ved at slette %s fra dine fulgte-forekomster.</string>
+    <string name="toast_instance_unavailable">Ingen tidslinjer fundet for denne instans!</string>
+    <string name="delete_instance">Slet denne instans?</string>
+    <string name="warning_delete_instance">Du er ved at slette %s fra dine fulgte instanser.</string>
     <string name="which_language">Oversæt til</string>
-    <string name="crash_title">Fedilab er stoppet :-(</string>
+    <string name="crash_title">Fedilab er stoppet :(</string>
     <string name="crash_message">Du kan sende mig nedbrudsrapporten på e-mail. Det vil bidrage til problemløsningen :-)\n\nDu kan selv tilføje yderlige info. Mange tak!</string>
     <string name="send_crash_report">Spørg inden afsendelse af nedbrudsrapporter på e-mail?</string>
-    <string name="follow_instance">Følg forekomst</string>
-    <string name="toast_instance_already_added">Du følger allerede denne forekomst!</string>
-    <string name="toast_instance_followed">Forekomsten følges nu!</string>
+    <string name="follow_instance">Følg instans</string>
+    <string name="toast_instance_already_added">Du følger allerede denne instans!</string>
+    <string name="toast_instance_followed">Instansen følges nu!</string>
     <string name="action_partnership">Partnerskaber</string>
     <string name="neutral_menu_information">Information</string>
     <string name="hide_boost">Skjul boosts fra %s</string>
@@ -527,8 +527,8 @@
     <string name="show_boost">Vis boosts fra %s</string>
     <string name="unendorse">Vis ikke på profil</string>
     <string name="show_everything">Vis alt fra %s</string>
-    <string name="toast_endorse">Kontoen vises nu på profilen</string>
-    <string name="toast_unendorse">Kontoen vises ikke længere på profilen</string>
+    <string name="toast_endorse">Kontoen fremhæves nu på profilen</string>
+    <string name="toast_unendorse">Kontoen fremhæves ikke længere på profilen</string>
     <string name="toast_show_boost">Boosts vises nu!</string>
     <string name="toast_hide_boost">Boosts skjules nu!</string>
     <string name="direct_message">Direkte besked</string>
@@ -537,7 +537,7 @@
     <string name="filter_keyword">Søgeord eller -udtryk</string>
     <string name="context_home">Hjem-tidslinje</string>
     <string name="context_public">Offentlige tidslinjer</string>
-    <string name="context_notification">Adviseringer</string>
+    <string name="context_notification">Notifikationer</string>
     <string name="context_conversation">Samtaler</string>
     <string name="filter_keyword_explanations">Matches uafhængigt af minuskler/versaler i tekst eller inholdsadvarsel i et toot</string>
     <string name="context_drop">Forkast i stedet for at skjule</string>
@@ -551,7 +551,7 @@
     <string name="action_filter_delete">Slet filter?</string>
     <string name="action_update_filter">Opdatér filter</string>
     <string name="action_filter_create">Opret filter</string>
-    <string name="how_to_follow">Hvem der skal følges</string>
+    <string name="how_to_follow">Hvem der kan følges</string>
     <string name="action_who_to_follow_empty_content">Ingen konti opført i øjeblikket!</string>
     <string name="follow_account">Følg</string>
     <string name="select_all">Vælg alle</string>
@@ -630,37 +630,37 @@
     <string name="set_truncate_toot">Afkort toots på flere end \'x\' linjer. Nul betyder deaktiveret.</string>
     <string name="display_toot_truncate">Vis mere</string>
     <string name="hide_toot_truncate">Vis mindre</string>
-    <string name="manage_tags">Administrer tags</string>
-    <string name="tags_already_stored">Dette tag eksisterer allerede!</string>
-    <string name="tags_stored">Tag\'et er blevet gemt!</string>
-    <string name="tags_renamed">Tag\'et er blevet ændret!</string>
-    <string name="tags_deleted">Tag\'et er blevet slettet!</string>
-    <string name="set_display_art">Vis kunst-tidslinje</string>
+    <string name="manage_tags">Håndtér tags</string>
+    <string name="tags_already_stored">Tag\'et findes allerede!</string>
+    <string name="tags_stored">Tag\'et er gemt!</string>
+    <string name="tags_renamed">Tag\'et er ændret!</string>
+    <string name="tags_deleted">Tag\'et er slettet!</string>
+    <string name="set_display_art">Vis kunsttidslinje</string>
     <string name="schedule_boost">Planlæg boost</string>
     <string name="boost_scheduled">Boostet er planlagt!</string>
     <string name="no_scheduled_boosts">Ingen planlagte boosts at vise!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Åbn menuen på et toot og vælg <b>Planlæg boost</b>.]]></string>
-    <string name="art_menu">Kunst-tidslinje</string>
+    <string name="art_menu">Kunsttidslinje</string>
     <string name="open_menu">Åbn menu</string>
     <string name="go_back">Gå tilbage</string>
-    <string name="app_logo">Logo for app\'en</string>
+    <string name="app_logo">App\'ens Logo</string>
     <string name="profile_picture">Profilbillede</string>
-    <string name="profile_banner">Profil banner</string>
-    <string name="contact_instance_admin">Kontakt administratoren for instansen</string>
+    <string name="profile_banner">Profilbanner</string>
+    <string name="contact_instance_admin">Kontakt admin for forekomsten</string>
     <string name="add_new">Tilføj ny</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="mastohost_logo">MastoHost-logo</string>
     <string name="emoji_picker">Emoji-vælger</string>
-    <string name="refresh">Genopfrisk</string>
+    <string name="refresh">Opfrisk</string>
     <string name="expand_conversation">Udvid samtalen</string>
     <string name="remove_account">Fjern en konto</string>
     <string name="delete_domain">Slet det blokerede domæne</string>
-    <string name="custom_emoji_picker">Brugerdefineret emoji-vælger</string>
+    <string name="custom_emoji_picker">Tilpasset emoji-vælger</string>
     <string name="play_video">Afspil video</string>
     <string name="new_toot">Nyt toot</string>
     <string name="card_view_image">Billede på kortet</string>
     <string name="hide_media">Skjul medie</string>
     <string name="favicon">Favikon</string>
-    <string name="media_description">Føj en beskrivelse til medie (for synshandicappede)</string>
+    <string name="media_description">Tiløj en mediebeskrivelse (til synshæmmede)</string>
     <string-array name="filter_expire">
         <item>Aldrig</item>
         <item>30 minutter</item>
@@ -670,13 +670,13 @@
         <item>1 dag</item>
         <item>1 uge</item>
     </string-array>
-    <string name="showcase_instance">        I dette felt skal du skrive din instans\' host-navn.\nF.eks., hvis du oprettede en konto på\' https://mastodon.social\n så skriv <b>mastodon.social</b> (uden https://)\n
-        Du kan begynde at skrive og så vil navne blive foreslået.\n\n
-        ⚠ Forbind knappen vil kun virke hvis instansnavnet er korrekt og instansen er online!
+    <string name="showcase_instance">        I dette felt skal du angive din forekomsts værtsnavn.\nOprettede du f.eks. din konto på https://mastodon.social\nSå angiv <b>mastodon.social</b> (uden https://)\n
+        Du kan begynde at skrive, hvorefter navneforslag vises.\n\n
+        ⚠ Forbind-knappen vil kun fungere, hvis forekomstnavnet er korrekt og forekomsten er online!
     </string>
-    <string name="showcase_uid">        Skriv den email din Mastodon konto er forbindet med i dette felt.
+    <string name="showcase_uid">        Angiv den til din Mastodon-konto tilknyttede e-mail i dette felt.
     </string>
-    <string name="showcase_pwd">        Sidste skridt er at skrive dit koderod og klikke på Log ind.
+    <string name="showcase_pwd">        Sidste trin er at angive dit adgangskode og trykke på Log ind.
     </string>
     <string name="more_information">Mere information</string>
     <string name="showcase_2FA">Hvis du bruger 2FA (To-faktor-godkendelse), skal du bruge dette link.\nDu kan også bruge det, hvis du ikke ønsker at indtaste dine loginoplysninger her.</string>
