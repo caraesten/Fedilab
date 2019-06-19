@@ -477,7 +477,7 @@
     <!-- Migration -->
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="show_boost_count">Vis tællere for boosts/favoritter</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Kan du ikke logge ind?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -485,31 +485,31 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="media_ready">Medie er blevet indlæst. Klik her for at vise det.</string>
+    <string name="data_export_start">Denne handling kan tage ganske lang tid. Du vil blive underrettet, når den er færdig.</string>
+    <string name="data_export_running">Kører stadig, vent venligst…</string>
+    <string name="data_export">Eksportér statusser</string>
+    <string name="data_export_toots">Eksportér statusser for %1$s</string>
+    <string name="data_export_success">%1$s toots ud af %2$s er blevet eksporteret.</string>
+    <string name="data_export_error">Noget gik galt ved eksport af data for %1$s</string>
+    <string name="data_export_error_simple">Noget gik galt ved eksport af data!</string>
+    <string name="data_import_success_simple">Data blev importeret!</string>
+    <string name="data_import_error_simple">Noget gik galt ved import af data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
+    <string name="proxy_enable">Aktiver proxy?</string>
+    <string name="poxy_host">Vært</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="poxy_login">Brugernavn</string>
+    <string name="poxy_password">Kodeord</string>
+    <string name="set_theme">Tema:</string>
+    <string name="set_compact_mode">Kompakt tilstand</string>
+    <string name="set_share_details">Tilføj toot-detaljer ved deling</string>
+    <string name="support_the_app_on_liberapay">Støt app\'en på Liberapay</string>
+    <string name="alert_regex">Der er en fejl i det regulære udtryk!</string>
+    <string name="no_account_yet">Har du endnu ingen konto?</string>
+    <string name="toast_instance_unavailable">Ingen tidslinjer blev fundet på denne instans!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Translate in</string>
@@ -560,9 +560,9 @@
     <string name="create_list_trunk">Creating the list %s</string>
     <string name="add_account_list_trunk">Adding accounts to the list</string>
     <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="adding_account_list_trunk">Tilføjer konti til listen</string>
+    <string name="action_list_add">Du har endnu ikke oprettet en liste. Klik på \"+\" knappen for at oprette en ny.</string>
+    <string name="action_remote_instance_add">Du følger ikke nogen fjern-instanser. Klik på \"+\" knappen for at tilføje en ny.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
