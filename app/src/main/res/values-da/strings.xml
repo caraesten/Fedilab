@@ -79,7 +79,7 @@
     <string name="muted_menu">Tavse brugere</string>
     <string name="blocked_menu">Blokerede brugere</string>
     <string name="remote_follow_menu">Fjernfølgning</string>
-    <string name="notifications">Adviseringer</string>
+    <string name="notifications">Notifikationer</string>
     <string name="follow_request">Følgeanmodninger</string>
     <string name="optimization">Optimering</string>
     <string name="settings">Indstillinger</string>
@@ -670,11 +670,11 @@
         <item>1 dag</item>
         <item>1 uge</item>
     </string-array>
-    <string name="showcase_instance">        I dette felt skal du angive din instans værtsnavn.\nOprettede du f.eks. din konto på https://mastodon.social\nSå angiv <b>mastodon.social</b> (uden https://)\n
+    <string name="showcase_instance">        I dette felt skal du angive din instans\' værtsnavn.\nOprettede du f.eks. din konto på https://mastodon.social\nSå angiv <b>mastodon.social</b> (uden https://)\n
         Du kan begynde at skrive, hvorefter navneforslag vises.\n\n
         ⚠ Forbind-knappen vil kun fungere, hvis instansnavnet er korrekt og instansen er online!
     </string>
-    <string name="showcase_uid">        Angiv den til din Mastodon-konto tilknyttede e-mail i dette felt.
+    <string name="showcase_uid">        Angiv din Mastodon-konto tilknyttede e-mail i dette felt.
     </string>
     <string name="showcase_pwd">        Sidste trin er at angive dit adgangskode og trykke på Log ind.
     </string>
@@ -702,7 +702,7 @@
     <string name="change_tag_column">Skift kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey instanser</string>
     <string name="misskey_instance">Misskey instans</string>
-    <string name="toast_no_apps">Ingen tilgængelig app på din enhed understøtter dette link.</string>
+    <string name="toast_no_apps">Ingen app på din enhed understøtter dette link.</string>
     <string name="subscriptions">Abonnementer</string>
     <string name="overview">Oversigt</string>
     <string name="trending">Populære</string>
@@ -749,7 +749,7 @@
     <string name="set_display_content_after_fetch_more">Vis nye toots over \"Hent mere\" - knappen</string>
     <string name="settings_category_label_confirmations">Bekræftelser</string>
     <string name="settings_category_label_timelines">Tidslinjer</string>
-    <string name="settings_category_label_notification">Underretningstjeneste</string>
+    <string name="settings_category_label_notification">Notifikationstjeneste</string>
     <string name="settings_category_label_interface">Brugerflade</string>
     <string name="settings_category_label_hiddencontent">Skjult indhold</string>
     <string name="settings_category_label_composing">Skrivning</string>
@@ -820,7 +820,7 @@
     <string name="set_display_new_badge">Vis \'nyt\' badge på ulæste toots</string>
     <string name="set_display_peertube">Vis Peertube tidslinje</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Skjule fanen</string>
+    <string name="hide_tab">Skjul fanen</string>
     <string name="move_timeline">Flyt tidslinje</string>
     <string name="hide_timeline">Skjul tidslinje</string>
     <string name="reorder_timelines">Omarranger tidslinjer</string>
@@ -844,7 +844,7 @@
     <string name="display_timeline">Vis tidslinjer</string>
     <string name="set_display_bot_icon">Markér bot-konti i toots</string>
     <string name="add_tags">Administrér tags</string>
-    <string name="set_remember_position">Husk position i Hjemmetidslinje</string>
+    <string name="set_remember_position">Husk position i Hjem-tidslinje</string>
     <string name="history">Historik</string>
     <string name="playlists">Afspilningslister</string>
     <string name="display_name">Kaldenavn</string>
@@ -865,7 +865,7 @@
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Justér</string>
     <string name="label_brush">Pensel</string>
-    <string name="confirm_exit_editing">Er du sikker på at du vil afslutte uden at gemme billedet?</string>
+    <string name="confirm_exit_editing">Sikker på at afslutte uden at gemme billedet?</string>
     <string name="discard">Kassér</string>
     <string name="saving">Gemmer…</string>
     <string name="image_saved">Billede succesfuldt gemt!</string>
@@ -894,7 +894,7 @@
     <string name="category_activism">Aktivisme</string>
     <string name="category_games">Gaming</string>
     <string name="category_tech">Teknologi</string>
-    <string name="category_adult">Seksuelt indhold</string>
+    <string name="category_adult">Erotisk indhold</string>
     <string name="category_furry">Furry</string>
     <string name="category_food">Mad</string>
     <string name="instance_logo">Logo for instansen</string>
