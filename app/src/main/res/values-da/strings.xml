@@ -332,37 +332,37 @@
     <string name="embedded_browser">Brug den indbyggede browser</string>
     <string name="custom_tabs">Tilpassede faner</string>
     <string name="use_javascript">Aktivér JavaScript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="expand_cw">Udvid automatisk cw</string>
+    <string name="use_cookies">Tillader tredjeparts-cookies</string>
+    <string name="settings_ui_layout">Layout for tidslinjer: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Normalt batteriforbrug</item>
+        <item>Medium batteriforbrug</item>
+        <item>Lavt batteriforbrug</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Faner</item>
         <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Faner og menu</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Nej</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Din API nøgle, efterlad blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Mørk</item>
         <item>Lys</item>
-        <item>Black</item>
+        <item>Sort</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Nej</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Sæt LED-farve:</string>
     <string-array name="led_colours">
         <item>Blå</item>
         <item>Cyan</item>
@@ -372,7 +372,7 @@
         <item>Gul</item>
         <item>Hvid</item>
     </string-array>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Underret om nye toots på hjemme-tidslinjen</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Block</string>
@@ -563,22 +563,22 @@
     <string name="adding_account_list_trunk">Tilføjer konti til listen</string>
     <string name="action_list_add">Du har endnu ikke oprettet en liste. Klik på \"+\" knappen for at oprette en ny.</string>
     <string name="action_remote_instance_add">Du følger ikke nogen fjern-instanser. Klik på \"+\" knappen for at tilføje en ny.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="about_trunk">Hvem man kan følge</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_poll">Poll Ended</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
+    <string name="toast_impossible_to_follow">Konto(er) kan ikke følges</string>
+    <string name="retrieve_remote_account">Henter fjern-konto</string>
+    <string name="expand_image">Udvid automatisk skjulte medier</string>
+    <string name="set_display_follow_instance">Vis \'følg instanser\'-knappen</string>
+    <string name="channel_notif_follow">Ny følger</string>
+    <string name="channel_notif_boost">Nyt boost</string>
+    <string name="channel_notif_fav">Ny favorit</string>
+    <string name="channel_notif_mention">Ny omtale</string>
+    <string name="channel_notif_poll">Afstemning afsluttet</string>
+    <string name="channel_notif_toot">Nyt toot</string>
+    <string name="channel_notif_backup">Toot-backup</string>
+    <string name="channel_notif_media">Medie nedhentning</string>
+    <string name="set_notif_sound">Skift underretningslyd</string>
+    <string name="select_sound">Vælg lyd</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
