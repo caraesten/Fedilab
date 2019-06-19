@@ -5050,22 +5050,24 @@ public class API {
         Report report = new Report();
         try {
             report.setId(resobj.getString("id"));
-            report.setAction_taken(resobj.getString("action_taken"));
+            report.setAction_taken(resobj.getBoolean("action_taken"));
             report.setComment(resobj.getString("comment"));
             report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
             report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
             if( !resobj.isNull("account")) {
-                report.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+                report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
             }
             if( !resobj.isNull("target_account")) {
-                report.setTarget_account(parseAccountResponse(context, resobj.getJSONObject("target_account")));
+                report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
             }
             if( !resobj.isNull("assigned_account")) {
-                report.setAssigned_account(parseAccountResponse(context, resobj.getJSONObject("assigned_account")));
+                report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
             }
-            report.setAction_taken_by_account_id(resobj.getString("action_taken_by_account_id"));
+            if( !resobj.isNull("action_taken_by_account")) {
+                report.setAction_taken_by_account(parseAccountAdminResponse(context, resobj.getJSONObject("action_taken_by_account")));
+            }
             report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
-        }catch (Exception ignored){}
+        }catch (Exception ignored){ignored.printStackTrace();}
         return report;
     }
 
@@ -5107,11 +5109,27 @@ public class API {
             accountAdmin.setEmail(resobj.getString("email"));
             accountAdmin.setRole(resobj.getString("role"));
             accountAdmin.setIp(resobj.getString("ip"));
-            accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
-            accountAdmin.setSuspended(resobj.getBoolean("suspended"));
-            accountAdmin.setSilenced(resobj.getBoolean("silenced"));
-            accountAdmin.setDisabled(resobj.getBoolean("disabled"));
             accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            if( !resobj.isNull("confirmed")) {
+                accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
+            }else{
+                accountAdmin.setConfirmed(true);
+            }
+            if( !resobj.isNull("suspended")) {
+                accountAdmin.setSuspended(resobj.getBoolean("suspended"));
+            }else{
+                accountAdmin.setSuspended(false);
+            }
+            if( !resobj.isNull("silenced")) {
+                accountAdmin.setSilenced(resobj.getBoolean("silenced"));
+            }else{
+                accountAdmin.setSilenced(false);
+            }
+            if( !resobj.isNull("disabled")) {
+                accountAdmin.setDisabled(resobj.getBoolean("disabled"));
+            }else{
+                accountAdmin.setDisabled(false);
+            }
         }catch (Exception ignored){}
         return accountAdmin;
     }

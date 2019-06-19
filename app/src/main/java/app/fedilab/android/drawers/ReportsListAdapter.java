@@ -15,9 +15,6 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.os.Build;
-import android.text.Html;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +25,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import app.fedilab.android.R;
@@ -72,12 +68,12 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final ReportsListAdapter.ViewHolder holder = (ReportsListAdapter.ViewHolder) viewHolder;
         Report report = reports.get(position);
-        Account account = report.getAccount();
-        Account target_account = report.getTarget_account();
+        Account account = report.getAccount().getAccount();
+        Account target_account = report.getTarget_account().getAccount();
 
 
-        account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
-        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
+        /*account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
+        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);*/
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn_reporter.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
@@ -95,7 +91,8 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
             holder.account_dn.setText( target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
 
-        Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
+
+        Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
@@ -104,7 +101,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         else
             holder.account_ac.setVisibility(View.VISIBLE);
 
-        holder.report_action_taken.setText(report.getAction_taken());
+        holder.report_comment.setText(report.getComment());
 
     }
 
@@ -148,7 +145,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         TextView account_ac;
         TextView account_dn, account_dn_reporter;
         TextView account_un;
-        TextView report_action_taken;
+        TextView report_comment;
 
         LinearLayout account_container;
 
@@ -160,7 +157,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
             account_dn_reporter = itemView.findViewById(R.id.account_dn_reporter);
             account_ac = itemView.findViewById(R.id.account_ac);
             account_un = itemView.findViewById(R.id.account_un);
-            report_action_taken = itemView.findViewById(R.id.report_action_taken);
+            report_comment = itemView.findViewById(R.id.report_comment);
             account_container = itemView.findViewById(R.id.account_container);
         }
     }

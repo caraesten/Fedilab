@@ -70,6 +70,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -79,6 +80,7 @@
             android:layout_height="40dp"
             android:contentDescription="@string/profile_picture"/>
         <TextView
+            android:layout_marginStart="10dp"
             android:id="@+id/account_dn_reporter"
             android:maxLines="1"
             android:layout_width="80dp"
@@ -86,9 +88,9 @@
             android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:visibility="gone"
-            android:id="@+id/report_action_taken"
+            android:id="@+id/report_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

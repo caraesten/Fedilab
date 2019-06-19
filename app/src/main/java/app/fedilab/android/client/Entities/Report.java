@@ -24,14 +24,14 @@ import java.util.List;
 public class Report implements Parcelable {
 
     private String id;
-    private String action_taken;
+    private boolean action_taken;
     private String comment;
     private Date created_at;
     private Date updated_at;
-    private Account account;
-    private Account target_account;
-    private Account assigned_account;
-    private String action_taken_by_account_id;
+    private AccountAdmin account;
+    private AccountAdmin target_account;
+    private AccountAdmin assigned_account;
+    private AccountAdmin action_taken_by_account;
     private List<Status> statuses;
 
 
@@ -43,13 +43,6 @@ public class Report implements Parcelable {
         this.id = id;
     }
 
-    public String getAction_taken() {
-        return action_taken;
-    }
-
-    public void setAction_taken(String action_taken) {
-        this.action_taken = action_taken;
-    }
 
     public String getComment() {
         return comment;
@@ -75,15 +68,6 @@ public class Report implements Parcelable {
         this.updated_at = updated_at;
     }
 
-
-    public String getAction_taken_by_account_id() {
-        return action_taken_by_account_id;
-    }
-
-    public void setAction_taken_by_account_id(String action_taken_by_account_id) {
-        this.action_taken_by_account_id = action_taken_by_account_id;
-    }
-
     public List<Status> getStatuses() {
         return statuses;
     }
@@ -96,28 +80,44 @@ public class Report implements Parcelable {
     public Report() {
     }
 
-    public Account getAccount() {
+    public AccountAdmin getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(AccountAdmin account) {
         this.account = account;
     }
 
-    public Account getTarget_account() {
+    public AccountAdmin getTarget_account() {
         return target_account;
     }
 
-    public void setTarget_account(Account target_account) {
+    public void setTarget_account(AccountAdmin target_account) {
         this.target_account = target_account;
     }
 
-    public Account getAssigned_account() {
+    public AccountAdmin getAssigned_account() {
         return assigned_account;
     }
 
-    public void setAssigned_account(Account assigned_account) {
+    public void setAssigned_account(AccountAdmin assigned_account) {
         this.assigned_account = assigned_account;
+    }
+
+    public boolean isAction_taken() {
+        return action_taken;
+    }
+
+    public void setAction_taken(boolean action_taken) {
+        this.action_taken = action_taken;
+    }
+
+    public AccountAdmin getAction_taken_by_account() {
+        return action_taken_by_account;
+    }
+
+    public void setAction_taken_by_account(AccountAdmin action_taken_by_account) {
+        this.action_taken_by_account = action_taken_by_account;
     }
 
     @Override
@@ -128,29 +128,29 @@ public class Report implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
-        dest.writeString(this.action_taken);
+        dest.writeByte(this.action_taken ? (byte) 1 : (byte) 0);
         dest.writeString(this.comment);
         dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
         dest.writeLong(this.updated_at != null ? this.updated_at.getTime() : -1);
         dest.writeParcelable(this.account, flags);
         dest.writeParcelable(this.target_account, flags);
         dest.writeParcelable(this.assigned_account, flags);
-        dest.writeString(this.action_taken_by_account_id);
+        dest.writeParcelable(this.action_taken_by_account, flags);
         dest.writeTypedList(this.statuses);
     }
 
     protected Report(Parcel in) {
         this.id = in.readString();
-        this.action_taken = in.readString();
+        this.action_taken = in.readByte() != 0;
         this.comment = in.readString();
         long tmpCreated_at = in.readLong();
         this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
         long tmpUpdated_at = in.readLong();
         this.updated_at = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
-        this.account = in.readParcelable(Account.class.getClassLoader());
-        this.target_account = in.readParcelable(Account.class.getClassLoader());
-        this.assigned_account = in.readParcelable(Account.class.getClassLoader());
-        this.action_taken_by_account_id = in.readString();
+        this.account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.target_account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.assigned_account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.action_taken_by_account = in.readParcelable(AccountAdmin.class.getClassLoader());
         this.statuses = in.createTypedArrayList(Status.CREATOR);
     }
 
