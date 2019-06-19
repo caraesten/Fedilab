@@ -293,7 +293,7 @@
     <string name="load_sensitive_attachment">Følsomt indhold</string>
     <string name="set_display_reply">Vis foregående besked i besvarelse</string>
     <string name="set_display_local">Vis lokal tidslinje</string>
-    <string name="set_display_global">Vis samlet tidslinje</string>
+    <string name="set_display_global">Vis forenet tidslinje</string>
     <string name="set_disable_gif">Deaktivér GIF-avatarer</string>
     <string name="set_folder_title">Sti: </string>
     <string name="set_auto_store_toot">Gem kladder automatisk</string>
@@ -423,13 +423,13 @@
         <item>Kun</item>
         <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">Ingen toots blev fundet i databasen. Brug synkroniser-knappen i menuen for at hente dem.</string>
+    <string name="owner_cached_toots_empty">Ingen toots fundet i databasen. Benyt synkroniseringsknappen i menuen for at hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Gemte data</string>
-    <string name="privacy_data">        Kun grundlæggende oplysninger fra konti, er gemt på enheden.
-        Disse data er strengt fortrolige og kan kun bruges af app\'en.
-        Sletning af app\'en med fjerner straks disse data.\n
-        &#9888; Brugernavn og kodeord bliver aldrig gemt. De bliver kun brugt i løbet af en sikker autentifikation (SSL) med en instans.
+    <string name="privacy_data">        Kun grundlæggende oplysninger fra konti lagres på enheden.
+        Disse data er strengt fortrolige og kan kun anvendes af app\'en.
+        Sletning af app\'en fjerner straks disse data.\n
+        &#9888; Loginoplysninger lagres aldrig, da de alene benyttes ifm. en sikker godkendelse (SSL) med en forekomst.
     </string>
     <string name="privacy_authorizations_title">Tilladelser:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
