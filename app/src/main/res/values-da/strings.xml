@@ -192,7 +192,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kildekode: </string>
     <string name="about_yandex">Oversættelse af toots:</string>
-    <string name="about_thekinrar">Søg forekomster:</string>
+    <string name="about_thekinrar">Søg instanser:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikondesigner:</string>
     <string name="thanks_text_banner">Bannerdesigner:</string>
@@ -264,8 +264,8 @@
     <string name="toast_pin">Toot\'et er fastgjort!</string>
     <string name="toast_unpin">Toot\'et er frigjort!</string>
     <string name="toast_error">Ups! En fejl opstod!</string>
-    <string name="toast_code_error">En fejl opstod! Forekomsten returnerede ikke en godkendelseskode!</string>
-    <string name="toast_error_instance">Domænet for forekomsten ser ud til at være ugyldigt!</string>
+    <string name="toast_code_error">En fejl opstod! Instansen returnerede ikke en godkendelseskode!</string>
+    <string name="toast_error_instance">Domænet for instansen ser ud til at være ugyldigt!</string>
     <string name="toast_error_loading_account">En fejl opstod under kontoskift!</string>
     <string name="toast_error_search">En fejl opstod under søgning!</string>
     <string name="toast_error_login">Kan ikke logge ind!</string>
@@ -275,9 +275,9 @@
     <string name="toast_error_translate">En fejl opstod under oversættelsen!</string>
     <string name="toast_error_translations_disabled">Oversættelser er deaktiveret i indstillinger</string>
     <string name="toast_toot_saved">Kladde gemt!</string>
-    <string name="toast_error_char_limit">Sikker på, at denne forekomst tillader dette antal tegn? Normalt er denne værdi tæt på 500 tegn.</string>
+    <string name="toast_error_char_limit">Sikker på, at denne instans tillader dette antal tegn? Normalt er denne værdi tæt på 500 tegn.</string>
     <string name="toast_visibility_changed">Toots-synlighed er ændret for kontoen %1$s</string>
-    <string name="toast_empty_search">Forekomsts- og kaldenavn er obligatoriske!</string>
+    <string name="toast_empty_search">Instans- og kaldenavn er obligatoriske!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimering af indlæsning</string>
     <string name="set_toots_page">Antal toots pr. indlæsning</string>
@@ -429,11 +429,11 @@
     <string name="privacy_data">        Kun grundlæggende oplysninger fra konti lagres på enheden.
         Disse data er strengt fortrolige og kan kun anvendes af app\'en.
         Sletning af app\'en fjerner straks disse data.\n
-        &#9888; Loginoplysninger lagres aldrig, da de alene benyttes ifm. en sikker godkendelse (SSL) med en forekomst.
+        &#9888; Loginoplysninger lagres aldrig, da de alene benyttes ifm. en sikker godkendelse (SSL) med en instans.
     </string>
     <string name="privacy_authorizations_title">Tilladelser:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Benyttes til at fastslå, om enheden er tilsluttet et Wi-Fi netværk.\n
-        - <b>INTERNET</b>: Benyttes ved forespørgsler til en forekomst.\n
+        - <b>INTERNET</b>: Benyttes ved forespørgsler til en instans.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Benyttes til lagring af medier eller til at flytte app\'en til et SD-kort.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Benyttes til at tilføje medier til toots.\n
         - <b>BOOT_COMPLETED</b>: Benyttes til starte notifikationstjenesten.\n
@@ -476,16 +476,16 @@
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
-    <string name="show_boost_count">Vis tællere for boosts/favoritter</string>
-    <string name="issue_login_title">Kan du ikke logge ind?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="show_boost_count">Vis boosts-/favoritantal</string>
+    <string name="issue_login_title">Kan ikke godkendes?</string>
+    <string name="issue_login_message">        <b>Her er nogle tjek, som måske hjælper:</b>\n\n
+        - Tjek, at der ikke er stavefejl i forekomstsnavnet\n\n
+        - Tjek, at din forekomst ikke er utilgængelig\n\n
+        - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når forekomstsnavnet er udfyldt) i bunden\n\n
+        - Du kan også benytte linket uden brug af 2FA\n\n
+        - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Medie er blevet indlæst. Klik her for at vise det.</string>
+    <string name="media_ready">Medie er indlæst. Tryk hér for at vise det.</string>
     <string name="data_export_start">Denne handling kan tage ganske lang tid. Du vil blive underrettet, når den er færdig.</string>
     <string name="data_export_running">Kører stadig, vent venligst…</string>
     <string name="data_export">Eksportér statusser</string>
