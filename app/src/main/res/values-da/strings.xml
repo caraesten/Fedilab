@@ -468,7 +468,7 @@
     <string name="action_lists_empty_content">Der er intet i denne liste endnu. Når listemedlemmer poster nye statusser, vil de fremgå her.</string>
     <string name="action_lists_add_to">Føj til liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
-    <string name="action_lists_create">Føj liste</string>
+    <string name="action_lists_create">Tilføj liste</string>
     <string name="action_lists_delete">Slet liste</string>
     <string name="action_lists_update">Redigér liste</string>
     <string name="action_lists_title_placeholder">Ny listetitel</string>
@@ -479,26 +479,26 @@
     <string name="show_boost_count">Vis boosts-/favoritantal</string>
     <string name="issue_login_title">Kan ikke godkendes?</string>
     <string name="issue_login_message">        <b>Her er nogle tjek, som måske hjælper:</b>\n\n
-        - Tjek, at der ikke er stavefejl i forekomstsnavnet\n\n
-        - Tjek, at din forekomst ikke er utilgængelig\n\n
-        - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når forekomstsnavnet er udfyldt) i bunden\n\n
+        - Tjek, at der ikke er stavefejl i instansnavnet\n\n
+        - Tjek, at din instans ikke er utilgængelig\n\n
+        - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når instansnavnet er udfyldt) i bunden\n\n
         - Du kan også benytte linket uden brug af 2FA\n\n
         - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Medie er indlæst. Tryk hér for at vise det.</string>
-    <string name="data_export_start">Denne handling kan tage ganske lang tid. Du vil blive underrettet, når den er færdig.</string>
+    <string name="data_export_start">Denne handling kan tage ganske lang tid. Du underrettes, når den er færdig.</string>
     <string name="data_export_running">Kører stadig, vent venligst…</string>
     <string name="data_export">Eksportér statusser</string>
     <string name="data_export_toots">Eksportér statusser for %1$s</string>
-    <string name="data_export_success">%1$s toots ud af %2$s er blevet eksporteret.</string>
-    <string name="data_export_error">Noget gik galt ved eksport af data for %1$s</string>
-    <string name="data_export_error_simple">Noget gik galt ved eksport af data!</string>
-    <string name="data_import_success_simple">Data blev importeret!</string>
-    <string name="data_import_error_simple">Noget gik galt ved import af data!</string>
+    <string name="data_export_success">%1$s toots ud af %2$s er eksporteret.</string>
+    <string name="data_export_error">Noget gik galt under dataeksporten til %1$s</string>
+    <string name="data_export_error_simple">Noget gik galt under dataeksporten!</string>
+    <string name="data_import_success_simple">Data er importeret!</string>
+    <string name="data_import_error_simple">Noget gik galt under dataimporten!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Aktiver proxy?</string>
+    <string name="proxy_enable">Aktivér proxy?</string>
     <string name="poxy_host">Vært</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Brugernavn</string>
@@ -510,7 +510,7 @@
     <string name="alert_regex">Der er en fejl i det regulære udtryk!</string>
     <string name="no_account_yet">Har du endnu ingen konto?</string>
     <string name="toast_instance_unavailable">Ingen tidslinjer blev fundet på denne instans!</string>
-    <string name="delete_instance">Slette denne instans?</string>
+    <string name="delete_instance">Slet denne instans?</string>
     <string name="warning_delete_instance">Du er ved at slette %s fra dine fulgte instanser.</string>
     <string name="which_language">Oversæt til</string>
     <string name="crash_title">Fedilab er stoppet :(</string>
@@ -568,7 +568,7 @@
     <string name="toast_impossible_to_follow">Konto(er) kan ikke følges</string>
     <string name="retrieve_remote_account">Henter fjern-konto</string>
     <string name="expand_image">Udvid automatisk skjulte medier</string>
-    <string name="set_display_follow_instance">Vis \'følg instanser\'-knappen</string>
+    <string name="set_display_follow_instance">Vis knappen \"Følg instanser\"</string>
     <string name="channel_notif_follow">Ny følger</string>
     <string name="channel_notif_boost">Nyt boost</string>
     <string name="channel_notif_fav">Ny favorit</string>
@@ -576,10 +576,10 @@
     <string name="channel_notif_poll">Afstemning afsluttet</string>
     <string name="channel_notif_toot">Nyt toot</string>
     <string name="channel_notif_backup">Toot-backup</string>
-    <string name="channel_notif_media">Medie nedhentning</string>
+    <string name="channel_notif_media">Mediedownload</string>
     <string name="set_notif_sound">Skift underretningslyd</string>
     <string name="select_sound">Vælg lyd</string>
-    <string name="set_enable_time_slot">Slå tidsplan til</string>
+    <string name="set_enable_time_slot">Aktivér tidsplan</string>
     <string name="how_to_videos">Instruktionsvideoer</string>
     <string name="retrieve_remote_conversation">Henter fjern-tråd!</string>
     <string name="no_blocked_domain">Ingen blokerede domæner!</string>
