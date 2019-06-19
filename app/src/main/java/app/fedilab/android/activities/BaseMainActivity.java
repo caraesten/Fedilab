@@ -86,6 +86,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
+import app.fedilab.android.fragments.DisplayAdminReportsFragment;
 import app.fedilab.android.fragments.DisplayBookmarksFragment;
 import app.fedilab.android.fragments.DisplayDraftsFragment;
 import app.fedilab.android.fragments.DisplayFavoritesPeertubeFragment;
@@ -284,6 +285,7 @@ public abstract class BaseMainActivity extends BaseActivity
         viewPager = findViewById(R.id.viewpager);
 
         new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ACCOUNTS, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_REPORTS, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         display_timeline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1510,6 +1512,10 @@ public abstract class BaseMainActivity extends BaseActivity
             return false;
         }else if(id == R.id.nav_drag_timelines){
             Intent intent = new Intent(getApplicationContext(), ReorderTimelinesActivity.class);
+            startActivity(intent);
+            return false;
+        }else if(id == R.id.nav_administration){
+            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
             startActivity(intent);
             return false;
         } else if( id == R.id.nav_about) {
