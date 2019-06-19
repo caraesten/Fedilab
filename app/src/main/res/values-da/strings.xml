@@ -882,13 +882,13 @@
     <string name="app_features">Åbn app-funktioner</string>
     <string name="timed_mute">Planlagt tavshed</string>
     <string name="mention_account">Nævn kontoen</string>
-    <string name="refresh_cache">Opdater cache</string>
-    <string name="see_boost_and_fav">Se hvem der har boostet og føjet til favoritter</string>
-    <string name="mention_status">Nævn statusen</string>
+    <string name="refresh_cache">Opfrisk cache</string>
+    <string name="see_boost_and_fav">Se, hvem der har boostet og føjet til favoritter</string>
+    <string name="mention_status">Nævn statussen</string>
     <string name="action_news">Nyheder</string>
-    <string name="set_display_news_from_fedilab">Vis nyheder fra Fedilab\'s konto</string>
+    <string name="set_display_news_from_fedilab">Vis nyheder fra Fedilabs konto</string>
     <string name="category_general">Generelt</string>
-    <string name="category_regional">Regional</string>
+    <string name="category_regional">Regionalt</string>
     <string name="category_art">Kunst</string>
     <string name="category_journalism">Journalistik</string>
     <string name="category_activism">Aktivisme</string>
@@ -907,7 +907,7 @@
     <string name="server_rules">serverregler</string>
     <string name="tos">tjenestevilkår</string>
     <string name="sign_up">Tilmeld</string>
-    <string name="validation_needed">Denne instans fungerer med invitationer. Din konto skal først manuelt godkendes af en administrator før den kan tages i brug.</string>
+    <string name="validation_needed">Denne instans fungerer vha. invitationer. Din konto skal først manuelt godkendes af en administrator, før den kan tages i brug.</string>
     <string name="all_field_filled">Udfyld venligst alle felter!</string>
     <string name="password_error">Adgangskoderne er ikke ens!</string>
     <string name="email_error">E-mail ser ikke ud til at være gyldig!</string>
