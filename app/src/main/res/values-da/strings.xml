@@ -93,9 +93,9 @@
     <string name="click_to_change">Tryk på stien for at ændre den</string>
     <string name="failed">Mislykkedes!</string>
     <string name="scheduled_toots">Planlagte toots</string>
-    <string name="disclaimer_full">Informationen nedenfor afspejler måske ikke den fulde brugerprofil.</string>
+    <string name="disclaimer_full">Informationen nedenfor afspejler måske ikke brugerens profil fuldstændigt.</string>
     <string name="insert_emoji">Indsæt emoji</string>
-    <string name="no_emoji">App\'en indsamlede ikke bruger-emojis i øjeblikket.</string>
+    <string name="no_emoji">App\'en indsamlede ikke tilpassede emojis i øjeblikket.</string>
     <string name="live_notif">Live-adviseringer</string>
     <!-- Status -->
     <string name="no_status">Ingen toot at vise</string>
@@ -117,7 +117,7 @@
     <string name="more_action_5">Kopiér</string>
     <string name="more_action_6">Del</string>
     <string name="more_action_7">Nævn</string>
-    <string name="more_action_8">Tidsbegænset tavshed</string>
+    <string name="more_action_8">Tidsbegrænset tavshed</string>
     <string name="more_action_9">Slet og omformulér</string>
     <string-array name="more_action_confirm">
         <item>Gør denne konto tavs?</item>
@@ -158,7 +158,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Skriv et toot</string>
     <string name="toot_title_reply">Besvar et toot</string>
-    <string name="queet_title">Skriv en queet</string>
+    <string name="queet_title">Skriv et queet</string>
     <string name="queet_title_reply">Besvar et queet</string>
     <string name="toot_no_space">Du har nået de tilladte 500 tegn!</string>
     <string name="toot_select_image">Vælg et medie</string>
@@ -181,7 +181,7 @@
     <string name="choose_accounts">Vælg en konto</string>
     <string name="select_accounts">Vælg nogle konti</string>
     <string name="remove_draft">Fjern udkast?</string>
-    <string name="show_reply">Vælg knappen for at vise det oprindelige toot</string>
+    <string name="show_reply">Tryk på knappen for at vise det oprindelige toot</string>
     <string name="upload_form_description">Beskriv for synshandicappede</string>
     <!-- Instance -->
     <string name="instance_no_description">Ingen beskrivelse tilgængelig!</string>
@@ -255,7 +255,7 @@
     <string name="toast_unmute">Kontoen er ikke længere tavs!</string>
     <string name="toast_follow">Kontoen blev fulgt!</string>
     <string name="toast_unfollow">Kontoen følges ikke længere!</string>
-    <string name="toast_reblog">Toot\'et blev Boostet!</string>
+    <string name="toast_reblog">Toot\'et blev boostet!</string>
     <string name="toast_unreblog">Toot\'et boostes ikke længere!</string>
     <string name="toast_favourite">Toot\'et blev føjet til dine favoritter!</string>
     <string name="toast_unfavourite">Toot\'et blev fjernet fra dine favoritter!</string>
@@ -440,10 +440,10 @@
         - <b>WAKE_LOCK</b>: Benyttes, når notifikationstjenesten kører.
     </string>
     <string name="privacy_API_authorizations_title">API-tilladelser:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Læse data.\n
+        - <b>Write</b>: Komme med statusindlæg og uploade medier til statusser.\n
+        - <b>Follow</b>: Følge, stoppe med at følge, blokere, afblokere.\n\n
+        <b>&#9888; Disse handlinger udføres kun på brugerforlangende.</b>
     </string>
     <string name="privacy_API_title">Sporing og Biblioteker</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
