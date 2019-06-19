@@ -396,7 +396,7 @@
 
     <!-- Light theme -->
     <style name="AppAdminTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColor">@color/light_black</item>
+        <item name="android:textColor">@color/dark_text</item>
         <item name="colorPrimary">@color/mastodonC1</item>
         <item name="colorPrimaryDark">@color/mastodonC1</item>
         <item name="colorAccent">@color/mastodonC4</item>
@@ -427,4 +427,13 @@
         <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
     </style>
 
+    <style name="AdminAlertDialogDark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/mastodonC1__</item>
+    </style>
+    <style name="AdminDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/mastodonC1__</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="android:headerBackground">@color/mastodonC2</item>
+        <item name="colorControlNormal">@color/mastodonC2</item>
+    </style>
 </resources>

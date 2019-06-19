@@ -191,14 +191,13 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             //Admin right not granted through the API?
             if( apiResponse.getError().getStatusCode() == 403){
                 AlertDialog.Builder builderInner;
-                builderInner = new AlertDialog.Builder(context, R.style.AppAdminTheme);
+                builderInner = new AlertDialog.Builder(context, R.style.AdminDialog);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -216,6 +215,8 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
                     }
                 });
                 builderInner.show();
+            }else{
+                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             }
             return;
         }

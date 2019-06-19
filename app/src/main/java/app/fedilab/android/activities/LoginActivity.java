@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity {
     private TextView instance_chosen;
     private ImageView info_instance;
     private final int PICK_IMPORT = 5557;
-    private boolean admin;
+    public static boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -886,8 +886,14 @@ public class LoginActivity extends BaseActivity {
         String queryString = Helper.CLIENT_ID + "="+ clientId;
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
-        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED )
-            queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED ) {
+
+            if( admin ) {
+                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
+            }else{
+                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
+            }
+        }
         return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 
