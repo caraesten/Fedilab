@@ -256,25 +256,25 @@
     <string name="toast_follow">Kontoen blev fulgt!</string>
     <string name="toast_unfollow">Kontoen bliver ikke længere fulgt!</string>
     <string name="toast_reblog">Toot\'et blev boostet!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_unreblog">Tootet bliver ikke længere boostet!</string>
+    <string name="toast_favourite">Tootet blev tilføjet til dine favoritter!</string>
+    <string name="toast_unfavourite">Tootet blev fjernet fra dine favoritter!</string>
+    <string name="toast_report">Tootet blev anmeldt!</string>
+    <string name="toast_unstatus">Tootet blev slettet!</string>
+    <string name="toast_pin">Tootet blev fastgjort!</string>
+    <string name="toast_unpin">Tootet blev frigjort!</string>
+    <string name="toast_error">Hovsa! En fejl opstod!</string>
+    <string name="toast_code_error">En fejl opstod! Instansen returnerede ikke en autoriseringskode!</string>
+    <string name="toast_error_instance">Domænet for instansen ser ikke ud til at være gyldigt!</string>
+    <string name="toast_error_loading_account">En fejl opstod ved skift mellem konti!</string>
+    <string name="toast_error_search">En fejl opstod ved søgning!</string>
+    <string name="toast_error_login">Kan ikke logge ind!</string>
+    <string name="toast_update_credential_ok">Profildata er blevet gemt!</string>
+    <string name="nothing_to_do">Ingen handling kan gøres</string>
+    <string name="toast_saved">Mediet er blevet gemt!</string>
+    <string name="toast_error_translate">En fejl opstod under oversættelsen!</string>
+    <string name="toast_error_translations_disabled">Oversættelser er slået fra i indstillinger</string>
+    <string name="toast_toot_saved">Kladde gemt!</string>
     <string name="toast_error_char_limit">Er du sikker på at denne instans tillader dette antal tegn? Normalt er denne værdi tæt på 500 tegn.</string>
     <string name="toast_visibility_changed">Synligheden for toots er blevet ændret for kontoen %1$s</string>
     <string name="toast_empty_search">Instansnavn og kaldenavn må ikke være tomt!</string>
@@ -420,10 +420,10 @@
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
         <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Kun</item>
+        <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ingen toots blev fundet i databasen. Brug venligst synkroniser-knappen i menuen for at hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
