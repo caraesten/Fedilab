@@ -94,14 +94,15 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
 
         Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
-        holder.account_un.setText(String.format("@%s",account.getUsername()));
-        holder.account_ac.setText(account.getAcct());
-        if( account.getUsername().equals(account.getAcct()))
-            holder.account_ac.setVisibility(View.GONE);
-        else
-            holder.account_ac.setVisibility(View.VISIBLE);
+        holder.account_ac.setText(target_account.getAcct());
 
         holder.report_comment.setText(report.getComment());
+
+        if( report.getStatuses() != null){
+            holder.report_number_status.setText(String.valueOf(report.getStatuses().size()));
+        }else{
+            holder.report_number_status.setText("0");
+        }
 
     }
 
@@ -144,8 +145,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         ImageView account_pp, account_pp_reporter;
         TextView account_ac;
         TextView account_dn, account_dn_reporter;
-        TextView account_un;
-        TextView report_comment;
+        TextView report_comment, report_number_status;
 
         LinearLayout account_container;
 
@@ -156,9 +156,9 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
             account_dn = itemView.findViewById(R.id.account_dn);
             account_dn_reporter = itemView.findViewById(R.id.account_dn_reporter);
             account_ac = itemView.findViewById(R.id.account_ac);
-            account_un = itemView.findViewById(R.id.account_un);
             report_comment = itemView.findViewById(R.id.report_comment);
             account_container = itemView.findViewById(R.id.account_container);
+            report_number_status = itemView.findViewById(R.id.report_number_status);
         }
     }
 
