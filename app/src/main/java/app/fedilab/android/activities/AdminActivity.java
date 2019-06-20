@@ -136,9 +136,7 @@ public class AdminActivity extends BaseActivity  {
                         if (item.getItemId() == R.id.action_unresolved_reports) {
                             unresolved = !unresolved;
                         }
-                        if( admin_tablayout.getTabAt(0) != null)
-                            //noinspection ConstantConditions
-                            admin_tablayout.getTabAt(0).select();
+                        itemUnresolved.setChecked(unresolved);
                         return false;
                     }
                 });
