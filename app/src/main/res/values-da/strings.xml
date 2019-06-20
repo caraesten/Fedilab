@@ -551,7 +551,7 @@
     <string name="action_filter_delete">Slet filter?</string>
     <string name="action_update_filter">Opdatér filter</string>
     <string name="action_filter_create">Opret filter</string>
-    <string name="how_to_follow">Hvem der kan følges</string>
+    <string name="how_to_follow">Hvem vil jeg følge</string>
     <string name="action_who_to_follow_empty_content">Ingen konti opført i øjeblikket!</string>
     <string name="follow_account">Følg</string>
     <string name="select_all">Vælg alle</string>
