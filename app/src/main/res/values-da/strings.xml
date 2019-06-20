@@ -565,7 +565,7 @@
     <string name="action_remote_instance_add">Du følger ingen fjernforekomstser. Trykk på \"+\"-knappen for at tilføje en ny.</string>
     <string name="about_trunk">Hvem man følger</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Konto(er) kan ikke følges</string>
+    <string name="toast_impossible_to_follow">Konto/konti kan ikke følges</string>
     <string name="retrieve_remote_account">Henter fjernkonto</string>
     <string name="expand_image">Udvid automatisk skjulte medier</string>
     <string name="set_display_follow_instance">Vis knappen \"Følg instanser\"</string>
