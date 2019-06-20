@@ -1035,6 +1035,12 @@
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
     <string name="unresolved">Unresolved</string>
     <string name="resolved">Resolved</string>
+    <string name="remote">Remote</string>
+    <string name="active">Active</string>
+    <string name="pending">Pending</string>
+    <string name="disabled">Disabled</string>
+    <string name="silenced">Silenced</string>
+    <string name="suspended">Suspended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

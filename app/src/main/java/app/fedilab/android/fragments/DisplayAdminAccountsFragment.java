@@ -41,6 +41,7 @@ import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountAdmin;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.drawers.AccountsAdminListAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
@@ -65,6 +66,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_admin_accounts;
+    private boolean local, remote, active, pending, disabled, silenced, suspended;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,18 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
         context = getContext();
 
         accountAdmins = new ArrayList<>();
+
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            local = bundle.getBoolean("local", false);
+            remote = bundle.getBoolean("remote", false);
+            active = bundle.getBoolean("active", false);
+            pending = bundle.getBoolean("pending", false);
+            disabled = bundle.getBoolean("disabled", false);
+            silenced = bundle.getBoolean("silenced", false);
+            suspended = bundle.getBoolean("suspended", false);
+        }
 
         max_id = null;
         firstLoad = true;
@@ -104,7 +118,15 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            AdminAction adminAction = new AdminAction();
+                            adminAction.setLocal(local);
+                            adminAction.setRemote(remote);
+                            adminAction.setActive(active);
+                            adminAction.setPending(pending);
+                            adminAction.setDisabled(disabled);
+                            adminAction.setSilenced(silenced);
+                            adminAction.setSuspended(suspended);
+                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, adminAction, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -122,7 +144,15 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                AdminAction adminAction = new AdminAction();
+                adminAction.setLocal(local);
+                adminAction.setRemote(remote);
+                adminAction.setActive(active);
+                adminAction.setPending(pending);
+                adminAction.setDisabled(disabled);
+                adminAction.setSilenced(silenced);
+                adminAction.setSuspended(suspended);
+                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, adminAction, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -147,8 +177,15 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
                 swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
-
-        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, null, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        AdminAction adminAction = new AdminAction();
+        adminAction.setLocal(local);
+        adminAction.setRemote(remote);
+        adminAction.setActive(active);
+        adminAction.setPending(pending);
+        adminAction.setDisabled(disabled);
+        adminAction.setSilenced(silenced);
+        adminAction.setSuspended(suspended);
+        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_ACCOUNTS, null, adminAction, DisplayAdminAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 
@@ -159,6 +196,13 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
     }
 
 
+
+    /**
+     * Refresh accounts in list
+     */
+    public void refreshFilter(){
+        accountsAdminListAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {

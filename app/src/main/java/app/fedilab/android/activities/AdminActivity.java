@@ -30,13 +30,17 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import app.fedilab.android.R;
 import app.fedilab.android.fragments.DisplayAdminAccountsFragment;
 import app.fedilab.android.fragments.DisplayAdminReportsFragment;
+import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.Helper;
+
+import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 
 
 /**
@@ -50,6 +54,8 @@ public class AdminActivity extends BaseActivity  {
     private boolean unresolved;
     private boolean local, remote, active, pending, disabled, silenced, suspended;
     private DisplayAdminReportsFragment displayAdminReportsFragment;
+    private DisplayAdminAccountsFragment displayAdminAccountsFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +84,8 @@ public class AdminActivity extends BaseActivity  {
             toolbar_title.setText(String.format(getString(R.string.administration)+ " %s", Helper.getLiveInstance(getApplicationContext())));
         }
         setContentView(R.layout.activity_admin);
-        unresolved = true;
-
+        unresolved = local = active = true;
+        remote = pending = disabled = silenced = suspended = false;
         ViewPager admin_viewpager = findViewById(R.id.admin_viewpager);
 
         TabLayout admin_tablayout = findViewById(R.id.admin_tablayout);
@@ -103,8 +109,13 @@ public class AdminActivity extends BaseActivity  {
                 popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                     @Override
                     public void onDismiss(PopupMenu menu) {
-                        if( displayAdminReportsFragment != null)
-                            displayAdminReportsFragment.refreshFilter();
+                        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                        fragTransaction.detach(displayAdminReportsFragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("unresolved",unresolved);
+                        displayAdminReportsFragment.setArguments(bundle);
+                        fragTransaction.attach(displayAdminReportsFragment);
+                        fragTransaction.commit();
                     }
                 });
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -128,10 +139,140 @@ public class AdminActivity extends BaseActivity  {
                         if( admin_tablayout.getTabAt(0) != null)
                             //noinspection ConstantConditions
                             admin_tablayout.getTabAt(0).select();
-                        PagerAdapter mPagerAdapter = new AdminPagerAdapter(getSupportFragmentManager());
-                        admin_viewpager.setAdapter(mPagerAdapter);
-                        itemUnresolved.setChecked(unresolved);
-                        return true;
+                        return false;
+                    }
+                });
+                popup.show();
+                return true;
+            }
+        });
+
+
+        tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                PopupMenu popup = new PopupMenu(AdminActivity.this, tabStrip.getChildAt(1));
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_filter_admin_accounts, popup.getMenu());
+                Menu menu = popup.getMenu();
+                final MenuItem itemLocal = menu.findItem(R.id.action_local);
+                final MenuItem itemRemote = menu.findItem(R.id.action_remote);
+                final MenuItem itemActive = menu.findItem(R.id.action_active);
+                final MenuItem itemPending = menu.findItem(R.id.action_pending);
+                final MenuItem itemDisabled = menu.findItem(R.id.action_disabled);
+                final MenuItem itemSilenced = menu.findItem(R.id.action_silenced);
+                final MenuItem itemSuspended = menu.findItem(R.id.action_suspended);
+
+                itemLocal.setChecked(local);
+                itemRemote.setChecked(remote);
+                itemActive.setChecked(active);
+                itemPending.setChecked(pending);
+                itemDisabled.setChecked(disabled);
+                itemSilenced.setChecked(silenced);
+                itemSuspended.setChecked(suspended);
+
+                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu menu) {
+                        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                        fragTransaction.detach(displayAdminAccountsFragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("local",local);
+                        bundle.putBoolean("remote",remote);
+                        bundle.putBoolean("active",active);
+                        bundle.putBoolean("pending",pending);
+                        bundle.putBoolean("disabled",disabled);
+                        bundle.putBoolean("silenced",silenced);
+                        bundle.putBoolean("suspended",suspended);
+                        displayAdminAccountsFragment.setArguments(bundle);
+                        fragTransaction.attach(displayAdminAccountsFragment);
+                        fragTransaction.commit();
+
+                    }
+                });
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                        item.setActionView(new View(getApplicationContext()));
+                        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                            @Override
+                            public boolean onMenuItemActionExpand(MenuItem item) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onMenuItemActionCollapse(MenuItem item) {
+                                return false;
+                            }
+                        });
+                        switch (item.getItemId()){
+                            case R.id.action_local:
+                                if( !local) {
+                                    remote = false;
+                                    local = true;
+                                }
+                                break;
+                            case R.id.action_remote:
+                                if( !remote) {
+                                    remote = true;
+                                    local = false;
+                                }
+                                break;
+                            case R.id.action_active:
+                                if( !active) {
+                                    active = true;
+                                    pending = false;
+                                    disabled = false;
+                                    silenced = false;
+                                    suspended = false;
+                                }
+                                break;
+                            case R.id.action_pending:
+                                if( !pending) {
+                                    pending = true;
+                                    active = false;
+                                    disabled = false;
+                                    silenced = false;
+                                    suspended = false;
+                                }
+                                break;
+                            case R.id.action_disabled:
+                                if( !disabled) {
+                                    disabled = true;
+                                    active = false;
+                                    pending = false;
+                                    silenced = false;
+                                    suspended = false;
+                                }
+                                break;
+                            case R.id.action_silenced:
+                                if( !silenced) {
+                                    silenced = true;
+                                    active = false;
+                                    pending = false;
+                                    disabled = false;
+                                    suspended = false;
+                                }
+                                break;
+                            case R.id.action_suspended:
+                                if( !suspended) {
+                                    suspended = true;
+                                    active = false;
+                                    pending = false;
+                                    disabled = false;
+                                    silenced = false;
+                                }
+                                break;
+                        }
+
+                        itemLocal.setChecked(local);
+                        itemRemote.setChecked(remote);
+                        itemActive.setChecked(active);
+                        itemPending.setChecked(pending);
+                        itemDisabled.setChecked(disabled);
+                        itemSilenced.setChecked(silenced);
+                        itemSuspended.setChecked(suspended);
+                        return false;
                     }
                 });
                 popup.show();
@@ -143,26 +284,8 @@ public class AdminActivity extends BaseActivity  {
 
         PagerAdapter mPagerAdapter = new AdminPagerAdapter(getSupportFragmentManager());
         admin_viewpager.setAdapter(mPagerAdapter);
-
-        admin_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                TabLayout.Tab tab = admin_tablayout.getTabAt(position);
-                if( tab != null)
-                    tab.select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
+        admin_viewpager.setOffscreenPageLimit(2);
+        admin_viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(admin_tablayout));
         admin_tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -188,7 +311,7 @@ public class AdminActivity extends BaseActivity  {
                         break;
                     case 1:
                         if( fragment != null) {
-                            DisplayAdminAccountsFragment displayAdminAccountsFragment = ((DisplayAdminAccountsFragment) fragment);
+                            displayAdminAccountsFragment = ((DisplayAdminAccountsFragment) fragment);
                             displayAdminAccountsFragment.scrollToTop();
                         }
                         break;
@@ -211,13 +334,22 @@ public class AdminActivity extends BaseActivity  {
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    DisplayAdminReportsFragment displayAdminReportsFragment = new DisplayAdminReportsFragment();
+                    displayAdminReportsFragment = new DisplayAdminReportsFragment();
                     bundle = new Bundle();
                     bundle.putBoolean("unresolved",unresolved);
                     displayAdminReportsFragment.setArguments(bundle);
                     return displayAdminReportsFragment;
                 case 1:
-                    DisplayAdminAccountsFragment displayAdminAccountsFragment = new DisplayAdminAccountsFragment();
+                    displayAdminAccountsFragment = new DisplayAdminAccountsFragment();
+                    bundle = new Bundle();
+                    bundle.putBoolean("local",local);
+                    bundle.putBoolean("remote",remote);
+                    bundle.putBoolean("active",active);
+                    bundle.putBoolean("pending",pending);
+                    bundle.putBoolean("disabled",disabled);
+                    bundle.putBoolean("silenced",silenced);
+                    bundle.putBoolean("suspended",suspended);
+                    displayAdminAccountsFragment.setArguments(bundle);
                     return displayAdminAccountsFragment;
             }
             return null;

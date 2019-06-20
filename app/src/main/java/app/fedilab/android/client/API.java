@@ -224,6 +224,21 @@ public class API {
         String endpoint = null;
         switch (action){
             case GET_ACCOUNTS:
+                params = new HashMap<>();
+                if( adminAction.isLocal())
+                    params.put("local", String.valueOf(adminAction.isLocal()));
+                if( adminAction.isRemote() )
+                    params.put("remote", String.valueOf(adminAction.isRemote()));
+                if( adminAction.isActive() )
+                    params.put("active", String.valueOf(adminAction.isActive()));
+                if( adminAction.isPending() )
+                    params.put("pending", String.valueOf(adminAction.isPending()));
+                if( adminAction.isDisabled() )
+                    params.put("disabled", String.valueOf(adminAction.isDisabled()));
+                if( adminAction.isSilenced() )
+                    params.put("silenced", String.valueOf(adminAction.isSilenced()));
+                if( adminAction.isSuspended() )
+                    params.put("suspended", String.valueOf(adminAction.isSuspended()));
                 endpoint = "/admin/accounts";
                 break;
             case GET_ONE_ACCOUNT:
@@ -241,9 +256,7 @@ public class API {
                 break;
         }
         try {
-            Log.v(Helper.TAG,"params: " + params);
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"response: " + response);
             switch (action){
                 case GET_ACCOUNTS:
                     List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));
