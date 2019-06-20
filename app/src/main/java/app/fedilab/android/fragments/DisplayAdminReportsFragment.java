@@ -48,6 +48,7 @@ import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.drawers.ReportsListAdapter;
 import app.fedilab.android.helper.Helper;
@@ -73,7 +74,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_reports;
-
+    private boolean unresolved;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,6 +84,10 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
 
         reports = new ArrayList<>();
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            unresolved = bundle.getBoolean("unresolved", true);
+        }
         max_id = null;
         firstLoad = true;
         flag_loading = true;
@@ -112,7 +117,9 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            AdminAction adminAction = new AdminAction();
+                            adminAction.setUnresolved(unresolved);
+                            asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, adminAction, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -130,7 +137,9 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                AdminAction adminAction = new AdminAction();
+                adminAction.setUnresolved(unresolved);
+                asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, adminAction, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -155,8 +164,9 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
                 swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
-
-        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, null, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        AdminAction adminAction = new AdminAction();
+        adminAction.setUnresolved(unresolved);
+        asyncTask = new PostAdminActionAsyncTask(context, API.adminAction.GET_REPORTS, null, adminAction, DisplayAdminReportsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 
@@ -167,6 +177,12 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     }
 
 
+    /**
+     * Refresh report in list
+     */
+    public void refreshFilter(){
+        reportsListAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {

@@ -395,7 +395,7 @@
 
 
     <!-- Light theme -->
-    <style name="AppAdminTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppAdminTheme" parent="Theme.AppCompat">
         <item name="android:textColor">@color/dark_text</item>
         <item name="colorPrimary">@color/mastodonC1</item>
         <item name="colorPrimaryDark">@color/mastodonC1</item>
@@ -410,13 +410,13 @@
         <item name="borderless">@style/borderLessLightStyle</item>
         <item name="borderlessColored">@style/borderlessColoredStyle</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="popupOverlay">@style/AppTheme.PopupOverlay</item>
+        <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
         <item name="android:spinnerStyle">@style/SpinnerStyle</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu</item>
-        <item name="android:itemBackground">@drawable/menu_selector</item>
-        <item name="android:actionModeStyle">@style/ActionMode</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
+        <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_dark</item>
+        <item name="android:actionModeStyle">@style/DarkActionMode</item>
+        <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/dark_text</item>
         <item name="color_in_account_header">@color/black</item>
         <item name="colorBackgroundFloating">@color/mastodonC1__</item>

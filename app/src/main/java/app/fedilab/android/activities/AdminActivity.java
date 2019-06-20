@@ -18,11 +18,15 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -43,6 +47,9 @@ import app.fedilab.android.helper.Helper;
 public class AdminActivity extends BaseActivity  {
 
 
+    private boolean unresolved;
+    private boolean local, remote, active, pending, disabled, silenced, suspended;
+    private DisplayAdminReportsFragment displayAdminReportsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +78,67 @@ public class AdminActivity extends BaseActivity  {
             toolbar_title.setText(String.format(getString(R.string.administration)+ " %s", Helper.getLiveInstance(getApplicationContext())));
         }
         setContentView(R.layout.activity_admin);
-
+        unresolved = true;
 
         ViewPager admin_viewpager = findViewById(R.id.admin_viewpager);
 
         TabLayout admin_tablayout = findViewById(R.id.admin_tablayout);
         admin_tablayout.addTab(admin_tablayout.newTab().setText(getString(R.string.reports)));
         admin_tablayout.addTab(admin_tablayout.newTab().setText(getString(R.string.accounts)));
+
+
+        final LinearLayout tabStrip = (LinearLayout) admin_tablayout.getChildAt(0);
+        tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                PopupMenu popup = new PopupMenu(AdminActivity.this, tabStrip.getChildAt(0));
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_filter_admin_reports, popup.getMenu());
+                Menu menu = popup.getMenu();
+                final MenuItem itemUnresolved = menu.findItem(R.id.action_unresolved_reports);
+
+
+                itemUnresolved.setChecked(unresolved);
+
+                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu menu) {
+                        if( displayAdminReportsFragment != null)
+                            displayAdminReportsFragment.refreshFilter();
+                    }
+                });
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                        item.setActionView(new View(getApplicationContext()));
+                        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                            @Override
+                            public boolean onMenuItemActionExpand(MenuItem item) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onMenuItemActionCollapse(MenuItem item) {
+                                return false;
+                            }
+                        });
+                        if (item.getItemId() == R.id.action_unresolved_reports) {
+                            unresolved = !unresolved;
+                        }
+                        if( admin_tablayout.getTabAt(0) != null)
+                            //noinspection ConstantConditions
+                            admin_tablayout.getTabAt(0).select();
+                        PagerAdapter mPagerAdapter = new AdminPagerAdapter(getSupportFragmentManager());
+                        admin_viewpager.setAdapter(mPagerAdapter);
+                        itemUnresolved.setChecked(unresolved);
+                        return true;
+                    }
+                });
+                popup.show();
+                return true;
+            }
+        });
+
 
 
         PagerAdapter mPagerAdapter = new AdminPagerAdapter(getSupportFragmentManager());
@@ -121,7 +182,7 @@ public class AdminActivity extends BaseActivity  {
                 switch (tab.getPosition()){
                     case 0:
                         if( fragment != null) {
-                            DisplayAdminReportsFragment displayAdminReportsFragment = ((DisplayAdminReportsFragment) fragment);
+                            displayAdminReportsFragment = ((DisplayAdminReportsFragment) fragment);
                             displayAdminReportsFragment.scrollToTop();
                         }
                         break;
@@ -151,6 +212,9 @@ public class AdminActivity extends BaseActivity  {
             switch (position){
                 case 0:
                     DisplayAdminReportsFragment displayAdminReportsFragment = new DisplayAdminReportsFragment();
+                    bundle = new Bundle();
+                    bundle.putBoolean("unresolved",unresolved);
+                    displayAdminReportsFragment.setArguments(bundle);
                     return displayAdminReportsFragment;
                 case 1:
                     DisplayAdminAccountsFragment displayAdminAccountsFragment = new DisplayAdminAccountsFragment();

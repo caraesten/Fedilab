@@ -1033,6 +1033,8 @@
     <string name="no_reports">No reports to display!</string>
     <string name="reconnect_account">Reconnect the account</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
+    <string name="unresolved">Unresolved</string>
+    <string name="resolved">Resolved</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

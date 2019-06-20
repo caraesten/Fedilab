@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -136,6 +137,7 @@ public class API {
         GET_ONE_REPORT
     }
 
+
     public enum StatusAction{
         FAVOURITE,
         UNFAVOURITE,
@@ -171,12 +173,15 @@ public class API {
         UPDATESERVERSCHEDULE,
         DELETESCHEDULED,
         REFRESHPOLL
-
     }
+
+
     public enum accountPrivacy {
         PUBLIC,
         LOCKED
     }
+
+
     public API(Context context) {
         this.context = context;
         if( context == null) {
@@ -207,16 +212,15 @@ public class API {
     }
 
 
-
-
     /**
      * Execute admin get actions
      * @param action type of the action
      * @param id String can for an account or a status
      * @return APIResponse
      */
-    public APIResponse adminGet(adminAction action, String id, HashMap<String, String> params){
+    public APIResponse adminGet(adminAction action, String id, AdminAction adminAction){
         apiResponse = new APIResponse();
+        HashMap<String, String> params = null;
         String endpoint = null;
         switch (action){
             case GET_ACCOUNTS:
@@ -227,13 +231,19 @@ public class API {
                 break;
             case GET_REPORTS:
                 endpoint = "/admin/reports";
+                if( !adminAction.isUnresolved()) {
+                    params = new HashMap<>();
+                    params.put("resolved", "present");
+                }
                 break;
             case GET_ONE_REPORT:
                 endpoint = String.format("/admin/reports/%s", id);
                 break;
         }
         try {
+            Log.v(Helper.TAG,"params: " + params);
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"response: " + response);
             switch (action){
                 case GET_ACCOUNTS:
                     List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));

@@ -26,7 +26,16 @@ public class AdminAction {
     private adminActionType type;
     private boolean send_email_notification;
     private String text;
+    private boolean unresolved;
 
+
+    public boolean isUnresolved() {
+        return unresolved;
+    }
+
+    public void setUnresolved(boolean unresolved) {
+        this.unresolved = unresolved;
+    }
 
     public adminActionType getType() {
         return type;

@@ -58,7 +58,7 @@ public class PostAdminActionAsyncTask extends AsyncTask<Void, Void, Void> {
             case GET_ONE_ACCOUNT:
             case GET_REPORTS:
             case GET_ONE_REPORT:
-                apiResponse = new API(contextReference.get()).adminGet(action, id, null);
+                apiResponse = new API(contextReference.get()).adminGet(action, id, adminAction);
                 break;
             default:
                 apiResponse = new API(contextReference.get()).adminDo(action, id, adminAction);
