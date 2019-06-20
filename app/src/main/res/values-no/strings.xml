@@ -32,7 +32,7 @@
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Arbeider nå med %1$s</string>
+    <string name="toast_account_changed" formatted="false">Bruker nå kontoen %1$s</string>
     <string name="add_account">Legg til en konto</string>
     <string name="clipboard">Tootet er kopiert til utklippstavlen!</string>
     <string name="clipboard_url">Nettadressen til tootet er kopiert til utklippstavlen</string>
