@@ -32,190 +32,206 @@
         android:theme="@style/AppTheme.AppBarOverlay">
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/permissions"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/permissions"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/email"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/permissions"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/permissions"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/email_status"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/email_status"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/email"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/login_status"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/login_status"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/joined"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/joined"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/email_status"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/email_status"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/recent_ip"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/login_status"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/login_status"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/joined"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/joined"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/recent_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/recent_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/warn"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/warn"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/disable"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/disable"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/silence"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/silence"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <CheckBox
+                android:layout_marginTop="20dp"
+                android:checked="true"
+                android:id="@+id/email_user"
+                android:text="@string/email_user"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/recent_ip"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
+                android:labelFor="@+id/comment"
+                android:text="@string/custom_warning"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            <EditText
+                android:minLines="3"
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <!--
             <Button
-                android:id="@+id/warn"
+                android:id="@+id/action"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/warn"
-                android:textSize="16sp" />
+                android:text="@string/perform_action"
+                android:textSize="18sp" />
+                -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:id="@+id/statuses_container">
+                <TextView
+                    android:text="@string/list_reported_statuses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lv_statuses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/disable"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/disable"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/silence"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/silence"
-                android:textSize="16sp" />
         </LinearLayout>
-        <CheckBox
-            android:layout_marginTop="20dp"
-            android:checked="true"
-            android:id="@+id/email_user"
-            android:text="@string/email_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:labelFor="@+id/comment"
-            android:text="@string/custom_warning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:minLines="3"
-            android:id="@+id/comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+    </ScrollView>
 
-        <!--
-        <Button
-            android:id="@+id/action"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/perform_action"
-            android:textSize="18sp" />
-            -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lv_statuses"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null"
-            />
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

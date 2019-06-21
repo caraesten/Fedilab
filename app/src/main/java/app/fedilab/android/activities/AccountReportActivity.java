@@ -25,10 +25,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
@@ -36,6 +41,8 @@ import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountAdmin;
 import app.fedilab.android.client.Entities.Report;
+import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.drawers.StatusReportAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
 import es.dmoral.toasty.Toasty;
@@ -107,6 +114,18 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }
         if( report != null) {
             targeted_account = report.getAccount();
+            RecyclerView lv_statuses = findViewById(R.id.lv_statuses);
+
+            ArrayList<String> contents = new ArrayList<>();
+            for(Status status: report.getStatuses()){
+                contents.add(status.getContent());
+            }
+            lv_statuses.setLayoutManager(new LinearLayoutManager(this));
+            StatusReportAdapter adapter = new StatusReportAdapter(this, contents);
+            lv_statuses.setAdapter(adapter);
+
+            LinearLayout statuses_container = findViewById(R.id.statuses_container);
+            statuses_container.setVisibility(View.VISIBLE);
         }
         fillReport(targeted_account);
 
