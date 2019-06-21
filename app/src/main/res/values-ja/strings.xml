@@ -773,7 +773,7 @@
     <string name="set_compact">コンパクト</string>
     <string name="set_console">コンソール</string>
     <string name="set_mode">表示モードの設定</string>
-    <string name="set_security_provider">セキュリティを向上する</string>
+    <string name="set_security_provider">セキュリティプロバイダーを使用する</string>
     <string name="update_tracking_domains">トラッキングドメインの更新</string>
     <string name="tracking_db_updated">トラッキングデータベースが更新されました！</string>
     <string name="calls_blocked">httpコールがアプリケーションによってブロックされました</string>
