@@ -15,6 +15,8 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.AccountAdmin;
@@ -97,6 +100,15 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
 
         holder.report_action_taken.setText(accountAdmin.getIp());
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
+
+
+        holder.main_container.setOnClickListener(view ->{
+            Intent intent = new Intent(context, AccountReportActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelable("targeted_account", accountAdmin);
+            intent.putExtras(b);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -141,7 +153,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
         TextView account_un;
         TextView report_action_taken;
 
-        LinearLayout account_container;
+        LinearLayout main_container;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -150,7 +162,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
             account_ac = itemView.findViewById(R.id.account_ac);
             account_un = itemView.findViewById(R.id.account_un);
             report_action_taken = itemView.findViewById(R.id.report_action_taken);
-            account_container = itemView.findViewById(R.id.account_container);
+            main_container = itemView.findViewById(R.id.main_container);
         }
     }
 

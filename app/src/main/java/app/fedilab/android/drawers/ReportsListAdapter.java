@@ -15,6 +15,8 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import app.fedilab.android.R;
+import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Report;
@@ -104,6 +107,14 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
             holder.report_number_status.setText("0");
         }
 
+        holder.main_container.setOnClickListener(view ->{
+            Intent intent = new Intent(context, AccountReportActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelable("report", report);
+            intent.putExtras(b);
+            context.startActivity(intent);
+        });
+
     }
 
     @Override
@@ -147,7 +158,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         TextView account_dn, account_dn_reporter;
         TextView report_comment, report_number_status;
 
-        LinearLayout account_container;
+        LinearLayout main_container;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -157,7 +168,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
             account_dn_reporter = itemView.findViewById(R.id.account_dn_reporter);
             account_ac = itemView.findViewById(R.id.account_ac);
             report_comment = itemView.findViewById(R.id.report_comment);
-            account_container = itemView.findViewById(R.id.account_container);
+            main_container = itemView.findViewById(R.id.main_container);
             report_number_status = itemView.findViewById(R.id.report_number_status);
         }
     }
