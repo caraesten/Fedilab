@@ -924,17 +924,17 @@
         <b>Importante</b>: se a súa instancia require validación, recibirá un correo unha vez sexa validada!
     </string>
     <string name="save_draft">¿Gardar mensaxe en borradores?</string>
-    <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
-    <string name="no_reports">No reports to display!</string>
-    <string name="reconnect_account">Reconnect the account</string>
-    <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
-    <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
-    <string name="remote">Remote</string>
-    <string name="active">Active</string>
-    <string name="pending">Pending</string>
-    <string name="disabled">Disabled</string>
+    <string name="administration">Administración</string>
+    <string name="reports">Informes</string>
+    <string name="no_reports">Non hai informes!</string>
+    <string name="reconnect_account">Reconectar a conta</string>
+    <string name="reconnect_account_message">A aplicación non puido acceder ao área de administración. Podería ter que voltar a conectar para ter o nivel de acceso correcto.</string>
+    <string name="unresolved">Sen resolver</string>
+    <string name="resolved">Resolto</string>
+    <string name="remote">Remoto</string>
+    <string name="active">Activo</string>
+    <string name="pending">Pendente</string>
+    <string name="disabled">Desactivado</string>
     <string name="silenced">Silenced</string>
     <string name="suspended">Suspended</string>
     <string name="permissions">Permissions</string>
