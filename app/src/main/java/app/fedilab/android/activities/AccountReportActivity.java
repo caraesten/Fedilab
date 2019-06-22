@@ -73,6 +73,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
     private Report report;
     private Group allow_reject_group;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         report = null;
         AccountAdmin targeted_account = null;
         Bundle b = getIntent().getExtras();
+
         if (b != null) {
             account_id = b.getString("account_id", null);
             targeted_account = b.getParcelable("targeted_account");
@@ -206,7 +208,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if(!accountAdmin.isConfirmed()){
+        if(!accountAdmin.isApproved()){
             allow_reject_group.setVisibility(View.VISIBLE);
         }
 

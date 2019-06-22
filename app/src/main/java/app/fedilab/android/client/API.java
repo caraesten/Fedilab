@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -5199,6 +5200,11 @@ public class API {
                 accountAdmin.setDisabled(resobj.getBoolean("disabled"));
             }else{
                 accountAdmin.setDisabled(false);
+            }
+            if( !resobj.isNull("approved")) {
+                accountAdmin.setApproved(resobj.getBoolean("approved"));
+            }else{
+                accountAdmin.setApproved(false);
             }
         }catch (Exception ignored){}
         return accountAdmin;

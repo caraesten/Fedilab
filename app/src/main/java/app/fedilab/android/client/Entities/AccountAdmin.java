@@ -35,6 +35,7 @@ public class AccountAdmin implements Parcelable {
     private boolean disabled;
     private Account account;
     private API.adminAction action;
+    private boolean approved;
 
     public String getId() {
         return id;
@@ -136,6 +137,22 @@ public class AccountAdmin implements Parcelable {
         this.domain = domain;
     }
 
+    public API.adminAction getAction() {
+        return action;
+    }
+
+    public void setAction(API.adminAction action) {
+        this.action = action;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -155,6 +172,8 @@ public class AccountAdmin implements Parcelable {
         dest.writeByte(this.silenced ? (byte) 1 : (byte) 0);
         dest.writeByte(this.disabled ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.account, flags);
+        dest.writeInt(this.action == null ? -1 : this.action.ordinal());
+        dest.writeByte(this.approved ? (byte) 1 : (byte) 0);
     }
 
     protected AccountAdmin(Parcel in) {
@@ -171,6 +190,9 @@ public class AccountAdmin implements Parcelable {
         this.silenced = in.readByte() != 0;
         this.disabled = in.readByte() != 0;
         this.account = in.readParcelable(Account.class.getClassLoader());
+        int tmpAction = in.readInt();
+        this.action = tmpAction == -1 ? null : API.adminAction.values()[tmpAction];
+        this.approved = in.readByte() != 0;
     }
 
     public static final Creator<AccountAdmin> CREATOR = new Creator<AccountAdmin>() {
@@ -184,12 +206,4 @@ public class AccountAdmin implements Parcelable {
             return new AccountAdmin[size];
         }
     };
-
-    public API.adminAction getAction() {
-        return action;
-    }
-
-    public void setAction(API.adminAction action) {
-        this.action = action;
-    }
 }
