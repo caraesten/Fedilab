@@ -931,13 +931,13 @@
         <b>Важно</b>: Если ваш инстанс требует проверки, вы получите письмо после ее завершения!
     </string>
     <string name="save_draft">Сохранить сообщение в черновиках?</string>
-    <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
-    <string name="no_reports">No reports to display!</string>
-    <string name="reconnect_account">Reconnect the account</string>
-    <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
-    <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
+    <string name="administration">Администрирование</string>
+    <string name="reports">Отчеты</string>
+    <string name="no_reports">Нет отчетов для отображения!</string>
+    <string name="reconnect_account">Повторно подключить аккаунт</string>
+    <string name="reconnect_account_message">Приложение не смогло получить доступ к функциям администрирования. Возможно вам необходимо повторно подключить учетную запись, чтобы получить нужные права.</string>
+    <string name="unresolved">Неразрешенный</string>
+    <string name="resolved">Разрешенный</string>
     <string name="remote">Remote</string>
     <string name="active">Active</string>
     <string name="pending">Pending</string>
