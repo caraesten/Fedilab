@@ -52,6 +52,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
     TextView permissions, username, email, email_status, login_status, joined, recent_ip;
     Button warn, disable, silence;
     private String account_id;
+    private CheckBox email_user;
+    private EditText comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +103,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         joined = findViewById(R.id.joined);
         recent_ip = findViewById(R.id.recent_ip);
 
-        CheckBox email_user = findViewById(R.id.email_user);
-        EditText comment = findViewById(R.id.comment);
+        email_user = findViewById(R.id.email_user);
+        comment = findViewById(R.id.comment);
 
         if( account_id == null && report == null && targeted_account == null){
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -177,8 +179,13 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }
         if( accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")){
             warn.setVisibility(View.VISIBLE);
+            email_user.setVisibility(View.VISIBLE);
+            comment.setVisibility(View.VISIBLE);
         }else{
             warn.setVisibility(View.GONE);
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.GONE);
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
         recent_ip.setText(accountAdmin.getIp());
