@@ -1,0 +1,6 @@
+Added
+- Admin and moderation support for Mastodon (enable it in settings)
+- Support for audio with Mastodon (listen and upload)
+
+Changed
+- Remove instance block feature inside the app
