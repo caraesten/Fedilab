@@ -58,7 +58,7 @@
                 android:layout_height="50dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/reject"
+                app:layout_constraintStart_toEndOf="@id/assign"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Barrier
