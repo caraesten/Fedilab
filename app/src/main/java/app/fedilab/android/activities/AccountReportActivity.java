@@ -181,13 +181,17 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             warn.setVisibility(View.VISIBLE);
             email_user.setVisibility(View.VISIBLE);
             comment.setVisibility(View.VISIBLE);
+            recent_ip.setText(accountAdmin.getIp());
         }else{
             warn.setVisibility(View.GONE);
             email_user.setVisibility(View.GONE);
             email_user.setChecked(false);
             comment.setVisibility(View.GONE);
+            recent_ip.setText("-");
+            permissions.setText("-");
+            email.setText("-");
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
-        recent_ip.setText(accountAdmin.getIp());
+
     }
 }
