@@ -41,16 +41,43 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
+            <Button
+                android:id="@+id/assign"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/status"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:id="@+id/status"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reject"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="assign,status"
+                android:id="@+id/assign_status_buttons_barrier"/>
+
             <TextView
                 android:id="@+id/permissions_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/permissions"
                 app:layout_constraintEnd_toStartOf="@id/stats_label_end_barrier"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/assign_status_buttons_barrier"/>
 
             <TextView
                 android:id="@+id/username_label"
@@ -197,6 +224,43 @@
                 app:constraint_referenced_ids="recent_ip,recent_ip_label" />
 
             <Button
+                android:id="@+id/reject"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/reject"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/allow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
+
+            <Button
+                android:id="@+id/allow"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/allow"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reject"
+                app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="reject,allow"
+                android:id="@+id/allow_reject_group"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="reject,allow"
+                android:id="@+id/allow_reject_buttons_barrier"/>
+
+            <Button
                 android:id="@+id/warn"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
@@ -205,9 +269,8 @@
                 android:text="@string/warn"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/disable"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
+                app:layout_constraintTop_toBottomOf="@id/allow_reject_buttons_barrier" />
 
             <Button
                 android:id="@+id/disable"
@@ -219,10 +282,10 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/warn"
-                app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
+                app:layout_constraintTop_toBottomOf="@id/allow_reject_buttons_barrier" />
 
             <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/buttons_mid_barrier"
+                android:id="@+id/warn_disable_buttons_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
@@ -238,7 +301,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/suspend"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttons_mid_barrier" />
+                app:layout_constraintTop_toBottomOf="@id/warn_disable_buttons_barrier" />
 
             <Button
                 android:id="@+id/suspend"
@@ -250,7 +313,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/silence"
-                app:layout_constraintTop_toBottomOf="@id/buttons_mid_barrier" />
+                app:layout_constraintTop_toBottomOf="@id/warn_disable_buttons_barrier" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/buttons_bottom_barrier"

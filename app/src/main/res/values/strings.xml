@@ -1072,6 +1072,7 @@
     <string name="account_warned">The account has been warned!</string>
     <string name="set_display_admin_menu">Display the admin menu</string>
     <string name="set_display_admin_toot">Display the admin feature in statuses</string>
+    <string name="allow">Allow</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
