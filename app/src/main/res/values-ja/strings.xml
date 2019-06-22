@@ -905,12 +905,12 @@
     <string name="password_too_short">パスワードは8文字以上必要です</string>
     <string name="username_error">ユーザー名にはアルファベット、数字、アンダーバーのみ含めることができます</string>
     <string name="account_created">アカウントを作成しました！</string>
-    <string name="account_created_message">        Your account has been created!\n\n
-        Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
-        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    <string name="account_created_message">アカウントを作成しました！\n\n
+        48時間以内にメールアドレスを確認してください。\n\n
+        最初の欄に<b>%1$s</b>と記入し、<b>接続</b>をタップするとアカウントに繋がります。\n\n
+        <b>重要</b>:インスタンスが認証を要求する場合、一度確認のメールが送信されます！
     </string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">メッセージを下書きに保存しますか？</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
