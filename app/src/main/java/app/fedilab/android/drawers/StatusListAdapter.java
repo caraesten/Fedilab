@@ -2869,7 +2869,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             holder.status_prev1_play.setVisibility(View.GONE);
                     else {
-                        if( attachment.getType().toLowerCase().equals("video")) {
+                        if( attachment.getType().toLowerCase().equals("video") ||  attachment.getType().toLowerCase().equals("audio")) {
                             holder.status_prev1_play_h.setImageResource(R.drawable.ic_video_preview);
                             holder.status_prev1_play.setImageResource(R.drawable.ic_video_preview);
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
@@ -2891,7 +2891,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             holder.status_prev2_play.setVisibility(View.GONE);
                     else {
-                        if( attachment.getType().toLowerCase().equals("video")) {
+                        if( attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("video")) {
                             holder.status_prev2_play_h.setImageResource(R.drawable.ic_video_preview);
                             holder.status_prev2_play.setImageResource(R.drawable.ic_video_preview);
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
@@ -2913,7 +2913,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             holder.status_prev3_play.setVisibility(View.GONE);
                     else {
-                        if( attachment.getType().toLowerCase().equals("video")) {
+                        if( attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("video")) {
                             holder.status_prev3_play_h.setImageResource(R.drawable.ic_video_preview);
                             holder.status_prev3_play.setImageResource(R.drawable.ic_video_preview);
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
@@ -2935,7 +2935,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             holder.status_prev4_play.setVisibility(View.GONE);
                     else {
-                        if( attachment.getType().toLowerCase().equals("video")) {
+                        if( attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("video")) {
                             holder.status_prev4_play_h.setImageResource(R.drawable.ic_video_preview);
                             holder.status_prev4_play.setImageResource(R.drawable.ic_video_preview);
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
