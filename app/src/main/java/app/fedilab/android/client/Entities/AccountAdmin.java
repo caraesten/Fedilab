@@ -18,6 +18,8 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import app.fedilab.android.client.API;
+
 public class AccountAdmin implements Parcelable {
 
     private String id;
@@ -32,7 +34,7 @@ public class AccountAdmin implements Parcelable {
     private boolean silenced;
     private boolean disabled;
     private Account account;
-
+    private API.adminAction action;
 
     public String getId() {
         return id;
@@ -182,4 +184,12 @@ public class AccountAdmin implements Parcelable {
             return new AccountAdmin[size];
         }
     };
+
+    public API.adminAction getAction() {
+        return action;
+    }
+
+    public void setAction(API.adminAction action) {
+        this.action = action;
+    }
 }

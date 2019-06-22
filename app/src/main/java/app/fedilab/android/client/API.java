@@ -124,13 +124,17 @@ public class API {
         ENABLE,
         APPROVE,
         REJECT,
+        NONE,
+        SILENCE,
+        UNDISABLE,
+        DISABLE,
         UNSILENCE,
+        SUSPEND,
         UNSUSPEND,
         ASSIGN_TO_SELF,
         UNASSIGN,
         REOPEN,
         RESOLVE,
-        MODERATION_ACTION,
         GET_ACCOUNTS,
         GET_ONE_ACCOUNT,
         GET_REPORTS,
@@ -335,22 +339,36 @@ public class API {
             case RESOLVE:
                 endpoint = String.format("/admin/reports/%s/resolve", id);
                 break;
-            case MODERATION_ACTION:
+            case NONE:
                 params = new HashMap<>();
-                switch (adminAction.getType()){
-                    case NONE:
-                        params.put("type","none");
-                        break;
-                    case DISABLE:
-                        params.put("type","disable");
-                        break;
-                    case SILENCE:
-                        params.put("type","silence");
-                        break;
-                    case SUSPEND:
-                        params.put("type","suspend");
-                        break;
+                params.put("type","none");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
                 }
+                break;
+            case DISABLE:
+                params = new HashMap<>();
+                params.put("type","disable");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+            case SILENCE:
+                params = new HashMap<>();
+                params.put("type","silence");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+            case SUSPEND:
+                params = new HashMap<>();
+                params.put("type","suspend");
                 endpoint = String.format("/admin/accounts/%s/action", id);
                 params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
                 if( adminAction.getText() != null) {
@@ -369,6 +387,7 @@ public class API {
                     List<AccountAdmin> accountAdmins = null;
                     try {
                         AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                        accountAdmin.setAction(action);
                         accountAdmins = new ArrayList<>();
                         accountAdmins.add(accountAdmin);
                     } catch (JSONException e) {
@@ -392,7 +411,31 @@ public class API {
                     apiResponse.setReports(reports);
 
                     break;
-                case MODERATION_ACTION:
+                case NONE:
+                    break;
+                case DISABLE:
+                    accountAdmins = new ArrayList<>();
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setDisabled(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case SILENCE:
+                    accountAdmins = new ArrayList<>();
+                    accountAdmin = new AccountAdmin();
+                    accountAdmin.setSilenced(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case SUSPEND:
+                    accountAdmins = new ArrayList<>();
+                    accountAdmin = new AccountAdmin();
+                    accountAdmin.setSuspended(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
                     break;
             }
         } catch (IOException e) {

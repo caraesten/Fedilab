@@ -1,4 +1,7 @@
 package app.fedilab.android.client.Entities;
+
+import app.fedilab.android.client.API;
+
 /* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Fedilab
@@ -16,14 +19,8 @@ package app.fedilab.android.client.Entities;
 public class AdminAction {
 
 
-    public enum adminActionType{
-        NONE,
-        DISABLE,
-        SILENCE,
-        SUSPEND
-    }
 
-    private adminActionType type;
+    private API.adminAction type;
     private boolean send_email_notification;
     private String text;
     private boolean unresolved;
@@ -96,13 +93,6 @@ public class AdminAction {
         this.unresolved = unresolved;
     }
 
-    public adminActionType getType() {
-        return type;
-    }
-
-    public void setType(adminActionType type) {
-        this.type = type;
-    }
 
     public boolean isSend_email_notification() {
         return send_email_notification;
@@ -121,6 +111,11 @@ public class AdminAction {
     }
 
 
+    public API.adminAction getType() {
+        return type;
+    }
 
-
+    public void setType(API.adminAction type) {
+        this.type = type;
+    }
 }

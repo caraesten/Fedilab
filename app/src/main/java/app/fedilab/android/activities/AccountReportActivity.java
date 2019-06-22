@@ -40,6 +40,7 @@ import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountAdmin;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusReportAdapter;
@@ -47,10 +48,15 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
 import es.dmoral.toasty.Toasty;
 
+import static app.fedilab.android.client.API.adminAction.DISABLE;
+import static app.fedilab.android.client.API.adminAction.NONE;
+import static app.fedilab.android.client.API.adminAction.SILENCE;
+import static app.fedilab.android.client.API.adminAction.SUSPEND;
+
 public class AccountReportActivity extends BaseActivity implements OnAdminActionInterface {
 
     TextView permissions, username, email, email_status, login_status, joined, recent_ip;
-    Button warn, disable, silence;
+    Button warn, disable, silence, suspend;
     private String account_id;
     private CheckBox email_user;
     private EditText comment;
@@ -94,6 +100,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         warn = findViewById(R.id.warn);
         disable = findViewById(R.id.disable);
         silence = findViewById(R.id.silence);
+        suspend = findViewById(R.id.suspend);
 
         permissions = findViewById(R.id.permissions);
         username = findViewById(R.id.username);
@@ -182,6 +189,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             email_user.setVisibility(View.VISIBLE);
             comment.setVisibility(View.VISIBLE);
             recent_ip.setText(accountAdmin.getIp());
+            disable.setVisibility(View.GONE);
+            suspend.setVisibility(View.VISIBLE);
         }else{
             warn.setVisibility(View.GONE);
             email_user.setVisibility(View.GONE);
@@ -190,8 +199,108 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             recent_ip.setText("-");
             permissions.setText("-");
             email.setText("-");
+            disable.setVisibility(View.VISIBLE);
+            suspend.setVisibility(View.GONE);
+        }
+        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
+            warn.setVisibility(View.GONE);
+            suspend.setVisibility(View.GONE);
+            silence.setVisibility(View.GONE);
+            disable.setVisibility(View.GONE);
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.GONE);
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
 
+        warn.setOnClickListener(view->{
+            AdminAction adminAction = new AdminAction();
+            adminAction.setType(NONE);
+            adminAction.setSend_email_notification(email_user.isChecked());
+            adminAction.setText(comment.getText().toString().trim());
+            new PostAdminActionAsyncTask(getApplicationContext(), NONE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        });
+
+
+        if( !accountAdmin.isSilenced() ) {
+            silence.setText(getString(R.string.silence));
+        }else{
+            silence.setText(getString(R.string.unsilence));
+        }
+        silence.setOnClickListener(view->{
+            if( !accountAdmin.isSilenced() ) {
+                AdminAction adminAction = new AdminAction();
+                adminAction.setType(SILENCE);
+                adminAction.setSend_email_notification(email_user.isChecked());
+                adminAction.setText(comment.getText().toString().trim());
+                new PostAdminActionAsyncTask(getApplicationContext(), SILENCE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else{
+                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSILENCE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+
+        if( !accountAdmin.isSilenced() ) {
+            silence.setText(getString(R.string.disable));
+        }else{
+            silence.setText(getString(R.string.undisable));
+        }
+        disable.setOnClickListener(view->{
+            if( !accountAdmin.isSilenced()) {
+                AdminAction adminAction = new AdminAction();
+                adminAction.setType(DISABLE);
+                adminAction.setSend_email_notification(email_user.isChecked());
+                adminAction.setText(comment.getText().toString().trim());
+                new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else{
+                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+
+        if( !accountAdmin.isSilenced() ) {
+            silence.setText(getString(R.string.suspend));
+        }else{
+            silence.setText(getString(R.string.unsuspend));
+        }
+        suspend.setOnClickListener(view->{
+            if( !accountAdmin.isSuspended() ){
+                AdminAction adminAction = new AdminAction();
+                adminAction.setType(SUSPEND);
+                adminAction.setSend_email_notification(email_user.isChecked());
+                adminAction.setText(comment.getText().toString().trim());
+                new PostAdminActionAsyncTask(getApplicationContext(), SUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else{
+                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+
+        if( accountAdmin.getAction() != null) {
+            String message = null;
+            switch (accountAdmin.getAction()) {
+                case SILENCE:
+                        message = getString(R.string.account_silenced);
+                    break;
+                case UNSILENCE:
+                        message = getString(R.string.account_unsilenced);
+                    break;
+                case DISABLE:
+                    message = getString(R.string.account_disabled);
+                    break;
+                case UNDISABLE:
+                    message = getString(R.string.account_undisabled);
+                    break;
+                case SUSPEND:
+                    message = getString(R.string.account_suspended);
+                    break;
+                case UNSUSPEND:
+                    message = getString(R.string.account_unsuspended);
+                    break;
+                case NONE:
+                    message = getString(R.string.account_warned);
+                    break;
+            }
+            if( message != null){
+                Toasty.success(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
