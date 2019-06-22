@@ -25,11 +25,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -124,8 +124,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             StatusReportAdapter adapter = new StatusReportAdapter(this, contents);
             lv_statuses.setAdapter(adapter);
 
-            LinearLayout statuses_container = findViewById(R.id.statuses_container);
-            statuses_container.setVisibility(View.VISIBLE);
+            Group statuses_group = findViewById(R.id.statuses_group);
+            statuses_group.setVisibility(View.VISIBLE);
         }
         fillReport(targeted_account);
 
