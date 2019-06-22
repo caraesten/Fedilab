@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -126,7 +125,6 @@ public class API {
         REJECT,
         NONE,
         SILENCE,
-        UNDISABLE,
         DISABLE,
         UNSILENCE,
         SUSPEND,
@@ -381,6 +379,7 @@ public class API {
                 case APPROVE:
                 case REJECT:
                 case UNSILENCE:
+               // case UNDISABLE:
                 case UNSUSPEND:
                     List<AccountAdmin> accountAdmins = null;
                     try {

@@ -61,7 +61,7 @@ import static app.fedilab.android.client.API.adminAction.SUSPEND;
 
 public class AccountReportActivity extends BaseActivity implements OnAdminActionInterface {
 
-    TextView permissions, username, email, email_status, login_status, joined, recent_ip;
+    TextView permissions, username, email, email_status, login_status, joined, recent_ip, comment_label;
     Button warn, disable, silence, suspend;
     private String account_id;
     private CheckBox email_user;
@@ -107,7 +107,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         disable = findViewById(R.id.disable);
         silence = findViewById(R.id.silence);
         suspend = findViewById(R.id.suspend);
-
+        comment_label = findViewById(R.id.comment_label);
         permissions = findViewById(R.id.permissions);
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
@@ -216,18 +216,20 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
         if( !accountAdmin.isDisabled() ) {
             disable.setText(getString(R.string.disable));
+            disable.setEnabled(true);
         }else{
-            disable.setText(getString(R.string.undisable));
+            disable.setText(getString(R.string.disabled));
+            disable.setEnabled(false);
         }
         disable.setOnClickListener(view->{
-            if( !accountAdmin.isSilenced()) {
+            if( !accountAdmin.isDisabled()) {
                 AdminAction adminAction = new AdminAction();
                 adminAction.setType(DISABLE);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
                 new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else{
-                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                //new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNDISABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -260,9 +262,9 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 case DISABLE:
                     message = getString(R.string.account_disabled);
                     break;
-                case UNDISABLE:
+              /*  case UNDISABLE:
                     message = getString(R.string.account_undisabled);
-                    break;
+                    break;*/
                 case SUSPEND:
                     message = getString(R.string.account_suspended);
                     break;
@@ -314,6 +316,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         if( accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")){
             warn.setVisibility(View.VISIBLE);
             email_user.setVisibility(View.VISIBLE);
+            comment_label.setVisibility(View.VISIBLE);
             comment.setVisibility(View.VISIBLE);
             recent_ip.setText(accountAdmin.getIp());
             disable.setVisibility(View.VISIBLE);
@@ -328,6 +331,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             email.setText("-");
             disable.setVisibility(View.GONE);
             suspend.setVisibility(View.VISIBLE);
+            comment_label.setVisibility(View.GONE);
         }
         if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
             warn.setVisibility(View.GONE);
@@ -337,6 +341,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             email_user.setVisibility(View.GONE);
             email_user.setChecked(false);
             comment.setVisibility(View.GONE);
+            comment_label.setVisibility(View.GONE);
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
 
