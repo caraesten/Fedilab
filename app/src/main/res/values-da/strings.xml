@@ -970,9 +970,9 @@
     <string name="allow">Tillad</string>
     <string name="account_approved">Kontoen er godkendt!</string>
     <string name="account_rejected">Kontoen er afvist!</string>
-    <string name="assign_to_me">Tildel mig</string>
-    <string name="unassign">Fjern tildeling</string>
-    <string name="mark_resolved">Markér løst</string>
+    <string name="assign_to_me">Tildele mig</string>
+    <string name="unassign">Tildel ikke længere</string>
+    <string name="mark_resolved">Markér som løst</string>
     <string name="mark_unresolved">Markér uløst</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
