@@ -11,6 +11,10 @@
         android:actionLayout="@layout/bookmark_layout"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_admin"
+        android:title="@string/administration"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_info"
         android:title="@string/information"
         app:showAsAction="never" />

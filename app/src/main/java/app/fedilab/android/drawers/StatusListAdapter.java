@@ -97,6 +97,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -2361,7 +2362,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                     }
-
+                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                        popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                    }else{
+                        boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + Helper.getLiveInstance(context), false);
+                        if( !display_admin_statuses){
+                            popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                        }
+                    }
 
                     boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
                     if( custom_sharing && status.getVisibility().equals("public"))
@@ -2393,7 +2401,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     break;
                                 case R.id.action_schedule_boost:
                                     scheduleBoost(status);
-
+                                    return true;
+                                case R.id.action_admin:
+                                    String account_id = status.getReblog() != null ? status.getReblog().getAccount().getId() : status.getAccount().getId();
+                                    Intent intent = new Intent(context, AccountReportActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("account_id", account_id);
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
                                     return true;
                                 case R.id.action_info:
                                     tootInformation(status);

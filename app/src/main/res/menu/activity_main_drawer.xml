@@ -58,6 +58,10 @@
                         android:id="@+id/nav_drag_timelines"
                         android:icon="@drawable/ic_drag_handle_menu"
                         android:title="@string/reorder_timelines" />
+                    <item
+                        android:id="@+id/nav_administration"
+                        android:icon="@drawable/ic_security_admin"
+                        android:title="@string/administration" />
                 </group>
             </menu>
         </item>

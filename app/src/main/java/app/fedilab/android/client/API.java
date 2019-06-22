@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -48,10 +49,13 @@ import java.util.Map;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.LoginActivity;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountAdmin;
 import app.fedilab.android.client.Entities.AccountCreation;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
@@ -71,6 +75,7 @@ import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.Poll;
 import app.fedilab.android.client.Entities.PollOptions;
 import app.fedilab.android.client.Entities.Relationship;
+import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Schedule;
 import app.fedilab.android.client.Entities.Status;
@@ -114,6 +119,28 @@ public class API {
         ACCOUNTS
     }
 
+
+    public enum adminAction{
+        ENABLE,
+        APPROVE,
+        REJECT,
+        NONE,
+        SILENCE,
+        DISABLE,
+        UNSILENCE,
+        SUSPEND,
+        UNSUSPEND,
+        ASSIGN_TO_SELF,
+        UNASSIGN,
+        REOPEN,
+        RESOLVE,
+        GET_ACCOUNTS,
+        GET_ONE_ACCOUNT,
+        GET_REPORTS,
+        GET_ONE_REPORT
+    }
+
+
     public enum StatusAction{
         FAVOURITE,
         UNFAVOURITE,
@@ -149,12 +176,15 @@ public class API {
         UPDATESERVERSCHEDULE,
         DELETESCHEDULED,
         REFRESHPOLL
-
     }
+
+
     public enum accountPrivacy {
         PUBLIC,
         LOCKED
     }
+
+
     public API(Context context) {
         this.context = context;
         if( context == null) {
@@ -182,6 +212,246 @@ public class API {
         }
         apiResponse = new APIResponse();
         APIError = null;
+    }
+
+
+    /**
+     * Execute admin get actions
+     * @param action type of the action
+     * @param id String can for an account or a status
+     * @return APIResponse
+     */
+    public APIResponse adminGet(adminAction action, String id, AdminAction adminAction){
+        apiResponse = new APIResponse();
+        HashMap<String, String> params = null;
+        String endpoint = null;
+        switch (action){
+            case GET_ACCOUNTS:
+                params = new HashMap<>();
+                if( adminAction.isLocal())
+                    params.put("local", String.valueOf(adminAction.isLocal()));
+                if( adminAction.isRemote() )
+                    params.put("remote", String.valueOf(adminAction.isRemote()));
+                if( adminAction.isActive() )
+                    params.put("active", String.valueOf(adminAction.isActive()));
+                if( adminAction.isPending() )
+                    params.put("pending", String.valueOf(adminAction.isPending()));
+                if( adminAction.isDisabled() )
+                    params.put("disabled", String.valueOf(adminAction.isDisabled()));
+                if( adminAction.isSilenced() )
+                    params.put("silenced", String.valueOf(adminAction.isSilenced()));
+                if( adminAction.isSuspended() )
+                    params.put("suspended", String.valueOf(adminAction.isSuspended()));
+                endpoint = "/admin/accounts";
+                break;
+            case GET_ONE_ACCOUNT:
+                endpoint = String.format("/admin/accounts/%s", id);
+                break;
+            case GET_REPORTS:
+                endpoint = "/admin/reports";
+                if( !adminAction.isUnresolved()) {
+                    params = new HashMap<>();
+                    params.put("resolved", "present");
+                }
+                break;
+            case GET_ONE_REPORT:
+                endpoint = String.format("/admin/reports/%s", id);
+                break;
+        }
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            switch (action){
+                case GET_ACCOUNTS:
+                    List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case GET_ONE_ACCOUNT:
+                    AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                    accountAdmins = new ArrayList<>();
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case GET_REPORTS:
+                    List<Report> reports = parseReportAdminResponse(new JSONArray(response));
+                    apiResponse.setReports(reports);
+                    break;
+                case GET_ONE_REPORT:
+                    reports = new ArrayList<>();
+                    Report report = parseReportAdminResponse(context, new JSONObject(response));
+                    reports.add(report);
+                    apiResponse.setReports(reports);
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+
+    /**
+     * Execute admin post actions
+     * @param action type of the action
+     * @param id String can for an account or a status
+     * @return APIResponse
+     */
+    public APIResponse adminDo(adminAction action, String id, AdminAction adminAction){
+        apiResponse = new APIResponse();
+        String endpoint = null;
+        HashMap<String, String> params = null;
+        switch (action){
+            case ENABLE:
+                endpoint = String.format("/admin/accounts/%s/enable", id);
+                break;
+            case APPROVE:
+                endpoint = String.format("/admin/accounts/%s/approve", id);
+                break;
+            case REJECT:
+                endpoint = String.format("/admin/accounts/%s/reject", id);
+                break;
+            case UNSILENCE:
+                endpoint = String.format("/admin/accounts/%s/unsilence", id);
+                break;
+            case UNSUSPEND:
+                endpoint = String.format("/admin/accounts/%s/unsuspend", id);
+                break;
+            case ASSIGN_TO_SELF:
+                endpoint = String.format("/admin/reports/%s/assign_to_self", id);
+                break;
+            case UNASSIGN:
+                endpoint = String.format("/admin/reports/%s/unassign", id);
+                break;
+            case REOPEN:
+                endpoint = String.format("/admin/reports/%s/reopen", id);
+                break;
+            case RESOLVE:
+                endpoint = String.format("/admin/reports/%s/resolve", id);
+                break;
+            case NONE:
+                params = new HashMap<>();
+                params.put("type","none");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+            case DISABLE:
+                params = new HashMap<>();
+                params.put("type","disable");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+            case SILENCE:
+                params = new HashMap<>();
+                params.put("type","silence");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+            case SUSPEND:
+                params = new HashMap<>();
+                params.put("type","suspend");
+                endpoint = String.format("/admin/accounts/%s/action", id);
+                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                if( adminAction.getText() != null) {
+                    params.put("text", adminAction.getText());
+                }
+                break;
+        }
+        try {
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            switch (action){
+                case ENABLE:
+                case APPROVE:
+                case REJECT:
+                case UNSILENCE:
+               // case UNDISABLE:
+                case UNSUSPEND:
+                    List<AccountAdmin> accountAdmins = null;
+                    try {
+                        AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                        accountAdmin.setAction(action);
+                        accountAdmins = new ArrayList<>();
+                        accountAdmins.add(accountAdmin);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case ASSIGN_TO_SELF:
+                case UNASSIGN:
+                case REOPEN:
+                case RESOLVE:
+                    List<Report> reports = null;
+                    Report report;
+                    try {
+                        reports = new ArrayList<>();
+                        report = parseReportAdminResponse(context, new JSONObject(response));
+                        reports.add(report);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    apiResponse.setReports(reports);
+
+                    break;
+                case NONE:
+                    accountAdmins = new ArrayList<>();
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case DISABLE:
+                    accountAdmins = new ArrayList<>();
+                    accountAdmin = new AccountAdmin();
+                    accountAdmin.setDisabled(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case SILENCE:
+                    accountAdmins = new ArrayList<>();
+                    accountAdmin = new AccountAdmin();
+                    accountAdmin.setSilenced(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+                case SUSPEND:
+                    accountAdmins = new ArrayList<>();
+                    accountAdmin = new AccountAdmin();
+                    accountAdmin.setSuspended(true);
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }
+        return apiResponse;
     }
 
     public InstanceNodeInfo getNodeInfo(String domain){
@@ -325,6 +595,9 @@ public class API {
         apiResponse = new APIResponse();
         APIError = null;
     }
+
+
+
 
 
     /***
@@ -4814,6 +5087,151 @@ public class API {
         return account;
     }
 
+
+    /**
+     * Parse json response for list of reports for admins
+     * @param jsonArray JSONArray
+     * @return List<Report>
+     */
+    private List<Report> parseReportAdminResponse(JSONArray jsonArray){
+
+        List<Report> reports = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Report report = parseReportAdminResponse(context, resobj);
+                reports.add(report);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return reports;
+    }
+
+    /**
+     * Parse json response an unique report for admins
+     * @param resobj JSONObject
+     * @return AccountAdmin
+     */
+    private static Report parseReportAdminResponse(Context context, JSONObject resobj){
+
+        Report report = new Report();
+        try {
+            report.setId(resobj.getString("id"));
+            report.setAction_taken(resobj.getBoolean("action_taken"));
+            report.setComment(resobj.getString("comment"));
+            report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
+            if( !resobj.isNull("account")) {
+                report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
+            }
+            if( !resobj.isNull("target_account")) {
+                report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
+            }
+            if( !resobj.isNull("assigned_account")) {
+                report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
+            }
+            if( !resobj.isNull("action_taken_by_account")) {
+                report.setAction_taken_by_account(parseAccountAdminResponse(context, resobj.getJSONObject("action_taken_by_account")));
+            }
+            report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
+        }catch (Exception ignored){ignored.printStackTrace();}
+        return report;
+    }
+
+
+    /**
+     * Parse json response for list of accounts for admins
+     * @param jsonArray JSONArray
+     * @return List<AccountAdmin>
+     */
+    private List<AccountAdmin> parseAccountAdminResponse(JSONArray jsonArray){
+
+        List<AccountAdmin> accountAdmins = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                AccountAdmin accountAdmin = parseAccountAdminResponse(context, resobj);
+                accountAdmins.add(accountAdmin);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accountAdmins;
+    }
+
+    /**
+     * Parse json response an unique account for admins
+     * @param resobj JSONObject
+     * @return Account
+     */
+    private static AccountAdmin parseAccountAdminResponse(Context context, JSONObject resobj){
+
+        AccountAdmin accountAdmin = new AccountAdmin();
+        try {
+            accountAdmin.setId(resobj.get("id").toString());
+            accountAdmin.setUsername(resobj.getString("username"));
+            accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            accountAdmin.setEmail(resobj.getString("email"));
+            accountAdmin.setRole(resobj.getString("role"));
+            accountAdmin.setIp(resobj.getString("ip"));
+            accountAdmin.setDomain(resobj.getString("domain"));
+            accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            if( !resobj.isNull("confirmed")) {
+                accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
+            }else{
+                accountAdmin.setConfirmed(true);
+            }
+            if( !resobj.isNull("suspended")) {
+                accountAdmin.setSuspended(resobj.getBoolean("suspended"));
+            }else{
+                accountAdmin.setSuspended(false);
+            }
+            if( !resobj.isNull("silenced")) {
+                accountAdmin.setSilenced(resobj.getBoolean("silenced"));
+            }else{
+                accountAdmin.setSilenced(false);
+            }
+            if( !resobj.isNull("disabled")) {
+                accountAdmin.setDisabled(resobj.getBoolean("disabled"));
+            }else{
+                accountAdmin.setDisabled(false);
+            }
+            if( !resobj.isNull("approved")) {
+                accountAdmin.setApproved(resobj.getBoolean("approved"));
+            }else{
+                accountAdmin.setApproved(false);
+            }
+        }catch (Exception ignored){}
+        return accountAdmin;
+    }
+
+    /**
+     * Parse json response for list of accounts
+     * @param jsonArray JSONArray
+     * @return List<Account>
+     */
+    private List<Account> parseAccountResponse(JSONArray jsonArray){
+
+        List<Account> accounts = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Account account = parseAccountResponse(context, resobj);
+                accounts.add(account);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accounts;
+    }
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
@@ -5029,27 +5447,7 @@ public class API {
         } catch (JSONException ignored) {}
         return account;
     }
-    /**
-     * Parse json response for list of accounts
-     * @param jsonArray JSONArray
-     * @return List<Account>
-     */
-    private List<Account> parseAccountResponse(JSONArray jsonArray){
 
-        List<Account> accounts = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Account account = parseAccountResponse(context, resobj);
-                accounts.add(account);
-                i++;
-            }
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return accounts;
-    }
 
 
     /**
