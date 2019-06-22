@@ -204,7 +204,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/warn"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/disable"
+                app:layout_constraintEnd_toStartOf="@id/silence"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
@@ -219,8 +219,10 @@
                 android:text="@string/silence"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/disable"
+                app:layout_constraintEnd_toStartOf="@id/disable"
+                app:layout_constraintStart_toEndOf="@id/warn"
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
+
 
             <Button
                 android:id="@+id/disable"
@@ -230,8 +232,8 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/disable"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/silence"
-                app:layout_constraintStart_toEndOf="@id/warn"
+                app:layout_constraintEnd_toStartOf="@id/suspend"
+                app:layout_constraintStart_toEndOf="@id/silence"
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
 
 
@@ -241,10 +243,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/silence"
+                android:text="@string/suspend"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/suspend"
+                app:layout_constraintStart_toEndOf="@id/disable"
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
 
             <androidx.constraintlayout.widget.Barrier
