@@ -25,11 +25,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 
 public class AccountReportActivity extends BaseActivity implements OnAdminActionInterface {
 
-    TextView permissions, email, email_status, login_status, joined, recent_ip;
+    TextView permissions, username, email, email_status, login_status, joined, recent_ip;
     Button warn, disable, silence;
     private String account_id;
 
@@ -94,6 +94,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         silence = findViewById(R.id.silence);
 
         permissions = findViewById(R.id.permissions);
+        username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         email_status = findViewById(R.id.email_status);
         login_status = findViewById(R.id.login_status);
@@ -124,8 +125,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             StatusReportAdapter adapter = new StatusReportAdapter(this, contents);
             lv_statuses.setAdapter(adapter);
 
-            LinearLayout statuses_container = findViewById(R.id.statuses_container);
-            statuses_container.setVisibility(View.VISIBLE);
+            Group statuses_group = findViewById(R.id.statuses_group);
+            statuses_group.setVisibility(View.VISIBLE);
         }
         fillReport(targeted_account);
 
@@ -159,6 +160,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 permissions.setText(getString(R.string.administrator));
                 break;
         }
+
+        username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
 
         email.setText(accountAdmin.getEmail());
         email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
