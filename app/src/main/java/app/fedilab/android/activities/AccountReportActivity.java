@@ -216,10 +216,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
         if( !accountAdmin.isDisabled() ) {
             disable.setText(getString(R.string.disable));
-            disable.setEnabled(true);
         }else{
-            disable.setText(getString(R.string.disabled));
-            disable.setEnabled(false);
+            disable.setText(getString(R.string.undisable));
         }
         disable.setOnClickListener(view->{
             if( !accountAdmin.isDisabled()) {
@@ -229,7 +227,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 adminAction.setText(comment.getText().toString().trim());
                 new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else{
-                //new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNDISABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.ENABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -262,9 +260,9 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 case DISABLE:
                     message = getString(R.string.account_disabled);
                     break;
-              /*  case UNDISABLE:
+                case ENABLE:
                     message = getString(R.string.account_undisabled);
-                    break;*/
+                    break;
                 case SUSPEND:
                     message = getString(R.string.account_suspended);
                     break;
