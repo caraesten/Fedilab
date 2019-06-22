@@ -114,7 +114,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             return;
         }
         if( report != null) {
-            targeted_account = report.getAccount();
+            targeted_account = report.getTarget_account();
             RecyclerView lv_statuses = findViewById(R.id.lv_statuses);
 
             ArrayList<String> contents = new ArrayList<>();
