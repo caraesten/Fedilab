@@ -966,7 +966,7 @@
     <string name="account_undisabled">Kontoen er ikke længere deaktiveret!</string>
     <string name="account_warned">Kontoen har fået en advarsel!</string>
     <string name="set_display_admin_menu">Vis admin-menuen</string>
-    <string name="set_display_admin_toot">Display the admin feature in statuses</string>
+    <string name="set_display_admin_toot">Vis admin funktioner i statusser</string>
     <string name="allow">Tillad</string>
     <string name="account_approved">Kontoen blev godkendt!</string>
     <string name="account_rejected">Kontoen blev afvist!</string>
