@@ -159,9 +159,10 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
             Group statuses_group = findViewById(R.id.statuses_group);
             statuses_group.setVisibility(View.VISIBLE);
+            account_id = targeted_account.getId();
+            fillReport(targeted_account);
         }
-        account_id = targeted_account.getId();
-        fillReport(targeted_account);
+
 
     }
 
@@ -195,7 +196,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }
         if( apiResponse.getReports() != null && apiResponse.getReports().size() > 0){
             report = apiResponse.getReports().get(0);
-            fillReport(apiResponse.getAccountAdmins().get(0));
+            fillReport(report.getTarget_account());
         } else if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
             fillReport(apiResponse.getAccountAdmins().get(0));
         }
@@ -208,7 +209,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if(!accountAdmin.isApproved()){
+        if(!accountAdmin.isApproved() && (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null"))){
             allow_reject_group.setVisibility(View.VISIBLE);
         }
 
@@ -314,7 +315,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     break;
                 case REJECT:
                     allow_reject_group.setVisibility(View.GONE);
-
                     message = getString(R.string.account_rejected);
                     break;
             }
