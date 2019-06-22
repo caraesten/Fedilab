@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,18 +56,22 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
 import es.dmoral.toasty.Toasty;
 
+import static app.fedilab.android.client.API.adminAction.APPROVE;
 import static app.fedilab.android.client.API.adminAction.DISABLE;
 import static app.fedilab.android.client.API.adminAction.NONE;
+import static app.fedilab.android.client.API.adminAction.REJECT;
 import static app.fedilab.android.client.API.adminAction.SILENCE;
 import static app.fedilab.android.client.API.adminAction.SUSPEND;
 
 public class AccountReportActivity extends BaseActivity implements OnAdminActionInterface {
 
     TextView permissions, username, email, email_status, login_status, joined, recent_ip, comment_label;
-    Button warn, disable, silence, suspend;
+    Button warn, disable, silence, suspend, allow, reject, assign, status;
     private String account_id;
     private CheckBox email_user;
     private EditText comment;
+    private Report report;
+    private Group allow_reject_group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
 
         setTheme(R.style.AppAdminTheme);
-        Report report = null;
+        report = null;
         AccountAdmin targeted_account = null;
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -107,6 +113,14 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         disable = findViewById(R.id.disable);
         silence = findViewById(R.id.silence);
         suspend = findViewById(R.id.suspend);
+        allow = findViewById(R.id.allow);
+        reject = findViewById(R.id.reject);
+        status = findViewById(R.id.status);
+        assign = findViewById(R.id.assign);
+        allow_reject_group = findViewById(R.id.allow_reject_group);
+        allow_reject_group.setVisibility(View.GONE);
+        allow.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green_1), PorterDuff.Mode.MULTIPLY);
+        reject.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red_1), PorterDuff.Mode.MULTIPLY);
         comment_label = findViewById(R.id.comment_label);
         permissions = findViewById(R.id.permissions);
         username = findViewById(R.id.username);
@@ -123,7 +137,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
-
+        assign.setVisibility(View.GONE);
+        status.setVisibility(View.GONE);
         if( account_id != null){
             new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ONE_ACCOUNT, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
@@ -176,9 +191,13 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             }
             return;
         }
-        if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
+        if( apiResponse.getReports() != null && apiResponse.getReports().size() > 0){
+            report = apiResponse.getReports().get(0);
+            fillReport(apiResponse.getAccountAdmins().get(0));
+        } else if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
             fillReport(apiResponse.getAccountAdmins().get(0));
         }
+
     }
 
     private void fillReport(AccountAdmin accountAdmin){
@@ -187,6 +206,21 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
+        if(!accountAdmin.isConfirmed()){
+            allow_reject_group.setVisibility(View.VISIBLE);
+        }
+
+        reject.setOnClickListener(view->{
+            AdminAction adminAction = new AdminAction();
+            adminAction.setType(REJECT);
+            new PostAdminActionAsyncTask(getApplicationContext(), REJECT, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        });
+
+        allow.setOnClickListener(view->{
+            AdminAction adminAction = new AdminAction();
+            adminAction.setType(APPROVE);
+            new PostAdminActionAsyncTask(getApplicationContext(), APPROVE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        });
 
         warn.setOnClickListener(view->{
             AdminAction adminAction = new AdminAction();
@@ -230,7 +264,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.ENABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-
         if( !accountAdmin.isSuspended() ) {
             suspend.setText(getString(R.string.suspend));
         }else{
@@ -247,6 +280,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
+
 
         if( accountAdmin.getAction() != null) {
             String message = null;
@@ -271,6 +305,14 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     break;
                 case NONE:
                     message = getString(R.string.account_warned);
+                    break;
+                case APPROVE:
+                    allow_reject_group.setVisibility(View.GONE);
+                    message = getString(R.string.account_approved);
+                    break;
+                case REJECT:
+                    allow_reject_group.setVisibility(View.GONE);
+                    message = getString(R.string.account_rejected);
                     break;
             }
             if( message != null){
@@ -343,6 +385,40 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
 
+
+        if(  report != null){
+            assign.setVisibility(View.VISIBLE);
+            status.setVisibility(View.VISIBLE);
+            if( report.getAssigned_account() == null){
+                assign.setText(getString(R.string.assign_to_me));
+            }else{
+                assign.setText(getString(R.string.unassign));
+            }
+            assign.setOnClickListener(view ->{
+                if( report.getAssigned_account() == null){
+                    new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.ASSIGN_TO_SELF, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else{
+                    new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNASSIGN, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+
+            if( report.isAction_taken()){
+                status.setText(getString(R.string.mark_unresolved));
+            }else{
+                status.setText(getString(R.string.mark_resolved));
+            }
+            status.setOnClickListener(view ->{
+                if( report.isAction_taken() ){
+                    new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.REOPEN, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else{
+                    new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.RESOLVE, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+
+        }else{
+            assign.setVisibility(View.GONE);
+            status.setVisibility(View.GONE);
+        }
 
     }
 }
