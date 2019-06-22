@@ -19,11 +19,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +75,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
 
         setTheme(R.style.AppAdminTheme);
         report = null;
@@ -389,7 +386,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             comment_label.setVisibility(View.GONE);
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
-
 
         if(  report != null){
             assign.setVisibility(View.VISIBLE);
