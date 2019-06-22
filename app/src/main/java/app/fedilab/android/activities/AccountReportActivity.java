@@ -175,7 +175,11 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }else{
             login_status.setText(getString(R.string.active));
         }
-
+        if( accountAdmin.getEmail() == null){
+            warn.setVisibility(View.GONE);
+        }else{
+            warn.setVisibility(View.VISIBLE);
+        }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
         recent_ip.setText(accountAdmin.getIp());
     }
