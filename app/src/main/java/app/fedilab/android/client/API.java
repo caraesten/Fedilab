@@ -5132,6 +5132,7 @@ public class API {
             accountAdmin.setEmail(resobj.getString("email"));
             accountAdmin.setRole(resobj.getString("role"));
             accountAdmin.setIp(resobj.getString("ip"));
+            accountAdmin.setDomain(resobj.getString("domain"));
             accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             if( !resobj.isNull("confirmed")) {
                 accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));

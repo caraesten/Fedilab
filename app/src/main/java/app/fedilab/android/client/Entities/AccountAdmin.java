@@ -26,6 +26,7 @@ public class AccountAdmin implements Parcelable {
     private String email;
     private String role;
     private String ip;
+    private String domain;
     private boolean confirmed;
     private boolean suspended;
     private boolean silenced;
@@ -122,7 +123,16 @@ public class AccountAdmin implements Parcelable {
     }
 
 
+    public AccountAdmin() {
+    }
 
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
     @Override
     public int describeContents() {
@@ -137,14 +147,12 @@ public class AccountAdmin implements Parcelable {
         dest.writeString(this.email);
         dest.writeString(this.role);
         dest.writeString(this.ip);
+        dest.writeString(this.domain);
         dest.writeByte(this.confirmed ? (byte) 1 : (byte) 0);
         dest.writeByte(this.suspended ? (byte) 1 : (byte) 0);
         dest.writeByte(this.silenced ? (byte) 1 : (byte) 0);
         dest.writeByte(this.disabled ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.account, flags);
-    }
-
-    public AccountAdmin() {
     }
 
     protected AccountAdmin(Parcel in) {
@@ -155,6 +163,7 @@ public class AccountAdmin implements Parcelable {
         this.email = in.readString();
         this.role = in.readString();
         this.ip = in.readString();
+        this.domain = in.readString();
         this.confirmed = in.readByte() != 0;
         this.suspended = in.readByte() != 0;
         this.silenced = in.readByte() != 0;
@@ -162,7 +171,7 @@ public class AccountAdmin implements Parcelable {
         this.account = in.readParcelable(Account.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<AccountAdmin> CREATOR = new Parcelable.Creator<AccountAdmin>() {
+    public static final Creator<AccountAdmin> CREATOR = new Creator<AccountAdmin>() {
         @Override
         public AccountAdmin createFromParcel(Parcel source) {
             return new AccountAdmin(source);
