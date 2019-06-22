@@ -1085,7 +1085,20 @@ public abstract class BaseMainActivity extends BaseActivity
                 partnerShipItem.setVisible(false);
             }
         }
-
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+            if( adminItem != null){
+                adminItem.setVisible(false);
+            }
+        }else{
+            boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
+            if( !display_admin_menu){
+                MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+                if( adminItem != null){
+                    adminItem.setVisible(false);
+                }
+            }
+        }
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override

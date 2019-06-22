@@ -16,6 +16,9 @@ package app.fedilab.android.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -147,8 +150,30 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
     @Override
     public void onAdminAction(APIResponse apiResponse) {
-        if( apiResponse == null || apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if( apiResponse.getError() != null){
+            if( apiResponse.getError().getStatusCode() == 403){
+                AlertDialog.Builder builderInner;
+                builderInner = new AlertDialog.Builder(AccountReportActivity.this, R.style.AdminDialog);
+                builderInner.setTitle(R.string.reconnect_account);
+                builderInner.setMessage(R.string.reconnect_account_message);
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        Intent intent = new Intent(AccountReportActivity.this, LoginActivity.class);
+                        intent.putExtra("admin", true);
+                        startActivity(intent);
+                    }
+                });
+                builderInner.show();
+            }else{
+                Toasty.error(AccountReportActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            }
             return;
         }
         if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
