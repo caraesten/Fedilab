@@ -159,10 +159,12 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
             Group statuses_group = findViewById(R.id.statuses_group);
             statuses_group.setVisibility(View.VISIBLE);
+
+        }
+        if( targeted_account != null) {
             account_id = targeted_account.getId();
             fillReport(targeted_account);
         }
-
 
     }
 
