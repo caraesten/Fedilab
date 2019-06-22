@@ -239,10 +239,10 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             }
         });
 
-        if( !accountAdmin.isSilenced() ) {
-            silence.setText(getString(R.string.disable));
+        if( !accountAdmin.isDisabled() ) {
+            disable.setText(getString(R.string.disable));
         }else{
-            silence.setText(getString(R.string.undisable));
+            disable.setText(getString(R.string.undisable));
         }
         disable.setOnClickListener(view->{
             if( !accountAdmin.isSilenced()) {
@@ -256,10 +256,10 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             }
         });
 
-        if( !accountAdmin.isSilenced() ) {
-            silence.setText(getString(R.string.suspend));
+        if( !accountAdmin.isSuspended() ) {
+            suspend.setText(getString(R.string.suspend));
         }else{
-            silence.setText(getString(R.string.unsuspend));
+            suspend.setText(getString(R.string.unsuspend));
         }
         suspend.setOnClickListener(view->{
             if( !accountAdmin.isSuspended() ){
