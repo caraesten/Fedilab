@@ -316,7 +316,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             email_user.setVisibility(View.VISIBLE);
             comment.setVisibility(View.VISIBLE);
             recent_ip.setText(accountAdmin.getIp());
-            disable.setVisibility(View.GONE);
+            disable.setVisibility(View.VISIBLE);
             suspend.setVisibility(View.VISIBLE);
         }else{
             warn.setVisibility(View.GONE);
@@ -326,8 +326,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             recent_ip.setText("-");
             permissions.setText("-");
             email.setText("-");
-            disable.setVisibility(View.VISIBLE);
-            suspend.setVisibility(View.GONE);
+            disable.setVisibility(View.GONE);
+            suspend.setVisibility(View.VISIBLE);
         }
         if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
             warn.setVisibility(View.GONE);
