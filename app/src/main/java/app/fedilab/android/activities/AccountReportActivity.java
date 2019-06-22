@@ -15,12 +15,15 @@ package app.fedilab.android.activities;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -137,6 +140,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Group statuses_group = findViewById(R.id.statuses_group);
             statuses_group.setVisibility(View.VISIBLE);
         }
+        account_id = targeted_account.getId();
         fillReport(targeted_account);
 
     }
@@ -158,60 +162,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        switch (accountAdmin.getRole()){
-            case "user":
-                permissions.setText(getString(R.string.user));
-                break;
-            case "mod":
-                permissions.setText(getString(R.string.moderator));
-                break;
-            case "admin":
-                permissions.setText(getString(R.string.administrator));
-                break;
-        }
-
-        username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
-
-        email.setText(accountAdmin.getEmail());
-        email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
-
-        if( accountAdmin.isDisabled()){
-            login_status.setText(getString(R.string.disabled));
-        }else if( accountAdmin.isSilenced()){
-            login_status.setText(getString(R.string.silenced));
-        }else if( accountAdmin.isSuspended()){
-            login_status.setText(getString(R.string.suspended));
-        }else{
-            login_status.setText(getString(R.string.active));
-        }
-        if( accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")){
-            warn.setVisibility(View.VISIBLE);
-            email_user.setVisibility(View.VISIBLE);
-            comment.setVisibility(View.VISIBLE);
-            recent_ip.setText(accountAdmin.getIp());
-            disable.setVisibility(View.GONE);
-            suspend.setVisibility(View.VISIBLE);
-        }else{
-            warn.setVisibility(View.GONE);
-            email_user.setVisibility(View.GONE);
-            email_user.setChecked(false);
-            comment.setVisibility(View.GONE);
-            recent_ip.setText("-");
-            permissions.setText("-");
-            email.setText("-");
-            disable.setVisibility(View.VISIBLE);
-            suspend.setVisibility(View.GONE);
-        }
-        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
-            warn.setVisibility(View.GONE);
-            suspend.setVisibility(View.GONE);
-            silence.setVisibility(View.GONE);
-            disable.setVisibility(View.GONE);
-            email_user.setVisibility(View.GONE);
-            email_user.setChecked(false);
-            comment.setVisibility(View.GONE);
-        }
-        joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
 
         warn.setOnClickListener(view->{
             AdminAction adminAction = new AdminAction();
@@ -277,10 +227,10 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             String message = null;
             switch (accountAdmin.getAction()) {
                 case SILENCE:
-                        message = getString(R.string.account_silenced);
+                    message = getString(R.string.account_silenced);
                     break;
                 case UNSILENCE:
-                        message = getString(R.string.account_unsilenced);
+                    message = getString(R.string.account_unsilenced);
                     break;
                 case DISABLE:
                     message = getString(R.string.account_disabled);
@@ -301,6 +251,70 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             if( message != null){
                 Toasty.success(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
+            comment.setText("");
+            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
         }
+        if( accountAdmin.getRole() == null) {
+            return;
+        }
+
+        switch (accountAdmin.getRole()) {
+            case "user":
+                permissions.setText(getString(R.string.user));
+                break;
+            case "mod":
+                permissions.setText(getString(R.string.moderator));
+                break;
+            case "admin":
+                permissions.setText(getString(R.string.administrator));
+                break;
+        }
+
+
+        username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
+
+        email.setText(accountAdmin.getEmail());
+        email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
+
+        if( accountAdmin.isDisabled()){
+            login_status.setText(getString(R.string.disabled));
+        }else if( accountAdmin.isSilenced()){
+            login_status.setText(getString(R.string.silenced));
+        }else if( accountAdmin.isSuspended()){
+            login_status.setText(getString(R.string.suspended));
+        }else{
+            login_status.setText(getString(R.string.active));
+        }
+        if( accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")){
+            warn.setVisibility(View.VISIBLE);
+            email_user.setVisibility(View.VISIBLE);
+            comment.setVisibility(View.VISIBLE);
+            recent_ip.setText(accountAdmin.getIp());
+            disable.setVisibility(View.GONE);
+            suspend.setVisibility(View.VISIBLE);
+        }else{
+            warn.setVisibility(View.GONE);
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.GONE);
+            recent_ip.setText("-");
+            permissions.setText("-");
+            email.setText("-");
+            disable.setVisibility(View.VISIBLE);
+            suspend.setVisibility(View.GONE);
+        }
+        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
+            warn.setVisibility(View.GONE);
+            suspend.setVisibility(View.GONE);
+            silence.setVisibility(View.GONE);
+            disable.setVisibility(View.GONE);
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.GONE);
+        }
+        joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
+
+
     }
 }

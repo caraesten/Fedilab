@@ -298,9 +298,7 @@ public class API {
         return apiResponse;
     }
 
-
-
-
+    
     /**
      * Execute admin post actions
      * @param action type of the action
@@ -412,10 +410,15 @@ public class API {
 
                     break;
                 case NONE:
+                    accountAdmins = new ArrayList<>();
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setAction(action);
+                    accountAdmins.add(accountAdmin);
+                    apiResponse.setAccountAdmins(accountAdmins);
                     break;
                 case DISABLE:
                     accountAdmins = new ArrayList<>();
-                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin = new AccountAdmin();
                     accountAdmin.setDisabled(true);
                     accountAdmin.setAction(action);
                     accountAdmins.add(accountAdmin);
@@ -446,6 +449,7 @@ public class API {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }
         return apiResponse;
     }
