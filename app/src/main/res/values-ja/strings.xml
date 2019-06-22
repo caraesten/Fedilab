@@ -220,7 +220,7 @@
     <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをクリックします。</string>
     <!-- Notifications -->
     <string name="no_notifications">通知はありません</string>
-    <string name="notif_mention">あなたにメンションしました</string>
+    <string name="notif_mention">メンションされました</string>
     <string name="notif_reblog">がブーストしました</string>
     <string name="notif_favourite">がお気に入りに登録しました</string>
     <string name="notif_follow">があなたをフォローしました</string>
@@ -282,7 +282,7 @@
     <string name="set_attachment_always">常に</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">尋ねる</string>
-    <string name="set_attachment_action">メディアをロードする</string>
+    <string name="set_attachment_action">メディアを読み込む</string>
     <string name="load_attachment">写真をロードする</string>
     <string name="load_attachment_spoiler">さらに表示…</string>
     <string name="load_attachment_spoiler_less">一部のみ表示...</string>
@@ -299,7 +299,7 @@
     <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
-    <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
+    <string name="set_notif_follow_mention">メンションを受け取ったときに通知する</string>
     <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
@@ -326,7 +326,7 @@
     <string name="settings_hour_init">開始時刻</string>
     <string name="settings_hour_end">終了時刻</string>
     <string name="embedded_browser">アプリ内ブラウザを使用する</string>
-    <string name="custom_tabs">カスタム タブ</string>
+    <string name="custom_tabs">カスタムタブ</string>
     <string name="use_javascript">Javascript を有効にする</string>
     <string name="expand_cw">CWを自動的に展開する</string>
     <string name="use_cookies">サードパーティのCookieを許可する</string>
