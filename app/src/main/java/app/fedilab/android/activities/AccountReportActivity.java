@@ -314,7 +314,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     break;
                 case REJECT:
                     allow_reject_group.setVisibility(View.GONE);
-                    
+
                     message = getString(R.string.account_rejected);
                     break;
             }
