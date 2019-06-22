@@ -49,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 
 public class AccountReportActivity extends BaseActivity implements OnAdminActionInterface {
 
-    TextView permissions, email, email_status, login_status, joined, recent_ip;
+    TextView permissions, username, email, email_status, login_status, joined, recent_ip;
     Button warn, disable, silence;
     private String account_id;
 
@@ -94,6 +94,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         silence = findViewById(R.id.silence);
 
         permissions = findViewById(R.id.permissions);
+        username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         email_status = findViewById(R.id.email_status);
         login_status = findViewById(R.id.login_status);
@@ -159,6 +160,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 permissions.setText(getString(R.string.administrator));
                 break;
         }
+
+        username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
 
         email.setText(accountAdmin.getEmail());
         email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
