@@ -922,18 +922,18 @@
         Anslut till ditt konto genom att skriva <b>%1$s</b> i det första fältet och klicka på <b>Anslut</b>.\n\n
         <b>Viktigt</b>: Om din instans kräver validering så kommer du att få ett e-postmeddelande när det är validerad!
     </string>
-    <string name="save_draft">Save the message in drafts?</string>
+    <string name="save_draft">Spara meddelandet i utkast?</string>
     <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
-    <string name="no_reports">No reports to display!</string>
-    <string name="reconnect_account">Reconnect the account</string>
-    <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
-    <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
-    <string name="remote">Remote</string>
-    <string name="active">Active</string>
-    <string name="pending">Pending</string>
-    <string name="disabled">Disabled</string>
+    <string name="reports">Rapporter</string>
+    <string name="no_reports">Inga rapporter att visa!</string>
+    <string name="reconnect_account">Återanslut kontot</string>
+    <string name="reconnect_account_message">Programmet misslyckades med att ansluta administrationsfunktionen. Du måste kanske återansluta för att få rätt rättigheter.</string>
+    <string name="unresolved">Olösta</string>
+    <string name="resolved">Lösta</string>
+    <string name="remote">Distans</string>
+    <string name="active">Aktiv</string>
+    <string name="pending">Väntande</string>
+    <string name="disabled">Inaktiverad</string>
     <string name="silenced">Silenced</string>
     <string name="suspended">Suspended</string>
     <string name="permissions">Permissions</string>
