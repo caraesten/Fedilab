@@ -218,7 +218,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             adminAction.setType(NONE);
             adminAction.setSend_email_notification(email_user.isChecked());
             adminAction.setText(comment.getText().toString().trim());
-            new PostAdminActionAsyncTask(getApplicationContext(), NONE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostAdminActionAsyncTask(getApplicationContext(), NONE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
 
 
@@ -233,7 +233,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 adminAction.setType(SILENCE);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
-                new PostAdminActionAsyncTask(getApplicationContext(), SILENCE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostAdminActionAsyncTask(getApplicationContext(), SILENCE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else{
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSILENCE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
@@ -250,7 +250,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 adminAction.setType(DISABLE);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
-                new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else{
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
@@ -267,7 +267,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 adminAction.setType(SUSPEND);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
-                new PostAdminActionAsyncTask(getApplicationContext(), SUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostAdminActionAsyncTask(getApplicationContext(), SUSPEND, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else{
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
