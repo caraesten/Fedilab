@@ -923,11 +923,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="reports">報告</string>
     <string name="no_reports">沒有要顯示的報告！</string>
     <string name="reconnect_account">重新連結帳號</string>
-    <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
+    <string name="reconnect_account_message">應用程式存取管理功能失敗。您可能需要重新連線帳號才能有正確的功能。</string>
     <string name="unresolved">尚未解決</string>
     <string name="resolved">已經解決</string>
-    <string name="remote">Remote</string>
-    <string name="active">Active</string>
+    <string name="remote">遠端</string>
+    <string name="active">活躍</string>
     <string name="pending">等待中</string>
     <string name="disabled">已停用</string>
     <string name="silenced">已靜音</string>
@@ -940,11 +940,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="warn">警告</string>
     <string name="disable">停用</string>
     <string name="silence">靜音</string>
-    <string name="email_user">Notify the user per e-mail</string>
+    <string name="email_user">透過電子郵件通知使用者</string>
     <string name="perform_action">執行動作</string>
     <string name="custom_warning">自訂警告</string>
     <string name="user">使用者</string>
-    <string name="moderator">Moderator</string>
+    <string name="moderator">版主</string>
     <string name="administrator">管理員</string>
     <string name="confirmed">已確認</string>
     <string name="unconfirmed">未確認</string>
@@ -970,7 +970,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="unassign">取消分配</string>
     <string name="mark_resolved">標記解決</string>
     <string name="mark_unresolved">標記未解決</string>
-    <string name="toast_empty_content">Empty content!</string>
+    <string name="toast_empty_content">內容為空！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
