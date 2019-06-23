@@ -971,6 +971,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="unassign">Unassign</string>
     <string name="mark_resolved">Mark as resolved</string>
     <string name="mark_unresolved">Mark as unresolved</string>
+    <string name="toast_empty_content">Empty content!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
