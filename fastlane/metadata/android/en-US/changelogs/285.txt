@@ -2,5 +2,6 @@ Added
 - Block a whole instance by adding their name
 
 Fixed
+- Fix muting conversation issue
 - Crash with admin feature when no toots were attached to a report
 - Edited images stored in download directory instead of the app cache directory
