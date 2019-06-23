@@ -2338,7 +2338,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     } else {
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                        popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
+                        //popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (isAdmin || isModerator)) {
                             popup.getMenu().findItem(R.id.action_remove).setVisible(true);
                         }else {
