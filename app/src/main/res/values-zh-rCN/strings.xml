@@ -799,7 +799,7 @@
     <string name="create_poll">创建投票</string>
     <string name="poll_choice_1">选项一</string>
     <string name="poll_choice_2">选项二</string>
-    <string name="poll_choice_s">Choice %d</string>
+    <string name="poll_choice_s">选择d%</string>
     <string name="poll_invalid_choices">你至少需要两个选项才能开投票！</string>
     <string name="done">完成</string>
     <string name="poll_finish_at">在 %s 结束</string>
@@ -869,8 +869,8 @@
     <string name="opacity">不透明度</string>
     <string name="label_crop">剪裁</string>
     <string name="set_photo_editor">启用照片编辑器</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">添加一个投票项目</string>
+    <string name="remove_poll_item">删除上一个投票项</string>
     <string name="mute_conversation">Mute conversation</string>
     <string name="unmute_conversation">Unmute conversation</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
@@ -970,6 +970,7 @@
     <string name="unassign">Unassign</string>
     <string name="mark_resolved">Mark as resolved</string>
     <string name="mark_unresolved">Mark as unresolved</string>
+    <string name="toast_empty_content">Empty content!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
