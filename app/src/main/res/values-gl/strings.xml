@@ -975,6 +975,7 @@
     <string name="unassign">Non asignar</string>
     <string name="mark_resolved">Marcar como resolto</string>
     <string name="mark_unresolved">Marcar como non resolto</string>
+    <string name="toast_empty_content">Empty content!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
