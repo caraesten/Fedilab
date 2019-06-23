@@ -14,29 +14,40 @@ package app.fedilab.android.fragments;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
-
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.drawers.DomainsListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPostActionInterface;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveDomainsAsyncTask;
@@ -47,7 +58,7 @@ import app.fedilab.android.interfaces.OnRetrieveDomainsInterface;
  * Created by Thomas on 26/09/2018.
  * Fragment to display muted instances
  */
-public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieveDomainsInterface {
+public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieveDomainsInterface, OnPostActionInterface {
 
     private boolean flag_loading;
     private Context context;
@@ -60,7 +71,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_domains;
-
+    private FloatingActionButton add_new;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,6 +153,56 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
 
         asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+
+
+        try {
+            add_new = ((MainActivity) context).findViewById(R.id.add_new);
+        }catch (Exception ignored){}
+        if( add_new != null)
+            add_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK){
+                        style = R.style.DialogBlack;
+                    }else {
+                        style = R.style.Dialog;
+                    }
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_blocked_instance, null);
+                    dialogBuilder.setView(dialogView);
+
+                    EditText add_domain = dialogView.findViewById(R.id.add_domain);
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            if(add_domain.getText() != null && add_domain.getText().toString().trim().matches("^[\\da-zA-Z.-]+\\.[a-zA-Z.]{2,10}$")){
+                                new PostActionAsyncTask(context, API.StatusAction.BLOCK_DOMAIN, add_domain.getText().toString().trim(), DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }else{
+                                Toasty.error(context, context.getString(R.string.toast_empty_content)).show();
+                            }
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.setTitle(getString(R.string.block_domain));
+                    if( alertDialog.getWindow() != null )
+                        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    alertDialog.show();
+                }
+            });
+
         return rootView;
     }
 
@@ -207,4 +268,14 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
     }
 
 
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+        if( error != null){
+            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        Helper.manageMessageStatusCode(context, statusCode, statusAction);
+        this.domains.add(0,userId);
+        domainsListAdapter.notifyItemInserted(0);
+    }
 }

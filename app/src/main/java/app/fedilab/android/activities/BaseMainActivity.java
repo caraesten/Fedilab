@@ -1586,7 +1586,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.show();
         }
-        if( id != R.id.nav_list && id != R.id.nav_filters && id != R.id.nav_peertube_playlists){
+        if( id != R.id.nav_list && id != R.id.nav_filters && id != R.id.nav_peertube_playlists && id != R.id.nav_blocked_domains){
             add_new.hide();
         }else{
             add_new.show();
