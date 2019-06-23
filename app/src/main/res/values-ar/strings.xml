@@ -938,8 +938,8 @@
         <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
     </string>
     <string name="save_draft">هل تريد حفظ الرسالة في المسودّات؟</string>
-    <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
+    <string name="administration">الإدارة</string>
+    <string name="reports">التقارير</string>
     <string name="no_reports">No reports to display!</string>
     <string name="reconnect_account">Reconnect the account</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
