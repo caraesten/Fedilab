@@ -142,7 +142,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     private void notifyAccountChanged(Account account){
         for (int i = 0; i < reportsListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
-            if (reportsListAdapter.getItemAt(i) != null && reportsListAdapter.getItemAt(i).getStatuses().get(0).getAccount().getId().equals(account.getId())) {
+            if (reportsListAdapter.getItemAt(i) != null && reportsListAdapter.getItemAt(i).getStatuses().size() > 0 && reportsListAdapter.getItemAt(i).getStatuses().get(0).getAccount().getId().equals(account.getId())) {
                 try {
                     reportsListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
