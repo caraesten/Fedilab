@@ -873,39 +873,39 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="remove_poll_item">移除末尾投票項目</string>
     <string name="mute_conversation">靜音對話</string>
     <string name="unmute_conversation">取消靜音對話</string>
-    <string name="toast_unmute_conversation">此對話已取消靜音！</string>
+    <string name="toast_unmute_conversation">已取消此對話的靜音！</string>
     <string name="toast_mute_conversation">此對話已經靜音</string>
     <string name="app_features">開啟應用程式功能</string>
     <string name="timed_mute">定時靜音</string>
     <string name="mention_account">提及此帳號</string>
     <string name="refresh_cache">重新快取</string>
-    <string name="see_boost_and_fav">看看有誰轉嘟與新增到收藏</string>
+    <string name="see_boost_and_fav">看看有誰轉嘟並新增到收藏</string>
     <string name="mention_status">提及此嘟文</string>
     <string name="action_news">新聞</string>
-    <string name="set_display_news_from_fedilab">顯示從 Fedilab 帳號而來的新聞</string>
+    <string name="set_display_news_from_fedilab">顯示來自 Fedilab 帳號的新聞</string>
     <string name="category_general">一般</string>
-    <string name="category_regional">地區</string>
+    <string name="category_regional">地區性</string>
     <string name="category_art">藝術</string>
     <string name="category_journalism">新聞</string>
     <string name="category_activism">行動</string>
     <string name="category_games">遊戲</string>
     <string name="category_tech">科技</string>
     <string name="category_adult">成人內容</string>
-    <string name="category_furry">獸</string>
+    <string name="category_furry">怪獸</string>
     <string name="category_food">食物</string>
-    <string name="instance_logo">站台的圖示</string>
-    <string name="toast_error_instance_reg">在檢查可用站台時發生了一點問題！</string>
+    <string name="instance_logo">站台圖示</string>
+    <string name="toast_error_instance_reg">在檢查可用站台時發生了些問題！</string>
     <string name="join_mastodon">加入 Mastodon</string>
-    <string name="pickup_instance_category">透過挑選分類，然點擊按鈕來選擇站台。</string>
-    <string name="users">%1$s 個使用者</string>
+    <string name="pickup_instance_category">透過挑選分類，然後按下按鈕來選擇站台。</string>
+    <string name="users">%1$s 位使用者</string>
     <string name="password_confirm">確認密碼</string>
-    <string name="agreement_check">我同意 %1$s 與 %2$s</string>
+    <string name="agreement_check">我同意 %1$s 和 %2$s</string>
     <string name="server_rules">伺服器規則</string>
     <string name="tos">服務條款</string>
     <string name="sign_up">註冊</string>
-    <string name="validation_needed">本站台是以邀請制運作。您的帳號在可以正式開始使用前將會由管理員手動驗證。</string>
+    <string name="validation_needed">本站台是以邀請制運作。您的帳號需要先由任一管理員手動核准通過才能使用。</string>
     <string name="all_field_filled">請填寫所有欄位！</string>
-    <string name="password_error">密碼不符合！</string>
+    <string name="password_error">密碼不相符！</string>
     <string name="email_error">電子郵件似乎是無效的！</string>
     <string name="username_indicator">您的使用者名稱在 %1$s 將會是獨一無二的</string>
     <string name="email_indicator">您將會收到一封確認用的電子郵件</string>
@@ -914,8 +914,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="username_error">使用者名稱應僅包含字母、數字與底線</string>
     <string name="account_created">已建立帳號！</string>
     <string name="account_created_message">        已建立您的帳號！\n\n
-        將會在接下來的 48 小時內驗證您的電子郵件。\n\n
-        您現在可以在第一欄中填寫 <b>%1$s</b> 並按下<b>連線</b>來連線到您的帳號。\n\n
+        請在接下來的 48 小時內驗證您的電子郵件。\n\n
+        您現在可以在第一欄中填寫 <b>%1$s</b> 並按下<b>連結</b>來連結到您的帳號。\n\n
         <b>重要</b>：如果您的站台需要驗證，您將會在驗證完成後收到電子郵件！
     </string>
     <string name="save_draft">將訊息儲存至草稿？</string>
@@ -923,7 +923,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="reports">報告</string>
     <string name="no_reports">沒有要顯示的報告！</string>
     <string name="reconnect_account">重新連結帳號</string>
-    <string name="reconnect_account_message">應用程式存取管理功能失敗。您可能需要重新連線帳號才能有正確的功能。</string>
+    <string name="reconnect_account_message">應用程式無法存取管理功能。您可能需要重新連結帳號才能有正確的功能。</string>
     <string name="unresolved">尚未解決</string>
     <string name="resolved">已經解決</string>
     <string name="remote">遠端</string>
