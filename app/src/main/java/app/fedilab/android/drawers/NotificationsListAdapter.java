@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -858,6 +859,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
 
                 }
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                    popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                }else{
+                    boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + Helper.getLiveInstance(context), false);
+                    if( !display_admin_statuses){
+                        popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                    }
+                }
                 if (status.isMuted())
                     popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.unmute_conversation);
                 else
@@ -896,9 +905,17 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             case R.id.action_open_browser:
                                 Helper.openBrowser(context, status.getUrl());
                                 return true;
-                            case R.id.action_info:
-                                Intent intent = new Intent(context, TootInfoActivity.class);
+                            case R.id.action_admin:
+                                String account_id = status.getReblog() != null ? status.getReblog().getAccount().getId() : status.getAccount().getId();
+                                Intent intent = new Intent(context, AccountReportActivity.class);
                                 Bundle b = new Bundle();
+                                b.putString("account_id", account_id);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                                return true;
+                            case R.id.action_info:
+                                intent = new Intent(context, TootInfoActivity.class);
+                                b = new Bundle();
                                 if (status.getReblog() != null) {
                                     b.putString("toot_id", status.getReblog().getId());
                                     b.putInt("toot_reblogs_count", status.getReblog().getReblogs_count());

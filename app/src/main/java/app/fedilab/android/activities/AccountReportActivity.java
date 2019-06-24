@@ -327,12 +327,11 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         if( accountAdmin.getRole() == null) {
             return;
         }
-
         switch (accountAdmin.getRole()) {
             case "user":
                 permissions.setText(getString(R.string.user));
                 break;
-            case "mod":
+            case "moderator":
                 permissions.setText(getString(R.string.moderator));
                 break;
             case "admin":
@@ -375,7 +374,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             suspend.setVisibility(View.VISIBLE);
             comment_label.setVisibility(View.GONE);
         }
-        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("mod")){
+        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("moderator")){
             warn.setVisibility(View.GONE);
             suspend.setVisibility(View.GONE);
             silence.setVisibility(View.GONE);
