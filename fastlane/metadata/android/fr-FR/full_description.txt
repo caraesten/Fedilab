@@ -1,0 +1,17 @@
+Fedilab est un client Android permettant d’accéder au Fediverse
+
+Il fonctionne avec:
+- Mastodon, Pleroma, Peertube, GNU Social, Friendica.
+
+L'application a des fonctionnalités avancées (Plus particulièrement pour Pleroma et Mastodon):
+
+- Connexion de plusieurs comptes
+- Programmation de messages depuis l'application
+- Programmation de partage
+- Utilisation des signets
+- Suivre et interagir avec des instances
+- Comptes temporairement mis en sourdine
+- Actions entre comptes grâce aux appuis longs
+- Outils de traduction
+- Art timelines
+- Vidéo timelines
