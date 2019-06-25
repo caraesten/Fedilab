@@ -1690,6 +1690,7 @@ public class API {
         } catch (UnsupportedEncodingException e) {
             params.put("search", query);
         }
+
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);

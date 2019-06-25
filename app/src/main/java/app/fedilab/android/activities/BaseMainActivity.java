@@ -710,6 +710,28 @@ public abstract class BaseMainActivity extends BaseActivity
                         manageTimelineList(false);
                         tabLayout.setVisibility(View.GONE);
                     }
+                }else if ( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                    DisplayStatusFragment statusFragment;
+                    Bundle bundle = new Bundle();
+                    statusFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    bundle.putString("remote_instance", instance);
+                    bundle.putString("instanceType", "PEERTUBE");
+                    bundle.putString("search_peertube", query);
+                    statusFragment.setArguments(bundle);
+                    String fragmentTag = "REMOTE_INSTANCE";
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                    if( main_app_container.getVisibility() == View.GONE){
+
+                        main_app_container.setVisibility(View.VISIBLE);
+                        toolbarTitle.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                        manageTimelineList(false);
+                        tabLayout.setVisibility(View.GONE);
+                    }
                 }else{
                     if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                         boolean isAccount = false;

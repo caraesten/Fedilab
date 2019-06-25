@@ -340,21 +340,26 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 }
             });
-        else
+        else {
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if( peertubes.size() > 0) {
+                    if (peertubes.size() > 0) {
                         int size = peertubes.size();
                         isSwipped = true;
                         peertubes.clear();
                         peertubes = new ArrayList<>();
                         max_id = "0";
                         peertubeAdapater.notifyItemRangeRemoved(0, size);
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if (search_peertube == null) { //Not a Peertube search
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } else {
+                            asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                     }
                 }
             });
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
