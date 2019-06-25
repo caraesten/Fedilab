@@ -962,6 +962,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="mark_resolved">Als gelöst kennzeichnen</string>
     <string name="mark_unresolved">Als ungelöst kennzeichnen</string>
     <string name="toast_empty_content">Kein Inhalt!</string>
+    <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
