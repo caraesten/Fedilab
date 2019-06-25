@@ -226,16 +226,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         Objects.requireNonNull(webSocketFutures.get(urlKey)).close();
                 } catch (Exception ignored) {}
             }
-            if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
-                try {
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-            }
             AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {

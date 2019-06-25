@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -644,10 +645,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
                 if(liveNotifications && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                    try {
-                        context.startService(streamingFederatedIntent);
-                    }catch (Exception ignored){}
+                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ) {
+                        streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                        try {
+                            context.startService(streamingFederatedIntent);
+                        }catch (Exception ignored){}
+                    }
+
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -659,10 +663,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
                 if( liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                    try {
-                        context.startService(streamingLocalIntent);
-                    }catch (Exception ignored){}
+                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ) {
+                        streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                        try {
+                            context.startService(streamingLocalIntent);
+                        } catch (Exception ignored) {
+                        }
+                    }
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -745,10 +752,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
                 if(liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                    try {
-                        context.startService(streamingFederatedIntent);
-                    }catch (Exception ignored){}
+                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ) {
+                        streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                        try {
+                            context.startService(streamingFederatedIntent);
+                        } catch (Exception ignored) {
+                        }
+                    }
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -766,10 +776,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
                 if( liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
-                    streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                    try {
-                        context.startService(streamingLocalIntent);
-                    }catch (Exception ignored){}
+                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ) {
+                        streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                        try {
+                            context.startService(streamingLocalIntent);
+                        } catch (Exception ignored) {
+                        }
+                    }
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());

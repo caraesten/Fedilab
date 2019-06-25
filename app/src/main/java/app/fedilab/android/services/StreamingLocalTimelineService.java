@@ -109,16 +109,6 @@ public class StreamingLocalTimelineService extends IntentService {
             Uri url = Uri.parse("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token="+ accountStream.getToken());
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             Account finalAccountStream = accountStream;
-            if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
-                try {
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
-                    AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-            }
             AsyncHttpClient.getDefaultInstance().websocket("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token="+ accountStream.getToken(),"wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {

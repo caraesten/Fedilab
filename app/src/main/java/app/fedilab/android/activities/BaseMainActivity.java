@@ -669,8 +669,11 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added,R.color.dark_text);
         }
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-            startSreaming();
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ) {
+                startSreaming();
+            }
+        }
 
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
