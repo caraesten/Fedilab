@@ -88,35 +88,8 @@ public class HttpsConnection implements OnHttpResponseInterface {
     }
 
     private HttpURLConnection initialize(URL url){
-
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
-
         try {
             httpURLConnection = NetCipher.getHttpURLConnection(url);
-            if( proxyEnabled){
-                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-                SocketAddress sa = new InetSocketAddress(host, port);
-                if( type == 0 ) {
-                    NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
-                }else{
-                    NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
-                }
-                final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
-                final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
-                if( login != null) {
-                    Authenticator authenticator = new Authenticator() {
-                        public PasswordAuthentication getPasswordAuthentication() {
-                            assert pwd != null;
-                            return (new PasswordAuthentication(login,
-                                    pwd.toCharArray()));
-                        }
-                    };
-                    Authenticator.setDefault(authenticator);
-                }
-            }
             if( url.toString().startsWith("https")) {
                 if( this.instance == null || !this.instance.endsWith(".onion")) {
                     ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());

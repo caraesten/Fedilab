@@ -26,6 +26,11 @@ import com.franmontiel.localechanger.LocaleChanger;
 
 import net.gotev.uploadservice.UploadService;
 
+import java.net.Authenticator;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -61,9 +66,10 @@ public class MainApplication extends MultiDexApplication {
         NotificationsSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
             String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, null);
             if( defaultLocaleString != null){
                 Locale defaultLocale;
@@ -81,6 +87,32 @@ public class MainApplication extends MultiDexApplication {
         }catch (Exception ignored){}
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
+
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
+        if( proxyEnabled){
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            SocketAddress sa = new InetSocketAddress(host, port);
+            if( type == 0 ) {
+                NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+            }else{
+                NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+            }
+            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+            if( login != null) {
+                Authenticator authenticator = new Authenticator() {
+                    public PasswordAuthentication getPasswordAuthentication() {
+                        assert pwd != null;
+                        return (new PasswordAuthentication(login,
+                                pwd.toCharArray()));
+                    }
+                };
+                Authenticator.setDefault(authenticator);
+            }
+        }
+        NetCipher.useGlobalProxy();
         if( OrbotHelper.isOrbotInstalled(getApplicationContext()) && OrbotHelper.isOrbotRunning(getApplicationContext())){
             NetCipher.useTor();
         }
