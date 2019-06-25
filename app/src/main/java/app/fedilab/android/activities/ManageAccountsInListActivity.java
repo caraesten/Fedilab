@@ -86,7 +86,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.mastodonC1));
         }
         setContentView(R.layout.activity_manage_accounts_list);
-        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if( getSupportActionBar() != null)
             getSupportActionBar().hide();
 
