@@ -972,6 +972,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="mark_resolved">Marquer comme résolu</string>
     <string name="mark_unresolved">Marquer comme non résolu</string>
     <string name="toast_empty_content">Empty content!</string>
+    <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
