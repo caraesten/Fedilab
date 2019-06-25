@@ -283,10 +283,6 @@ public class API {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -441,10 +437,6 @@ public class API {
                     break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);

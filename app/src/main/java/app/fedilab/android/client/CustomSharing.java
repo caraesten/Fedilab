@@ -20,9 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Results;
 

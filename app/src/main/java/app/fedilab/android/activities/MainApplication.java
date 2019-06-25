@@ -16,6 +16,7 @@ package app.fedilab.android.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.StrictMode;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
@@ -88,31 +89,34 @@ public class MainApplication extends MultiDexApplication {
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
 
-        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
-        if( proxyEnabled){
-            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            SocketAddress sa = new InetSocketAddress(host, port);
-            if( type == 0 ) {
-                NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
-            }else{
-                NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+            int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
+            if( proxyEnabled){
+                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                SocketAddress sa = new InetSocketAddress(host, port);
+                if( type == 0 ) {
+                    NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+                }else{
+                    NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+                }
+                final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+                final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+                if( login != null) {
+                    Authenticator authenticator = new Authenticator() {
+                        public PasswordAuthentication getPasswordAuthentication() {
+                            assert pwd != null;
+                            return (new PasswordAuthentication(login,
+                                    pwd.toCharArray()));
+                        }
+                    };
+                    Authenticator.setDefault(authenticator);
+                }
             }
-            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
-            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
-            if( login != null) {
-                Authenticator authenticator = new Authenticator() {
-                    public PasswordAuthentication getPasswordAuthentication() {
-                        assert pwd != null;
-                        return (new PasswordAuthentication(login,
-                                pwd.toCharArray()));
-                    }
-                };
-                Authenticator.setDefault(authenticator);
-            }
+            NetCipher.useGlobalProxy();
         }
-        NetCipher.useGlobalProxy();
         if( OrbotHelper.isOrbotInstalled(getApplicationContext()) && OrbotHelper.isOrbotRunning(getApplicationContext())){
             NetCipher.useTor();
         }

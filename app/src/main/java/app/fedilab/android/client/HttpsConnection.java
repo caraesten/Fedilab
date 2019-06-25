@@ -15,7 +15,6 @@ package app.fedilab.android.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
@@ -43,6 +42,7 @@ import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -63,8 +63,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnHttpResponseInterface;
 import info.guardianproject.netcipher.NetCipher;
-import info.guardianproject.netcipher.client.StrongConnectionBuilder;
-import info.guardianproject.netcipher.proxy.OrbotHelper;
+
 
 
 /**
@@ -90,6 +89,34 @@ public class HttpsConnection implements OnHttpResponseInterface {
     private HttpURLConnection initialize(URL url){
         try {
             httpURLConnection = NetCipher.getHttpURLConnection(url);
+
+            if (Build.VERSION.SDK_INT < 24) {
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+                int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
+                if (proxyEnabled) {
+                    String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                    int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                    SocketAddress sa = new InetSocketAddress(host, port);
+                    if (type == 0) {
+                        NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+                    } else {
+                        NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+                    }
+                    final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+                    final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+                    if (login != null) {
+                        Authenticator authenticator = new Authenticator() {
+                            public PasswordAuthentication getPasswordAuthentication() {
+                                assert pwd != null;
+                                return (new PasswordAuthentication(login,
+                                        pwd.toCharArray()));
+                            }
+                        };
+                        Authenticator.setDefault(authenticator);
+                    }
+                }
+            }
             if( url.toString().startsWith("https")) {
                 if( this.instance == null || !this.instance.endsWith(".onion")) {
                     ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(new TLSSocketFactory());
@@ -131,7 +158,6 @@ public class HttpsConnection implements OnHttpResponseInterface {
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpURLConnection.setRequestProperty("Content-Type", "application/json");
         httpURLConnection.setRequestProperty("Accept", "application/json");
-        // httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         if (token != null && !token.startsWith("Basic "))
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         else if( token != null && token.startsWith("Basic "))
@@ -171,7 +197,6 @@ public class HttpsConnection implements OnHttpResponseInterface {
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("Accept", "application/json");
             httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            //httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpURLConnection.setRequestMethod("GET");
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
@@ -218,12 +243,16 @@ public class HttpsConnection implements OnHttpResponseInterface {
             postData.append('=');
             postData.append(String.valueOf(param.getValue()));
         }
-        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        byte[] postDataBytes;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+        }else {
+            postDataBytes = postData.toString().getBytes("UTF-8");
+        }
         initialize(url);
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpURLConnection.setConnectTimeout(timeout * 1000);
         httpURLConnection.setDoOutput(true);
-        //httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpURLConnection.setRequestMethod("POST");
         if (token != null && !token.startsWith("Basic "))
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -261,12 +290,15 @@ public class HttpsConnection implements OnHttpResponseInterface {
     String postJson(String urlConnection, int timeout, JsonObject jsonObject, String token) throws IOException,  HttpsConnectionException {
         URL url = new URL(urlConnection);
         byte[] postDataBytes;
-        postDataBytes = jsonObject.toString().getBytes("UTF-8");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postDataBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+        }else {
+            postDataBytes = jsonObject.toString().getBytes("UTF-8");
+        }
         initialize(url);
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpURLConnection.setConnectTimeout(timeout * 1000);
         httpURLConnection.setDoOutput(true);
-        // httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpURLConnection.setRequestProperty("Content-Type", "application/json");
         httpURLConnection.setRequestProperty("Accept", "application/json");
         httpURLConnection.setRequestMethod("POST");
@@ -305,13 +337,17 @@ public class HttpsConnection implements OnHttpResponseInterface {
 
     String postMisskey(String urlConnection, int timeout, JSONObject paramaters, String token) throws IOException, HttpsConnectionException {
         URL url = new URL(urlConnection);
-        byte[] postDataBytes = paramaters.toString().getBytes("UTF-8");
+        byte[] postDataBytes;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postDataBytes = paramaters.toString().getBytes(StandardCharsets.UTF_8);
+        }else {
+            postDataBytes = paramaters.toString().getBytes("UTF-8");
+        }
 
         initialize(url);
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpURLConnection.setConnectTimeout(timeout * 1000);
         httpURLConnection.setDoOutput(true);
-        //httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpURLConnection.setRequestMethod("POST");
         if (token != null && !token.startsWith("Basic "))
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -618,8 +654,12 @@ public class HttpsConnection implements OnHttpResponseInterface {
                 postData.append('=');
                 postData.append(String.valueOf(param.getValue()));
             }
-            byte[] postDataBytes = (postData.toString()).getBytes("UTF-8");
-
+            byte[] postDataBytes;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+            }else {
+                postDataBytes = postData.toString().getBytes("UTF-8");
+            }
 
 
             initialize(url);
@@ -690,12 +730,16 @@ public class HttpsConnection implements OnHttpResponseInterface {
             postData.append('=');
             postData.append(String.valueOf(param.getValue()));
         }
-        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        byte[] postDataBytes;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+        }else {
+            postDataBytes = postData.toString().getBytes("UTF-8");
+        }
 
         initialize(url);
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpURLConnection.setConnectTimeout(timeout * 1000);
-        //httpURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         if (token != null && !token.startsWith("Basic "))
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         else if( token != null && token.startsWith("Basic "))
@@ -754,7 +798,12 @@ public class HttpsConnection implements OnHttpResponseInterface {
             postData.append('=');
             postData.append(String.valueOf(param.getValue()));
         }
-        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        byte[] postDataBytes;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
+        }else {
+            postDataBytes = postData.toString().getBytes("UTF-8");
+        }
 
         initialize(url);
         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
