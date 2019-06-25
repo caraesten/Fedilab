@@ -207,6 +207,22 @@
             app:layout_constraintTop_toBottomOf="@id/status_pp_section"
             app:layout_constraintVertical_bias="0" />
 
+        <ImageView
+            android:id="@+id/cached_status"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:contentDescription="@string/cached_status"
+            android:padding="5dp"
+            android:src="@drawable/ic_cached_black"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/status_pp_section"
+            app:layout_constraintStart_toStartOf="@id/status_pp_section"
+            app:layout_constraintTop_toBottomOf="@id/status_pp_section"
+            app:layout_constraintVertical_bias="0" />
+
         <!-- Remove status button (Pleroma admin only) -->
         <ImageView
             android:id="@+id/status_remove"
