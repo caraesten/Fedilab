@@ -18,6 +18,7 @@ package app.fedilab.android.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
@@ -31,8 +32,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.net.Authenticator;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
+import java.net.SocketAddress;
+
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
+import info.guardianproject.netcipher.NetCipher;
 
 
 /**
@@ -141,6 +149,33 @@ public class ProxyActivity extends BaseActivity {
                 editor.putString(Helper.SET_PROXY_LOGIN, proxy_loginVal);
                 editor.putString(Helper.SET_PROXY_PASSWORD, proxy_passwordVal);
                 editor.apply();
+                if (Build.VERSION.SDK_INT >= 24) {
+                    if(  set_enable_proxy.isChecked() ){
+                        String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                        int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                        SocketAddress sa = new InetSocketAddress(host, port);
+                        if( sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0) == 0 ) {
+                            NetCipher.setProxy(new Proxy(Proxy.Type.HTTP, sa));
+                        }else{
+                            NetCipher.setProxy(new Proxy(Proxy.Type.SOCKS, sa));
+                        }
+                        final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+                        final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+                        if( login != null) {
+                            Authenticator authenticator = new Authenticator() {
+                                public PasswordAuthentication getPasswordAuthentication() {
+                                    assert pwd != null;
+                                    return (new PasswordAuthentication(login,
+                                            pwd.toCharArray()));
+                                }
+                            };
+                            Authenticator.setDefault(authenticator);
+                        }
+                        NetCipher.useGlobalProxy();
+                    }else{
+                        NetCipher.clearProxy();
+                    }
+                }
                 finish();
             }
         });

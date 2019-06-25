@@ -114,8 +114,8 @@ public class MainApplication extends MultiDexApplication {
                     };
                     Authenticator.setDefault(authenticator);
                 }
+                NetCipher.useGlobalProxy();
             }
-            NetCipher.useGlobalProxy();
         }
         if( OrbotHelper.isOrbotInstalled(getApplicationContext()) && OrbotHelper.isOrbotRunning(getApplicationContext())){
             NetCipher.useTor();
