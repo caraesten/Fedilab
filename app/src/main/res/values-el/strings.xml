@@ -975,6 +975,7 @@
     <string name="mark_resolved">Mark as resolved</string>
     <string name="mark_unresolved">Mark as unresolved</string>
     <string name="toast_empty_content">Empty content!</string>
+    <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>

@@ -971,6 +971,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="mark_resolved">標記解決</string>
     <string name="mark_unresolved">標記未解決</string>
     <string name="toast_empty_content">內容為空！</string>
+    <string name="set_display_fedilab_features_button">顯示 Fedilab 功能按鈕</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

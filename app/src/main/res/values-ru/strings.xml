@@ -63,7 +63,7 @@
     <string name="favourite">Избранные</string>
     <string name="follow">Новые подписчики</string>
     <string name="mention">Упоминания</string>
-    <string name="reblog">Продвинутые</string>
+    <string name="reblog">Продвинули</string>
     <string name="show_boosts">Показать продвинутые</string>
     <string name="show_replies">Показать ответы</string>
     <string name="action_open_in_web">Открыть в браузере</string>
@@ -74,7 +74,7 @@
     <string name="local_menu">Местная лента</string>
     <string name="global_menu">Федеративная лента</string>
     <string name="neutral_menu_title">Опции</string>
-    <string name="favorites_menu">Избранные</string>
+    <string name="favorites_menu">В избранном</string>
     <string name="communication_menu_title">Общение</string>
     <string name="muted_menu">Приглушенные пользователи</string>
     <string name="blocked_menu">Заблокированные пользователи</string>
@@ -140,7 +140,7 @@
         <item quantity="many">%d ответов</item>
         <item quantity="other">%d ответов</item>
     </plurals>
-    <string name="set_display_bookmark_button">Отобразить кнопку закладок</string>
+    <string name="set_display_bookmark_button">Отображать кнопку закладок</string>
     <string name="bookmarks">Закладки</string>
     <string name="bookmark_add">Добавить в закладки</string>
     <string name="bookmark_remove">Удалить закладку</string>
@@ -294,7 +294,7 @@
     <string name="set_attachment_always">Всегда</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Спрашивать</string>
-    <string name="set_attachment_action">Загржать медиа</string>
+    <string name="set_attachment_action">Загружать медиа</string>
     <string name="load_attachment">Загружать изображения</string>
     <string name="load_attachment_spoiler">Еще…</string>
     <string name="load_attachment_spoiler_less">Свернуть…</string>
@@ -312,7 +312,7 @@
     <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
     <string name="set_notif_follow_add">Уведомлять, если кто-то добавил ваш статус в избранное</string>
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
-    <string name="set_notif_follow_poll">Уведомить об окончании опроса</string>
+    <string name="set_notif_follow_poll">Уведомлять об окончании опроса</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
     <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
     <string name="set_wifi_only">Уведомлять только в сети WIFI</string>
@@ -358,7 +358,7 @@
         <item>DeepL</item>
         <item>Нет</item>
     </string-array>
-    <string name="your_api_key">Ваш ключ API, вы можете оставить пустым для Yandex</string>
+    <string name="your_api_key">Ваш ключ API (для Яндекса можно оставить пустым)</string>
     <string-array name="settings_theme">
         <item>Темная</item>
         <item>Светлая</item>
@@ -392,7 +392,7 @@
     <string name="followed_by">Подписан на вас</string>
     <string name="action_search">Поиск</string>
     <string name="set_capitalize">Заглавная первая буква в ответах</string>
-    <string name="set_resize_picture">Изменить размер изображений</string>
+    <string name="set_resize_picture">Изменять размер изображений</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
     <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получать.
@@ -476,10 +476,10 @@
     <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда члены этого списка опубликуют новые статусы, они появятся здесь.</string>
     <string name="action_lists_add_to">Добавить в список</string>
     <string name="action_lists_remove_from">Удалить из списка</string>
-    <string name="action_lists_create">Добавить список</string>
+    <string name="action_lists_create">Добавление списка</string>
     <string name="action_lists_delete">Удалить список</string>
     <string name="action_lists_update">Изменить список</string>
-    <string name="action_lists_title_placeholder">Новый заголовок списка</string>
+    <string name="action_lists_title_placeholder">Название нового списка</string>
     <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
     <string name="action_lists_owner">Ваши списки</string>
     <!-- Migration -->
@@ -513,7 +513,7 @@
     <string name="poxy_password">Пароль</string>
     <string name="set_theme">Тема:</string>
     <string name="set_compact_mode">Компактный режим</string>
-    <string name="set_share_details">Добавить детали тута при перепосте</string>
+    <string name="set_share_details">Добавлять детали тута при перепосте</string>
     <string name="support_the_app_on_liberapay">Поддержать приложение на Liberapay</string>
     <string name="alert_regex">В регулярном выражении есть ошибка!</string>
     <string name="no_account_yet">Нет аккаунта?</string>
@@ -541,7 +541,7 @@
     <string name="toast_hide_boost">Продвигаемые теперь скрываются!</string>
     <string name="direct_message">Прямое сообщение</string>
     <string name="filters">Фильтры</string>
-    <string name="action_filters_empty_content">Нет фильтров для отображения. Вы можете создать первый, нажав кнопку \"+\".</string>
+    <string name="action_filters_empty_content">Нет фильтров для отображения. Вы можете создать первый, нажав \"+\".</string>
     <string name="filter_keyword">Ключевое слово или фраза</string>
     <string name="context_home">Домашняя лента</string>
     <string name="context_public">Публичные ленты</string>
@@ -569,8 +569,8 @@
     <string name="add_account_list_trunk">Добавление аккаунтов в список</string>
     <string name="account_added_list_trunk">Аккаунты были добавлены в список</string>
     <string name="adding_account_list_trunk">Добавление аккаунтов в список</string>
-    <string name="action_list_add">Вы еще не создали список. Нажмите кнопку \"+\", чтобы добавить первый.</string>
-    <string name="action_remote_instance_add">Вы не подписаны на какие-либо внешние инстансы. Нажмите кнопку \"+\", чтобы добавить первый.</string>
+    <string name="action_list_add">Вы еще не создали список. Нажмите \"+\", чтобы добавить первый.</string>
+    <string name="action_remote_instance_add">Вы не подписаны на какие-либо внешние инстансы. Нажмите \"+\", чтобы добавить первый.</string>
     <string name="about_trunk">На кого подписаться</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
@@ -622,7 +622,7 @@
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
     <string name="information">Информация</string>
-    <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
+    <string name="set_display_card">Отображать предпросмотр для всех тутов</string>
     <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
     <string name="set_old_direct_timeline">Использовать старый вариант ленты (до версии Mastodon 2.6)</string>
     <string name="set_display_video_preview">Отображать предпросмотр видео</string>
@@ -662,7 +662,7 @@
     <string name="expand_conversation">Развернуть разговор</string>
     <string name="remove_account">Удалить аккаунт</string>
     <string name="delete_domain">Удалить заблокированный домен</string>
-    <string name="custom_emoji_picker">Пользовательский выбор Emoji</string>
+    <string name="custom_emoji_picker">Персонализация выбора Emoji</string>
     <string name="play_video">Воспроизвести видео</string>
     <string name="new_toot">Новый тут</string>
     <string name="card_view_image">Изображение карты</string>
@@ -680,7 +680,7 @@
     </string-array>
     <string name="showcase_instance">        В этом поле вам нужно указать имя хоста вашего инстанса.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nпросто напишите <b>mastodon.social</b> (без https://)\n
         Вы можете начать писать первые буквы, чтобы получить предложения.\n\n
-        ⚠ Кнопка входа будет работать только случае, если инстанс включен и его имя корректно!
+        ⚠ Кнопка входа будет работать только в случае, если инстанс включен и его имя корректно!
     </string>
     <string name="showcase_uid">        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
     </string>
@@ -721,7 +721,7 @@
     <string name="delete_comment">Удалить комментарий</string>
     <string name="delete_comment_confirm">Вы уверены, что хотите удалить этот комментарий?</string>
     <string name="fullscreen">Полноэкранное видео</string>
-    <string name="set_video_mode">Режим для видео</string>
+    <string name="set_video_mode">Режим видео</string>
     <string name="file_to_upload">Выберите файл для загрузки</string>
     <string name="my_videos">Мои видео</string>
     <string name="title">Название</string>
@@ -783,7 +783,7 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Выйти из аккаунта</string>
-    <string name="set_optimize_loading">Оптимизировать время загрузки</string>
+    <string name="set_optimize_loading">Оптимизация времени загрузки</string>
     <string name="all">Все</string>
     <string name="about_opencollective">Поддержать это приложение</string>
     <string name="more_about_opencollective">Open Collective позволяет группам быстро создавать коллектив, собирать средства и прозрачно управлять ими.</string>
@@ -793,7 +793,7 @@
     <string name="set_compact">Компактный</string>
     <string name="set_console">Консольный</string>
     <string name="set_mode">Установить режим отображения</string>
-    <string name="set_security_provider">Патч провайдера безопасности</string>
+    <string name="set_security_provider">Улучшение безопасности</string>
     <string name="update_tracking_domains">Обновить отслеживаемые домены</string>
     <string name="tracking_db_updated">База данных отслеживания была обновлена!</string>
     <string name="calls_blocked">http-вызовы, заблокированные приложением</string>
@@ -803,8 +803,8 @@
     <string name="featured_hashtags">Рекомендуемые хэштеги</string>
     <string name="filter_timeline_with_a_tag">Фильтровать ленту тегами</string>
     <string name="no_tags">Нет тегов</string>
-    <string name="set_hide_delete_notification_on_tab">Скрыть кнопку удаления уведомлений на вкладке уведомлений</string>
-    <string name="set_retrieve_metadata_share_from_extras">Прикрепить изображение при публикации URL</string>
+    <string name="set_hide_delete_notification_on_tab">Скрыть кнопку удаления на вкладке уведомлений</string>
+    <string name="set_retrieve_metadata_share_from_extras">Прикреплять изображение при перепосте URL</string>
     <!-- end languages -->
     <string name="poll">Опрос</string>
     <string name="polls">Опросы</string>
@@ -846,9 +846,9 @@
     <string name="gnu_instance">Инстанс GNU</string>
     <string name="cached_status">Состояние кэша</string>
     <string name="set_forward_tags">Пересылать теги в ответах</string>
-    <string name="set_long_press_media">Удерживайте, чтобы сохранить медиа</string>
+    <string name="set_long_press_media">Длительное нажатие сохраняет медиа</string>
     <string name="set_blur_sensitive">Размытие деликатного контента</string>
-    <string name="set_display_timeline_in_list">Показывать список лент в списке</string>
+    <string name="set_display_timeline_in_list">Показывать ленты в списке</string>
     <string name="display_timeline">Отображать ленты</string>
     <string name="set_display_bot_icon">Отметить аккаунты ботов в тутах</string>
     <string name="add_tags">Управлять тегами</string>
@@ -894,7 +894,7 @@
     <string name="see_boost_and_fav">Посмотреть кто продвинул и добавил в избранное</string>
     <string name="mention_status">Упомянуть статус</string>
     <string name="action_news">Новости</string>
-    <string name="set_display_news_from_fedilab">Отображать новости от аккаунта Fedilab</string>
+    <string name="set_display_news_from_fedilab">Показывать новости от Fedilab</string>
     <string name="category_general">Основной</string>
     <string name="category_regional">Региональный</string>
     <string name="category_art">Искусство</string>
@@ -964,7 +964,7 @@
     <string name="account">Аккаунт</string>
     <string name="unsilence">Отменить приглушение</string>
     <string name="undisable">Отменить отключение</string>
-    <string name="suspend">Приостановить</string>
+    <string name="suspend">Приостановка</string>
     <string name="unsuspend">Отменить приостановление</string>
     <string name="account_silenced">Этот аккаунт приглушен!</string>
     <string name="account_unsilenced">Этот аккаунт больше не приглушен!</string>
@@ -973,7 +973,7 @@
     <string name="account_disabled">Этот аккаунт отключен!</string>
     <string name="account_undisabled">Этот аккаунт больше не отключен!</string>
     <string name="account_warned">Этот аккаунт предупрежден!</string>
-    <string name="set_display_admin_menu">Отобразить меню администратора</string>
+    <string name="set_display_admin_menu">Отображать меню администратора</string>
     <string name="set_display_admin_toot">Отображение функций администрирования в статусах</string>
     <string name="allow">Разрешить</string>
     <string name="account_approved">Учетная запись одобрена!</string>
@@ -982,7 +982,8 @@
     <string name="unassign">Отменить назначение</string>
     <string name="mark_resolved">Пометить как решенный</string>
     <string name="mark_unresolved">Пометить как нерешенный</string>
-    <string name="toast_empty_content">Empty content!</string>
+    <string name="toast_empty_content">Контента нет!</string>
+    <string name="set_display_fedilab_features_button">Показать кнопку функций Fedilab</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
