@@ -584,6 +584,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean isModerator = sharedpreferences.getBoolean(Helper.PREF_IS_MODERATOR, false);
             boolean isAdmin = sharedpreferences.getBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
 
+            boolean fedilab_features_button = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FEDILAB_FEATURES_BUTTON, true);
+
             boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
             boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
 
@@ -988,7 +990,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
-            if( holder.cached_status != null) {
+            if( holder.cached_status != null && (holder.getItemViewType() == DISPLAYED_STATUS && !fedilab_features_button)) {
                 if (status.iscached()) {
                     holder.cached_status.setVisibility(View.VISIBLE);
                 } else {
@@ -1002,7 +1004,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
-            if( holder.fedilab_features != null) {
+            if (holder.fedilab_features != null && !fedilab_features_button)
+                holder.fedilab_features.setVisibility(View.GONE);
+
+            if (holder.fedilab_features != null && fedilab_features_button) {
                 TooltipCompat.setTooltipText(holder.fedilab_features, context.getString(R.string.app_features));
                 holder.fedilab_features.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2355,7 +2360,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                     }
-                    if( holder.getItemViewType() == DISPLAYED_STATUS){
+                    if (holder.getItemViewType() == DISPLAYED_STATUS && fedilab_features_button) {
                         popup.getMenu().findItem(R.id.action_translate).setVisible(false);
                         popup.getMenu().findItem(R.id.action_bookmark).setVisible(false);
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);

@@ -673,6 +673,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean fedilab_features_button = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FEDILAB_FEATURES_BUTTON, true);
+        final CheckBox set_fedilab_features_button = rootView.findViewById(R.id.set_display_fedilab_features_button);
+        set_fedilab_features_button.setChecked(fedilab_features_button);
+
+        set_fedilab_features_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_FEDILAB_FEATURES_BUTTON, set_fedilab_features_button.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
         final CheckBox set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
         set_bot_icon.setChecked(bot_icon);
