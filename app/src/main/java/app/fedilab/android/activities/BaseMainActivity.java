@@ -74,8 +74,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
+import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Results;
@@ -83,6 +86,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
+import app.fedilab.android.fragments.DisplayAdminReportsFragment;
 import app.fedilab.android.fragments.DisplayBookmarksFragment;
 import app.fedilab.android.fragments.DisplayDraftsFragment;
 import app.fedilab.android.fragments.DisplayFavoritesPeertubeFragment;
@@ -103,6 +107,7 @@ import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
+import app.fedilab.android.interfaces.OnAdminActionInterface;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -278,7 +283,6 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = findViewById(R.id.viewpager);
-
 
         display_timeline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1081,7 +1085,20 @@ public abstract class BaseMainActivity extends BaseActivity
                 partnerShipItem.setVisible(false);
             }
         }
-
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+            if( adminItem != null){
+                adminItem.setVisible(false);
+            }
+        }else{
+            boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
+            if( !display_admin_menu){
+                MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+                if( adminItem != null){
+                    adminItem.setVisible(false);
+                }
+            }
+        }
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1507,6 +1524,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), ReorderTimelinesActivity.class);
             startActivity(intent);
             return false;
+        }else if(id == R.id.nav_administration){
+            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+            startActivity(intent);
+            return false;
         } else if( id == R.id.nav_about) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
@@ -1565,7 +1586,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.show();
         }
-        if( id != R.id.nav_list && id != R.id.nav_filters && id != R.id.nav_peertube_playlists){
+        if( id != R.id.nav_list && id != R.id.nav_filters && id != R.id.nav_peertube_playlists && id != R.id.nav_blocked_domains){
             add_new.hide();
         }else{
             add_new.show();

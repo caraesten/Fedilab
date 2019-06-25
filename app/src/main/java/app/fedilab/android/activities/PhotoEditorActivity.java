@@ -287,7 +287,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading(getString(R.string.saving));
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, getCacheDir().getAbsolutePath());
             String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
 
             File file = new File(myDir+"/"+filename);

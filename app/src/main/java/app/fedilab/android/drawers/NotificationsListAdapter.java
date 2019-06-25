@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -855,8 +856,21 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     popup.getMenu().findItem(R.id.action_info).setVisible(false);
                     popup.getMenu().findItem(R.id.action_report).setVisible(false);
                     popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
 
                 }
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                    popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                }else{
+                    boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + Helper.getLiveInstance(context), false);
+                    if( !display_admin_statuses){
+                        popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                    }
+                }
+                if (status.isMuted())
+                    popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.unmute_conversation);
+                else
+                    popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.mute_conversation);
                 boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
                 if( custom_sharing && status.getVisibility().equals("public"))
                     popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
@@ -881,12 +895,27 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 builderInner.setTitle(stringArrayConf[0]);
                                 doAction = API.StatusAction.MUTE;
                                 break;
+                            case R.id.action_mute_conversation:
+                                if( status.isMuted())
+                                    doAction = API.StatusAction.UNMUTE_CONVERSATION;
+                                else
+                                    doAction = API.StatusAction.MUTE_CONVERSATION;
+                                new PostActionAsyncTask(context, doAction, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                return true;
                             case R.id.action_open_browser:
                                 Helper.openBrowser(context, status.getUrl());
                                 return true;
-                            case R.id.action_info:
-                                Intent intent = new Intent(context, TootInfoActivity.class);
+                            case R.id.action_admin:
+                                String account_id = status.getReblog() != null ? status.getReblog().getAccount().getId() : status.getAccount().getId();
+                                Intent intent = new Intent(context, AccountReportActivity.class);
                                 Bundle b = new Bundle();
+                                b.putString("account_id", account_id);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                                return true;
+                            case R.id.action_info:
+                                intent = new Intent(context, TootInfoActivity.class);
+                                b = new Bundle();
                                 if (status.getReblog() != null) {
                                     b.putString("toot_id", status.getReblog().getId());
                                     b.putInt("toot_reblogs_count", status.getReblog().getReblogs_count());

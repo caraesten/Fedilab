@@ -168,7 +168,7 @@
     <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
     <string name="toot_sent">トゥートを送信しました</string>
     <string name="toot_reply_content_title">このトゥートに返信中：</string>
-    <string name="toot_sensitive">閲覧に注意を要するコンテンツ？</string>
+    <string name="toot_sensitive">メディアを閲覧注意にする</string>
     <string-array name="toot_visibility">
         <item>公開タイムラインに投稿</item>
         <item>公開タイムラインに投稿しない</item>
@@ -220,7 +220,7 @@
     <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをクリックします。</string>
     <!-- Notifications -->
     <string name="no_notifications">通知はありません</string>
-    <string name="notif_mention">あなたにメンションしました</string>
+    <string name="notif_mention">メンションされました</string>
     <string name="notif_reblog">がブーストしました</string>
     <string name="notif_favourite">がお気に入りに登録しました</string>
     <string name="notif_follow">があなたをフォローしました</string>
@@ -282,11 +282,11 @@
     <string name="set_attachment_always">常に</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">尋ねる</string>
-    <string name="set_attachment_action">メディアをロードする</string>
+    <string name="set_attachment_action">メディアを読み込む</string>
     <string name="load_attachment">写真をロードする</string>
     <string name="load_attachment_spoiler">さらに表示…</string>
     <string name="load_attachment_spoiler_less">一部のみ表示...</string>
-    <string name="load_sensitive_attachment">閲覧に注意を要するコンテンツ</string>
+    <string name="load_sensitive_attachment">閲覧注意</string>
     <string name="set_display_reply">応答に前のメッセージを表示する</string>
     <string name="set_display_local">ローカルタイムラインを表示</string>
     <string name="set_display_global">連合タイムラインを表示</string>
@@ -299,7 +299,7 @@
     <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
-    <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
+    <string name="set_notif_follow_mention">メンションを受け取ったときに通知する</string>
     <string name="set_notif_follow_poll">投票が終了したら通知する</string>
     <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
     <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
@@ -326,7 +326,7 @@
     <string name="settings_hour_init">開始時刻</string>
     <string name="settings_hour_end">終了時刻</string>
     <string name="embedded_browser">アプリ内ブラウザを使用する</string>
-    <string name="custom_tabs">カスタム タブ</string>
+    <string name="custom_tabs">カスタムタブ</string>
     <string name="use_javascript">Javascript を有効にする</string>
     <string name="expand_cw">CWを自動的に展開する</string>
     <string name="use_cookies">サードパーティのCookieを許可する</string>
@@ -773,7 +773,7 @@
     <string name="set_compact">コンパクト</string>
     <string name="set_console">コンソール</string>
     <string name="set_mode">表示モードの設定</string>
-    <string name="set_security_provider">セキュリティを向上する</string>
+    <string name="set_security_provider">セキュリティプロバイダーを使用する</string>
     <string name="update_tracking_domains">トラッキングドメインの更新</string>
     <string name="tracking_db_updated">トラッキングデータベースが更新されました！</string>
     <string name="calls_blocked">httpコールがアプリケーションによってブロックされました</string>
@@ -875,41 +875,94 @@
     <string name="mention_status">ステータスをメンション</string>
     <string name="action_news">ニュース</string>
     <string name="set_display_news_from_fedilab">Fedilab公式アカウントからのニュースを表示する</string>
-    <string name="category_general">General</string>
-    <string name="category_regional">Regional</string>
-    <string name="category_art">Art</string>
-    <string name="category_journalism">Journalism</string>
-    <string name="category_activism">Activism</string>
-    <string name="category_games">Gaming</string>
-    <string name="category_tech">Technology</string>
-    <string name="category_adult">Adult content</string>
-    <string name="category_furry">Furry</string>
-    <string name="category_food">Food</string>
-    <string name="instance_logo">Logo of the instance</string>
-    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
-    <string name="join_mastodon">Join Mastodon</string>
-    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
-    <string name="users">%1$s users</string>
-    <string name="password_confirm">Confirm password</string>
-    <string name="agreement_check">I agree to %1$s and %2$s</string>
-    <string name="server_rules">server rules</string>
-    <string name="tos">terms of service</string>
-    <string name="sign_up">Sign up</string>
-    <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
-    <string name="all_field_filled">Please, fill all the fields!</string>
-    <string name="password_error">Passwords don\'t match!</string>
-    <string name="email_error">The email doesn\'t seem to be valid!</string>
-    <string name="username_indicator">Your username will be unique on %1$s</string>
-    <string name="email_indicator">You will be sent a confirmation e-mail</string>
-    <string name="password_indicator">Use at least 8 characters</string>
-    <string name="password_too_short">Password should contain at least 8 characters</string>
-    <string name="username_error">Username should only contain letters, numbers and underscores</string>
-    <string name="account_created">Account created!</string>
-    <string name="account_created_message">        Your account has been created!\n\n
-        Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
-        <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
+    <string name="category_general">全般</string>
+    <string name="category_regional">地域</string>
+    <string name="category_art">アート</string>
+    <string name="category_journalism">報道</string>
+    <string name="category_activism">行動主義</string>
+    <string name="category_games">ゲームプレイ</string>
+    <string name="category_tech">テクノロジー</string>
+    <string name="category_adult">アダルトコンテンツ</string>
+    <string name="category_furry">ふわふわ</string>
+    <string name="category_food">食べ物</string>
+    <string name="instance_logo">インスタンスのロゴ</string>
+    <string name="toast_error_instance_reg">有効なインスタンスのチェック中に問題が発生しました！</string>
+    <string name="join_mastodon">Mastodonに参加</string>
+    <string name="pickup_instance_category">カテゴリーを選択してインスタンスを選択し、チェックボタンをタップしてください。</string>
+    <string name="users">%1$s人のユーザー</string>
+    <string name="password_confirm">パスワードの確認</string>
+    <string name="agreement_check">%1$sと%2$sに同意する</string>
+    <string name="server_rules">サーバーのルール</string>
+    <string name="tos">利用規約</string>
+    <string name="sign_up">新規登録</string>
+    <string name="validation_needed">このインスタンスは招待制です。アカウントが利用可能になるには、管理者から手動で承認を受ける必要があります。</string>
+    <string name="all_field_filled">全ての欄を記入してください！</string>
+    <string name="password_error">パスワードが一致しません！</string>
+    <string name="email_error">このメールアドレスは無効です！</string>
+    <string name="username_indicator">あなたのユーザー名は%1$s上に固有です</string>
+    <string name="email_indicator">確認メールを送信しました</string>
+    <string name="password_indicator">少なくとも8文字は入力してください</string>
+    <string name="password_too_short">パスワードは8文字以上必要です</string>
+    <string name="username_error">ユーザー名にはアルファベット、数字、アンダーバーのみ含めることができます</string>
+    <string name="account_created">アカウントを作成しました！</string>
+    <string name="account_created_message">アカウントを作成しました！\n\n
+        48時間以内にメールアドレスを確認してください。\n\n
+        最初の欄に<b>%1$s</b>と記入し、<b>接続</b>をタップするとアカウントに繋がります。\n\n
+        <b>重要</b>:インスタンスが認証を要求する場合、一度確認のメールが送信されます！
     </string>
+    <string name="save_draft">メッセージを下書きに保存しますか？</string>
+    <string name="administration">管理</string>
+    <string name="reports">報告</string>
+    <string name="no_reports">表示するレポートがありません！</string>
+    <string name="reconnect_account">アカウントに再接続</string>
+    <string name="reconnect_account_message">管理者向け機能へのアクヘスに失敗しました。正常な動作のためにはアカウントに再接続する必要があります。</string>
+    <string name="unresolved">未解決</string>
+    <string name="resolved">解決済み</string>
+    <string name="remote">リモート</string>
+    <string name="active">アクティブ</string>
+    <string name="pending">保留</string>
+    <string name="disabled">無効</string>
+    <string name="silenced">サイレンス済み</string>
+    <string name="suspended">保留中</string>
+    <string name="permissions">権限</string>
+    <string name="email_status">メールアドレスの状態</string>
+    <string name="login_status">ログイン状態</string>
+    <string name="joined">参加済み</string>
+    <string name="recent_ip">直近のIP</string>
+    <string name="warn">警告</string>
+    <string name="disable">無効</string>
+    <string name="silence">サイレント</string>
+    <string name="email_user">メールでユーザーに通知</string>
+    <string name="perform_action">アクションを実行</string>
+    <string name="custom_warning">カスタム警告文</string>
+    <string name="user">ユーザー</string>
+    <string name="moderator">モデレーター</string>
+    <string name="administrator">管理者</string>
+    <string name="confirmed">確認済み</string>
+    <string name="unconfirmed">未確認</string>
+    <string name="list_reported_statuses">報告したステータス</string>
+    <string name="account">アカウント</string>
+    <string name="unsilence">サイレンスから戻す</string>
+    <string name="undisable">無効化を解除する</string>
+    <string name="suspend">Suspend</string>
+    <string name="unsuspend">Undo suspend</string>
+    <string name="account_silenced">The account is silenced!</string>
+    <string name="account_unsilenced">The account is no longer silenced!</string>
+    <string name="account_suspended">The account is suspended!</string>
+    <string name="account_unsuspended">The account is no longer suspended!</string>
+    <string name="account_disabled">The account is disabled!</string>
+    <string name="account_undisabled">The account is no longer disabled!</string>
+    <string name="account_warned">The account has been warned!</string>
+    <string name="set_display_admin_menu">Display the admin menu</string>
+    <string name="set_display_admin_toot">Display the admin feature in statuses</string>
+    <string name="allow">Allow</string>
+    <string name="account_approved">The account is approved!</string>
+    <string name="account_rejected">The account is rejected!</string>
+    <string name="assign_to_me">Assign to me</string>
+    <string name="unassign">Unassign</string>
+    <string name="mark_resolved">Mark as resolved</string>
+    <string name="mark_unresolved">Mark as unresolved</string>
+    <string name="toast_empty_content">Empty content!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>

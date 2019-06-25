@@ -684,6 +684,7 @@ public class GNUAPI {
      */
     private APIResponse getHomeTimeline(String max_id, String since_id, String min_id, int limit) {
 
+        apiResponse = new APIResponse();
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("max_id", max_id);

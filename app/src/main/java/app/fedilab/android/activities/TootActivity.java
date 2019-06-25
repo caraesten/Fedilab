@@ -30,6 +30,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -686,11 +688,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent.setType("*/*");
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    String[] mimetypes = {"image/*", "video/*"};
+                    String[] mimetypes = {"image/*", "video/*" , "audio/mpeg", "audio/opus", "audio/flac", "audio/wav" , "audio/ogg"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
-                    intent.setType("image/* video/*");
+                    intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     }
@@ -1016,6 +1018,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }else{
                         upload(TootActivity.this, data.getData(), filename);
                     }
+                }else if(mime != null && mime.toLowerCase().contains("audio")){
+                    upload(TootActivity.this, data.getData(), filename);
                 }else {
                     Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
@@ -1065,7 +1069,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_picture_container.setVisibility(View.GONE);
         toot_picture.setEnabled(true);
         toot_it.setEnabled(true);
-        exception.printStackTrace();
     }
 
     @Override
@@ -1098,12 +1101,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-
+                Bitmap musicBtp = BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.music);
                 if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                     Uri uri = filesMap.get(attachment.getUrl());
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(uri)
+                            .error(Glide.with(imageView).asBitmap().load(musicBtp))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -1115,6 +1120,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(url)
+                            .error(Glide.with(imageView).asBitmap().load(musicBtp))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -1257,7 +1263,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             String filename =  Helper.getFileName(TootActivity.this, imageUri);
             ContentResolver cr = getContentResolver();
             String mime = cr.getType(imageUri);
-            if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
+            if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("audio") || mime.toLowerCase().contains("gif")) ) {
                 upload(TootActivity.this, imageUri, filename);
             } else if(mime != null && mime.toLowerCase().contains("image")) {
                 new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

@@ -114,12 +114,14 @@ public class LoginActivity extends BaseActivity {
     private TextView instance_chosen;
     private ImageView info_instance;
     private final int PICK_IMPORT = 5557;
+    public static boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
         socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+        admin = false;
         if(b != null) {
             autofilledInstance = b.getString("instance", null);
             social = b.getString("social", null);
@@ -136,6 +138,7 @@ public class LoginActivity extends BaseActivity {
                         break;
                 }
             }
+            admin = b.getBoolean("admin", false);
         }
 
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
@@ -295,10 +298,6 @@ public class LoginActivity extends BaseActivity {
                         return;
                     }
                     instance = login_instance.getText().toString().trim().toLowerCase();
-                    if(instance.endsWith(".gab.com") || instance.equals("gab.com") || instance.endsWith(".gab.ai") || instance.equals("gab.ai")){
-                        Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
-                        return;
-                    }
                     connect_button.setEnabled(false);
                     new Thread(new Runnable(){
                         @Override
@@ -551,7 +550,11 @@ public class LoginActivity extends BaseActivity {
             parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
             parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
             if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-                parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+                if( admin ) {
+                    parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_ADMIN);
+                }else{
+                    parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+                }
             }else {
                 parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
             }
@@ -879,8 +882,14 @@ public class LoginActivity extends BaseActivity {
         String queryString = Helper.CLIENT_ID + "="+ clientId;
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
-        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED )
-            queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED ) {
+
+            if( admin ) {
+                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
+            }else{
+                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
+            }
+        }
         return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 

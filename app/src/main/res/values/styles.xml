@@ -392,4 +392,48 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
+
+
+    <!-- Light theme -->
+    <style name="AppAdminTheme" parent="Theme.AppCompat">
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="colorPrimary">@color/mastodonC1</item>
+        <item name="colorPrimaryDark">@color/mastodonC1</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="cardBorder">@color/cardBorderLight</item>
+        <item name="textColor">@color/dark_text</item>
+        <item name="android:buttonStyle">@style/ButtonColor</item>
+        <item name="headerbg">@style/Header.Light</item>
+        <item name="android:windowBackground">@color/mastodonC1__</item>
+        <item name="shapeBorder">@style/Shape.Light</item>
+        <item name="imgbd">@style/Image.Border.Light</item>
+        <item name="borderless">@style/borderLessLightStyle</item>
+        <item name="borderlessColored">@style/borderlessColoredStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
+        <item name="android:spinnerStyle">@style/SpinnerStyle</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
+        <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_dark</item>
+        <item name="android:actionModeStyle">@style/DarkActionMode</item>
+        <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
+        <item name="actionBarTextColor">@color/dark_text</item>
+        <item name="color_in_account_header">@color/black</item>
+        <item name="colorBackgroundFloating">@color/mastodonC1__</item>
+        <item name="android:colorBackground">@color/mastodonC1__</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.Admin.ActionButton.Overflow</item>
+    </style>
+    <style name="Widget.Admin.ActionButton.Overflow" parent="Base.Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
+    </style>
+
+    <style name="AdminAlertDialogDark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/mastodonC1__</item>
+    </style>
+    <style name="AdminDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/mastodonC1__</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="android:headerBackground">@color/mastodonC2</item>
+        <item name="colorControlNormal">@color/mastodonC2</item>
+    </style>
 </resources>

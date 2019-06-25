@@ -230,6 +230,7 @@ public class Helper {
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
+    public static final String OAUTH_SCOPES_ADMIN = "read write follow admin:read admin:write admin";
     public static final String OAUTH_SCOPES_PIXELFED = "write follow";
     public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
@@ -350,6 +351,9 @@ public class Helper {
     public static final String SET_DISPLAY_TIMELINE_IN_LIST = "set_display_timeline_in_list";
     public static final String SET_ONION_SCHEME = "set_onion_scheme";
     public static final String SET_REMEMBER_POSITION_HOME = "set_remember_position";
+    public static final String SET_DISPLAY_ADMIN_MENU = "set_display_admin_menu";
+    public static final String SET_DISPLAY_ADMIN_STATUSES = "set_display_admin_statuses";
+
     public static final int S_NO = 0;
     static final int S_512KO = 1;
     public static final int S_1MO = 2;
@@ -1504,7 +1508,7 @@ public class Helper {
      */
     public static void changeUser(Activity activity, String userID, String instance, boolean notificationIntent) {
 
-
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         MainActivity.lastNotificationId = null;
@@ -1517,13 +1521,7 @@ public class Helper {
         //Can happen when an account has been deleted and there is a click on an old notification
         if( account == null)
             return;
-        //Locked account can see follow request
-        if (account.isLocked()) {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-        } else {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
-        }
-        SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         if( !account.getToken().equals(token)){
             FragmentManager fm = activity.getFragmentManager();
@@ -1531,6 +1529,7 @@ public class Helper {
                 fm.popBackStack();
             }
         }
+
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
@@ -2915,6 +2914,27 @@ public class Helper {
             } else {
                 if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
+            MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
+            if( news != null){
+                boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
+                if( ! display_news ){
+                    news.setVisible(false);
+                }
+            }
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+                if( adminItem != null){
+                    adminItem.setVisible(false);
+                }
+            }else{
+                boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userID + instance, false);
+                if( !display_admin_menu){
+                    MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
+                    if( adminItem != null){
+                        adminItem.setVisible(false);
+                    }
+                }
             }
 
         }

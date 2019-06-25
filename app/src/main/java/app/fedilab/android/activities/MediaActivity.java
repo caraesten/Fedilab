@@ -175,7 +175,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             @Override
             public void onClick(View view) {
                 isSHaring = false;
-                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio")  || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
@@ -198,7 +198,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             @Override
             public void onClick(View view) {
                 isSHaring = true;
-                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") ||attachment.getType().toLowerCase().equals("gifv")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
@@ -390,7 +390,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             preview_url = attachment.getRemote_url();
             if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg")) {
                 type = "image";
-            }else if( preview_url.endsWith(".mp4")) {
+            }else if( preview_url.endsWith(".mp4") || preview_url.endsWith(".mp3")) {
                 type = "video";
             }
             url = attachment.getRemote_url();
@@ -443,6 +443,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 );
                 break;
             case "video":
+            case "audio":
             case "gifv":
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);

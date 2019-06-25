@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_local"
+        android:checkable="true"
+        android:title="@string/local"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_remote"
+        android:checkable="true"
+        android:title="@string/remote"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_active"
+        android:checkable="true"
+        android:title="@string/active"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_pending"
+        android:checkable="true"
+        android:title="@string/pending"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_disabled"
+        android:checkable="true"
+        android:title="@string/disabled"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_silenced"
+        android:checkable="true"
+        android:title="@string/silenced"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_suspended"
+        android:checkable="true"
+        android:title="@string/suspended"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+</menu>

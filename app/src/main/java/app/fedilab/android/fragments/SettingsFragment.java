@@ -342,6 +342,41 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+
+        boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
+
+        final CheckBox set_display_admin_menu = rootView.findViewById(R.id.set_display_admin_menu);
+        set_display_admin_menu.setChecked(display_admin_menu);
+        set_display_admin_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, set_display_admin_menu.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + instance, false);
+
+        final CheckBox set_display_admin_statuses = rootView.findViewById(R.id.set_display_admin_statuses);
+        set_display_admin_statuses.setChecked(display_admin_statuses);
+        set_display_admin_statuses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + instance, set_display_admin_statuses.isChecked());
+                editor.apply();
+            }
+        });
+
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            LinearLayout admin_container = rootView.findViewById(R.id.admin_container);
+            if( admin_container != null){
+                admin_container.setVisibility(View.GONE);
+            }
+        }
 
         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
         final CheckBox set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);
@@ -1022,8 +1057,7 @@ public class SettingsFragment extends Fragment {
 
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+
         final Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
         if( theme == Helper.THEME_DARK){
