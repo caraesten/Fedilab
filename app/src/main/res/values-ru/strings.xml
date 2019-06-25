@@ -983,6 +983,7 @@
     <string name="mark_resolved">Пометить как решенный</string>
     <string name="mark_unresolved">Пометить как нерешенный</string>
     <string name="toast_empty_content">Empty content!</string>
+    <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
