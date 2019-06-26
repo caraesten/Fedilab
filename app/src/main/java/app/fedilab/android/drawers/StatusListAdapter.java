@@ -60,11 +60,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -121,6 +123,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.CustomEmojiDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.StatusStoredDAO;
@@ -185,6 +188,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
+    private AlertDialog alertDialogEmoji;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -827,6 +831,51 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
+
+            holder.quick_reply_emoji.setOnClickListener(view ->{
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK) {
+                    style = R.style.DialogBlack;
+                } else {
+                    style = R.style.Dialog;
+                }
+
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                final List<Emojis>  emojis = new CustomEmojiDAO(context, db).getAllEmojis(Helper.getLiveInstance(context));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                int paddingPixel = 15;
+                float density = context.getResources().getDisplayMetrics().density;
+                int paddingDp = (int)(paddingPixel * density);
+                builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setTitle(R.string.insert_emoji);
+                if( emojis != null && emojis.size() > 0) {
+                    GridView gridView = new GridView(context);
+                    gridView.setAdapter(new CustomEmojiAdapter(context, android.R.layout.simple_list_item_1, emojis));
+                    gridView.setNumColumns(5);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            holder.quick_reply_text.getText().insert(holder.quick_reply_text.getSelectionStart(), " :" + emojis.get(position).getShortcode()+": ");
+                            alertDialogEmoji.dismiss();
+                        }
+                    });
+                    gridView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(gridView);
+                }else{
+                    TextView textView = new TextView(context);
+                    textView.setText(context.getString(R.string.no_emoji));
+                    textView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(textView);
+                }
+                alertDialogEmoji = builder.show();
+
+            });
 
             if (status.isNew() && new_badge){
                 if (theme == Helper.THEME_BLACK)
