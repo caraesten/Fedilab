@@ -376,7 +376,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageButton custom_feature_schedule;
         ImageButton custom_feature_mention;
         ImageButton custom_feature_cache;
-        ConstraintLayout fedilab_features_panel;
+        ConstraintLayout fedilab_features_panel, quick_reply_container;
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
@@ -475,6 +475,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
             fedilab_features = itemView.findViewById(R.id.fedilab_features);
             fedilab_features_panel = itemView.findViewById(R.id.fedilab_features_panel);
+            quick_reply_container = itemView.findViewById(R.id.quick_reply_container);
             custom_feature_translate = itemView.findViewById(R.id.custom_feature_translate);
             custom_feature_bookmark = itemView.findViewById(R.id.custom_feature_bookmark);
             custom_feature_timed_mute = itemView.findViewById(R.id.custom_feature_timed_mute);
@@ -875,6 +876,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
@@ -903,6 +905,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
@@ -933,6 +936,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_light);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
@@ -2120,7 +2124,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossReply(context, status, type, true);
+                    if (holder.quick_reply_container.getVisibility() == View.GONE)
+                        holder.quick_reply_container.setVisibility(View.VISIBLE);
+                    else
+                        holder.quick_reply_container.setVisibility(View.GONE);
+                    //CrossActions.doCrossReply(context, status, type, true);
                 }
             });
 
