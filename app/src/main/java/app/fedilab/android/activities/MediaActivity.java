@@ -19,13 +19,18 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.RectF;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +39,19 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.cleveroad.audiovisualization.DbmHandler;
+import com.cleveroad.audiovisualization.GLAudioVisualizationView;
+import com.cleveroad.audiovisualization.SpeechRecognizerDbmHandler;
+import com.cleveroad.audiovisualization.VisualizerDbmHandler;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -54,9 +65,12 @@ import com.google.android.exoplayer2.util.Util;
 import com.gw.swipeback.SwipeBackLayout;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -69,8 +83,15 @@ import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import app.fedilab.android.R;
 import app.fedilab.android.interfaces.OnDownloadInterface;
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
+import cafe.adriel.androidaudiorecorder.AudioRecorderActivity;
+import cafe.adriel.androidaudiorecorder.VisualizerHandler;
+import omrecorder.AudioChunk;
+import omrecorder.PullTransport;
 
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import static cafe.adriel.androidaudiorecorder.Util.formatSeconds;
+import static cafe.adriel.androidaudiorecorder.Util.getDarkerColor;
 
 
 /**
@@ -78,7 +99,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Media Activity
  */
 
-public class MediaActivity extends BaseActivity implements OnDownloadInterface {
+public class MediaActivity extends BaseActivity implements OnDownloadInterface, PullTransport.OnAudioChunkPulledListener, MediaPlayer.OnCompletionListener {
 
 
     private RelativeLayout loader;
@@ -105,6 +126,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     SwipeBackLayout mSwipeBackLayout;
     private float imageScale = 0;
     private RelativeLayout action_bar_container;
+    private VisualizerHandler visualizerHandler;
+    private TextView statusView;
+    private TextView timerView;
+    private ImageButton playView;
+    private GLAudioVisualizationView visualizerView;
+
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -116,6 +143,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private SimpleExoPlayer player;
     private boolean isSHaring;
     private String instance;
+    private RelativeLayout content_audio;
+    private MediaPlayer playeraudio;
+    private Timer timer;
+    private int playerSecondsElapsed;
+    private static final Handler HANDLER = new Handler();
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +159,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         super.onCreate(savedInstanceState);
         hideSystemUI();
         setContentView(R.layout.activity_media);
-        action_bar_container = (RelativeLayout) findViewById(R.id.action_bar_container);
+        action_bar_container = findViewById(R.id.action_bar_container);
         mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
         mSwipeBackLayout.setMaskAlpha(125);
@@ -147,6 +180,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
             }
         });
+
         instance = Helper.getLiveInstance(MediaActivity.this);
         mSwipeBackLayout.attachToActivity(this);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
@@ -170,7 +204,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_close = findViewById(R.id.media_close);
         progress = findViewById(R.id.loader_progress);
         webview_video = findViewById(R.id.webview_video);
-
+        content_audio = findViewById(R.id.content_audio);
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,7 +315,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
 
+    }
     /**
      * Manage touch event
      * Allows to swipe from timelines
@@ -443,7 +480,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 );
                 break;
             case "video":
-            case "audio":
             case "gifv":
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
@@ -507,7 +543,135 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 webview_video.setWebViewClient(new MastalabWebViewClient(MediaActivity.this));
                 webview_video.loadUrl(attachment.getUrl());
                 break;
+            case "audio":
+                int color = getIntent().getIntExtra("color", Color.BLACK);
+                visualizerView = new GLAudioVisualizationView.Builder(this)
+                        .setLayersCount(1)
+                        .setWavesCount(6)
+                        .setWavesHeight(R.dimen.aar_wave_height)
+                        .setWavesFooterHeight(R.dimen.aar_footer_height)
+                        .setBubblesPerLayer(20)
+                        .setBubblesSize(R.dimen.aar_bubble_size)
+                        .setBubblesRandomizeSize(true)
+                        .setBackgroundColor(getDarkerColor(color))
+                        .setLayerColors(new int[]{color})
+                        .build();
+
+                statusView =  findViewById(R.id.status);
+                timerView =  findViewById(R.id.timer);
+                playView =  findViewById(R.id.play);
+                content_audio.setBackgroundColor(getDarkerColor(color));
+                content_audio.addView(visualizerView, 0);
+                playView.setVisibility(View.INVISIBLE);
+                this.url = attachment.getUrl();
+                startPlaying();
+                break;
         }
+    }
+
+
+    public void togglePlaying(View v){
+
+        HANDLER.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(isPlaying()){
+                    stopPlaying();
+                } else {
+                    startPlaying();
+                }
+            }
+        }, 100);
+    }
+
+    private void startPlaying(){
+        try {
+            playeraudio = new MediaPlayer();
+            playeraudio.setDataSource(url);
+            playeraudio.prepare();
+            playeraudio.start();
+
+
+            visualizerView.linkTo(DbmHandler.Factory.newVisualizerHandler(this, playeraudio));
+            visualizerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    playeraudio.setOnCompletionListener(MediaActivity.this);
+                }
+            });
+
+            timerView.setText("00:00:00");
+            playView.setVisibility(View.VISIBLE);
+            statusView.setText(R.string.aar_playing);
+            statusView.setVisibility(View.VISIBLE);
+            playView.setImageResource(R.drawable.aar_ic_stop);
+
+            playerSecondsElapsed = 0;
+            startTimer();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void stopPlaying(){
+        statusView.setText("");
+        statusView.setVisibility(View.INVISIBLE);
+        playView.setImageResource(R.drawable.aar_ic_play);
+
+        visualizerView.release();
+        if(visualizerHandler != null) {
+            visualizerHandler.stop();
+        }
+
+        if(playeraudio != null){
+            try {
+                playeraudio.pause();
+            } catch (Exception ignored){ }
+        }
+
+        stopTimer();
+    }
+    private void startTimer(){
+        stopTimer();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateTimer();
+            }
+        }, 0, 1000);
+    }
+
+    private void updateTimer() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerSecondsElapsed++;
+                timerView.setText(formatSeconds(playerSecondsElapsed));
+            }
+        });
+    }
+
+    private void stopTimer(){
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+    }
+
+    private boolean isPlaying(){
+        try {
+            return playeraudio != null && playeraudio.isPlaying();
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public void onAudioChunkPulled(AudioChunk audioChunk) {
+        float amplitude = (float) audioChunk.maxAmplitude();
+        visualizerHandler.onDataReceived(amplitude);
     }
 
     @Override
@@ -545,6 +709,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         if( player != null) {
             player.setPlayWhenReady(false);
         }
+        if( playeraudio != null) {
+            playeraudio.pause();
+        }
     }
 
     @Override
@@ -552,6 +719,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         super.onResume();
         if( player != null) {
             player.setPlayWhenReady(true);
+        }
+        if( playeraudio != null) {
+            playeraudio.start();
         }
 
     }

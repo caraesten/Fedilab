@@ -884,6 +884,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.dark_text);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.black_text_toot_header);
 
+                Helper.changeDrawableColor(context, R.drawable.ic_soundcloud, R.color.black_text_toot_header);
+
                 Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.dark_icon);
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
                 holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
@@ -906,7 +908,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-
+                Helper.changeDrawableColor(context, R.drawable.ic_soundcloud, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.dark_text_toot_header);
 
                 Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
@@ -933,6 +935,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                Helper.changeDrawableColor(context, R.drawable.ic_soundcloud, R.color.action_light);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
@@ -2968,7 +2971,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if( !blur) {
                             Glide.with(imageView.getContext())
                                     .asBitmap()
-                                    .load(url)
+                                    .load( !attachment.getType().toLowerCase().equals("audio")?url:R.drawable.ic_soundcloud)
                                     .thumbnail(0.1f)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
@@ -2991,7 +2994,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else{
                             Glide.with(imageView.getContext())
                                     .asBitmap()
-                                    .load(url)
+                                    .load(!attachment.getType().toLowerCase().equals("audio")?url:R.drawable.ic_soundcloud)
                                     .thumbnail(0.1f)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
@@ -3016,14 +3019,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
                         if( !blur) {
                             Glide.with(imageView.getContext())
-                                    .load(url)
+                                    .load(!attachment.getType().toLowerCase().equals("audio")?url:R.drawable.ic_soundcloud)
                                     .thumbnail(0.1f)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
                         }else{
                             Glide.with(imageView.getContext())
-                                    .load(url)
+                                    .load(!attachment.getType().toLowerCase().equals("audio")?url:R.drawable.ic_soundcloud)
                                     .thumbnail(0.1f)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50,3), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
