@@ -185,7 +185,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
-    private RecyclerView mRecyclerView;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -2149,19 +2148,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    status.setShortReply(!status.isShortReply());
-                    if( status.isShortReply()){
+                    boolean shown = status.isShortReply();
+                    if( !shown){
+                        for(Status s: statuses){
+                            if(s.isShortReply()){
+                                s.setShortReply(false);
+                                notifyStatusChanged(s);
+                            }
+                        }
+                        status.setShortReply(true);
                         holder.quick_reply_text.requestFocus();
-
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         inputMethodManager.toggleSoftInputFromWindow(
                                 holder.quick_reply_text.getApplicationWindowToken(),
                                 InputMethodManager.SHOW_FORCED, 0);
-                        tryMoveSelection(i);
                     }else{
+                        status.setShortReply(false);
                         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+
                     }
                     notifyStatusChanged(status);
                 }
@@ -3645,20 +3651,5 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
     }
 
-
-    @Override
-    public void onAttachedToRecyclerView(@NotNull final RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-
-        mRecyclerView = recyclerView;
-
-    }
-
-    private void tryMoveSelection(int mSelectedItem) {
-        if (mSelectedItem >= 0 && mSelectedItem+1 < getItemCount()) {
-            mRecyclerView.smoothScrollBy(mSelectedItem, (int) Helper.convertDpToPixel(250, context));
-        }
-
-    }
 
 }
