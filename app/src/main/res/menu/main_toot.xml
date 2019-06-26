@@ -28,7 +28,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_microphone"
-        android:title="@string/microphone"
+        android:title="@string/voice_message"
         android:icon="@drawable/ic_mic"
         app:showAsAction="ifRoom" />
     <item

@@ -110,4 +110,6 @@ dependencies {
     implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
     implementation "info.guardianproject.netcipher:netcipher:$netCipherVersion"
     implementation "info.guardianproject.netcipher:netcipher-okhttp3:$netCipherVersion"
+
+    implementation  'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
 }

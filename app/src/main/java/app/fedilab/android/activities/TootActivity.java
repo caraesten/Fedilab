@@ -53,6 +53,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -178,6 +179,10 @@ import app.fedilab.android.sqlite.CustomEmojiDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
+import cafe.adriel.androidaudiorecorder.model.AudioChannel;
+import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
+import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -253,7 +258,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private TextWatcher textWatcher;
     private int pollCountItem;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
-
+    public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
+    public static final int SEND_VOICE_MESSAGE = 1423;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -898,6 +904,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 break;
             }
+            case REQUEST_CAMERA_PERMISSION_RESULT: {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    recordAudio();
+                }
+            }
         }
     }
 
@@ -1025,13 +1036,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
             }
 
-        }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == RESULT_OK){
-            if (null != data) {
-                ArrayList<String> result = data
-                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                toot_content.setText(result.get(0));
-                toot_content.setSelection(toot_content.getText().length());
-            }
+        }else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
+
+            Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedialb_recorded_audio.wav"));
+            upload(TootActivity.this, uri, "fedialb_recorded_audio.wav");
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
             if( photo_editor) {
                 Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1092,6 +1100,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 index++;
             }
+
+            File audioFile = new File(getCacheDir() + "/fedialb_recorded_audio.wav");
+            audioFile.delete();
             if( !alreadyAdded){
                 toot_picture_container.setVisibility(View.VISIBLE);
                 String url = attachment.getPreview_url();
@@ -1576,19 +1587,24 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 return true;
             case R.id.action_microphone:
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-                        getString(R.string.speech_prompt));
-                try {
-                    startActivityForResult(intent, Helper.REQ_CODE_SPEECH_INPUT);
-                } catch (ActivityNotFoundException a) {
-                    Toasty.info(getApplicationContext(),
-                            getString(R.string.speech_not_supported),
-                            Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
+                            PackageManager.PERMISSION_GRANTED) {
+                        recordAudio();
+                    } else {
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
+                            Toast.makeText(this,
+                                    getString(R.string.audio), Toast.LENGTH_SHORT).show();
+                        }
+                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO
+                        }, REQUEST_CAMERA_PERMISSION_RESULT);
+                    }
+
+                } else {
+                    recordAudio();
                 }
+
+
                 return true;
             case R.id.action_store:
                 storeToot(true, true);
@@ -3359,4 +3375,23 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
+
+    private void recordAudio(){
+        String filePath = getCacheDir() + "/fedialb_recorded_audio.wav";
+        int color = getResources().getColor(R.color.mastodonC1);
+        AndroidAudioRecorder.with(this)
+                // Required
+                .setFilePath(filePath)
+                .setColor(color)
+                .setRequestCode(SEND_VOICE_MESSAGE)
+
+                // Optional
+                .setSource(AudioSource.MIC)
+                .setChannel(AudioChannel.STEREO)
+                .setSampleRate(AudioSampleRate.HZ_44100)
+                .setAutoStart(true)
+                .setKeepDisplayOn(true)
+                // Start recording
+                .record();
+    }
 }
