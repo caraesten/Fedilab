@@ -310,7 +310,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        stopPlaying();
     }
     /**
      * Manage touch event
@@ -606,6 +606,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
             e.printStackTrace();
         }
     }
+
 
     private void stopPlaying(){
         statusView.setText("");

@@ -1111,14 +1111,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-                Bitmap musicBtp = BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.music);
                 if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                     Uri uri = filesMap.get(attachment.getUrl());
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(uri)
-                            .error(Glide.with(imageView).asBitmap().load(musicBtp))
+                            .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -1130,7 +1128,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(url)
-                            .error(Glide.with(imageView).asBitmap().load(musicBtp))
+                            .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
