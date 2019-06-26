@@ -84,6 +84,7 @@ import omrecorder.PullTransport;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static cafe.adriel.androidaudiorecorder.Util.formatSeconds;
 import static cafe.adriel.androidaudiorecorder.Util.getDarkerColor;
+import static cafe.adriel.androidaudiorecorder.Util.isBrightColor;
 
 
 /**
@@ -91,7 +92,7 @@ import static cafe.adriel.androidaudiorecorder.Util.getDarkerColor;
  * Media Activity
  */
 
-public class MediaActivity extends BaseActivity implements OnDownloadInterface, PullTransport.OnAudioChunkPulledListener, MediaPlayer.OnCompletionListener {
+public class MediaActivity extends BaseActivity implements OnDownloadInterface, MediaPlayer.OnCompletionListener {
 
 
     private RelativeLayout loader;
@@ -536,7 +537,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 webview_video.loadUrl(attachment.getUrl());
                 break;
             case "audio":
-                int color = getIntent().getIntExtra("color", Color.BLACK);
+                int color = getResources().getColor(R.color.mastodonC1);
                 visualizerView = new GLAudioVisualizationView.Builder(this)
                         .setLayersCount(1)
                         .setWavesCount(6)
@@ -556,6 +557,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 content_audio.addView(visualizerView, 0);
                 playView.setVisibility(View.INVISIBLE);
                 this.url = attachment.getUrl();
+
                 startPlaying();
                 break;
         }
@@ -578,6 +580,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
     private void startPlaying(){
         try {
+            
             playeraudio = new MediaPlayer();
             playeraudio.setDataSource(url);
             playeraudio.prepare();
@@ -659,11 +662,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         }
     }
 
-    @Override
-    public void onAudioChunkPulled(AudioChunk audioChunk) {
-        float amplitude = (float) audioChunk.maxAmplitude();
-        visualizerHandler.onDataReceived(amplitude);
-    }
 
     @Override
     public void onDownloaded(String path, String originUrl, Error error) {
