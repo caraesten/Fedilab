@@ -2200,25 +2200,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     boolean shown = status.isShortReply();
                     if( !shown){
                         for(Status s: statuses){
-                            if(s.isShortReply()){
+                            if(s.isShortReply() && !s.getId().equals(status.getId())){
                                 s.setShortReply(false);
                                 notifyStatusChanged(s);
                             }
                         }
                         status.setShortReply(true);
-                        holder.quick_reply_text.requestFocus();
+                        holder.quick_reply_container.setVisibility(View.VISIBLE);
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         inputMethodManager.toggleSoftInputFromWindow(
                                 holder.quick_reply_text.getApplicationWindowToken(),
                                 InputMethodManager.SHOW_FORCED, 0);
+                        holder.quick_reply_text.requestFocus();
                     }else{
+
                         status.setShortReply(false);
+                        holder.quick_reply_container.setVisibility(View.GONE);
                         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
-
                     }
-                    notifyStatusChanged(status);
+
                 }
             });
 
