@@ -580,7 +580,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
     private void startPlaying(){
         try {
-            
+
             playeraudio = new MediaPlayer();
             playeraudio.setDataSource(url);
             playeraudio.prepare();
