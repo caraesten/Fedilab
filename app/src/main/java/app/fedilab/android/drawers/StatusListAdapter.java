@@ -56,6 +56,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -88,6 +89,8 @@ import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
 import com.varunest.sparkbutton.SparkButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -115,6 +118,7 @@ import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -181,6 +185,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
+    private RecyclerView mRecyclerView;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -384,6 +389,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
+
+        MastalabAutoCompleteTextView quick_reply_text;
+        ImageView quick_reply_switch_to_full;
+        TextView toot_space_left;
+        ImageView quick_reply_emoji;
+        Button quick_reply_button;
+
         public View getView(){
             return itemView;
         }
@@ -494,6 +506,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             cached_status = itemView.findViewById(R.id.cached_status);
             status_account_bot = itemView.findViewById(R.id.status_account_bot);
 
+
+
+            quick_reply_text = itemView.findViewById(R.id.quick_reply_text);
+            quick_reply_switch_to_full = itemView.findViewById(R.id.quick_reply_switch_to_full);
+            toot_space_left = itemView.findViewById(R.id.toot_space_left);
+            quick_reply_emoji = itemView.findViewById(R.id.quick_reply_emoji);
+            quick_reply_button = itemView.findViewById(R.id.quick_reply_button);
 
         }
     }
@@ -2121,14 +2140,30 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_video.setVisibility(View.GONE);
             }
 
+            if( status.isShortReply()){
+                holder.quick_reply_container.setVisibility(View.VISIBLE);
+            }else{
+                holder.quick_reply_container.setVisibility(View.GONE);
+            }
+
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (holder.quick_reply_container.getVisibility() == View.GONE)
-                        holder.quick_reply_container.setVisibility(View.VISIBLE);
-                    else
-                        holder.quick_reply_container.setVisibility(View.GONE);
-                    //CrossActions.doCrossReply(context, status, type, true);
+                    status.setShortReply(!status.isShortReply());
+                    if( status.isShortReply()){
+                        holder.quick_reply_text.requestFocus();
+
+                        InputMethodManager inputMethodManager =
+                                (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.toggleSoftInputFromWindow(
+                                holder.quick_reply_text.getApplicationWindowToken(),
+                                InputMethodManager.SHOW_FORCED, 0);
+                        tryMoveSelection(i);
+                    }else{
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+                    }
+                    notifyStatusChanged(status);
                 }
             });
 
@@ -3609,4 +3644,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void setConversationPosition(int position){
         this.conversationPosition = position;
     }
+
+
+    @Override
+    public void onAttachedToRecyclerView(@NotNull final RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        mRecyclerView = recyclerView;
+
+    }
+
+    private void tryMoveSelection(int mSelectedItem) {
+        if (mSelectedItem >= 0 && mSelectedItem+1 < getItemCount()) {
+            mRecyclerView.smoothScrollBy(mSelectedItem, (int) Helper.convertDpToPixel(250, context));
+        }
+
+    }
+
 }

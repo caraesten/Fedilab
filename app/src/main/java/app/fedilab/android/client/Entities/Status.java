@@ -138,6 +138,7 @@ public class Status implements Parcelable{
     private boolean cached = false;
     private boolean autoHiddenCW = false;
     private boolean customFeaturesDisplayed = false;
+    private boolean shortReply = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -199,6 +200,7 @@ public class Status implements Parcelable{
         dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
         dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
         dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
     }
 
     protected Status(Parcel in) {
@@ -262,6 +264,7 @@ public class Status implements Parcelable{
         this.cached = in.readByte() != 0;
         this.autoHiddenCW = in.readByte() != 0;
         this.customFeaturesDisplayed = in.readByte() != 0;
+        this.shortReply = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -334,6 +337,13 @@ public class Status implements Parcelable{
         this.content = Helper.remove_tracking_param(content);
     }
 
+    public boolean isShortReply() {
+        return shortReply;
+    }
+
+    public void setShortReply(boolean shortReply) {
+        this.shortReply = shortReply;
+    }
     public Status getReblog() {
         return reblog;
     }
