@@ -53,7 +53,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1038,8 +1037,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
 
-            Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedialb_recorded_audio.wav"));
-            upload(TootActivity.this, uri, "fedialb_recorded_audio.wav");
+            Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedilab_recorded_audio.wav"));
+            upload(TootActivity.this, uri, "fedilab_recorded_audio.wav");
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
             if( photo_editor) {
                 Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1101,7 +1100,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 index++;
             }
 
-            File audioFile = new File(getCacheDir() + "/fedialb_recorded_audio.wav");
+            File audioFile = new File(getCacheDir() + "/fedilab_recorded_audio.wav");
             audioFile.delete();
             if( !alreadyAdded){
                 toot_picture_container.setVisibility(View.VISIBLE);
@@ -3377,7 +3376,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
     private void recordAudio(){
-        String filePath = getCacheDir() + "/fedialb_recorded_audio.wav";
+        String filePath = getCacheDir() + "/fedilab_recorded_audio.wav";
         int color = getResources().getColor(R.color.mastodonC1);
         AndroidAudioRecorder.with(this)
                 // Required
