@@ -1161,7 +1161,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
+
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
@@ -1191,7 +1191,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
@@ -1222,7 +1221,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_light);
+
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
@@ -2513,12 +2512,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
+                                changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.dark_text);
+                                if( theme == Helper.THEME_DARK) {
+                                    holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background);
+                                    changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
+                                }else{
+                                    holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_black);
+                                    changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
+                                }
                             }else {
+                                holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_light);
                                 changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
                                 changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
                                 changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
                                 changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
                                 changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
+                                changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.black);
 
                             }
 
