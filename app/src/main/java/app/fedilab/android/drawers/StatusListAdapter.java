@@ -51,6 +51,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -286,10 +287,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        Log.v(Helper.TAG,"onRetrieveSearch");
         if( apiResponse.getError() != null)
             return;
         int searchLength = 15;
         final List<Account> accounts = apiResponse.getAccounts();
+        Log.v(Helper.TAG,"accounts: " +accounts);
+        if( accounts != null)
+            Log.v(Helper.TAG,"size: " +accounts.size());
         if( accounts != null && accounts.size() > 0){
             int currentCursorPosition = toot_content.getSelectionStart();
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
@@ -383,12 +388,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
+
         if( apiResponse == null || apiResponse.getResults() == null)
             return;
         int searchLength = 15;
         app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
         int currentCursorPosition = toot_content.getSelectionStart();
         final List<String> tags = results.getHashtags();
+
         if( tags != null && tags.size() > 0){
             TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, tags);
             toot_content.setThreshold(1);
@@ -2382,7 +2389,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             toot_space_left = holder.toot_space_left;
 
                             if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                                holder.status_content.addTextChangedListener(textWatcher);
+                                holder.quick_reply_text.addTextChangedListener(textWatcher);
 
                         } else {
                             status.setShortReply(false);

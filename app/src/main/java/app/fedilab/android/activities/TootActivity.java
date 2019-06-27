@@ -783,6 +783,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
+                Log.v(Helper.TAG,"s: " + s.toString());
                 if (autocomplete) {
                     toot_content.removeTextChangedListener(finalTextw);
                     Thread thread = new Thread() {
