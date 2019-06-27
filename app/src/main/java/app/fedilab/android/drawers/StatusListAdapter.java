@@ -2406,7 +2406,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else{
                 holder.quick_reply_container.setVisibility(View.GONE);
             }
+            holder.quick_reply_container.setOnClickListener(view -> {
 
+            });
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
