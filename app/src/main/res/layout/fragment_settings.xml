@@ -344,6 +344,15 @@
             android:text="@string/set_display_bot_icon"
             android:layout_height="wrap_content" />
 
+        <!-- DISPLAY BOT ICON -->
+        <CheckBox
+            android:id="@+id/set_quick_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_quick_reply" />
+
         <!-- FIT PREVIEWS  -->
         <CheckBox
             android:id="@+id/set_fit_preview"

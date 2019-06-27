@@ -412,6 +412,7 @@ public class Helper {
     public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_DISPLAY_NEW_BADGE = "set_display_new_badge";
     public static final String SET_DISPLAY_BOT_ICON = "set_display_bot_icon";
+    public static final String SET_QUICK_REPLY = "set_quick_reply";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";

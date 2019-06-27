@@ -699,6 +699,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean quick_reply = sharedpreferences.getBoolean(Helper.SET_QUICK_REPLY, true);
+        final CheckBox set_quick_reply = rootView.findViewById(R.id.set_quick_reply);
+        set_quick_reply.setChecked(quick_reply);
+
+        set_quick_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_QUICK_REPLY, set_quick_reply.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
         set_fit_preview.setChecked(fit_preview);
