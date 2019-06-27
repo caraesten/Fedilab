@@ -1201,7 +1201,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
         if( !split_toot){
             set_split_container.setVisibility(View.GONE);
         }
@@ -1211,7 +1211,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, set_split_toot.isChecked());
+                editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, set_split_toot.isChecked());
                 editor.apply();
                 if( set_split_toot.isChecked()){
                     set_split_container.setVisibility(View.VISIBLE);

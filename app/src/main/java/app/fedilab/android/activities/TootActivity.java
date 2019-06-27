@@ -1795,7 +1795,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
         }*/
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
 
         String tootContent;
@@ -2201,7 +2201,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
 
         int cwSize = toot_cw_content.getText().toString().trim().length();
