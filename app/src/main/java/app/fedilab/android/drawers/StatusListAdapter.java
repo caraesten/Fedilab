@@ -612,6 +612,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
             boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
 
+            boolean quick_reply = sharedpreferences.getBoolean(Helper.SET_QUICK_REPLY, true);
+
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
@@ -2197,30 +2199,46 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean shown = status.isShortReply();
-                    if( !shown){
-                        for(Status s: statuses){
-                            if(s.isShortReply() && !s.getId().equals(status.getId())){
-                                s.setShortReply(false);
-                                notifyStatusChanged(s);
+                    if (quick_reply) {
+                        boolean shown = status.isShortReply();
+                        if (!shown) {
+                            for (Status s : statuses) {
+                                if (s.isShortReply() && !s.getId().equals(status.getId())) {
+                                    s.setShortReply(false);
+                                    notifyStatusChanged(s);
+                                }
                             }
+                            status.setShortReply(true);
+                            holder.quick_reply_container.setVisibility(View.VISIBLE);
+                            InputMethodManager inputMethodManager =
+                                    (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.toggleSoftInputFromWindow(
+                                    holder.quick_reply_text.getApplicationWindowToken(),
+                                    InputMethodManager.SHOW_FORCED, 0);
+                            holder.quick_reply_text.requestFocus();
+                        } else {
+                            status.setShortReply(false);
+                            holder.quick_reply_container.setVisibility(View.GONE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
                         }
-                        status.setShortReply(true);
-                        holder.quick_reply_container.setVisibility(View.VISIBLE);
-                        InputMethodManager inputMethodManager =
-                                (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.toggleSoftInputFromWindow(
-                                holder.quick_reply_text.getApplicationWindowToken(),
-                                InputMethodManager.SHOW_FORCED, 0);
-                        holder.quick_reply_text.requestFocus();
-                    }else{
-
-                        status.setShortReply(false);
-                        holder.quick_reply_container.setVisibility(View.GONE);
-                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+                        holder.quick_reply_switch_to_full.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CrossActions.doCrossReply(context, status, type, true);
+                                status.setShortReply(false);
+                                holder.quick_reply_container.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        CrossActions.doCrossReply(context, status, type, true);
+                        if (status.isShortReply()) {
+                            status.setShortReply(false);
+                            holder.quick_reply_container.setVisibility(View.GONE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+                        }
                     }
-
                 }
             });
 
