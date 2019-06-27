@@ -98,6 +98,7 @@
 
         <RelativeLayout
             android:id="@+id/content_audio"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -149,7 +150,6 @@
                     android:src="@drawable/aar_ic_play"
                     android:onClick="togglePlaying"
                     style="@style/Widget.AppCompat.Button.Borderless"/>
-
             </RelativeLayout>
 
         </RelativeLayout>
