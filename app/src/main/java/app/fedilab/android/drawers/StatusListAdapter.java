@@ -46,6 +46,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -121,6 +122,8 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
+import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
@@ -168,7 +171,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -189,6 +192,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
     private AlertDialog alertDialogEmoji;
+    private static MastalabAutoCompleteTextView toot_content;
+    private static EditText toot_cw_content;
+    private static TextView toot_space_left;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -276,6 +282,155 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             new PostActionAsyncTask(context, API.StatusAction.UNSTATUS, refreshedStatus.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
+    }
+
+    @Override
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        if( apiResponse.getError() != null)
+            return;
+        int searchLength = 15;
+        final List<Account> accounts = apiResponse.getAccounts();
+        if( accounts != null && accounts.size() > 0){
+            int currentCursorPosition = toot_content.getSelectionStart();
+            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(accountsListAdapter);
+            final String oldContent = toot_content.getText().toString();
+            if( oldContent.length() >= currentCursorPosition) {
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                if (searchA.length > 0) {
+                    final String search = searchA[searchA.length - 1];
+                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Account account = accounts.get(position);
+                            String deltaSearch = "";
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
+
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace("@" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += "@" + account.getAcct() + " ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length() )
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            toot_content.setText(newContent);
+                            toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                            toot_content.setSelection(newPosition);
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, new ArrayList<>());
+                            toot_content.setThreshold(1);
+                            toot_content.setAdapter(accountsListAdapter);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRetrieveContact(APIResponse apiResponse) {
+
+    }
+
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+        int currentCursorPosition = toot_content.getSelectionStart();
+        int searchLength = 15;
+        if( emojis != null && emojis.size() > 0){
+            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, emojis);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(emojisSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String shortcode = emojis.get(position).getShortcode();
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace(":"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += ":" + shortcode + ": ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_content.setSelection(newPosition);
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(emojisSearchAdapter);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onRetrieveSearch(APIResponse apiResponse) {
+        if( apiResponse == null || apiResponse.getResults() == null)
+            return;
+        int searchLength = 15;
+        app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
+        int currentCursorPosition = toot_content.getSelectionStart();
+        final List<String> tags = results.getHashtags();
+        if( tags != null && tags.size() > 0){
+            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, tags);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(tagsSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            if( oldContent.length() < currentCursorPosition)
+                return;
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
+            if( searchA.length < 1)
+                return;
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if( position >= tags.size() )
+                        return;
+                    String tag = tags.get(position);
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("#"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "#" + tag + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_content.setSelection(newPosition);
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(tagsSearchAdapter);
+                }
+            });
+        }
     }
 
 
@@ -2216,6 +2371,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.quick_reply_text.getApplicationWindowToken(),
                                     InputMethodManager.SHOW_FORCED, 0);
                             holder.quick_reply_text.requestFocus();
+                            EditText content_cw = new EditText(context);
+                            content_cw.setText(status.getReblog()!=null?status.getReblog().getSpoiler_text():status.getSpoiler_text());
+                            TootActivity.manageMentions(context, userId,
+                                    holder.quick_reply_text,content_cw, holder.toot_space_left,status.getReblog()!=null?status.getReblog():status);
+                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
+
+                            toot_content =holder.quick_reply_text;
+                            toot_cw_content = content_cw;
+                            toot_space_left = holder.toot_space_left;
+
+                            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+                                holder.status_content.addTextChangedListener(textWatcher);
+
                         } else {
                             status.setShortReply(false);
                             holder.quick_reply_container.setVisibility(View.GONE);
@@ -3651,10 +3819,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-    @Override
-    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
-    }
 
 
     private void translateToot(Status status){
