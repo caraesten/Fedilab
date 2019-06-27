@@ -806,7 +806,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/emoji_one_category_smileysandpeople"
-            android:tint="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/quick_reply_privacy"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+        <ImageView
+            android:id="@+id/quick_reply_privacy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_public"
             app:layout_constraintEnd_toStartOf="@id/quick_reply_button"
             app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
 
