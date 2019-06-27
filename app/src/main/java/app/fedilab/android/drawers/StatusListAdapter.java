@@ -2400,9 +2400,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.quick_reply_switch_to_full.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CrossActions.doCrossReply(context, status, type, true);
                                 status.setShortReply(false);
                                 holder.quick_reply_container.setVisibility(View.GONE);
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                if( status != null && status.getReblog() != null ) {
+                                    b.putParcelable("tootReply", status.getReblog());
+                                }else {
+                                    b.putParcelable("tootReply", status);
+                                }
+                                b.putString("quickmessagecontent", holder.quick_reply_text.getText().toString());
+                                intent.putExtras(b); //Put your id to your next Intent
+                                context.startActivity(intent);
+                                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                                    try {
+                                        //Avoid to open multi activities when replying in a conversation
+                                        ((ShowConversationActivity)context).finish();
+                                    }catch (Exception ignored){}
+
+                                }
                             }
                         });
                     } else {

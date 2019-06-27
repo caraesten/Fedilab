@@ -255,6 +255,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private TextWatcher textWatcher;
     private int pollCountItem;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
+    private String quickmessagecontent;
 
 
     @Override
@@ -434,6 +435,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             removed = b.getBoolean("removed");
             visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
+            quickmessagecontent = b.getString("quickmessagecontent", null);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
@@ -520,14 +522,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         toot_content.requestFocus();
-        if (mentionAccount != null) {
-            toot_content.setText(String.format("@%s\n", mentionAccount));
+        if( quickmessagecontent == null) {
+            if (mentionAccount != null) {
+                toot_content.setText(String.format("@%s\n", mentionAccount));
+                toot_content.setSelection(toot_content.getText().length());
+                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+            }
+            if (tootMention != null && urlMention != null) {
+                toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
+                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+            }
+        }else{
+            toot_content.setText(quickmessagecontent);
+            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
             toot_content.setSelection(toot_content.getText().length());
-            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-        }
-        if (tootMention != null && urlMention != null) {
-            toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
-            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
         }
 
 
