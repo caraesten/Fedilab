@@ -148,4 +148,8 @@
 
     <color name="custom_features_panel_background">#14161B</color>
     <color name="custom_features_panel_background_light">#E0E0E0</color>
+
+    <color name="quick_reply_background_dark">#2d313c</color>
+    <color name="quick_reply_background_black">#1A1A1A</color>
+    <color name="quick_reply_background_light">#E0E0E0</color>
 </resources>

@@ -1084,6 +1084,7 @@
     <string name="audio">The application needs to access audio recording</string>
     <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
     <string name="voice_message">Voice message</string>
+    <string name="set_quick_reply">Enable quick reply</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

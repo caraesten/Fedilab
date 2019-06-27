@@ -834,6 +834,81 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/quick_reply_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/quick_reply_background"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <app.fedilab.android.helper.MastalabAutoCompleteTextView
+            android:id="@+id/quick_reply_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:hint="@string/toot_placeholder"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/quick_reply_switch_to_full"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_zoom_out"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+        <TextView
+            android:id="@+id/toot_space_left"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="500"
+            android:textColor="?colorAccent"
+            app:layout_constraintEnd_toStartOf="@id/quick_reply_emoji"
+            app:layout_constraintStart_toEndOf="@id/quick_reply_switch_to_full"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+        <ImageView
+            android:id="@+id/quick_reply_emoji"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/emoji_one_category_smileysandpeople"
+            app:layout_constraintEnd_toStartOf="@id/quick_reply_privacy"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+        <ImageView
+            android:id="@+id/quick_reply_privacy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_public"
+            app:layout_constraintEnd_toStartOf="@id/quick_reply_privacy"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+        <Button
+            android:id="@+id/quick_reply_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/reply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:visibility="gone"
         android:layout_marginBottom="10dp"

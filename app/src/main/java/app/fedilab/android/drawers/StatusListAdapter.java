@@ -46,6 +46,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -56,14 +57,18 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -86,7 +91,10 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.varunest.sparkbutton.SparkButton;
+
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -98,6 +106,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -115,8 +124,13 @@ import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.interfaces.OnPostStatusActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
+import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.CustomEmojiDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.StatusStoredDAO;
@@ -151,6 +165,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
+import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.activities.MainActivity.currentLocale;
@@ -161,7 +176,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -181,6 +196,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status toot;
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
+    private AlertDialog alertDialogEmoji;
+    private MastalabAutoCompleteTextView toot_content;
+    private EditText toot_cw_content;
+    private TextView toot_space_left;
+    private String visibility;
+    private ArrayList<String> splitToot;
+    private int stepSpliToot;
+    private String in_reply_to_status;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -268,6 +291,203 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             new PostActionAsyncTask(context, API.StatusAction.UNSTATUS, refreshedStatus.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
+    }
+
+    @Override
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        if( apiResponse.getError() != null)
+            return;
+        int searchLength = 15;
+        final List<Account> accounts = apiResponse.getAccounts();
+        if( accounts != null && accounts.size() > 0){
+            int currentCursorPosition = toot_content.getSelectionStart();
+            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(accountsListAdapter);
+            final String oldContent = toot_content.getText().toString();
+            if( oldContent.length() >= currentCursorPosition) {
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                if (searchA.length > 0) {
+                    final String search = searchA[searchA.length - 1];
+                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Account account = accounts.get(position);
+                            String deltaSearch = "";
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
+
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace("@" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += "@" + account.getAcct() + " ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length() )
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            toot_content.setText(newContent);
+                            toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                            toot_content.setSelection(newPosition);
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, new ArrayList<>());
+                            toot_content.setThreshold(1);
+                            toot_content.setAdapter(accountsListAdapter);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRetrieveContact(APIResponse apiResponse) {
+
+    }
+
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+        int currentCursorPosition = toot_content.getSelectionStart();
+        int searchLength = 15;
+        if( emojis != null && emojis.size() > 0){
+            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, emojis);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(emojisSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String shortcode = emojis.get(position).getShortcode();
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace(":"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += ":" + shortcode + ": ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_content.setSelection(newPosition);
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(emojisSearchAdapter);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onRetrieveSearch(APIResponse apiResponse) {
+
+        if( apiResponse == null || apiResponse.getResults() == null)
+            return;
+        int searchLength = 15;
+        app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
+        int currentCursorPosition = toot_content.getSelectionStart();
+        final List<String> tags = results.getHashtags();
+
+        if( tags != null && tags.size() > 0){
+            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, tags);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(tagsSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            if( oldContent.length() < currentCursorPosition)
+                return;
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
+            if( searchA.length < 1)
+                return;
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if( position >= tags.size() )
+                        return;
+                    String tag = tags.get(position);
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("#"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "#" + tag + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_content.setSelection(newPosition);
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(tagsSearchAdapter);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onPostStatusAction(APIResponse apiResponse) {
+        if( apiResponse.getError() != null ) {
+            if (apiResponse.getError().getError().contains("422")) {
+                Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        int cwSize = toot_cw_content.getText().toString().trim().length();
+        int size = toot_content.getText().toString().trim().length() + cwSize;
+
+        if( split_toot && splitToot != null && (size  >= split_toot_size) && stepSpliToot < splitToot.size()){
+            String tootContent = splitToot.get(stepSpliToot);
+            stepSpliToot += 1;
+            Status toot = new Status();
+            toot.setSensitive(false);
+            if( toot_cw_content.getText().toString().trim().length() > 0)
+                toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+            toot.setVisibility(visibility);
+            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
+                toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
+            toot.setContent(tootContent);
+            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+            new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return;
+
+        }
+        if(apiResponse.getError() == null) {
+            Toasty.success(context, context.getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+        }else {
+            if(apiResponse.getError().getStatusCode() == -33)
+                Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
@@ -376,13 +596,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageButton custom_feature_schedule;
         ImageButton custom_feature_mention;
         ImageButton custom_feature_cache;
-        ConstraintLayout fedilab_features_panel;
+        ConstraintLayout fedilab_features_panel, quick_reply_container;
         //Poll
         LinearLayout poll_container, single_choice, multiple_choice, rated;
         RadioGroup radio_group;
 
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
+
+
+        MastalabAutoCompleteTextView quick_reply_text;
+        ImageView quick_reply_switch_to_full;
+        TextView toot_space_left;
+        ImageView quick_reply_emoji;
+        Button quick_reply_button;
+        ImageView quick_reply_privacy;
 
         public View getView(){
             return itemView;
@@ -475,6 +703,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
             fedilab_features = itemView.findViewById(R.id.fedilab_features);
             fedilab_features_panel = itemView.findViewById(R.id.fedilab_features_panel);
+            quick_reply_container = itemView.findViewById(R.id.quick_reply_container);
             custom_feature_translate = itemView.findViewById(R.id.custom_feature_translate);
             custom_feature_bookmark = itemView.findViewById(R.id.custom_feature_bookmark);
             custom_feature_timed_mute = itemView.findViewById(R.id.custom_feature_timed_mute);
@@ -494,6 +723,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_account_bot = itemView.findViewById(R.id.status_account_bot);
 
 
+
+            quick_reply_text = itemView.findViewById(R.id.quick_reply_text);
+            quick_reply_switch_to_full = itemView.findViewById(R.id.quick_reply_switch_to_full);
+            toot_space_left = itemView.findViewById(R.id.toot_space_left);
+            quick_reply_emoji = itemView.findViewById(R.id.quick_reply_emoji);
+            quick_reply_button = itemView.findViewById(R.id.quick_reply_button);
+            quick_reply_privacy  = itemView.findViewById(R.id.quick_reply_privacy);
+
         }
     }
 
@@ -506,7 +743,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemViewType(int position) {
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
         if( !isConsoleMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
@@ -543,7 +780,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
@@ -588,6 +825,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
             boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
+
+            boolean quick_reply = sharedpreferences.getBoolean(Helper.SET_QUICK_REPLY, true);
 
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -809,6 +1048,52 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             }
 
+
+            holder.quick_reply_emoji.setOnClickListener(view ->{
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK) {
+                    style = R.style.DialogBlack;
+                } else {
+                    style = R.style.Dialog;
+                }
+
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                final List<Emojis>  emojis = new CustomEmojiDAO(context, db).getAllEmojis(Helper.getLiveInstance(context));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                int paddingPixel = 15;
+                float density = context.getResources().getDisplayMetrics().density;
+                int paddingDp = (int)(paddingPixel * density);
+                builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setTitle(R.string.insert_emoji);
+                if( emojis != null && emojis.size() > 0) {
+                    GridView gridView = new GridView(context);
+                    gridView.setAdapter(new CustomEmojiAdapter(context, android.R.layout.simple_list_item_1, emojis));
+                    gridView.setNumColumns(5);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            holder.quick_reply_text.getText().insert(holder.quick_reply_text.getSelectionStart(), " :" + emojis.get(position).getShortcode()+": ");
+                            alertDialogEmoji.dismiss();
+                        }
+                    });
+                    gridView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(gridView);
+                }else{
+                    TextView textView = new TextView(context);
+                    textView.setText(context.getString(R.string.no_emoji));
+                    textView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(textView);
+                }
+                alertDialogEmoji = builder.show();
+
+            });
+
             if (status.isNew() && new_badge){
                 if (theme == Helper.THEME_BLACK)
                     holder.new_element.setImageResource(R.drawable.ic_fiber_new_dark);
@@ -875,6 +1160,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
@@ -904,6 +1190,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
@@ -934,6 +1221,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                Helper.changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_light);
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
@@ -2041,6 +2329,74 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            if( context instanceof BaseMainActivity){
+                FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
+                if( toot != null){
+                    toot.hide();
+                }
+            }
+
+            holder.quick_reply_button.setOnClickListener(view -> {
+                Status statusToSend = new Status();
+                statusToSend.setContent(toot_content.getText().toString());
+                if( toot_cw_content != null && toot_cw_content.getText().toString().trim().length() > 0) {
+                    statusToSend.setSpoiler_text(toot_cw_content.getText().toString());
+                }
+                status.setIn_reply_to_id(in_reply_to_status);
+                statusToSend.setVisibility(visibility);
+                sendToot(statusToSend);
+                status.setShortReply(false);
+                holder.quick_reply_container.setVisibility(View.GONE);
+            });
+
+            holder.quick_reply_privacy.setOnClickListener(view -> {
+
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK) {
+                    style = R.style.DialogBlack;
+                } else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
+                dialog.setTitle(R.string.toot_visibility_tilte);
+                final String[] stringArray = context.getResources().getStringArray(R.array.toot_visibility);
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
+                dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        switch (position){
+                            case 0:
+                                visibility = "public";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                break;
+                            case 1:
+                                visibility = "unlisted";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                break;
+                            case 2:
+                                visibility = "private";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                break;
+                            case 3:
+                                visibility = "direct";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                break;
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            });
+
 
 
             if ((type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition) || display_card || display_video_preview) {
@@ -2118,10 +2474,169 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_video.setVisibility(View.GONE);
             }
 
+            if( status.isShortReply()){
+                holder.quick_reply_container.setVisibility(View.VISIBLE);
+            }else{
+                holder.quick_reply_container.setVisibility(View.GONE);
+            }
+            holder.quick_reply_container.setOnClickListener(view -> {
+
+            });
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossReply(context, status, type, true);
+                    if (quick_reply) {
+                        boolean shown = status.isShortReply();
+                        if (!shown) {
+                            for (Status s : statuses) {
+                                if (s.isShortReply() && !s.getId().equals(status.getId())) {
+                                    s.setShortReply(false);
+                                    notifyStatusChanged(s);
+                                }
+                            }
+                            status.setShortReply(true);
+                            holder.quick_reply_container.setVisibility(View.VISIBLE);
+                            InputMethodManager inputMethodManager =
+                                    (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.toggleSoftInputFromWindow(
+                                    holder.quick_reply_text.getApplicationWindowToken(),
+                                    InputMethodManager.SHOW_FORCED, 0);
+                            holder.quick_reply_text.requestFocus();
+                            EditText content_cw = new EditText(context);
+                            content_cw.setText(status.getReblog()!=null?status.getReblog().getSpoiler_text():status.getSpoiler_text());
+                            TootActivity.manageMentions(context, userId,
+                                    holder.quick_reply_text,content_cw, holder.toot_space_left,status.getReblog()!=null?status.getReblog():status);
+                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
+
+                            toot_content = holder.quick_reply_text;
+                            toot_cw_content = content_cw;
+                            toot_space_left = holder.toot_space_left;
+                            in_reply_to_status = status.getReblog() != null ? status.getReblog().getId():status.getId();
+
+                            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
+                            }else {
+                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.white);
+
+                            }
+
+                            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+
+                            String defaultVisibility = account.isLocked()?"private":"public";
+                            String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+                            int initialTootVisibility = 0;
+                            int ownerTootVisibility = 0;
+                            switch (status.getReblog() != null ?status.getReblog().getVisibility():status.getVisibility()){
+                                case "public":
+                                    initialTootVisibility = 4;
+                                    break;
+                                case "unlisted":
+                                    initialTootVisibility  = 3;
+                                    break;
+                                case "private":
+                                    visibility = "private";
+                                    initialTootVisibility = 2;
+                                    break;
+                                case "direct":
+                                    visibility = "direct";
+                                    initialTootVisibility = 1;
+                                    break;
+                            }
+                            if (settingsVisibility != null) {
+                                switch (settingsVisibility){
+                                    case "public":
+                                        ownerTootVisibility = 4;
+                                        break;
+                                    case "unlisted":
+                                        ownerTootVisibility  = 3;
+                                        break;
+                                    case "private":
+                                        visibility = "private";
+                                        ownerTootVisibility = 2;
+                                        break;
+                                    case "direct":
+                                        visibility = "direct";
+                                        ownerTootVisibility = 1;
+                                        break;
+                                }
+                            }
+                            int tootVisibility;
+                            if( ownerTootVisibility >= initialTootVisibility){
+                                tootVisibility = initialTootVisibility;
+                            }else {
+                                tootVisibility = ownerTootVisibility;
+                            }
+                            switch (tootVisibility){
+                                case 4:
+                                    visibility = "public";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                    break;
+                                case 3:
+                                    visibility = "unlisted";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                    break;
+                                case 2:
+                                    visibility = "private";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                    break;
+                                case 1:
+                                    visibility = "direct";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                    break;
+                            }
+
+                            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+                                holder.quick_reply_text.addTextChangedListener(textWatcher);
+
+                        } else {
+                            status.setShortReply(false);
+                            holder.quick_reply_container.setVisibility(View.GONE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+                        }
+                        holder.quick_reply_switch_to_full.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                status.setShortReply(false);
+                                holder.quick_reply_container.setVisibility(View.GONE);
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                if( status != null && status.getReblog() != null ) {
+                                    b.putParcelable("tootReply", status.getReblog());
+                                }else {
+                                    b.putParcelable("tootReply", status);
+                                }
+
+                                b.putString("quickmessagevisibility", visibility);
+                                b.putString("quickmessagecontent", holder.quick_reply_text.getText().toString());
+                                intent.putExtras(b); //Put your id to your next Intent
+                                context.startActivity(intent);
+                                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                                    try {
+                                        //Avoid to open multi activities when replying in a conversation
+                                        ((ShowConversationActivity)context).finish();
+                                    }catch (Exception ignored){}
+
+                                }
+                            }
+                        });
+                    } else {
+                        CrossActions.doCrossReply(context, status, type, true);
+                        if (status.isShortReply()) {
+                            status.setShortReply(false);
+                            holder.quick_reply_container.setVisibility(View.GONE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
+                        }
+                    }
                 }
             });
 
@@ -2784,7 +3299,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     private void loadAttachments(final Status status, final ViewHolder holder, boolean blur){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments;
         if( status.getReblog() != null)
@@ -3119,7 +3634,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     private void timedMuteAction(Status status){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
@@ -3216,7 +3731,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void scheduleBoost(Status status){
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
@@ -3350,6 +3865,43 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         context.startActivity(intent);
     }
 
+    private void sendToot(Status tootReply ){
+
+        if(toot_content.getText().toString().trim().length() == 0){
+            Toasty.error(context, context.getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        String tootContent;
+        if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
+            split_toot_size -= toot_cw_content.getText().toString().trim().length();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(toot_content, toot_cw_content)  < split_toot_size)){
+            tootContent = toot_content.getText().toString().trim();
+        }else{
+            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+            tootContent = splitToot.get(0);
+            stepSpliToot = 1;
+        }
+        Status toot = new Status();
+
+        toot.setSensitive(false);
+        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+        if( toot_cw_content.getText().toString().trim().length() > 0)
+            toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+        toot.setVisibility(visibility);
+        if( tootReply != null)
+            toot.setIn_reply_to_id(tootReply.getId());
+        toot.setContent(tootContent);
+        new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
     private void bookmark(Status status){
         if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
             status.setBookmarked(!status.isBookmarked());
@@ -3415,7 +3967,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if( error != null){
             Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
@@ -3534,15 +4086,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-    @Override
-    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
-    }
 
 
     private void translateToot(Status status){
         //Manages translations
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
         String api_key = null;
@@ -3602,4 +4151,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void setConversationPosition(int position){
         this.conversationPosition = position;
     }
+
+
 }
