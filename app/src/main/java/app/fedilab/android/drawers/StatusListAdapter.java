@@ -51,7 +51,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -63,6 +62,7 @@ import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -196,7 +196,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private static MastalabAutoCompleteTextView toot_content;
     private static EditText toot_cw_content;
     private static TextView toot_space_left;
-
+    private static String visibility;
+    
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -287,14 +288,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
-        Log.v(Helper.TAG,"onRetrieveSearch");
         if( apiResponse.getError() != null)
             return;
         int searchLength = 15;
         final List<Account> accounts = apiResponse.getAccounts();
-        Log.v(Helper.TAG,"accounts: " +accounts);
-        if( accounts != null)
-            Log.v(Helper.TAG,"size: " +accounts.size());
         if( accounts != null && accounts.size() > 0){
             int currentCursorPosition = toot_content.getSelectionStart();
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
@@ -560,6 +557,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView toot_space_left;
         ImageView quick_reply_emoji;
         Button quick_reply_button;
+        ImageView quick_reply_privacy;
 
         public View getView(){
             return itemView;
@@ -678,6 +676,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot_space_left = itemView.findViewById(R.id.toot_space_left);
             quick_reply_emoji = itemView.findViewById(R.id.quick_reply_emoji);
             quick_reply_button = itemView.findViewById(R.id.quick_reply_button);
+            quick_reply_privacy  = itemView.findViewById(R.id.quick_reply_privacy);
 
         }
     }
@@ -995,6 +994,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
+
 
             holder.quick_reply_emoji.setOnClickListener(view ->{
                 int style;
@@ -2276,6 +2276,55 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
+            holder.quick_reply_privacy.setOnClickListener(view -> {
+
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK) {
+                    style = R.style.DialogBlack;
+                } else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
+                dialog.setTitle(R.string.toot_visibility_tilte);
+                final String[] stringArray = context.getResources().getStringArray(R.array.toot_visibility);
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
+                dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        switch (position){
+                            case 0:
+                                visibility = "public";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                break;
+                            case 1:
+                                visibility = "unlisted";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                break;
+                            case 2:
+                                visibility = "private";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                break;
+                            case 3:
+                                visibility = "direct";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                break;
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            });
+
+
 
             if ((type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition) || display_card || display_video_preview) {
 
@@ -2388,6 +2437,86 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             toot_cw_content = content_cw;
                             toot_space_left = holder.toot_space_left;
 
+                            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
+                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
+                            }else {
+                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.white);
+
+                            }
+
+                            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+
+                            String defaultVisibility = account.isLocked()?"private":"public";
+                            String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+                            int initialTootVisibility = 0;
+                            int ownerTootVisibility = 0;
+                            switch (status.getReblog() != null ?status.getReblog().getVisibility():status.getVisibility()){
+                                case "public":
+                                    initialTootVisibility = 4;
+                                    break;
+                                case "unlisted":
+                                    initialTootVisibility  = 3;
+                                    break;
+                                case "private":
+                                    visibility = "private";
+                                    initialTootVisibility = 2;
+                                    break;
+                                case "direct":
+                                    visibility = "direct";
+                                    initialTootVisibility = 1;
+                                    break;
+                            }
+                            if (settingsVisibility != null) {
+                                switch (settingsVisibility){
+                                    case "public":
+                                        ownerTootVisibility = 4;
+                                        break;
+                                    case "unlisted":
+                                        ownerTootVisibility  = 3;
+                                        break;
+                                    case "private":
+                                        visibility = "private";
+                                        ownerTootVisibility = 2;
+                                        break;
+                                    case "direct":
+                                        visibility = "direct";
+                                        ownerTootVisibility = 1;
+                                        break;
+                                }
+                            }
+                            int tootVisibility;
+                            if( ownerTootVisibility >= initialTootVisibility){
+                                tootVisibility = initialTootVisibility;
+                            }else {
+                                tootVisibility = ownerTootVisibility;
+                            }
+                            switch (tootVisibility){
+                                case 4:
+                                    visibility = "public";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                    break;
+                                case 3:
+                                    visibility = "unlisted";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                    break;
+                                case 2:
+                                    visibility = "private";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                    break;
+                                case 1:
+                                    visibility = "direct";
+                                    holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                    break;
+                            }
+
                             if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                 holder.quick_reply_text.addTextChangedListener(textWatcher);
 
@@ -2409,6 +2538,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }else {
                                     b.putParcelable("tootReply", status);
                                 }
+
+                                b.putString("quickmessagevisibility", visibility);
                                 b.putString("quickmessagecontent", holder.quick_reply_text.getText().toString());
                                 intent.putExtras(b); //Put your id to your next Intent
                                 context.startActivity(intent);

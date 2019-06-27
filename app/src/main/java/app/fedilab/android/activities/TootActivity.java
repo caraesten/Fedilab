@@ -37,6 +37,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import androidx.annotation.NonNull;
@@ -53,7 +55,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -255,7 +256,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private TextWatcher textWatcher;
     private int pollCountItem;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
-    private String quickmessagecontent;
+    private String quickmessagecontent, quickmessagevisibility;
 
 
     @Override
@@ -436,6 +437,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             quickmessagecontent = b.getString("quickmessagecontent", null);
+            quickmessagevisibility =  b.getString("quickmessagevisibility", null);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
@@ -589,12 +591,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             uploadSharedImage(sharedUri);
         }
 
-
         if (tootReply == null) {
             if (visibility == null) {
                 String defaultVisibility = account.isLocked() ? "private" : "public";
                 visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             }
+            assert visibility != null;
             switch (visibility) {
                 case "public":
                     toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -610,6 +612,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     break;
             }
         }
+
         toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -791,7 +794,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.v(Helper.TAG,"s: " + s.toString());
                 if (autocomplete) {
                     toot_content.removeTextChangedListener(finalTextw);
                     Thread thread = new Thread() {
@@ -799,25 +801,37 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         public void run() {
                             String fedilabHugsTrigger = ":fedilab_hugs:";
 
+
+                            newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
+
                             int currentLength = countLength(toot_content, toot_cw_content);
-                            int toFill = 500 + fedilabHugsTrigger.length() - currentLength;
+                            int toFill = 500  - currentLength;
                             if(toFill <= 0) {
                                 return;
                             }
 
-                            newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
+
 
                             StringBuilder hugs = new StringBuilder();
                             for(int i = 0; i < toFill; i++) {
                                 hugs.append(new String(Character.toChars(0x1F917)));
                             }
 
-                            newContent[0] = newContent[0] + hugs.toString();
-                            toot_content.setText(newContent[0]);
-                            toot_content.setSelection(toot_content.getText().length());
-                            toot_content.addTextChangedListener(finalTextw);
-                            autocomplete = false;
-                            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                            Handler mainHandler = new Handler(Looper.getMainLooper());
+
+                            Runnable myRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    newContent[0] = newContent[0] + hugs.toString();
+                                    toot_content.setText(newContent[0]);
+                                    toot_content.setSelection(toot_content.getText().length());
+                                   // toot_content.addTextChangedListener(finalTextw);
+                                    autocomplete = false;
+                                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                                }
+                            };
+                            mainHandler.post(myRunnable);
+
                         }
                     };
                     thread.start();
@@ -2881,7 +2895,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             int initialTootVisibility = 0;
             int ownerTootVisibility = 0;
-            switch (tootReply.getVisibility()){
+            String temp_visibility = tootReply.getVisibility();
+            if( quickmessagevisibility != null){
+                temp_visibility = quickmessagevisibility;
+            }
+            switch (temp_visibility){
                 case "public":
                     initialTootVisibility = 4;
                     break;
@@ -2985,7 +3003,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             else
                 contentView.setText(String.format("%s", (contentView.getText().toString() + " ")));
             for(Mention mention : tootReply.getMentions()){
-                Log.v(Helper.TAG, mention.getAcct());
                 if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                     mentionedAccountsAdded.add(mention.getAcct());
                     String tootTemp = String.format("@%s ", mention.getAcct());
