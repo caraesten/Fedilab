@@ -51,6 +51,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -2337,14 +2338,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             holder.quick_reply_button.setOnClickListener(view -> {
-                Status statusToSend = new Status();
-                statusToSend.setContent(toot_content.getText().toString());
-                if( toot_cw_content != null && toot_cw_content.getText().toString().trim().length() > 0) {
-                    statusToSend.setSpoiler_text(toot_cw_content.getText().toString());
-                }
-                status.setIn_reply_to_id(in_reply_to_status);
-                statusToSend.setVisibility(visibility);
-                sendToot(statusToSend);
+                sendToot();
                 status.setShortReply(false);
                 holder.quick_reply_container.setVisibility(View.GONE);
             });
@@ -2514,15 +2508,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             in_reply_to_status = status.getReblog() != null ? status.getReblog().getId():status.getId();
 
                             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                                changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
                             }else {
-                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.white);
-                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.white);
-                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.white);
-                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.white);
+                                changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
+                                changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
+                                changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
+                                changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
+                                changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
 
                             }
 
@@ -3865,7 +3861,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         context.startActivity(intent);
     }
 
-    private void sendToot(Status tootReply ){
+    private void sendToot(){
 
         if(toot_content.getText().toString().trim().length() == 0){
             Toasty.error(context, context.getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
@@ -3895,8 +3891,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        if( tootReply != null)
-            toot.setIn_reply_to_id(tootReply.getId());
+        toot.setIn_reply_to_id(in_reply_to_status);
         toot.setContent(tootContent);
         new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
