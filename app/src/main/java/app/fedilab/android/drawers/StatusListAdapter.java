@@ -91,9 +91,10 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.varunest.sparkbutton.SparkButton;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -105,6 +106,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -123,6 +125,7 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
@@ -162,6 +165,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
+import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.activities.MainActivity.currentLocale;
@@ -172,7 +176,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -193,11 +197,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private TagTimeline tagTimeline;
     public static boolean fetch_all_more = false;
     private AlertDialog alertDialogEmoji;
-    private static MastalabAutoCompleteTextView toot_content;
-    private static EditText toot_cw_content;
-    private static TextView toot_space_left;
-    private static String visibility;
-    
+    private MastalabAutoCompleteTextView toot_content;
+    private EditText toot_cw_content;
+    private TextView toot_space_left;
+    private String visibility;
+    private ArrayList<String> splitToot;
+    private int stepSpliToot;
+    private String in_reply_to_status;
+
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -435,6 +442,52 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
         }
+    }
+
+    @Override
+    public void onPostStatusAction(APIResponse apiResponse) {
+        if( apiResponse.getError() != null ) {
+            if (apiResponse.getError().getError().contains("422")) {
+                Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        int cwSize = toot_cw_content.getText().toString().trim().length();
+        int size = toot_content.getText().toString().trim().length() + cwSize;
+
+        if( split_toot && splitToot != null && (size  >= split_toot_size) && stepSpliToot < splitToot.size()){
+            String tootContent = splitToot.get(stepSpliToot);
+            stepSpliToot += 1;
+            Status toot = new Status();
+            toot.setSensitive(false);
+            if( toot_cw_content.getText().toString().trim().length() > 0)
+                toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+            toot.setVisibility(visibility);
+            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
+                toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
+            toot.setContent(tootContent);
+            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+            new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return;
+
+        }
+        if(apiResponse.getError() == null) {
+            Toasty.success(context, context.getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+        }else {
+            if(apiResponse.getError().getStatusCode() == -33)
+                Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
@@ -690,7 +743,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemViewType(int position) {
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
         if( !isConsoleMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
@@ -727,7 +780,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
@@ -2275,6 +2328,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            if( context instanceof BaseMainActivity){
+                FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
+                if( toot != null){
+                    toot.hide();
+                }
+            }
+
+            holder.quick_reply_button.setOnClickListener(view -> {
+                Status statusToSend = new Status();
+                statusToSend.setContent(toot_content.getText().toString());
+                if( toot_cw_content != null && toot_cw_content.getText().toString().trim().length() > 0) {
+                    statusToSend.setSpoiler_text(toot_cw_content.getText().toString());
+                }
+                status.setIn_reply_to_id(in_reply_to_status);
+                statusToSend.setVisibility(visibility);
+                sendToot(statusToSend);
+                status.setShortReply(false);
+                holder.quick_reply_container.setVisibility(View.GONE);
+            });
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
 
@@ -2435,9 +2507,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.quick_reply_text,content_cw, holder.toot_space_left,status.getReblog()!=null?status.getReblog():status);
                             TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
 
-                            toot_content =holder.quick_reply_text;
+                            toot_content = holder.quick_reply_text;
                             toot_cw_content = content_cw;
                             toot_space_left = holder.toot_space_left;
+                            in_reply_to_status = status.getReblog() != null ? status.getReblog().getId():status.getId();
 
                             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
                                 changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
@@ -3225,7 +3298,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     private void loadAttachments(final Status status, final ViewHolder holder, boolean blur){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments;
         if( status.getReblog() != null)
@@ -3560,7 +3633,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     private void timedMuteAction(Status status){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
@@ -3657,7 +3730,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void scheduleBoost(Status status){
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
@@ -3791,6 +3864,43 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         context.startActivity(intent);
     }
 
+    private void sendToot(Status tootReply ){
+
+        if(toot_content.getText().toString().trim().length() == 0){
+            Toasty.error(context, context.getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+
+        String tootContent;
+        if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
+            split_toot_size -= toot_cw_content.getText().toString().trim().length();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(toot_content, toot_cw_content)  < split_toot_size)){
+            tootContent = toot_content.getText().toString().trim();
+        }else{
+            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+            tootContent = splitToot.get(0);
+            stepSpliToot = 1;
+        }
+        Status toot = new Status();
+
+        toot.setSensitive(false);
+        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+        if( toot_cw_content.getText().toString().trim().length() > 0)
+            toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+        toot.setVisibility(visibility);
+        if( tootReply != null)
+            toot.setIn_reply_to_id(tootReply.getId());
+        toot.setContent(tootContent);
+        new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
     private void bookmark(Status status){
         if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
             status.setBookmarked(!status.isBookmarked());
@@ -3856,7 +3966,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if( error != null){
             Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
@@ -3980,7 +4090,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void translateToot(Status status){
         //Manages translations
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
         String api_key = null;

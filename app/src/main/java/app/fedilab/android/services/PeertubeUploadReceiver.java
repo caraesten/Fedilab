@@ -15,7 +15,7 @@ package app.fedilab.android.services;
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+
 
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
