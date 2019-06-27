@@ -537,6 +537,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 webview_video.loadUrl(attachment.getUrl());
                 break;
             case "audio":
+                loader.setVisibility(View.GONE);
+                content_audio.setVisibility(View.VISIBLE);
                 int color = getResources().getColor(R.color.mastodonC1);
                 visualizerView = new GLAudioVisualizationView.Builder(this)
                         .setLayersCount(1)
