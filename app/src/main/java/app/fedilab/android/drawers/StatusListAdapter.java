@@ -2498,7 +2498,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (quick_reply) {
+
+                    if (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
 
                         holder.warning_message.setVisibility(View.GONE);
                         if( status.getWarningFetched() == -1 ){
