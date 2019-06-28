@@ -140,6 +140,8 @@ public class Status implements Parcelable{
     private boolean customFeaturesDisplayed = false;
     private boolean shortReply = false;
 
+    private int warningFetched = -1;
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
@@ -201,6 +203,7 @@ public class Status implements Parcelable{
         dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
         dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
         dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.warningFetched);
     }
 
     protected Status(Parcel in) {
@@ -265,6 +268,7 @@ public class Status implements Parcelable{
         this.autoHiddenCW = in.readByte() != 0;
         this.customFeaturesDisplayed = in.readByte() != 0;
         this.shortReply = in.readByte() != 0;
+        this.warningFetched = in.readInt();
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1420,5 +1424,13 @@ public class Status implements Parcelable{
 
     public void setCustomFeaturesDisplayed(boolean customFeaturesDisplayed) {
         this.customFeaturesDisplayed = customFeaturesDisplayed;
+    }
+
+    public int getWarningFetched() {
+        return warningFetched;
+    }
+
+    public void setWarningFetched(int warningFetched) {
+        this.warningFetched = warningFetched;
     }
 }

@@ -51,7 +51,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -108,6 +107,8 @@ import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipQuickReplyAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -120,6 +121,7 @@ import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Poll;
 import app.fedilab.android.client.Entities.PollOptions;
+import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.CrossActions;
@@ -127,6 +129,8 @@ import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
+import app.fedilab.android.interfaces.OnRetrieveRelationshipQuickReplyInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
@@ -177,7 +181,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface, OnRetrieveRelationshipQuickReplyInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -205,6 +209,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private ArrayList<String> splitToot;
     private int stepSpliToot;
     private String in_reply_to_status;
+    private TextView warning_message;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -491,6 +496,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
+    @Override
+    public void onRetrieveRelationshipQuickReply(Relationship relationship, Status status, Error error) {
+        if( error != null){
+            return;
+        }
+        if( relationship.isBlocked_by() ){
+            warning_message.setVisibility(View.VISIBLE);
+            status.setWarningFetched(1);
+        }else{
+            status.setWarningFetched(0);
+        }
+    }
+
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
         ViewHolderEmpty(View itemView) {
@@ -608,7 +626,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         MastalabAutoCompleteTextView quick_reply_text;
         ImageView quick_reply_switch_to_full;
-        TextView toot_space_left;
+        TextView toot_space_left, warning_message;
         ImageView quick_reply_emoji;
         Button quick_reply_button;
         ImageView quick_reply_privacy;
@@ -731,6 +749,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             quick_reply_emoji = itemView.findViewById(R.id.quick_reply_emoji);
             quick_reply_button = itemView.findViewById(R.id.quick_reply_button);
             quick_reply_privacy  = itemView.findViewById(R.id.quick_reply_privacy);
+
+            warning_message  = itemView.findViewById(R.id.warning_message);
 
         }
     }
@@ -2479,6 +2499,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     if (quick_reply) {
+
+                        holder.warning_message.setVisibility(View.GONE);
+                        if( status.getWarningFetched() == -1 ){
+                            warning_message = holder.warning_message;
+                            new RetrieveRelationshipQuickReplyAsyncTask(context, status,StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                        }else if(status.getWarningFetched() == 1){
+                            holder.warning_message.setVisibility(View.VISIBLE);
+                        }
+
                         boolean shown = status.isShortReply();
                         if (!shown) {
                             for (Status s : statuses) {
