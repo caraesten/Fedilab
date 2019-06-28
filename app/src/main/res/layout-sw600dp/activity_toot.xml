@@ -28,7 +28,17 @@
         android:paddingTop="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
         android:paddingBottom="@dimen/fab_margin">
-
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/warning_message"
+            android:text="@string/reply_might_be_useless"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/red_border"
+            android:textColor="@color/red_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/toot_cw_content"
             android:layout_width="match_parent"

@@ -30,6 +30,7 @@ public class Relationship {
     private boolean muting_notifications;
     private boolean endorsed;
     private boolean showing_reblogs;
+    private boolean blocked_by;
 
 
     public String getId() {
@@ -102,5 +103,13 @@ public class Relationship {
 
     public void setShowing_reblogs(boolean showing_reblogs) {
         this.showing_reblogs = showing_reblogs;
+    }
+
+    public boolean isBlocked_by() {
+        return blocked_by;
+    }
+
+    public void setBlocked_by(boolean blocked_by) {
+        this.blocked_by = blocked_by;
     }
 }

@@ -28,9 +28,20 @@
         android:paddingTop="@dimen/toot_padding"
         android:paddingRight="@dimen/toot_padding"
         android:paddingBottom="@dimen/toot_padding">
-
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/warning_message"
+            android:text="@string/reply_might_be_useless"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/red_border"
+            android:textColor="@color/red_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/toot_cw_content"
+            android:layout_below="@+id/warning_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -50,7 +61,6 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:fillViewport="true">
-
             <app.fedilab.android.helper.MastalabAutoCompleteTextView
                 android:id="@+id/toot_content"
                 android:layout_width="match_parent"

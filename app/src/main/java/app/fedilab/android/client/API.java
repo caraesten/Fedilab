@@ -25,6 +25,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.apache.poi.hssf.usermodel.HSSFHeader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -5478,6 +5479,11 @@ public class API {
                 relationship.setShowing_reblogs(Boolean.valueOf(resobj.get("showing_reblogs").toString()));
             }catch (Exception ignored){
                 relationship.setMuting_notifications(false);
+            }
+            try {
+                relationship.setBlocked_by(resobj.getBoolean("blocked_by"));
+            }catch (Exception ignored){
+                relationship.setBlocked_by(false);
             }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {

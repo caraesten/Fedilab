@@ -136,6 +136,7 @@ import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveEmojiAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveSearchAccountsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -150,6 +151,7 @@ import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Poll;
 import app.fedilab.android.client.Entities.PollOptions;
+import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
@@ -172,6 +174,7 @@ import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveAccountsReplyInterface;
 import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
+import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
@@ -196,7 +199,7 @@ import static app.fedilab.android.helper.Helper.orbotConnected;
  * Toot activity class
  */
 
-public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface {
+public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface {
 
 
 
@@ -264,6 +267,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
     public static final int SEND_VOICE_MESSAGE = 1423;
+    private TextView warning_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -385,6 +389,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_sensitive = findViewById(R.id.toot_sensitive);
         drawer_layout = findViewById(R.id.drawer_layout);
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
+        warning_message = findViewById(R.id.warning_message);
         poll_action = findViewById(R.id.poll_action);
         isScheduled = false;
         if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
@@ -460,6 +465,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
             }
             restored = b.getLong("restored", -1);
+        }
+        if( tootReply != null){
+            if( tootReply.getAccount().getMoved_to_account() != null){
+                warning_message.setVisibility(View.VISIBLE);
+            }
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), tootReply.getAccount().getId(),TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         if (scheduledstatus != null)
             toot_it.setText(R.string.modify);
@@ -1242,6 +1253,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     @Override
     public void onCancelled(Context context, UploadInfo uploadInfo) {
         // your code here
+    }
+
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+        if( error != null){
+            return;
+        }
+        if( relationship.isBlocked_by() ){
+            warning_message.setVisibility(View.VISIBLE);
+        }
+
     }
 
 
