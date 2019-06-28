@@ -2452,6 +2452,30 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
+    private void checkMastodon( Uri inUri){
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), inUri);
+            int imageWidth = -1;
+            int imageHeight = -1;
+            long size = -1;
+            if( bitmap != null) {
+                imageWidth = bitmap.getWidth();
+                imageHeight = bitmap.getHeight();
+            }
+            if( inUri != null) {
+                File imageFile = new File(inUri.getPath());
+                size = imageFile.length();
+            }
+            if( imageWidth != -1 && imageHeight != -1 && size != -1){
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     private void upload(Context context, Uri inUri, String fname){
         String uploadId = UUID.randomUUID().toString();
         uploadReceiver.setUploadID(uploadId);
@@ -2468,7 +2492,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
             tempOut = new FileOutputStream(file.getAbsoluteFile());
             byte[] buff = new byte[1024];
-            int read = 0;
+            int read;
+            assert tempInput != null;
             while ((read = tempInput.read(buff)) > 0) {
                 tempOut.write(buff, 0, read);
             }
