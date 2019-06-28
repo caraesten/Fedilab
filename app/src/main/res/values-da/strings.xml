@@ -976,11 +976,11 @@
     <string name="mark_unresolved">Markér uløst</string>
     <string name="toast_empty_content">Intet indhold!</string>
     <string name="set_display_fedilab_features_button">Vis Fedilab-funktionsknap</string>
-    <string name="audio">The application needs to access audio recording</string>
-    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
-    <string name="set_quick_reply">Enable quick reply</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="audio">App\'en behøver adgang til lydoptagelse</string>
+    <string name="toot_message_record_error">En fejl opstod under optagelse af talebeskeden!</string>
+    <string name="voice_message">Talebesked</string>
+    <string name="set_quick_reply">Aktivér hurtig visning</string>
+    <string name="reply_might_be_useless">Kontoen, du besvarer, kan måske ikke se din besked!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
