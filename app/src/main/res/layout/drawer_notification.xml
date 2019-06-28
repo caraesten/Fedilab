@@ -385,15 +385,28 @@
                     android:padding="10dp"
                     android:visibility="gone">
 
+                    <TextView
+                        android:id="@+id/warning_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/red_border"
+                        android:gravity="center"
+                        android:text="@string/reply_might_be_useless"
+                        android:textColor="@color/red_1"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <app.fedilab.android.helper.MastalabAutoCompleteTextView
                         android:id="@+id/quick_reply_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:gravity="top|start"
                         android:hint="@string/toot_placeholder"
                         android:inputType="textMultiLine|textCapSentences"
                         android:minLines="4"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/warning_message"
+                        app:layout_goneMarginTop="0dp" />
 
                     <ImageView
                         android:id="@+id/quick_reply_switch_to_full"
