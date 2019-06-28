@@ -76,7 +76,7 @@
     <string name="neutral_menu_title">Опции</string>
     <string name="favorites_menu">В избранном</string>
     <string name="communication_menu_title">Общение</string>
-    <string name="muted_menu">Приглушенные пользователи</string>
+    <string name="muted_menu">Игнорируемые пользователи</string>
     <string name="blocked_menu">Заблокированные пользователи</string>
     <string name="remote_follow_menu">Внешняя подписка</string>
     <string name="notifications">Уведомления</string>
@@ -110,21 +110,21 @@
     <string name="reblog_remove">Не продвигать этот тут?</string>
     <string name="pin_add">Закрепить этот тут?</string>
     <string name="pin_remove">Открепить этот тут?</string>
-    <string name="more_action_1">Приглушить</string>
+    <string name="more_action_1">Игнорировать</string>
     <string name="more_action_2">Заблокировать</string>
     <string name="more_action_3">Пожаловаться</string>
     <string name="more_action_4">Удалить</string>
     <string name="more_action_5">Копировать</string>
     <string name="more_action_6">Поделиться</string>
     <string name="more_action_7">Упомянуть</string>
-    <string name="more_action_8">Временно приглушить</string>
+    <string name="more_action_8">Временно игнорировать</string>
     <string name="more_action_9">Удалить &amp; переписать</string>
     <string-array name="more_action_confirm">
-        <item>Приглушить этот аккаунт?</item>
+        <item>Игнорировать этот аккаунт?</item>
         <item>Заблокировать этот аккаунт?</item>
         <item>Пожаловаться на этот тут?</item>
         <item>Заблокировать этот домен?</item>
-        <item>Не глушить этот аккаунт?</item>
+        <item>Не игнорировать этот аккаунт?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Уведомлять</item>
@@ -218,9 +218,9 @@
     <string name="toot_scheduled_date">Запланированная дата должна быть в будущем!</string>
     <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Время приглушения должно быть больше одной минуты.</string>
-    <string name="timed_mute_date">%1$s был приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
-    <string name="timed_mute_profile">%1$s приглушен до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
+    <string name="timed_mute_date_error">Время игнорирования должно быть больше одной минуты.</string>
+    <string name="timed_mute_date">%1$s теперь игнорируется до %2$s.\n Вы можете изменить это, посетив ее/его профиля.</string>
+    <string name="timed_mute_profile">%1$s игнорируется до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
     <string name="notif_mention">упомянул(а) вас</string>
@@ -259,8 +259,8 @@
     <string name="no_internet">Нет подключения к Интернету!</string>
     <string name="toast_block">Аккаунт заблокирован!</string>
     <string name="toast_unblock">Аккаунт больше не блокируется!</string>
-    <string name="toast_mute">Аккаунт был приглушен!</string>
-    <string name="toast_unmute">Аккаунт более не пригушен!</string>
+    <string name="toast_mute">Этот аккаунт теперь игнорируется!</string>
+    <string name="toast_unmute">Этот аккаунт больше не игнорируется!</string>
     <string name="toast_follow">Вы подписались на этот аккаунт!</string>
     <string name="toast_unfollow">Вы больше не подписаны на этот аккаунт!</string>
     <string name="toast_reblog">Этот тут был продвинут!</string>
@@ -385,9 +385,9 @@
     <string name="action_unfollow">Отписаться</string>
     <string name="action_block">Заблокировать</string>
     <string name="action_unblock">Разблокировать</string>
-    <string name="action_mute">Приглушить</string>
+    <string name="action_mute">Игнорировать</string>
     <string name="action_no_action">Нет действия</string>
-    <string name="action_unmute">Разглушить</string>
+    <string name="action_unmute">Не игнорировать</string>
     <string name="request_sent">Запрос отправлен</string>
     <string name="followed_by">Подписан на вас</string>
     <string name="action_search">Поиск</string>
@@ -883,12 +883,12 @@
     <string name="set_photo_editor">Включить редактор фотографий</string>
     <string name="add_poll_item">Добавить элемент опроса</string>
     <string name="remove_poll_item">Удалить последний элемент опроса</string>
-    <string name="mute_conversation">Приглушить разговор</string>
-    <string name="unmute_conversation">Активировать разговор</string>
-    <string name="toast_unmute_conversation">Разговор больше не приглушен!</string>
-    <string name="toast_mute_conversation">Разговор приглушен</string>
+    <string name="mute_conversation">Игнорировать разговор</string>
+    <string name="unmute_conversation">Не игнорировать разговор</string>
+    <string name="toast_unmute_conversation">Этот разговор больше не игнорируется!</string>
+    <string name="toast_mute_conversation">Этот разговор теперь игнорируется</string>
     <string name="app_features">Открыть настройки приложения</string>
-    <string name="timed_mute">Временно приглушить</string>
+    <string name="timed_mute">Временно игнорировать</string>
     <string name="mention_account">Упомянуть аккаунт</string>
     <string name="refresh_cache">Обновить кэш</string>
     <string name="see_boost_and_fav">Посмотреть кто продвинул и добавил в избранное</string>
@@ -984,6 +984,11 @@
     <string name="mark_unresolved">Пометить как нерешенный</string>
     <string name="toast_empty_content">Контента нет!</string>
     <string name="set_display_fedilab_features_button">Показать кнопку функций Fedilab</string>
+    <string name="audio">The application needs to access audio recording</string>
+    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
+    <string name="voice_message">Voice message</string>
+    <string name="set_quick_reply">Enable quick reply</string>
+    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

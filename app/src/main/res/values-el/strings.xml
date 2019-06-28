@@ -976,6 +976,11 @@
     <string name="mark_unresolved">Mark as unresolved</string>
     <string name="toast_empty_content">Empty content!</string>
     <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
+    <string name="audio">The application needs to access audio recording</string>
+    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
+    <string name="voice_message">Voice message</string>
+    <string name="set_quick_reply">Enable quick reply</string>
+    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>
