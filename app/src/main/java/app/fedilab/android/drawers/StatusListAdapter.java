@@ -849,7 +849,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
-            if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 holder.rated.setVisibility(View.GONE);
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
