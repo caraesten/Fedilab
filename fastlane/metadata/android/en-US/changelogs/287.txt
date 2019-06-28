@@ -1,0 +1,13 @@
+<b>Added</b>
+- Quick reply below statuses: change visibility/emoji picker/auto-completion/switch in full version
+- Send voice messages
+- New audio player
+- Know when it's useless to reply
+
+<b>Changed</b>
+- Improvement with the admin features
+- New images for audio media
+
+<b>Fixed</b>
+- Fix with Peertube searches
+- Some other bug fixes
