@@ -2349,12 +2349,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-            if( context instanceof BaseMainActivity){
-                FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
-                if( toot != null){
-                    toot.hide();
-                }
-            }
+
 
             holder.quick_reply_button.setOnClickListener(view -> {
                 sendToot();
@@ -2364,6 +2359,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
 
+                if( context instanceof BaseMainActivity){
+                    FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
+                    if( toot != null){
+                        toot.hide();
+                    }
+                }
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
