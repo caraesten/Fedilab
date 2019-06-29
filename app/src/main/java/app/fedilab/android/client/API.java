@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -225,30 +226,48 @@ public class API {
         apiResponse = new APIResponse();
         HashMap<String, String> params = null;
         String endpoint = null;
+        String url_action = null;
         switch (action){
             case GET_ACCOUNTS:
                 params = new HashMap<>();
-                if( adminAction.isLocal())
-                    params.put("local", String.valueOf(adminAction.isLocal()));
-                if( adminAction.isRemote() )
-                    params.put("remote", String.valueOf(adminAction.isRemote()));
-                if( adminAction.isActive() )
-                    params.put("active", String.valueOf(adminAction.isActive()));
-                if( adminAction.isPending() )
-                    params.put("pending", String.valueOf(adminAction.isPending()));
-                if( adminAction.isDisabled() )
-                    params.put("disabled", String.valueOf(adminAction.isDisabled()));
-                if( adminAction.isSilenced() )
-                    params.put("silenced", String.valueOf(adminAction.isSilenced()));
-                if( adminAction.isSuspended() )
-                    params.put("suspended", String.valueOf(adminAction.isSuspended()));
-                endpoint = "/admin/accounts";
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    if (adminAction.isLocal())
+                        params.put("local", String.valueOf(adminAction.isLocal()));
+                    if (adminAction.isRemote())
+                        params.put("remote", String.valueOf(adminAction.isRemote()));
+                    if (adminAction.isActive())
+                        params.put("active", String.valueOf(adminAction.isActive()));
+                    if (adminAction.isPending())
+                        params.put("pending", String.valueOf(adminAction.isPending()));
+                    if (adminAction.isDisabled())
+                        params.put("disabled", String.valueOf(adminAction.isDisabled()));
+                    if (adminAction.isSilenced())
+                        params.put("silenced", String.valueOf(adminAction.isSilenced()));
+                    if (adminAction.isSuspended())
+                        params.put("suspended", String.valueOf(adminAction.isSuspended()));
+                    endpoint = "/admin/accounts";
+
+                    url_action = getAbsoluteUrl(endpoint);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                    if (adminAction.isLocal())
+                        params.put("local", String.valueOf(adminAction.isLocal()));
+                    if (adminAction.isRemote())
+                        params.put("external", String.valueOf(adminAction.isRemote()));
+                    if (adminAction.isActive())
+                        params.put("active", String.valueOf(adminAction.isActive()));
+                    if (adminAction.isDisabled())
+                        params.put("deactivated", String.valueOf(adminAction.isDisabled()));
+                    endpoint = "/admin/accounts";
+                    url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
+                }
                 break;
             case GET_ONE_ACCOUNT:
                 endpoint = String.format("/admin/accounts/%s", id);
+                url_action = getAbsoluteUrl(endpoint);
                 break;
             case GET_REPORTS:
                 endpoint = "/admin/reports";
+                url_action = getAbsoluteUrl(endpoint);
                 if( !adminAction.isUnresolved()) {
                     params = new HashMap<>();
                     params.put("resolved", "present");
@@ -256,10 +275,12 @@ public class API {
                 break;
             case GET_ONE_REPORT:
                 endpoint = String.format("/admin/reports/%s", id);
+                url_action = getAbsoluteUrl(endpoint);
                 break;
         }
+        Log.v(Helper.TAG,"url_action:" + url_action);
         try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(url_action, 60, params, prefKeyOauthTokenT);
             switch (action){
                 case GET_ACCOUNTS:
                     List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));

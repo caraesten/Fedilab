@@ -371,7 +371,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             LinearLayout admin_container = rootView.findViewById(R.id.admin_container);
             if( admin_container != null){
                 admin_container.setVisibility(View.GONE);

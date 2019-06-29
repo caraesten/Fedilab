@@ -2922,7 +2922,7 @@ public class Helper {
                     news.setVisible(false);
                 }
             }
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                 MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
                 if( adminItem != null){
                     adminItem.setVisible(false);
