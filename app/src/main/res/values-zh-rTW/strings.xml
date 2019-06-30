@@ -972,11 +972,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="mark_unresolved">標記未解決</string>
     <string name="toast_empty_content">內容為空！</string>
     <string name="set_display_fedilab_features_button">顯示 Fedilab 功能按鈕</string>
-    <string name="audio">The application needs to access audio recording</string>
-    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
-    <string name="set_quick_reply">Enable quick reply</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="audio">應用程式需要存取音訊錄製</string>
+    <string name="toot_message_record_error">錄製音訊訊息時發生錯誤！</string>
+    <string name="voice_message">音訊訊息</string>
+    <string name="set_quick_reply">啟用快速回覆</string>
+    <string name="reply_might_be_useless">您回覆的帳號可能看不到您的訊息！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
