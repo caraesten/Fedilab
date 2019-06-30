@@ -1070,7 +1070,7 @@ public class HttpsConnection {
 
 
         @SuppressWarnings("SameParameterValue")
-        public void patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if( urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
             Map<String, Object> params = new LinkedHashMap<>();
@@ -1114,7 +1114,7 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
             httpsURLConnection.setDoOutput(true);
 
-
+            String response;
             OutputStream outputStream = httpsURLConnection.getOutputStream();
             outputStream.write(postDataBytes);
             if( avatar != null)
@@ -1122,7 +1122,7 @@ public class HttpsConnection {
             if( header != null)
                 patchImage(urlConnection,120,imageType.BANNER, header,headerName,token);
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-               new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+                response = converToString(httpsURLConnection.getInputStream());
             } else {
                 String error = null;
                 if( httpsURLConnection.getErrorStream() != null) {
@@ -1142,6 +1142,7 @@ public class HttpsConnection {
                 throw new HttpsConnectionException(responseCode, error);
             }
             httpsURLConnection.getInputStream().close();
+            return response;
         }else {
             URL url = new URL(urlConnection);
             Map<String, Object> params = new LinkedHashMap<>();
@@ -1189,8 +1190,9 @@ public class HttpsConnection {
                 patchImage(urlConnection,120,imageType.AVATAR, avatar,avatarName,token);
             if( header != null)
                 patchImage(urlConnection,120,imageType.BANNER, header,headerName,token);
+            String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+                response = converToString(httpsURLConnection.getInputStream());
             } else {
                 String error = null;
                 if( httpURLConnection.getErrorStream() != null) {
@@ -1211,6 +1213,7 @@ public class HttpsConnection {
                 throw new HttpsConnectionException(responseCode, error);
             }
             httpURLConnection.getInputStream().close();
+            return response;
         }
 
     }

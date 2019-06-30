@@ -43,6 +43,7 @@ import java.util.ArrayList;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountAdmin;
@@ -70,7 +71,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
     private EditText comment;
     private Report report;
     private Group allow_reject_group;
-
+    private TextView email_label, recent_ip_label, joined_label;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         reject = findViewById(R.id.reject);
         status = findViewById(R.id.status);
         assign = findViewById(R.id.assign);
+        email_label = findViewById(R.id.email_label);
         allow_reject_group = findViewById(R.id.allow_reject_group);
         allow_reject_group.setVisibility(View.GONE);
         allow.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green_1), PorterDuff.Mode.MULTIPLY);
@@ -128,7 +130,8 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         login_status = findViewById(R.id.login_status);
         joined = findViewById(R.id.joined);
         recent_ip = findViewById(R.id.recent_ip);
-
+        recent_ip_label = findViewById(R.id.recent_ip_label);
+        joined_label = findViewById(R.id.joined_label);
         email_user = findViewById(R.id.email_user);
         comment = findViewById(R.id.comment);
 
@@ -161,7 +164,11 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         if( targeted_account != null) {
             account_id = targeted_account.getId();
             fillReport(targeted_account);
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                account_id = targeted_account.getUsername();
+            }
         }
+
 
     }
 
@@ -197,6 +204,9 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             report = apiResponse.getReports().get(0);
             fillReport(report.getTarget_account());
         } else if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                account_id = apiResponse.getAccountAdmins().get(0).getUsername();
+            }
             fillReport(apiResponse.getAccountAdmins().get(0));
         }
 
@@ -208,7 +218,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if(!accountAdmin.isApproved() && (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null"))){
+        if(!accountAdmin.isApproved() && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null"))){
             allow_reject_group.setVisibility(View.VISIBLE);
         }
 
@@ -344,7 +354,18 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
         email.setText(accountAdmin.getEmail());
         email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
-
+        if( accountAdmin.getEmail() == null || accountAdmin.getEmail().trim().equals("")){
+            email.setVisibility(View.GONE);
+            email_label.setVisibility(View.GONE);
+        }
+        if( accountAdmin.getIp() == null || accountAdmin.getIp().trim().equals("")){
+            recent_ip.setVisibility(View.GONE);
+            recent_ip_label.setVisibility(View.GONE);
+        }
+        if( accountAdmin.getCreated_at() == null ){
+            joined.setVisibility(View.GONE);
+            joined_label.setVisibility(View.GONE);
+        }
         if( accountAdmin.isDisabled()){
             login_status.setText(getString(R.string.disabled));
         }else if( accountAdmin.isSilenced()){
@@ -383,6 +404,15 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             email_user.setChecked(false);
             comment.setVisibility(View.GONE);
             comment_label.setVisibility(View.GONE);
+        }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.GONE);
+            comment_label.setVisibility(View.GONE);
+            warn.setVisibility(View.GONE);
+            silence.setVisibility(View.GONE);
+
         }
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
 

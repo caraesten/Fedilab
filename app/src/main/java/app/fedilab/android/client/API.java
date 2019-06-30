@@ -246,8 +246,6 @@ public class API {
                     if (adminAction.isSuspended())
                         params.put("suspended", String.valueOf(adminAction.isSuspended()));
                     endpoint = "/admin/accounts";
-
-                    url_action = getAbsoluteUrl(endpoint);
                 }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                     if (adminAction.isLocal())
                         params.put("local", String.valueOf(adminAction.isLocal()));
@@ -257,30 +255,51 @@ public class API {
                         params.put("active", String.valueOf(adminAction.isActive()));
                     if (adminAction.isDisabled())
                         params.put("deactivated", String.valueOf(adminAction.isDisabled()));
-                    endpoint = "/admin/accounts";
-                    url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
+                    endpoint = "/admin/users";
                 }
                 break;
             case GET_ONE_ACCOUNT:
-                endpoint = String.format("/admin/accounts/%s", id);
-                url_action = getAbsoluteUrl(endpoint);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    endpoint = String.format("/admin/accounts/%s", id);
+                }else {
+                    endpoint = String.format("/admin/users/%s", id);
+                }
                 break;
             case GET_REPORTS:
                 endpoint = "/admin/reports";
-                url_action = getAbsoluteUrl(endpoint);
-                if( !adminAction.isUnresolved()) {
-                    params = new HashMap<>();
-                    params.put("resolved", "present");
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    if( !adminAction.isUnresolved()) {
+                        params = new HashMap<>();
+                        params.put("resolved", "present");
+                    }
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    if( !adminAction.isUnresolved()) {
+                        params = new HashMap<>();
+                        params.put("state", "resolved");
+                    }
                 }
                 break;
             case GET_ONE_REPORT:
                 endpoint = String.format("/admin/reports/%s", id);
-                url_action = getAbsoluteUrl(endpoint);
                 break;
         }
-        Log.v(Helper.TAG,"url_action:" + url_action);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            url_action = getAbsoluteUrl(endpoint);
+
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
+        }
         try {
+
             String response = new HttpsConnection(context, this.instance).get(url_action, 60, params, prefKeyOauthTokenT);
+            Helper.largeLog(response);
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                if( new JSONObject(response).has("users") ) {
+                    response = new JSONArray(new JSONObject(response).getJSONArray("users").toString()).toString();
+                }else if( new JSONObject(response).has("reports") ) {
+                    response = new JSONArray(new JSONObject(response).getJSONArray("reports").toString()).toString();
+                }
+            }
             switch (action){
                 case GET_ACCOUNTS:
                     List<AccountAdmin> accountAdmins = parseAccountAdminResponse(new JSONArray(response));
@@ -327,11 +346,18 @@ public class API {
      */
     public APIResponse adminDo(adminAction action, String id, AdminAction adminAction){
         apiResponse = new APIResponse();
+        String http_action = "POST";
         String endpoint = null;
+        String url_action = null;
         HashMap<String, String> params = null;
         switch (action){
             case ENABLE:
-                endpoint = String.format("/admin/accounts/%s/enable", id);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    endpoint = String.format("/admin/accounts/%s/enable", id);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    http_action = "PATCH";
+                    endpoint = String.format( "/admin/users/%s/toggle_activation", id);
+                }
                 break;
             case APPROVE:
                 endpoint = String.format("/admin/accounts/%s/approve", id);
@@ -367,15 +393,23 @@ public class API {
                 }
                 break;
             case DISABLE:
-                params = new HashMap<>();
-                params.put("type","disable");
-                endpoint = String.format("/admin/accounts/%s/action", id);
-                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
-                if( adminAction.getText() != null) {
-                    params.put("text", adminAction.getText());
+
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    params = new HashMap<>();
+                    params.put("type","disable");
+                    endpoint = String.format("/admin/accounts/%s/action", id);
+                    params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                    if( adminAction.getText() != null) {
+                        params.put("text", adminAction.getText());
+                    }
+
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    http_action = "PATCH";
+                    endpoint = String.format( "/admin/users/%s/toggle_activation", id);
                 }
                 break;
             case SILENCE:
+
                 params = new HashMap<>();
                 params.put("type","silence");
                 endpoint = String.format("/admin/accounts/%s/action", id);
@@ -385,17 +419,44 @@ public class API {
                 }
                 break;
             case SUSPEND:
-                params = new HashMap<>();
-                params.put("type","suspend");
-                endpoint = String.format("/admin/accounts/%s/action", id);
-                params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
-                if( adminAction.getText() != null) {
-                    params.put("text", adminAction.getText());
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    params = new HashMap<>();
+                    params.put("type", "suspend");
+                    endpoint = String.format("/admin/accounts/%s/action", id);
+                    params.put("send_email_notification", String.valueOf(adminAction.isSend_email_notification()));
+                    if (adminAction.getText() != null) {
+                        params.put("text", adminAction.getText());
+                    }
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    http_action = "DELETE";
+                    endpoint = "/admin/users";
+                    params = new HashMap<>();
+                    params.put("nickname", id);
                 }
                 break;
         }
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            url_action = getAbsoluteUrl(endpoint);
+
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
+        }
+        Log.v(Helper.TAG,"url_action: " + url_action);
+        Log.v(Helper.TAG,"params: " + params);
         try {
-            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl(endpoint), 60, params, prefKeyOauthTokenT);
+            String response = null;
+            switch (http_action) {
+                case "POST":
+                    response = new HttpsConnection(context, this.instance).post(url_action, 60, params, prefKeyOauthTokenT);
+                    break;
+                case "PATCH":
+                    response = new HttpsConnection(context, this.instance).patch(url_action, 60, params, null, null, null, null, prefKeyOauthTokenT);
+                    break;
+                case "DELETE":
+                    new HttpsConnection(context, this.instance).delete(url_action, 60, params, prefKeyOauthTokenT);
+                    break;
+            }
+            Log.v(Helper.TAG,"response: " + response);
             switch (action){
                 case ENABLE:
                 case APPROVE:
@@ -5196,13 +5257,46 @@ public class API {
         AccountAdmin accountAdmin = new AccountAdmin();
         try {
             accountAdmin.setId(resobj.get("id").toString());
-            accountAdmin.setUsername(resobj.getString("username"));
-            accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
-            accountAdmin.setEmail(resobj.getString("email"));
-            accountAdmin.setRole(resobj.getString("role"));
-            accountAdmin.setIp(resobj.getString("ip"));
-            accountAdmin.setDomain(resobj.getString("domain"));
-            accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            if( !resobj.isNull("username")) {
+                accountAdmin.setUsername(resobj.getString("username"));
+            }
+            if( !resobj.isNull("nickname")) {
+                accountAdmin.setUsername(resobj.getString("nickname"));
+            }
+            if( !resobj.isNull("created_at")) {
+                accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            }
+            if( !resobj.isNull("email")) {
+                accountAdmin.setEmail(resobj.getString("email"));
+            }
+            if( !resobj.isNull("role")) {
+                accountAdmin.setRole(resobj.getString("role"));
+            }
+            if( !resobj.isNull("roles")) {
+                if(resobj.getJSONObject("roles").getBoolean("admin")){
+                    accountAdmin.setRole("admin");
+                }else if(resobj.getJSONObject("roles").getBoolean("moderator")){
+                    accountAdmin.setRole("moderator");
+                }else{
+                    accountAdmin.setRole("user");
+                }
+            }
+            if( !resobj.isNull("ip")) {
+                accountAdmin.setIp(resobj.getString("ip"));
+            }
+            if( !resobj.isNull("domain")) {
+                accountAdmin.setDomain(resobj.getString("domain"));
+            }
+
+            if( !resobj.isNull("account")) {
+                accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            }else{
+                Account account = new Account();
+                account.setId(accountAdmin.getId());
+                account.setAcct(accountAdmin.getUsername());
+                account.setDisplay_name(accountAdmin.getUsername());
+                accountAdmin.setAccount(account);
+            }
             if( !resobj.isNull("confirmed")) {
                 accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
             }else{
@@ -5221,14 +5315,19 @@ public class API {
             if( !resobj.isNull("disabled")) {
                 accountAdmin.setDisabled(resobj.getBoolean("disabled"));
             }else{
-                accountAdmin.setDisabled(false);
+                if( !resobj.isNull("deactivated")) {
+                    accountAdmin.setDisabled(resobj.getBoolean("deactivated"));
+                }else{
+                    accountAdmin.setDisabled(false);
+                }
             }
+
             if( !resobj.isNull("approved")) {
                 accountAdmin.setApproved(resobj.getBoolean("approved"));
             }else{
-                accountAdmin.setApproved(false);
+                accountAdmin.setApproved(true);
             }
-        }catch (Exception ignored){}
+        }catch (Exception ignored){ignored.printStackTrace();}
         return accountAdmin;
     }
 
