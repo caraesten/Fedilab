@@ -2920,7 +2920,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                     }
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                         popup.getMenu().findItem(R.id.action_admin).setVisible(false);
                     }else{
                         boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + Helper.getLiveInstance(context), false);
@@ -2962,9 +2962,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     return true;
                                 case R.id.action_admin:
                                     String account_id = status.getReblog() != null ? status.getReblog().getAccount().getId() : status.getAccount().getId();
+                                    String acct = status.getReblog() != null ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
                                     Intent intent = new Intent(context, AccountReportActivity.class);
                                     Bundle b = new Bundle();
-                                    b.putString("account_id", account_id);
+                                    if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                                        b.putString("account_id", account_id);
+                                    }else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                                        b.putString("account_id", acct);
+                                    }
                                     intent.putExtras(b);
                                     context.startActivity(intent);
                                     return true;

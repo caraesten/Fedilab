@@ -337,26 +337,15 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
         }
-        if( accountAdmin.getRole() == null) {
-            return;
-        }
-        switch (accountAdmin.getRole()) {
-            case "user":
-                permissions.setText(getString(R.string.user));
-                break;
-            case "moderator":
-                permissions.setText(getString(R.string.moderator));
-                break;
-            case "admin":
-                permissions.setText(getString(R.string.administrator));
-                break;
-        }
+
+
+
 
 
         username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
 
         email.setText(accountAdmin.getEmail());
-        email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
+
         if( accountAdmin.getEmail() == null || accountAdmin.getEmail().trim().equals("")){
             email.setVisibility(View.GONE);
             email_label.setVisibility(View.GONE);
@@ -398,27 +387,34 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             suspend.setVisibility(View.VISIBLE);
             comment_label.setVisibility(View.GONE);
         }
-        if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("moderator")){
-            warn.setVisibility(View.GONE);
-            suspend.setVisibility(View.GONE);
-            silence.setVisibility(View.GONE);
-            disable.setVisibility(View.GONE);
-            email_user.setVisibility(View.GONE);
-            email_user.setChecked(false);
-            comment.setVisibility(View.GONE);
-            comment_label.setVisibility(View.GONE);
-        }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
-            email_user.setVisibility(View.GONE);
-            email_user.setChecked(false);
-            comment.setVisibility(View.GONE);
-            comment_label.setVisibility(View.GONE);
-            warn.setVisibility(View.GONE);
-            silence.setVisibility(View.GONE);
 
+        if( accountAdmin.getRole() != null) {
+            switch (accountAdmin.getRole()) {
+                case "user":
+                    permissions.setText(getString(R.string.user));
+                    break;
+                case "moderator":
+                    permissions.setText(getString(R.string.moderator));
+                    break;
+                case "admin":
+                    permissions.setText(getString(R.string.administrator));
+                    break;
+            }
+            if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("moderator")){
+                warn.setVisibility(View.GONE);
+                suspend.setVisibility(View.GONE);
+                silence.setVisibility(View.GONE);
+                disable.setVisibility(View.GONE);
+                email_user.setVisibility(View.GONE);
+                email_user.setChecked(false);
+                comment.setVisibility(View.GONE);
+                comment_label.setVisibility(View.GONE);
+            }
+            email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
         }
+
+
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
-
         if(  report != null){
             assign.setVisibility(View.VISIBLE);
             status.setVisibility(View.VISIBLE);
@@ -434,7 +430,6 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNASSIGN, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-
             if( report.isAction_taken()){
                 status.setText(getString(R.string.mark_unresolved));
             }else{
@@ -451,6 +446,15 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }else{
             assign.setVisibility(View.GONE);
             status.setVisibility(View.GONE);
+        }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            email_user.setVisibility(View.GONE);
+            email_user.setChecked(false);
+            comment.setVisibility(View.INVISIBLE);
+            comment_label.setVisibility(View.GONE);
+            warn.setVisibility(View.GONE);
+            silence.setVisibility(View.GONE);
+            assign.setVisibility(View.GONE);
         }
 
     }

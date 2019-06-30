@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.JsonArray;
@@ -278,7 +279,10 @@ public class API {
                         params.put("resolved", "present");
                     }
                 }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                    if( !adminAction.isUnresolved()) {
+                    if( adminAction.isUnresolved()) {
+                        params = new HashMap<>();
+                        params.put("state", "open");
+                    }else{
                         params = new HashMap<>();
                         params.put("state", "resolved");
                     }
@@ -392,10 +396,24 @@ public class API {
                 endpoint = String.format("/admin/reports/%s/unassign", id);
                 break;
             case REOPEN:
-                endpoint = String.format("/admin/reports/%s/reopen", id);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    endpoint = String.format("/admin/reports/%s/reopen", id);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    endpoint = String.format("/admin/reports/%s", id);
+                    params = new HashMap<>();
+                    params.put("state","open");
+                    http_action = "PUT";
+                }
                 break;
             case RESOLVE:
-                endpoint = String.format("/admin/reports/%s/resolve", id);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    endpoint = String.format("/admin/reports/%s/resolve", id);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    endpoint = String.format("/admin/reports/%s", id);
+                    params = new HashMap<>();
+                    params.put("state","resolved");
+                    http_action = "PUT";
+                }
                 break;
             case NONE:
                 params = new HashMap<>();
@@ -463,6 +481,9 @@ public class API {
                     break;
                 case "PATCH":
                     response = new HttpsConnection(context, this.instance).patch(url_action, 60, params, null, null, null, null, prefKeyOauthTokenT);
+                    break;
+                case "PUT":
+                    response = new HttpsConnection(context, this.instance).put(url_action, 60, params, prefKeyOauthTokenT);
                     break;
                 case "DELETE":
                     new HttpsConnection(context, this.instance).delete(url_action, 60, params, prefKeyOauthTokenT);
@@ -5217,7 +5238,7 @@ public class API {
             if( !resobj.isNull("action_taken")) {
                 report.setAction_taken(resobj.getBoolean("action_taken"));
             }else if( !resobj.isNull("state")) {
-                report.setAction_taken(!resobj.has("open"));
+                report.setAction_taken(!resobj.getString("state").equals("open"));
             }
             if( !resobj.isNull("comment")) {
                 report.setComment(resobj.getString("comment"));
@@ -5491,8 +5512,17 @@ public class API {
             if( resobj.has("source")){
                 JSONObject source = resobj.getJSONObject("source");
                 try{
-                    account.setPrivacy(source.getString("privacy"));
-                    account.setSensitive(source.getBoolean("sensitive"));
+                    if( source.has("privacy")) {
+                        account.setPrivacy(source.getString("privacy"));
+                    }else{
+                        account.setPrivacy("public");
+                    }
+                    if( source.has("sensitive")) {
+                        account.setSensitive(source.getBoolean("sensitive"));
+                    }else{
+                        account.setSensitive(false);
+                    }
+
                 }catch (Exception e){
                     account.setPrivacy("public");
                     account.setSensitive(false);
