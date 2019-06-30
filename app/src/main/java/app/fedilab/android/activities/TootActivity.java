@@ -1883,9 +1883,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-        if( poll != null) {
-            toot.setPoll(poll);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (poll != null) {
+                toot.setPoll(poll);
+            } else {
+                toot.setMedia_attachments(attachments);
+            }
         }else{
+            if (poll != null) {
+                toot.setPoll(poll);
+            }
             toot.setMedia_attachments(attachments);
         }
         if( timestamp == null)
@@ -2663,8 +2670,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( status.getPoll() != null) {
             poll = status.getPoll();
             poll_action.setVisibility(View.VISIBLE);
-            toot_picture.setVisibility(View.GONE);
-            picture_scrollview.setVisibility(View.GONE);
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                toot_picture.setVisibility(View.GONE);
+                picture_scrollview.setVisibility(View.GONE);
+            }
         }
 
         if( attachments != null && attachments.size() > 0){
@@ -3307,8 +3316,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     dialog.dismiss();
                 }
                 poll_action.setVisibility(View.VISIBLE);
-                toot_picture.setVisibility(View.GONE);
-                picture_scrollview.setVisibility(View.GONE);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    toot_picture.setVisibility(View.GONE);
+                    picture_scrollview.setVisibility(View.GONE);
+                }
 
             }
         });
