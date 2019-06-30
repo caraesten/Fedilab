@@ -35,6 +35,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.fragments.DisplayAdminAccountsFragment;
 import app.fedilab.android.fragments.DisplayAdminReportsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
@@ -160,6 +161,11 @@ public class AdminActivity extends BaseActivity  {
                 final MenuItem itemDisabled = menu.findItem(R.id.action_disabled);
                 final MenuItem itemSilenced = menu.findItem(R.id.action_silenced);
                 final MenuItem itemSuspended = menu.findItem(R.id.action_suspended);
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                    itemSilenced.setVisible(false);
+                    itemPending.setVisible(false);
+                    itemSuspended.setVisible(false);
+                }
 
                 itemLocal.setChecked(local);
                 itemRemote.setChecked(remote);
@@ -190,6 +196,7 @@ public class AdminActivity extends BaseActivity  {
                 });
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+
                         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
                         item.setActionView(new View(getApplicationContext()));
                         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {

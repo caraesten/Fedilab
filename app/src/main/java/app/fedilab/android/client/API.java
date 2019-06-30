@@ -248,13 +248,13 @@ public class API {
                     endpoint = "/admin/accounts";
                 }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                     if (adminAction.isLocal())
-                        params.put("local", String.valueOf(adminAction.isLocal()));
+                        params.put("filters","local");
                     if (adminAction.isRemote())
-                        params.put("external", String.valueOf(adminAction.isRemote()));
+                        params.put("filters","external");
                     if (adminAction.isActive())
-                        params.put("active", String.valueOf(adminAction.isActive()));
+                        params.put("filters","active");
                     if (adminAction.isDisabled())
-                        params.put("deactivated", String.valueOf(adminAction.isDisabled()));
+                        params.put("filters","deactivated");
                     endpoint = "/admin/users";
                 }
                 break;
