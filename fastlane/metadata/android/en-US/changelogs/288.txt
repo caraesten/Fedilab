@@ -1,0 +1,8 @@
+<b>Added</b>
+- Moderation feature for Pleroma
+
+<b>Changed</b>
+- Add media with polls with Pleroma
+
+<b>Fixed</b>
+- Behavior of the compose button when scrolling

@@ -2317,7 +2317,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
-            if( (isAdmin || isModerator) && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+            if( (isAdmin || isModerator) && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
                 holder.status_remove.setVisibility(View.VISIBLE);
             }else {
                 holder.status_remove.setVisibility(View.GONE);
@@ -2359,12 +2359,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
 
-                if( context instanceof BaseMainActivity){
-                    FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
-                    if( toot != null){
-                        toot.hide();
-                    }
-                }
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
@@ -2502,6 +2496,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                     if (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
 
+                        if( context instanceof BaseMainActivity){
+                            FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
+                            if( toot != null){
+                                toot.hide();
+                            }
+                        }
                         holder.warning_message.setVisibility(View.GONE);
                         if( status.getWarningFetched() == -1 ){
                             warning_message = holder.warning_message;
