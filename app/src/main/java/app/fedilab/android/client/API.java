@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -262,7 +261,13 @@ public class API {
                 if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     endpoint = String.format("/admin/accounts/%s", id);
                 }else {
-                    endpoint = String.format("/admin/users/%s", id);
+                    try {
+                        id = URLEncoder.encode(id, "UTF-8");
+                    } catch (UnsupportedEncodingException e) { }
+                    params = new HashMap<>();
+                    params.put("query", id);
+                    endpoint = "/admin/users";
+
                 }
                 break;
             case GET_REPORTS:
@@ -290,9 +295,7 @@ public class API {
             url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
         }
         try {
-
             String response = new HttpsConnection(context, this.instance).get(url_action, 60, params, prefKeyOauthTokenT);
-            Helper.largeLog(response);
             if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                 if( new JSONObject(response).has("users") ) {
                     response = new JSONArray(new JSONObject(response).getJSONArray("users").toString()).toString();
@@ -306,9 +309,20 @@ public class API {
                     apiResponse.setAccountAdmins(accountAdmins);
                     break;
                 case GET_ONE_ACCOUNT:
-                    AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
-                    accountAdmins = new ArrayList<>();
-                    accountAdmins.add(accountAdmin);
+
+                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                        accountAdmins = parseAccountAdminResponse(new JSONArray(response));
+                        if( accountAdmins != null && accountAdmins.size() > 0) {
+                            Account accountpleroma = getAccount(accountAdmins.get(0).getId());
+                            if (accountpleroma != null) {
+                                accountAdmins.get(0).setAccount(accountpleroma);
+                            }
+                        }
+                    }else{
+                        AccountAdmin accountAdmin = parseAccountAdminResponse(context, new JSONObject(response));
+                        accountAdmins = new ArrayList<>();
+                        accountAdmins.add(accountAdmin);
+                    }
                     apiResponse.setAccountAdmins(accountAdmins);
                     break;
                 case GET_REPORTS:
@@ -441,8 +455,6 @@ public class API {
         }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
         }
-        Log.v(Helper.TAG,"url_action: " + url_action);
-        Log.v(Helper.TAG,"params: " + params);
         try {
             String response = null;
             switch (http_action) {
@@ -456,7 +468,6 @@ public class API {
                     new HttpsConnection(context, this.instance).delete(url_action, 60, params, prefKeyOauthTokenT);
                     break;
             }
-            Log.v(Helper.TAG,"response: " + response);
             switch (action){
                 case ENABLE:
                 case APPROVE:
@@ -5203,19 +5214,54 @@ public class API {
         Report report = new Report();
         try {
             report.setId(resobj.getString("id"));
-            report.setAction_taken(resobj.getBoolean("action_taken"));
-            report.setComment(resobj.getString("comment"));
+            if( !resobj.isNull("action_taken")) {
+                report.setAction_taken(resobj.getBoolean("action_taken"));
+            }else if( !resobj.isNull("state")) {
+                report.setAction_taken(!resobj.has("open"));
+            }
+            if( !resobj.isNull("comment")) {
+                report.setComment(resobj.getString("comment"));
+            }else if( !resobj.isNull("content")) {
+                report.setComment(resobj.getString("content"));
+            }
+
+
             report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
-            report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
-            if( !resobj.isNull("account")) {
-                report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
+            if( !resobj.isNull("updated_at")) {
+                report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
             }
-            if( !resobj.isNull("target_account")) {
-                report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                if( !resobj.isNull("account")) {
+                    report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
+                }
+                if( !resobj.isNull("target_account")) {
+                    report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
+                }
+                if( !resobj.isNull("assigned_account")) {
+                    report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
+                }
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+
+                if( !resobj.isNull("account")) {
+                    Account account = parseAccountResponse(context, resobj.getJSONObject("account"));
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setId(account.getId());
+                    accountAdmin.setUsername(account.getAcct());
+                    accountAdmin.setAccount(account);
+                    report.setTarget_account(accountAdmin);
+                }
+
+                if( !resobj.isNull("actor")) {
+                    Account account = parseAccountResponse(context, resobj.getJSONObject("actor"));
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setId(account.getId());
+                    accountAdmin.setUsername(account.getAcct());
+                    accountAdmin.setAccount(account);
+                    report.setAccount(accountAdmin);
+                }
+
             }
-            if( !resobj.isNull("assigned_account")) {
-                report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
-            }
+
             if( !resobj.isNull("action_taken_by_account")) {
                 report.setAction_taken_by_account(parseAccountAdminResponse(context, resobj.getJSONObject("action_taken_by_account")));
             }

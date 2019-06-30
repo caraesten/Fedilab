@@ -159,6 +159,9 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
             Group statuses_group = findViewById(R.id.statuses_group);
             statuses_group.setVisibility(View.VISIBLE);
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ONE_ACCOUNT, report.getTarget_account().getUsername(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
 
         }
         if( targeted_account != null) {
