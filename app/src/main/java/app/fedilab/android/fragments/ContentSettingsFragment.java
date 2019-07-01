@@ -16,22 +16,29 @@ package app.fedilab.android.fragments;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import app.fedilab.android.R;
+import app.fedilab.android.activities.SettingsActivity;
+import app.fedilab.android.activities.TagCacheActivity;
+import app.fedilab.android.helper.Helper;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ContentSettingsFragment  extends Fragment implements ScreenShotable {
 
@@ -42,6 +49,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
     private Context context;
     public static final String CLOSE = "Close";
+    public static final String TIMELINES = "Timelines";
+    public static final String ADMIN = "Admin";
+    public static final String NOTIFICATIONS = "Notifications";
+    public static final String INTERFACE = "Interface";
+    public static final String COMPOSE = "Compose";
+    public static final String HIDDEN = "Hidden";
+    public static final String TODO = "All";
 
     public static ContentSettingsFragment newInstance(int resId) {
         ContentSettingsFragment contentFragment = new ContentSettingsFragment();
@@ -70,8 +84,49 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings_reveal, container, false);
+        FrameLayout containerFrame = rootView.findViewById(R.id.container);
+
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
+                break;
+            case Helper.THEME_BLACK:
+                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
+                break;
+            default:
+                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
+        }
+
+        LinearLayout settings_timeline = rootView.findViewById(R.id.settings_timeline);
+        LinearLayout settings_notifications = rootView.findViewById(R.id.settings_notifications);
+        LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
+        LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
+        LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
+        LinearLayout settings_hidden = rootView.findViewById(R.id.settings_hidden);
+        LinearLayout settings_to_do = rootView.findViewById(R.id.settings_to_do);
 
         if( res == R.drawable.ic_timeline_menu_s){
+            settings_timeline.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_notifications_menu){
+            settings_notifications.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_security_admin_menu){
+            settings_admin.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_tablet_menu){
+            settings_interface.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_edit_black_menu){
+            settings_compose.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_visibility_off_menu){
+            settings_hidden.setVisibility(View.VISIBLE);
+        }else if( res == R.drawable.ic_all_inclusive_menu){
+            settings_to_do.setVisibility(View.VISIBLE);
+        }
+        else if( res == R.drawable.ic_close){
 
         }
 

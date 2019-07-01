@@ -165,7 +165,20 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentSettingsFragment.CLOSE, R.drawable.ic_close);
         list.add(menuItem0);
-
+        SlideMenuItem menuItem1 = new SlideMenuItem(ContentSettingsFragment.TIMELINES, R.drawable.ic_timeline_menu_s);
+        list.add(menuItem1);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.ADMIN, R.drawable.ic_security_admin_menu);
+        list.add(menuItem2);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentSettingsFragment.NOTIFICATIONS, R.drawable.ic_notifications_menu);
+        list.add(menuItem3);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentSettingsFragment.INTERFACE, R.drawable.ic_tablet_menu);
+        list.add(menuItem4);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentSettingsFragment.COMPOSE, R.drawable.ic_edit_black_menu);
+        list.add(menuItem5);
+        SlideMenuItem menuItem6 = new SlideMenuItem(ContentSettingsFragment.HIDDEN, R.drawable.ic_visibility_off_menu);
+        list.add(menuItem6);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentSettingsFragment.TODO, R.drawable.ic_all_inclusive_menu);
+        list.add(menuItem7);
     }
 
     @Override
@@ -204,7 +217,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition) {
-        this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_more_toot_content : R.drawable.ic_timeline_menu_s;
+        this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
         View view = findViewById(R.id.content_frame);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
         Animator animator = null;
@@ -227,7 +240,8 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
         if (ContentSettingsFragment.CLOSE.equals(slideMenuItem.getName())) {
-            return screenShotable;
+            finish();
+            return null;
         }
         return replaceFragment(screenShotable, position);
     }
