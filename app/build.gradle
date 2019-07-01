@@ -112,4 +112,5 @@ dependencies {
     implementation "info.guardianproject.netcipher:netcipher-okhttp3:$netCipherVersion"
 
     implementation  'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
+    implementation 'com.github.yalantis:Side-Menu.Android:1.0.2'
 }

@@ -1570,7 +1570,11 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), PartnerShipActivity.class);
             startActivity(intent);
             return false;
-        }else if(id == R.id.nav_bug_report){
+        }else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+            return false;
+        } else if(id == R.id.nav_bug_report){
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"incoming+tom79/mastalab@incoming.gitlab.com"});
@@ -1613,14 +1617,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             add_new.show();
         }
-        if (id == R.id.nav_settings) {
-            toot.hide();
-            TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
-            fragmentTag = "TABLAYOUT_SETTINGS";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
-
-        }else if (id == R.id.nav_peertube_settings) {
+        if (id == R.id.nav_peertube_settings) {
             toot.hide();
             SettingsPeertubeFragment settingsPeertubeFragment= new SettingsPeertubeFragment();
             fragmentTag = "TABLAYOUT_PEERTUBE_SETTINGS";
