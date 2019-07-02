@@ -46,6 +46,7 @@ import app.fedilab.android.animatemenu.interfaces.Resourceble;
 import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.animatemenu.model.SlideMenuItem;
 import app.fedilab.android.animatemenu.util.ViewAnimator;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.helper.Helper;
 
@@ -169,8 +170,10 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         list.add(menuItem0);
         SlideMenuItem menuItem1 = new SlideMenuItem(ContentSettingsFragment.type.TIMELINES, R.drawable.ic_timeline_menu_s);
         list.add(menuItem1);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
-        list.add(menuItem2);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
+            list.add(menuItem2);
+        }
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentSettingsFragment.type.NOTIFICATIONS, R.drawable.ic_notifications_menu);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
