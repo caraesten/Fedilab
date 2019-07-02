@@ -170,10 +170,9 @@ public class ViewAnimator<T extends Resourceble> {
             public void onAnimationEnd(Animation animation) {
                 view.clearAnimation();
                 view.setVisibility(View.INVISIBLE);
-                if (position == viewList.size() - 1) {
-                    animatorListener.enableHomeButton();
-                    drawerLayout.closeDrawers();
-                }
+
+                animatorListener.enableHomeButton();
+                drawerLayout.closeDrawers();
             }
 
             @Override
@@ -192,13 +191,13 @@ public class ViewAnimator<T extends Resourceble> {
 
     public interface ViewAnimatorListener {
 
-        public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position);
+        ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position);
 
-        public void disableHomeButton();
+        void disableHomeButton();
 
-        public void enableHomeButton();
+        void enableHomeButton();
 
-        public void addViewToContainer(View view);
+        void addViewToContainer(View view);
 
     }
 }
