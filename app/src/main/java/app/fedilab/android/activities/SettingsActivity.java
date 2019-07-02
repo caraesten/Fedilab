@@ -83,7 +83,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
-
+        position = 1;
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -164,6 +164,10 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         drawerLayout.addDrawerListener(drawerToggle);
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
 
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentSettingsFragment.type.CLOSE, R.drawable.ic_close);
