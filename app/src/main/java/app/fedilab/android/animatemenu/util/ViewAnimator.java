@@ -9,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.ManageAccountsInListActivity;
+import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.animatemenu.animation.FlipAnimation;
 import app.fedilab.android.animatemenu.interfaces.Resourceble;
 import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
@@ -63,11 +66,15 @@ public class ViewAnimator<T extends Resourceble> {
         for (int i = 0; i < size; i++) {
             @SuppressLint("InflateParams") View viewMenu = appCompatActivity.getLayoutInflater().inflate(R.layout.menu_list_item, null);
 
+            if( i == SettingsActivity.position){
+                viewMenu.setBackgroundColor(ContextCompat.getColor(viewMenu.getContext(), R.color.mastodonC2));
+            }
             final int finalI = i;
             viewMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int[] location = {0, 0};
+                    SettingsActivity.position = finalI;
                     v.getLocationOnScreen(location);
                     switchItem(list.get(finalI), location[1] + v.getHeight() / 2);
                 }

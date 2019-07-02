@@ -62,6 +62,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
+    public static int position = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
