@@ -164,21 +164,21 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
 
     private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentSettingsFragment.CLOSE, R.drawable.ic_close);
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentSettingsFragment.type.CLOSE, R.drawable.ic_close);
         list.add(menuItem0);
-        SlideMenuItem menuItem1 = new SlideMenuItem(ContentSettingsFragment.TIMELINES, R.drawable.ic_timeline_menu_s);
+        SlideMenuItem menuItem1 = new SlideMenuItem(ContentSettingsFragment.type.TIMELINES, R.drawable.ic_timeline_menu_s);
         list.add(menuItem1);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.ADMIN, R.drawable.ic_security_admin_menu);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentSettingsFragment.NOTIFICATIONS, R.drawable.ic_notifications_menu);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentSettingsFragment.type.NOTIFICATIONS, R.drawable.ic_notifications_menu);
         list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentSettingsFragment.INTERFACE, R.drawable.ic_tablet_menu);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
         list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentSettingsFragment.COMPOSE, R.drawable.ic_edit_black_menu);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
         list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(ContentSettingsFragment.HIDDEN, R.drawable.ic_visibility_off_menu);
+        SlideMenuItem menuItem6 = new SlideMenuItem(ContentSettingsFragment.type.HIDDEN, R.drawable.ic_visibility_off_menu);
         list.add(menuItem6);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentSettingsFragment.TODO, R.drawable.ic_all_inclusive_menu);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentSettingsFragment.type.ALL, R.drawable.ic_all_inclusive_menu);
         list.add(menuItem7);
     }
 
@@ -217,7 +217,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
 
-    private ScreenShotable replaceFragment(ScreenShotable screenShotable, String type, int topPosition) {
+    private ScreenShotable replaceFragment(ScreenShotable screenShotable, ContentSettingsFragment.type type, int topPosition) {
         this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
         View view = findViewById(R.id.content_frame);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
@@ -234,7 +234,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
         ContentSettingsFragment contentSettingsFragment = ContentSettingsFragment.newInstance(this.res);
         Bundle bundle = new Bundle();
-        bundle.putString("type",type);
+        bundle.putSerializable("type",type);
         contentSettingsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentSettingsFragment).commit();
         return contentSettingsFragment;
@@ -244,8 +244,8 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
 
-        String type = slideMenuItem.getName();
-        if (ContentSettingsFragment.CLOSE.equals(type)) {
+        ContentSettingsFragment.type type = slideMenuItem.getType();
+        if (ContentSettingsFragment.type.CLOSE.equals(type)) {
             finish();
             return null;
         }

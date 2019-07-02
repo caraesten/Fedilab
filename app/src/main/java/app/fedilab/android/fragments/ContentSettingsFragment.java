@@ -37,6 +37,13 @@ import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.helper.Helper;
 
 import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.ALL;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.HIDDEN;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
 public class ContentSettingsFragment  extends Fragment implements ScreenShotable {
 
@@ -44,16 +51,20 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
     private View containerView;
     protected int res;
     private Bitmap bitmap;
-    private String type;
+    private type type;
     private Context context;
-    public static final String CLOSE = "Close";
-    public static final String TIMELINES = "Timelines";
-    public static final String ADMIN = "Admin";
-    public static final String NOTIFICATIONS = "Notifications";
-    public static final String INTERFACE = "Interface";
-    public static final String COMPOSE = "Compose";
-    public static final String HIDDEN = "Hidden";
-    public static final String TODO = "All";
+
+    public enum type{
+        CLOSE,
+        TIMELINES,
+        ADMIN,
+        NOTIFICATIONS,
+        INTERFACE,
+        COMPOSE,
+        HIDDEN,
+        ALL
+    }
+
 
     public static ContentSettingsFragment newInstance(int resId) {
         ContentSettingsFragment contentFragment = new ContentSettingsFragment();
@@ -86,7 +97,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            type = bundle.getString("type", null);
+            type = (type)bundle.getSerializable("type");
         }
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -114,17 +125,17 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         if(type == null || type.equals(TIMELINES)){
             settings_timeline.setVisibility(View.VISIBLE);
-        }else if( type.equals(NOTIFICATIONS)){
+        }else if( type == NOTIFICATIONS){
             settings_notifications.setVisibility(View.VISIBLE);
-        }else if( type.equals(ADMIN)){
+        }else if( type == ADMIN){
             settings_admin.setVisibility(View.VISIBLE);
-        }else if(type.equals(INTERFACE)){
+        }else if(type == INTERFACE){
             settings_interface.setVisibility(View.VISIBLE);
-        }else if(type.equals(COMPOSE)){
+        }else if(type == COMPOSE){
             settings_compose.setVisibility(View.VISIBLE);
-        }else if( type.equals(HIDDEN)){
+        }else if( type == HIDDEN){
             settings_hidden.setVisibility(View.VISIBLE);
-        }else if( type.equals(TODO)){
+        }else if( type == ALL){
             settings_to_do.setVisibility(View.VISIBLE);
         }
 
