@@ -1,6 +1,7 @@
 package app.fedilab.android.animatemenu.util;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -21,6 +22,10 @@ import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.animatemenu.animation.FlipAnimation;
 import app.fedilab.android.animatemenu.interfaces.Resourceble;
 import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
+import app.fedilab.android.helper.Helper;
+
+import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -53,10 +58,6 @@ public class ViewAnimator<T extends Resourceble> {
         this.animatorListener = animatorListener;
     }
 
-    public void setMenuItemSelector(int drawableSelector){
-        RelativeLayout menu_item_container = appCompatActivity.findViewById(R.id.menu_item_container);
-        menu_item_container.setBackgroundResource(drawableSelector);
-    }
 
 
     public void showMenuContent() {
@@ -67,8 +68,25 @@ public class ViewAnimator<T extends Resourceble> {
             @SuppressLint("InflateParams") View viewMenu = appCompatActivity.getLayoutInflater().inflate(R.layout.menu_list_item, null);
 
             if( i == SettingsActivity.position){
-                viewMenu.setBackgroundColor(ContextCompat.getColor(viewMenu.getContext(), R.color.mastodonC2));
+                viewMenu.setBackgroundColor(ContextCompat.getColor(appCompatActivity, R.color.mastodonC2));
+            }else {
+                SharedPreferences sharedpreferences = appCompatActivity.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+                if (theme == Helper.THEME_DARK) {
+                    viewMenu.setBackgroundResource(R.drawable.menu_item_selector);
+                } else if (theme == Helper.THEME_BLACK){
+                    viewMenu.setBackgroundResource(R.drawable.menu_item_selector_black);
+                }else {
+                    viewMenu.setBackgroundResource(R.drawable.menu_item_selector_light);
+                    ImageView imageView = viewMenu.findViewById(R.id.menu_item_image);
+                    if( imageView != null){
+                        changeDrawableColor(appCompatActivity, imageView, R.color.black);
+                    }
+                }
+
             }
+
             final int finalI = i;
             viewMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
