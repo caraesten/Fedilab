@@ -21,6 +21,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +42,12 @@ import java.util.List;
 import java.util.Objects;
 
 import app.fedilab.android.R;
+import app.fedilab.android.animatemenu.interfaces.Resourceble;
+import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
+import app.fedilab.android.animatemenu.model.SlideMenuItem;
+import app.fedilab.android.animatemenu.util.ViewAnimator;
 import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.helper.Helper;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-import yalantis.com.sidemenu.util.ViewAnimator;
 
 /**
  * Created by Thomas on 01/07/2019.
@@ -216,7 +217,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
 
-    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition) {
+    private ScreenShotable replaceFragment(ScreenShotable screenShotable, String type, int topPosition) {
         this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
         View view = findViewById(R.id.content_frame);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
@@ -232,6 +233,9 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
 
         ContentSettingsFragment contentSettingsFragment = ContentSettingsFragment.newInstance(this.res);
+        Bundle bundle = new Bundle();
+        bundle.putString("type",type);
+        contentSettingsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentSettingsFragment).commit();
         return contentSettingsFragment;
     }
@@ -239,11 +243,13 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
-        if (ContentSettingsFragment.CLOSE.equals(slideMenuItem.getName())) {
+
+        String type = slideMenuItem.getName();
+        if (ContentSettingsFragment.CLOSE.equals(type)) {
             finish();
             return null;
         }
-        return replaceFragment(screenShotable, position);
+        return replaceFragment(screenShotable, type, position);
     }
 
     @Override

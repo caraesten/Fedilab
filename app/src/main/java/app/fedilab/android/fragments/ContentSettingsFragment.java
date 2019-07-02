@@ -33,10 +33,8 @@ import androidx.fragment.app.Fragment;
 import org.jetbrains.annotations.NotNull;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.SettingsActivity;
-import app.fedilab.android.activities.TagCacheActivity;
+import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.helper.Helper;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -46,7 +44,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
     private View containerView;
     protected int res;
     private Bitmap bitmap;
-
+    private String type;
     private Context context;
     public static final String CLOSE = "Close";
     public static final String TIMELINES = "Timelines";
@@ -86,6 +84,10 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         View rootView = inflater.inflate(R.layout.fragment_settings_reveal, container, false);
         FrameLayout containerFrame = rootView.findViewById(R.id.container);
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            type = bundle.getString("type", null);
+        }
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -102,7 +104,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             default:
                 containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
         }
-
         LinearLayout settings_timeline = rootView.findViewById(R.id.settings_timeline);
         LinearLayout settings_notifications = rootView.findViewById(R.id.settings_notifications);
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
@@ -111,24 +112,22 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         LinearLayout settings_hidden = rootView.findViewById(R.id.settings_hidden);
         LinearLayout settings_to_do = rootView.findViewById(R.id.settings_to_do);
 
-        if( res == R.drawable.ic_timeline_menu_s){
+        if(type == null || type.equals(TIMELINES)){
             settings_timeline.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_notifications_menu){
+        }else if( type.equals(NOTIFICATIONS)){
             settings_notifications.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_security_admin_menu){
+        }else if( type.equals(ADMIN)){
             settings_admin.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_tablet_menu){
+        }else if(type.equals(INTERFACE)){
             settings_interface.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_edit_black_menu){
+        }else if(type.equals(COMPOSE)){
             settings_compose.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_visibility_off_menu){
+        }else if( type.equals(HIDDEN)){
             settings_hidden.setVisibility(View.VISIBLE);
-        }else if( res == R.drawable.ic_all_inclusive_menu){
+        }else if( type.equals(TODO)){
             settings_to_do.setVisibility(View.VISIBLE);
         }
-        else if( res == R.drawable.ic_close){
 
-        }
 
         return rootView;
     }
