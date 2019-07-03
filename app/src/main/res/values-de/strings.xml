@@ -971,8 +971,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_display_fedilab_features_button_indication">Zeigt eine Fedilab-Schaltfläche unter dem Profilbild. Dies ermöglicht einen Schnellzugriff auf In-App-Funktionen.</string>
     <string name="set_quick_reply_indication">Ermöglicht das direkte Antworten in Zeitachsen unterhalb des Status</string>
     <string name="set_fit_preview_indication">Vorschauen in Zeitachsen werden nicht beschnitten</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_video_preview_indication">Ermöglicht die Wiedergabe eingebetteter Videos direkt in der Zeitleiste</string>
+    <string name="set_display_content_after_fetch_more_indication">Ermöglicht es, die Art und Weise umzukehren, wie Zustände gelesen werden, die nach dem Klicken auf die Schaltfläche „Mehr nachladen” angezeigt werden.</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
