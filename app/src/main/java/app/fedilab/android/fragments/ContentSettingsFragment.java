@@ -68,6 +68,7 @@ import com.google.common.collect.ImmutableSet;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,11 +81,14 @@ import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.filelister.FileListerDialog;
+import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 import mabbas007.tagsedittext.TagsEditText;
+
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -1040,7 +1044,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         set_folder = rootView.findViewById(R.id.set_folder);
         set_folder.setText(targeted_folder);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_folder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1052,7 +1056,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         }else {
             LinearLayout file_chooser = rootView.findViewById(R.id.file_chooser);
             file_chooser.setVisibility(View.GONE);
-        }
+        }*/
+        set_folder.setOnClickListener(view ->{
+            FileListerDialog fileListerDialog = FileListerDialog.createFileListerDialog(context, style);
+            fileListerDialog.setDefaultDir(targeted_folder);
+            fileListerDialog.setFileFilter(FileListerDialog.FILE_FILTER.DIRECTORY_ONLY);
+            fileListerDialog.setOnFileSelectedListener(new OnFileSelectedListener() {
+                @Override
+                public void onFileSelected(File file, String path) {
+                    if( path == null )
+                        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.SET_FOLDER_RECORD, path);
+                    editor.apply();
+                    set_folder.setText(path);
+                }
+            });
+            fileListerDialog.show();
+        });
 
         final Spinner set_night_mode = rootView.findViewById(R.id.set_night_mode);
         ArrayAdapter<CharSequence> adapterTheme = ArrayAdapter.createFromResource(getContext(),
