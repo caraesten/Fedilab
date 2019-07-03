@@ -1,0 +1,7 @@
+Changed
+- New settings divided with categories
+
+Fixed
+- Quick reply broken with the compact mode
+- Some crashes in console mode
+- Crashes when using the quick reply
