@@ -975,10 +975,10 @@
     <string name="set_display_timeline_in_list_indication">在右上角添加一个省略按钮来列出所有标签/实例/列表</string>
     <string name="set_display_news_from_fedilab_indication">在主菜单中显示一个项目，以便快速访问目标为#Fedilab 标签的时间线</string>
     <string name="live_notif_indication">保持直播API打开连接，以便实时通知。</string>
-    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
+    <string name="set_keep_background_process_indication">当应用程序处于后台时，它将保持连接到流媒体API。如果您要节约电池，禁用它。</string>
+    <string name="set_enable_time_slot_indication">在时间段期间，应用程序将发送通知。您可以用正确的选择逆反 (如: 静音) 这个时间段。</string>
+    <string name="set_display_fedilab_features_button_indication">在档案图片下显示 Fedilab 按钮。它是访问应用内功能的快捷方式。</string>
+    <string name="set_quick_reply_indication">允许在时间线状态下直接回复</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
