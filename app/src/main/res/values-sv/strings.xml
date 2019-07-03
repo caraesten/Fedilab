@@ -983,8 +983,8 @@
     <string name="set_enable_time_slot_indication">Under tiden perioden kommer programmet att skicka meddelanden. Du kan ändra (dvs: tysta) denna period med höger spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Visa en Fedilab-knapp nedan profilbilden. Det är en genväg för att få tillgång till in-app-funktioner.</string>
     <string name="set_quick_reply_indication">Tillåt att svara direkt i tidslinjen nedanför statusen</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_fit_preview_indication">Förhandsgranskning kommer inte att förkortas i tidslinjer</string>
+    <string name="set_display_video_preview_indication">Tillåt att spela upp inbäddade videoklipp direkt i tidslinjer</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
