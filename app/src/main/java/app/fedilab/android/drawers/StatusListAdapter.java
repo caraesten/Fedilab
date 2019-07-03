@@ -1624,18 +1624,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     else if (theme == Helper.THEME_BLACK)
                         acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)),  acctReblogSpan.length()-1, acctReblogSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-                    startingSpan = new SpannableString(TextUtils.concat(acctSpan, " ", acctReblogSpan));
+                    startingSpan = new SpannableString(TextUtils.concat(acctSpan, new SpannableString(" "), acctReblogSpan));
                 }else
                     startingSpan = acctSpan;
+                if( startingSpan == null)
+                    startingSpan = new SpannableString("");
+                if( status.getContentSpan() == null)
+                    status.setContentSpan(new SpannableString(""));
+
                 if( status.getReblog() == null && status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
-                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
+                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, new SpannableString(" "), status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
                     holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
                 }else if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
-                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
+                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, new SpannableString(" "), status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
                     holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
                 } else {
                     holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-                    holder.status_content.setText(TextUtils.concat(startingSpan, " ", status.getContentSpan()!=null?status.getContentSpan():""), TextView.BufferType.SPANNABLE);
+                    holder.status_content.setText(TextUtils.concat(startingSpan, new SpannableString(" "), status.getContentSpan()!=null?status.getContentSpan():new SpannableString("")), TextView.BufferType.SPANNABLE);
                 }
 
             }else {
@@ -3850,7 +3855,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void sendToot(){
 
-        if(toot_content.getText().toString().trim().length() == 0){
+        if(toot_content == null || toot_content.getText() == null){
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( toot_content.getText().toString().trim().length() == 0){
             Toasty.error(context, context.getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
             return;
         }
