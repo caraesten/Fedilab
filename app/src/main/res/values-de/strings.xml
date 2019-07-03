@@ -973,11 +973,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_fit_preview_indication">Vorschauen in Zeitachsen werden nicht beschnitten</string>
     <string name="set_display_video_preview_indication">Ermöglicht die Wiedergabe eingebetteter Videos direkt in der Zeitleiste</string>
     <string name="set_display_content_after_fetch_more_indication">Ermöglicht es, die Art und Weise umzukehren, wie Zustände gelesen werden, die nach dem Klicken auf die Schaltfläche „Mehr nachladen” angezeigt werden.</string>
-    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
-    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
-    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="set_security_provider_indication">Diese Option ermöglicht die Unterstützung aktueller Verschlüsselungs-Suiten. Es ist nützlich für ältere Android-Geräte oder wenn Sie keine Verbindung zu Ihrer Instanz herstellen können.</string>
+    <string name="set_video_mode_indication">Exklusiv für PeerTube-Videos. Aktivieren Sie diesen Modus, wenn Sie diese nicht wiedergeben können.</string>
+    <string name="featured_hashtags_indication">Diese Schlagwörter ermöglichen es, den Status von Profilen zu filtern. Sie müssen das Kontextmenü verwenden, um diese anzuzeigen.</string>
+    <string name="set_capitalize_indication">Automatisches Einfügen eines Zeilenumbruchs nach der Anweisung den ersten Buchstaben groß zu schreiben.</string>
+    <string name="settings_title_custom_sharing_indication">Ermöglicht es Inhaltserstellern, den Status ihrer RSS-Feeds zu teilen</string>
     <string name="timelines">Zeitleisten</string>
     <string name="u_interface">Benutzeroberfläche</string>
     <string name="battery">Batterie</string>
