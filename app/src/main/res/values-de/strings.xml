@@ -968,9 +968,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="live_notif_indication">Halten Sie eine offene Verbindung zur Streaming-API für Echtzeit-Mitteilungen aufrecht.</string>
     <string name="set_keep_background_process_indication">Dieser Ordner besteht bereits.\n Bitte geben Sie einen anderen Namen für den Ordner an.</string>
     <string name="set_enable_time_slot_indication">Innerhalb des Zeitfensters sendet die App Mitteilungen. Sie können dieses Zeitfenster mit dem richtigen Drehwähler umkehren (d.h. leise).</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_display_fedilab_features_button_indication">Zeigt eine Fedilab-Schaltfläche unter dem Profilbild. Dies ermöglicht einen Schnellzugriff auf In-App-Funktionen.</string>
+    <string name="set_quick_reply_indication">Ermöglicht das direkte Antworten in Zeitachsen unterhalb des Status</string>
+    <string name="set_fit_preview_indication">Vorschauen in Zeitachsen werden nicht beschnitten</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
