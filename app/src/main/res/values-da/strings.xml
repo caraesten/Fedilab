@@ -987,7 +987,7 @@
     <string name="set_display_video_preview_indication">Tillad afspilning af indlejrede videoer direkte fra tidslinjer</string>
     <string name="set_display_content_after_fetch_more_indication">Tillader, spejlvendingg af måden, hvorpå statusser, som hentes når du klikker på Hent flere-knappen, læses</string>
     <string name="set_security_provider_indication">Indstillingen muliggør understøttelse af tidligere cipher suites. Det er nyttigt på ældre Android-enheder, eller hvis du ikke kan oprette forbindelse til din instans.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot read them.</string>
+    <string name="set_video_mode_indication">Kun til Peertube-videoer. Skift denne tilstand, hvis du ikke kan afspille dem.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
