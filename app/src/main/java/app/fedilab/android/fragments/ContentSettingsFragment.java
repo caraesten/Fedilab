@@ -62,12 +62,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.collect.ImmutableSet;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,11 +84,15 @@ import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.filelister.FileListerDialog;
+import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 import mabbas007.tagsedittext.TagsEditText;
+
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -447,6 +455,15 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, set_display_admin_menu.isChecked());
                 editor.apply();
+                Bundle b = new Bundle();
+                if( set_display_admin_menu.isChecked()){
+                    b.putString("menu", "show_admin");
+                }else{
+                    b.putString("menu", "hide_admin");
+                }
+                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
+                intentBC.putExtras(b);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
 
@@ -688,6 +705,15 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_timeline_in_list.isChecked());
                 editor.apply();
+                Bundle b = new Bundle();
+                if( set_display_timeline_in_list.isChecked()){
+                    b.putString("menu", "show_list_button");
+                }else{
+                    b.putString("menu", "hide_list_button");
+                }
+                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
+                intentBC.putExtras(b);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
 
@@ -700,13 +726,17 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_news.isChecked());
+                editor.putBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, set_display_news.isChecked());
                 editor.apply();
-                NavigationView navigationView = ((MainActivity) context).findViewById(R.id.nav_view);
-                MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
-                if( news != null){
-                    news.setVisible(set_display_news.isChecked());
+                Bundle b = new Bundle();
+                if( set_display_news.isChecked()){
+                    b.putString("menu", "show_news");
+                }else{
+                    b.putString("menu", "hide_news");
                 }
+                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
+                intentBC.putExtras(b);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
 
@@ -986,16 +1016,17 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
         final CheckBox set_custom_tabs  = rootView.findViewById(R.id.set_custom_tabs);
+        final  LinearLayout custom_tabs_container  = rootView.findViewById(R.id.custom_tabs_container);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
         if( !embedded_browser){
             set_javascript_container.setVisibility(View.GONE);
-            set_custom_tabs.setVisibility(View.VISIBLE);
+            custom_tabs_container.setVisibility(View.VISIBLE);
         }else{
             set_javascript_container.setVisibility(View.VISIBLE);
-            set_custom_tabs.setVisibility(View.GONE);
+            custom_tabs_container.setVisibility(View.GONE);
         }
         set_embedded_browser.setChecked(embedded_browser);
         set_embedded_browser.setOnClickListener(new View.OnClickListener() {
@@ -1006,10 +1037,10 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
                 if( !set_embedded_browser.isChecked()){
                     set_javascript_container.setVisibility(View.GONE);
-                    set_custom_tabs.setVisibility(View.VISIBLE);
+                    custom_tabs_container.setVisibility(View.VISIBLE);
                 }else{
                     set_javascript_container.setVisibility(View.VISIBLE);
-                    set_custom_tabs.setVisibility(View.GONE);
+                    custom_tabs_container.setVisibility(View.GONE);
                 }
             }
         });
@@ -1056,7 +1087,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         set_folder = rootView.findViewById(R.id.set_folder);
         set_folder.setText(targeted_folder);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_folder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1068,7 +1099,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         }else {
             LinearLayout file_chooser = rootView.findViewById(R.id.file_chooser);
             file_chooser.setVisibility(View.GONE);
-        }
+        }*/
+        set_folder.setOnClickListener(view ->{
+            FileListerDialog fileListerDialog = FileListerDialog.createFileListerDialog(context, style);
+            fileListerDialog.setDefaultDir(targeted_folder);
+            fileListerDialog.setFileFilter(FileListerDialog.FILE_FILTER.DIRECTORY_ONLY);
+            fileListerDialog.setOnFileSelectedListener(new OnFileSelectedListener() {
+                @Override
+                public void onFileSelected(File file, String path) {
+                    if( path == null )
+                        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.SET_FOLDER_RECORD, path);
+                    editor.apply();
+                    set_folder.setText(path);
+                }
+            });
+            fileListerDialog.show();
+        });
 
         final Spinner set_night_mode = rootView.findViewById(R.id.set_night_mode);
         ArrayAdapter<CharSequence> adapterTheme = ArrayAdapter.createFromResource(getContext(),
@@ -1110,7 +1159,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                             editor.apply();
                             break;
                     }
-                    ((MainActivity) context).recreate();
+                    Bundle b = new Bundle();
+                    b.putString("menu", "theme");
+                    Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
+                    intentBC.putExtras(b);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
+                    ((SettingsActivity) context).recreate();
                 }
                 count1++;
             }

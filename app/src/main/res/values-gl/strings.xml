@@ -138,7 +138,6 @@
         <item quantity="one">%d resposta</item>
         <item quantity="other">%d respostas</item>
     </plurals>
-    <string name="set_display_bookmark_button">Mostrar o botón de marcador</string>
     <string name="bookmarks">Marcadores</string>
     <string name="bookmark_add">Engadir a marcadores</string>
     <string name="bookmark_remove">Eliminar marcador</string>
@@ -335,11 +334,6 @@
     <string name="expand_cw">Expandir automáticamente CW</string>
     <string name="use_cookies">Permitir testemuños de terceiros</string>
     <string name="settings_ui_layout">Aspecto das liñas temporais: </string>
-    <string-array name="battery_profiles">
-        <item>Consumo normal de batería</item>
-        <item>Consumo moderado de batería</item>
-        <item>Consumo baixo de batería</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanas</item>
         <item>Menú</item>
@@ -616,7 +610,6 @@
     <string name="information">Información</string>
     <string name="set_display_card">Mostrar vista previa en todos os toots</string>
     <string name="thanks_text_ux">Deseñador/a da nova UX/UI</string>
-    <string name="set_old_direct_timeline">Utilizar a liña temporal directa previa a Mastodon 2.6</string>
     <string name="set_display_video_preview">Mostrar vista previa de vídeos</string>
     <string name="thanks_text_support">Soporte Gitlab</string>
     <string name="action_bug_report">Informe de fallos</string>
@@ -776,7 +769,6 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Desconectar conta</string>
-    <string name="set_optimize_loading">Optimizar tempo de carga</string>
     <string name="all">Todo</string>
     <string name="about_opencollective">Axude a app</string>
     <string name="more_about_opencollective">Open Collective crea grupos para establecer rápidamente un colectivo, colleitar fondos e xestionalos de xeito transparente.</string>
@@ -977,11 +969,42 @@
     <string name="mark_unresolved">Marcar como non resolto</string>
     <string name="toast_empty_content">Sen contido!</string>
     <string name="set_display_fedilab_features_button">Mostrar botón características Fedilab</string>
-    <string name="audio">The application needs to access audio recording</string>
-    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
-    <string name="set_quick_reply">Enable quick reply</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="audio">A aplicación precisa acceso a gravación de audio</string>
+    <string name="toot_message_record_error">Algo fallou ao gravar a mensaxe de voz!</string>
+    <string name="voice_message">Mensaxe de voz</string>
+    <string name="set_quick_reply">Activar resposta rápida</string>
+    <string name="reply_might_be_useless">A conta a que está a respostar podería non ver a súa mensaxe!</string>
+    <string name="set_remember_position_indication">Se desactivado, a app sempre cargará os últimos estados</string>
+    <string name="set_blur_sensitive_indication">Se desactivado, os medios sensibles estarán ocultos con un botón</string>
+    <string name="set_long_press_media_indication">Gardar medios a resolución completa con pulsación longa na vista previa</string>
+    <string name="set_display_timeline_in_list_indication">Engadir un botón elíptico arriba a dereita para listar todas as etiquetas/instancias/listas</string>
+    <string name="set_display_news_from_fedilab_indication">Mostrar un elemento no menú principal para acceso rápido a liña temporal coa etiqueta #Fedilab</string>
+    <string name="live_notif_indication">Manter conexión aberta ao fluxo API para notificacións ao vivo.</string>
+    <string name="set_keep_background_process_indication">Cando a app está en segundo plano, manterá unha conexión ao fluxo da API. Desactivar se lle preocupa a batería.</string>
+    <string name="set_enable_time_slot_indication">Durante o tempo marcado, a app enviará notificacións. Pode revertir (silenciar) esta marxe coa roda da dereita.</string>
+    <string name="set_display_fedilab_features_button_indication">Mostar un botón Fedilab debaixo da imaxe de perfil. É un atallo para acceder a funcións propias da app.</string>
+    <string name="set_quick_reply_indication">Permitir respostar directamente en liñas temporais baixo os estados</string>
+    <string name="set_fit_preview_indication">Non se recortarán as vistas previas en liñas temporais</string>
+    <string name="set_display_video_preview_indication">Permitir mostrar videos incrustrados directamente en liñas temporais</string>
+    <string name="set_display_content_after_fetch_more_indication">Permitir reverter o xeito para ler estados que se mostran unha vez pulsado o botón obter máis</string>
+    <string name="set_security_provider_indication">Esta opción dalle soporte a recentes programas de cifra. É útil para dispositivos con versións antigas de Android o se non pode conectar coa instancia.</string>
+    <string name="set_video_mode_indication">Exclusivo de vídeos Peertube. Cambie este modo se non pode velos.</string>
+    <string name="featured_hashtags_indication">Estas etiquetas permitiranlle filtrar estados dos perfís. Poderá utilizar o menú contextual para velas.</string>
+    <string name="set_capitalize_indication">Inserta automáticamente un salto de liña tras a mención para por en maiúscula a primeira letra</string>
+    <string name="settings_title_custom_sharing_indication">Permitir as creadoras de contido compartir estados desde as súas fontes RSS</string>
+    <string name="timelines">Liñas temporais</string>
+    <string name="u_interface">Interface</string>
+    <string name="battery">Batería</string>
+    <string name="compose">Redactar</string>
+    <string name="new_folder">Create a new Folder here</string>
+    <string name="folder_name">Enter the folder name</string>
+    <string name="valid_folder_name">Please enter a valid folder name</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

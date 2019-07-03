@@ -137,7 +137,6 @@
     <plurals name="preview_replies">
         <item quantity="other">%d 條回覆</item>
     </plurals>
-    <string name="set_display_bookmark_button">顯示書籤按鈕</string>
     <string name="bookmarks">書籤</string>
     <string name="bookmark_add">新增至書籤</string>
     <string name="bookmark_remove">移除書籤</string>
@@ -331,11 +330,6 @@
     <string name="expand_cw">自動展開 cw</string>
     <string name="use_cookies">允許第三方 cookies</string>
     <string name="settings_ui_layout">時間軸佈局：</string>
-    <string-array name="battery_profiles">
-        <item>正常電池消耗</item>
-        <item>中等電池消耗</item>
-        <item>低度電池消耗</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>分頁</item>
         <item>選單</item>
@@ -612,7 +606,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="information">資訊</string>
     <string name="set_display_card">在所有嘟文中顯示預覽</string>
     <string name="thanks_text_ux">新的 UX/UI 設計師</string>
-    <string name="set_old_direct_timeline">使用 Mastodon 2.6 前的直接時間軸</string>
     <string name="set_display_video_preview">顯示影片預覽</string>
     <string name="thanks_text_support">Gitlab 支援</string>
     <string name="action_bug_report">錯誤回報</string>
@@ -771,7 +764,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">登出帳號</string>
-    <string name="set_optimize_loading">最佳化載入時間</string>
     <string name="all">全部</string>
     <string name="about_opencollective">幫助改進應用程式</string>
     <string name="more_about_opencollective">Open Collective 讓群組可以快速設定集合，募集資金並以透明的方式管理。</string>
@@ -977,6 +969,37 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="voice_message">音訊訊息</string>
     <string name="set_quick_reply">啟用快速回覆</string>
     <string name="reply_might_be_useless">您回覆的帳號可能看不到您的訊息！</string>
+    <string name="set_remember_position_indication">若停用，App 將永遠會載入最新嘟文</string>
+    <string name="set_blur_sensitive_indication">若停用，敏感媒體將會隱藏並顯示按鈕</string>
+    <string name="set_long_press_media_indication">在預覽中長按可以儲存完整大小的媒體</string>
+    <string name="set_display_timeline_in_list_indication">在右上角新增一個按鈕，列出所有標籤／站台／清單</string>
+    <string name="set_display_news_from_fedilab_indication">在主選單中顯示項目以供快速存取目標為 #Fedilab 標籤的時間軸</string>
+    <string name="live_notif_indication">保持與串流 API 的開放連線以供即時通知。</string>
+    <string name="set_keep_background_process_indication">當應用程式在背景時，它將保持對串流 API 的連線。如果您關心電池的話，請將其停用。</string>
+    <string name="set_enable_time_slot_indication">在該時段，應用程式將會傳送通知。您可以使用右側的微調器來反轉（亦即讓其安靜）此時段。</string>
+    <string name="set_display_fedilab_features_button_indication">在個人資料圖片下顯示 Fedilab 按鈕。這是存取應用程式內功能的快捷鍵。</string>
+    <string name="set_quick_reply_indication">允許在時間軸中直接回覆狀態</string>
+    <string name="set_fit_preview_indication">將不會裁切時間軸中的預覽畫面。</string>
+    <string name="set_display_video_preview_indication">允許直接在時間軸內播放嵌入影片</string>
+    <string name="set_display_content_after_fetch_more_indication">點擊擷取更多按鈕後，允許反轉讀取狀態的顯示方式</string>
+    <string name="set_security_provider_indication">此選項可支援最近的加密套裝軟體。它對較舊的 Android 裝置或無法連線至您的站台時很有用。</string>
+    <string name="set_video_mode_indication">專為 Peertube 影片而設。如果您無法讀取它們的話，請切換此模式。</string>
+    <string name="featured_hashtags_indication">這些標籤將允許從個人資料過濾狀態。您必須使用情境選單來查看它們。</string>
+    <string name="set_capitalize_indication">在提及後自動插入斷行符號以將首字母大寫</string>
+    <string name="settings_title_custom_sharing_indication">允許內容創作者將狀態分享至他們的 RSS feed</string>
+    <string name="timelines">時間軸</string>
+    <string name="u_interface">介面</string>
+    <string name="battery">電量</string>
+    <string name="compose">組成</string>
+    <string name="new_folder">Create a new Folder here</string>
+    <string name="folder_name">Enter the folder name</string>
+    <string name="valid_folder_name">Please enter a valid folder name</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

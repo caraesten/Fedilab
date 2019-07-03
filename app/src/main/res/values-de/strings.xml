@@ -138,7 +138,6 @@
         <item quantity="one">%d Antwort</item>
         <item quantity="other">%d Antworten</item>
     </plurals>
-    <string name="set_display_bookmark_button">Lesezeichenbutton anzeigen</string>
     <string name="bookmarks">Lesezeichen</string>
     <string name="bookmark_add">Zu Lesezeichen hinzufügen</string>
     <string name="bookmark_remove">Lesezeichen löschen</string>
@@ -335,11 +334,6 @@
     <string name="expand_cw">Inhaltswarnungen (CWs) automatisch einblenden</string>
     <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
     <string name="settings_ui_layout">Zeitleisten wie anzeigen:</string>
-    <string-array name="battery_profiles">
-        <item>Normaler Akkuverbrauch</item>
-        <item>Mittlerer Akkuverbrauch</item>
-        <item>Geringer Akkuverbrauch</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Nur als Reiter</item>
         <item>Nur als Menü</item>
@@ -609,7 +603,6 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="information">Information</string>
     <string name="set_display_card">Vorschau in allen Toots anzeigen</string>
     <string name="thanks_text_ux">Neuer UX/UI-Designer</string>
-    <string name="set_old_direct_timeline">Direkte, alte Zeitline vor Mastodon 2.6 verwenden</string>
     <string name="set_display_video_preview">Video-Vorschau anzeigen</string>
     <string name="thanks_text_support">Gitlab Unterstützung</string>
     <string name="action_bug_report">Fehlerbericht</string>
@@ -766,7 +759,6 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Konto abmelden</string>
-    <string name="set_optimize_loading">Ladezeit optimieren</string>
     <string name="all">Alle</string>
     <string name="about_opencollective">Die App unterstützen</string>
     <string name="more_about_opencollective">Open Collective ermöglicht es Gruppen, schnell ein Kollektiv zu gründen, Mittel aufzubringen und transparent zu verwalten.</string>
@@ -968,6 +960,37 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="voice_message">Sprachnachricht</string>
     <string name="set_quick_reply">Schnelles Antworten aktivieren</string>
     <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="set_remember_position_indication">Wenn deaktiviert, lädt die App immer die letzten Status</string>
+    <string name="set_blur_sensitive_indication">Wenn deaktiviert, werden sensible Medien mit Hilfe einer Schaltfläche ausgeblendet</string>
+    <string name="set_long_press_media_indication">Medien in voller Größe speichern durch langes Antippen der Vorschaubilder</string>
+    <string name="set_display_timeline_in_list_indication">Fügen Sie oben rechts eine Dreipunkt-Schaltfläche […] hinzu, um alle Schlagwörter/Instanzen/Listen aufzulisten</string>
+    <string name="set_display_news_from_fedilab_indication">Anzeige eines Elements im Hauptmenü für einen schnellen Zugriff auf das Zeitlisten-Zielen #Fedilab-Tag</string>
+    <string name="live_notif_indication">Halten Sie eine offene Verbindung zur Streaming-API für Echtzeit-Mitteilungen aufrecht.</string>
+    <string name="set_keep_background_process_indication">Dieser Ordner besteht bereits.\n Bitte geben Sie einen anderen Namen für den Ordner an.</string>
+    <string name="set_enable_time_slot_indication">Innerhalb des Zeitfensters sendet die App Mitteilungen. Sie können dieses Zeitfenster mit dem richtigen Drehwähler umkehren (d.h. leise).</string>
+    <string name="set_display_fedilab_features_button_indication">Zeigt eine Fedilab-Schaltfläche unter dem Profilbild. Dies ermöglicht einen Schnellzugriff auf In-App-Funktionen.</string>
+    <string name="set_quick_reply_indication">Ermöglicht das direkte Antworten in Zeitachsen unterhalb des Status</string>
+    <string name="set_fit_preview_indication">Vorschauen in Zeitachsen werden nicht beschnitten</string>
+    <string name="set_display_video_preview_indication">Ermöglicht die Wiedergabe eingebetteter Videos direkt in der Zeitleiste</string>
+    <string name="set_display_content_after_fetch_more_indication">Ermöglicht es, die Art und Weise umzukehren, wie Zustände gelesen werden, die nach dem Klicken auf die Schaltfläche „Mehr nachladen” angezeigt werden.</string>
+    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
+    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
+    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
+    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="timelines">Zeitleisten</string>
+    <string name="u_interface">Benutzeroberfläche</string>
+    <string name="battery">Batterie</string>
+    <string name="compose">Verfassen</string>
+    <string name="new_folder">Hier einen neuen Ordner erstellen</string>
+    <string name="folder_name">Ordnernamen eingeben</string>
+    <string name="valid_folder_name">Bitte einen gültigen Ordnernamen eingeben</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

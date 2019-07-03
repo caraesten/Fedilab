@@ -455,7 +455,7 @@ public class Helper {
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
-
+    public static final String RECEIVE_HIDE_ITEM = "receive_hide_item";
     //User agent
     public static final String USER_AGENT = "Fedilab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 

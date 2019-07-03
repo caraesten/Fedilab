@@ -140,7 +140,6 @@
         <item quantity="few">%d odgovorov</item>
         <item quantity="other">%d odgovorov</item>
     </plurals>
-    <string name="set_display_bookmark_button">Prikaži gumb za zaznamke</string>
     <string name="bookmarks">Zaznamki</string>
     <string name="bookmark_add">Dodaj med zaznamke</string>
     <string name="bookmark_remove">Odstrani zaznamek</string>
@@ -343,11 +342,6 @@
     <string name="expand_cw">Samodejno razširi cw</string>
     <string name="use_cookies">Dovoli tuje piškotke</string>
     <string name="settings_ui_layout">Postavitev za časovnice: </string>
-    <string-array name="battery_profiles">
-        <item>Običajna poraba baterije</item>
-        <item>Zmerna poraba naterije</item>
-        <item>Nizka poraba baterije</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Zavihki</item>
         <item>Meni</item>
@@ -624,7 +618,6 @@
     <string name="information">Informacije</string>
     <string name="set_display_card">Prikaži predoglede v vseh objavah</string>
     <string name="thanks_text_ux">Nov oblikovalec uporabniške izkušnje</string>
-    <string name="set_old_direct_timeline">Uporabi neposredno časovnico pred različico Mastodon 2.6</string>
     <string name="set_display_video_preview">Prikaži predogled videov</string>
     <string name="thanks_text_support">Podpora na Gitlab-u</string>
     <string name="action_bug_report">Poročilo o napaki</string>
@@ -783,7 +776,6 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logout account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
     <string name="all">All</string>
     <string name="about_opencollective">Support the app</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
@@ -989,6 +981,37 @@
     <string name="voice_message">Voice message</string>
     <string name="set_quick_reply">Enable quick reply</string>
     <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
+    <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
+    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
+    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
+    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
+    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
+    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
+    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
+    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
+    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
+    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
+    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
+    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
+    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="timelines">Timelines</string>
+    <string name="u_interface">Interface</string>
+    <string name="battery">Battery</string>
+    <string name="compose">Compose</string>
+    <string name="new_folder">Create a new Folder here</string>
+    <string name="folder_name">Enter the folder name</string>
+    <string name="valid_folder_name">Please enter a valid folder name</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>

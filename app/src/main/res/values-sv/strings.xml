@@ -138,7 +138,6 @@
         <item quantity="one">%d svar</item>
         <item quantity="other">%d svar</item>
     </plurals>
-    <string name="set_display_bookmark_button">Visa bokmärksknappen</string>
     <string name="bookmarks">Bokmärken</string>
     <string name="bookmark_add">Lägger till bokmärke</string>
     <string name="bookmark_remove">Ta bort bokmärke</string>
@@ -335,11 +334,6 @@
     <string name="expand_cw">Utöka meddelanden automatiskt</string>
     <string name="use_cookies">Tillåt tredjepartskakor</string>
     <string name="settings_ui_layout">Layout för tidslinjer: </string>
-    <string-array name="battery_profiles">
-        <item>Normala batteriförbrukningen</item>
-        <item>Medel batteriförbrukningen</item>
-        <item>Låg batteriförbrukningen</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Flikar</item>
         <item>Meny</item>
@@ -616,7 +610,6 @@
     <string name="information">Information</string>
     <string name="set_display_card">Visa förhandsvisning i alla toots</string>
     <string name="thanks_text_ux">Ny UX/UI designer</string>
-    <string name="set_old_direct_timeline">Använd direkttidslinje från innan Mastodon 2.6</string>
     <string name="set_display_video_preview">Förhandsvisa filmer</string>
     <string name="thanks_text_support">Gitlab support</string>
     <string name="action_bug_report">Felrapport</string>
@@ -775,7 +768,6 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logga ut konto</string>
-    <string name="set_optimize_loading">Optimera laddningstid</string>
     <string name="all">Allt</string>
     <string name="about_opencollective">Stötta appen</string>
     <string name="more_about_opencollective">Open Collective gör det möjligt för grupper att snabbt inrätta ett kollektiv, samla in pengar och hantera dem transparent.</string>
@@ -981,6 +973,37 @@
     <string name="voice_message">Röstmeddelande</string>
     <string name="set_quick_reply">Aktivera snabbsvar</string>
     <string name="reply_might_be_useless">Det konto du svarar till kanske inte ser ditt meddelande!</string>
+    <string name="set_remember_position_indication">Om inaktiverat så kommer programmet alltid att ladda senaste status</string>
+    <string name="set_blur_sensitive_indication">Om inaktiverad så kommer känsligt material att döljas med en knapp</string>
+    <string name="set_long_press_media_indication">Spara media i full upplösning genom att långtrycka på förhandsgranskningen</string>
+    <string name="set_display_timeline_in_list_indication">Lägg till en ellips-knapp längst upp till höger för att lista alla taggar/instanser/listor</string>
+    <string name="set_display_news_from_fedilab_indication">Visa en post i huvudmenyn för en snabb tillgång till tidslinjen riktat mot #Fedilab taggar</string>
+    <string name="live_notif_indication">Hålla en öppen anslutning till streaming API för live-meddelanden.</string>
+    <string name="set_keep_background_process_indication">När appen är i bakgrunden kommer den att hålla en anslutning till streaming-API. Inaktivera detta om du bryr dig om din batteriförbrukning.</string>
+    <string name="set_enable_time_slot_indication">Under tiden perioden kommer programmet att skicka meddelanden. Du kan ändra (dvs: tysta) denna period med höger spinner.</string>
+    <string name="set_display_fedilab_features_button_indication">Visa en Fedilab-knapp nedan profilbilden. Det är en genväg för att få tillgång till in-app-funktioner.</string>
+    <string name="set_quick_reply_indication">Tillåt att svara direkt i tidslinjen nedanför statusen</string>
+    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
+    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
+    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
+    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="timelines">Timelines</string>
+    <string name="u_interface">Interface</string>
+    <string name="battery">Battery</string>
+    <string name="compose">Compose</string>
+    <string name="new_folder">Create a new Folder here</string>
+    <string name="folder_name">Enter the folder name</string>
+    <string name="valid_folder_name">Please enter a valid folder name</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>

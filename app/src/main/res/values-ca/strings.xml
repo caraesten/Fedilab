@@ -138,7 +138,6 @@
         <item quantity="one">%d respondre</item>
         <item quantity="other">%d respostes</item>
     </plurals>
-    <string name="set_display_bookmark_button">Mostrar el botó de marcador</string>
     <string name="bookmarks">Marcadors</string>
     <string name="bookmark_add">Afegeix als marcadors</string>
     <string name="bookmark_remove">Suprimeix el marcador</string>
@@ -335,11 +334,6 @@
     <string name="expand_cw">Expandir automàticament el ca</string>
     <string name="use_cookies">Permetre galetes de tercers</string>
     <string name="settings_ui_layout">Disposició de les pissarres: </string>
-    <string-array name="battery_profiles">
-        <item>Consum normal de la pila</item>
-        <item>Consum mitjà de la pila</item>
-        <item>Comsum baix de la pila</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanyes</item>
         <item>Menú</item>
@@ -608,7 +602,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="information">Informació</string>
     <string name="set_display_card">Mostra la vista preliminar de tots els toots</string>
     <string name="thanks_text_ux">Nou dissenyador UX/UI</string>
-    <string name="set_old_direct_timeline">Fer ús de la pissarra directa anterior a Mastodont 2.6</string>
     <string name="set_display_video_preview">Mostrar les vistes preliminars dels vídeos</string>
     <string name="thanks_text_support">Servei a l\'usuari de Gitlab</string>
     <string name="action_bug_report">Informe d\'errors</string>
@@ -767,7 +760,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="action_html">HTML</string>
     <string name="action_markdown">Assenyala</string>
     <string name="action_logout_account">Sortir de la sessió</string>
-    <string name="set_optimize_loading">Optimitzar el temps de càrrega</string>
     <string name="all">Tot</string>
     <string name="about_opencollective">Dona suport a l\'app</string>
     <string name="more_about_opencollective">Open Collective facilita a grups de crear ràpidament un col·lectiu, recollir diners i gestionar-los amb transparència.</string>
@@ -973,6 +965,37 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="voice_message">Missatge de veu</string>
     <string name="set_quick_reply">Activa resposta ràpida</string>
     <string name="reply_might_be_useless">El compte a qui respons pot ser que no pugui veure el teu missatge!</string>
+    <string name="set_remember_position_indication">Quan està desactivat, l\'app carrega sempre els últims estats</string>
+    <string name="set_blur_sensitive_indication">Quan està desactivat, els mèdia senzills resten amagats amb un botó</string>
+    <string name="set_long_press_media_indication">Guarda els mèdia a mida completa pitjant les previsualitzacions durant un segon</string>
+    <string name="set_display_timeline_in_list_indication">Afegeix un botó el·lipse a dalt a la dreta per llistar totes les etiquetes/instàncies/llistes</string>
+    <string name="set_display_news_from_fedilab_indication">Mostra un element al menú principal per a un accés ràpid a la pissarra que mostra l\'etiqueta #Fedilab</string>
+    <string name="live_notif_indication">Mantenir connexió oberta a l\'API de streaming per a rebre notificacions contínuament.</string>
+    <string name="set_keep_background_process_indication">Mentre l\'app estigui en latència, mantindrà una connexió amb l\'API de streaming. Desactiva-ho si et preocupa la bateria.</string>
+    <string name="set_enable_time_slot_indication">Dins el període definit, l\'app enviarà notificacions. Pots revertir (p. e. silenciar) aquest període amb el spinner adequat.</string>
+    <string name="set_display_fedilab_features_button_indication">Mostrar un botó de Fedilab sota la imatge de perfil. És una drecera per accedir a funcions de l\'app.</string>
+    <string name="set_quick_reply_indication">Permet de respondre directament dins les pissarres sota les infos d\'estat</string>
+    <string name="set_fit_preview_indication">Les previsualitzacions de les pissarres no es retallaran</string>
+    <string name="set_display_video_preview_indication">Permet reproduir vídeos incrustats dins les pissarres</string>
+    <string name="set_display_content_after_fetch_more_indication">Permet de revertir la forma de llegir els estats que es mostren al clicar el botó de veure més</string>
+    <string name="set_security_provider_indication">Aquesta opció permet donar suport als recursos de xifratge més recents. És últil per als dispositius Android més antics o per si no et pots connectar a la teva instància.</string>
+    <string name="set_video_mode_indication">Exclusivament per a vídeos de Peertube. Canvia el mode en cas de què nos els puguis llegir.</string>
+    <string name="featured_hashtags_indication">Aquestes etiquetes permetran de filtrar els estatus dels perfils. Hauràs de fer servir el menú conceptual per veure\'ls.</string>
+    <string name="set_capitalize_indication">Inserir automàticament un salt de línia després de la menció de primera lletra en majúscula</string>
+    <string name="settings_title_custom_sharing_indication">Permet als creadors de continguts de compartir estatus en els seus RSS</string>
+    <string name="timelines">Pissarres</string>
+    <string name="u_interface">Interfície</string>
+    <string name="battery">Bateria</string>
+    <string name="compose">Redactar</string>
+    <string name="new_folder">Create a new Folder here</string>
+    <string name="folder_name">Enter the folder name</string>
+    <string name="valid_folder_name">Please enter a valid folder name</string>
+    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="select">Select</string>
+    <string name="default_directory">Default Directory</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create folder</string>
+    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
