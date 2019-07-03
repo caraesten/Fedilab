@@ -138,7 +138,6 @@
         <item quantity="one">%d svar</item>
         <item quantity="other">%d svar</item>
     </plurals>
-    <string name="set_display_bookmark_button">Vis knappen Bogmærke</string>
     <string name="bookmarks">Bogmærker</string>
     <string name="bookmark_add">Tilføj bogmærke</string>
     <string name="bookmark_remove">Fjern bogmærke</string>
@@ -335,11 +334,6 @@
     <string name="expand_cw">Udvid automatisk cw</string>
     <string name="use_cookies">Tillad tredjeparts-cookies</string>
     <string name="settings_ui_layout">Tidslinjelayouts: </string>
-    <string-array name="battery_profiles">
-        <item>Normalt batteriforbrug</item>
-        <item>Medium batteriforbrug</item>
-        <item>Lavt batteriforbrug</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Faner</item>
         <item>Menu</item>
@@ -562,7 +556,7 @@
     <string name="account_added_list_trunk">Konti blev føjet til listen</string>
     <string name="adding_account_list_trunk">Føjer konti til listen</string>
     <string name="action_list_add">Du har endnu ikke oprettet en liste. Tryk på \"+\"-knappen for at oprette en ny.</string>
-    <string name="action_remote_instance_add">Du følger ingen fjernforekomstser. Trykk på \"+\"-knappen for at tilføje en ny.</string>
+    <string name="action_remote_instance_add">Du følger ingen fjerninstans. Tryk på \"+\"-knappen for at tilføje en ny.</string>
     <string name="about_trunk">Hvem man følger</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Konto/konti kan ikke følges</string>
@@ -616,7 +610,6 @@
     <string name="information">Information</string>
     <string name="set_display_card">Forhåndsvis alle toots</string>
     <string name="thanks_text_ux">Ny UI/UX-designer</string>
-    <string name="set_old_direct_timeline">Brug den direkte tidslinje fra før Mastodon 2.6</string>
     <string name="set_display_video_preview">Vis videoforhåndsvisninger</string>
     <string name="thanks_text_support">Gitlab Support</string>
     <string name="action_bug_report">Fejlrapport</string>
@@ -775,7 +768,6 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Log ud af konto</string>
-    <string name="set_optimize_loading">Optimér indlæsningstiden</string>
     <string name="all">Alle</string>
     <string name="about_opencollective">Støt app\'en</string>
     <string name="more_about_opencollective">Open Collective gør det muligt for grupper hurtigt at oprette en samarbejdsgruppe, rejse midler og håndtere dem på en transparent måde.</string>
@@ -981,6 +973,28 @@
     <string name="voice_message">Talebesked</string>
     <string name="set_quick_reply">Aktivér hurtig visning</string>
     <string name="reply_might_be_useless">Kontoen, du besvarer, kan måske ikke se din besked!</string>
+    <string name="set_remember_position_indication">Hvis deaktiveret, indlæser app\'en altid seneste statusser</string>
+    <string name="set_blur_sensitive_indication">Hvis deaktiveret, skjules følsomme medier altid med en knap</string>
+    <string name="set_long_press_media_indication">Lagr medier i fuld størrelse med et langt tryk på forhåndsvisninger</string>
+    <string name="set_display_timeline_in_list_indication">Tilføj en ellipseknap øverst til højre for at få vist alle tags/forekomster/lister</string>
+    <string name="set_display_news_from_fedilab_indication">Vis et punkt i hovedmenuen for en hurtig adgang til tidslinjmålretnings #Fedilab-tagget</string>
+    <string name="live_notif_indication">Bevar en åben forbindelse til streaming-API\'en for live-notifikationer.</string>
+    <string name="set_keep_background_process_indication">Når app\'en er i baggrunden, vil den bevare en forbindelse til streaming-API\'en. Deaktivé den, hvis du vil spare strøm.</string>
+    <string name="set_enable_time_slot_indication">I løbet af tidperioden vil app\'en vil sende notifikationer. Du kan ændre (dvs. gøre tavs) denne tidsperiode med den højre kontrol.</string>
+    <string name="set_display_fedilab_features_button_indication">Vis en Fedilab-knap nedenfor profilbilledet. Det er en genvej for adgang til in-app funktioner.</string>
+    <string name="set_quick_reply_indication">Tillad direkte besvarelse fra tidslinjer under statusser</string>
+    <string name="set_fit_preview_indication">Forhåndsvisninger beskæres ikke i tidslinjer</string>
+    <string name="set_display_video_preview_indication">Tillad afspilning af indlejrede videoer direkte fra tidslinjer</string>
+    <string name="set_display_content_after_fetch_more_indication">Tillader, spejlvendingg af måden, hvorpå statusser, som hentes når du klikker på Hent flere-knappen, læses</string>
+    <string name="set_security_provider_indication">Indstillingen muliggør understøttelse af tidligere cipher suites. Det er nyttigt på ældre Android-enheder, eller hvis du ikke kan oprette forbindelse til din instans.</string>
+    <string name="set_video_mode_indication">Kun til Peertube-videoer. Skift denne tilstand, hvis du ikke kan afspille dem.</string>
+    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
+    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="timelines">Timelines</string>
+    <string name="u_interface">Interface</string>
+    <string name="battery">Battery</string>
+    <string name="compose">Compose</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

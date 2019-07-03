@@ -140,7 +140,6 @@
         <item quantity="many">%d ответов</item>
         <item quantity="other">%d ответов</item>
     </plurals>
-    <string name="set_display_bookmark_button">Отображать кнопку закладок</string>
     <string name="bookmarks">Закладки</string>
     <string name="bookmark_add">Добавить в закладки</string>
     <string name="bookmark_remove">Удалить закладку</string>
@@ -343,11 +342,6 @@
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
     <string name="settings_ui_layout">Временные рамки ленты: </string>
-    <string-array name="battery_profiles">
-        <item>Обычный расход батареи</item>
-        <item>Средний расход батареи</item>
-        <item>Низкий расход батареи</item>
-    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
@@ -624,7 +618,6 @@
     <string name="information">Информация</string>
     <string name="set_display_card">Отображать предпросмотр для всех тутов</string>
     <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
-    <string name="set_old_direct_timeline">Использовать старый вариант ленты (до версии Mastodon 2.6)</string>
     <string name="set_display_video_preview">Отображать предпросмотр видео</string>
     <string name="thanks_text_support">Поддержка Gitlab</string>
     <string name="action_bug_report">Отчет об ошибке</string>
@@ -783,7 +776,6 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Выйти из аккаунта</string>
-    <string name="set_optimize_loading">Оптимизация времени загрузки</string>
     <string name="all">Все</string>
     <string name="about_opencollective">Поддержать это приложение</string>
     <string name="more_about_opencollective">Open Collective позволяет группам быстро создавать коллектив, собирать средства и прозрачно управлять ими.</string>
@@ -984,11 +976,33 @@
     <string name="mark_unresolved">Пометить как нерешенный</string>
     <string name="toast_empty_content">Контента нет!</string>
     <string name="set_display_fedilab_features_button">Показать кнопку функций Fedilab</string>
-    <string name="audio">The application needs to access audio recording</string>
-    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
-    <string name="set_quick_reply">Enable quick reply</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="audio">Приложению требуется доступ к записи аудио</string>
+    <string name="toot_message_record_error">Произошла ошибка при записи голосового сообщения!</string>
+    <string name="voice_message">Голосовое сообщение</string>
+    <string name="set_quick_reply">Включить быстрый ответ</string>
+    <string name="reply_might_be_useless">Аккаунт, которому вы отвечаете, может не увидеть ваше сообщение!</string>
+    <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
+    <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
+    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
+    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
+    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
+    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
+    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
+    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
+    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
+    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
+    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
+    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot read them.</string>
+    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
+    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="timelines">Timelines</string>
+    <string name="u_interface">Interface</string>
+    <string name="battery">Battery</string>
+    <string name="compose">Compose</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
