@@ -983,14 +983,14 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_display_video_preview_indication">允許直接在時間軸內播放嵌入影片</string>
     <string name="set_display_content_after_fetch_more_indication">點擊擷取更多按鈕後，允許反轉讀取狀態的顯示方式</string>
     <string name="set_security_provider_indication">此選項可支援最近的加密套裝軟體。它對較舊的 Android 裝置或無法連線至您的站台時很有用。</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot read them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
-    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
-    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="set_video_mode_indication">專為 Peertube 影片而設。如果您無法讀取它們的話，請切換此模式。</string>
+    <string name="featured_hashtags_indication">這些標籤將允許從個人資料過濾狀態。您必須使用情境選單來查看它們。</string>
+    <string name="set_capitalize_indication">在提及後自動插入斷行符號以將首字母大寫</string>
+    <string name="settings_title_custom_sharing_indication">允許內容創作者將狀態分享至他們的 RSS feed</string>
     <string name="timelines">時間軸</string>
     <string name="u_interface">介面</string>
     <string name="battery">電量</string>
-    <string name="compose">Compose</string>
+    <string name="compose">組成</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
