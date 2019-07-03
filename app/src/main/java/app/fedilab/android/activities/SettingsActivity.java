@@ -164,6 +164,10 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         drawerLayout.addDrawerListener(drawerToggle);
     }
 
+    public void setActionBarTitle(String title) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+    }
+
     @Override
     public void onDestroy(){
         super.onDestroy();

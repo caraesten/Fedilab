@@ -32,7 +32,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Konstantin on 12.01.2015.
  */
 public class ViewAnimator<T extends Resourceble> {
-    private final int ANIMATION_DURATION = 175;
+    private final int ANIMATION_DURATION = 100;
     public static final int CIRCULAR_REVEAL_ANIMATION_DURATION = 500;
 
     private AppCompatActivity appCompatActivity;

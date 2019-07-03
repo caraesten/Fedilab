@@ -75,6 +75,7 @@ import java.util.Set;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -230,19 +231,28 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
         LinearLayout settings_battery = rootView.findViewById(R.id.settings_battery);
 
+        String title = "";
         if(type == null || type.equals(TIMELINES)){
             settings_timeline.setVisibility(View.VISIBLE);
+            title = context.getString(R.string.timelines);
         }else if( type == NOTIFICATIONS){
             settings_notifications.setVisibility(View.VISIBLE);
+            title = context.getString(R.string.notifications);
         }else if( type == ADMIN){
             settings_admin.setVisibility(View.VISIBLE);
+            title = context.getString(R.string.administration);
         }else if(type == INTERFACE){
             settings_interface.setVisibility(View.VISIBLE);
+            title = context.getString(R.string.u_interface);
         }else if(type == BATTERY){
+            title = context.getString(R.string.battery);
             settings_battery.setVisibility(View.VISIBLE);
         }else if(type == COMPOSE){
             settings_compose.setVisibility(View.VISIBLE);
+            title = context.getString(R.string.compose);
         }
+        ((SettingsActivity) context)
+                .setActionBarTitle(title);
 
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
