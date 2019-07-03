@@ -334,8 +334,6 @@ public class Helper {
     public static final String SET_DISPLAY_EMOJI = "set_display_emoji";
     public static final String SET_DISPLAY_CARD = "set_display_card";
     public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
-    public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
-    public static final String SET_BATTERY_PROFILE = "set_battery_profile";
     public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
     public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
     public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
@@ -367,9 +365,6 @@ public class Helper {
     public static final int VIDEO_MODE_WEBVIEW = 1;
     public static final int VIDEO_MODE_DIRECT = 2;
 
-    public static final int BATTERY_PROFILE_NORMAL = 1;
-    public static final int BATTERY_PROFILE_MEDIUM = 2;
-    public static final int BATTERY_PROFILE_LOW = 3;
 
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
@@ -404,7 +399,6 @@ public class Helper {
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
-    public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EXPAND_MEDIA = "set_expand_media";
@@ -3615,29 +3609,6 @@ public class Helper {
         }
     }
 
-    public static void changeBatteryProfile(Context context){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        switch (batteryProfile){
-            case BATTERY_PROFILE_NORMAL:
-                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
-                editor.apply();
-                break;
-            case BATTERY_PROFILE_MEDIUM:
-                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, false);
-                editor.apply();
-                break;
-            case BATTERY_PROFILE_LOW:
-                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
-                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, false);
-                editor.apply();
-                break;
-
-        }
-    }
 
     public static String[] getLocales(Context context){
         String[] locale = new String[20];

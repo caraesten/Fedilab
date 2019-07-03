@@ -39,61 +39,119 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_remember_position"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_remember_position"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_remember_position_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_blur_sensitive"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_blur_sensitive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_blur_sensitive_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!-- EXPAND CW -->
                 <CheckBox
-                    android:id="@+id/set_remember_position"
+                    android:id="@+id/set_expand_cw"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_remember_position"
+                    android:text="@string/expand_cw"
                     android:layout_height="wrap_content" />
 
+                <!-- EXPAND Images -->
                 <CheckBox
-                    android:id="@+id/set_old_direct_timeline"
+                    android:id="@+id/set_expand_image"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_old_direct_timeline"
+                    android:text="@string/expand_image"
                     android:layout_height="wrap_content" />
 
-                <CheckBox
-                    android:id="@+id/set_hide_delete_notification_on_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_hide_delete_notification_on_tab"
-                    android:layout_height="wrap_content" />
 
-                <CheckBox
-                    android:id="@+id/set_blur_sensitive"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_blur_sensitive"
-                    android:layout_height="wrap_content" />
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_long_press_media"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_long_press_media"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_long_press_media_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/set_long_press_media"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_long_press_media"
-                    android:layout_height="wrap_content" />
 
-                <CheckBox
-                    android:id="@+id/set_display_timeline_in_list"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_display_timeline_in_list"
-                    android:layout_height="wrap_content" />
 
-                <CheckBox
-                    android:id="@+id/set_display_news"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_display_news_from_fedilab"
-                    android:layout_height="wrap_content" />
+
+
+
 
                 <CheckBox
                     android:id="@+id/set_share_validation"
@@ -121,23 +179,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <!-- LIVE NOTIFICATIONS SETTINGS -->
-                <CheckBox
-                    android:id="@+id/set_live_notify"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/live_notif"
-                    android:layout_height="wrap_content" />
 
-                <!-- BACKGROUND PROCESS SETTINGS -->
-                <CheckBox
-                    android:id="@+id/set_keep_background_process"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/set_keep_background_process"
-                    android:layout_height="wrap_content" />
 
 
                 <LinearLayout
@@ -387,43 +429,6 @@
                         android:layout_height="wrap_content" />
                     <!-- END NOTIFICATIONS SETTINGS -->
 
-                    <!-- NOTIFICATION CONTENT NEW -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:background="?colorAccent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/settings_category_notif_news"
-                            android:textColor="?colorAccent"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:background="?colorAccent" />
-                    </LinearLayout>
-                    <!-- New hometimeline content -->
-                    <CheckBox
-                        android:id="@+id/set_notif_hometimeline"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="@dimen/settings_checkbox_margin"
-                        android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                        android:text="@string/set_notification_news"
-                        android:layout_height="wrap_content" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -464,7 +469,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
-                        android:paddingBottom="10dp"
                         android:orientation="horizontal">
                         <TextView
                             android:text="@string/settings_time_from"
@@ -492,6 +496,12 @@
                             android:layout_height="wrap_content"
                             android:entries="@array/action_notification"/>
                     </LinearLayout>
+                    <TextView
+                        android:textColor="@color/mastodonC2"
+                        android:text="@string/set_enable_time_slot_indication"
+                        android:paddingBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <!-- MORE OPTIONS SETTINGS -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -640,6 +650,65 @@
                 </RadioGroup>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_display_timeline_in_list"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_display_timeline_in_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_display_timeline_in_list_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_display_news"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_display_news_from_fedilab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_display_news_from_fedilab_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <!-- DISPLAY NEW BADGE -->
                 <CheckBox
                     android:id="@+id/set_display_new_badge"
@@ -727,6 +796,77 @@
                     android:text="@string/set_display_content_after_fetch_more"
                     android:layout_height="wrap_content" />
 
+            </LinearLayout>
+
+
+            <!--  BATTERY -->
+            <LinearLayout
+                android:id="@+id/settings_battery"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_live_notify"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/live_notif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/live_notif_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_keep_background_process"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_keep_background_process"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_keep_background_process_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <!--  COMPOSE -->
@@ -858,22 +998,13 @@
                 android:orientation="vertical">
 
 
-                <!-- EXPAND CW -->
-                <CheckBox
-                    android:id="@+id/set_expand_cw"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/settings_checkbox_margin"
-                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/expand_cw"
-                    android:layout_height="wrap_content" />
 
-                <!-- EXPAND Images -->
                 <CheckBox
-                    android:id="@+id/set_expand_image"
+                    android:id="@+id/set_hide_delete_notification_on_tab"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
-                    android:text="@string/expand_image"
+                    android:text="@string/set_hide_delete_notification_on_tab"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -887,15 +1018,7 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:text="@string/settings_title_battery"
-                    style="?attr/shapeBorder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <Spinner
-                    android:id="@+id/battery_layout_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:text="@string/set_attachment_action"
                     android:layout_width="match_parent"

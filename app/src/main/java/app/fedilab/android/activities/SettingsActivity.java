@@ -170,23 +170,27 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
     private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentSettingsFragment.type.CLOSE, R.drawable.ic_close);
-        list.add(menuItem0);
-        SlideMenuItem menuItem1 = new SlideMenuItem(ContentSettingsFragment.type.TIMELINES, R.drawable.ic_timeline_menu_s);
-        list.add(menuItem1);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
-            SlideMenuItem menuItem2 = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
-            list.add(menuItem2);
-        }
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentSettingsFragment.type.NOTIFICATIONS, R.drawable.ic_notifications_menu);
-        list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
-        list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
-        list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(ContentSettingsFragment.type.HIDDEN, R.drawable.ic_visibility_off_menu);
-        list.add(menuItem6);
+
+        SlideMenuItem menuItemClose = new SlideMenuItem(ContentSettingsFragment.type.CLOSE, R.drawable.ic_close);
+        SlideMenuItem menuItemTimeline = new SlideMenuItem(ContentSettingsFragment.type.TIMELINES, R.drawable.ic_timeline_menu_s);
+        SlideMenuItem menuItemNotification = new SlideMenuItem(ContentSettingsFragment.type.NOTIFICATIONS, R.drawable.ic_notifications_menu);
+        SlideMenuItem menuItemAdmin = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
+        SlideMenuItem menuItemInterface = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
+        SlideMenuItem menuItemEdit = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
+        SlideMenuItem menuItemHidden = new SlideMenuItem(ContentSettingsFragment.type.HIDDEN, R.drawable.ic_visibility_off_menu);
         SlideMenuItem menuItem7 = new SlideMenuItem(ContentSettingsFragment.type.ALL, R.drawable.ic_all_inclusive_menu);
+        SlideMenuItem menuItemBattery = new SlideMenuItem(ContentSettingsFragment.type.BATTERY, R.drawable.ic_battery_alert_menu);
+
+        list.add(menuItemClose);
+        list.add(menuItemTimeline);
+        list.add(menuItemNotification);
+        list.add(menuItemInterface);
+        list.add(menuItemBattery);
+        list.add(menuItemEdit);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            list.add(menuItemAdmin);
+        }
+        list.add(menuItemHidden);
         list.add(menuItem7);
     }
 

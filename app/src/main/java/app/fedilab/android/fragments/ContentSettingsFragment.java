@@ -89,6 +89,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ALL;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.BATTERY;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.HIDDEN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
@@ -112,6 +113,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         INTERFACE,
         COMPOSE,
         HIDDEN,
+        BATTERY,
         ALL
     }
 
@@ -232,6 +234,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
         LinearLayout settings_hidden = rootView.findViewById(R.id.settings_hidden);
         LinearLayout settings_to_do = rootView.findViewById(R.id.settings_to_do);
+        LinearLayout settings_battery = rootView.findViewById(R.id.settings_battery);
 
         if(type == null || type.equals(TIMELINES)){
             settings_timeline.setVisibility(View.VISIBLE);
@@ -241,6 +244,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             settings_admin.setVisibility(View.VISIBLE);
         }else if(type == INTERFACE){
             settings_interface.setVisibility(View.VISIBLE);
+        }else if(type == BATTERY){
+            settings_battery.setVisibility(View.VISIBLE);
         }else if(type == COMPOSE){
             settings_compose.setVisibility(View.VISIBLE);
         }else if( type == HIDDEN){
@@ -281,48 +286,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         count4 = 0;
         count5 = 0;
 
-        final Spinner battery_layout_spinner = rootView.findViewById(R.id.battery_layout_spinner);
-        ArrayAdapter<CharSequence> adapterBattery = ArrayAdapter.createFromResource(getContext(),
-                R.array.battery_profiles, android.R.layout.simple_spinner_item);
-        battery_layout_spinner.setAdapter(adapterBattery);
-        int positionSpinner = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL) -1;
-        battery_layout_spinner.setSelection(positionSpinner);
-        battery_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position){
-                        case 0:
-                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_MEDIUM);
-                            editor.apply();
-                            break;
-                        case 2:
-                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_LOW);
-                            editor.apply();
-                            break;
-                    }
-                    Helper.changeBatteryProfile(context);
-                    if( position < 2 ){
-                        try {
-                            ((MainActivity) context).startSreaming();
-                        }catch (Exception ignored){ignored.printStackTrace();}
-                    }else{
-                        context.sendBroadcast(new Intent("StopLiveNotificationService"));
-                    }
-                }else {
-                    count2++;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
 
         TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
@@ -671,24 +635,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-        boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
-        final CheckBox set_old_direct_timeline = rootView.findViewById(R.id.set_old_direct_timeline);
-        set_old_direct_timeline.setChecked(old_direct_timeline);
 
-        set_old_direct_timeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_OLD_DIRECT_TIMELINE, set_old_direct_timeline.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                if(getActivity() != null)
-                    getActivity().finish();
-                startActivity(intent);
-            }
-        });
 
         boolean hide_delete_notification_on_tab = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
         final CheckBox set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
@@ -1505,7 +1452,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         boolean notif_wifi = sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false);
         boolean notif_silent = sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false);
 
-        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
 
         final String time_from = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         final String time_to = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
@@ -1518,7 +1464,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final CheckBox set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
         final CheckBox set_notif_follow_poll = rootView.findViewById(R.id.set_notif_follow_poll);
 
-        final CheckBox set_notif_hometimeline = rootView.findViewById(R.id.set_notif_hometimeline);
 
         final SwitchCompat switchCompatWIFI = rootView.findViewById(R.id.set_wifi_only);
         final SwitchCompat switchCompatSilent = rootView.findViewById(R.id.set_silence);
@@ -1741,19 +1686,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_notif_follow_mention.setChecked(notif_mention);
         set_notif_follow_share.setChecked(notif_share);
         set_notif_follow_poll.setChecked(notif_poll);
-        set_notif_hometimeline.setChecked(notif_hometimeline);
+
 
         switchCompatWIFI.setChecked(notif_wifi);
         switchCompatSilent.setChecked(notif_silent);
 
-        set_notif_hometimeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_notif_hometimeline.isChecked());
-                editor.apply();
-            }
-        });
+
         set_notif_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

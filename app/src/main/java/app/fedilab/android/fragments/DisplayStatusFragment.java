@@ -630,7 +630,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onResume(){
         super.onResume();
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
             if( getUserVisibleHint() ){
                 statusListAdapter.updateMuted(mutedAccount);
@@ -643,7 +642,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
-                if(liveNotifications && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                if(liveNotifications) {
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                     try {
                         context.startService(streamingFederatedIntent);
@@ -658,7 +657,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
-                if( liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                if( liveNotifications ) {
                     streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
                     try {
                         context.startService(streamingLocalIntent);
@@ -731,7 +730,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( context == null)
             return;
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME ) {
             if (visible) {
@@ -744,7 +742,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
-                if(liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                if(liveNotifications ) {
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                     try {
                         context.startService(streamingFederatedIntent);
@@ -765,7 +763,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
-                if( liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                if( liveNotifications ) {
                     streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
                     try {
                         context.startService(streamingLocalIntent);
