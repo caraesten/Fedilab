@@ -994,12 +994,13 @@
     <string name="new_folder">在此创建新文件夹</string>
     <string name="folder_name">输入文件夹名</string>
     <string name="valid_folder_name">请输入一个有效的文件夹名</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
+    <string name="folder_exists">文件夹已存在。\n
+请提供另一个文件夹名</string>
+    <string name="select">选择</string>
+    <string name="default_directory">默认目录</string>
+    <string name="folder">文件夹</string>
+    <string name="create_folder">创建文件夹</string>
+    <string name="custom_tabs_indication">在应用程序中使用您最喜欢的浏览器。禁用则链接将在外部打开</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
