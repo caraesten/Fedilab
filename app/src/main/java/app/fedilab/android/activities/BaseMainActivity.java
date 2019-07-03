@@ -18,8 +18,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,6 +44,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -162,7 +166,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
-
+    private BroadcastReceiver hidde_menu;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
     private static boolean notificationChecked = false;
@@ -662,9 +666,56 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added,R.color.dark_text);
         }
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        boolean live_notification = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+
+        if( live_notification && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA))
             startSreaming();
 
+        if( hidde_menu != null)
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
+        hidde_menu = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                assert b != null;
+                String menu = b.getString("menu");
+                if( menu != null){
+                    if( menu.equals("hide_admin")){
+                        NavigationView navigationView = findViewById(R.id.nav_view);
+                        MenuItem admin = navigationView.getMenu().findItem(R.id.nav_administration);
+                        if( admin != null){
+                            admin.setVisible(false);
+                        }
+                    }else if(menu.equals("show_admin")){
+                        NavigationView navigationView = findViewById(R.id.nav_view);
+                        MenuItem admin = navigationView.getMenu().findItem(R.id.nav_administration);
+                        if( admin != null){
+                            admin.setVisible(true);
+                        }
+                    }else if(menu.equals("hide_news")){
+                        NavigationView navigationView = findViewById(R.id.nav_view);
+                        MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
+                        if( news != null){
+                            news.setVisible(false);
+                        }
+                    }else if(menu.equals("show_news")){
+                        NavigationView navigationView = findViewById(R.id.nav_view);
+                        MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
+                        if( news != null){
+                            news.setVisible(true);
+                        }
+                    }else if(menu.equals("show_list_button")){
+                        displayTimelineMoreButton(true);
+                    }else if(menu.equals("hide_list_button")){
+                        displayTimelineMoreButton(false);
+                    }else if(menu.equals("theme")){
+                        recreate();
+                    }
+                }
+
+            }
+        };
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(hidde_menu, new IntentFilter(Helper.RECEIVE_HIDE_ITEM));
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -1521,6 +1572,8 @@ public abstract class BaseMainActivity extends BaseActivity
         boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         if(!backgroundProcess)
             sendBroadcast(new Intent("StopLiveNotificationService"));
+        if( hidde_menu != null)
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 
