@@ -973,8 +973,8 @@
     <string name="voice_message">Messaggio vocale</string>
     <string name="set_quick_reply">Abilita risposta veloce</string>
     <string name="reply_might_be_useless">L\'account al quale stai rispondendo potrebbe non vedere il tuo messaggio!</string>
-    <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
-    <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
+    <string name="set_remember_position_indication">Se disabilitato, l\'app caricherà sempre gli ultimi stati</string>
+    <string name="set_blur_sensitive_indication">Se disabilitato, i media con contenuti sensibili saranno nascosti con un pulsante</string>
     <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
     <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
     <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
@@ -991,9 +991,9 @@
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
-    <string name="timelines">Timelines</string>
-    <string name="u_interface">Interface</string>
-    <string name="battery">Battery</string>
+    <string name="timelines">Timeline</string>
+    <string name="u_interface">Interfaccia</string>
+    <string name="battery">Batteria</string>
     <string name="compose">Compose</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
