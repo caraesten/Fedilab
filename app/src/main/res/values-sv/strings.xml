@@ -979,10 +979,10 @@
     <string name="set_display_timeline_in_list_indication">Lägg till en ellips-knapp längst upp till höger för att lista alla taggar/instanser/listor</string>
     <string name="set_display_news_from_fedilab_indication">Visa en post i huvudmenyn för en snabb tillgång till tidslinjen riktat mot #Fedilab taggar</string>
     <string name="live_notif_indication">Hålla en öppen anslutning till streaming API för live-meddelanden.</string>
-    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
+    <string name="set_keep_background_process_indication">När appen är i bakgrunden kommer den att hålla en anslutning till streaming-API. Inaktivera detta om du bryr dig om din batteriförbrukning.</string>
+    <string name="set_enable_time_slot_indication">Under tiden perioden kommer programmet att skicka meddelanden. Du kan ändra (dvs: tysta) denna period med höger spinner.</string>
+    <string name="set_display_fedilab_features_button_indication">Visa en Fedilab-knapp nedan profilbilden. Det är en genväg för att få tillgång till in-app-funktioner.</string>
+    <string name="set_quick_reply_indication">Tillåt att svara direkt i tidslinjen nedanför statusen</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
