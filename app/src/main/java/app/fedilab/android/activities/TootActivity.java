@@ -2544,6 +2544,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance(context), "https");
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
             String url = null;
             if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 url = scheme + "://" + Helper.getLiveInstance(context) + "/api/v1/media";
@@ -2563,7 +2564,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }else {
                 request.addFileToUpload(uri.toString().replace("file://",""), "media");
             };
-            request.addParameter("filename", fileName).setMaxRetries(1)
+            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
                 .startUpload();
         } catch (MalformedURLException e) {
             e.printStackTrace();
