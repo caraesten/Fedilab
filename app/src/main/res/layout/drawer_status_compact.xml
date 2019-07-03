@@ -265,34 +265,6 @@
             style="?attr/borderless"
             android:text="@string/display_toot_truncate" />
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageButton
-                android:id="@+id/status_translate"
-                android:gravity="center"
-                android:tint="@android:color/white"
-                style="?attr/borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_translate"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                />
-            <ImageButton
-                android:id="@+id/status_bookmark"
-                android:gravity="center"
-                android:tint="@android:color/white"
-                style="?attr/borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bookmark_border"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                />
-        </LinearLayout>
-        <LinearLayout
             android:id="@+id/status_content_translated_container"
             android:visibility="gone"
             android:layout_width="match_parent"

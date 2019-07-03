@@ -320,7 +320,6 @@ public class Helper {
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
-    public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
@@ -422,7 +421,6 @@ public class Helper {
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
-    public static final String SET_OPTIMIZE_LOADING = "set_optimize_loading";
     public static final String SET_SECURITY_PROVIDER = "set_security_provider";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";

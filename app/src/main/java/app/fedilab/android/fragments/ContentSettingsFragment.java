@@ -88,10 +88,8 @@ import mabbas007.tagsedittext.TagsEditText;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
-import static app.fedilab.android.fragments.ContentSettingsFragment.type.ALL;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.BATTERY;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
-import static app.fedilab.android.fragments.ContentSettingsFragment.type.HIDDEN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
@@ -112,9 +110,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         NOTIFICATIONS,
         INTERFACE,
         COMPOSE,
-        HIDDEN,
         BATTERY,
-        ALL
     }
 
     private static final int ACTIVITY_CHOOSE_FILE = 411;
@@ -232,8 +228,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
         LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
-        LinearLayout settings_hidden = rootView.findViewById(R.id.settings_hidden);
-        LinearLayout settings_to_do = rootView.findViewById(R.id.settings_to_do);
         LinearLayout settings_battery = rootView.findViewById(R.id.settings_battery);
 
         if(type == null || type.equals(TIMELINES)){
@@ -248,10 +242,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             settings_battery.setVisibility(View.VISIBLE);
         }else if(type == COMPOSE){
             settings_compose.setVisibility(View.VISIBLE);
-        }else if( type == HIDDEN){
-            settings_hidden.setVisibility(View.VISIBLE);
-        }else if( type == ALL){
-            settings_to_do.setVisibility(View.VISIBLE);
         }
 
 
@@ -363,28 +353,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-
-        boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
-        final CheckBox set_optimize_loading = rootView.findViewById(R.id.set_optimize_loading);
-        set_optimize_loading.setChecked(optimize_loading);
-
-        set_optimize_loading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_OPTIMIZE_LOADING, set_optimize_loading.isChecked());
-                if( set_optimize_loading.isChecked()){
-                    editor.putInt(Helper.SET_ACCOUNTS_PER_PAGE, 10);
-                    editor.putInt(Helper.SET_TOOTS_PER_PAGE, 10);
-                    editor.putInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 10);
-                }else {
-                    editor.putInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-                    editor.putInt(Helper.SET_TOOTS_PER_PAGE, 40);
-                    editor.putInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
-                }
-                editor.apply();
-            }
-        });
 
 
         int videoMode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
@@ -737,18 +705,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
-        boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
-        final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
-        set_display_bookmark.setChecked(display_bookmark);
-
-        set_display_bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_SHOW_BOOKMARK, set_display_bookmark.isChecked());
-                editor.apply();
-            }
-        });
 
         boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
         final CheckBox set_new_badge = rootView.findViewById(R.id.set_display_new_badge);

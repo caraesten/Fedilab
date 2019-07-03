@@ -580,8 +580,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_pin;
         ImageView status_remove;
         ImageView status_privacy;
-        ImageView status_translate;
-        ImageView status_bookmark;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
@@ -680,8 +678,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
             status_reply = itemView.findViewById(R.id.status_reply);
             status_privacy = itemView.findViewById(R.id.status_privacy);
-            status_translate = itemView.findViewById(R.id.status_translate);
-            status_bookmark = itemView.findViewById(R.id.status_bookmark);
+
             status_content_translated_container = itemView.findViewById(R.id.status_content_translated_container);
             main_container = itemView.findViewById(R.id.main_container);
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
@@ -821,7 +818,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status.setItemViewType(viewHolder.getItemViewType());
 
 
-            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
+
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
             boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
@@ -1274,30 +1271,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            if( holder.status_bookmark != null) {
-                if (status.isBookmarked())
-                    holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
-                else
-                    holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
-                if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
-                    holder.status_bookmark.setVisibility(View.VISIBLE);
-                else
-                    holder.status_bookmark.setVisibility(View.GONE);
-
-                holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bookmark(status);
-                    }
-                });
-                holder.status_bookmark.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        CrossActions.doCrossBookmark(context, status, statusListAdapter);
-                        return false;
-                    }
-                });
-            }
 
             if( holder.cached_status != null && (holder.getItemViewType() == DISPLAYED_STATUS && !fedilab_features_button)) {
                 if (status.iscached()) {
@@ -1561,38 +1534,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
-            if( holder.status_translate != null) {
-                holder.status_translate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        translateToot(status);
-                    }
-                });
-                boolean differentLanguage;
-                if (status.getReblog() == null)
-                    differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
-                else
-                    differentLanguage = status.getReblog().getLanguage() != null && !status.getReblog().getLanguage().trim().equals(currentLocale);
-                if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
-                        if (status.isSpoilerShown() || expand_cw  || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
-                            holder.status_translate.setVisibility(View.VISIBLE);
-                        } else {
-                            holder.status_translate.setVisibility(View.GONE);
-                        }
-                    } else if (status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
-                        if (status.isSpoilerShown() || expand_cw   || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
-                            holder.status_translate.setVisibility(View.VISIBLE);
-                        } else {
-                            holder.status_translate.setVisibility(View.GONE);
-                        }
-                    } else {
-                        holder.status_translate.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    holder.status_translate.setVisibility(View.GONE);
-                }
-            }
 
             if( isConsoleMode){
                 String starting = "";
