@@ -980,7 +980,7 @@
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
+    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot read them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
@@ -988,6 +988,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>
