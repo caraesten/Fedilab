@@ -982,6 +982,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="u_interface">Benutzeroberfläche</string>
     <string name="battery">Batterie</string>
     <string name="compose">Verfassen</string>
+    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
     <string name="new_folder">Hier einen neuen Ordner erstellen</string>
     <string name="folder_name">Ordnernamen eingeben</string>
     <string name="valid_folder_name">Bitte einen gültigen Ordnernamen eingeben</string>
