@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Sayaçları göster</string>
     <string name="set_auto_add_media_url">Toot\'taki medyanın URL\'sini ekle</string>
     <string name="set_notif_follow">Biri kullanıcıyı takip ettiğinde bildir</string>
-    <string name="set_notif_follow_ask">Biri seni takip etmek istediğinde bildir</string>
     <string name="set_notif_follow_share">Birisi durumunuzu artırdığında bildir</string>
     <string name="set_notif_follow_add">Ne zaman biri sizi favorilere eklerse bildir</string>
     <string name="set_notif_follow_mention">Biri kullanıcıyı takip ettiğinde bildir</string>
