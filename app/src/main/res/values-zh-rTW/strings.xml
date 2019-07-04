@@ -991,7 +991,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="u_interface">介面</string>
     <string name="battery">電量</string>
     <string name="compose">組成</string>
-    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>
