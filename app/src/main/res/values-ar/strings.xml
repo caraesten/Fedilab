@@ -370,6 +370,9 @@
         <item>512 ك.ب</item>
         <item>1 م.ب</item>
         <item>2 م.ب</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">اختيار لون الإشعار الضوئي:</string>
     <string-array name="led_colours">
