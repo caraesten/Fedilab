@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Vis tellere</string>
     <string name="set_auto_add_media_url">Legg til URL til media i toots</string>
     <string name="set_notif_follow">Varlse når noen følger deg</string>
-    <string name="set_notif_follow_ask">Varsle når noen ber om å følge deg</string>
     <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
     <string name="set_notif_follow_add">Varsle når noen favoriserer tootene dine</string>
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
