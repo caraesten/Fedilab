@@ -617,6 +617,22 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
+        int upload_img_max_retry_times = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
+        final SeekBar max_times_bar = rootView.findViewById(R.id.max_upload_image_retry_times);
+        final TextView max_times_value = rootView.findViewById(R.id.max_upload_image_retry_times_value);
+        max_times_bar.setProgress(upload_img_max_retry_times);
+        max_times_value.setText(String.valueOf(upload_img_max_retry_times));
+        max_times_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                max_times_value.setText(String.valueOf(progress));
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, progress);
+                editor.apply();
+            }
+        });
         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
         final CheckBox set_remember_position = rootView.findViewById(R.id.set_remember_position);
         set_remember_position.setChecked(remember_position_home);
