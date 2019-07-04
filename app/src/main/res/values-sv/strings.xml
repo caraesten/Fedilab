@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Lägga till URL för media i toots</string>
     <string name="set_notif_follow">Meddela när någon följer dig</string>
-    <string name="set_notif_follow_ask">Meddela när någon begär för att följa dig</string>
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
