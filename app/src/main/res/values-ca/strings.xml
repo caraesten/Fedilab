@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Mostra els comptadors</string>
     <string name="set_auto_add_media_url">Afegeix als toots els URL dels mèdia</string>
     <string name="set_notif_follow">Avisa quan algú et comenci a seguir</string>
-    <string name="set_notif_follow_ask">Avisa quan algú demani per seguir-te</string>
     <string name="set_notif_follow_share">Avisa quan algú difongui el teu estatus</string>
     <string name="set_notif_follow_add">Avisa quan algú marqui el teu estatus com a preferit</string>
     <string name="set_notif_follow_mention">Avisa quan algú et mencioni</string>
