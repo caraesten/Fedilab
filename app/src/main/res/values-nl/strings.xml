@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
     <string name="set_auto_add_media_url">URL van afbeelding of video aan toot toevoegen</string>
     <string name="set_notif_follow">Geef een melding wanneer iemand jou volgt</string>
-    <string name="set_notif_follow_ask">Geef een melding van een volgverzoek</string>
     <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
     <string name="set_notif_follow_add">Geef een melding wanneer jouw toot als favoriet is gemarkeerd</string>
     <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
