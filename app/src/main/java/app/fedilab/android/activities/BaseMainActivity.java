@@ -1928,12 +1928,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     public void displayTimelineMoreButton(boolean displayed){
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            if (displayed) {
-                display_timeline.setVisibility(View.VISIBLE);
-            } else {
-                display_timeline.setVisibility(View.GONE);
-            }
+        if (displayed) {
+            display_timeline.setVisibility(View.VISIBLE);
+        } else {
+            display_timeline.setVisibility(View.GONE);
         }
     }
 

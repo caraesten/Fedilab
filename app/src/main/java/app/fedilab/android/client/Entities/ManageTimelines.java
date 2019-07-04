@@ -351,7 +351,7 @@ public class ManageTimelines {
                     }else {
                         name = tl.getTagTimeline().getName();
                     }
-                }else if( tl.getType() == Type.INSTANCE && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+                }else if( tl.getType() == Type.INSTANCE ){
                     name = tl.getRemoteInstance().getHost();
                 }else if( tl.getType() == Type.LIST){
                     name = tl.getListTimeline().getTitle();
