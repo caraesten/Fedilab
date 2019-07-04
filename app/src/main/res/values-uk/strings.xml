@@ -307,7 +307,6 @@
     <string name="set_bubble_counter">Показати лічильники</string>
     <string name="set_auto_add_media_url">Додати URL медіа-файлу до дмуху</string>
     <string name="set_notif_follow">Сповіщати, якщо хтось підписується</string>
-    <string name="set_notif_follow_ask">Сповіщати, якщо хтось робить запит підписки</string>
     <string name="set_notif_follow_share">Сповіщати, якщо хтось передмухнув ваш статус</string>
     <string name="set_notif_follow_add">Сповіщати, якщо хтось додав статус до обраного</string>
     <string name="set_notif_follow_mention">Сповіщати, якщо хтось згадує вас</string>
