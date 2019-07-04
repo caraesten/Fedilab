@@ -315,7 +315,6 @@
     <string name="set_bubble_counter">Arddangos cownteri</string>
     <string name="set_auto_add_media_url">Ychwanegu URL o\'r cyfryngau yn y tŵtiau</string>
     <string name="set_notif_follow">Hysbysu pryd mae rhywun yn eich dilyn chi</string>
-    <string name="set_notif_follow_ask">Hysbysu pryd mae rhywun yn gwneud cais i\'ch dilyn chi</string>
     <string name="set_notif_follow_share">Hysbysu pan mae rhywun yn hybu\'ch statws</string>
     <string name="set_notif_follow_add">Hysbysu pan mae rhywun yn ffefrynnu eich statws</string>
     <string name="set_notif_follow_mention">Hysbysu pan mae rhywun yn sôn amdanoch chi</string>
