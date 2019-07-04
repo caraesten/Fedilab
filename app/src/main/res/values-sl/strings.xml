@@ -307,7 +307,6 @@
     <string name="set_bubble_counter">Prikaz števcev</string>
     <string name="set_auto_add_media_url">Dodaj naslove URL za vsebine v objavah Toot</string>
     <string name="set_notif_follow">Obveščaj me o novih spremljevalcih</string>
-    <string name="set_notif_follow_ask">Obveščaj me o novih zahtevah za spremljanje</string>
     <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
     <string name="set_notif_follow_add">Obveščaj me, ko kdo moj status doda med priljubljene</string>
     <string name="set_notif_follow_mention">Obveščaj me, ko me kdo omeni</string>
@@ -1003,6 +1002,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

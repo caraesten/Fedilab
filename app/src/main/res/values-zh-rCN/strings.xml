@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">显示计数器</string>
     <string name="set_auto_add_media_url">在嘟文中添加媒体的 URL</string>
     <string name="set_notif_follow">当有人关注您时通知</string>
-    <string name="set_notif_follow_ask">当有人请求关注您时通知</string>
     <string name="set_notif_follow_share">当某人转嘟您的状态时通知</string>
     <string name="set_notif_follow_add">当某人收藏您的状态时通知</string>
     <string name="set_notif_follow_mention">当有人提到您时通知</string>
@@ -991,15 +990,17 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
-    <string name="new_folder">Create a new Folder here</string>
-    <string name="folder_name">Enter the folder name</string>
-    <string name="valid_folder_name">Please enter a valid folder name</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
+    <string name="upload_image_maximum_retry_times">上传图片最大重试次数</string>
+    <string name="new_folder">在此创建新文件夹</string>
+    <string name="folder_name">输入文件夹名</string>
+    <string name="valid_folder_name">请输入一个有效的文件夹名</string>
+    <string name="folder_exists">文件夹已存在。\n
+请提供另一个文件夹名</string>
+    <string name="select">选择</string>
+    <string name="default_directory">默认目录</string>
+    <string name="folder">文件夹</string>
+    <string name="create_folder">创建文件夹</string>
+    <string name="custom_tabs_indication">在应用程序中使用您最喜欢的浏览器。禁用则链接将在外部打开</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>

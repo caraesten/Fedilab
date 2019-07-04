@@ -307,7 +307,6 @@
     <string name="set_bubble_counter">Zobrazit počítadla</string>
     <string name="set_auto_add_media_url">Přidat URL médií v tootu</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
-    <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
     <string name="set_notif_follow_add">Oznámení v případě oblíbení vašeho tootu</string>
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
@@ -1000,6 +999,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

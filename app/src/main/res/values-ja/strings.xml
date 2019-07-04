@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">カウンターを表示する</string>
     <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
     <string name="set_notif_follow">フォローされたときに通知</string>
-    <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知する</string>
@@ -983,6 +982,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

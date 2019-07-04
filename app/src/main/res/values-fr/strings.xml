@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Afficher les compteurs</string>
     <string name="set_auto_add_media_url">Ajouter l’URL des médias dans les pouets</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
-    <string name="set_notif_follow_ask">Notifier lorsque quelqu’un demande à me suivre</string>
     <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
@@ -992,6 +991,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

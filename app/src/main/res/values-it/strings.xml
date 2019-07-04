@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Mostra contatori</string>
     <string name="set_auto_add_media_url">Aggiungi URL dei media nei toot</string>
     <string name="set_notif_follow">Notifica quando qualcuno ti segue</string>
-    <string name="set_notif_follow_ask">Notifica quando qualcuno richiede di seguirti</string>
     <string name="set_notif_follow_share">Notifica quando qualcuno ricondivide al tuo stato</string>
     <string name="set_notif_follow_add">Notifica quando qualcuno mette tra i preferiti il tuo stato</string>
     <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
@@ -995,6 +994,7 @@
     <string name="u_interface">Interfaccia</string>
     <string name="battery">Batteria</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

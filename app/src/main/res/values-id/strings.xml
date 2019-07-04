@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">Tampilkan konter</string>
     <string name="set_auto_add_media_url">Tambahkan URL dari media kutipan</string>
     <string name="set_notif_follow">Beritahu ketika seseorang mengikuti Anda</string>
-    <string name="set_notif_follow_ask">Beritahu ketika seseorang meminta untuk mengikuti Anda</string>
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
     <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
@@ -993,6 +992,7 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

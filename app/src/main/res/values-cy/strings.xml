@@ -315,7 +315,6 @@
     <string name="set_bubble_counter">Arddangos cownteri</string>
     <string name="set_auto_add_media_url">Ychwanegu URL o\'r cyfryngau yn y tŵtiau</string>
     <string name="set_notif_follow">Hysbysu pryd mae rhywun yn eich dilyn chi</string>
-    <string name="set_notif_follow_ask">Hysbysu pryd mae rhywun yn gwneud cais i\'ch dilyn chi</string>
     <string name="set_notif_follow_share">Hysbysu pan mae rhywun yn hybu\'ch statws</string>
     <string name="set_notif_follow_add">Hysbysu pan mae rhywun yn ffefrynnu eich statws</string>
     <string name="set_notif_follow_mention">Hysbysu pan mae rhywun yn sôn amdanoch chi</string>
@@ -1010,6 +1009,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

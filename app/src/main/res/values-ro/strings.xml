@@ -303,7 +303,6 @@
     <string name="set_bubble_counter">Arată contoarele</string>
     <string name="set_auto_add_media_url">Adauga URL-ul de media în notițe</string>
     <string name="set_notif_follow">Notifică atunci când cineva vă urmărește</string>
-    <string name="set_notif_follow_ask">Notifică atunci când cineva solicită să te urmeze</string>
     <string name="set_notif_follow_share">Notifica atunci când cineva amplifică statusul</string>
     <string name="set_notif_follow_add">Notifica atunci când cineva favorizează statusul tău</string>
     <string name="set_notif_follow_mention">Notifică atunci când cineva vă menţionează</string>
@@ -997,6 +996,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

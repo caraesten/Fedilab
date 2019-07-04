@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Ցուցադրել հաշվիչները</string>
     <string name="set_auto_add_media_url">Թութում ներառել մեդիայի հղումը</string>
     <string name="set_notif_follow">Տեղեկացնել, երբ որևէ մեկը սկսում է հետևել քեզ</string>
-    <string name="set_notif_follow_ask">Տեղեկացնել, երբ երևէ մեկը հայց է ուղարկում՝ հետևելու քեզ</string>
     <string name="set_notif_follow_share">Տեղեկացնել, երբ որևէ մեկը տարածում է թութդ</string>
     <string name="set_notif_follow_add">Տեղեկացնել, երբ որևէ մեկը հավանում է թութդ</string>
     <string name="set_notif_follow_mention">Տեղեկացնել, երբ որևէ մեկը նշում է քեզ</string>
@@ -994,6 +993,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

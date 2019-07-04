@@ -303,7 +303,6 @@
     <string name="set_bubble_counter">Прикажи бројаче</string>
     <string name="set_auto_add_media_url">Додај адресу мултимедије у тутове</string>
     <string name="set_notif_follow">Обавести када Вас неко запрати</string>
-    <string name="set_notif_follow_ask">Обавести када неко затражи да Вас прати</string>
     <string name="set_notif_follow_share">Обавести када неко подржи Ваш статус</string>
     <string name="set_notif_follow_add">Обавести када неко стави да му је Ваш статус омиљен</string>
     <string name="set_notif_follow_mention">Обавести када Вас неко помене</string>
@@ -999,6 +998,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

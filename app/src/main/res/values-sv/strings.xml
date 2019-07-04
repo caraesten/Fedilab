@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Lägga till URL för media i toots</string>
     <string name="set_notif_follow">Meddela när någon följer dig</string>
-    <string name="set_notif_follow_ask">Meddela när någon begär för att följa dig</string>
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
     <string name="set_notif_follow_add">Meddela när någon favoriter din status</string>
     <string name="set_notif_follow_mention">Meddela när någon nämner dig</string>
@@ -983,8 +982,8 @@
     <string name="set_enable_time_slot_indication">Under tiden perioden kommer programmet att skicka meddelanden. Du kan ändra (dvs: tysta) denna period med höger spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Visa en Fedilab-knapp nedan profilbilden. Det är en genväg för att få tillgång till in-app-funktioner.</string>
     <string name="set_quick_reply_indication">Tillåt att svara direkt i tidslinjen nedanför statusen</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_fit_preview_indication">Förhandsgranskning kommer inte att förkortas i tidslinjer</string>
+    <string name="set_display_video_preview_indication">Tillåt att spela upp inbäddade videoklipp direkt i tidslinjer</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
@@ -995,6 +994,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

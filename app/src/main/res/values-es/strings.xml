@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Agregar URL del contenido multimedia en toots</string>
     <string name="set_notif_follow">Notificar cuando alguien te siga</string>
-    <string name="set_notif_follow_ask">Notificar cuando alguien pide que te siga</string>
     <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
     <string name="set_notif_follow_add">Notificar cuando alguien agrega a favoritos tu estado</string>
     <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
@@ -989,6 +988,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>

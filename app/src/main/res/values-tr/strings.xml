@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Sayaçları göster</string>
     <string name="set_auto_add_media_url">Toot\'taki medyanın URL\'sini ekle</string>
     <string name="set_notif_follow">Biri kullanıcıyı takip ettiğinde bildir</string>
-    <string name="set_notif_follow_ask">Biri seni takip etmek istediğinde bildir</string>
     <string name="set_notif_follow_share">Birisi durumunuzu artırdığında bildir</string>
     <string name="set_notif_follow_add">Ne zaman biri sizi favorilere eklerse bildir</string>
     <string name="set_notif_follow_mention">Biri kullanıcıyı takip ettiğinde bildir</string>
@@ -988,6 +987,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Battery</string>
     <string name="compose">Compose</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>
