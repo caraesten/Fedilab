@@ -987,6 +987,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="u_interface">Interfície</string>
     <string name="battery">Bateria</string>
     <string name="compose">Redactar</string>
+    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
     <string name="new_folder">Crear una carpeta nova aquí</string>
     <string name="folder_name">Introdueix el nom de la carpeta</string>
     <string name="valid_folder_name">Cal introduir un nom de carpeta vàlid</string>
