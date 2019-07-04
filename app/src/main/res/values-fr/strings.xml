@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Afficher les compteurs</string>
     <string name="set_auto_add_media_url">Ajouter l’URL des médias dans les pouets</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
-    <string name="set_notif_follow_ask">Notifier lorsque quelqu’un demande à me suivre</string>
     <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
