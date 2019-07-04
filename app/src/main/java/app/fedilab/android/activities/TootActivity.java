@@ -2380,10 +2380,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Account account = accounts.get(position);
-                            String newContent = oldContent.replace("@"+search, "@"+account.getAcct() + " ");
+                            String deltaSearch = "";
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
+
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace("@" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += "@" + account.getAcct() + " ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length() )
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                            toot_content.setSelection( newContent.length());
+                            toot_content.setSelection(newPosition);
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
+                            toot_content.setThreshold(1);
+                            toot_content.setAdapter(accountsListAdapter);
+
 
                         }
                     });
@@ -2435,10 +2454,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String shortcode = emojis.get(position).getShortcode();
-                    String newContent = oldContent.replace(":"+search, ":"+shortcode + ": ");
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace(":"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += ":" + shortcode + ": ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    toot_content.setSelection( newContent.length());
+                    toot_content.setSelection(newPosition);
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(emojisSearchAdapter);
+
                 }
             });
         }
@@ -2566,10 +2604,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     if( position >= tags.size() )
                         return;
                     String tag = tags.get(position);
-                    String newContent = oldContent.replace("#"+search, "#"+tag + " ");
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("#"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "#" + tag + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() )
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    toot_content.setSelection( newContent.length());
+                    toot_content.setSelection(newPosition);
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(tagsSearchAdapter);
+                    
                 }
             });
         }

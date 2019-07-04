@@ -326,7 +326,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 if (currentCursorPosition >= oldContent.length())
                                     deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
                             }
-
                             if (!search.equals(""))
                                 deltaSearch = deltaSearch.replace("@" + search, "");
                             String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
