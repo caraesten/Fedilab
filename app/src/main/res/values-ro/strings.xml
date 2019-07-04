@@ -303,7 +303,6 @@
     <string name="set_bubble_counter">Arată contoarele</string>
     <string name="set_auto_add_media_url">Adauga URL-ul de media în notițe</string>
     <string name="set_notif_follow">Notifică atunci când cineva vă urmărește</string>
-    <string name="set_notif_follow_ask">Notifică atunci când cineva solicită să te urmeze</string>
     <string name="set_notif_follow_share">Notifica atunci când cineva amplifică statusul</string>
     <string name="set_notif_follow_add">Notifica atunci când cineva favorizează statusul tău</string>
     <string name="set_notif_follow_mention">Notifică atunci când cineva vă menţionează</string>
