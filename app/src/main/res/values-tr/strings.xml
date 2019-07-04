@@ -354,6 +354,9 @@
         <item>512KB</item>
         <item>1MB</item>
         <item>2MB</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">LED rengini ayarla:</string>
     <string-array name="led_colours">
