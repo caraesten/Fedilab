@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Ցուցադրել հաշվիչները</string>
     <string name="set_auto_add_media_url">Թութում ներառել մեդիայի հղումը</string>
     <string name="set_notif_follow">Տեղեկացնել, երբ որևէ մեկը սկսում է հետևել քեզ</string>
-    <string name="set_notif_follow_ask">Տեղեկացնել, երբ երևէ մեկը հայց է ուղարկում՝ հետևելու քեզ</string>
     <string name="set_notif_follow_share">Տեղեկացնել, երբ որևէ մեկը տարածում է թութդ</string>
     <string name="set_notif_follow_add">Տեղեկացնել, երբ որևէ մեկը հավանում է թութդ</string>
     <string name="set_notif_follow_mention">Տեղեկացնել, երբ որևէ մեկը նշում է քեզ</string>
