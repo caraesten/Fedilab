@@ -303,7 +303,6 @@
     <string name="set_bubble_counter">Прикажи бројаче</string>
     <string name="set_auto_add_media_url">Додај адресу мултимедије у тутове</string>
     <string name="set_notif_follow">Обавести када Вас неко запрати</string>
-    <string name="set_notif_follow_ask">Обавести када неко затражи да Вас прати</string>
     <string name="set_notif_follow_share">Обавести када неко подржи Ваш статус</string>
     <string name="set_notif_follow_add">Обавести када неко стави да му је Ваш статус омиљен</string>
     <string name="set_notif_follow_mention">Обавести када Вас неко помене</string>
