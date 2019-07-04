@@ -985,11 +985,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="new_folder">Hier einen neuen Ordner erstellen</string>
     <string name="folder_name">Ordnernamen eingeben</string>
     <string name="valid_folder_name">Bitte einen gültigen Ordnernamen eingeben</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
+    <string name="folder_exists">Dieser Ordner existiert bereits.\nBitte einen anderen Ordnernamen eingeben.</string>
+    <string name="select">Auswählen</string>
+    <string name="default_directory">Standardordner</string>
+    <string name="folder">Ordner</string>
+    <string name="create_folder">Ordner erstellen</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
