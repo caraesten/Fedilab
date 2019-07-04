@@ -995,6 +995,7 @@
     <string name="u_interface">Brugerflade</string>
     <string name="battery">Batteri</string>
     <string name="compose">Skriv</string>
+    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
     <string name="new_folder">Opret en ny mappe hér</string>
     <string name="folder_name">Angiv mappenavnet</string>
     <string name="valid_folder_name">Angiv et gyldigt mappenavn</string>
