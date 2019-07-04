@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">Tampilkan konter</string>
     <string name="set_auto_add_media_url">Tambahkan URL dari media kutipan</string>
     <string name="set_notif_follow">Beritahu ketika seseorang mengikuti Anda</string>
-    <string name="set_notif_follow_ask">Beritahu ketika seseorang meminta untuk mengikuti Anda</string>
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
     <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
