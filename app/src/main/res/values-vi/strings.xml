@@ -297,7 +297,6 @@ và %d toots khác để khám phá</item>
     <string name="set_bubble_counter">Quầy hiển thị</string>
     <string name="set_auto_add_media_url">Thêm URL của phương tiện truyền thông vào các toots</string>
     <string name="set_notif_follow">Thông báo khi ai đó theo bạn</string>
-    <string name="set_notif_follow_ask">Thông báo khi ai đó yêu cầu bạn theo dõi bạn</string>
     <string name="set_notif_follow_share">Thông báo khi ai đó tăng tình trạng của bạn</string>
     <string name="set_notif_follow_add">Thông báo khi ai đó yêu thích trạng thái của bạn</string>
     <string name="set_notif_follow_mention">Thông báo khi ai đó đề cập đến bạn</string>
