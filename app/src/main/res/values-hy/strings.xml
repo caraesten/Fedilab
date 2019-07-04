@@ -354,6 +354,9 @@
         <item>512 կբ</item>
         <item>1 մբ</item>
         <item>2 մբ</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">Կարգել LED-ի գույնը․</string>
     <string-array name="led_colours">
