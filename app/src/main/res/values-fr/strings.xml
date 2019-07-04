@@ -354,6 +354,9 @@
         <item>512 Ko</item>
         <item>1 Mo</item>
         <item>2 Mo</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">Couleur de la LED :</string>
     <string-array name="led_colours">
