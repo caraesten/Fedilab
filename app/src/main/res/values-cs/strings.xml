@@ -307,7 +307,6 @@
     <string name="set_bubble_counter">Zobrazit počítadla</string>
     <string name="set_auto_add_media_url">Přidat URL médií v tootu</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
-    <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
     <string name="set_notif_follow_add">Oznámení v případě oblíbení vašeho tootu</string>
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
