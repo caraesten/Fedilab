@@ -981,9 +981,9 @@
     <string name="voice_message">Голосовое сообщение</string>
     <string name="set_quick_reply">Включить быстрый ответ</string>
     <string name="reply_might_be_useless">Аккаунт, которому вы отвечаете, может не увидеть ваше сообщение!</string>
-    <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
-    <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
-    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
+    <string name="set_remember_position_indication">Если отключено, приложение всегда будет загружать последние статусы</string>
+    <string name="set_blur_sensitive_indication">Если отключено, деликатный контент будет скрыт кнопкой</string>
+    <string name="set_long_press_media_indication">Сохранять мультимедиа в полном размере при длительном нажатии на превью</string>
     <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
     <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
     <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
