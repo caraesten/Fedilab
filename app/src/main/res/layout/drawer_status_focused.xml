@@ -583,32 +583,167 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <TextView
-        android:layout_marginBottom="10dp"
-        android:id="@+id/status_toot_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        />
+
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/layout_poll" />
 
-    <TextView
-        android:id="@+id/status_toot_app"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:layout_gravity="end"
-        android:gravity="end"
-        android:layout_marginBottom="10dp"
-        android:textStyle="italic"
-        android:textSize="16sp"
-        android:textColor="?attr/colorAccent"
-        />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <!-- Fedilab Features button -->
+        <ImageButton
+            android:id="@+id/fedilab_features"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/mastodonC4"
+            android:contentDescription="@string/app_features"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_logo_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/status_toot_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/status_toot_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            android:textColor="?attr/colorAccent"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_toot_date" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fedilab_features_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="@color/custom_features_panel_background"
+            android:paddingStart="2dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/fedilab_features"
+            app:layout_constraintStart_toEndOf="@id/fedilab_features"
+            app:layout_constraintTop_toTopOf="@id/fedilab_features">
+
+            <ImageButton
+                android:id="@+id/custom_feature_bookmark"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/bookmark_add"
+                android:src="@drawable/ic_bookmark_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/custom_feature_translate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/custom_feature_translate"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/translate"
+                android:src="@drawable/ic_translate_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/custom_feature_timed_mute"
+                app:layout_constraintStart_toEndOf="@id/custom_feature_bookmark"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/custom_feature_timed_mute"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/timed_mute"
+                android:src="@drawable/ic_timed_mute"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/custom_feature_schedule"
+                app:layout_constraintStart_toEndOf="@id/custom_feature_translate"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/custom_feature_schedule"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/schedule"
+                android:src="@drawable/ic_schedule_boost"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/custom_feature_mention"
+                app:layout_constraintStart_toEndOf="@id/custom_feature_timed_mute"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/custom_feature_mention"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/mention_account"
+                android:src="@drawable/ic_mention_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/custom_feature_cache"
+                app:layout_constraintStart_toEndOf="@id/custom_feature_schedule"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/custom_feature_cache"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/mastodonC4"
+                android:contentDescription="@string/refresh_cache"
+                android:src="@drawable/ic_refresh"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/custom_feature_mention"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/status_action_container"
