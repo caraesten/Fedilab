@@ -219,6 +219,7 @@
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
                     android:text="@string/set_display_bot_icon"
+                    android:textSize="16sp"
                     android:layout_height="wrap_content" />
 
                 <!-- DISPLAY QUICK REPLY -->
@@ -299,6 +300,7 @@
                     android:layout_marginTop="@dimen/settings_checkbox_margin"
                     android:layout_marginBottom="@dimen/settings_checkbox_margin"
                     android:text="@string/set_display_card"
+                    android:textSize="16sp"
                     android:layout_height="wrap_content" />
 
 
