@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">काउंटर दिखाएं</string>
     <string name="set_auto_add_media_url">मीडिया के यूआरएल को लेखों में जोड़े</string>
     <string name="set_notif_follow">अनुसरण होने पर सूचित करें</string>
-    <string name="set_notif_follow_ask">अनुसरण करने की गुज़ारिश मिलने पर सूचित करें</string>
     <string name="set_notif_follow_share">आपके लेख बूस्ट होने पर सूचित करें</string>
     <string name="set_notif_follow_add">आपके लेख पसंद होने पर सूचित करें</string>
     <string name="set_notif_follow_mention">आपका उल्लेख होने पर सूचित करें</string>
