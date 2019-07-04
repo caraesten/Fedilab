@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Engadir a URL dos medios nos toots</string>
     <string name="set_notif_follow">Notificar cando alguén a segue</string>
-    <string name="set_notif_follow_ask">Notificar cando alguén solicita seguila</string>
     <string name="set_notif_follow_share">Notificar cando alguén promove un dos seus toots</string>
     <string name="set_notif_follow_add">Notificar cando alguén favorece un dos seus estados</string>
     <string name="set_notif_follow_mention">Notificar cando alguén a menciona</string>
