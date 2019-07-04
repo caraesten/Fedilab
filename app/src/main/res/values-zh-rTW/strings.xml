@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">顯示計數器</string>
     <string name="set_auto_add_media_url">在嘟文中新增媒體的 URL</string>
     <string name="set_notif_follow">當有人關注您時通知您</string>
-    <string name="set_notif_follow_ask">當有人請求關注您時通知</string>
     <string name="set_notif_follow_share">當有人轉嘟您的嘟文時通知</string>
     <string name="set_notif_follow_add">當有人收藏您的嘟文時通知您</string>
     <string name="set_notif_follow_mention">當有人提及您時通知</string>
