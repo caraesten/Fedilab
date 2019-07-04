@@ -295,7 +295,6 @@
     <string name="set_bubble_counter">カウンターを表示する</string>
     <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
     <string name="set_notif_follow">フォローされたときに通知</string>
-    <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
     <string name="set_notif_follow_share">トゥートがブーストされたときに通知する</string>
     <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知する</string>
     <string name="set_notif_follow_mention">メンションを受け取ったときに通知する</string>
