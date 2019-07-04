@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Számlálók megjelenítése</string>
     <string name="set_auto_add_media_url">Média URL-jének hozzáadása a tootokhoz</string>
     <string name="set_notif_follow">Értesítsen, amikor valaki követ</string>
-    <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Értesíts, amikor valaki megemlít téged</string>
