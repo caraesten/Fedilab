@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Erakutsi kontagailuak</string>
     <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
     <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen dizunean</string>
-    <string name="set_notif_follow_ask">Jakinarazi norbaitek zu jarraitzeko eskaera egiten duenean</string>
     <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
     <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
     <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
