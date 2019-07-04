@@ -1480,7 +1480,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
@@ -1495,7 +1494,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         final CheckBox set_notif_follow = rootView.findViewById(R.id.set_notif_follow);
         final CheckBox set_notif_follow_add = rootView.findViewById(R.id.set_notif_follow_add);
-        final CheckBox set_notif_follow_ask = rootView.findViewById(R.id.set_notif_follow_ask);
         final CheckBox set_notif_follow_mention = rootView.findViewById(R.id.set_notif_follow_mention);
         final CheckBox set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
         final CheckBox set_notif_follow_poll = rootView.findViewById(R.id.set_notif_follow_poll);
@@ -1718,7 +1716,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         set_notif_follow.setChecked(notif_follow);
         set_notif_follow_add.setChecked(notif_add);
-        set_notif_follow_ask.setChecked(notif_ask);
         set_notif_follow_mention.setChecked(notif_mention);
         set_notif_follow_share.setChecked(notif_share);
         set_notif_follow_poll.setChecked(notif_poll);
@@ -1741,14 +1738,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_ADD, set_notif_follow_add.isChecked());
-                editor.apply();
-            }
-        });
-        set_notif_follow_ask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_NOTIF_ASK, set_notif_follow_ask.isChecked());
                 editor.apply();
             }
         });

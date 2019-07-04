@@ -382,7 +382,6 @@ public class Helper {
     public static final String SET_NOTIFY = "set_notify";
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
-    public static final String SET_NOTIF_ASK = "set_notif_follow_ask";
     public static final String SET_NOTIF_MENTION = "set_notif_follow_mention";
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
     public static final String SET_NOTIF_POLL = "set_notif_follow_poll";

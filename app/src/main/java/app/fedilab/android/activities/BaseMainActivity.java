@@ -1202,10 +1202,9 @@ public abstract class BaseMainActivity extends BaseActivity
             final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
             boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
             boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
             boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-            boolean notifif_notifications = !( !notif_follow &&  !notif_add && !notif_ask && !notif_mention && !notif_share);
+            boolean notifif_notifications = !( !notif_follow &&  !notif_add && !notif_mention && !notif_share);
             //set_push_hometimeline.setChecked(notif_hometimeline);
             set_push_notification.setChecked(notifif_notifications);
 
@@ -1216,7 +1215,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putBoolean(Helper.SET_NOTIF_FOLLOW, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_ADD, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_ASK, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_POLL, set_push_notification.isChecked());
