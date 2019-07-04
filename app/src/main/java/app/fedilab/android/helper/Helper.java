@@ -354,6 +354,10 @@ public class Helper {
     static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
+    public static final int S_4MO = 4;
+    public static final int S_6MO = 5;
+    public static final int S_8MO = 6;
+
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -3209,7 +3213,14 @@ public class Helper {
                 resizeby = 8388608;
             }else if(resizeSet == Helper.S_2MO){
                 resizeby = 16777216;
+            }else if(resizeSet == Helper.S_4MO){
+                resizeby = 33554432;
+            }else if(resizeSet == Helper.S_6MO){
+                resizeby = 50331648;
+            }else if(resizeSet == Helper.S_8MO) {
+                resizeby = 67108864;
             }
+
             double resize = ((double)size)/resizeby;
             if( resize > 1 ){
                 ContentResolver cr = context.getContentResolver();
