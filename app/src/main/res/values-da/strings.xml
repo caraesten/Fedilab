@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Vis tællere</string>
     <string name="set_auto_add_media_url">Tilføj URL på medier i toots</string>
     <string name="set_notif_follow">Notificér, når en person følger dig</string>
-    <string name="set_notif_follow_ask">Notificér, når en person anmoder om at følge dig</string>
     <string name="set_notif_follow_share">Notificér, når nogen booster din status</string>
     <string name="set_notif_follow_add">Notificér, når nogen favoriserer din status</string>
     <string name="set_notif_follow_mention">Notificér, når nogen nævner dig</string>
