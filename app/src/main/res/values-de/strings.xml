@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
     <string name="set_auto_add_media_url">Füge die URL bei Anhängen in Toots hinzu</string>
     <string name="set_notif_follow">mir jemand folgt</string>
-    <string name="set_notif_follow_ask">Ich eine Folgeanfrage erhalte</string>
     <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
     <string name="set_notif_follow_add">jemand meinen Beitrag favorisiert</string>
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
