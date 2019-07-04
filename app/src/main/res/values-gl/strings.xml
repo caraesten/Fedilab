@@ -996,7 +996,7 @@
     <string name="u_interface">Interface</string>
     <string name="battery">Batería</string>
     <string name="compose">Redactar</string>
-    <string name="upload_image_maximum_retry_times">Upload image maximum retry times</string>
+    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>
