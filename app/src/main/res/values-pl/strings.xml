@@ -307,7 +307,6 @@
     <string name="set_bubble_counter">Wyświetl kraje</string>
     <string name="set_auto_add_media_url">Dodaj adres URL zawartości we wpisach</string>
     <string name="set_notif_follow">Powiadom mnie, gdy ktoś zaczyna mnie śledzić</string>
-    <string name="set_notif_follow_ask">Powiadom mnie, gdy ktoś wysyła prośbę o śledzenie</string>
     <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś podbije mój wpis</string>
     <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój wpis</string>
     <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś mnie wspomni</string>
