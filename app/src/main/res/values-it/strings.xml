@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Mostra contatori</string>
     <string name="set_auto_add_media_url">Aggiungi URL dei media nei toot</string>
     <string name="set_notif_follow">Notifica quando qualcuno ti segue</string>
-    <string name="set_notif_follow_ask">Notifica quando qualcuno richiede di seguirti</string>
     <string name="set_notif_follow_share">Notifica quando qualcuno ricondivide al tuo stato</string>
     <string name="set_notif_follow_add">Notifica quando qualcuno mette tra i preferiti il tuo stato</string>
     <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
