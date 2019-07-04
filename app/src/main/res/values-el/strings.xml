@@ -299,7 +299,6 @@
     <string name="set_bubble_counter">Προβολή των μετρητών</string>
     <string name="set_auto_add_media_url">Προσθήκη της διεύθυνσης URL στις φωνές πολυμέσων</string>
     <string name="set_notif_follow">Ειδοποίηση όταν κάποιος σε παρακολουθεί</string>
-    <string name="set_notif_follow_ask">Ειδοποίηση όταν κάποιος ζητήσει να σε παρακολουθεί</string>
     <string name="set_notif_follow_share">Ειδοποίηση όταν κάποιος ενισχύει την κατάστασή σου</string>
     <string name="set_notif_follow_add">Ειδοποίηση όταν σε κάποιον αρέσει η κατάστασή σου</string>
     <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
