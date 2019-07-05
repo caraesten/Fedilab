@@ -358,6 +358,9 @@
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">Setează culoarea LED:</string>
     <string-array name="led_colours">

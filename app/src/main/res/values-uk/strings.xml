@@ -362,6 +362,9 @@
         <item>512 Кб</item>
         <item>1 Мб</item>
         <item>2 Мб</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">Встановити колір LED:</string>
     <string-array name="led_colours">

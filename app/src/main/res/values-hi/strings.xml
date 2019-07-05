@@ -354,6 +354,9 @@
         <item>५१२ केबी</item>
         <item>१ एमबी</item>
         <item>२ एमबी</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">एलईडी का रंग चुनें:</string>
     <string-array name="led_colours">

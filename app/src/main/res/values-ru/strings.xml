@@ -362,6 +362,9 @@
         <item>512 КБ</item>
         <item>1 МБ</item>
         <item>2 МБ</item>
+        <item>4 МБ</item>
+        <item>6 МБ</item>
+        <item>8 МБ</item>
     </string-array>
     <string name="set_led_colour">Цвет светодиода:</string>
     <string-array name="led_colours">
@@ -992,21 +995,21 @@
     <string name="set_quick_reply_indication">Разрешить отвечать прямо в ленте ниже статусов</string>
     <string name="set_fit_preview_indication">Превью не будут обрезаны в лентах</string>
     <string name="set_display_video_preview_indication">Разрешить воспроизведение встроенных видео прямо в ленте</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
-    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
-    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
-    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="set_display_content_after_fetch_more_indication">Позволяет изменить способ чтения статусов, которые отображаются при нажатии кнопки \'Получить больше\'</string>
+    <string name="set_security_provider_indication">Эта опция позволяет поддерживать последние наборы шифров. Это полезно для старых устройств Android или если вы не можете подключиться к вашему инстансу.</string>
+    <string name="set_video_mode_indication">Только для видеороликов Peertube. Переключите, если они у вас не воспроизводятся.</string>
+    <string name="featured_hashtags_indication">Эти теги позволят отфильтровывать статусы из профилей. Вы должны будете использовать контекстное меню для их просмотра.</string>
+    <string name="set_capitalize_indication">Автоматически вставлять разрыв строки после упоминания для ввода заглавной первой букву</string>
+    <string name="settings_title_custom_sharing_indication">Разрешить создателям контента обмениваться статусами в своих RSS-каналах</string>
     <string name="timelines">Ленты</string>
     <string name="u_interface">Интерфейс</string>
     <string name="battery">Батарея</string>
     <string name="compose">Создание</string>
     <string name="upload_image_maximum_retry_times">Максимальное количество повторов при загрузке мультимедиа</string>
-    <string name="new_folder">Create a new Folder here</string>
-    <string name="folder_name">Enter the folder name</string>
-    <string name="valid_folder_name">Please enter a valid folder name</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="new_folder">Создать новую папку здесь</string>
+    <string name="folder_name">Введите название папки</string>
+    <string name="valid_folder_name">Пожалуйста, введите правильное название папки</string>
+    <string name="folder_exists">Эта папка уже существует.\n Пожалуйста, укажите другое имя для папки</string>
     <string name="select">Выбрать</string>
     <string name="default_directory">Каталог по умолчанию</string>
     <string name="folder">Папка</string>

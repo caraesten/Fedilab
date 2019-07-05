@@ -354,6 +354,9 @@
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
+        <item>4 Mb</item>
+        <item>6 Mb</item>
+        <item>8 Mb</item>
     </string-array>
     <string name="set_led_colour">Sæt LED-farve:</string>
     <string-array name="led_colours">
@@ -994,7 +997,7 @@
     <string name="u_interface">Brugerflade</string>
     <string name="battery">Batteri</string>
     <string name="compose">Skriv</string>
-    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
+    <string name="upload_image_maximum_retry_times">Maks. antal forsøg ved medie-upload</string>
     <string name="new_folder">Opret en ny mappe hér</string>
     <string name="folder_name">Angiv mappenavnet</string>
     <string name="valid_folder_name">Angiv et gyldigt mappenavn</string>
