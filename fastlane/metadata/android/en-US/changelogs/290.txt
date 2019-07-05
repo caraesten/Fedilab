@@ -1,0 +1,10 @@
+Changed
+- New settings divided with categories
+- Add more retries when uploads fail (can be defined in settings)
+- Add Fedilab features button to focused statuses
+
+Fixed
+- Fix issue with mentions when composing
+- Quick reply broken with the compact mode
+- Some crashes in console mode
+- Crashes when using the quick reply
