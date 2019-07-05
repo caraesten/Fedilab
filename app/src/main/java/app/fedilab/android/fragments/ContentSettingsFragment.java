@@ -718,7 +718,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
-        boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
+        boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, false);
         final CheckBox set_display_news = rootView.findViewById(R.id.set_display_news);
         set_display_news.setChecked(display_news);
 

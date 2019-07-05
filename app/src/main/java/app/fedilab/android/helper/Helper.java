@@ -2913,7 +2913,7 @@ public class Helper {
             }
             MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
             if( news != null){
-                boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
+                boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, false);
                 if( ! display_news ){
                     news.setVisible(false);
                 }
