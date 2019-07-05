@@ -228,7 +228,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private Toast mToast;
     private RelativeLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
-    private int searchLength;
     private TextView toot_space_left;
     private String initialContent;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
@@ -2381,6 +2380,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Account account = accounts.get(position);
                             String deltaSearch = "";
+                            int searchLength = 15;
+                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                searchLength = currentCursorPosition;
+                            }
                             if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
                                 deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                             else {
@@ -2455,6 +2458,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String shortcode = emojis.get(position).getShortcode();
                     String deltaSearch = "";
+                    int searchLength = 15;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }
                     if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
                         deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
                     else {
@@ -2605,6 +2612,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         return;
                     String tag = tags.get(position);
                     String deltaSearch = "";
+                    int searchLength = 15;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }
                     if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
                         deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
                     else {

@@ -303,7 +303,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         if( apiResponse.getError() != null)
             return;
-        int searchLength = 15;
+
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             int currentCursorPosition = toot_content.getSelectionStart();
@@ -320,6 +320,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Account account = accounts.get(position);
                             String deltaSearch = "";
+                            int searchLength = 15;
+                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                searchLength = currentCursorPosition;
+                            }
                             if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
                                 deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                             else {
@@ -356,7 +360,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
         int currentCursorPosition = toot_content.getSelectionStart();
-        int searchLength = 15;
+
         if( emojis != null && emojis.size() > 0){
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, emojis);
             toot_content.setThreshold(1);
@@ -369,6 +373,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String shortcode = emojis.get(position).getShortcode();
                     String deltaSearch = "";
+                    int searchLength = 15;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }
                     if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
                         deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
                     else {
@@ -400,7 +408,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         if( apiResponse == null || apiResponse.getResults() == null)
             return;
-        int searchLength = 15;
         app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
         int currentCursorPosition = toot_content.getSelectionStart();
         final List<String> tags = results.getHashtags();
@@ -423,6 +430,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         return;
                     String tag = tags.get(position);
                     String deltaSearch = "";
+                    int searchLength = 15;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }
                     if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
                         deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
                     else {
