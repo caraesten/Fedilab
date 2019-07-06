@@ -994,6 +994,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="folder">Ordner</string>
     <string name="create_folder">Ordner erstellen</string>
     <string name="custom_tabs_indication">Verwenden Sie Ihren bevorzugten Browser innerhalb der Anwendung. Durch das Deaktivieren werden Links extern geöffnet.</string>
+    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
