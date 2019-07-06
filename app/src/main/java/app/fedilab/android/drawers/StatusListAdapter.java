@@ -1828,9 +1828,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
-                Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
-                holder.status_reply_count.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            if ((isCompactMode || isConsoleMode)  &&  getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+
+                if((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1)) {
+                    Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
+                    holder.status_reply_count.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                }else{
+                    holder.status_reply_count.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
             }
 
             if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS && getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
