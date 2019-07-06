@@ -41,6 +41,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -2495,6 +2496,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
 
                             toot_content = holder.quick_reply_text;
+                            int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+                            toot_content.setInputType(newInputType);
                             toot_cw_content = content_cw;
                             toot_space_left = holder.toot_space_left;
                             in_reply_to_status = status.getReblog() != null ? status.getReblog().getId():status.getId();
