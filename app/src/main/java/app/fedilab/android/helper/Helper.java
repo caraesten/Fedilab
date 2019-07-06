@@ -905,7 +905,10 @@ public class Helper {
         String message = "";
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
-        if( statusCode >= 200 && statusCode < 400 && display_confirm){
+        if( !display_confirm){
+            return;
+        }
+        if( statusCode >= 200 && statusCode < 400 ){
             if( statusAction == API.StatusAction.BLOCK){
                 message = context.getString(R.string.toast_block);
             }else if(statusAction == API.StatusAction.UNBLOCK){
