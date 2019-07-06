@@ -1004,6 +1004,7 @@
     <string name="folder">文件夹</string>
     <string name="create_folder">创建文件夹</string>
     <string name="custom_tabs_indication">在应用程序中使用您最喜欢的浏览器。禁用则链接将在外部打开</string>
+    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>

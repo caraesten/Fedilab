@@ -1007,6 +1007,7 @@
     <string name="folder">Mappe</string>
     <string name="create_folder">Opret mappe</string>
     <string name="custom_tabs_indication">Benyt din foretrukne browser i selve programmet. Ved at deaktivere, åbnes links eksternt</string>
+    <string name="set_display_confirm">Vis en toast-besked efte fuldførelsen af en handling (boost, fav mv.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

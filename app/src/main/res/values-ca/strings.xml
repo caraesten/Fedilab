@@ -989,7 +989,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="u_interface">Interfície</string>
     <string name="battery">Bateria</string>
     <string name="compose">Redactar</string>
-    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
+    <string name="upload_image_maximum_retry_times">Màxim d\'intents quan es penja un mèdia</string>
     <string name="new_folder">Crear una carpeta nova aquí</string>
     <string name="folder_name">Introdueix el nom de la carpeta</string>
     <string name="valid_folder_name">Cal introduir un nom de carpeta vàlid</string>
@@ -999,6 +999,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="folder">Carpeta</string>
     <string name="create_folder">Crear carpeta</string>
     <string name="custom_tabs_indication">Utilitza el teu navegador preferit dins l\'aplicació. Si es desactiva, els enllaços s\'obriran externament</string>
+    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
