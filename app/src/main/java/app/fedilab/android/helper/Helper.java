@@ -409,6 +409,7 @@ public class Helper {
     public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_DISPLAY_NEW_BADGE = "set_display_new_badge";
     public static final String SET_DISPLAY_BOT_ICON = "set_display_bot_icon";
+    public static final String SET_DISPLAY_CONFIRM = "set_display_confirm";
     public static final String SET_QUICK_REPLY = "set_quick_reply";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
@@ -902,7 +903,9 @@ public class Helper {
      */
     public static void manageMessageStatusCode(Context context, int statusCode, API.StatusAction statusAction){
         String message = "";
-        if( statusCode >= 200 && statusCode < 400){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
+        if( statusCode >= 200 && statusCode < 400 && display_confirm){
             if( statusAction == API.StatusAction.BLOCK){
                 message = context.getString(R.string.toast_block);
             }else if(statusAction == API.StatusAction.UNBLOCK){

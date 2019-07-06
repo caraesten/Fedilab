@@ -222,6 +222,17 @@
                     android:textSize="16sp"
                     android:layout_height="wrap_content" />
 
+
+                <!-- DISPLAY BOT ICON -->
+                <CheckBox
+                    android:id="@+id/set_display_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:text="@string/set_display_confirm"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+
                 <!-- DISPLAY QUICK REPLY -->
                 <LinearLayout
                     android:layout_width="match_parent"

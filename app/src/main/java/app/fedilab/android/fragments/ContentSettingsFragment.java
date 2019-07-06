@@ -801,6 +801,19 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
+        boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
+        final CheckBox set_display_confirm = rootView.findViewById(R.id.set_display_confirm);
+        set_display_confirm.setChecked(display_confirm);
+
+        set_display_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_CONFIRM, set_display_confirm.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean quick_reply = sharedpreferences.getBoolean(Helper.SET_QUICK_REPLY, true);
         final CheckBox set_quick_reply = rootView.findViewById(R.id.set_quick_reply);
         set_quick_reply.setChecked(quick_reply);
