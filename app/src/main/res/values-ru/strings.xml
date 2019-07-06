@@ -749,7 +749,7 @@
     <string name="toots_server">Туты (Сервер)</string>
     <string name="toots_client">Туты (Устройство)</string>
     <string name="modify">Изменить</string>
-    <string name="set_display_content_after_fetch_more">Отображать новые туты над кнопкой \"Получить больше\"</string>
+    <string name="set_display_content_after_fetch_more">Отображать новые туты над кнопкой \'Получить больше\'</string>
     <string name="settings_category_label_confirmations">Подтверждения</string>
     <string name="settings_category_label_timelines">Ленты</string>
     <string name="settings_category_label_notification">Служба уведомлений</string>
@@ -1015,7 +1015,7 @@
     <string name="folder">Папка</string>
     <string name="create_folder">Создать папку</string>
     <string name="custom_tabs_indication">Используйте свой любимый браузер внутри приложения. При отключении, сылки будут открыты вне Fedilab</string>
-    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="set_display_confirm">Отобразить уведомление после выполнения действия (продвижение, добавление в избранные и т. д.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
