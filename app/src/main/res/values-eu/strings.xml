@@ -1006,6 +1006,7 @@
     <string name="folder">Karpeta</string>
     <string name="create_folder">Sortu karpeta</string>
     <string name="custom_tabs_indication">Erabili zure gogoko nabigatzailea aplikazio barruan. Desgaitzen bada, estekak kanpoan irekiko dira</string>
+    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
