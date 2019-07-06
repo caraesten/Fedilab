@@ -499,7 +499,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         }
         if(apiResponse.getError() == null) {
-            Toasty.success(context, context.getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+            boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
+            if( display_confirm){
+                Toasty.success(context, context.getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+            }
         }else {
             if(apiResponse.getError().getStatusCode() == -33)
                 Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();

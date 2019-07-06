@@ -2320,9 +2320,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
         if(apiResponse.getError() == null) {
-            if (scheduledstatus == null && !isScheduled)
-                Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
-            else
+            if (scheduledstatus == null && !isScheduled) {
+                boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
+                if( display_confirm){
+                    Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+                }
+            }else
                 Toasty.success(TootActivity.this, getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
         }else {
             if(apiResponse.getError().getStatusCode() == -33)
