@@ -296,9 +296,9 @@ public class Helper {
     public static final int RELOAD_MYVIDEOS = 10;
     public static final int REFRESH_TIMELINE = 11;
     //Settings
-    public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
-    public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
-    public static final String SET_NOTIFICATIONS_PER_PAGE = "set_notifications_per_page";
+    public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page_new";
+    public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page_new";
+    public static final String SET_NOTIFICATIONS_PER_PAGE = "set_notifications_per_page_new";
     public static final String SET_ATTACHMENT_ACTION = "set_attachment_action";
     public static final String SET_THEME = "set_theme";
     public static final String SET_TIME_FROM = "set_time_from";
