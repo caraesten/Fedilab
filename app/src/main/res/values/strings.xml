@@ -1087,8 +1087,8 @@
     <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
     <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
+    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
+    <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
