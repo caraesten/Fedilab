@@ -30,6 +30,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -307,6 +308,18 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
 
     }
 
+    public void addStatuses(Status status){
+        if( status != null && status.getIn_reply_to_id() != null && this.statuses != null){
+            int position = 0;
+            for(Status s: this.statuses){
+                if(status.getIn_reply_to_id().equals(s.getId())){
+                    this.statuses.add(position+1, status);
+                    statusListAdapter.notifyItemInserted(position+1);
+                }
+                position++;
+            }
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

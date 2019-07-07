@@ -507,6 +507,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if(apiResponse.getError().getStatusCode() == -33)
                 Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
+        //For conversation
+        if( context instanceof ShowConversationActivity){
+            ((ShowConversationActivity) context).addStatuses(apiResponse.getStatuses().get(0));
+        }
 
     }
 
