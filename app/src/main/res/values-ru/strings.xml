@@ -571,7 +571,7 @@
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
     <string name="retrieve_remote_account">Получение внешнего аккаунта</string>
-    <string name="expand_image">Раскрывать скрытое медиасодержимое автоматически</string>
+    <string name="expand_image">Показать скрытые медиа автоматически</string>
     <string name="set_display_follow_instance">Отображать кнопку подписки на инстансы</string>
     <string name="channel_notif_follow">Новая подписка</string>
     <string name="channel_notif_boost">Новое продвижение</string>
@@ -673,8 +673,8 @@
         <item>1 день</item>
         <item>1 неделя</item>
     </string-array>
-    <string name="showcase_instance">        В этом поле вам нужно указать имя хоста вашего инстанса.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nпросто напишите <b>mastodon.social</b> (без https://)\n
-        Вы можете начать писать первые буквы, чтобы получить предложения.\n\n
+    <string name="showcase_instance">        В этом поле необходимо указать имя хоста вашего инстанса.\nНапример, если вы создали учетную запись на https://mastodon.social\nвведите <b>mastodon.social</b> (без https://)\n
+        Начните писать, чтобы получить предложения.\n\n
         ⚠ Кнопка входа будет работать только в случае, если инстанс включен и его имя корректно!
     </string>
     <string name="showcase_uid">        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
@@ -749,7 +749,7 @@
     <string name="toots_server">Туты (Сервер)</string>
     <string name="toots_client">Туты (Устройство)</string>
     <string name="modify">Изменить</string>
-    <string name="set_display_content_after_fetch_more">Отображать новые туты над кнопкой \"Получить больше\"</string>
+    <string name="set_display_content_after_fetch_more">Отображать новые туты над кнопкой \'Получить больше\'</string>
     <string name="settings_category_label_confirmations">Подтверждения</string>
     <string name="settings_category_label_timelines">Ленты</string>
     <string name="settings_category_label_notification">Служба уведомлений</string>
@@ -968,7 +968,7 @@
     <string name="account_undisabled">Этот аккаунт больше не отключен!</string>
     <string name="account_warned">Этот аккаунт предупрежден!</string>
     <string name="set_display_admin_menu">Отображать меню администратора</string>
-    <string name="set_display_admin_toot">Отображение функций администрирования в статусах</string>
+    <string name="set_display_admin_toot">Отображать функции администрирования в статусах</string>
     <string name="allow">Разрешить</string>
     <string name="account_approved">Учетная запись одобрена!</string>
     <string name="account_rejected">Учетная запись отклонена!</string>
@@ -991,7 +991,7 @@
     <string name="live_notif_indication">Поддерживать соединение с потоковым API для уведомлений в реальном времени.</string>
     <string name="set_keep_background_process_indication">Когда приложение работает в фоновом режиме, оно будет поддерживать соединение с потоковым API. Отключите, если вы заботитесь о своей батарее.</string>
     <string name="set_enable_time_slot_indication">В течение этого промежутка времени приложение отправит вам уведомление. Вы можете изменить (отключить) этот временной интервал с помощью спиннера.</string>
-    <string name="set_display_fedilab_features_button_indication">Отобразить кнопку Fedilab под изображением профиля. Это обеспечивает быстрый доступ к функциям в приложении.</string>
+    <string name="set_display_fedilab_features_button_indication">Включает кнопку Fedilab под изображением профиля для быстрого доступа к функциям.</string>
     <string name="set_quick_reply_indication">Разрешить отвечать прямо в ленте ниже статусов</string>
     <string name="set_fit_preview_indication">Превью не будут обрезаны в лентах</string>
     <string name="set_display_video_preview_indication">Разрешить воспроизведение встроенных видео прямо в ленте</string>
@@ -999,7 +999,7 @@
     <string name="set_security_provider_indication">Эта опция позволяет поддерживать последние наборы шифров. Это полезно для старых устройств Android или если вы не можете подключиться к вашему инстансу.</string>
     <string name="set_video_mode_indication">Только для видеороликов Peertube. Переключите, если они у вас не воспроизводятся.</string>
     <string name="featured_hashtags_indication">Эти теги позволят отфильтровывать статусы из профилей. Вы должны будете использовать контекстное меню для их просмотра.</string>
-    <string name="set_capitalize_indication">Автоматически вставлять разрыв строки после упоминания для ввода заглавной первой букву</string>
+    <string name="set_capitalize_indication">Автоматически вставлять разрыв строки после упоминания для ввода заглавной первой буквы</string>
     <string name="settings_title_custom_sharing_indication">Разрешить создателям контента обмениваться статусами в своих RSS-каналах</string>
     <string name="timelines">Ленты</string>
     <string name="u_interface">Интерфейс</string>
@@ -1015,7 +1015,7 @@
     <string name="folder">Папка</string>
     <string name="create_folder">Создать папку</string>
     <string name="custom_tabs_indication">Используйте свой любимый браузер внутри приложения. При отключении, сылки будут открыты вне Fedilab</string>
-    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="set_display_confirm">Отобразить уведомление после выполнения действия (продвижение, добавление в избранные и т. д.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

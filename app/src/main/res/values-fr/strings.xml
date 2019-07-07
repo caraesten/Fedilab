@@ -354,9 +354,9 @@
         <item>512 Ko</item>
         <item>1 Mo</item>
         <item>2 Mo</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>4 Mo</item>
+        <item>6 Mo</item>
+        <item>8 Mo</item>
     </string-array>
     <string name="set_led_colour">Couleur de la LED :</string>
     <string-array name="led_colours">
@@ -867,7 +867,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="add_poll_item">Ajouter un élément de sondage</string>
     <string name="remove_poll_item">Supprimer le dernier élément de sondage</string>
     <string name="mute_conversation">Mettre la conversation en sourdine</string>
-    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="unmute_conversation">Enlever la sourdine de la discussion</string>
     <string name="toast_unmute_conversation">La conversation n\'est plus mise en sourdine !</string>
     <string name="toast_mute_conversation">La conversation est mise en sourdine</string>
     <string name="app_features">Ouvrez les fonctionnalités de l\'application</string>
@@ -971,39 +971,39 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="toot_message_record_error">Une erreur est survenue lors de l\'enregistrement du message vocal !</string>
     <string name="voice_message">Message vocal</string>
     <string name="set_quick_reply">Activer la réponse rapide</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
-    <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
-    <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
-    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
+    <string name="reply_might_be_useless">Le compte auquel vous répondez ne peut voir votre message !</string>
+    <string name="set_remember_position_indication">Si désactivé, l\'application chargera toujours les derniers statuts</string>
+    <string name="set_blur_sensitive_indication">Si désactivé, les médias sensibles seront cachés avec un bouton</string>
+    <string name="set_long_press_media_indication">Enregistre les médias en plein format lors d\'un appui long sur les prévisualisations</string>
     <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
     <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
-    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
-    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
+    <string name="live_notif_indication">Garde une connexion ouverte à l\'API de streaming pour les notifications en direct.</string>
+    <string name="set_keep_background_process_indication">Lorsque l\'application est en arrière-plan, elle gardera une connexion à l\'API de streaming. Désactivez-la si vous vous souciez de la votre batterie.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button bellow profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines bellow statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_fedilab_features_button_indication">Affiche un bouton Fedilab. C\'est un raccourci pour accéder aux fonctionnalités de l\'application.</string>
+    <string name="set_quick_reply_indication">Permet de répondre directement dans les fils, en bas des statuts</string>
+    <string name="set_fit_preview_indication">Les aperçus ne seront pas rognés dans les fils</string>
+    <string name="set_display_video_preview_indication">Autoriser à lire les vidéos intégrées directement dans les fils</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
-    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
-    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
-    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
-    <string name="timelines">Timelines</string>
+    <string name="set_security_provider_indication">Cette option permet de prendre en charge les suites de chiffrement récentes. Elle est utile pour les anciens appareils Android ou si vous ne n\'arrivez pas vous connecter à votre instance.</string>
+    <string name="set_video_mode_indication">Exclusivement pour les vidéos Peertube. Basculez vers ce mode si vous ne pouvez pas les lire.</string>
+    <string name="featured_hashtags_indication">Ces tags permettent de filtrer les statuts dans les profils. Vous devrez utiliser le menu contextuel pour les voir.</string>
+    <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscules</string>
+    <string name="settings_title_custom_sharing_indication">Permet aux créateurs de contenu de partager leurs statuts sur leurs flux RSS</string>
+    <string name="timelines">Fils</string>
     <string name="u_interface">Interface</string>
-    <string name="battery">Battery</string>
-    <string name="compose">Compose</string>
-    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
-    <string name="new_folder">Create a new Folder here</string>
-    <string name="folder_name">Enter the folder name</string>
-    <string name="valid_folder_name">Please enter a valid folder name</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
+    <string name="battery">Batterie</string>
+    <string name="compose">Rédaction</string>
+    <string name="upload_image_maximum_retry_times">Nombre maximum de tentatives lors du téléversement de médias</string>
+    <string name="new_folder">Créer un nouveau dossier ici</string>
+    <string name="folder_name">Entrez le nom du dossier</string>
+    <string name="valid_folder_name">Veuillez saisir un nom de dossier valide</string>
+    <string name="folder_exists">Ce dossier existe déjà.\n Veuillez fournir un autre nom pour le dossier</string>
+    <string name="select">Sélectionner</string>
+    <string name="default_directory">Dossier par défaut</string>
+    <string name="folder">Dossier</string>
+    <string name="create_folder">Créer un dossier</string>
+    <string name="custom_tabs_indication">Utilisez votre navigateur préféré intégré dans l\'application. En le désactivant, les liens seront ouverts via un navigateur externe</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
