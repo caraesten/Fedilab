@@ -354,9 +354,9 @@
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>4 MB</item>
+        <item>6 MB</item>
+        <item>8 MB</item>
     </string-array>
     <string name="set_led_colour">Imposta colore LED:</string>
     <string-array name="led_colours">
@@ -741,7 +741,7 @@
     <string name="toots_server">Toot (Server)</string>
     <string name="toots_client">Toot (Dispositivo)</string>
     <string name="modify">Modifica</string>
-    <string name="set_display_content_after_fetch_more">Visualizza nuovi toot sopra il pulsante \"Recupera altri\"</string>
+    <string name="set_display_content_after_fetch_more">Visualizza nuovi toot sopra il pulsante \"Recupera altri toot\"</string>
     <string name="settings_category_label_confirmations">Conferme</string>
     <string name="settings_category_label_timelines">Timeline</string>
     <string name="settings_category_label_notification">Servizio di notifica</string>
@@ -977,37 +977,37 @@
     <string name="reply_might_be_useless">L\'account al quale stai rispondendo potrebbe non vedere il tuo messaggio!</string>
     <string name="set_remember_position_indication">Se disabilitato, l\'app caricherà sempre gli ultimi stati</string>
     <string name="set_blur_sensitive_indication">Se disabilitato, i media con contenuti sensibili saranno nascosti con un pulsante</string>
-    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
-    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
-    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
-    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
-    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
-    <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
-    <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
+    <string name="set_long_press_media_indication">Salva media in dimensione originale tenendo premuto nelle anteprime</string>
+    <string name="set_display_timeline_in_list_indication">Aggiungi un pulsante con i 3 puntini in alto a destra per elencare tutte le etichette/istanze/liste</string>
+    <string name="set_display_news_from_fedilab_indication">Mostra un collegamento nel menu principale per un accesso rapido alla timeline che punta all\'etichetta #Fedilab</string>
+    <string name="live_notif_indication">Tieni una connessione aperta con le API del flusso per notifiche in tempo reale.</string>
+    <string name="set_keep_background_process_indication">Quando l\'app è in background, terrà aperta una connessione con le API del flusso. Disabilita se tieni alla tua batteria.</string>
+    <string name="set_enable_time_slot_indication">Durante l\'intervallo di tempo, l\'app invierà notifiche. Puoi invertire (es: silenziare) questo intervallo di tempo con il menù a destra.</string>
+    <string name="set_display_fedilab_features_button_indication">Mostra un pulsante di Fedilab sotto l\'immagine del profilo. Questa è una scorciatoia per accedere alle funzionalità dell\'app.</string>
+    <string name="set_quick_reply_indication">Consenti di rispondere direttamente nelle timeline sotto gli stati</string>
+    <string name="set_fit_preview_indication">Le anteprime non saranno ritagliate nelle timeline</string>
+    <string name="set_display_video_preview_indication">Consenti di riprodurre video incorporati direttamente nelle timeline</string>
+    <string name="set_display_content_after_fetch_more_indication">Consenti di invertire il verso di lettura degli stati che sono mostrati una volta cliccato il pulsante \"Recupera altri toot\"</string>
+    <string name="set_security_provider_indication">Questa opzione consente di supportare i recenti metodi di crittografia. É utile per vecchi dispositivi Android o se non riesci a connetterti alla tua istanza.</string>
+    <string name="set_video_mode_indication">Esclusivamente per video da Peertube. Cambia modalità se non riesci a riprodurli.</string>
+    <string name="featured_hashtags_indication">Queste etichette ti consentono di filtrare stati dai profili. Dovrai usare il menu contestuale per visualizzarli.</string>
+    <string name="set_capitalize_indication">Inserisci automaticamente un\'interruzione di linea dopo la citazione per mettere in maiuscolo la prima lettera</string>
+    <string name="settings_title_custom_sharing_indication">Consenti ai creatori di contenuti di condividere stati ai loro Feed RSS</string>
     <string name="timelines">Timeline</string>
     <string name="u_interface">Interfaccia</string>
     <string name="battery">Batteria</string>
-    <string name="compose">Compose</string>
-    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
-    <string name="new_folder">Create a new Folder here</string>
-    <string name="folder_name">Enter the folder name</string>
-    <string name="valid_folder_name">Please enter a valid folder name</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
-    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="compose">Composizione</string>
+    <string name="upload_image_maximum_retry_times">Massimo numero di tentativi per il caricamento dei media</string>
+    <string name="new_folder">Crea una nuova Cartella qui</string>
+    <string name="folder_name">Inserisci il nome della cartella</string>
+    <string name="valid_folder_name">Per favore inserisci un nome valido per la cartella</string>
+    <string name="folder_exists">Questa cartella esiste già.\n Per favore fornisci un altro nome per la cartella</string>
+    <string name="select">Seleziona</string>
+    <string name="default_directory">Cartella Predefinita</string>
+    <string name="folder">Cartella</string>
+    <string name="create_folder">Crea cartella</string>
+    <string name="custom_tabs_indication">Usa il tuo browser preferito all\'interno dell\'applicazione. Disabilitandolo, i collegamenti verranno aperti esternamente</string>
+    <string name="set_display_confirm">Mostrare un messaggio a comparsa dopo che un\'azione è stata completata (boost, mi piace, ecc.)?</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
