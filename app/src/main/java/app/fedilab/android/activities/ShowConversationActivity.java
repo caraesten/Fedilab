@@ -312,7 +312,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     public void addStatuses(Status status){
         if( status != null && status.getIn_reply_to_id() != null && this.statuses != null){
             int position = 0;
-            for(Status s: this.statuses){
+            for(Status s: new ArrayList<>(this.statuses)){
                 if(status.getIn_reply_to_id().equals(s.getId())){
                     this.statuses.add(position+1, status);
                     statusListAdapter.notifyItemInserted(position+1);
