@@ -302,7 +302,7 @@
     <string name="set_notif_follow_share">Notificar quando alguém der boost nos seus toots</string>
     <string name="set_notif_follow_add">Notificar quando alguém favoritar seus toots</string>
     <string name="set_notif_follow_mention">Notificar quando alguém te mencionar</string>
-    <string name="set_notif_follow_poll">Notificar quando uma enquete terminar</string>
+    <string name="set_notif_follow_poll">Notificar quando uma sondagem terminar</string>
     <string name="set_share_validation">Mostrar diálogo antes de dar boost</string>
     <string name="set_share_validation_fav">Mostrar diálogo antes de favoritar</string>
     <string name="set_wifi_only">Notificar somente em Wi-Fi</string>
@@ -316,7 +316,7 @@
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Trancar conta</string>
     <string name="set_save_changes">Salvar alterações</string>
-    <string name="set_header_picture_overlay">Escolher capa</string>
+    <string name="set_header_picture_overlay">Escolha uma imagem de cabeçalho</string>
     <string name="set_fit_preview">Ajustar prévias de imagens</string>
     <string name="set_automatically_split_toot">Transformar toot em sequência ao exceder o valor definido:</string>
     <string name="note_no_space">Você excedeu os 160 caracteres permitidos!</string>
@@ -488,9 +488,9 @@
     <string name="data_export_toots">Exportar toots para %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
     <string name="data_export_error">Algo deu errado enquanto exportava dados de %1$s</string>
-    <string name="data_export_error_simple">Algo deu errado ao exportar dados!</string>
+    <string name="data_export_error_simple">Algo correu mal ao exportar os dados!</string>
     <string name="data_import_success_simple">Dados foram importados!</string>
-    <string name="data_import_error_simple">Algo deu errado ao importar dados!</string>
+    <string name="data_import_error_simple">Algo correu mal ao importar os dados!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Tipo</string>
@@ -560,7 +560,7 @@
     <string name="action_list_add">Sem listas. Você pode criar uma tocando no botão \"+\".</string>
     <string name="action_remote_instance_add">Sem instâncias. Você pode seguir uma tocando no botão \"+\".</string>
     <string name="about_trunk">Quem seguir:</string>
-    <string name="about_trunk_action">API Trunk</string>
+    <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Desculpe, é impossível seguir</string>
     <string name="retrieve_remote_account">Carregando conta remota!</string>
     <string name="expand_image">Expandir automaticamente mídias ocultas</string>
@@ -569,7 +569,7 @@
     <string name="channel_notif_boost">Novo Boost</string>
     <string name="channel_notif_fav">Novo favorito</string>
     <string name="channel_notif_mention">Nova menção</string>
-    <string name="channel_notif_poll">Enquete terminada</string>
+    <string name="channel_notif_poll">Sondagem terminada</string>
     <string name="channel_notif_toot">Novo toot</string>
     <string name="channel_notif_backup">Backup de Toots</string>
     <string name="channel_notif_media">Baixar mídia</string>
@@ -617,11 +617,11 @@
     <string name="action_bug_report">Relatório de erros</string>
     <string name="no_mail_client">Não há nenhum cliente de email instalado.</string>
     <string name="bug_report_mail">Enviar relatório de erros</string>
-    <string name="account_id_clipbloard">O nome de usuário foi copiado para a área de transferência!</string>
+    <string name="account_id_clipbloard">O nome de utilizador foi copiado para a área de transferência!</string>
     <string name="settings_title_battery">Otimização da bateria</string>
     <string name="set_change_locale">Mudar o idioma</string>
     <string name="default_language">Idioma padrão</string>
-    <string name="truncate_long_toots">Delimitar toots longos</string>
+    <string name="truncate_long_toots">Cortar toots longos</string>
     <string name="set_truncate_toot">Delimitar toots por nº de linhas, 0 para desativar.</string>
     <string name="display_toot_truncate">Mostrar mais</string>
     <string name="hide_toot_truncate">Mostrar menos</string>
