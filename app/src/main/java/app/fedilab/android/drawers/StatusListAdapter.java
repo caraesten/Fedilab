@@ -1893,8 +1893,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     fullDate = fullDate_tmp.substring(0, 1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
             } else {
-                holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-                Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+                if( status.getCreated_at() != null) {
+                    holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                    Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+                }
             }
 
             if (status.getReblog() != null) {
@@ -2031,7 +2033,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean blur_sensitive = sharedpreferences.getBoolean(Helper.SET_BLUR_SENSITIVE, true);
 
             if (status.getReblog() == null) {
-                if (status.getMedia_attachments().size() < 1) {
+                if (status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1) {
                     holder.status_horizontal_document_container.setVisibility(View.GONE);
                     holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
