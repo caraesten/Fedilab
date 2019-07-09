@@ -1270,6 +1270,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
         String target = account.getId();
+        //IF action is unfollow or mute, sends an intent to remove statuses
+        if( statusAction == API.StatusAction.UNFOLLOW || statusAction == API.StatusAction.MUTE){
+            Bundle b = new Bundle();
+            b.putString("receive_action", targetedId);
+            Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+            intentBC.putExtras(b);
+        }
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             target = account.getAcct();
         new RetrieveRelationshipAsyncTask(getApplicationContext(), target,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
