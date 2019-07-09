@@ -96,6 +96,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.varunest.sparkbutton.SparkButton;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -3735,11 +3737,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                     Toasty.success(context, context.getString(R.string.timed_mute_date, status.getAccount().getAcct(), Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                     alertDialog.dismiss();
-                    notifyDataSetChanged();
+                    send_delete_statuses(targeted_id);
                 }
             }
         });
         alertDialog.show();
+    }
+
+    private void send_delete_statuses(String targetedId){
+        //Delete in the current timeline
+        List<Status> statusesToRemove = new ArrayList<>();
+        for(Status status: statuses){
+            if( status.getAccount().getId().equals(targetedId))
+                statusesToRemove.add(status);
+        }
+        statuses.removeAll(statusesToRemove);
+        statusListAdapter.notifyDataSetChanged();
+        //Send an intent to delete in every timelines
+        Bundle b = new Bundle();
+        b.putString("receive_action", targetedId);
+        Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+        intentBC.putExtras(b);
     }
 
     private void scheduleBoost(Status status){

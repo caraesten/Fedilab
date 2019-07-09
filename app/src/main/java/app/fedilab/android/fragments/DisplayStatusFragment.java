@@ -249,8 +249,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
+                    String delete_statuses_from = b.getString("delete_statuses_for_id", null);
                     if( status != null && statusListAdapter != null) {
                         statusListAdapter.notifyStatusWithActionChanged(status);
+                    }else if( delete_statuses_from != null){
+                        List<Status> statusesToRemove = new ArrayList<>();
+                        for(Status status_temp: statuses){
+                            if( status_temp.getAccount().getId().equals(delete_statuses_from))
+                                statusesToRemove.add(status);
+                        }
+                        statuses.removeAll(statusesToRemove);
+                        statusListAdapter.notifyDataSetChanged();
                     }
                 }
             };
