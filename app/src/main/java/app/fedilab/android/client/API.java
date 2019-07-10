@@ -650,6 +650,7 @@ public class API {
                 setDefaultError(e);
             }
         } catch (IOException e) {
+            instanceNodeInfo.setConnectionError(true);
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -663,6 +664,7 @@ public class API {
                 instanceNodeInfo.setVersion(jsonObject.getString("version"));
                 instanceNodeInfo.setOpenRegistrations(true);
             } catch (IOException e1) {
+                instanceNodeInfo.setConnectionError(true);
                 e1.printStackTrace();
             } catch (NoSuchAlgorithmException e1) {
                 e1.printStackTrace();

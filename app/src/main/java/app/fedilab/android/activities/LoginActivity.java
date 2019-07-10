@@ -337,6 +337,8 @@ public class LoginActivity extends BaseActivity {
                                                 instance_chosen.setText(instance);
                                             }
                                         }
+                                    }else if(instanceNodeInfo != null && instanceNodeInfo.isConnectionError()){
+                                        Toasty.error(LoginActivity.this,getString(R.string.connect_error), Toast.LENGTH_LONG).show();
                                     }else{
                                         Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
                                     }
