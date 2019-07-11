@@ -247,7 +247,7 @@
     <string name="pinned_toots">Fastgjort</string>
     <!-- TOAST -->
     <string name="client_error">Kan ikke hente klient-ID!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Kan ikke tilslutte instansdomæne!</string>
     <string name="no_internet">Ingen Internetforbindelse!</string>
     <string name="toast_block">Kontoen blev blokeret!</string>
     <string name="toast_unblock">Kontoen er ikke længere blokeret!</string>
