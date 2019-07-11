@@ -255,6 +255,7 @@
     <string name="pinned_toots">Прикріплено</string>
     <!-- TOAST -->
     <string name="client_error">Не вдалося отримати ідентифікатор клієнта!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Немає з\'єднання з Інтернетом!</string>
     <string name="toast_block">Обліковий запис заблокований!</string>
     <string name="toast_unblock">Обліковий запис більше не заблоковано!</string>
