@@ -786,7 +786,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
         if( !isConsoleMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
-        else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
+        else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, statuses.get(position), timedMute, type))
             return HIDDEN_STATUS;
         else {
             if( isCompactMode)
@@ -1358,7 +1358,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 });
 
-                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS){
                     holder.custom_feature_timed_mute.setVisibility(View.GONE);
                     holder.custom_feature_schedule.setVisibility(View.GONE);
                     holder.custom_feature_cache.setVisibility(View.GONE);
@@ -1480,7 +1480,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
                             if(  holder.getAdapterPosition() == position)
@@ -1505,7 +1505,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
                             if(  holder.getAdapterPosition() == position)
@@ -1530,7 +1530,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
                             if(  holder.getAdapterPosition() == position)
@@ -2288,7 +2288,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
-            if( (isAdmin || isModerator) && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+            if( (isAdmin || isModerator) && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS){
                 holder.status_remove.setVisibility(View.VISIBLE);
             }else {
                 holder.status_remove.setVisibility(View.GONE);
@@ -2465,7 +2465,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
 
-                    if (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                    if (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
 
                         if( context instanceof BaseMainActivity){
                             FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
@@ -2833,7 +2833,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
-            if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+            if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS)
                 holder.status_more.setVisibility(View.GONE);
 
             final View attached = holder.status_more;
@@ -3207,7 +3207,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
-            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

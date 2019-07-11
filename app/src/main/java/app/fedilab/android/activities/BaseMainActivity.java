@@ -1119,7 +1119,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
         if( news != null){
-            boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, false);
+            boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
             if( ! display_news ){
                 news.setVisible(false);
             }

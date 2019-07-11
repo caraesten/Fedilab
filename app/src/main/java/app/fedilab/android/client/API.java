@@ -2019,63 +2019,34 @@ public class API {
      */
     public APIResponse getNews(String max_id){
 
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
+        HashMap<String, String> params = null;
+        if (max_id != null) {
+            params = new HashMap<>();
             params.put("max_id", max_id);
-
-        params.put("exclude_replies", "true");
-        params.put("reblogs","false");
-        params.put("limit", "40");
-        params.put("tagged", "Fedilab");
-        statuses = new ArrayList<>();
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = Helper.getLiveInstance(context);
-
-        String accountID = sharedpreferences.getString(Helper.NEWS_ACCOUNT_ID+userId+instance, null);
-        if( accountID == null){
-            HashMap<String, String> params2 = new HashMap<>();
-            try {
-                params2.put("q", URLEncoder.encode("https://framapiaf.org/@fedilab", "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params2.put("q", "https://framapiaf.org/@fedilab");
-            }
-            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            try {
-                String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params2, prefKeyOauthTokenT);
-                Results res = parseResultsResponse(new JSONObject(response));
-                if( res != null && res.getAccounts() != null && res.getAccounts().size() > 0 ){
-                    accountID = res.getAccounts().get(0).getId();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.NEWS_ACCOUNT_ID+userId+instance, accountID);
-                    editor.apply();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
+
+        statuses = new ArrayList<>();
+        apiResponse = new APIResponse();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountID)), 60, params, prefKeyOauthTokenT);
-            statuses = parseStatuses(context, new JSONArray(response));
+            String response = httpsConnection.get("https://framapiaf.org/api/v1/timelines/tag/fedilab", 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
+            List<Status> tmp_status = parseStatuses(context, new JSONArray(response));
+            if( tmp_status != null && tmp_status.size() > 0){
+                for(Status status: tmp_status){
+                    if( status.getAccount().getAcct().equals("fedilab")){
+                        statuses.add(status);
+                    }
+                }
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
