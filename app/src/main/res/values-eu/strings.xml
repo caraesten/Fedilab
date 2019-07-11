@@ -247,6 +247,7 @@
     <string name="pinned_toots">Finkatuta</string>
     <!-- TOAST -->
     <string name="client_error">Ezin izan da bezero id-a eskuratu!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Ez dago Internet konexiorik!</string>
     <string name="toast_block">Kontua blokeatua izan da!</string>
     <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
