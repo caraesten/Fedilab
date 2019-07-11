@@ -247,6 +247,7 @@
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">අන්තර්ජාල සබඳතාවක් නොමැත!</string>
     <string name="toast_block">ගිණුම අවහිර කරන ලදී!</string>
     <string name="toast_unblock">ගිණුම තවදුරටත් අවහිර කර නොමැත!</string>
