@@ -247,6 +247,7 @@
     <string name="pinned_toots">जड़े हुए</string>
     <!-- TOAST -->
     <string name="client_error">क्लाइंट आईडी नहीं मिल सका!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
     <string name="toast_block">इस खाते को अवरुद्ध कर दिया!</string>
     <string name="toast_unblock">खाता अब अवरुद्ध नहीं है!</string>
