@@ -247,6 +247,7 @@
     <string name="pinned_toots">Fastnålad</string>
     <!-- TOAST -->
     <string name="client_error">Kan inte få tag på klientid!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Ingen internetuppkoppling!</string>
     <string name="toast_block">Kontot är spärrat!</string>
     <string name="toast_unblock">Kontot är inte längre spärrat!</string>
