@@ -247,6 +247,7 @@
     <string name="pinned_toots">In evidenza</string>
     <!-- TOAST -->
     <string name="client_error">Impossibile ottenere il client id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Nessuna connessione ad internet!</string>
     <string name="toast_block">L\'account è stato bloccato!</string>
     <string name="toast_unblock">Questo account non è più bloccato!</string>
