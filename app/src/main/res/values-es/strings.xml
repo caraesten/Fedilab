@@ -247,6 +247,7 @@
     <string name="pinned_toots">Fijado</string>
     <!-- TOAST -->
     <string name="client_error">¡No se puede obtener la identificación del cliente!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">¡Sin conexión a Internet!</string>
     <string name="toast_block">¡La cuenta ha sido bloqueada!</string>
     <string name="toast_unblock">¡La cuenta ya no está bloqueada!</string>
