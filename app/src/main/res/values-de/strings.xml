@@ -247,7 +247,7 @@
     <string name="pinned_toots">Angeheftet</string>
     <!-- TOAST -->
     <string name="client_error">Fehler beim Laden der Client ID!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Verbinden zur Instanzdomain fehlgeschlagen!</string>
     <string name="no_internet">Keine Internetverbindung!</string>
     <string name="toast_block">Nutzer wurde blockiert!</string>
     <string name="toast_unblock">Der Nutzer wird nicht länger blockiert!</string>
