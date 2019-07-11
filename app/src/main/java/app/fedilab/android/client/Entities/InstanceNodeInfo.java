@@ -19,6 +19,7 @@ public class InstanceNodeInfo {
     private String name;
     private String version;
     private boolean openRegistrations;
+    private boolean connectionError;
 
     public String getName() {
         return name;
@@ -42,5 +43,11 @@ public class InstanceNodeInfo {
 
     public void setOpenRegistrations(boolean openRegistrations) {
         this.openRegistrations = openRegistrations;
+    }
+
+    public boolean isConnectionError() { return connectionError; }
+
+    public void setConnectionError(boolean connectionError) {
+        this.connectionError = connectionError;
     }
 }
