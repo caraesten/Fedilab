@@ -263,6 +263,7 @@
     <string name="pinned_toots">التبويقات المُثبَّتة</string>
     <!-- TOAST -->
     <string name="client_error">تعذرت عملية جلب معرف العميل!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">لا يوجد اتصال بشبكة الإنترنت!</string>
     <string name="toast_block">تم حجب الحساب!</string>
     <string name="toast_unblock">لقد تم إلغاء حظر هذا الحساب!</string>
