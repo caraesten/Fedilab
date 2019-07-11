@@ -263,6 +263,7 @@
     <string name="pinned_toots">Wedi eu pinio</string>
     <!-- TOAST -->
     <string name="client_error">Methwyd i gael gafael ar id y cleient!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Dim cyswllt i\'r rhyngrwyd!</string>
     <string name="toast_block">Blociwyd y cyfrif!</string>
     <string name="toast_unblock">Nid yw\'r cyfrif wedi ei flocio mwyach!</string>
