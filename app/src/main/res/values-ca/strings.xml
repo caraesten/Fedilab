@@ -247,6 +247,7 @@
     <string name="pinned_toots">Fixat</string>
     <!-- TOAST -->
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">No hi ha connexió a internet!</string>
     <string name="toast_block">El compte s\'ha blocat!</string>
     <string name="toast_unblock">El compte ja no està blocat!</string>
