@@ -247,6 +247,7 @@
     <string name="pinned_toots">Մեխած</string>
     <!-- TOAST -->
     <string name="client_error">Հաճախորդի id-ն հնարավոր չէ ստանալ</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Կապ չկա</string>
     <string name="toast_block">Հաշիվն արգելափակված է</string>
     <string name="toast_unblock">Հաշիվն այլևս արգելափակված չէ</string>
