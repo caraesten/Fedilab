@@ -255,6 +255,7 @@
     <string name="pinned_toots">Przypięte</string>
     <!-- TOAST -->
     <string name="client_error">Nie można pobrać identyfikatora klienta!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Brak połączenia z Internetem!</string>
     <string name="toast_block">Konto zostało zablokowane!</string>
     <string name="toast_unblock">Konto nie jest już zablokowane!</string>
