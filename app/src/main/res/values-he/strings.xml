@@ -255,6 +255,7 @@
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">No Internet connection!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
