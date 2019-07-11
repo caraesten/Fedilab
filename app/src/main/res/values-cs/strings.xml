@@ -255,6 +255,7 @@
     <string name="pinned_toots">Připnuto</string>
     <!-- TOAST -->
     <string name="client_error">Nelze načíst klientské id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Nejste připojeni k internetu!</string>
     <string name="toast_block">Tento účet je zablokován!</string>
     <string name="toast_unblock">Účet není nadále blokován!</string>
