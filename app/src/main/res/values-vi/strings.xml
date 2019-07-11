@@ -245,6 +245,7 @@ và %d toots khác để khám phá</item>
     <string name="pinned_toots">Đã ghim</string>
     <!-- TOAST -->
     <string name="client_error">Không thể lấy id khách hàng!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Không có kết nối Internet!</string>
     <string name="toast_block">Tài khoản đã bị chặn!</string>
     <string name="toast_unblock">Tài khoản không còn bị chặn!</string>
