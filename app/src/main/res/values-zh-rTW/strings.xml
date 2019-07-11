@@ -243,6 +243,7 @@
     <string name="pinned_toots">已釘選</string>
     <!-- TOAST -->
     <string name="client_error">無法取得客戶端 id！</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">沒有網路連線！</string>
     <string name="toast_block">帳號被封鎖！</string>
     <string name="toast_unblock">帳號不再被封鎖！</string>
