@@ -255,6 +255,7 @@
     <string name="pinned_toots">Pripeto</string>
     <!-- TOAST -->
     <string name="client_error">Ni mogoče pridobiti ID odjemalca.</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Ni internetne povezave.</string>
     <string name="toast_block">Račun je blokiran.</string>
     <string name="toast_unblock">Račun ni več blokiran.</string>
