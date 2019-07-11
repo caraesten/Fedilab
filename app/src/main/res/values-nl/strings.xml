@@ -247,6 +247,7 @@
     <string name="pinned_toots">Vastgezet</string>
     <!-- TOAST -->
     <string name="client_error">Niet in staat om client-id te verkrijgen!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Geen internetverbinding!</string>
     <string name="toast_block">Account is geblokkeerd!</string>
     <string name="toast_unblock">Account is gedeblokkeerd!</string>
