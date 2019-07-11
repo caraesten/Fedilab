@@ -247,6 +247,7 @@
     <string name="pinned_toots">Sabitlenmiş</string>
     <!-- TOAST -->
     <string name="client_error">Müşteri kimliği alınamıyor!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">İnternet bağlantısı yok!</string>
     <string name="toast_block">Hesap engellenmiş!</string>
     <string name="toast_unblock">Bu hesap artık engelli değil!</string>
