@@ -251,6 +251,7 @@
     <string name="pinned_toots">Fixat</string>
     <!-- TOAST -->
     <string name="client_error">Imposibil de obținut Id-ul clientului!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Nu există conexiune la Internet!</string>
     <string name="toast_block">Contul a fost blocat!</string>
     <string name="toast_unblock">Contul nu mai este blocat!</string>
