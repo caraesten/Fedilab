@@ -243,6 +243,7 @@
     <string name="pinned_toots">ピン留め</string>
     <!-- TOAST -->
     <string name="client_error">クライアントIDを取得できませんでした。</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">インターネット接続がありません！</string>
     <string name="toast_block">アカウントがブロックされました！</string>
     <string name="toast_unblock">アカウントはブロックされていません！</string>
