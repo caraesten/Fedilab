@@ -247,6 +247,7 @@
     <string name="pinned_toots">Καρφιτσωμένα</string>
     <!-- TOAST -->
     <string name="client_error">Αδυναμία λήψης του αριθμού ταυτότητας (id) του πελάτη.</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Καμία σύνδεση στο διαδίκτυο.</string>
     <string name="toast_block">Ο λογαριασμός φράχτηκε.</string>
     <string name="toast_unblock">Ο λογαριασμός δεν είναι πλέον φραγμένος.</string>
