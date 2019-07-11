@@ -251,6 +251,7 @@
     <string name="pinned_toots">Прикачени тутови</string>
     <!-- TOAST -->
     <string name="client_error">Није могуће добити id клијента!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Не постоји веза са интернетом!</string>
     <string name="toast_block">Налог блокиран!</string>
     <string name="toast_unblock">Налог није више блокиран!</string>
