@@ -584,7 +584,7 @@ public class Status implements Parcelable{
             String beforemodification;
             String urlText = matcherALink.group(3);
 
-            urlText = urlText.substring(2);
+            urlText = urlText.substring(1);
             beforemodification = urlText;
             if( !beforemodification.startsWith("http")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -649,13 +649,15 @@ public class Status implements Parcelable{
                 key = new SpannableString(Html.fromHtml(matcher.group(3))).toString();
             key = key.substring(1);
 
-            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
+            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(2).contains("search?tag=")) {
+                String url;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    targetedURL.put(key, Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY).toString());
+                    url = Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY).toString();
                 }
                 else {
-                    targetedURL.put(key, Html.fromHtml(matcher.group(2)).toString());
+                    url = Html.fromHtml(matcher.group(2)).toString();
                 }
+                targetedURL.put(key, url);
             }else if( key.startsWith("@") ){
                 String acct;
                 String url;
