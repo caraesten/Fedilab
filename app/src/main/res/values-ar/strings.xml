@@ -371,9 +371,9 @@
         <item>512 ك.ب</item>
         <item>1 م.ب</item>
         <item>2 م.ب</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>4 م.ب</item>
+        <item>6 م.ب</item>
+        <item>8 م.ب</item>
     </string-array>
     <string name="set_led_colour">اختيار لون الإشعار الضوئي:</string>
     <string-array name="led_colours">
@@ -939,7 +939,7 @@
     <string name="reconnect_account">أعد توصيل الحساب</string>
     <string name="reconnect_account_message">لقد فشل التطبيق في الوصول إلى ميزات الإشراف. قد تحتاج إلى إعادة توصيل الحساب قصد الحصول على التصريحات اللازمة لذلك.</string>
     <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
+    <string name="resolved">تم حله</string>
     <string name="remote">عن بعد</string>
     <string name="active">نشط</string>
     <string name="pending">معلّق</string>
@@ -950,13 +950,13 @@
     <string name="email_status">حالة البريد الإلكتروني</string>
     <string name="login_status">حالة الولوج</string>
     <string name="joined">انضم</string>
-    <string name="recent_ip">Most recent IP</string>
+    <string name="recent_ip">أحدث عنوان إيبي</string>
     <string name="warn">تحذير</string>
     <string name="disable">تعطيل</string>
     <string name="silence">اكتمه</string>
-    <string name="email_user">Notify the user per e-mail</string>
-    <string name="perform_action">Perform action</string>
-    <string name="custom_warning">Custom warning</string>
+    <string name="email_user">أخبر المستخدم عبر البريد الإلكتروني</string>
+    <string name="perform_action">نفّذ الإجراء</string>
+    <string name="custom_warning">تحذير مخصص</string>
     <string name="user">المستخدم</string>
     <string name="moderator">المُشرف</string>
     <string name="administrator">المدير</string>
@@ -978,18 +978,18 @@
     <string name="set_display_admin_menu">أظهر اللوح الإداري</string>
     <string name="set_display_admin_toot">اعرض الميزات الإدارية على المنشورات</string>
     <string name="allow">سماح</string>
-    <string name="account_approved">The account is approved!</string>
-    <string name="account_rejected">The account is rejected!</string>
+    <string name="account_approved">تتم الموافقة على الحساب!</string>
+    <string name="account_rejected">تم رفض الحساب!</string>
     <string name="assign_to_me">Assign to me</string>
     <string name="unassign">Unassign</string>
-    <string name="mark_resolved">Mark as resolved</string>
-    <string name="mark_unresolved">Mark as unresolved</string>
-    <string name="toast_empty_content">Empty content!</string>
-    <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
-    <string name="audio">The application needs to access audio recording</string>
+    <string name="mark_resolved">اعتبار الشكوى كمحلولة</string>
+    <string name="mark_unresolved">اعتبار الشكوى كغير محلولة</string>
+    <string name="toast_empty_content">محتوى فارغ!</string>
+    <string name="set_display_fedilab_features_button">اعرض زر ميزات Fedilab</string>
+    <string name="audio">يحتاج التطبيق إلى الوصول إلى تسجيل الصوت</string>
     <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
-    <string name="set_quick_reply">Enable quick reply</string>
+    <string name="voice_message">رسالة صوتية</string>
+    <string name="set_quick_reply">تمكين الرد السريع</string>
     <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
     <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
     <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
@@ -1001,7 +1001,7 @@
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_fit_preview_indication">لتعطيل اقتصاص المعاينات في الخطوط الزمنية</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
@@ -1009,19 +1009,19 @@
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
-    <string name="timelines">Timelines</string>
-    <string name="u_interface">Interface</string>
-    <string name="battery">Battery</string>
-    <string name="compose">Compose</string>
+    <string name="timelines">الخيوط</string>
+    <string name="u_interface">الواجهة</string>
+    <string name="battery">البطارية</string>
+    <string name="compose">التحرير</string>
     <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
-    <string name="new_folder">Create a new Folder here</string>
-    <string name="folder_name">Enter the folder name</string>
-    <string name="valid_folder_name">Please enter a valid folder name</string>
-    <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
+    <string name="new_folder">إنشاء مجلد جديد هنا</string>
+    <string name="folder_name">أدخل اسم المجلد</string>
+    <string name="valid_folder_name">الرجاء ادخل اسم مجلد صحيح</string>
+    <string name="folder_exists">هذا المجلد موجود بالفعل.\n يرجى إدخال اسم آخر للمجلد</string>
     <string name="select">Select</string>
-    <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
+    <string name="default_directory">المجلد الافتراضي</string>
+    <string name="folder">المجلد</string>
+    <string name="create_folder">إنشاء مجلد</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <plurals name="number_of_vote">
