@@ -55,7 +55,7 @@
     <string name="validate">Validate</string>
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
-    <string name="shared_via">Shared via Mastalab</string>
+    <string name="shared_via">Shared via Fedilab</string>
     <string name="replies">Replies</string>
     <string name="username">User name</string>
     <string name="drafts">Drafts</string>
@@ -192,7 +192,6 @@
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
