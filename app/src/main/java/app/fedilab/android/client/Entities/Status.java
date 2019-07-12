@@ -31,6 +31,7 @@ import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -577,6 +578,7 @@ public class Status implements Parcelable{
 
         Pattern aLink = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
+        int count = 0;
         while (matcherALink.find()){
             String beforemodification;
             String urlText = matcherALink.group(2);
@@ -592,7 +594,8 @@ public class Status implements Parcelable{
                     urlText = urlText.replace("http://", "").replace("https://", "").replace("www.", "");
                     if (urlText.length() > 31) {
                         urlText = urlText.substring(0, 30);
-                        urlText += '…';
+                        urlText += "…"+count;
+                        count++;
                     }
                 }
                 content = content.replace(beforemodification, urlText);
@@ -607,7 +610,6 @@ public class Status implements Parcelable{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringCW = new SpannableString(Html.fromHtml(spoilerText, Html.FROM_HTML_MODE_LEGACY));
         else
-            //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(spoilerText));
         if( spannableStringContent.length() > 0)
             status.setContentSpan(treatment(context, spannableStringContent, status));
@@ -629,7 +631,6 @@ public class Status implements Parcelable{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
         else
-            //noinspection deprecation
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
 
         status.setContentSpanTranslated(treatment(context, spannableStringTranslated, status));
@@ -866,7 +867,6 @@ public class Status implements Parcelable{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
             else
-                //noinspection deprecation
                 key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
             key = key.substring(1);
             if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
@@ -911,7 +911,6 @@ public class Status implements Parcelable{
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
             final String url = spannableString.toString().substring(matcherALink.start(1), matcherALink.end(1));
-
             if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
@@ -941,7 +940,6 @@ public class Status implements Parcelable{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
         else
-            //noinspection deprecation
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
 
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
@@ -1014,62 +1012,67 @@ public class Status implements Parcelable{
                 String url = (String) pair.getValue();
                 if (spannableStringT.toString().toLowerCase().contains(key.toLowerCase())) {
                     //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                    int startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase());
+                    int endPosition = startPosition + key.length();
+                    if( key.contains("…") && !key.endsWith("…")) {
+                        key = key.split("…")[0]+"…";
+                        SpannableStringBuilder ssb = new SpannableStringBuilder();
+                        ssb.append(spannableStringT, 0, spannableStringT.length());
+                        ssb.replace(startPosition,endPosition, key);
+                        spannableStringT = SpannableString.valueOf(ssb);
+                        endPosition = startPosition + key.length();
+                    }
+                    if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
+                        spannableStringT.setSpan(new ClickableSpan() {
+                                     @Override
+                                     public void onClick(@NonNull View textView) {
+                                         String finalUrl = url;
+                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                         Matcher matcherLink = link.matcher(url);
+                                         if( matcherLink.find()){
+                                             if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
+                                                 CrossActions.doCrossConversation(context, finalUrl);
+                                             }else{//It's an account
+                                                 Account account = status.getAccount();
+                                                 account.setAcct(matcherLink.group(2));
+                                                 account.setInstance(matcherLink.group(1));
+                                                 CrossActions.doCrossProfile(context, account);
+                                             }
 
-                        int endPosition = startPosition + key.length();
+                                         }else  {
+                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                             matcherLink = link.matcher(url);
+                                             if( matcherLink.find()){ //Peertubee video
+                                                 Intent intent = new Intent(context, PeertubeActivity.class);
+                                                 Bundle b = new Bundle();
+                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                                                 b.putString("peertubeLinkToFetch", url);
+                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
+                                                 b.putString("video_id", matcherLink.group(2));
+                                                 intent.putExtras(b);
+                                                 context.startActivity(intent);
+                                             }else {
+                                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                                     finalUrl = "http://" + url;
+                                                 Helper.openBrowser(context, finalUrl);
+                                             }
 
-                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
-                            spannableStringT.setSpan(new ClickableSpan() {
-                                 @Override
-                                 public void onClick(@NonNull View textView) {
-                                     String finalUrl = url;
-                                     Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                                     Matcher matcherLink = link.matcher(url);
-                                     if( matcherLink.find()){
-                                        if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
-                                            CrossActions.doCrossConversation(context, finalUrl);
-                                        }else{//It's an account
-                                            Account account = status.getAccount();
-                                            account.setAcct(matcherLink.group(2));
-                                            account.setInstance(matcherLink.group(1));
-                                            CrossActions.doCrossProfile(context, account);
-                                        }
-
-                                     }else  {
-                                         link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                                         matcherLink = link.matcher(url);
-                                         if( matcherLink.find()){ //Peertubee video
-                                             Intent intent = new Intent(context, PeertubeActivity.class);
-                                             Bundle b = new Bundle();
-                                             String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                                             b.putString("peertubeLinkToFetch", url);
-                                             b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
-                                             b.putString("video_id", matcherLink.group(2));
-                                             intent.putExtras(b);
-                                             context.startActivity(intent);
-                                         }else {
-                                             if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                                 finalUrl = "http://" + url;
-                                             Helper.openBrowser(context, finalUrl);
                                          }
-
                                      }
-                                 }
-                                 @Override
-                                 public void updateDrawState(@NonNull TextPaint ds) {
-                                     super.updateDrawState(ds);
-                                     ds.setUnderlineText(false);
-                                     if (theme == THEME_DARK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                     else if (theme == THEME_BLACK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                     else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                 }
-                             },
-                                    startPosition, endPosition,
-                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        }
+                                     @Override
+                                     public void updateDrawState(@NonNull TextPaint ds) {
+                                         super.updateDrawState(ds);
+                                         ds.setUnderlineText(false);
+                                         if (theme == THEME_DARK)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                         else if (theme == THEME_BLACK)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                         else if (theme == THEME_LIGHT)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                     }
+                                 },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
                 it.remove();
