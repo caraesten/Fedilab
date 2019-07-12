@@ -19,18 +19,21 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
@@ -1457,12 +1460,14 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         }else if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getDataString();
-            intent.replaceExtras(new Bundle());
-            intent.setAction("");
-            intent.setData(null);
-            intent.setFlags(0);
-            if( url == null)
+
+            if( url == null) {
+                intent.replaceExtras(new Bundle());
+                intent.setAction("");
+                intent.setData(null);
+                intent.setFlags(0);
                 return;
+            }
             Matcher matcher;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
                 matcher = Patterns.WEB_URL.matcher(url);
@@ -1472,15 +1477,48 @@ public abstract class BaseMainActivity extends BaseActivity
             while (matcher.find()){
                 isUrl = true;
             }
-            if(!isUrl)
+            if(!isUrl) {
+                intent.replaceExtras(new Bundle());
+                intent.setAction("");
+                intent.setData(null);
+                intent.setFlags(0);
                 return;
+            }
             //Here we know that the intent contains a valid URL
-            new RetrieveRemoteDataAsyncTask(BaseMainActivity.this, url, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if( !url.contains("medium.com")) {
+                new RetrieveRemoteDataAsyncTask(BaseMainActivity.this, url, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else{
+                forwardToBrowser(intent);
+            }
         }
         intent.replaceExtras(new Bundle());
         intent.setAction("");
         intent.setData(null);
         intent.setFlags(0);
+    }
+
+    private void forwardToBrowser(Intent i) {
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(i.getData(), i.getType());
+        List<ResolveInfo> activities = getPackageManager().queryIntentActivities(intent, 0);
+        ArrayList<Intent> targetIntents = new ArrayList<Intent>();
+        String thisPackageName = getApplicationContext().getPackageName();
+        for (ResolveInfo currentInfo : activities) {
+            String packageName = currentInfo.activityInfo.packageName;
+            if (!thisPackageName.equals(packageName)) {
+                Intent targetIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                targetIntent.setDataAndType(intent.getData(),intent.getType());
+                targetIntent.setPackage(intent.getPackage());
+                targetIntent.setComponent(new ComponentName(packageName, currentInfo.activityInfo.name));
+                targetIntents.add(targetIntent);
+            }
+        }
+        if(targetIntents.size() > 0) {
+            Intent chooserIntent = Intent.createChooser(targetIntents.remove(0), getString(R.string.open_with));
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetIntents.toArray(new Parcelable[] {}));
+            startActivity(chooserIntent);
+        }
     }
 
     @Override

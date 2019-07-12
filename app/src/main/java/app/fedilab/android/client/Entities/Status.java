@@ -38,6 +38,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -49,6 +50,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -597,8 +600,11 @@ public class Status implements Parcelable{
                         urlText += "…"+count;
                         count++;
                     }
+                }else if( urlText.startsWith("@")){
+                    urlText += "|"+count;
+                    count++;
                 }
-                content = content.replace(beforemodification, urlText);
+                content = content.replaceFirst(beforemodification, urlText);
             }
         }
         spannableStringContent = new SpannableString(content);
@@ -620,6 +626,278 @@ public class Status implements Parcelable{
         status.setClickable(true);
     }
 
+
+    private static SpannableString treatment(final Context context, SpannableString spannableString, Status status){
+
+        URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
+        for(URLSpan span : urls)
+            spannableString.removeSpan(span);
+        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+        Matcher matcher;
+        Pattern linkPattern = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        matcher = linkPattern.matcher(spannableString);
+        HashMap<String, String> targetedURL = new HashMap<>();
+        HashMap<String, Account> accountsMentionUnknown = new HashMap<>();
+        while (matcher.find()){
+            String key;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
+            else
+                key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
+            key = key.substring(1);
+            Log.v(Helper.TAG,"key! " + key);
+            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    targetedURL.put(key, Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString());
+                }
+                else {
+                    targetedURL.put(key, Html.fromHtml(matcher.group(1)).toString());
+                }
+            }else if( key.startsWith("@") ){
+                String acct;
+                String url;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    url = Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString();
+                }
+                else {
+                    url = Html.fromHtml(matcher.group(1)).toString();
+                }
+
+                URI uri;
+                String instance = null;
+                try {
+                    uri = new URI(url);
+                    instance = uri.getHost();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                acct = key.substring(1).split("\\|")[0];
+                Account account = new Account();
+                account.setAcct(acct);
+                account.setInstance(instance);
+                account.setUrl(url);
+                String accountId = null;
+                for(Mention mention: mentions){
+                    String[] accountMentionAcct = mention.getAcct().split("@");
+                    //Different isntance
+                    if( accountMentionAcct.length > 1){
+                        if (account.getUrl() != null && mention.getAcct().equals(account.getAcct()+"@"+account.getInstance())) {
+                            accountId = mention.getId();
+                            break;
+                        }
+                    }else{
+                        if (account.getUrl() != null && mention.getAcct().equals(account.getAcct())) {
+                            accountId = mention.getId();
+                            break;
+                        }
+                    }
+                }
+                if( accountId != null){
+                    account.setId(accountId);
+                }
+                accountsMentionUnknown.put(key, account);
+            }
+        }
+        SpannableString spannableStringT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
+        else
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
+
+        URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
+        for (URLSpan span : spans) {
+            spannableStringT.removeSpan(span);
+        }
+
+        matcher = Helper.twitterPattern.matcher(spannableStringT);
+        while (matcher.find()){
+            int matchStart = matcher.start(2);
+            int matchEnd = matcher.end();
+            final String twittername = matcher.group(2);
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View textView) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
+        if( accountsMentionUnknown.size() > 0 ) {
+            Iterator it = accountsMentionUnknown.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String) pair.getKey();
+                Account account = (Account) pair.getValue();
+                String targetedAccount = "@" + account.getAcct();
+                if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
+
+                    int startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase());
+                    int endPosition = startPosition + key.length();
+                    if( key.contains("|")) {
+                        key = key.split("\\|")[0];
+                        SpannableStringBuilder ssb = new SpannableStringBuilder();
+                        ssb.append(spannableStringT, 0, spannableStringT.length());
+                        ssb.replace(startPosition,endPosition, key);
+                        spannableStringT = SpannableString.valueOf(ssb);
+                        endPosition = startPosition + key.length();
+                    }
+                    //Accounts can be mentioned several times so we have to loop
+                    if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                        spannableStringT.setSpan(new ClickableSpan() {
+                                                     @Override
+                                                     public void onClick(@NonNull View textView) {
+                                                         if( account.getId() == null) {
+                                                             CrossActions.doCrossProfile(context, account);
+                                                         }else{
+                                                             Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                             Bundle b = new Bundle();
+                                                             b.putString("accountId", account.getId());
+                                                             intent.putExtras(b);
+                                                             context.startActivity(intent);
+                                                         }
+                                                     }
+                                                     @Override
+                                                     public void updateDrawState(@NonNull TextPaint ds) {
+                                                         super.updateDrawState(ds);
+                                                         ds.setUnderlineText(false);
+                                                         if (theme == THEME_DARK)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                         else if (theme == THEME_BLACK)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                         else if (theme == THEME_LIGHT)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                     }
+                                                 },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+                it.remove();
+            }
+        }
+        if( targetedURL.size() > 0 ){
+            Iterator it = targetedURL.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String) pair.getKey();
+                String url = (String) pair.getValue();
+                if (spannableStringT.toString().toLowerCase().contains(key.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    int startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase());
+                    int endPosition = startPosition + key.length();
+                    if( key.contains("…") && !key.endsWith("…")) {
+                        key = key.split("…")[0]+"…";
+                        SpannableStringBuilder ssb = new SpannableStringBuilder();
+                        ssb.append(spannableStringT, 0, spannableStringT.length());
+                        ssb.replace(startPosition,endPosition, key);
+                        spannableStringT = SpannableString.valueOf(ssb);
+                        endPosition = startPosition + key.length();
+                    }
+                    if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
+                        spannableStringT.setSpan(new ClickableSpan() {
+                                                     @Override
+                                                     public void onClick(@NonNull View textView) {
+                                                         String finalUrl = url;
+                                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                                         Matcher matcherLink = link.matcher(url);
+                                                         if( matcherLink.find() && !url.contains("medium.com")){
+                                                             if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
+                                                                 CrossActions.doCrossConversation(context, finalUrl);
+                                                             }else{//It's an account
+                                                                 Account account = status.getAccount();
+                                                                 account.setAcct(matcherLink.group(2));
+                                                                 account.setInstance(matcherLink.group(1));
+                                                                 CrossActions.doCrossProfile(context, account);
+                                                             }
+
+                                                         }else  {
+                                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                                             matcherLink = link.matcher(url);
+                                                             if( matcherLink.find()){ //Peertubee video
+                                                                 Intent intent = new Intent(context, PeertubeActivity.class);
+                                                                 Bundle b = new Bundle();
+                                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                                                                 b.putString("peertubeLinkToFetch", url);
+                                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
+                                                                 b.putString("video_id", matcherLink.group(2));
+                                                                 intent.putExtras(b);
+                                                                 context.startActivity(intent);
+                                                             }else {
+                                                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                                                     finalUrl = "http://" + url;
+                                                                 Helper.openBrowser(context, finalUrl);
+                                                             }
+
+                                                         }
+                                                     }
+                                                     @Override
+                                                     public void updateDrawState(@NonNull TextPaint ds) {
+                                                         super.updateDrawState(ds);
+                                                         ds.setUnderlineText(false);
+                                                         if (theme == THEME_DARK)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                         else if (theme == THEME_BLACK)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                         else if (theme == THEME_LIGHT)
+                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                     }
+                                                 },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
+                }
+                it.remove();
+            }
+        }
+        matcher = Helper.hashtagPattern.matcher(spannableStringT);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableStringT.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View textView) {
+                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                            Intent intent = new Intent(context, HashTagActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("tag", tag.substring(1));
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                    }
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        }
+        return spannableStringT;
+    }
 
     public static void transformTranslation(Context context, Status status){
 
@@ -848,341 +1126,7 @@ public class Status implements Parcelable{
 
 
 
-    private static SpannableString treatment(final Context context, final SpannableString spannableString, Status status){
 
-        URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
-        for(URLSpan span : urls)
-            spannableString.removeSpan(span);
-        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
-
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
-        Matcher matcher;
-        Pattern linkPattern = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
-        matcher = linkPattern.matcher(spannableString);
-        HashMap<String, String> targetedURL = new HashMap<>();
-        while (matcher.find()){
-            String key;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
-            else
-                key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
-            key = key.substring(1);
-            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    targetedURL.put(key, Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString());
-                }
-                else
-                    targetedURL.put(key, Html.fromHtml(matcher.group(1)).toString());
-            }
-        }
-        String currentInstance = Helper.getLiveInstance(context);
-        //Get url to account that are unknown
-        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
-        Matcher matcherALink = aLink.matcher(spannableString.toString());
-        ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
-        while (matcherALink.find()){
-            String acct = matcherALink.group(3).replace("@","");
-            String instance = matcherALink.group(2);
-            boolean addAccount = true;
-            for(Mention mention: mentions){
-                String[] accountMentionAcct = mention.getAcct().split("@");
-                //Different isntance
-                if( accountMentionAcct.length > 1){
-                    if( mention.getAcct().equals(acct+"@"+instance))
-                        addAccount = false;
-                }else {
-                    if( (mention.getUsername()+"@"+currentInstance).equals(acct+"@"+instance))
-                        addAccount = false;
-                }
-            }
-            if( addAccount) {
-                Account account = new Account();
-                account.setAcct(acct);
-                account.setInstance(instance);
-                accountsMentionUnknown.add(account);
-            }
-        }
-        aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
-        matcherALink = aLink.matcher(spannableString.toString());
-
-        while (matcherALink.find()){
-            int matchStart = matcherALink.start();
-            int matchEnd = matcherALink.end();
-            final String url = spannableString.toString().substring(matcherALink.start(1), matcherALink.end(1));
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
-                            @Override
-                            public void onClick(@NonNull View textView) {
-                                String finalUrl = url;
-                                if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                    finalUrl = "http://" + url;
-                                Helper.openBrowser(context, finalUrl);
-                            }
-                            @Override
-                            public void updateDrawState(@NonNull TextPaint ds) {
-                                super.updateDrawState(ds);
-                                ds.setUnderlineText(false);
-                                if (theme == THEME_DARK)
-                                    ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                else if (theme == THEME_BLACK)
-                                    ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                else if (theme == THEME_LIGHT)
-                                    ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                            }
-                        },
-                        matchStart, matchEnd,
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        }
-        SpannableString spannableStringT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
-        else
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
-
-        URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
-        for (URLSpan span : spans) {
-            spannableStringT.removeSpan(span);
-        }
-
-        matcher = Helper.twitterPattern.matcher(spannableStringT);
-        while (matcher.find()){
-            int matchStart = matcher.start(2);
-            int matchEnd = matcher.end();
-            final String twittername = matcher.group(2);
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View textView) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
-                        context.startActivity(intent);
-                    }
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                    }
-                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-
-        if( accountsMentionUnknown.size() > 0 ) {
-            for(Account account: accountsMentionUnknown){
-                String targetedAccount = "@" + account.getAcct();
-                if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
-                    //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
-                        int endPosition = startPosition + targetedAccount.length();
-                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                            spannableStringT.setSpan(new ClickableSpan() {
-                                 @Override
-                                 public void onClick(@NonNull View textView) {
-                                     CrossActions.doCrossProfile(context,account);
-                                 }
-                                 @Override
-                                 public void updateDrawState(@NonNull TextPaint ds) {
-                                     super.updateDrawState(ds);
-                                     ds.setUnderlineText(false);
-                                     if (theme == THEME_DARK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                     else if (theme == THEME_BLACK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                     else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                 }
-                             },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                    }
-                }
-            }
-        }
-        if( targetedURL.size() > 0 ){
-            Iterator it = targetedURL.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                String key = (String) pair.getKey();
-                String url = (String) pair.getValue();
-                if (spannableStringT.toString().toLowerCase().contains(key.toLowerCase())) {
-                    //Accounts can be mentioned several times so we have to loop
-                    int startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase());
-                    int endPosition = startPosition + key.length();
-                    if( key.contains("…") && !key.endsWith("…")) {
-                        key = key.split("…")[0]+"…";
-                        SpannableStringBuilder ssb = new SpannableStringBuilder();
-                        ssb.append(spannableStringT, 0, spannableStringT.length());
-                        ssb.replace(startPosition,endPosition, key);
-                        spannableStringT = SpannableString.valueOf(ssb);
-                        endPosition = startPosition + key.length();
-                    }
-                    if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
-                        spannableStringT.setSpan(new ClickableSpan() {
-                                     @Override
-                                     public void onClick(@NonNull View textView) {
-                                         String finalUrl = url;
-                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                                         Matcher matcherLink = link.matcher(url);
-                                         if( matcherLink.find()){
-                                             if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
-                                                 CrossActions.doCrossConversation(context, finalUrl);
-                                             }else{//It's an account
-                                                 Account account = status.getAccount();
-                                                 account.setAcct(matcherLink.group(2));
-                                                 account.setInstance(matcherLink.group(1));
-                                                 CrossActions.doCrossProfile(context, account);
-                                             }
-
-                                         }else  {
-                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                                             matcherLink = link.matcher(url);
-                                             if( matcherLink.find()){ //Peertubee video
-                                                 Intent intent = new Intent(context, PeertubeActivity.class);
-                                                 Bundle b = new Bundle();
-                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                                                 b.putString("peertubeLinkToFetch", url);
-                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
-                                                 b.putString("video_id", matcherLink.group(2));
-                                                 intent.putExtras(b);
-                                                 context.startActivity(intent);
-                                             }else {
-                                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                                     finalUrl = "http://" + url;
-                                                 Helper.openBrowser(context, finalUrl);
-                                             }
-
-                                         }
-                                     }
-                                     @Override
-                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                         super.updateDrawState(ds);
-                                         ds.setUnderlineText(false);
-                                         if (theme == THEME_DARK)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                         else if (theme == THEME_BLACK)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                         else if (theme == THEME_LIGHT)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                     }
-                                 },
-                                startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                    }
-                }
-                it.remove();
-            }
-        }
-        //Deals with mention to make them clickable
-        if( mentions != null && mentions.size() > 0 ) {
-            //Looping through accounts which are mentioned
-            for (final Mention mention : mentions) {
-                String targetedAccount = "@" + mention.getUsername();
-                if(spannableStringT.toString().toLowerCase().contains(("@" + mention.getAcct()).toLowerCase())) {
-                    targetedAccount = "@" + mention.getAcct();
-                    if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
-                        //Accounts can be mentioned several times so we have to loop
-                        for (int startPosition = -1; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1; startPosition++) {
-
-                            int endPosition = startPosition + targetedAccount.length();
-                            if (endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                                spannableStringT.setSpan(new ClickableSpan() {
-                                     @Override
-                                     public void onClick(@NonNull View textView) {
-                                         Intent intent = new Intent(context, ShowAccountActivity.class);
-                                         Bundle b = new Bundle();
-                                         b.putString("accountId", mention.getId());
-                                         intent.putExtras(b);
-                                         context.startActivity(intent);
-                                     }
-
-                                     @Override
-                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                         super.updateDrawState(ds);
-                                         ds.setUnderlineText(false);
-                                         if (theme == THEME_DARK)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                         else if (theme == THEME_BLACK)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                         else if (theme == THEME_LIGHT)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                     }
-                                 },
-                                startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        }
-                    }
-                }else if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
-                    //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
-
-                        int endPosition = startPosition + targetedAccount.length();
-                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                            spannableStringT.setSpan(new ClickableSpan() {
-                                 @Override
-                                 public void onClick(@NonNull View textView) {
-                                     Intent intent = new Intent(context, ShowAccountActivity.class);
-                                     Bundle b = new Bundle();
-                                     b.putString("accountId", mention.getId());
-                                     intent.putExtras(b);
-                                     context.startActivity(intent);
-                                 }
-                                 @Override
-                                 public void updateDrawState(@NonNull TextPaint ds) {
-                                     super.updateDrawState(ds);
-                                     ds.setUnderlineText(false);
-                                     if (theme == THEME_DARK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                     else if (theme == THEME_BLACK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                     else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                 }
-                             },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                    }
-                }
-            }
-        }
-        matcher = Helper.hashtagPattern.matcher(spannableStringT);
-        while (matcher.find()){
-            int matchStart = matcher.start(1);
-            int matchEnd = matcher.end();
-            final String tag = spannableStringT.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View textView) {
-                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                            Intent intent = new Intent(context, HashTagActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("tag", tag.substring(1));
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                    }
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                    }
-                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        }
-        return spannableStringT;
-    }
 
     public SpannableString getContentSpan() {
         return contentSpan;
