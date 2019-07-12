@@ -38,7 +38,6 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -578,15 +577,14 @@ public class Status implements Parcelable{
             return;
         
         String content = status.getReblog() != null ?status.getReblog().getContent():status.getContent();
-
-        Pattern aLink = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        Pattern aLink = Pattern.compile("<a((?!href).)*href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
         int count = 0;
         while (matcherALink.find()){
             String beforemodification;
-            String urlText = matcherALink.group(2);
+            String urlText = matcherALink.group(3);
 
-            urlText = urlText.substring(1);
+            urlText = urlText.substring(2);
             beforemodification = urlText;
             if( !beforemodification.startsWith("http")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -638,33 +636,34 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-        Pattern linkPattern = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        Pattern linkPattern = Pattern.compile("<a((?!href).)*href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         matcher = linkPattern.matcher(spannableString);
         HashMap<String, String> targetedURL = new HashMap<>();
         HashMap<String, Account> accountsMentionUnknown = new HashMap<>();
+
         while (matcher.find()){
             String key;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
+                key = new SpannableString(Html.fromHtml(matcher.group(3), Html.FROM_HTML_MODE_LEGACY)).toString();
             else
-                key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
+                key = new SpannableString(Html.fromHtml(matcher.group(3))).toString();
             key = key.substring(1);
-            Log.v(Helper.TAG,"key! " + key);
+
             if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    targetedURL.put(key, Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString());
+                    targetedURL.put(key, Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY).toString());
                 }
                 else {
-                    targetedURL.put(key, Html.fromHtml(matcher.group(1)).toString());
+                    targetedURL.put(key, Html.fromHtml(matcher.group(2)).toString());
                 }
             }else if( key.startsWith("@") ){
                 String acct;
                 String url;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    url = Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString();
+                    url = Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY).toString();
                 }
                 else {
-                    url = Html.fromHtml(matcher.group(1)).toString();
+                    url = Html.fromHtml(matcher.group(2)).toString();
                 }
 
                 URI uri;
@@ -685,17 +684,18 @@ public class Status implements Parcelable{
                     String[] accountMentionAcct = mention.getAcct().split("@");
                     //Different isntance
                     if( accountMentionAcct.length > 1){
-                        if (account.getUrl() != null && mention.getAcct().equals(account.getAcct()+"@"+account.getInstance())) {
+                        if (mention.getAcct().equals(account.getAcct()+"@"+account.getInstance())) {
                             accountId = mention.getId();
                             break;
                         }
                     }else{
-                        if (account.getUrl() != null && mention.getAcct().equals(account.getAcct())) {
+                        if ( mention.getAcct().equals(account.getAcct())) {
                             accountId = mention.getId();
                             break;
                         }
                     }
                 }
+
                 if( accountId != null){
                     account.setId(accountId);
                 }
@@ -740,6 +740,7 @@ public class Status implements Parcelable{
         }
 
         if( accountsMentionUnknown.size() > 0 ) {
+
             Iterator it = accountsMentionUnknown.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
