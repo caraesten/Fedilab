@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -418,9 +419,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         preview_url = attachment.getPreview_url();
         if( type.equals("unknown")){
             preview_url = attachment.getRemote_url();
-            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg")) {
+            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg") ||  preview_url.endsWith(".gif")) {
                 type = "image";
-            }else if( preview_url.endsWith(".mp4") || preview_url.endsWith(".mp3")) {
+            }else if( preview_url.endsWith(".mp4") || preview_url.endsWith(".mp3") ) {
                 type = "video";
             }
             url = attachment.getRemote_url();
@@ -435,42 +436,48 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
                 fileVideo = null;
-                Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(preview_url).into(
-                    new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
-                            Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
-                            imageView.setImageBitmap(imageCompressed);
-                            Glide.with(getApplicationContext())
-                                .asBitmap()
-                                .load(finalUrl).into(
-                                new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
-                                        loader.setVisibility(View.GONE);
-                                        Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
-                                        if( imageView.getScale() < 1.1) {
-                                            downloadedImage = resource;
-                                            imageView.setImageBitmap(imageCompressed);
-                                        }else{
-                                            message_ready.setVisibility(View.VISIBLE);
-                                        }
-                                        message_ready.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                downloadedImage = resource;
-                                                imageView.setImageBitmap(imageCompressed);
-                                                message_ready.setVisibility(View.GONE);
+                if( !finalUrl.endsWith(".gif")) {
+                    Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(preview_url).into(
+                            new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
+                                    Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
+                                    imageView.setImageBitmap(imageCompressed);
+                                    Glide.with(getApplicationContext())
+                                            .asBitmap()
+                                            .load(finalUrl).into(
+                                            new SimpleTarget<Bitmap>() {
+                                                @Override
+                                                public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
+                                                    loader.setVisibility(View.GONE);
+                                                    Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
+                                                    if (imageView.getScale() < 1.1) {
+                                                        downloadedImage = resource;
+                                                        imageView.setImageBitmap(imageCompressed);
+                                                    } else {
+                                                        message_ready.setVisibility(View.VISIBLE);
+                                                    }
+                                                    message_ready.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            downloadedImage = resource;
+                                                            imageView.setImageBitmap(imageCompressed);
+                                                            message_ready.setVisibility(View.GONE);
+                                                        }
+                                                    });
+                                                }
                                             }
-                                        });
-                                    }
+                                    );
                                 }
-                            );
-                        }
-                    }
-                );
+                            }
+                    );
+                }else {
+                    loader.setVisibility(View.GONE);
+                    Glide.with(getApplicationContext())
+                            .load(finalUrl).into(imageView);
+                }
                 break;
             case "video":
             case "gifv":
