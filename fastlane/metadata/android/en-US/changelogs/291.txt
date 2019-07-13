@@ -1,0 +1,14 @@
+Added
+- Export blocked instances (can be shared with some explanations)
+- Auto save drafts for quick replies
+- Quick reply automatically added below the toot for conversations
+
+Changed
+- Remove peertube.social
+
+Fixed
+- Auto-complete feature with quick reply
+- Remove statuses in timelines after unfollows or timed-mute
+- Fix the fetch more button
+- Medium accounts are no longer opened with the app.
+- Gif media not displayed in media activity
