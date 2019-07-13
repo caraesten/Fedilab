@@ -124,7 +124,7 @@
         <item>이 계정을 차단하시겠습니까?</item>
         <item>이 툿을 신고하시겠습니까?</item>
         <item>이 도메인을 차단하시겠습니까?</item>
-        <item>Unmute this account?</item>
+        <item>이 계정의 뮤트를 해제하겠습니까?</item>
     </string-array>
     <string-array name="action_notification">
         <item>알림</item>
@@ -137,12 +137,12 @@
     <plurals name="preview_replies">
         <item quantity="other">답글 %d개</item>
     </plurals>
-    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmarks">북마크</string>
     <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="bookmark_remove">북마크 삭제</string>
+    <string name="bookmarks_empty">북마크가 비어있습니다</string>
+    <string name="status_bookmarked">게시물이 북마크에 추가 되었습니다!</string>
+    <string name="status_unbookmarked">게시물이 북마크에서 삭제 되었습니다!</string>
     <!-- Date -->
     <string name="date_seconds">%d 초</string>
     <string name="date_minutes">%d 초</string>
@@ -150,11 +150,11 @@
     <string name="date_day">%d 초</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">경고</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
-    <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
+    <string name="toot_placeholder">무슨 생각을 하고 있나요?</string>
+    <string name="toot_it">툿!</string>
+    <string name="queet_it">큇!</string>
+    <string name="cw">열람주의</string>
+    <string name="toot_title">툿 작성</string>
     <string name="toot_title_reply">Reply to a toot</string>
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
@@ -169,16 +169,16 @@
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Sensitive content?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>공개 타임라인에 작성</item>
+        <item>공개 타임라인에 비표시</item>
+        <item>팔로워에게만 공개</item>
+        <item>멘션 된 사용자들에게만</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
+    <string name="no_draft">임시 저장 된 것이 없습니다!</string>
+    <string name="choose_toot">툿을 선택하세요</string>
+    <string name="choose_accounts">계정을 선택하세요</string>
+    <string name="select_accounts">계정들을 몇 개 선택하세요</string>
+    <string name="remove_draft">임시 저장 된 글을 삭제할까요?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
@@ -189,16 +189,15 @@
     <string name="about_license">라이센스: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">소스 코드: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
-    <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="about_yandex">툿 번역:</string>
+    <string name="about_thekinrar">인스턴스 검색:</string>
+    <string name="thanks_text_logo">아이콘 디자이너</string>
+    <string name="thanks_text_banner">배너 디자이너</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">대화</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_accounts">표시할 계정이 없습니다</string>
+    <string name="no_follow_request">팔로우 요청이 없습니다</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
     <string name="followers_cnt">Followers \n %1$s</string>
@@ -243,6 +242,7 @@
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">No Internet connection!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
@@ -1004,6 +1004,11 @@
     <string name="create_folder">Create folder</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>

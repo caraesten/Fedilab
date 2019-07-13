@@ -192,7 +192,6 @@
     <string name="about_code">Kildekode: </string>
     <string name="about_yandex">Oversættelse af toots:</string>
     <string name="about_thekinrar">Søg instanser:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikondesigner:</string>
     <string name="thanks_text_banner">Bannerdesigner:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Fastgjort</string>
     <!-- TOAST -->
     <string name="client_error">Kan ikke hente klient-ID!</string>
+    <string name="connect_error">Kan ikke tilslutte instansdomæne!</string>
     <string name="no_internet">Ingen Internetforbindelse!</string>
     <string name="toast_block">Kontoen blev blokeret!</string>
     <string name="toast_unblock">Kontoen er ikke længere blokeret!</string>
@@ -1008,6 +1008,11 @@
     <string name="create_folder">Opret mappe</string>
     <string name="custom_tabs_indication">Benyt din foretrukne browser i selve programmet. Ved at deaktivere, åbnes links eksternt</string>
     <string name="set_display_confirm">Vis en toast-besked efte fuldførelsen af en handling (boost, fav mv.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

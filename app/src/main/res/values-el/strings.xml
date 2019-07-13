@@ -192,7 +192,6 @@
     <string name="about_code">Πηγαίος κώδικας: </string>
     <string name="about_yandex">Μετάφραση με... :</string>
     <string name="about_thekinrar">Αναζήτηση για υποστάσεις:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Σχεδιαστής εικονιδίου:</string>
     <string name="thanks_text_banner">Σχεδιαστής σημαίας:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Καρφιτσωμένα</string>
     <!-- TOAST -->
     <string name="client_error">Αδυναμία λήψης του αριθμού ταυτότητας (id) του πελάτη.</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Καμία σύνδεση στο διαδίκτυο.</string>
     <string name="toast_block">Ο λογαριασμός φράχτηκε.</string>
     <string name="toast_unblock">Ο λογαριασμός δεν είναι πλέον φραγμένος.</string>
@@ -1008,6 +1008,11 @@
     <string name="create_folder">Create folder</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>

@@ -192,7 +192,6 @@
     <string name="about_code">Codi font: </string>
     <string name="about_yandex">Traducció dels toots:</string>
     <string name="about_thekinrar">Cerca instàncies:</string>
-    <string name="about_thekinrar_action">instancies.social</string>
     <string name="thanks_text_logo">Disseny d\'icones:</string>
     <string name="thanks_text_banner">Disseny de banderoles:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Fixat</string>
     <!-- TOAST -->
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">No hi ha connexió a internet!</string>
     <string name="toast_block">El compte s\'ha blocat!</string>
     <string name="toast_unblock">El compte ja no està blocat!</string>
@@ -1000,6 +1000,11 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="create_folder">Crear carpeta</string>
     <string name="custom_tabs_indication">Utilitza el teu navegador preferit dins l\'aplicació. Si es desactiva, els enllaços s\'obriran externament</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>

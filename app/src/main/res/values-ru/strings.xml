@@ -194,7 +194,6 @@
     <string name="about_code">Исходный код: </string>
     <string name="about_yandex">Перевод тутов:</string>
     <string name="about_thekinrar">Поиск инстансов:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Дизайнер иконки:</string>
     <string name="thanks_text_banner">Дизайнер баннера:</string>
     <!-- Conversation -->
@@ -255,6 +254,7 @@
     <string name="pinned_toots">Закреплено</string>
     <!-- TOAST -->
     <string name="client_error">Не удалось получить идентификатор клиента!</string>
+    <string name="connect_error">Невозможно подключиться к домену инстанса!</string>
     <string name="no_internet">Нет подключения к Интернету!</string>
     <string name="toast_block">Аккаунт заблокирован!</string>
     <string name="toast_unblock">Аккаунт больше не блокируется!</string>
@@ -1016,6 +1016,11 @@
     <string name="create_folder">Создать папку</string>
     <string name="custom_tabs_indication">Используйте свой любимый браузер внутри приложения. При отключении, сылки будут открыты вне Fedilab</string>
     <string name="set_display_confirm">Отобразить уведомление после выполнения действия (продвижение, добавление в избранные и т. д.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

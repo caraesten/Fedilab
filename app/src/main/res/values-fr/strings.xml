@@ -192,7 +192,6 @@
     <string name="about_code">Code source : </string>
     <string name="about_yandex">Traduction des pouets :</string>
     <string name="about_thekinrar">Recherche d’instances :</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Concepteur de l’icône :</string>
     <string name="thanks_text_banner">Concepteur de la bannière :</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Épinglé</string>
     <!-- TOAST -->
     <string name="client_error">Impossible d’obtenir l’id du client !</string>
+    <string name="connect_error">Impossible de se connecter au domaine de l\'instance !</string>
     <string name="no_internet">Aucune connexion Internet !</string>
     <string name="toast_block">Le compte a été bloqué !</string>
     <string name="toast_unblock">Le compte n\'est plus bloqué !</string>
@@ -1005,6 +1005,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="create_folder">Créer un dossier</string>
     <string name="custom_tabs_indication">Utilisez votre navigateur préféré intégré dans l\'application. En le désactivant, les liens seront ouverts via un navigateur externe</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>

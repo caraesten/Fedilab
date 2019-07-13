@@ -55,7 +55,7 @@
     <string name="validate">Validate</string>
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
-    <string name="shared_via">Shared via Mastalab</string>
+    <string name="shared_via">Shared via Fedilab</string>
     <string name="replies">Replies</string>
     <string name="username">User name</string>
     <string name="drafts">Drafts</string>
@@ -192,7 +192,6 @@
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">No Internet connection!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
@@ -1008,6 +1008,11 @@
     <string name="create_folder">Create folder</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

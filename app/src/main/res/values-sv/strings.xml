@@ -192,7 +192,6 @@
     <string name="about_code">Källkod: </string>
     <string name="about_yandex">Översättning av toots:</string>
     <string name="about_thekinrar">Sök instanser:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikondesigner:</string>
     <string name="thanks_text_banner">Banner-design av:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Fastnålad</string>
     <!-- TOAST -->
     <string name="client_error">Kan inte få tag på klientid!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Ingen internetuppkoppling!</string>
     <string name="toast_block">Kontot är spärrat!</string>
     <string name="toast_unblock">Kontot är inte längre spärrat!</string>
@@ -1008,6 +1008,11 @@
     <string name="create_folder">Skapa mapp</string>
     <string name="custom_tabs_indication">Använd din favorit browser i applikationen. Genom att inaktivera så kommer länkar att öppnas externt</string>
     <string name="set_display_confirm">Visa toast-meddelande när en åtgärd har slutförts (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>

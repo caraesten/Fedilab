@@ -192,7 +192,6 @@
     <string name="about_code">Iturburu kodea: </string>
     <string name="about_yandex">Toot-en itzulpena:</string>
     <string name="about_thekinrar">Bilatu instantziak:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikonoaren diseinatzailea:</string>
     <string name="thanks_text_banner">Bandaren diseinatzailea:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Finkatuta</string>
     <!-- TOAST -->
     <string name="client_error">Ezin izan da bezero id-a eskuratu!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Ez dago Internet konexiorik!</string>
     <string name="toast_block">Kontua blokeatua izan da!</string>
     <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
@@ -1007,6 +1007,11 @@
     <string name="create_folder">Sortu karpeta</string>
     <string name="custom_tabs_indication">Erabili zure gogoko nabigatzailea aplikazio barruan. Desgaitzen bada, estekak kanpoan irekiko dira</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>

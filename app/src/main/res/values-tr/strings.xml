@@ -192,7 +192,6 @@
     <string name="about_code">Kaynak kodu: </string>
     <string name="about_yandex">Modül tercümesi:</string>
     <string name="about_thekinrar">Arama örnekleri:</string>
-    <string name="about_thekinrar_action">instances.Social</string>
     <string name="thanks_text_logo">İkon tararımcısı:</string>
     <string name="thanks_text_banner">Afiş tasarımcısı:</string>
     <!-- Conversation -->
@@ -247,6 +246,7 @@
     <string name="pinned_toots">Sabitlenmiş</string>
     <!-- TOAST -->
     <string name="client_error">Müşteri kimliği alınamıyor!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">İnternet bağlantısı yok!</string>
     <string name="toast_block">Hesap engellenmiş!</string>
     <string name="toast_unblock">Bu hesap artık engelli değil!</string>
@@ -1001,6 +1001,11 @@
     <string name="create_folder">Create folder</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

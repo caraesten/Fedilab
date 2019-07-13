@@ -196,7 +196,6 @@
     <string name="about_code">Cod ffynhonnell: </string>
     <string name="about_yandex">Cyfieithiadau\'r tŵtiau:</string>
     <string name="about_thekinrar">Chwilio achosion:</string>
-    <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Dylunydd eicon:</string>
     <string name="thanks_text_banner">Dylunydd baner:</string>
     <!-- Conversation -->
@@ -263,6 +262,7 @@
     <string name="pinned_toots">Wedi eu pinio</string>
     <!-- TOAST -->
     <string name="client_error">Methwyd i gael gafael ar id y cleient!</string>
+    <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Dim cyswllt i\'r rhyngrwyd!</string>
     <string name="toast_block">Blociwyd y cyfrif!</string>
     <string name="toast_unblock">Nid yw\'r cyfrif wedi ei flocio mwyach!</string>
@@ -1023,6 +1023,11 @@
     <string name="create_folder">Create folder</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
