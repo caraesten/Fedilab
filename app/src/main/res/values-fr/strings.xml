@@ -962,7 +962,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="account_approved">Le compte est approuvé !</string>
     <string name="account_rejected">Le compte est rejeté !</string>
     <string name="assign_to_me">Me l’attribuer</string>
-    <string name="unassign">Unassign</string>
+    <string name="unassign">Annuler l\'assignation</string>
     <string name="mark_resolved">Marquer comme résolu</string>
     <string name="mark_unresolved">Marquer comme non résolu</string>
     <string name="toast_empty_content">Contenu vide !</string>
@@ -1005,7 +1005,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="create_folder">Créer un dossier</string>
     <string name="custom_tabs_indication">Utilisez votre navigateur préféré intégré dans l\'application. En le désactivant, les liens seront ouverts via un navigateur externe</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
-    <string name="export_muted_instance">Export muted instances</string>
+    <string name="export_muted_instance">Exporter les instances mises en sourdine</string>
     <string name="muted_instance_exported">Les instances mises en sourdine ont été exportées !</string>
     <string name="add_instances">Ajouter une instance</string>
     <string name="export_instances">Exporter des instances</string>
