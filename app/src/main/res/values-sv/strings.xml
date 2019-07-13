@@ -1008,6 +1008,11 @@
     <string name="create_folder">Skapa mapp</string>
     <string name="custom_tabs_indication">Använd din favorit browser i applikationen. Genom att inaktivera så kommer länkar att öppnas externt</string>
     <string name="set_display_confirm">Visa toast-meddelande när en åtgärd har slutförts (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
