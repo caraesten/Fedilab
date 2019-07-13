@@ -474,7 +474,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( max_id == null)
                 max_id = "0";
             //max_id needs to work like an offset
-            int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+            int tootPerPage = Helper.TOOTS_PER_PAGE;
             max_id = String.valueOf(Integer.valueOf(max_id) + tootPerPage);
             if( apiResponse.getPeertubes() == null){
                 return;
@@ -985,7 +985,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         try {
             ((MainActivity) context).updateHomeCounter();
         }catch (Exception ignored){}
-        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+        int tootPerPage = Helper.TOOTS_PER_PAGE;
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
             if (initialBookMarkDate != null &&  tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {

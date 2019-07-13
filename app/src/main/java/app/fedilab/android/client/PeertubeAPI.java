@@ -89,9 +89,9 @@ public class PeertubeAPI {
     public PeertubeAPI(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-        accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
+        tootPerPage = Helper.TOOTS_PER_PAGE;
+        accountPerPage = Helper.ACCOUNTS_PER_PAGE;
+        notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         if( Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
@@ -119,9 +119,9 @@ public class PeertubeAPI {
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-        accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
+        tootPerPage = Helper.TOOTS_PER_PAGE;
+        accountPerPage = Helper.ACCOUNTS_PER_PAGE;
+        notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         if( instance != null)
             this.instance = instance;
         else

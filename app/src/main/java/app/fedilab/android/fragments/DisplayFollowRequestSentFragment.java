@@ -80,7 +80,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
 
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
+        accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         lv_accounts = rootView.findViewById(R.id.lv_accounts);
         lv_accounts.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         no_action_text = rootView.findViewById(R.id.no_action_text);
