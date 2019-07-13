@@ -995,6 +995,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="create_folder">Ordner erstellen</string>
     <string name="custom_tabs_indication">Verwenden Sie Ihren bevorzugten Browser innerhalb der Anwendung. Durch das Deaktivieren werden Links extern geöffnet.</string>
     <string name="set_display_confirm">Toast-Benachrichtigung anzeigen, nachdem eine Aktion abgeschlossen ist (boost, fav, usw)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
