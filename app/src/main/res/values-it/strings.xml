@@ -1012,7 +1012,7 @@
     <string name="muted_instance_exported">Le istanze silenziate sono state esportate!</string>
     <string name="add_instances">Aggiungi un istanza</string>
     <string name="export_instances">Esporta le istanze</string>
-    <string name="import_instances">Import instances</string>
+    <string name="import_instances">Importa istanze</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
