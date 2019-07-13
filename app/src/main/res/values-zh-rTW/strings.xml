@@ -1004,11 +1004,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="create_folder">建立資料夾</string>
     <string name="custom_tabs_indication">在應用程式中使用您最愛的瀏覽器。停用此選項就可以讓連結在外部打開</string>
     <string name="set_display_confirm">在動作完成後顯示快顯訊息（轉嘟、最愛等等）？</string>
-    <string name="export_muted_instance">Export muted instances</string>
-    <string name="muted_instance_exported">Muted instances have been exported!</string>
-    <string name="add_instances">Add an instance</string>
-    <string name="export_instances">Export instances</string>
-    <string name="import_instances">Import instances</string>
+    <string name="export_muted_instance">匯出已靜音的站台</string>
+    <string name="muted_instance_exported">靜音的站台已匯出！</string>
+    <string name="add_instances">新增站台</string>
+    <string name="export_instances">匯出站台</string>
+    <string name="import_instances">匯入站台</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
