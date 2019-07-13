@@ -764,32 +764,32 @@ public class Status implements Parcelable{
                     //Accounts can be mentioned several times so we have to loop
                     if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                         spannableStringT.setSpan(new ClickableSpan() {
-                                                     @Override
-                                                     public void onClick(@NonNull View textView) {
-                                                         if( account.getId() == null) {
-                                                             CrossActions.doCrossProfile(context, account);
-                                                         }else{
-                                                             Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                             Bundle b = new Bundle();
-                                                             b.putString("accountId", account.getId());
-                                                             intent.putExtras(b);
-                                                             context.startActivity(intent);
-                                                         }
-                                                     }
-                                                     @Override
-                                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                                         super.updateDrawState(ds);
-                                                         ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                                     }
-                                                 },
-                                startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                             @Override
+                             public void onClick(@NonNull View textView) {
+                                 if( account.getId() == null) {
+                                     CrossActions.doCrossProfile(context, account);
+                                 }else{
+                                     Intent intent = new Intent(context, ShowAccountActivity.class);
+                                     Bundle b = new Bundle();
+                                     b.putString("accountId", account.getId());
+                                     intent.putExtras(b);
+                                     context.startActivity(intent);
+                                 }
+                             }
+                             @Override
+                             public void updateDrawState(@NonNull TextPaint ds) {
+                                 super.updateDrawState(ds);
+                                 ds.setUnderlineText(false);
+                                 if (theme == THEME_DARK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                 else if (theme == THEME_BLACK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                 else if (theme == THEME_LIGHT)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                             }
+                         },
+                        startPosition, endPosition,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
                 it.remove();
             }
@@ -814,53 +814,53 @@ public class Status implements Parcelable{
                     }
                     if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
                         spannableStringT.setSpan(new ClickableSpan() {
-                                                     @Override
-                                                     public void onClick(@NonNull View textView) {
-                                                         String finalUrl = url;
-                                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                                                         Matcher matcherLink = link.matcher(url);
-                                                         if( matcherLink.find() && !url.contains("medium.com")){
-                                                             if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
-                                                                 CrossActions.doCrossConversation(context, finalUrl);
-                                                             }else{//It's an account
-                                                                 Account account = status.getAccount();
-                                                                 account.setAcct(matcherLink.group(2));
-                                                                 account.setInstance(matcherLink.group(1));
-                                                                 CrossActions.doCrossProfile(context, account);
-                                                             }
+                                     @Override
+                                     public void onClick(@NonNull View textView) {
+                                         String finalUrl = url;
+                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                         Matcher matcherLink = link.matcher(url);
+                                         if( matcherLink.find() && !url.contains("medium.com")){
+                                             if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
+                                                 CrossActions.doCrossConversation(context, finalUrl);
+                                             }else{//It's an account
+                                                 Account account = status.getAccount();
+                                                 account.setAcct(matcherLink.group(2));
+                                                 account.setInstance(matcherLink.group(1));
+                                                 CrossActions.doCrossProfile(context, account);
+                                             }
 
-                                                         }else  {
-                                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                                                             matcherLink = link.matcher(url);
-                                                             if( matcherLink.find()){ //Peertubee video
-                                                                 Intent intent = new Intent(context, PeertubeActivity.class);
-                                                                 Bundle b = new Bundle();
-                                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                                                                 b.putString("peertubeLinkToFetch", url);
-                                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
-                                                                 b.putString("video_id", matcherLink.group(2));
-                                                                 intent.putExtras(b);
-                                                                 context.startActivity(intent);
-                                                             }else {
-                                                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                                                     finalUrl = "http://" + url;
-                                                                 Helper.openBrowser(context, finalUrl);
-                                                             }
+                                         }else  {
+                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                             matcherLink = link.matcher(url);
+                                             if( matcherLink.find()){ //Peertubee video
+                                                 Intent intent = new Intent(context, PeertubeActivity.class);
+                                                 Bundle b = new Bundle();
+                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                                                 b.putString("peertubeLinkToFetch", url);
+                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
+                                                 b.putString("video_id", matcherLink.group(2));
+                                                 intent.putExtras(b);
+                                                 context.startActivity(intent);
+                                             }else {
+                                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                                     finalUrl = "http://" + url;
+                                                 Helper.openBrowser(context, finalUrl);
+                                             }
 
-                                                         }
-                                                     }
-                                                     @Override
-                                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                                         super.updateDrawState(ds);
-                                                         ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                                     }
-                                                 },
+                                         }
+                                     }
+                                     @Override
+                                     public void updateDrawState(@NonNull TextPaint ds) {
+                                         super.updateDrawState(ds);
+                                         ds.setUnderlineText(false);
+                                         if (theme == THEME_DARK)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                         else if (theme == THEME_BLACK)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                         else if (theme == THEME_LIGHT)
+                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                     }
+                                 },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
