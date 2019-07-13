@@ -190,6 +190,7 @@
                     android:ellipsize="end"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/status_account_username"
                     android:layout_height="wrap_content" />
                 <TextView
