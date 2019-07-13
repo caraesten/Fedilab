@@ -126,6 +126,7 @@ import app.fedilab.android.client.Entities.Poll;
 import app.fedilab.android.client.Entities.PollOptions;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
@@ -213,6 +214,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private int stepSpliToot;
     private String in_reply_to_status;
     private TextView warning_message;
+    private Status tootReply;
+    private long currentToId = -1;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
@@ -500,6 +503,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
 
         }
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
         if(apiResponse.getError() == null) {
             boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
             if( display_confirm){
@@ -2510,7 +2517,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             toot_cw_content = content_cw;
                             toot_space_left = holder.toot_space_left;
                             in_reply_to_status = status.getReblog() != null ? status.getReblog().getId():status.getId();
-
+                            tootReply = status;
                             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
                                 changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
                                 changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
@@ -4186,5 +4193,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
     }
 
+
+    public void storeToot(){
+        //Nothing to store here....
+        if (tootReply == null || (toot_content.getText().toString().trim().length() == 0 && toot_cw_content.getText().toString().trim().length() == 0))
+            return;
+        Status toot = new Status();
+        if( toot_cw_content.getText().toString().trim().length() > 0)
+            toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+        toot.setVisibility(visibility);
+        toot.setContent(toot_content.getText().toString().trim());
+
+        toot.setIn_reply_to_id(tootReply.getId());
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        try{
+            if(currentToId == -1) {
+                currentToId = new StatusStoredDAO(context, db).insertStatus(toot, tootReply);
+            }else{
+                StoredStatus storedStatus = new StatusStoredDAO(context, db).getStatus(currentToId);
+                if( storedStatus != null ){
+                    new StatusStoredDAO(context, db).updateStatus(currentToId, toot);
+                }else { //Might have been deleted, so it needs insertion
+                    new StatusStoredDAO(context, db).insertStatus(toot, tootReply);
+                }
+            }
+        }catch (Exception ignored){ }
+    }
 
 }

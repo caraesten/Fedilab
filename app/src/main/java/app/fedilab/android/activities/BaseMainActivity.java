@@ -737,7 +737,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     Bundle bundle = new Bundle();
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                    String instance = "peertube.social";
+                    String instance = "peertube.fedilab.app";
                     if(timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE"))
                         instance = timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getHost();
                     bundle.putString("remote_instance", instance);
@@ -2226,7 +2226,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         bundle.putString("instanceType", "ART");
                     }else if (tl.getType() == ManageTimelines.Type.PEERTUBE) {
                         bundle.putString("instanceType", "PEERTUBE");
-                        bundle.putString("remote_instance", "peertube.social");
+                        bundle.putString("remote_instance", "peertube.fedilab.app");
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                     }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
                         if( tl.getRemoteInstance().getFilteredWith() == null){

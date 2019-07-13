@@ -794,6 +794,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onStop(){
         super.onStop();
+        if( statusListAdapter != null){
+            statusListAdapter.storeToot();
+        }
        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);

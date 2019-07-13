@@ -1863,7 +1863,7 @@ public class API {
         List<HowToVideo> howToVideos = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://peertube.social/api/v1/video-channels/mastalab_channel/videos", 60, null, null);
+            String response = httpsConnection.get("https://peertube.fedilab.app/api/v1/video-channels/fedilab_channel/videos", 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             howToVideos = parseHowTos(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {

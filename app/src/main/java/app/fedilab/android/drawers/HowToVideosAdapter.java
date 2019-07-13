@@ -116,14 +116,14 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
         next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
         holder.how_to_description.setCompoundDrawables(null, null, next, null);
         Glide.with(holder.how_to_image.getContext())
-                .load("https://peertube.social" + howToVideo.getThumbnailPath())
+                .load("https://peertube.fedilab.app" + howToVideo.getThumbnailPath())
                 .into(holder.how_to_image);
         holder.how_to_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebviewActivity.class);
                 Bundle b = new Bundle();
-                String finalUrl = "https://peertube.social" + howToVideo.getEmbedPath();
+                String finalUrl = "https://peertube.fedilab.app" + howToVideo.getEmbedPath();
                 b.putString("url", finalUrl);
                 b.putBoolean("peertubeLink", true);
                 Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
