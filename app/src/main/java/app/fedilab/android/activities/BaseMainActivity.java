@@ -1654,6 +1654,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
             return false;
+        } else if(id == R.id.nav_blocked_domains){
+            Intent intent = new Intent(getApplicationContext(), MutedInstanceActivity.class);
+            startActivity(intent);
+            return false;
         } else if(id == R.id.nav_bug_report){
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/rfc822");
@@ -1766,12 +1770,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BLOCKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
-        }else if (id == R.id.nav_blocked_domains) {
-            toot.hide();
-            DisplayMutedInstanceFragment displayMutedInstanceFragment = new DisplayMutedInstanceFragment();
-            fragmentTag = "BLOCKED_DOMAINS";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayMutedInstanceFragment, fragmentTag).commit();
         }else if (id == R.id.nav_how_to) {
             toot.hide();
             DisplayHowToFragment displayHowToFragment = new DisplayHowToFragment();

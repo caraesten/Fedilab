@@ -24,6 +24,7 @@ import android.app.FragmentManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +56,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import androidx.annotation.NonNull;
@@ -71,16 +74,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -95,9 +102,13 @@ import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -141,6 +152,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -159,6 +171,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -172,20 +185,27 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
+import app.fedilab.android.activities.MutedInstanceActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
+import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Filters;
+import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.RemoteInstance;
+import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
+import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
+import app.fedilab.android.sqlite.DomainBlockDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
@@ -4099,5 +4119,228 @@ public class Helper {
         }
 
         return client;
+    }
+
+
+    public static void exportInstanceBlock(Context context, String username){
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String backupDBPath = "instance_mute_"+timeStamp+".csv";
+        File sd = Environment.getExternalStorageDirectory();
+        final String filename = sd + "/" + backupDBPath;
+
+
+        new AsyncTask<Void, Void, List<String>>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            APIResponse apiResponse;
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected List<String> doInBackground(Void... voids) {
+                apiResponse = new API(contextReference.get()).getBlockedDomain(null);
+                return apiResponse.getDomains();
+            }
+            @Override
+            protected void onPostExecute( List<String> domains) {
+                if( domains == null){
+                    return;
+                }
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                LayoutInflater inflater = ((MutedInstanceActivity)context).getLayoutInflater();
+                ScrollView scrollView = new ScrollView(context);
+                LinearLayout linearLayout_main = new LinearLayout(context);
+
+                linearLayout_main.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                linearLayout_main.setOrientation(LinearLayout.VERTICAL);
+
+                for(String domain: domains){
+                    @SuppressLint("InflateParams") View item = inflater.inflate(R.layout.muted_instance_popup, null);
+                    CheckBox checkBox = item.findViewById(R.id.popup_domain);
+                    checkBox.setText(domain);
+                    linearLayout_main.addView(item);
+                }
+                scrollView.addView(linearLayout_main);
+                dialogBuilder.setView(scrollView);
+                HashMap<String, String> domainBlocked = new HashMap<>();
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        for( int i = 0; i < linearLayout_main.getChildCount() ; i++){
+                            LinearLayout linearLayout = (LinearLayout) linearLayout_main.getChildAt(i);
+                            CheckBox checkBox = linearLayout.findViewById(R.id.popup_domain);
+                            EditText editText = linearLayout.findViewById(R.id.popup_comment);
+                            if( checkBox.isChecked()){
+                                String comment = null;
+                                String domain = checkBox.getText().toString().trim();
+                                if(  editText.getText() != null) {
+                                    comment = editText.getText().toString().trim();
+                                }
+                                domainBlocked.put(domain, comment);
+                            }
+                        }
+                        if( domainBlocked.size() > 0 ){
+                            new Thread() {
+                                public void run() {
+                                    try {
+
+                                        FileWriter fw = new FileWriter(filename);
+                                        fw.append("INSTANCE");
+                                        fw.append(',');
+                                        fw.append("COMMENT");
+                                        fw.append('\n');
+                                        Iterator it = domainBlocked.entrySet().iterator();
+                                        while (it.hasNext()) {
+                                            Map.Entry pair = (Map.Entry)it.next();
+                                            fw.append((String)pair.getKey());
+                                            fw.append(',');
+                                            fw.append((String)pair.getValue());
+                                            fw.append('\n');
+                                            it.remove();
+                                        }
+                                        fw.close();
+                                    } catch (Exception ignored) {
+                                    }
+                                    final Intent intent = new Intent();
+                                    Random r = new Random();
+                                    final int notificationIdTmp = r.nextInt(10000);
+                                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                                    Uri uri = Uri.fromFile(new File(filename));
+                                    intent.setDataAndType(uri, "text/csv");
+                                    Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
+                                }
+                            }.start();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+    }
+
+
+
+    public static void importInstanceBlock(Context context, HashMap<String, String> instances){
+
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+        LayoutInflater inflater = ((MutedInstanceActivity)context).getLayoutInflater();
+        ScrollView scrollView = new ScrollView(context);
+        LinearLayout linearLayout_main = new LinearLayout(context);
+
+        linearLayout_main.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout_main.setOrientation(LinearLayout.VERTICAL);
+        Iterator it = instances.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            @SuppressLint("InflateParams") View item = inflater.inflate(R.layout.muted_instance_popup, null);
+            CheckBox checkBox = item.findViewById(R.id.popup_domain);
+            checkBox.setText(pair.getKey().toString().trim());
+            item.findViewById(R.id.popup_comment).setVisibility(View.GONE);
+            if( pair.getValue() != null) {
+                TextView textView = item.findViewById(R.id.comment_text);
+                textView.setText(pair.getValue().toString());
+                textView.setVisibility(View.VISIBLE);
+            }
+            linearLayout_main.addView(item);
+            it.remove();
+        }
+        scrollView.addView(linearLayout_main);
+        dialogBuilder.setView(scrollView);
+        HashMap<String, String> domainBlocked = new HashMap<>();
+        dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                for( int i = 0; i < linearLayout_main.getChildCount() ; i++){
+                    LinearLayout linearLayout = (LinearLayout) linearLayout_main.getChildAt(i);
+                    CheckBox checkBox = linearLayout.findViewById(R.id.popup_domain);
+                    if( checkBox.isChecked()){
+                        String domain = checkBox.getText().toString().trim();
+                        domainBlocked.put(domain, null);
+                    }
+                }
+                if( domainBlocked.size() > 0 ){
+                    new Thread() {
+                        public void run() {
+                            Iterator it = domainBlocked.entrySet().iterator();
+                            while (it.hasNext()) {
+                                Map.Entry pair = (Map.Entry)it.next();
+                                try {
+                                    sleep(200);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                new PostActionAsyncTask(context, API.StatusAction.BLOCK_DOMAIN, pair.getKey().toString().trim(), ((MutedInstanceActivity)context)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                it.remove();
+                            }
+                        }
+                    }.start();
+                }
+                dialog.dismiss();
+            }
+        });
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        new AsyncTask<Void, Void, List<String>>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            APIResponse apiResponse;
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected List<String> doInBackground(Void... voids) {
+                apiResponse = new API(contextReference.get()).getBlockedDomain(null);
+                return apiResponse.getDomains();
+            }
+            @Override
+            protected void onPostExecute( List<String> domains) {
+                if( domains == null){
+                    return;
+                }
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+
+
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2018 Thomas Schneider
+    Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
 
@@ -15,12 +15,11 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="@dimen/fab_margin"
+<RelativeLayout android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Listview Accounts -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

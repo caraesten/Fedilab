@@ -500,7 +500,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
             if (sd.canWrite()) {
 
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
                 String backupDBPath = "Fedilab_export_"+timeStamp+".fedilab";
                 File dbSource = context.getDatabasePath(DB_NAME);
                 File dbDest = new File(sd,backupDBPath);
@@ -524,4 +524,7 @@ public class Sqlite extends SQLiteOpenHelper {
             Toasty.error(context, context.getString(R.string.data_export_error_simple), Toast.LENGTH_LONG).show();
         }
     }
+
+
+
 }
