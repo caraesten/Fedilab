@@ -1005,6 +1005,11 @@
     <string name="create_folder">创建文件夹</string>
     <string name="custom_tabs_indication">在应用程序中使用您最喜欢的浏览器。禁用则链接将在外部打开</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="export_muted_instance">Export muted instances</string>
+    <string name="muted_instance_exported">Muted instances have been exported!</string>
+    <string name="add_instances">Add an instance</string>
+    <string name="export_instances">Export instances</string>
+    <string name="import_instances">Import instances</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
