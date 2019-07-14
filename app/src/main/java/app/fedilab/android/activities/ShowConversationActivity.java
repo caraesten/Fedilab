@@ -316,6 +316,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                 if(status.getIn_reply_to_id().equals(s.getId())){
                     this.statuses.add(position+1, status);
                     statusListAdapter.notifyItemInserted(position+1);
+                    break;
                 }
                 position++;
             }
