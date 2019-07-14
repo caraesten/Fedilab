@@ -246,7 +246,7 @@
     <string name="pinned_toots">Fixados</string>
     <!-- TOAST -->
     <string name="client_error">Imposible obter o id de cliente!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Non se puido conectar co dominio da instancia!</string>
     <string name="no_internet">Sen conexión a internet!</string>
     <string name="toast_block">A conta foi bloqueada!</string>
     <string name="toast_unblock">A conta xa non está bloqueada!</string>
@@ -1009,11 +1009,11 @@
     <string name="create_folder">Crear cartafol</string>
     <string name="custom_tabs_indication">Utilice o navegador favorito dentro da aplicación. Desactivando, as ligazóns abriranse externamente</string>
     <string name="set_display_confirm">Mostrar mensaxe amigable tras terse completado unha acción (promo, fav, etc.)?</string>
-    <string name="export_muted_instance">Export muted instances</string>
-    <string name="muted_instance_exported">Muted instances have been exported!</string>
-    <string name="add_instances">Add an instance</string>
-    <string name="export_instances">Export instances</string>
-    <string name="import_instances">Import instances</string>
+    <string name="export_muted_instance">Exportar instancias acaladas</string>
+    <string name="muted_instance_exported">Exportáronse as instancias acaladas!</string>
+    <string name="add_instances">Engadir unha instancia</string>
+    <string name="export_instances">Exportar instancias</string>
+    <string name="import_instances">Importar instancias</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
