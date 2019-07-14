@@ -311,9 +311,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             if( firstLoad && type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
+                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId)) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
-                updateNotificationLastId(notifications.get(0).getId());
+                    updateNotificationLastId(notifications.get(0).getId());
+                }
             }
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
         }else {
@@ -409,6 +410,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
         }
         if( notifications != null && notifications.size() > 0) {
+
+            if( type == Type.ALL) {
+                //Update the id of the last notification retrieved
+                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId)) {
+                    MainActivity.lastNotificationId = notifications.get(0).getId();
+                    updateNotificationLastId(notifications.get(0).getId());
+                }
+            }
             if( textviewNoAction.getVisibility() == View.VISIBLE){
                 textviewNoAction.setVisibility(View.GONE);
                 lv_notifications.setVisibility(View.VISIBLE);
