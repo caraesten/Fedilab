@@ -3621,7 +3621,7 @@ public class API {
         apiResponse = new APIResponse();
         List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 10, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 5, null, prefKeyOauthTokenT);
             lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
