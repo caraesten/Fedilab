@@ -797,7 +797,7 @@
     <string name="settings_category_notif_customize">カスタマイズ</string>
     <string name="settings_category_notif_categories">カテゴリ</string>
     <string name="settings_category_notif_news">ニュース</string>
-    <string name="settings_category_notif_time_slot">時間帯</string>
+    <string name="settings_category_notif_time_slot">時間帯管理</string>
     <string name="settings_category_notif_advanced">上級者向け</string>
     <string name="set_display_new_badge">未読のトゥートに「new」バッジを表示する</string>
     <string name="set_display_peertube">Peertubeのタイムラインを表示する</string>
