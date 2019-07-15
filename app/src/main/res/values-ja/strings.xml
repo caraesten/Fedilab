@@ -934,7 +934,7 @@
     <string name="administrator">管理者</string>
     <string name="confirmed">確認済み</string>
     <string name="unconfirmed">未確認</string>
-    <string name="list_reported_statuses">報告したステータス</string>
+    <string name="list_reported_statuses">通報されたトゥート</string>
     <string name="account">アカウント</string>
     <string name="unsilence">サイレンスから戻す</string>
     <string name="undisable">無効化を解除する</string>
@@ -948,7 +948,7 @@
     <string name="account_undisabled">アカウントが有効になりました！</string>
     <string name="account_warned">このアカウントは警告を受けています！</string>
     <string name="set_display_admin_menu">管理者メニューを表示する</string>
-    <string name="set_display_admin_toot">ステータスに管理者機能を表示する</string>
+    <string name="set_display_admin_toot">トゥートに管理者機能を表示する</string>
     <string name="allow">許可</string>
     <string name="account_approved">アカウントが承認されました！</string>
     <string name="account_rejected">アカウントが拒否されました！</string>
@@ -970,11 +970,11 @@
     <string name="set_display_news_from_fedilab_indication">メインメニューに #Fedilab タグのタイムラインへのクイックアクセスのための項目を表示します</string>
     <string name="live_notif_indication">ライブ通知のためにストリーミングAPIへ常時接続します。</string>
     <string name="set_keep_background_process_indication">アプリがバックグラウンドに常駐しているとき、ストリーミングAPIへの接続を維持します。バッテリー持ちを気にする場合は無効にしてください。</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_enable_time_slot_indication">指定された時間帯に、アプリは通知を送信します。右のスピンボタンを押すと、設定を反転することができます。(指定された時間に非通知)</string>
+    <string name="set_display_fedilab_features_button_indication">プロフィール画像の下にFedilabボタンを表示します。このボタンはアプリ内機能へのショートカットです。</string>
+    <string name="set_quick_reply_indication">トゥートの下のタイムラインから直接返信できるようにします。</string>
+    <string name="set_fit_preview_indication">タイムラインではプレビューは切り取られません</string>
+    <string name="set_display_video_preview_indication">タイムラインで埋め込み動画を直接再生できるようになります</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
