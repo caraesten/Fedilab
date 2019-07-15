@@ -975,10 +975,10 @@
     <string name="set_quick_reply_indication">トゥートの下のタイムラインから直接返信できるようにします。</string>
     <string name="set_fit_preview_indication">タイムラインではプレビューは切り取られません</string>
     <string name="set_display_video_preview_indication">タイムラインで埋め込み動画を直接再生できるようになります</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
-    <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
-    <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
+    <string name="set_display_content_after_fetch_more_indication">もっと見るボタンを押して取得したトゥートを古いほうから読めるようになります</string>
+    <string name="set_security_provider_indication">このオプションは最新の暗号スイートをサポートします。これは古いAndroid デバイスやインスタンスに接続できない場合に有効です。</string>
+    <string name="set_video_mode_indication">Peertubeの動画専用です。動画が再生できない場合にモードを切り替えてください。</string>
+    <string name="featured_hashtags_indication">これらのタグはプロフィールからトゥートを取り除くことがあります。取り除かれたトゥートを表示するにはコンテキストメニューを使用する必要があります。</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
     <string name="timelines">Timelines</string>
