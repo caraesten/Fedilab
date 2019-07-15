@@ -29,6 +29,8 @@ import android.text.Html;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -343,14 +345,48 @@ public class CrossActions {
                 }
                 List<Account> remoteAccounts = response.getAccounts();
                 if( remoteAccounts != null && remoteAccounts.size() > 0) {
-                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    //Flag it has a peertube account
-                    if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
-                        b.putBoolean("peertubeaccount", true);
-                    b.putParcelable("account", remoteAccounts.get(0));
-                    intent.putExtras(b);
-                    context.startActivity(intent);
+
+                    Account fetchedAccount = null;
+                    if( remoteAccounts.size() == 1){
+                        Account acc = remoteAccounts.get(0);
+                        if (acc.getUsername().equals(remoteAccount.getUsername())) {
+                            fetchedAccount = acc;
+                        }
+                    }else {
+                        remoteAccounts.size();
+                        for(Account acc: remoteAccounts){
+
+                            String instance = null;
+                            try {
+                                URI url = new URI(acc.getUrl());
+                                instance = url.getHost();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            if( instance != null ) {
+                                if (acc.getUsername().equals(remoteAccount.getUsername()) && instance.equals(remoteAccount.getInstance())) {
+                                    fetchedAccount = acc;
+                                    break;
+                                }
+                            }else{
+                                if (acc.getUsername().equals(remoteAccount.getUsername())) {
+                                    fetchedAccount = acc;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(fetchedAccount != null){
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        //Flag it has a peertube account
+                        if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
+                            b.putBoolean("peertubeaccount", true);
+                        b.putParcelable("account", fetchedAccount);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+
                 }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );

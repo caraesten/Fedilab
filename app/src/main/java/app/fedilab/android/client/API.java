@@ -3244,6 +3244,7 @@ public class API {
             } catch (UnsupportedEncodingException e) {
                 params.put("q", query);
             }
+        params.put("resolve", "true");
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 10, params, prefKeyOauthTokenT);

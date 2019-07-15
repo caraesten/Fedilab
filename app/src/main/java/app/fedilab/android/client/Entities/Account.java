@@ -43,6 +43,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -1044,6 +1046,10 @@ public class Account implements Parcelable {
         }
     }
 
+    @NotNull
+    public String toString(){
+        return this.getAcct()+ " - " + this.getUrl();
+    }
 
 
 }
