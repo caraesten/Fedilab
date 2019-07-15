@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -3285,18 +3286,21 @@ public class API {
             }
         if( offset != null)
             params.put("offset", offset);
-        switch (type){
-            case TAGS:
-                params.put("type", "hashtags");
-                break;
-            case ACCOUNTS:
-                params.put("type", "accounts");
-                break;
-            case STATUSES:
-                params.put("type", "statuses");
-                break;
+        if( type != null) {
+            switch (type) {
+                case TAGS:
+                    params.put("type", "hashtags");
+                    break;
+                case ACCOUNTS:
+                    params.put("type", "accounts");
+                    break;
+                case STATUSES:
+                    params.put("type", "statuses");
+                    break;
+            }
         }
         params.put("limit", "20");
+        params.put("resolve", "true");
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUr2l("/search"), 10, params, prefKeyOauthTokenT);
@@ -5409,7 +5413,11 @@ public class API {
             account.setAcct(resobj.get("acct").toString());
             account.setDisplay_name(resobj.get("display_name").toString());
             account.setLocked(Boolean.parseBoolean(resobj.get("locked").toString()));
-            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            if( resobj.has("created_at") && !resobj.isNull("created_at")) {
+                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            }else {
+                account.setCreated_at(new Date());
+            }
             account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
             account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));

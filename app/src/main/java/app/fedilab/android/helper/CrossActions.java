@@ -334,7 +334,7 @@ public class CrossActions {
                     else
                         url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
                 }
-                APIResponse apiResponse = api.search(url);
+                APIResponse apiResponse = api.search2(url, null, null);
                 response = apiResponse.getResults();
                 return null;
             }
