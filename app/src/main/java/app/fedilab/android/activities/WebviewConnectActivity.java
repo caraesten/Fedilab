@@ -114,8 +114,15 @@ public class WebviewConnectActivity extends BaseActivity {
             }
         }
         webView = findViewById(R.id.webviewConnect);
-        webView.getSettings().setJavaScriptEnabled(true);
         clearCookies(getApplicationContext());
+        webView.getSettings().setJavaScriptEnabled(true);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        } else {
+            CookieManager.getInstance().setAcceptCookie(true);
+        }
+
+
         final ProgressBar pbar = findViewById(R.id.progress_bar);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
