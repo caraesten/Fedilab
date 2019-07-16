@@ -871,7 +871,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="toast_unmute_conversation">La conversation n\'est plus mise en sourdine !</string>
     <string name="toast_mute_conversation">La conversation est mise en sourdine</string>
     <string name="app_features">Ouvrez les fonctionnalités de l\'application</string>
-    <string name="timed_mute">Timed mute</string>
+    <string name="timed_mute">Temporairement muet</string>
     <string name="mention_account">Mentionner le compte</string>
     <string name="refresh_cache">Rafraîchir le cache</string>
     <string name="see_boost_and_fav">Voir qui a boosté et ajouté aux favoris</string>
