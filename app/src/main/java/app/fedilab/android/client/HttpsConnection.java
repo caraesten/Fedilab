@@ -1184,7 +1184,7 @@ public class HttpsConnection {
         }
 
     }
-    
+
 
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if( urlConnection.startsWith("https://")) {
