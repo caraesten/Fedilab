@@ -90,7 +90,7 @@
     <string name="send_email">メールを送信</string>
     <string name="choose_file">ファイルを選択してください</string>
     <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
-    <string name="click_to_change">パスをクリックして変更します</string>
+    <string name="click_to_change">パスをタップして変更する</string>
     <string name="failed">失敗！</string>
     <string name="scheduled_toots">スケジュールトゥート</string>
     <string name="disclaimer_full">以下の情報は、ユーザーのプロフィールが完全には反映されていない場合があります。</string>
@@ -215,7 +215,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">ミュートする時間（1分超）です。</string>
     <string name="timed_mute_date">%1$s は %2$s までミュートされています。\n このアカウントのプロフィールページでミュートを解除することができます。</string>
-    <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをクリックします。</string>
+    <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをタップします。</string>
     <!-- Notifications -->
     <string name="no_notifications">通知はありません</string>
     <string name="notif_mention">メンションされました</string>
@@ -470,7 +470,7 @@
         - このリンクは、2FAを利用していなくても使用することができます\n\n
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
     </string>
-    <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
+    <string name="media_ready">メディアが読み込まれました。ここをタップして表示します。</string>
     <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
     <string name="data_export_running">実行中です。お待ちください...</string>
     <string name="data_export">トゥートをエクスポート</string>
@@ -518,7 +518,7 @@
     <string name="toast_hide_boost">ブーストは表示されません！</string>
     <string name="direct_message">ダイレクトメッセージ</string>
     <string name="filters">フィルター</string>
-    <string name="action_filters_empty_content">フィルターはありません。 \"+\" ボタンをクリックして作成できます。</string>
+    <string name="action_filters_empty_content">フィルターはありません。 \"+\" ボタンをタップして作成できます。</string>
     <string name="filter_keyword">キーワードまたはフレーズ</string>
     <string name="context_home">ホームタイムライン</string>
     <string name="context_public">公開タイムライン</string>
