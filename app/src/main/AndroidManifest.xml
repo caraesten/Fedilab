@@ -326,7 +326,7 @@
             />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="app.fedilab.android.fileProvider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

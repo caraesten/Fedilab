@@ -1013,9 +1013,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoFileUri = FileProvider.getUriForFile(this,
-                        "app.fedilab.android.fileProvider",
-                        photoFile);
+                if(BuildConfig.DONATIONS) {
+                    photoFileUri = FileProvider.getUriForFile(this,
+                            "fr.gouv.etalab.mastodon.fileProvider",
+                            photoFile);
+                }else{
+                    photoFileUri = FileProvider.getUriForFile(this,
+                            "app.fedilab.android.fileProvider",
+                            photoFile);
+                }
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
@@ -2538,9 +2545,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             while ((read = tempInput.read(buff)) > 0) {
                 tempOut.write(buff, 0, read);
             }
-            uri = FileProvider.getUriForFile(this,
-                    "app.fedilab.android.fileProvider",
-                    file);
+            if(BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile(this,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        file);
+            }else{
+                uri = FileProvider.getUriForFile(this,
+                        "app.fedilab.android.fileProvider",
+                        file);
+            }
             tempInput.close();
             tempOut.close();
         } catch(IOException e) {
