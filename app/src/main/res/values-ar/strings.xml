@@ -803,7 +803,7 @@
     <string name="data_base_exported">تم تصدير قاعدة البيانات!</string>
     <string name="featured_hashtags">الوسوم الشائعة</string>
     <string name="filter_timeline_with_a_tag">تصفية الخيط الزمني باستخدام الوسوم</string>
-    <string name="no_tags">دون وسم</string>
+    <string name="no_tags">لا يوجد هناك وسم</string>
     <string name="set_hide_delete_notification_on_tab">إخفاء زر \"الحذف\" المتواجد في لسان الإشعارات</string>
     <string name="set_retrieve_metadata_share_from_extras">ارفاق صورة عند مشاركة عنوان رابط</string>
     <!-- end languages -->
