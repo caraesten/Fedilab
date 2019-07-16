@@ -1,0 +1,4 @@
+Fixed
+- Images when editing profile (Pleroma)
+- Profiles with remote instances (Pleroma)
+- Issue when following Pixelfed instances
