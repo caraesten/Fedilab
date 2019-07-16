@@ -453,7 +453,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="filter_regex">Filtrar por expresiones regulares</string>
     <string name="search">Buscar</string>
     <string name="delete">Eliminar</string>
-    <string name="fetch_more_toots">Buscar más toots…</string>
+    <string name="fetch_more_toots">Obtener más toots…</string>
     <!-- About lists -->
     <string name="action_lists">Listas</string>
     <string name="action_lists_confirm_delete">¿Seguro que deseas eliminar esta lista de forma permanente?</string>
@@ -572,7 +572,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="select_sound">Seleccionar tono</string>
     <string name="set_enable_time_slot">Activar intervalo de tiempo</string>
     <string name="how_to_videos">Videos de cómo se hace</string>
-    <string name="retrieve_remote_conversation">! Obteniendo hilo remoto!</string>
+    <string name="retrieve_remote_conversation">¡Obteniendo hilo remoto!</string>
     <string name="no_blocked_domain">! No hay dominios bloqueados!</string>
     <string name="unblock_domain_confirm">Desbloquear dominio</string>
     <string name="unblock_domain_confirm_message">¿Estás seguro de que quieres desbloquear a %s?</string>
