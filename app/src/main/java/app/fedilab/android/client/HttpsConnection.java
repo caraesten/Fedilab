@@ -22,9 +22,18 @@ import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.ServerResponse;
+import net.gotev.uploadservice.UploadInfo;
+import net.gotev.uploadservice.UploadNotificationConfig;
+import net.gotev.uploadservice.UploadStatusDelegate;
+
+import org.apache.poi.util.IOUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -41,6 +50,7 @@ import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
@@ -67,6 +77,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
@@ -832,240 +843,66 @@ public class HttpsConnection {
         BANNER
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private void patchImage(String urlConnection, int timeout, imageType it, InputStream image, String fileName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
-        fileName = FileNameCleaner.cleanFileName(fileName);
-        String twoHyphens = "--";
-        String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
-        String lineEnd = "\r\n";
-        if( urlConnection.startsWith("https://")) {
-            HttpsURLConnection httpsURLConnection;
-            URL url = new URL(urlConnection);
-            int lengthSentImage = 0;
-            byte[] pixelsImage = new byte[0];
-            if( image != null) {
-                ByteArrayOutputStream ous = null;
-                try {
-                    try {
-                        byte[] buffer = new byte[CHUNK_SIZE];
-                        ous = new ByteArrayOutputStream();
-                        int read;
-                        while ((read = image.read(buffer)) != -1) {
-                            ous.write(buffer, 0, read);
-                        }
-                        ous.flush();
-                    } finally {
-                        if (ous != null)
-                            ous.close();
-                    }
-                } catch (FileNotFoundException ignored) {
-                } catch (IOException ignored) {
-                }
-                pixelsImage = ous.toByteArray();
-
-                lengthSentImage = pixelsImage.length;
-                lengthSentImage += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                if( it == imageType.AVATAR)
-                    lengthSentImage += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
-                else
-                    lengthSentImage += ("Content-Disposition: form-data; name=\"header\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
-                lengthSentImage += 2 * (lineEnd).getBytes().length;
+    private void uploadMedia(String urlConnection, InputStream avatar, InputStream header, String filename){
+        UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+        uploadConfig.getCompleted().autoClear = true;
+        File file = new File(context.getCacheDir() + "/" + filename);
+        OutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(file);
+            if( avatar != null) {
+                IOUtils.copy(avatar, outputStream);
+            }else{
+                IOUtils.copy(header, outputStream);
             }
-
-
-
-            int lengthSent = lengthSentImage + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-            if (proxy != null)
-                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            httpsURLConnection.setDoInput(true);
-            httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setUseCaches(false);
-            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
-                httpsURLConnection.setRequestMethod("PATCH");
-            }else {
-                httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
-                httpsURLConnection.setRequestMethod("POST");
-            }
-            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
-            httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-            if (token != null && !token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            else if( token != null && token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", token);
-            httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
-
-            OutputStream outputStream = httpsURLConnection.getOutputStream();
-            outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
-            if(lengthSentImage > 0){
-                DataOutputStream request = new DataOutputStream(outputStream);
-                int totalSize = pixelsImage.length;
-                int bytesTransferred = 0;
-                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                if( it == imageType.AVATAR)
-                    request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+fileName+"\"" + lineEnd);
-                else
-                    request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+fileName+"\"" + lineEnd);
-
-                request.writeBytes(lineEnd);
-                while (bytesTransferred < totalSize) {
-                    int nextChunkSize = totalSize - bytesTransferred;
-                    if (nextChunkSize > CHUNK_SIZE) {
-                        nextChunkSize = CHUNK_SIZE;
-                    }
-                    request.write(pixelsImage, bytesTransferred, nextChunkSize);
-                    bytesTransferred += nextChunkSize;
-                    request.flush();
-                }
-                request.writeBytes(lineEnd);
-                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                request.flush();
-            }
-
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
-            } else {
-                String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        error = scanner.next();
-                    }catch (Exception e){e.printStackTrace();}
-                }
-                int responseCode = httpsURLConnection.getResponseCode();
-                try {
-                    httpsURLConnection.getInputStream().close();
-                }catch (Exception ignored){}
-
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            httpsURLConnection.getInputStream().close();
-        }else {
-            HttpURLConnection httpURLConnection;
-            URL url = new URL(urlConnection);
-
-            int lengthSentImage = 0;
-            byte[] pixelsImage = new byte[0];
-            if( image != null) {
-                ByteArrayOutputStream ous = null;
-                try {
-                    try {
-                        byte[] buffer = new byte[CHUNK_SIZE];
-                        ous = new ByteArrayOutputStream();
-                        int read;
-                        while ((read = image.read(buffer)) != -1) {
-                            ous.write(buffer, 0, read);
-                        }
-                        ous.flush();
-                    } finally {
-                        if (ous != null)
-                            ous.close();
-                    }
-                } catch (FileNotFoundException ignored) {
-                } catch (IOException ignored) {
-                }
-                pixelsImage = ous.toByteArray();
-
-                lengthSentImage = pixelsImage.length;
-                lengthSentImage += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                if( it == imageType.AVATAR)
-                    lengthSentImage += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
-                else
-                    lengthSentImage += ("Content-Disposition: form-data; name=\"header\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
-                lengthSentImage += 2 * (lineEnd).getBytes().length;
-            }
-
-
-
-            int lengthSent = lengthSentImage + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-            if (proxy != null)
-                httpURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpURLConnection = (HttpsURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpURLConnection.setConnectTimeout(timeout * 1000);
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setUseCaches(false);
-            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
-                httpURLConnection.setRequestMethod("PATCH");
-            }else {
-                httpURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
-                httpURLConnection.setRequestMethod("POST");
-            }
-            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
-            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-            if (token != null && !token.startsWith("Basic "))
-                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            else if( token != null && token.startsWith("Basic "))
-                httpURLConnection.setRequestProperty("Authorization", token);
-            httpURLConnection.setFixedLengthStreamingMode(lengthSent);
-
-            OutputStream outputStream = httpURLConnection.getOutputStream();
-            outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
-            if(lengthSentImage > 0){
-                DataOutputStream request = new DataOutputStream(outputStream);
-                int totalSize = pixelsImage.length;
-                int bytesTransferred = 0;
-                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                if( it == imageType.AVATAR)
-                    request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+fileName+"\"" + lineEnd);
-                else
-                    request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+fileName+"\"" + lineEnd);
-
-                request.writeBytes(lineEnd);
-                while (bytesTransferred < totalSize) {
-                    int nextChunkSize = totalSize - bytesTransferred;
-                    if (nextChunkSize > CHUNK_SIZE) {
-                        nextChunkSize = CHUNK_SIZE;
-                    }
-                    request.write(pixelsImage, bytesTransferred, nextChunkSize);
-                    bytesTransferred += nextChunkSize;
-                    request.flush();
-                }
-                request.writeBytes(lineEnd);
-                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                request.flush();
-            }
-
-            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
-            } else {
-                String error = null;
-                if( httpURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        error = scanner.next();
-                    }catch (Exception e){e.printStackTrace();}
-                }
-                int responseCode = httpURLConnection.getResponseCode();
-                try {
-                    httpURLConnection.getInputStream().close();
-                }catch (Exception ignored){}
-
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            httpURLConnection.getInputStream().close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-    }
+        try {
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            MultipartUploadRequest m = new MultipartUploadRequest(context, urlConnection)
+                    .setMethod("PATCH");
+                    if( avatar != null) {
+                        m.addFileToUpload(file.getPath(), "avatar");
+                    }else{
+                        m.addFileToUpload(file.getPath(), "header");
+                    }
+                    m.addParameter("name", filename)
+                    .addHeader("Authorization", "Bearer " + token)
+                    .setNotificationConfig(uploadConfig)
+                    .setDelegate(new UploadStatusDelegate() {
+                        @Override
+                        public void onProgress(Context context, UploadInfo uploadInfo) {
+                            // your code here
+                        }
 
+                        @Override
+                        public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
+                                            Exception exception) {
+                            // your code here
+                            file.delete();
+                        }
+
+                        @Override
+                        public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
+                            file.delete();
+                        }
+
+                        @Override
+                        public void onCancelled(Context context, UploadInfo uploadInfo) {
+                            file.delete();
+                        }
+                    })
+                    .startUpload();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -1117,10 +954,12 @@ public class HttpsConnection {
             String response;
             OutputStream outputStream = httpsURLConnection.getOutputStream();
             outputStream.write(postDataBytes);
-            if( avatar != null)
-                patchImage(urlConnection,120,imageType.AVATAR, avatar,avatarName,token);
-            if( header != null)
-                patchImage(urlConnection,120,imageType.BANNER, header,headerName,token);
+            if( avatar != null){
+                uploadMedia(urlConnection,avatar, null, avatarName);
+            }
+            if( header != null){
+                uploadMedia(urlConnection,null,header,headerName);
+            }
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
                 response = converToString(httpsURLConnection.getInputStream());
             } else {
@@ -1186,10 +1025,12 @@ public class HttpsConnection {
 
             OutputStream outputStream = httpURLConnection.getOutputStream();
             outputStream.write(postDataBytes);
-            if( avatar != null)
-                patchImage(urlConnection,120,imageType.AVATAR, avatar,avatarName,token);
-            if( header != null)
-                patchImage(urlConnection,120,imageType.BANNER, header,headerName,token);
+            if( avatar != null){
+                uploadMedia(urlConnection,avatar, null, avatarName);
+            }
+            if( header != null){
+                uploadMedia(urlConnection,null,header,headerName);
+            }
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 response = converToString(httpsURLConnection.getInputStream());
@@ -1343,11 +1184,7 @@ public class HttpsConnection {
         }
 
     }
-
-
-
-
-
+    
 
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if( urlConnection.startsWith("https://")) {
