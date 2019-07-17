@@ -26,43 +26,43 @@
     <string name="toots">Tootoj</string>
     <string name="tags">Etikedoj</string>
     <string name="token">Ĵetono</string>
-    <string name="save">Konservi</string>
+    <string name="save">Konservu</string>
     <string name="restore">Restarigi</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
     <string name="no_result">Neniu rezultoj!</string>
-    <string name="instance">Instance</string>
-    <string name="instance_example">Instance: mastodon.social</string>
+    <string name="instance">Servilo</string>
+    <string name="instance_example">Servilo: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-    <string name="add_account">Add an account</string>
+    <string name="add_account">Aldoni konton</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
+    <string name="change">Ŝangi</string>
+    <string name="choose_picture">Elekti bildon…</string>
     <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
+    <string name="microphone">Mikrofono</string>
+    <string name="camera">Fotilo</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
-    <string name="translate_toot">Translate this toot.</string>
-    <string name="schedule">Schedule</string>
+    <string name="delete_all">Forigu ĉiujn</string>
+    <string name="translate_toot">Traduki tiun Aplikaĵon.</string>
+    <string name="schedule">Plano</string>
     <string name="text_size">Text and icon sizes</string>
     <string name="text_size_change">Change the current text size:</string>
     <string name="icon_size_change">Change the current icon size:</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="open_with">Open with</string>
+    <string name="next">Sekva</string>
+    <string name="previous">Antaŭa</string>
+    <string name="open_with">Malfermi per</string>
     <string name="validate">Validate</string>
-    <string name="media">Media</string>
-    <string name="share_with">Share with</string>
-    <string name="shared_via">Shared via Fedilab</string>
-    <string name="replies">Replies</string>
-    <string name="username">User name</string>
-    <string name="drafts">Drafts</string>
+    <string name="media">Aŭdovidaĵoj</string>
+    <string name="share_with">Konigi kun</string>
+    <string name="shared_via">Komuna tra Fedilab</string>
+    <string name="replies">Respondoj</string>
+    <string name="username">Uzantnomo</string>
+    <string name="drafts">Malnetoj</string>
     <string name="new_data">New data are available! Do you want to display them?</string>
-    <string name="favourite">Favourites</string>
-    <string name="follow">New followers</string>
-    <string name="mention">Mentions</string>
+    <string name="favourite">Stelumoj</string>
+    <string name="follow">Novaj sekvantoj</string>
+    <string name="mention">Mencioj</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
     <string name="show_replies">Show replies</string>
@@ -87,11 +87,11 @@
     <string name="make_a_choice">What do you want to do?</string>
     <string name="delete_account_title">Delete an account</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
+    <string name="send_email">Sendi per retmesaĝo</string>
     <string name="choose_file">Please select a file</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="failed">Fiaskis!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
@@ -110,13 +110,13 @@
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
+    <string name="more_action_1">Silentigi</string>
+    <string name="more_action_2">Bloki</string>
+    <string name="more_action_3">Raporti</string>
+    <string name="more_action_4">Forigi</string>
+    <string name="more_action_5">Kopii</string>
+    <string name="more_action_6">Konigi</string>
+    <string name="more_action_7">Mencii</string>
     <string name="more_action_8">Timed mute</string>
     <string name="more_action_9">Delete &amp; re-draft</string>
     <string-array name="more_action_confirm">
@@ -127,8 +127,8 @@
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Sciigi</item>
+        <item>Silenta</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
@@ -160,9 +160,9 @@
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
+    <string name="toot_select_image">Elekti aŭdovidaĵon</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_delete_media">Forigi ĉi tiun aŭdovidaĵon?</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
