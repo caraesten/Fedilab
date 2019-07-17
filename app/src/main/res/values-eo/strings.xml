@@ -52,7 +52,7 @@
     <string name="next">Sekva</string>
     <string name="previous">Antaŭa</string>
     <string name="open_with">Malfermi per</string>
-    <string name="validate">Validate</string>
+    <string name="validate">Validigi</string>
     <string name="media">Aŭdovidaĵoj</string>
     <string name="share_with">Konigi kun</string>
     <string name="shared_via">Komuna tra Fedilab</string>
@@ -66,26 +66,26 @@
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
     <string name="show_replies">Show replies</string>
-    <string name="action_open_in_web">Open in browser</string>
-    <string name="translate">Translate</string>
+    <string name="action_open_in_web">Malfermu en retumilo</string>
+    <string name="translate">Traduki</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
-    <string name="local_menu">Local timeline</string>
-    <string name="global_menu">Federated timeline</string>
-    <string name="neutral_menu_title">Options</string>
-    <string name="favorites_menu">Favourites</string>
-    <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Muted users</string>
-    <string name="blocked_menu">Blocked users</string>
+    <string name="home_menu">Hejmo</string>
+    <string name="local_menu">Loka templinio</string>
+    <string name="global_menu">Frata templinio</string>
+    <string name="neutral_menu_title">Opcioj</string>
+    <string name="favorites_menu">Stelumoj</string>
+    <string name="communication_menu_title">Komunikado</string>
+    <string name="muted_menu">Silentigitaj uzantoj</string>
+    <string name="blocked_menu">Blokitaj uzantoj</string>
     <string name="remote_follow_menu">Remote follow</string>
-    <string name="notifications">Notifications</string>
-    <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
+    <string name="notifications">Sciigoj</string>
+    <string name="follow_request">Petoj de sekvado</string>
+    <string name="optimization">Optimigo</string>
+    <string name="settings">Agordoj</string>
+    <string name="profile">Profilo</string>
+    <string name="make_a_choice">Kion vi volas?</string>
+    <string name="delete_account_title">Forigi konton</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
     <string name="send_email">Sendi per retmesaĝo</string>
     <string name="choose_file">Please select a file</string>
@@ -135,8 +135,8 @@
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d respondo</item>
+        <item quantity="other">%d respondoj</item>
     </plurals>
     <string name="bookmarks">Bookmarks</string>
     <string name="bookmark_add">Add to bookmarks</string>
@@ -163,7 +163,7 @@
     <string name="toot_select_image">Elekti aŭdovidaĵon</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
     <string name="toot_delete_media">Forigi ĉi tiun aŭdovidaĵon?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
+    <string name="toot_error_no_content">Via tooto estas malplena!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
@@ -189,28 +189,28 @@
     <string name="about_developer">Developer:</string>
     <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
-    <string name="about_yandex">Translation of toots:</string>
+    <string name="about_code">Kodo: </string>
+    <string name="about_yandex">Traduko de toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Konversacioj</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
     <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
+    <string name="status_cnt">Tootoj \n %1$s</string>
+    <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Followers \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="reject">Malakcepti</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="remove_scheduled">Forigi planita toot?</string>
     <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
+    <string name="toot_scheduled">La toot estis planita!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
@@ -219,10 +219,10 @@
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="notif_mention">%s menciis vin</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">%s eksekvis vin</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
@@ -241,13 +241,13 @@
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="following">Sekvantaj</string>
+    <string name="followers">Sekvitaj</string>
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="connect_error">Unable to connect to instance domain!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="no_internet">Neniu interreta konekto!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
@@ -267,7 +267,7 @@
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
+    <string name="toast_error_login">Ne povas ensaluti!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
@@ -282,13 +282,13 @@
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
-    <string name="set_attachment_always">Always</string>
+    <string name="set_attachment_always">Ĉiam</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
+    <string name="set_attachment_ask">Demandi</string>
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="load_attachment_spoiler">Montru pli…</string>
+    <string name="load_attachment_spoiler_less">Montru malpli…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
