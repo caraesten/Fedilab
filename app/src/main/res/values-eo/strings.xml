@@ -251,8 +251,8 @@
     <string name="toast_block">La konto estis blokita!</string>
     <string name="toast_unblock">La konto ne plu estas blokita!</string>
     <string name="toast_mute">La konto estis silentigita!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
+    <string name="toast_unmute">La konto ne plu silentigita!</string>
+    <string name="toast_follow">La konto estis sekvita!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
@@ -283,18 +283,18 @@
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Ĉiam</string>
-    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_wifi">sendrata reto</string>
     <string name="set_attachment_ask">Demandi</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
+    <string name="set_attachment_action">Laŭdu la aŭdvidaĵo</string>
+    <string name="load_attachment">Ŝarĝi la bildojn</string>
     <string name="load_attachment_spoiler">Montru pli…</string>
     <string name="load_attachment_spoiler_less">Montru malpli…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
+    <string name="load_sensitive_attachment">Tikla enhavo</string>
+    <string name="set_display_reply">Montri antaŭa mesaĝo en respondoj</string>
+    <string name="set_display_local">Montri loka timeline</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_folder_title">Vojo: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
@@ -308,9 +308,9 @@
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Sciigi?</string>
     <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_night_mode">Nokta reĝimo</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_profile">Redakti profilon</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
@@ -321,7 +321,7 @@
     <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_time_from">Between</string>
+    <string name="settings_time_from">Inter</string>
     <string name="settings_time_to">kaj</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
     <string name="settings_time_lower">The time must be lower than %1$s</string>
@@ -351,32 +351,32 @@
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Ne</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>512 Ko</item>
+        <item>1 Mo</item>
+        <item>2 Mo</item>
+        <item>4 Mo</item>
+        <item>6 Mo</item>
+        <item>8 Mo</item>
     </string-array>
     <string name="set_led_colour">Set LED colour:</string>
     <string-array name="led_colours">
         <item>Blua</item>
-        <item>Cyan</item>
+        <item>Cejana</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Verda</item>
+        <item>Ruĝa</item>
+        <item>Flava</item>
+        <item>Blanka</item>
     </string-array>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
+    <string name="action_follow">Sekvi</string>
+    <string name="action_unfollow">Malsekvi</string>
+    <string name="action_block">Bloki</string>
+    <string name="action_unblock">Malbloki</string>
+    <string name="action_mute">Silentigi</string>
+    <string name="action_no_action">Neniu ago</string>
+    <string name="action_unmute">Malsilentigi</string>
+    <string name="request_sent">Peto sendita</string>
     <string name="followed_by">Sekvas vin</string>
     <string name="action_search">Serĉi</string>
     <string name="set_capitalize">First letter in capital for replies</string>
@@ -389,21 +389,21 @@
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
+    <string name="cache_title">Vakigi Kaŝmemoron</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
-    <string name="cache_units">Mb</string>
+    <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Title</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="description_header_custom_sharing">Priskribo</string>
+    <string name="description_hint_custom_sharing">Priskribo&#8230;</string>
+    <string name="keywords_header_custom_sharing">Ŝlosilvortoj</string>
+    <string name="keywords_hint_custom_sharing">Ŝlosilvortoj&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="action_sync">Sinkronigadi</string>
+    <string name="action_filter">Filtrili</string>
+    <string name="owner_cached_toots">Via listoj</string>
     <string name="v_public">Publika</string>
     <string name="v_unlisted">Nelistigita</string>
     <string name="v_private">Privata</string>
