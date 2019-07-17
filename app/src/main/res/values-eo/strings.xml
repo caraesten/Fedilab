@@ -19,7 +19,7 @@
     <string name="download_over">Elŝutado plenumita</string>
     <string name="save_file">Konservi %1$s</string>
     <string name="save_over">Media saved</string>
-    <string name="download_from" formatted="false">File: %1$s</string>
+    <string name="download_from" formatted="false">Dosiero: %1$s</string>
     <string name="password">Pasvorto</string>
     <string name="email">Retpoŝto</string>
     <string name="accounts">Kontaj</string>
@@ -38,10 +38,10 @@
     <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
     <string name="change">Ŝangi</string>
     <string name="choose_picture">Elekti bildon…</string>
-    <string name="clear">Clean</string>
+    <string name="clear">Pura</string>
     <string name="microphone">Mikrofono</string>
     <string name="camera">Fotilo</string>
-    <string name="speech_prompt">Please, say something</string>
+    <string name="speech_prompt">Bonvolu, diri ion</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Forigu ĉiujn</string>
     <string name="translate_toot">Traduki tiun Aplikaĵon.</string>
@@ -86,10 +86,10 @@
     <string name="profile">Profilo</string>
     <string name="make_a_choice">Kion vi volas?</string>
     <string name="delete_account_title">Forigi konton</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
+    <string name="delete_account_message" formatted="false">Forigi la konton %1$s de la apliko?</string>
     <string name="send_email">Sendi per retmesaĝo</string>
     <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
+    <string name="choose_file_error">Neniu dosiero esploristo trovis!</string>
     <string name="click_to_change">Click on the path to change it</string>
     <string name="failed">Fiaskis!</string>
     <string name="scheduled_toots">Scheduled toots</string>
@@ -141,9 +141,9 @@
     <string name="bookmarks">Legosignoj</string>
     <string name="bookmark_add">Aldoni legosignon</string>
     <string name="bookmark_remove">Forigu legosignon</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="bookmarks_empty">Neniu legosignojn por montri</string>
+    <string name="status_bookmarked">Statuso estis aldonita al legosignoj!</string>
+    <string name="status_unbookmarked">Statuso estis forigita de legosignoj!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -170,7 +170,7 @@
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Tikla enhavo?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
+        <item>Publika: afiŝi en publikaj tempolinioj</item>
         <item>Do not post to public timelines</item>
         <item>Post to followers only</item>
         <item>Post to mentioned users only</item>
@@ -186,7 +186,7 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
+    <string name="about_developer">Evoluigado:</string>
     <string name="about_license">Permesilo: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kodo: </string>
@@ -203,7 +203,7 @@
     <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Sekvante \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
+    <string name="authorize">Rajtigi</string>
     <string name="reject">Malakcepti</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
@@ -248,9 +248,9 @@
     <string name="client_error">Unable to get client id!</string>
     <string name="connect_error">Unable to connect to instance domain!</string>
     <string name="no_internet">Neniu interreta konekto!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
+    <string name="toast_block">La konto estis blokita!</string>
+    <string name="toast_unblock">La konto ne plu estas blokita!</string>
+    <string name="toast_mute">La konto estis silentigita!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
