@@ -94,7 +94,7 @@
     <string name="failed">Fiaskis!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="insert_emoji">Enmeti emoĝion</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
@@ -171,9 +171,9 @@
     <string name="toot_sensitive">Tikla enhavo?</string>
     <string-array name="toot_visibility">
         <item>Publika: afiŝi en publikaj tempolinioj</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Ne afiŝi en publikaj tempolinioj</item>
+        <item>Afiŝi nur al sekvantoj</item>
+        <item>Afiŝi nur al menciitaj uzantoj</item>
     </string-array>
     <string name="no_draft">No drafts!</string>
     <string name="choose_toot">Choose a toot</string>
@@ -461,7 +461,7 @@
     <!-- About lists -->
     <string name="action_lists">Lists</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">Ankoraŭ estas nenio en ĉi tiu listo. Kiam membroj de ĉi tiu listo afiŝos novajn mesaĝojn, ili aperos ĉi tie.</string>
     <string name="action_lists_add_to">Add to list</string>
     <string name="action_lists_remove_from">Remove from list</string>
     <string name="action_lists_create">Add list</string>
@@ -852,7 +852,7 @@
     <string name="edit_media">Edit media</string>
     <string name="redo">redo</string>
     <string name="gallery">Gallery</string>
-    <string name="label_emoji">Emoji</string>
+    <string name="label_emoji">Emoĝio</string>
     <string name="label_sticker">Sticker</string>
     <string name="label_eraser">Eraser</string>
     <string name="label_text">Text</string>
