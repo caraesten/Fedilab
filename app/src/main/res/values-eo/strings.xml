@@ -28,7 +28,7 @@
     <string name="token">Ĵetono</string>
     <string name="save">Konservu</string>
     <string name="restore">Restarigi</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
+    <string name="two_factor_authentification">Dufaktora aŭtentigo?</string>
     <string name="no_result">Neniu rezultoj!</string>
     <string name="instance">Servilo</string>
     <string name="instance_example">Servilo: mastodon.social</string>
@@ -118,7 +118,7 @@
     <string name="more_action_6">Konigi</string>
     <string name="more_action_7">Mencii</string>
     <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Forigi kaj reskribi</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
         <item>Block this account?</item>
@@ -150,7 +150,7 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
+    <string name="toot_cw_placeholder">Averto</string>
     <string name="toot_placeholder">What is on your mind?</string>
     <string name="toot_it">HUP!</string>
     <string name="queet_it">QUEET!</string>
@@ -828,7 +828,7 @@
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
+    <string name="set_sensitive_content">Ĉiam marki aŭdovidaĵojn tiklaj</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
