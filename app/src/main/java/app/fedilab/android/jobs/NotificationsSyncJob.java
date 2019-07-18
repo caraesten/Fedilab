@@ -38,6 +38,7 @@ import com.evernote.android.job.JobRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -265,11 +266,14 @@ public class NotificationsSyncJob extends Job {
             if( targeted_account != null && notifType == Helper.NotifType.FOLLLOW)
                 intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
             intent.putExtra(PREF_INSTANCE, account.getInstance());
-            long notif_id = Long.parseLong(account.getId());
+            long notif_id;
+            if( account.getId() != null &&  account.getId().matches("-?\\d+(\\.\\d+)?")){
+                notif_id =  Long.parseLong(account.getId());
+            }else{
+                notif_id = new Random().nextLong();
+            }
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             if( notificationUrl != null ){
-
-
                 final String finalTitle = title;
                 Handler mainHandler = new Handler(Looper.getMainLooper());
 
