@@ -936,7 +936,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="list_reported_statuses">Gemeldete Status</string>
     <string name="account">Konto</string>
     <string name="unsilence">Lautlosschaltung aufheben</string>
-    <string name="undisable">Deaktivieren widerrufen</string>
+    <string name="undisable">Deaktivierung widerrufen</string>
     <string name="suspend">Unterbrechen</string>
     <string name="unsuspend">Unterbrechen widerrufen</string>
     <string name="account_silenced">Das Konto wurde lautlos geschaltet!</string>

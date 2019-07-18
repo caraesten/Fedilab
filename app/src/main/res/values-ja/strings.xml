@@ -90,7 +90,7 @@
     <string name="send_email">メールを送信</string>
     <string name="choose_file">ファイルを選択してください</string>
     <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
-    <string name="click_to_change">パスをクリックして変更します</string>
+    <string name="click_to_change">パスをタップして変更する</string>
     <string name="failed">失敗！</string>
     <string name="scheduled_toots">スケジュールトゥート</string>
     <string name="disclaimer_full">以下の情報は、ユーザーのプロフィールが完全には反映されていない場合があります。</string>
@@ -215,7 +215,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">ミュートする時間（1分超）です。</string>
     <string name="timed_mute_date">%1$s は %2$s までミュートされています。\n このアカウントのプロフィールページでミュートを解除することができます。</string>
-    <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをクリックします。</string>
+    <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをタップします。</string>
     <!-- Notifications -->
     <string name="no_notifications">通知はありません</string>
     <string name="notif_mention">メンションされました</string>
@@ -245,11 +245,11 @@
     <string name="connect_error">インスタンスドメインに接続できません！</string>
     <string name="no_internet">インターネット接続がありません！</string>
     <string name="toast_block">アカウントがブロックされました！</string>
-    <string name="toast_unblock">アカウントはブロックされていません！</string>
+    <string name="toast_unblock">このアカウントのブロックを解除しました！</string>
     <string name="toast_mute">アカウントはミュートされました。</string>
-    <string name="toast_unmute">アカウントはミュートされません！</string>
+    <string name="toast_unmute">このアカウントのミュートを解除しました！</string>
     <string name="toast_follow">アカウントがフォローされました！</string>
-    <string name="toast_unfollow">アカウントはフォローされていません！</string>
+    <string name="toast_unfollow">このアカウントのフォローを解除しました！</string>
     <string name="toast_reblog">トゥートをブーストしました</string>
     <string name="toast_unreblog">トゥートはブーストされていません！</string>
     <string name="toast_favourite">トゥートをお気に入りに追加しました</string>
@@ -450,7 +450,7 @@
     <!-- About lists -->
     <string name="action_lists">リスト</string>
     <string name="action_lists_confirm_delete">このリストを完全に削除してもよろしいですか？</string>
-    <string name="action_lists_empty_content">このリストにはまだ何もありません。 このリストのメンバーが新しいステータスを投稿すると、ここに表示されます。</string>
+    <string name="action_lists_empty_content">このリストにはまだ何もありません。 このリストのメンバーが新しいトゥートを投稿すると、ここに表示されます。</string>
     <string name="action_lists_add_to">リストに追加</string>
     <string name="action_lists_remove_from">リストから削除</string>
     <string name="action_lists_create">リストを追加</string>
@@ -470,7 +470,7 @@
         - このリンクは、2FAを利用していなくても使用することができます\n\n
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
     </string>
-    <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
+    <string name="media_ready">メディアが読み込まれました。ここをタップして表示します。</string>
     <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
     <string name="data_export_running">実行中です。お待ちください...</string>
     <string name="data_export">トゥートをエクスポート</string>
@@ -513,12 +513,12 @@
     <string name="unendorse">プロフィールから外す</string>
     <string name="show_everything">%s からの全てを表示</string>
     <string name="toast_endorse">アカウントはプロフィールで紹介されています</string>
-    <string name="toast_unendorse">アカウントはプロフィールで紹介されません</string>
+    <string name="toast_unendorse">プロフィールの紹介からこのアカウントを削除しました</string>
     <string name="toast_show_boost">ブーストが表示されます！</string>
     <string name="toast_hide_boost">ブーストは表示されません！</string>
     <string name="direct_message">ダイレクトメッセージ</string>
     <string name="filters">フィルター</string>
-    <string name="action_filters_empty_content">フィルターはありません。 \"+\" ボタンをクリックして作成できます。</string>
+    <string name="action_filters_empty_content">フィルターはありません。 \"+\" ボタンをタップして作成できます。</string>
     <string name="filter_keyword">キーワードまたはフレーズ</string>
     <string name="context_home">ホームタイムライン</string>
     <string name="context_public">公開タイムライン</string>
@@ -546,8 +546,8 @@
     <string name="add_account_list_trunk">アカウントをリストに追加</string>
     <string name="account_added_list_trunk">アカウントがリストに追加されました</string>
     <string name="adding_account_list_trunk">アカウントをリストに追加</string>
-    <string name="action_list_add">まだリストを作成していません。新規に追加するには \"+\" ボタンをクリックします。</string>
-    <string name="action_remote_instance_add">リモートインスタンスをフォローしていません。新規に追加するには、 \"+\" ボタンをクリックします。</string>
+    <string name="action_list_add">まだリストを作成していません。新規に追加するには \"+\" ボタンをタップします。</string>
+    <string name="action_remote_instance_add">リモートインスタンスをフォローしていません。新規に追加するには、 \"+\" ボタンをタップします。</string>
     <string name="about_trunk">おすすめのアカウント</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">アカウントをフォローできません</string>
