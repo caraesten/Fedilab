@@ -379,9 +379,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             //Makes sure the notifications is not already displayed
             if( !this.notifications.contains(notification)) {
                 //Update the id of the last notification retrieved
-                MainActivity.lastNotificationId = notification.getId();
+
                 notifications.add(0, notification);
                 if( type == Type.ALL) {
+                    MainActivity.lastNotificationId = notification.getId();
                     MainActivity.countNewNotifications++;
                     try {
                         ((MainActivity) context).updateNotifCounter();
