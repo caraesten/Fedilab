@@ -1265,7 +1265,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( error != null){
             return;
         }
-        if( relationship.isBlocked_by() ){
+        if( relationship != null && relationship.isBlocked_by() ){
             warning_message.setVisibility(View.VISIBLE);
         }
 
@@ -2462,40 +2462,42 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_content.setAdapter(emojisSearchAdapter);
             final String oldContent = toot_content.getText().toString();
             String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
-            final String search = searchA[searchA.length-1];
-            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String shortcode = emojis.get(position).getShortcode();
-                    String deltaSearch = "";
-                    int searchLength = 15;
-                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                        searchLength = currentCursorPosition;
-                    }
-                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
-                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
-                    else {
-                        if( currentCursorPosition >= oldContent.length() )
-                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
-                    }
+            if( searchA.length > 0 ) {
+                final String search = searchA[searchA.length - 1];
+                toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String shortcode = emojis.get(position).getShortcode();
+                        String deltaSearch = "";
+                        int searchLength = 15;
+                        if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                            searchLength = currentCursorPosition;
+                        }
+                        if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                        else {
+                            if (currentCursorPosition >= oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                        }
 
-                    if( !search.equals(""))
-                        deltaSearch = deltaSearch.replace(":"+search,"");
-                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
-                    newContent += deltaSearch;
-                    newContent += ":" + shortcode + ": ";
-                    int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() )
-                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
-                    toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    toot_content.setSelection(newPosition);
-                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
-                    toot_content.setThreshold(1);
-                    toot_content.setAdapter(emojisSearchAdapter);
+                        if (!search.equals(""))
+                            deltaSearch = deltaSearch.replace(":" + search, "");
+                        String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                        newContent += deltaSearch;
+                        newContent += ":" + shortcode + ": ";
+                        int newPosition = newContent.length();
+                        if (currentCursorPosition < oldContent.length())
+                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                        toot_content.setText(newContent);
+                        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                        toot_content.setSelection(newPosition);
+                        EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
+                        toot_content.setThreshold(1);
+                        toot_content.setAdapter(emojisSearchAdapter);
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 

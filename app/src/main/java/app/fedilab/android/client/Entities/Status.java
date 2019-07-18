@@ -602,7 +602,7 @@ public class Status implements Parcelable{
                     urlText += "|"+count;
                     count++;
                 }
-                content = content.replaceFirst(Pattern.quote(beforemodification), urlText);
+                content = content.replaceFirst(Pattern.quote(beforemodification), Matcher.quoteReplacement(urlText));
             }
         }
         spannableStringContent = new SpannableString(content);

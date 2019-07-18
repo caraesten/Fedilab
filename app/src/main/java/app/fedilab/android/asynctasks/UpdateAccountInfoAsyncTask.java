@@ -114,10 +114,12 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
-        Intent mainActivity = new Intent(this.contextReference.get(), MainActivity.class);
-        mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
-        this.contextReference.get().startActivity(mainActivity);
-        ((Activity) this.contextReference.get()).finish();
+        if( this.contextReference.get() != null) {
+            Intent mainActivity = new Intent(this.contextReference.get(), MainActivity.class);
+            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
+            this.contextReference.get().startActivity(mainActivity);
+            ((Activity) this.contextReference.get()).finish();
+        }
 
     }
 

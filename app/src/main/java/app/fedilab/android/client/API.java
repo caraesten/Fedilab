@@ -22,6 +22,7 @@ import android.os.Bundle;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.room.util.StringUtil;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -296,6 +297,13 @@ public class API {
 
         }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             url_action = Helper.instanceWithProtocol(this.context, this.instance) + "/api/pleroma" + endpoint;
+        }
+        if( url_action == null){
+            apiResponse = new APIResponse();
+            APIError = new Error();
+            APIError.setError(context.getString(R.string.toast_error));
+            apiResponse.setError(APIError);
+            return apiResponse;
         }
         try {
             String response = new HttpsConnection(context, this.instance).get(url_action, 10, params, prefKeyOauthTokenT);
@@ -1619,8 +1627,13 @@ public class API {
             String response = httpsConnection.get("https://"+remoteInstance+"/api/statuses/public_timeline.json", 10, params, prefKeyOauthTokenT);
             statuses = GNUAPI.parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                if(statuses.get(0).getId() != null && statuses.get(0).getId().matches("-?\\d+(\\.\\d+)?")) {
+                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId()) + 1));
+                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId()) - 1));
+                }else{
+                    apiResponse.setSince_id(statuses.get(0).getId());
+                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+                }
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
