@@ -164,7 +164,6 @@ public abstract class BaseMainActivity extends BaseActivity
     public static String displayPeertube = null;
     private int style;
     private Activity activity;
-    public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
@@ -2092,9 +2091,13 @@ public abstract class BaseMainActivity extends BaseActivity
                     } else if(tl.getType() == ManageTimelines.Type.NOTIFICATION) {
                         countNewNotifications = 0;
                         updateNotifCounter();
-                    }else if (tab.getPosition() > 1) {
-                        if (typePosition.containsKey(tab.getPosition()))
-                            manageTab(typePosition.get(tab.getPosition()), 0);
+                    }else {
+                        View tabCustom = tab.getCustomView();
+                        if( tabCustom != null) {
+                            TextView tabCountertCustom = tabCustom.findViewById(R.id.tab_counter);
+                            tabCountertCustom.setText(String.valueOf(0));
+                            tabCountertCustom.setVisibility(View.GONE);
+                        }
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         displayStatusFragment.scrollToTop();
                     }
