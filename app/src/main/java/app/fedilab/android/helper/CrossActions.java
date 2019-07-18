@@ -561,7 +561,7 @@ public class CrossActions {
     public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
 
-        if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+        if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
             Intent intent = new Intent(context, TootActivity.class);
             Bundle b = new Bundle();
             if( status != null && status.getReblog() != null )
@@ -578,7 +578,7 @@ public class CrossActions {
 
             }
         }else {
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS){
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
                 builderSingle.setTitle(context.getString(R.string.choose_accounts));
                 final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
