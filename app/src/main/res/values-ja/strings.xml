@@ -498,9 +498,6 @@
     <string name="delete_instance">このインスタンスを削除しますか？</string>
     <string name="warning_delete_instance">%s をフォローインスタンスから削除しようとしています。</string>
     <string name="which_language">次の言語に翻訳</string>
-    <string name="crash_title">Mastalabは停止しました :(</string>
-    <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
-    <string name="send_crash_report">クラッシュレポートをメールで送信するか尋ねる？</string>
     <string name="follow_instance">インスタンスをフォロー</string>
     <string name="toast_instance_already_added">既にこのインスタンスをフォローしています！</string>
     <string name="toast_instance_followed">インスタンスがフォローされました！</string>
@@ -1001,6 +998,11 @@
     <string name="add_instances">インスタンスを追加</string>
     <string name="export_instances">インスタンスをエクスポート</string>
     <string name="import_instances">インスタンスをインポート</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalabは停止しました :(</string>
+    <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
