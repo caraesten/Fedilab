@@ -76,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -2339,7 +2340,11 @@ public abstract class BaseMainActivity extends BaseActivity
                         View tabHome = tabLayout.getTabAt(i).getCustomView();
                         if( tabHome != null){
                             TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
-                            tabCounterHome.setText(String.valueOf(countNewStatus));
+                            if(countNewStatus == Helper.TOOTS_PER_PAGE){
+                                tabCounterHome.setText(String.format(Locale.getDefault(), "%d+", countNewStatus));
+                            }else{
+                                tabCounterHome.setText(String.valueOf(countNewStatus));
+                            }
                             if( countNewStatus> 0){
                                 //New data are available
                                 //The fragment is not displayed, so the counter is displayed
@@ -2398,7 +2403,11 @@ public abstract class BaseMainActivity extends BaseActivity
         TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
         if( tabCounterNotif == null)
             return;
-        tabCounterNotif.setText(String.valueOf(countNewNotifications));
+        if(countNewNotifications == Helper.NOTIFICATIONS_PER_PAGE){
+            tabCounterNotif.setText(String.format(Locale.getDefault(), "%d+", countNewNotifications));
+        }else{
+            tabCounterNotif.setText(String.valueOf(countNewNotifications));
+        }
         if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
         }else {

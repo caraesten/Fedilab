@@ -30,6 +30,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
 import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
+
+import static app.fedilab.android.activities.BaseMainActivity.countNewNotifications;
 
 
 /**
@@ -188,7 +191,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 flag_loading = true;
                 swiped = true;
                 if(type == Type.ALL) {
-                    MainActivity.countNewNotifications = 0;
+                    countNewNotifications = 0;
                     try {
                         ((MainActivity) context).updateNotifCounter();
                     } catch (Exception ignored) {
@@ -300,7 +303,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
                 if(type == Type.ALL) {
                     if (lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
-                        MainActivity.countNewNotifications++;
+                        countNewNotifications++;
                     }
                     try {
                         ((MainActivity) context).updateNotifCounter();
@@ -333,7 +336,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
      * Called from main activity in onResume to retrieve missing notifications
      * @param sinceId String
      */
-    public void retrieveMissingNotifications(String sinceId){
+    void retrieveMissingNotifications(String sinceId){
         asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -366,7 +369,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         swiped = true;
         if(type == Type.ALL) {
-            MainActivity.countNewNotifications = 0;
+            countNewNotifications = 0;
         }
         asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -383,7 +386,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 notifications.add(0, notification);
                 if( type == Type.ALL) {
                     MainActivity.lastNotificationId = notification.getId();
-                    MainActivity.countNewNotifications++;
+                    countNewNotifications++;
                     try {
                         ((MainActivity) context).updateNotifCounter();
                     } catch (Exception ignored) {
@@ -411,10 +414,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
         }
         if( notifications != null && notifications.size() > 0) {
-
             if( type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId)) {
+                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) >= Long.parseLong(MainActivity.lastNotificationId)) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
                 }
@@ -427,7 +429,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications != null && this.notifications.size() == 0 ||
                         Long.parseLong(notifications.get(i).getId()) > Long.parseLong(this.notifications.get(0).getId())) {
-                    MainActivity.countNewNotifications++;
+                    countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
                     inserted++;
                 }
@@ -449,7 +451,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( type == Type.ALL) {
             String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
             if (lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)) {
-                MainActivity.countNewNotifications = 0;
+                countNewNotifications = 0;
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
                 editor.apply();
