@@ -502,9 +502,6 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="delete_instance">Diese Instanz löschen?</string>
     <string name="warning_delete_instance">Sie löschen %s aus Ihren folgenden Instanzen.</string>
     <string name="which_language">Übersetzen in</string>
-    <string name="crash_title">Mastalab ist abgestürzt :(</string>
-    <string name="crash_message">Du kannst mir den Fehlerreport per E-Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
-    <string name="send_crash_report">Nachfragen, ob Fehlerbericht per E-Mail versendet werden soll?</string>
     <string name="follow_instance">Folge Instanz</string>
     <string name="toast_instance_already_added">Du folgst dieser Instanz bereits!</string>
     <string name="toast_instance_followed">Der Instanz wird gefolgt!</string>
@@ -1000,6 +997,11 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="add_instances">Instanz hinzufügen</string>
     <string name="export_instances">Instanzen exportieren</string>
     <string name="import_instances">Instanzen importieren</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab ist abgestürzt :(</string>
+    <string name="crash_message">Du kannst mir den Fehlerreport per E-Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
