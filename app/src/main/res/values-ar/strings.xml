@@ -524,9 +524,6 @@
     <string name="delete_instance">هل تريد إزالة مثيل الخادم هذا؟</string>
     <string name="warning_delete_instance">إنّك بصدد حذف %s مِن قائمة مثيلات الخوادم التي تتبعها.</string>
     <string name="which_language">ترجِم إلى</string>
-    <string name="crash_title">لقد توقّفَ تطبيق Mastalab :(</string>
-    <string name="crash_message">يمكنكم أن ترسلوا لي عن طريق البريد الإلكتروني تقرير الحادث. وستساعدون على إصلاح ذلك:)\n\n يمكن إضافة محتوى إضافي. شكرًا لكم!</string>
-    <string name="send_crash_report">طلب إرسال تقرير عن تحطم التطبيق عبر البريد ؟</string>
     <string name="follow_instance">اتبع مثيل الخادم</string>
     <string name="toast_instance_already_added">إنّك مُتابِع لمثيل الخادم هذا!</string>
     <string name="toast_instance_followed">تمت مُتابَعة مثيل الخادم!</string>
@@ -1028,6 +1025,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">لقد توقّفَ تطبيق Mastalab :(</string>
+    <string name="crash_message">يمكنكم أن ترسلوا لي عن طريق البريد الإلكتروني تقرير الحادث. وستساعدون على إصلاح ذلك:)\n\n يمكن إضافة محتوى إضافي. شكرًا لكم!</string>
     <plurals name="number_of_vote">
         <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>
