@@ -91,7 +91,7 @@
     <string name="choose_file">Per favore seleziona un file</string>
     <string name="choose_file_error">Nessun gestore file trovato!</string>
     <string name="click_to_change">Fai clic sul percorso per cambiarlo</string>
-    <string name="failed">Fallito!</string>
+    <string name="failed">Errore!</string>
     <string name="scheduled_toots">Toot programmati</string>
     <string name="disclaimer_full">Le informazioni qui sotto potrebbero riflettere in modo incompleto il profilo dell\'utente.</string>
     <string name="insert_emoji">Inserisci emoji</string>
@@ -102,7 +102,7 @@
     <string name="fav_added">Il toot è stato aggiunto ai preferiti</string>
     <string name="fav_removed">Il toot è stato rimosso dai preferiti!</string>
     <string name="reblog_added">Il toot è stato ricondiviso!</string>
-    <string name="reblog_removed">Il toot non più ricondiviso!</string>
+    <string name="reblog_removed">Il toot non è più ricondiviso!</string>
     <string name="reblog_by">Ricondiviso da %1$s</string>
     <string name="favourite_add">Aggiungere questo toot ai tuoi preferiti?</string>
     <string name="favourite_remove">Rimuovere questo toot dai tuoi preferiti?</string>
@@ -1010,9 +1010,9 @@
     <string name="add_instances">Aggiungi un istanza</string>
     <string name="export_instances">Esporta le istanze</string>
     <string name="import_instances">Importa istanze</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Segnalazioni di crash</string>
+    <string name="set_enable_crash_report">Abilita segnalazioni di crash</string>
+    <string name="set_enable_crash_report_indication">Se abilitato, una segnalazione di crash sarà creata localmente e quindi sarai in grado di condividerla.</string>
     <string name="crash_title">Mastalab ha smesso di funzionare :-(</string>
     <string name="crash_message">Puoi inviarmi via email il rapporto sul problema. Mi aiuterà a risolverlo :-)\n\nPuoi aggiungere ulteriori commenti. Grazie!</string>
     <plurals name="number_of_vote">
