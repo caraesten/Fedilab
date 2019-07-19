@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 293
-        versionName "2.10.2"
+        versionCode 294
+        versionName "2.10.3"
         multiDexEnabled true
         renderscriptTargetApi 28 as int
         renderscriptSupportModeEnabled true
@@ -67,7 +67,7 @@ ext.uploadServiceVersion = "3.5.2"
 ext.torrentstreamVersion = "2.5.0"
 
 ext.netCipherVersion = "2.0.0-alpha1"
-ext.acraVersion = "5.1.3"
+ext.acraVersion = "5.4.0"
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
