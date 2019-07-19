@@ -140,7 +140,7 @@ public class CrossActions {
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
         else if (doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG)
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-        if(type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
+        if((type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS) && limitedToOwner){
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -246,11 +246,11 @@ public class CrossActions {
                         if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
                             if (doAction == API.StatusAction.REBLOG) {
                                 status.setReblogged(true);
-                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS)
                                     status.setBoostAnimated(true);
                             } else if (doAction == API.StatusAction.FAVOURITE) {
                                 status.setFavourited(true);
-                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE|| type == RetrieveFeedsAsyncTask.Type.NEWS)
                                     status.setFavAnimated(true);
                             } else if (doAction == API.StatusAction.PIN) {
                                 status.setPinned(true);
