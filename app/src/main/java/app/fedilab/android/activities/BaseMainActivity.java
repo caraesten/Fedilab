@@ -2095,8 +2095,10 @@ public abstract class BaseMainActivity extends BaseActivity
                         View tabCustom = tab.getCustomView();
                         if( tabCustom != null) {
                             TextView tabCountertCustom = tabCustom.findViewById(R.id.tab_counter);
-                            tabCountertCustom.setText(String.valueOf(0));
-                            tabCountertCustom.setVisibility(View.GONE);
+                            if( tabCountertCustom != null) {
+                                tabCountertCustom.setText(String.valueOf(0));
+                                tabCountertCustom.setVisibility(View.GONE);
+                            }
                         }
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         displayStatusFragment.scrollToTop();
