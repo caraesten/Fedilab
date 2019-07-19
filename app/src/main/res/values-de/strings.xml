@@ -997,9 +997,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="add_instances">Instanz hinzufügen</string>
     <string name="export_instances">Instanzen exportieren</string>
     <string name="import_instances">Instanzen importieren</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Absturzberichte</string>
+    <string name="set_enable_crash_report">Absturzberichte aktivieren</string>
+    <string name="set_enable_crash_report_indication">Wenn aktiviert, wird lokal ein Absturzbericht erstellt. Anschließend können Sie diesen teilen.</string>
     <string name="crash_title">Mastalab ist abgestürzt :(</string>
     <string name="crash_message">Du kannst mir den Fehlerreport per E-Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
     <plurals name="number_of_vote">
