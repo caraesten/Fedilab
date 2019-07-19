@@ -479,11 +479,10 @@ public class Helper {
     public static final String RECEIVE_HOME_DATA = "receive_home_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
-    public static final String RECEIVE_PICTURE = "receive_picture";
     public static final String RECEIVE_HIDE_ITEM = "receive_hide_item";
     //User agent
-    public static final String USER_AGENT = "Fedilab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
-
+    //public static final String USER_AGENT = "Fedilab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
+    public static final String USER_AGENT = System.getProperty("http.agent");
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
     public static final String VIDEO_ID = "video_id_update";

@@ -101,7 +101,7 @@ public class MainApplication extends MultiDexApplication {
                 version = pInfo.versionName;
             } catch (PackageManager.NameNotFoundException ignored) {
             }
-            ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("support@fedilab.app").setSubject(" Crash Report for Fedilab " + version).setEnabled(true);
+            ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("hello@fedilab.app").setSubject("[Fedilab] - Crash Report " + version).setEnabled(true);
             ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
             ACRA.init(this, ACRABuilder);
         }
