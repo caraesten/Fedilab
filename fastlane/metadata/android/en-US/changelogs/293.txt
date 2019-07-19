@@ -1,0 +1,10 @@
+Added:
+- Crash reports can be sent by email (default: disabled)
+
+Changed
+- User agent reversed to its default value
+- Decrease the number of accounts/statuses/notifications loaded per page (40 -> 20)
+
+Fixed
+- Notification counter issue
+- Fix some crashes
