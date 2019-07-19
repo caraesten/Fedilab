@@ -509,9 +509,6 @@
     <string name="delete_instance">Διαγραφή αυτής της υπόστασης;</string>
     <string name="warning_delete_instance">Πρόκειται να διαγράψεις την %s , από τις υποστάσεις που παρακολουθείς.</string>
     <string name="which_language">Μετάφραση στο</string>
-    <string name="crash_title">Το Φέντιλαμπ σταμάτησε :(</string>
-    <string name="crash_message">Μπορείς να μου στείλεις την αναφορά κατάρρευσης με ηλεκτρονικό ταχυδρομείο. Αυτό θα βοηθήσει στην βελτίωση του Φέντιλαμπ. :)\n\n Μπορείς να προσθέσεις και επιπλέον στοιχεία. Ευχαριστώ!</string>
-    <string name="send_crash_report">Ερώτηση πριν την αποστολή αναφορών κατάρρευσης μέσω του ηλεκτρονικού ταχυδρομείου;</string>
     <string name="follow_instance">Παρακολούθηση της υπόστασης</string>
     <string name="toast_instance_already_added">Ήδη παρακολουθείς αυτή την υπόσταση.</string>
     <string name="toast_instance_followed">Η υπόσταση παρακολουθείται.</string>
@@ -1013,6 +1010,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Το Φέντιλαμπ σταμάτησε :(</string>
+    <string name="crash_message">Μπορείς να μου στείλεις την αναφορά κατάρρευσης με ηλεκτρονικό ταχυδρομείο. Αυτό θα βοηθήσει στην βελτίωση του Φέντιλαμπ. :)\n\n Μπορείς να προσθέσεις και επιπλέον στοιχεία. Ευχαριστώ!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>
