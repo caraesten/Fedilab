@@ -509,9 +509,6 @@
     <string name="delete_instance">Ta bort denna instans?</string>
     <string name="warning_delete_instance">Du håller på att ta bort %s från dina instanser.</string>
     <string name="which_language">Översätt till</string>
-    <string name="crash_title">Fedilab har stängts :(</string>
-    <string name="crash_message">Du kan skicka felrapport via e-post. Det kommer vara till hjälp för att åtgärda det :)\n\nDu kan också lägga till mer information. Tack så mycket!</string>
-    <string name="send_crash_report">Fråga om att skicka felrapport via e-post?</string>
     <string name="follow_instance">Följ instans</string>
     <string name="toast_instance_already_added">Du följer redan denna instans!</string>
     <string name="toast_instance_followed">Instansen följs!</string>
@@ -1013,6 +1010,11 @@
     <string name="add_instances">Lägg till en instans</string>
     <string name="export_instances">Exportera instanser</string>
     <string name="import_instances">Importera instanser</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Fedilab har stängts :(</string>
+    <string name="crash_message">Du kan skicka felrapport via e-post. Det kommer vara till hjälp för att åtgärda det :)\n\nDu kan också lägga till mer information. Tack så mycket!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
