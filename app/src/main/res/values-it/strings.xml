@@ -509,9 +509,6 @@
     <string name="delete_instance">Eliminare questa istanza?</string>
     <string name="warning_delete_instance">Stai per eliminare %s dalle tue istanze seguite.</string>
     <string name="which_language">Traduci in</string>
-    <string name="crash_title">Mastalab ha smesso di funzionare :-(</string>
-    <string name="crash_message">Puoi inviarmi via email il rapporto sul problema. Mi aiuterà a risolverlo :-)\n\nPuoi aggiungere ulteriori commenti. Grazie!</string>
-    <string name="send_crash_report">Chiedere di inviare rapporti sui problemi via email?</string>
     <string name="follow_instance">Segui istanza</string>
     <string name="toast_instance_already_added">Stai già seguendo questa istanza!</string>
     <string name="toast_instance_followed">L\'istanza è seguita!</string>
@@ -1013,6 +1010,11 @@
     <string name="add_instances">Aggiungi un istanza</string>
     <string name="export_instances">Esporta le istanze</string>
     <string name="import_instances">Importa istanze</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab ha smesso di funzionare :-(</string>
+    <string name="crash_message">Puoi inviarmi via email il rapporto sul problema. Mi aiuterà a risolverlo :-)\n\nPuoi aggiungere ulteriori commenti. Grazie!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
