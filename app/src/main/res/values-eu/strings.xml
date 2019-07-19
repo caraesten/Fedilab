@@ -509,9 +509,6 @@
     <string name="delete_instance">Ezabatu instantzia hau?</string>
     <string name="warning_delete_instance">%s ezabatuko duzu jarraitutako instantzietatik.</string>
     <string name="which_language">Itzuli</string>
-    <string name="crash_title">Mastalab gelditu da :(</string>
-    <string name="crash_message">Kraskatze txostena e-mail bidez bidali diezadakezu. Konpontzen lagunduko dit :)\n\nEdukia gehitu dezakezu. Eskerrik asko!</string>
-    <string name="send_crash_report">Kraskatze txostenak e-mail bidez bidaltzea eskatzea nahi?</string>
     <string name="follow_instance">Jarraitu instantzia</string>
     <string name="toast_instance_already_added">Dagoeneko jarraitzen duzu instantzia hau!</string>
     <string name="toast_instance_followed">Instantzia jarraituta!</string>
@@ -1012,6 +1009,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab gelditu da :(</string>
+    <string name="crash_message">Kraskatze txostena e-mail bidez bidali diezadakezu. Konpontzen lagunduko dit :)\n\nEdukia gehitu dezakezu. Eskerrik asko!</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
