@@ -259,7 +259,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }else{ //For other remote instance
                     List<RemoteInstance> remoteInstanceObj = new InstancesDAO(this.contextReference.get(), db).getInstanceByName(this.instanceName);
                     if( remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
-                        apiResponse = api.getPublicTimeline(this.instanceName, false, max_id);
+                        apiResponse = api.getPublicTimeline(this.instanceName, true, max_id);
                         List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
                         if( statusesTemp != null){
                             for(app.fedilab.android.client.Entities.Status status: statusesTemp){
