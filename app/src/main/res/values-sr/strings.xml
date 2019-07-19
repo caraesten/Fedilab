@@ -513,9 +513,6 @@
     <string name="delete_instance">Избриши ову инстанцу?</string>
     <string name="warning_delete_instance">Управо ћете избрисати инстанцу %s са листе праћених инстанци.</string>
     <string name="which_language">Преведи на</string>
-    <string name="crash_title">Масталаб је престао да ради :(</string>
-    <string name="crash_message">Можете ми послати извештај о грешци е-поштом. То може да ми помогне да је исправим:)\n\nМожете додати и неки додатни садржај. Хвала!</string>
-    <string name="send_crash_report">Питај за слање извештаји о паду преко е-поште?</string>
     <string name="follow_instance">Прати инстанцу</string>
     <string name="toast_instance_already_added">Већ пратите ову инстанцу!</string>
     <string name="toast_instance_followed">Инстанца запраћена!</string>
@@ -1017,6 +1014,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Масталаб је престао да ради :(</string>
+    <string name="crash_message">Можете ми послати извештај о грешци е-поштом. То може да ми помогне да је исправим:)\n\nМожете додати и неки додатни садржај. Хвала!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
