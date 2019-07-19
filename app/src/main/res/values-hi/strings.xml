@@ -502,9 +502,6 @@
     <string name="delete_instance">इस इंस्टंस को मिटाएं?</string>
     <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टंस से मिटाने वाले है।</string>
     <string name="which_language">में अनुवाद करें</string>
-    <string name="crash_title">मैस्टालैब रुक गया है :(</string>
-    <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
-    <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
     <string name="follow_instance">इंस्टंस का अनुसरण करें</string>
     <string name="toast_instance_already_added">आप इस इंस्टंस का पहले से अनुसरण कर रहे हैं!</string>
     <string name="toast_instance_followed">इंस्टंस का अनुसरण किया!</string>
@@ -1003,6 +1000,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">मैस्टालैब रुक गया है :(</string>
+    <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d मत</item>
         <item quantity="other">%d मत</item>
