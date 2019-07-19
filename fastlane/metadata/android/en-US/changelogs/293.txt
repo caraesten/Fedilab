@@ -7,4 +7,5 @@ Changed
 
 Fixed
 - Notification counter issue
+- Fix boost/reply/fav with the news timeline
 - Fix some crashes
