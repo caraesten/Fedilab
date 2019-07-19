@@ -509,9 +509,6 @@
     <string name="delete_instance">Eliminar esta instancia?</string>
     <string name="warning_delete_instance">Vai eliminar %s das instancias que está a seguir.</string>
     <string name="which_language">Traducir en</string>
-    <string name="crash_title">Mastalab detívose :(</string>
-    <string name="crash_message">Pode enviarme un correo-e co informe do fallo. Axudará a arranxalo :)\n\nPode engadir contido adicional. Grazas!</string>
-    <string name="send_crash_report">Quere enviar informe de fallos por correo-e?</string>
     <string name="follow_instance">Seguir instancia</string>
     <string name="toast_instance_already_added">Xa segue a esta instancia!</string>
     <string name="toast_instance_followed">Esta a seguir a instancia!</string>
@@ -1014,6 +1011,11 @@
     <string name="add_instances">Engadir unha instancia</string>
     <string name="export_instances">Exportar instancias</string>
     <string name="import_instances">Importar instancias</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab detívose :(</string>
+    <string name="crash_message">Pode enviarme un correo-e co informe do fallo. Axudará a arranxalo :)\n\nPode engadir contido adicional. Grazas!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
