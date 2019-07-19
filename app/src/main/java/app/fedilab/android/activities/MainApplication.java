@@ -16,6 +16,8 @@ package app.fedilab.android.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
@@ -25,6 +27,13 @@ import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
 
 import net.gotev.uploadservice.UploadService;
+
+import org.acra.ACRA;
+import org.acra.annotation.AcraNotification;
+import org.acra.config.CoreConfigurationBuilder;
+import org.acra.config.LimiterConfigurationBuilder;
+import org.acra.config.MailSenderConfigurationBuilder;
+import org.acra.data.StringFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +53,8 @@ import static app.fedilab.android.helper.Helper.initNetCipher;
  * Main application, jobs are launched here.
  */
 
+@AcraNotification(
+         resIcon = R.mipmap.ic_launcher, resTitle = R.string.crash_title, resChannelName = R.string.set_crash_reports, resText = R.string.crash_message)
 
 public class MainApplication extends MultiDexApplication {
 
@@ -59,9 +70,10 @@ public class MainApplication extends MultiDexApplication {
         NotificationsSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
             String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, null);
             if( defaultLocaleString != null){
                 Locale defaultLocale;
@@ -77,6 +89,24 @@ public class MainApplication extends MultiDexApplication {
             }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){}
+
+
+        boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
+        if( send_crash_reports) {
+            CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
+            ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
+            String version = "";
+            try {
+                PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                version = pInfo.versionName;
+            } catch (PackageManager.NameNotFoundException ignored) {
+            }
+            ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("support@fedilab.app").setSubject(" Crash Report for Fedilab " + version).setEnabled(true);
+            ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
+            ACRA.init(this, ACRABuilder);
+        }
+
+
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
         initNetCipher(this);

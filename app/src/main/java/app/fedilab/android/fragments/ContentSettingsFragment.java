@@ -740,6 +740,22 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
+
+        boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
+        final CheckBox set_enable_crash_report = rootView.findViewById(R.id.set_enable_crash_report);
+        set_enable_crash_report.setChecked(send_crash_reports);
+
+        set_enable_crash_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SEND_CRASH_REPORTS, set_enable_crash_report.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+            }
+        });
+
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
         set_truncate_size.setMax(20);

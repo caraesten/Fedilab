@@ -358,6 +358,7 @@ public class Helper {
     public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
     public static final String SET_FEATURED_TAGS ="set_featured_tags";
     public static final String SET_DISPLAY_NEWS_FROM_FEDILAB ="set_display_news_from_fedilab";
+    public static final String SET_SEND_CRASH_REPORTS ="set_send_crash_reports";
     public static final String SET_FEATURED_TAG_ACTION ="set_featured_tag_action";
     public static final String SET_HIDE_DELETE_BUTTON_ON_TAB = "set_hide_delete_notification_on_tab";
     public static final String SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL = "set_retrieve_metadata_share_from_extras";
