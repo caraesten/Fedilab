@@ -517,9 +517,6 @@
     <string name="delete_instance">Удалить этот инстанс?</string>
     <string name="warning_delete_instance">Вы собираетесь удалить %s из ваших следующих инстансов.</string>
     <string name="which_language">Перевести на</string>
-    <string name="crash_title">Mastalab остановился :(</string>
-    <string name="crash_message">Вы можете отправить мне по электронной почте отчет о сбое. Это поможет его исправить :)\n\nВы можете добавить дополнительную информацию. Спасибо!</string>
-    <string name="send_crash_report">Запрашивать отправку отчетов о сбоях по электронной почте?</string>
     <string name="follow_instance">Подписаться на инстанс</string>
     <string name="toast_instance_already_added">Вы уже подписаны на этот инстанс!</string>
     <string name="toast_instance_followed">Вы подписаны на этот инстанс!</string>
@@ -1021,6 +1018,11 @@
     <string name="add_instances">Добавить инстанс</string>
     <string name="export_instances">Экспорт инстансов</string>
     <string name="import_instances">Импорт инстансов</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab остановился :(</string>
+    <string name="crash_message">Вы можете отправить мне по электронной почте отчет о сбое. Это поможет его исправить :)\n\nВы можете добавить дополнительную информацию. Спасибо!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
