@@ -507,9 +507,6 @@
     <string name="delete_instance">Видалити цей екземпляр?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Перекласти</string>
-    <string name="crash_title">Mastalab зупинився :(</string>
-    <string name="crash_message">Ви можете надіслати мені звіт про збій електронною поштою. Це допоможе виправити це:)\n\nВи можете додати додатковий вміст. Дякую!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
@@ -1011,6 +1008,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab зупинився :(</string>
+    <string name="crash_message">Ви можете надіслати мені звіт про збій електронною поштою. Це допоможе виправити це:)\n\nВи можете додати додатковий вміст. Дякую!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>

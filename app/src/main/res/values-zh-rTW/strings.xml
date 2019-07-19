@@ -505,9 +505,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="delete_instance">刪除此站台？</string>
     <string name="warning_delete_instance">您將要從您追蹤的站台中刪除 %s。</string>
     <string name="which_language">翻譯成</string>
-    <string name="crash_title">Mastalab 已停止 :(</string>
-    <string name="crash_message">您可以透過電子郵件傳送當機報告給我。這可以協助我修復它 :)\n\n您可以加入鵝外的內容。感謝您！</string>
-    <string name="send_crash_report">是否要透過電子郵件傳送當機報告？</string>
     <string name="follow_instance">追蹤站台</string>
     <string name="toast_instance_already_added">您已經追蹤此站台了！</string>
     <string name="toast_instance_followed">站台已被追蹤！</string>
@@ -1009,6 +1006,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="add_instances">新增站台</string>
     <string name="export_instances">匯出站台</string>
     <string name="import_instances">匯入站台</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab 已停止 :(</string>
+    <string name="crash_message">您可以透過電子郵件傳送當機報告給我。這可以協助我修復它 :)\n\n您可以加入鵝外的內容。感謝您！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

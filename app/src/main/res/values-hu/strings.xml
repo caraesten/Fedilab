@@ -507,9 +507,6 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="delete_instance">Töröljuk ezt a szervert?</string>
     <string name="warning_delete_instance">Ezzel ki fogod törölni %s szervert a követett szerverek listájáról.</string>
     <string name="which_language">Fordítsd erre:</string>
-    <string name="crash_title">Mastalab leállt :(</string>
-    <string name="crash_message">Küldhetsz nekem e-mailt a hibajelentéssel. Ez segít majd a javításnál :)\n\nHozzáadhatsz még további tartalmakat is. Köszönöm!</string>
-    <string name="send_crash_report">Rákerdezzen a hibajelentések e-mailen történő elküldése előtt?</string>
     <string name="follow_instance">Szerver követése</string>
     <string name="toast_instance_already_added">Már követed ezt a szervert!</string>
     <string name="toast_instance_followed">Mostantól követed a szervert!</string>
@@ -1011,6 +1008,11 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab leállt :(</string>
+    <string name="crash_message">Küldhetsz nekem e-mailt a hibajelentéssel. Ez segít majd a javításnál :)\n\nHozzáadhatsz még további tartalmakat is. Köszönöm!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

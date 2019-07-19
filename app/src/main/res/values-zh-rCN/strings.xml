@@ -505,9 +505,6 @@
     <string name="delete_instance">删除此实例？</string>
     <string name="warning_delete_instance">您将从下列实例中删除 %s。</string>
     <string name="which_language">翻译为</string>
-    <string name="crash_title">Mastalab 已停止 :(</string>
-    <string name="crash_message">您可以通过电子邮件给我发送崩溃报告。这有助于修复问题 :)\n\n您可以添加其他内容。谢谢！</string>
-    <string name="send_crash_report">询问是否通过电子邮件发送崩溃报告？</string>
     <string name="follow_instance">关注实例</string>
     <string name="toast_instance_already_added">您已关注过该实例！</string>
     <string name="toast_instance_followed">已关注此实例！</string>
@@ -1010,6 +1007,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab 已停止 :(</string>
+    <string name="crash_message">您可以通过电子邮件给我发送崩溃报告。这有助于修复问题 :)\n\n您可以添加其他内容。谢谢！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>

@@ -515,9 +515,6 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="delete_instance">Odstranit instanci?</string>
     <string name="warning_delete_instance">Chystáte se smazat %s z vašich sledovaných instancí.</string>
     <string name="which_language">Přeložit v</string>
-    <string name="crash_title">Mastalab přestal fungovat :(</string>
-    <string name="crash_message">Pošlete mi mailem údaje o chybě. Pomůžete tak při opravě :)\n\nMůžete přidat dodatečný obsah. Děkuji!</string>
-    <string name="send_crash_report">Požádat o zaslání chybového hlášení emailem?</string>
     <string name="follow_instance">Sledovat instanci</string>
     <string name="toast_instance_already_added">Tuto instanci již sledujete!</string>
     <string name="toast_instance_followed">Instance je sledována!</string>
@@ -1018,6 +1015,11 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab přestal fungovat :(</string>
+    <string name="crash_message">Pošlete mi mailem údaje o chybě. Pomůžete tak při opravě :)\n\nMůžete přidat dodatečný obsah. Děkuji!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>

@@ -501,9 +501,6 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="delete_instance">Slette denne instansen?</string>
     <string name="warning_delete_instance">Du er i ferd med å slette %s fra instansene du følger.</string>
     <string name="which_language">Oversett med</string>
-    <string name="crash_title">Mastalab har stoppet :(</string>
-    <string name="crash_message">Du kan sende meg krasjrapporten på e-post. Det vil hjelpe til med å fikse problemet :)\n\nDu kan også legge til ekstra informasjon du mener er nyttig. Tusen takk!</string>
-    <string name="send_crash_report">Spør om å sende krasjrapporter på e-post?</string>
     <string name="follow_instance">Følg instanse</string>
     <string name="toast_instance_already_added">Du følger allerede denne instansen!</string>
     <string name="toast_instance_followed">Instansen følges!</string>
@@ -1001,6 +998,11 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab har stoppet :(</string>
+    <string name="crash_message">Du kan sende meg krasjrapporten på e-post. Det vil hjelpe til med å fikse problemet :)\n\nDu kan også legge til ekstra informasjon du mener er nyttig. Tusen takk!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

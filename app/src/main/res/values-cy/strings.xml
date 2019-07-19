@@ -524,9 +524,6 @@
     <string name="delete_instance">Dileu yr achos yma?</string>
     <string name="warning_delete_instance">Yr ydych am ddileu %s o\'r achosion yr ydych yn eu dilyn.</string>
     <string name="which_language">Cyfieithu yn</string>
-    <string name="crash_title">Mae Mastalab wedi stopio :(</string>
-    <string name="crash_message">Mae modd i chi anfon adroddiad crash ata\'i drwy ebost. Bydd yn help i\'w ddatrys. :)\n\nMae modd i chi ychwanegu cynnwys ychwanegol! Diolch!</string>
-    <string name="send_crash_report">Gofyn am adroddiadau crash drwy ebost?</string>
     <string name="follow_instance">Dilyn achos</string>
     <string name="toast_instance_already_added">Yr ydych yn dilyn yr achos yma\'n barod!</string>
     <string name="toast_instance_followed">Dilynwyd yr achos!</string>
@@ -1028,6 +1025,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mae Mastalab wedi stopio :(</string>
+    <string name="crash_message">Mae modd i chi anfon adroddiad crash ata\'i drwy ebost. Bydd yn help i\'w ddatrys. :)\n\nMae modd i chi ychwanegu cynnwys ychwanegol! Diolch!</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>

@@ -515,9 +515,6 @@
     <string name="delete_instance">Usunąć tą instancję?</string>
     <string name="warning_delete_instance">Usuniesz %s z obserwowanych instancji.</string>
     <string name="which_language">Przetłumacz na</string>
-    <string name="crash_title">Mastalab został zatrzymany :(</string>
-    <string name="crash_message">Możesz wysłać mi email z raportem o błędzie. To pomoże go naprawić :)\n\nMożesz dopisać coś więcej. Dziękuję!</string>
-    <string name="send_crash_report">Poprosić o wysłanie raportów o awariach przez e-mail?</string>
     <string name="follow_instance">Obserwuj instancję</string>
     <string name="toast_instance_already_added">Już obserwujesz tą instancję!</string>
     <string name="toast_instance_followed">Instancja jest śledzona!</string>
@@ -1016,6 +1013,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab został zatrzymany :(</string>
+    <string name="crash_message">Możesz wysłać mi email z raportem o błędzie. To pomoże go naprawić :)\n\nMożesz dopisać coś więcej. Dziękuję!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
