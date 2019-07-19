@@ -517,9 +517,6 @@
     <string name="delete_instance">Izbrišem to instanco?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
     <string name="which_language">Prevedi v</string>
-    <string name="crash_title">Mastalab se je ustavil :(</string>
-    <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
-    <string name="send_crash_report">Vprašaj me za posredovanje poročila o zrušitvi.</string>
     <string name="follow_instance">Spremljanje instance</string>
     <string name="toast_instance_already_added">To instanco že spremljate.</string>
     <string name="toast_instance_followed">Ta instanca je spremljana.</string>
@@ -1021,6 +1018,11 @@
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_enable_crash_report">Enable crash reports</string>
+    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="crash_title">Mastalab se je ustavil :(</string>
+    <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>
