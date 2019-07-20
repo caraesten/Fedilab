@@ -3968,6 +3968,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             @Override
             public void onClick(View v) {
                 wysiwyg.updateTextStyle(EditorTextStyle.BLOCKQUOTE);
+                wysiwyg.updateTextColor("#000000");
             }
         });
 
