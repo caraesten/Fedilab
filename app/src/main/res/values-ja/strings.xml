@@ -998,9 +998,9 @@
     <string name="add_instances">インスタンスを追加</string>
     <string name="export_instances">インスタンスをエクスポート</string>
     <string name="import_instances">インスタンスをインポート</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">クラッシュレポート</string>
+    <string name="set_enable_crash_report">クラッシュレポートを有効にする</string>
+    <string name="set_enable_crash_report_indication">有効にすると、クラッシュレポートが作成され、共有できるようになります</string>
     <string name="crash_title">Mastalabは停止しました :(</string>
     <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
     <plurals name="number_of_vote">
