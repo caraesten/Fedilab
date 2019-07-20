@@ -119,4 +119,5 @@ dependencies {
     implementation "ch.acra:acra-limiter:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.irshulx:laser-native-editor:3.0.3'
+    implementation 'com.github.duanhong169:colorpicker:1.1.6'
 }

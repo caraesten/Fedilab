@@ -18,7 +18,6 @@ package app.fedilab.android.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -30,8 +29,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -40,7 +38,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.speech.RecognizerIntent;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -58,7 +55,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,7 +63,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -103,18 +98,16 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
 import com.vanniktech.emoji.EmojiPopup;
-import com.vanniktech.emoji.emoji.Emoji;
+
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
 import net.gotev.uploadservice.UploadNotificationConfig;
-import net.gotev.uploadservice.UploadService;
 import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
 import org.apache.poi.util.IOUtils;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -194,7 +187,6 @@ import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
-import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
@@ -202,14 +194,14 @@ import cafe.adriel.androidaudiorecorder.model.AudioChannel;
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import es.dmoral.toasty.Toasty;
+import top.defaults.colorpicker.ColorPickerPopup;
 
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
-import static app.fedilab.android.helper.Helper.initNetCipher;
-import static app.fedilab.android.helper.Helper.orbotConnected;
+
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -442,7 +434,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 break;
         }
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        if( displayWYSIWYG()){
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
             HorizontalScrollView toolbar = findViewById(R.id.toolbar);
@@ -473,7 +465,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     } else {
                         searchLength = 15;
                     }
-                    int totalChar = countLength(editText, toot_cw_content);
+                    int totalChar = countLength(wysiwyg, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                     if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
@@ -519,7 +511,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
 
 
-                    totalChar = countLength(editText, toot_cw_content);
+                    totalChar = countLength(wysiwyg, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                 }
                 @Override
@@ -686,7 +678,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
 
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
 
 
         String url = account.getAvatar();
@@ -790,11 +782,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendToot(null, null);
+                if( !displayWYSIWYG()) {
+                    sendToot(null, null);
+                }else{
+                    sendToot(null, "text/html");
+                }
             }
         });
 
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && !displayWYSIWYG())
             toot_it.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -1989,7 +1985,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     private void sendToot(String timestamp, String content_type){
         toot_it.setEnabled(false);
-        if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
+        if(!displayWYSIWYG() && toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
+            Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
+            return;
+        }
+        if(displayWYSIWYG() && wysiwyg.getContent().toString().trim().length() == 0 && attachments.size() == 0){
             Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
             toot_it.setEnabled(true);
             return;
@@ -2003,11 +2004,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
 
+        if(displayWYSIWYG()){
+            split_toot = false;
+        }
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(toot_content, toot_cw_content)  < split_toot_size)){
-            tootContent = toot_content.getText().toString().trim();
+            if( !displayWYSIWYG()) {
+                tootContent = toot_content.getText().toString().trim();
+            }else{
+                tootContent = wysiwyg.getContentAsHTML();
+            }
         }else{
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
             tootContent = splitToot.get(0);
@@ -2512,7 +2520,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( !displayWYSIWYG()) {
                 int currentCursorPosition = toot_content.getSelectionStart();
                 AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
                 toot_content.setThreshold(1);
@@ -2603,7 +2611,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 if (currentCursorPosition < oldContent.length())
                                     newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                                 wysiwygEditText.setText(newContent);
-                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
                                 suggestionsRV.setVisibility(View.GONE);
 
@@ -2649,7 +2657,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         if (emojis != null && emojis.size() > 0) {
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( !displayWYSIWYG()) {
             int currentCursorPosition = toot_content.getSelectionStart();
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
             toot_content.setThreshold(1);
@@ -2739,7 +2747,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 if (currentCursorPosition < oldContent.length())
                                     newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                                 wysiwygEditText.setText(newContent);
-                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
                                 suggestionsRV.setVisibility(View.GONE);
 
@@ -2863,7 +2871,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Results results = apiResponse.getResults();
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( !displayWYSIWYG()) {
                 int currentCursorPosition = toot_content.getSelectionStart();
                 TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
                 toot_content.setThreshold(1);
@@ -2957,7 +2965,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 if (currentCursorPosition < oldContent.length())
                                     newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                                 wysiwygEditText.setText(newContent);
-                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
                                 suggestionsRV.setVisibility(View.GONE);
 
@@ -3089,10 +3097,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
-
-        toot_content.setText(content);
+        if( !displayWYSIWYG()) {
+            toot_content.setText(content);
+        }else{
+            wysiwyg.render(content);
+        }
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-        toot_content.setSelection(toot_content.getText().length());
+        if( !displayWYSIWYG()) {
+            toot_content.setSelection(toot_content.getText().length());
+        }else{
+            if( wysiwygEditText != null) {
+                wysiwygEditText.setSelection(wysiwygEditText.getText().length());
+            }
+        }
+
         switch (status.getVisibility()){
             case "public":
                 visibility = "public";
@@ -3133,8 +3151,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
         invalidateOptionsMenu();
-        initialContent = toot_content.getText().toString();
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
+        if( !displayWYSIWYG()) {
+            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        }else{
+            toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
+        }
     }
 
 
@@ -3275,7 +3297,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 setTitle(R.string.toot_title);
         }
         invalidateOptionsMenu();
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
     }
 
@@ -3389,7 +3411,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
 
         }
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
     }
 
 
@@ -3670,9 +3692,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
         if( !forced) {
-            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
+            if (toot_content.getText().toString().trim().length() == 0 && wysiwyg.getContentAsHTML().toString().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
-            if (initialContent.trim().equals(toot_content.getText().toString().trim()))
+            if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim()))
+                return;
+            if (displayWYSIWYG() && wysiwyg.getContentAsHTML().toString().trim().equals(toot_content.getText().toString().trim()))
                 return;
         }
         Status toot = new Status();
@@ -3681,7 +3705,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        toot.setContent(toot_content.getText().toString().trim());
+        if( !displayWYSIWYG()) {
+            toot.setContent(toot_content.getText().toString().trim());
+        }else{
+            toot.setContent(wysiwyg.getContentAsHTML());
+        }
 
         if( poll != null)
             toot.setPoll(poll);
@@ -3831,11 +3859,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
-     int countLength(EditText toot_content, EditText toot_cw_content){
-        if( toot_content == null || toot_cw_content == null) {
+     int countLength(Editor wysiwyg, EditText toot_cw_content){
+        if( wysiwyg == null || toot_cw_content == null) {
             return -1;
         }
-        String content = toot_content.getText().toString();
+        String content = wysiwyg.getContentAsHTML();
         String cwContent = toot_cw_content.getText().toString();
         int contentLength = content.length() - countWithEmoji(content);
         int cwLength = cwContent.length() - countWithEmoji(cwContent);
@@ -3861,6 +3889,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 .record();
     }
 
+
+    private boolean displayWYSIWYG(){
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            return false;
+        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        return sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
+    }
 
     private void renderEditor(){
 
@@ -3924,7 +3960,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         findViewById(R.id.action_color).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wysiwyg.updateTextColor("#FF3333");
+                new ColorPickerPopup.Builder(getApplicationContext())
+                        .enableAlpha(false)
+                        .okTitle(getString(R.string.validate))
+                        .cancelTitle(getString(R.string.cancel))
+                        .showIndicator(true)
+                        .showValue(true)
+                        .build()
+                        .show(findViewById(android.R.id.content), new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                wysiwyg.updateTextColor(colorHex(color));
+                            }
+
+                        });
             }
         });
 
@@ -3973,5 +4022,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         });
 
         wysiwyg.render();
+    }
+
+    private String colorHex(int color) {
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        return String.format(Locale.getDefault(), "#%02X%02X%02X", r, g, b);
     }
 }

@@ -67,6 +67,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.collect.ImmutableSet;
 
+import org.apache.poi.sl.usermodel.Line;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1037,6 +1038,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_CAPITALIZE, set_capitalize.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            LinearLayout set_wysiwyg_container = rootView.findViewById(R.id.set_wysiwyg_container);
+            set_wysiwyg_container.setVisibility(View.VISIBLE);
+        }
+
+        boolean wysiwyg = sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
+        final CheckBox set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
+        set_wysiwyg.setChecked(wysiwyg);
+
+        set_capitalize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_WYSIWYG, set_capitalize.isChecked());
                 editor.apply();
             }
         });

@@ -1480,6 +1480,39 @@
                     </LinearLayout>
                 </LinearLayout>
 
+
+                <!-- WYSIWYG -->
+                <LinearLayout
+                    android:id="@+id/set_wysiwyg_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/set_wysiwyg"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textSize="16sp"
+                            android:text="@string/set_wysiwyg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/mastodonC2"
+                            android:text="@string/set_wysiwyg_indication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <CheckBox
                     android:textSize="16sp"
                     android:id="@+id/set_automatically_split_toot"
