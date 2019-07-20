@@ -203,6 +203,9 @@ import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import es.dmoral.toasty.Toasty;
 
+import static app.fedilab.android.helper.Helper.THEME_BLACK;
+import static app.fedilab.android.helper.Helper.THEME_DARK;
+import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
 import static app.fedilab.android.helper.Helper.initNetCipher;
@@ -429,6 +432,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
         wysiwyg = findViewById(R.id.editor);
 
+        switch (theme){
+            case THEME_LIGHT:
+                wysiwyg.setEditorTextColor("#000000");
+                break;
+            case THEME_BLACK:
+            case THEME_DARK:
+                wysiwyg.setEditorTextColor("#f3f3f3");
+                break;
+        }
+
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
@@ -439,6 +452,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 @Override
                 public void onTextChanged(EditText editText, Editable s) {
                     wysiwygEditText = editText;
+
                     String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
                     final Pattern sPattern = Pattern.compile(pattern);
 
@@ -459,21 +473,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     } else {
                         searchLength = 15;
                     }
-
-
                     int totalChar = countLength(editText, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                     if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
 
-                    String patternh = "^(.|\\s)*(:fedilab_hugs:)$";
-                    final Pattern hPattern = Pattern.compile(patternh);
-                    Matcher mh = hPattern.matcher((s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)));
-
-                    if (mh.matches()) {
-                        autocomplete = true;
-                        return;
-                    }
                     Matcher m, mt;
                     if (s.toString().charAt(0) == '@')
                         m = sPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
@@ -510,14 +514,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     pp_actionBar.setVisibility(View.GONE);
                                 }
                                 new RetrieveEmojiAsyncTask(TootActivity.this, shortcode, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            } else {
-                                toot_content.dismissDropDown();
                             }
                         }
                     }
 
 
-                    totalChar = countLength(toot_content, toot_cw_content);
+                    totalChar = countLength(editText, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                 }
                 @Override
