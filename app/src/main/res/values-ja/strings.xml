@@ -55,7 +55,7 @@
     <string name="validate">完了</string>
     <string name="media">メディア</string>
     <string name="share_with">共有</string>
-    <string name="shared_via">Mastalabで共有</string>
+    <string name="shared_via">Fedilabで共有</string>
     <string name="replies">返信</string>
     <string name="username">ユーザー名</string>
     <string name="drafts">下書き</string>
@@ -961,7 +961,7 @@
     <string name="set_quick_reply">クイック返信を有効化する</string>
     <string name="reply_might_be_useless">あなたが返信しているアカウントにはあなたのメッセージが表示されていないかもしれません！</string>
     <string name="set_remember_position_indication">このオプションが無効の場合、常に最新のトゥートを読み込みます</string>
-    <string name="set_blur_sensitive_indication">このオプションが無効の場合、閲覧注意のメディアはボタンで非表示にできます</string>
+    <string name="set_blur_sensitive_indication">無効にすると、閲覧注意のメディアは非表示になり、ボタンだけが表示されます</string>
     <string name="set_long_press_media_indication">プレビューで長押ししてメディアをオリジナルのサイズで保存します</string>
     <string name="set_display_timeline_in_list_indication">右上にすべてのタグ、インスタンス、リストを表示する楕円のボタンを追加します</string>
     <string name="set_display_news_from_fedilab_indication">メインメニューに #Fedilab タグのタイムラインへのクイックアクセスのための項目を表示します</string>
