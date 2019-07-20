@@ -1010,9 +1010,9 @@
     <string name="add_instances">Tilføj en instans</string>
     <string name="export_instances">Eksportér instanser</string>
     <string name="import_instances">Importér instanser</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Nedbrudsrapporter</string>
+    <string name="set_enable_crash_report">Aktivér nedbrudsrapporter</string>
+    <string name="set_enable_crash_report_indication">Hvis aktiveret, vil en nedbrudsrapporten vil blive genereret lokalt, hvorefter vil du kunne dele den.</string>
     <string name="crash_title">Fedilab er stoppet :(</string>
     <string name="crash_message">Du kan sende mig nedbrudsrapporten på e-mail. Det vil bidrage til problemløsningen :-)\n\nDu kan selv tilføje yderlige info. Mange tak!</string>
     <plurals name="number_of_vote">
