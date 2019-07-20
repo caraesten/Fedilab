@@ -974,7 +974,7 @@
     <string name="set_remember_position_indication">Desgaituta badago, aplikazioak beti kargatuko ditu azken mezuak</string>
     <string name="set_blur_sensitive_indication">Desgaituta badago, multimedia hunkigarria botoi batekin ezkutatuko da</string>
     <string name="set_long_press_media_indication">Gorde multimedia tamaina osoan aurrebistetan luze sakatuz</string>
-    <string name="set_display_timeline_in_list_indication">Gehitu botoia goi eskuin erpinean etiketa, instantzia eta zerrenda guztiak erakusteko</string>
+    <string name="set_display_timeline_in_list_indication">Gehitu botoi bat goi-eskuin erpinean etiketa, instantzia eta zerrenda guztiak erakusteko</string>
     <string name="set_display_news_from_fedilab_indication">Bistaratu elementu bat menu nagusian #Fedilab etiketa erakusten duen denbora-lerrora sarbide azkarra izateko</string>
     <string name="live_notif_indication">Mantendu konexio bat irekita API jariora zuzeneko jakinarazpenetarako.</string>
     <string name="set_keep_background_process_indication">Aplikazioa bigarren planoan dagoenean, API jariora konexio bat mantenduko du. Desgaitu bateriak arduratzen bazaitu.</string>
@@ -1007,11 +1007,11 @@
     <string name="export_muted_instance">Esportatu mutututako instantziak</string>
     <string name="muted_instance_exported">Mutututako instantziak esportatu dira!</string>
     <string name="add_instances">Gehitu instantzia bat</string>
-    <string name="export_instances">Export instances</string>
-    <string name="import_instances">Import instances</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="export_instances">Esportatu instantziak</string>
+    <string name="import_instances">Inportatu instantziak</string>
+    <string name="set_crash_reports">Kraskatze txostenak</string>
+    <string name="set_enable_crash_report">Gaitu kraskatze txostenak</string>
+    <string name="set_enable_crash_report_indication">Gaituta badago, krakatze txosten bat sortuko da lokalean eta gero partekatu ahal izango duzu.</string>
     <string name="crash_title">Mastalab gelditu da :(</string>
     <string name="crash_message">Kraskatze txostena e-mail bidez bidali diezadakezu. Konpontzen lagunduko dit :)\n\nEdukia gehitu dezakezu. Eskerrik asko!</string>
     <plurals name="number_of_vote">
