@@ -516,7 +516,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 @Override
                 public void onUpload(Bitmap image, String uuid) {
-                    wysiwyg.onImageUploadComplete("https://fedilab.app/img/fedilab-700.png",uuid);
+
                 }
 
                 @Override
@@ -1311,6 +1311,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             });
 
                 }else {
+                    String finalUrl = url;
+                    String uuid = attachment.getId();
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(url)
@@ -1319,8 +1321,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     imageView.setImageBitmap(resource);
-                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                                    if( displayWYSIWYG()) {
                                         wysiwyg.insertImage(resource);
+                                        wysiwyg.onImageUploadComplete(finalUrl,uuid);
                                     }
                                 }
                             });
@@ -1335,7 +1338,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                 boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-                if (show_media_urls) {
+                if (show_media_urls && !displayWYSIWYG()) {
                     //Adds the shorter text_url of attachment at the end of the toot 
                     int selectionBefore = toot_content.getSelectionStart();
                     toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
