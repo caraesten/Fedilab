@@ -1006,9 +1006,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="add_instances">新增站台</string>
     <string name="export_instances">匯出站台</string>
     <string name="import_instances">匯入站台</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">當機回報</string>
+    <string name="set_enable_crash_report">啟用當機回報</string>
+    <string name="set_enable_crash_report_indication">若啟用，將會在本機建立當機回報，然後您就可以分享它了。</string>
     <string name="crash_title">Mastalab 已停止 :(</string>
     <string name="crash_message">您可以透過電子郵件傳送當機報告給我。這可以協助我修復它 :)\n\n您可以加入鵝外的內容。感謝您！</string>
     <plurals name="number_of_vote">
