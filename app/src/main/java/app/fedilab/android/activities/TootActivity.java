@@ -103,6 +103,7 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
 import com.vanniktech.emoji.EmojiPopup;
+import com.vanniktech.emoji.emoji.Emoji;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
@@ -281,8 +282,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public static final int SEND_VOICE_MESSAGE = 1423;
     private TextView warning_message;
     private Editor wysiwyg;
-    private RecyclerView suggestionsRV;
-    private List<Suggestion> suggestions;
     private EditText wysiwygEditText;
 
     @Override
@@ -429,7 +428,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ScrollView composer_container = findViewById(R.id.composer_container);
         ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
         wysiwyg = findViewById(R.id.editor);
-        suggestionsRV = findViewById(R.id.suggestions);
+
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
@@ -2556,6 +2555,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
             }else { //For Pleroma and its wysiwyg
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
                 suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
                 List<Suggestion> suggestions = new ArrayList<>();
                 for(Account account: accounts){
@@ -2645,14 +2645,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        int currentCursorPosition = toot_content.getSelectionStart();
-        if( emojis != null && emojis.size() > 0){
+
+        if (emojis != null && emojis.size() > 0) {
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            int currentCursorPosition = toot_content.getSelectionStart();
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
             toot_content.setThreshold(1);
             toot_content.setAdapter(emojisSearchAdapter);
             final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
-            if( searchA.length > 0 ) {
+            String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
+            if (searchA.length > 0) {
                 final String search = searchA[searchA.length - 1];
                 toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -2687,6 +2689,62 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                     }
                 });
+            }
+        } else {
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                List<Suggestion> suggestions = new ArrayList<>();
+                for (Emojis emoji : emojis) {
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(emoji.getShortcode());
+                    suggestion.setImageUrl(emoji.getUrl());
+                    suggestion.setType(Suggestion.suggestionType.EMOJI);
+                    suggestions.add(suggestion);
+                }
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace(":" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += ":" + suggestion.getContent() + ": ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
             }
         }
     }
@@ -2793,7 +2851,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
 
-        int currentCursorPosition = toot_content.getSelectionStart();
+
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
@@ -2803,51 +2861,109 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Results results = apiResponse.getResults();
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
-            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
-            toot_content.setThreshold(1);
-            toot_content.setAdapter(tagsSearchAdapter);
-            final String oldContent = toot_content.getText().toString();
-            if( oldContent.length() < currentCursorPosition)
-                return;
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
-            if( searchA.length < 1)
-                return;
-            final String search = searchA[searchA.length-1];
-            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if( position >= tags.size() )
-                        return;
-                    String tag = tags.get(position);
-                    String deltaSearch = "";
-                    int searchLength = 15;
-                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                        searchLength = currentCursorPosition;
-                    }
-                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
-                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
-                    else {
-                        if( currentCursorPosition >= oldContent.length() )
-                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
-                    }
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                int currentCursorPosition = toot_content.getSelectionStart();
+                TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
+                toot_content.setThreshold(1);
+                toot_content.setAdapter(tagsSearchAdapter);
+                final String oldContent = toot_content.getText().toString();
+                if (oldContent.length() < currentCursorPosition)
+                    return;
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("#");
+                if (searchA.length < 1)
+                    return;
+                final String search = searchA[searchA.length - 1];
+                toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (position >= tags.size())
+                            return;
+                        String tag = tags.get(position);
+                        String deltaSearch = "";
+                        int searchLength = 15;
+                        if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                            searchLength = currentCursorPosition;
+                        }
+                        if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                        else {
+                            if (currentCursorPosition >= oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                        }
 
-                    if( !search.equals(""))
-                        deltaSearch = deltaSearch.replace("#"+search,"");
-                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
-                    newContent += deltaSearch;
-                    newContent += "#" + tag + " ";
-                    int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() )
-                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
-                    toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    toot_content.setSelection(newPosition);
-                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
-                    toot_content.setThreshold(1);
-                    toot_content.setAdapter(tagsSearchAdapter);
-                    
+                        if (!search.equals(""))
+                            deltaSearch = deltaSearch.replace("#" + search, "");
+                        String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                        newContent += deltaSearch;
+                        newContent += "#" + tag + " ";
+                        int newPosition = newContent.length();
+                        if (currentCursorPosition < oldContent.length())
+                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                        toot_content.setText(newContent);
+                        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                        toot_content.setSelection(newPosition);
+                        TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
+                        toot_content.setThreshold(1);
+                        toot_content.setAdapter(tagsSearchAdapter);
+
+                    }
+                });
+            }else{
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+
+                List<Suggestion> suggestions = new ArrayList<>();
+                for (String tag : tags) {
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(tag);
+                    suggestion.setType(Suggestion.suggestionType.TAG);
+                    suggestions.add(suggestion);
                 }
-            });
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("#");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("#" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "#" + suggestion.getContent() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
+            }
         }
     }
 
