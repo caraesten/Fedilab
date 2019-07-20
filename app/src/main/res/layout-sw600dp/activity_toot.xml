@@ -18,6 +18,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:aztec="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -73,48 +74,39 @@
                 android:inputType="textMultiLine|textCapSentences"
                 android:minLines="4" />
         </ScrollView>
+
+        <HorizontalScrollView android:id="@+id/toolbar"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e6e6e6"
+            android:scrollbars="none">
+            <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
+        </HorizontalScrollView>
         <ScrollView
             android:id="@+id/wysiwyg_container"
-            android:layout_below="@+id/toot_cw_content"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/formatting_toolbar"
+            android:layout_above="@+id/bottom_bar_tooting"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:fillViewport="true">
-            <RelativeLayout
+            <com.github.irshulx.Editor
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <org.wordpress.aztec.AztecText
-                    android:id="@+id/visual"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"
-                    android:minLines="4"
-                    android:imeOptions="flagNoExtractUi"
-                    aztec:historyEnable="false" />
-                <org.wordpress.aztec.source.SourceViewEditText
-                    android:id="@+id/source"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textNoSuggestions|textMultiLine"
-                    android:scrollbars="vertical"
-                    android:minLines="4"
-                    android:imeOptions="flagNoExtractUi"
-                    aztec:codeBackgroundColor="@android:color/transparent"
-                    aztec:codeTextColor="@android:color/white" />
-            </RelativeLayout>
+                android:id="@+id/editor"
+                app:render_type="Editor"
+                android:hint="@string/toot_placeholder"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="100dp"
+                />
         </ScrollView>
-        <org.wordpress.aztec.toolbar.AztecToolbar
-            android:id="@+id/formatting_toolbar"
-            android:layout_below="@+id/toot_cw_content"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/format_bar_height"
-            android:layout_alignParentBottom="true" />
         <LinearLayout
             android:id="@+id/bottom_bar_tooting"
             android:layout_width="match_parent"

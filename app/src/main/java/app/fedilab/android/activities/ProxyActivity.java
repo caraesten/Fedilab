@@ -52,7 +52,7 @@ public class ProxyActivity extends BaseActivity {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar);
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC3__));
                 break;
             case Helper.THEME_DARK:

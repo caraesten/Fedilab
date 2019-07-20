@@ -118,5 +118,5 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-limiter:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"
-    implementation 'com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:v1.3.28'
+    implementation 'com.github.irshulx:laser-native-editor:3.0.3'
 }

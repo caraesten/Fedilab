@@ -50,11 +50,15 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -90,6 +94,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.irshulx.Editor;
+import com.github.irshulx.EditorListener;
+import com.github.irshulx.models.EditorTextStyle;
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
 import com.github.stom79.mytransl.MyTransL;
@@ -109,12 +116,6 @@ import org.apache.poi.util.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wordpress.aztec.Aztec;
-import org.wordpress.aztec.AztecText;
-import org.wordpress.aztec.ITextFormat;
-import org.wordpress.aztec.source.SourceViewEditText;
-import org.wordpress.aztec.toolbar.AztecToolbar;
-import org.wordpress.aztec.toolbar.IAztecToolbarClickListener;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -132,6 +133,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -163,6 +165,7 @@ import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.client.Entities.Suggestion;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.GNUAPI;
@@ -172,10 +175,12 @@ import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.CustomEmojiAdapter;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
+import app.fedilab.android.drawers.SuggestionsAdapter;
 import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.helper.RecyclerItemClickListener;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -207,7 +212,7 @@ import static app.fedilab.android.helper.Helper.orbotConnected;
  * Toot activity class
  */
 
-public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface, IAztecToolbarClickListener {
+public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface {
 
 
 
@@ -275,6 +280,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
     public static final int SEND_VOICE_MESSAGE = 1423;
     private TextView warning_message;
+    private Editor wysiwyg;
+    private RecyclerView suggestionsRV;
+    private List<Suggestion> suggestions;
+    private EditText wysiwygEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -401,6 +410,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
         warning_message = findViewById(R.id.warning_message);
         poll_action = findViewById(R.id.poll_action);
+
+
         isScheduled = false;
         if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
@@ -417,16 +428,111 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         ScrollView composer_container = findViewById(R.id.composer_container);
         ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
-
+        wysiwyg = findViewById(R.id.editor);
+        suggestionsRV = findViewById(R.id.suggestions);
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
-            AztecText visualEditor = findViewById(R.id.visual);
-            SourceViewEditText sourceEditor = findViewById(R.id.source);
-            AztecToolbar toolbar = findViewById(R.id.formatting_toolbar);
-            Aztec.with(visualEditor, sourceEditor, toolbar, this);
-            toolbar.setVisibility(View.VISIBLE);
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
+            HorizontalScrollView toolbar = findViewById(R.id.toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            renderEditor();
+            wysiwyg.setEditorListener(new EditorListener() {
+                @Override
+                public void onTextChanged(EditText editText, Editable s) {
+                    wysiwygEditText = editText;
+                    String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
+                    final Pattern sPattern = Pattern.compile(pattern);
+
+                    String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
+                    final Pattern tPattern = Pattern.compile(patternTag);
+
+                    String patternEmoji = "^(.|\\s)*(:([\\w_]+))$";
+                    final Pattern ePattern = Pattern.compile(patternEmoji);
+                    int currentCursorPosition = editText.getSelectionStart();
+                    if (editText.getSelectionStart() != 0)
+                        currentCursorPosition = editText.getSelectionStart();
+                    if (s.toString().length() == 0)
+                        currentCursorPosition = 0;
+                    //Only check last 15 characters before cursor position to avoid lags
+                    int searchLength;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    } else {
+                        searchLength = 15;
+                    }
+
+
+                    int totalChar = countLength(editText, toot_cw_content);
+                    toot_space_left.setText(String.valueOf(totalChar));
+                    if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                        return;
+
+                    String patternh = "^(.|\\s)*(:fedilab_hugs:)$";
+                    final Pattern hPattern = Pattern.compile(patternh);
+                    Matcher mh = hPattern.matcher((s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)));
+
+                    if (mh.matches()) {
+                        autocomplete = true;
+                        return;
+                    }
+                    Matcher m, mt;
+                    if (s.toString().charAt(0) == '@')
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                    else
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                    if (m.matches()) {
+                        String search = m.group(3);
+                        if (pp_progress != null && pp_actionBar != null) {
+                            pp_progress.setVisibility(View.VISIBLE);
+                            pp_actionBar.setVisibility(View.GONE);
+                        }
+                        new RetrieveSearchAccountsAsyncTask(getApplicationContext(), search, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        if (s.toString().charAt(0) == '#')
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                        else
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                        if (mt.matches()) {
+                            String search = mt.group(3);
+                            if (pp_progress != null && pp_actionBar != null) {
+                                pp_progress.setVisibility(View.VISIBLE);
+                                pp_actionBar.setVisibility(View.GONE);
+                            }
+                            new RetrieveSearchAsyncTask(TootActivity.this, search, true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } else {
+                            if (s.toString().charAt(0) == ':')
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                            else
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                            if (mt.matches()) {
+                                String shortcode = mt.group(3);
+                                if (pp_progress != null && pp_actionBar != null) {
+                                    pp_progress.setVisibility(View.VISIBLE);
+                                    pp_actionBar.setVisibility(View.GONE);
+                                }
+                                new RetrieveEmojiAsyncTask(TootActivity.this, shortcode, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            } else {
+                                toot_content.dismissDropDown();
+                            }
+                        }
+                    }
+
+
+                    totalChar = countLength(toot_content, toot_cw_content);
+                    toot_space_left.setText(String.valueOf(totalChar));
+                }
+                @Override
+                public void onUpload(Bitmap image, String uuid) {
+                    wysiwyg.onImageUploadComplete("https://fedilab.app/img/fedilab-700.png",uuid);
+                }
+
+                @Override
+                public View onRenderMacro(String name, Map<String, Object> props, int index) {
+                    return null;
+                }
+            });
         }
+
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -1129,6 +1235,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }else {
                 new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
+        }else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            String filename = Helper.getFileName(TootActivity.this, data.getData());
+            upload(TootActivity.this, data.getData(), filename);
         }
     }
 
@@ -1213,6 +1322,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     imageView.setImageBitmap(resource);
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                                        wysiwyg.insertImage(resource);
+                                    }
                                 }
                             });
                 }
@@ -1293,40 +1405,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    @Override
-    public void onToolbarCollapseButtonClicked() {
-
-    }
-
-    @Override
-    public void onToolbarExpandButtonClicked() {
-
-    }
-
-    @Override
-    public void onToolbarFormatButtonClicked(@NotNull ITextFormat iTextFormat, boolean b) {
-
-    }
-
-    @Override
-    public void onToolbarHeadingButtonClicked() {
-
-    }
-
-    @Override
-    public void onToolbarHtmlButtonClicked() {
-
-    }
-
-    @Override
-    public void onToolbarListButtonClicked() {
-
-    }
-
-    @Override
-    public boolean onToolbarMediaButtonClicked() {
-        return false;
-    }
 
 
     class asyncPicture extends AsyncTask<Void, Void, Void> {
@@ -2433,50 +2511,105 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
-            int currentCursorPosition = toot_content.getSelectionStart();
-            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
-            toot_content.setThreshold(1);
-            toot_content.setAdapter(accountsListAdapter);
-            final String oldContent = toot_content.getText().toString();
-            if( oldContent.length() >= currentCursorPosition) {
-                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
-                if (searchA.length > 0) {
-                    final String search = searchA[searchA.length - 1];
-                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Account account = accounts.get(position);
-                            String deltaSearch = "";
-                            int searchLength = 15;
-                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                                searchLength = currentCursorPosition;
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                int currentCursorPosition = toot_content.getSelectionStart();
+                AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
+                toot_content.setThreshold(1);
+                toot_content.setAdapter(accountsListAdapter);
+                final String oldContent = toot_content.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Account account = accounts.get(position);
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("@" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "@" + account.getAcct() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                toot_content.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                                toot_content.setSelection(newPosition);
+                                AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
+                                toot_content.setThreshold(1);
+                                toot_content.setAdapter(accountsListAdapter);
                             }
-                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
-                            else {
-                                if (currentCursorPosition >= oldContent.length())
-                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
-                            }
-
-                            if (!search.equals(""))
-                                deltaSearch = deltaSearch.replace("@" + search, "");
-                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
-                            newContent += deltaSearch;
-                            newContent += "@" + account.getAcct() + " ";
-                            int newPosition = newContent.length();
-                            if (currentCursorPosition < oldContent.length() )
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
-                            toot_content.setText(newContent);
-                            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                            toot_content.setSelection(newPosition);
-                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
-                            toot_content.setThreshold(1);
-                            toot_content.setAdapter(accountsListAdapter);
-
-
-                        }
-                    });
+                        });
+                    }
                 }
+            }else { //For Pleroma and its wysiwyg
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                List<Suggestion> suggestions = new ArrayList<>();
+                for(Account account: accounts){
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(account.getAcct());
+                    suggestion.setImageUrl(account.getAvatar());
+                    suggestion.setType(Suggestion.suggestionType.ACCOUNT);
+                    suggestions.add(suggestion);
+                }
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("@" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "@" + suggestion.getContent() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwygEditText, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
+
             }
         }
     }
@@ -3580,6 +3713,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
+     int countLength(EditText toot_content, EditText toot_cw_content){
+        if( toot_content == null || toot_cw_content == null) {
+            return -1;
+        }
+        String content = toot_content.getText().toString();
+        String cwContent = toot_cw_content.getText().toString();
+        int contentLength = content.length() - countWithEmoji(content);
+        int cwLength = cwContent.length() - countWithEmoji(cwContent);
+        return cwLength + contentLength;
+    }
 
     private void recordAudio(){
         String filePath = getCacheDir() + "/fedilab_recorded_audio.wav";
@@ -3598,5 +3741,118 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 .setKeepDisplayOn(true)
                 // Start recording
                 .record();
+    }
+
+
+    private void renderEditor(){
+
+
+        findViewById(R.id.action_h1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H1);
+            }
+        });
+
+        findViewById(R.id.action_h2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H2);
+            }
+        });
+
+        findViewById(R.id.action_h3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H3);
+            }
+        });
+
+        findViewById(R.id.action_bold).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.BOLD);
+            }
+        });
+
+        findViewById(R.id.action_Italic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.ITALIC);
+            }
+        });
+
+        findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.INDENT);
+            }
+        });
+
+        findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.OUTDENT);
+            }
+        });
+
+        findViewById(R.id.action_bulleted).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertList(false);
+            }
+        });
+
+        findViewById(R.id.action_color).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextColor("#FF3333");
+            }
+        });
+
+        findViewById(R.id.action_unordered_numbered).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertList(true);
+            }
+        });
+
+        findViewById(R.id.action_hr).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertDivider();
+            }
+        });
+
+        findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.openImagePicker();
+            }
+        });
+
+        findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertLink();
+            }
+        });
+
+
+        findViewById(R.id.action_erase).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.clearAllContents();
+            }
+        });
+
+        findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.BLOCKQUOTE);
+            }
+        });
+
+        wysiwyg.render();
     }
 }

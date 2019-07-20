@@ -283,7 +283,7 @@
             android:fitsSystemWindows="true"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme_NoActionBar"
+            android:theme="@style/AppTheme_NoActionBar_Fedilab"
             />
         <activity android:name="app.fedilab.android.activities.EditProfileActivity"
             android:windowSoftInputMode="stateAlwaysHidden"

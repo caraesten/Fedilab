@@ -52,7 +52,7 @@
     </style>
 
 
-    <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme_NoActionBar_Fedilab" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/light_black</item>
         <item name="android:scrollbarThumbVertical">@color/transparent</item>
         <item name="colorPrimary">@color/white</item>

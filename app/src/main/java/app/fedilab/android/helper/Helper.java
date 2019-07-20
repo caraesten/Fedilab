@@ -3440,6 +3440,7 @@ public class Helper {
         return text.length() - countWithEmoji(text);
     }
 
+
     public static int countWithEmoji(String text){
         int emojiCount = 0;
         for (int i = 0; i < text.length(); i++) {
