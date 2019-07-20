@@ -81,6 +81,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -105,8 +106,15 @@ import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
 import org.apache.poi.util.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.wordpress.aztec.Aztec;
+import org.wordpress.aztec.AztecText;
+import org.wordpress.aztec.ITextFormat;
+import org.wordpress.aztec.source.SourceViewEditText;
+import org.wordpress.aztec.toolbar.AztecToolbar;
+import org.wordpress.aztec.toolbar.IAztecToolbarClickListener;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -199,7 +207,7 @@ import static app.fedilab.android.helper.Helper.orbotConnected;
  * Toot activity class
  */
 
-public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface {
+public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface, IAztecToolbarClickListener {
 
 
 
@@ -366,6 +374,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         changeColor();
+
+
+
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         restoredScheduled = false;
@@ -404,7 +415,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_emoji.setVisibility(View.GONE);
         }
 
+        ScrollView composer_container = findViewById(R.id.composer_container);
+        ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
 
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            AztecText visualEditor = findViewById(R.id.visual);
+            SourceViewEditText sourceEditor = findViewById(R.id.source);
+            AztecToolbar toolbar = findViewById(R.id.formatting_toolbar);
+            Aztec.with(visualEditor, sourceEditor, toolbar, this);
+            toolbar.setVisibility(View.VISIBLE);
+            wysiwyg_container.setVisibility(View.VISIBLE);
+            composer_container.setVisibility(View.GONE);
+        }
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -1269,6 +1291,41 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             warning_message.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    @Override
+    public void onToolbarCollapseButtonClicked() {
+
+    }
+
+    @Override
+    public void onToolbarExpandButtonClicked() {
+
+    }
+
+    @Override
+    public void onToolbarFormatButtonClicked(@NotNull ITextFormat iTextFormat, boolean b) {
+
+    }
+
+    @Override
+    public void onToolbarHeadingButtonClicked() {
+
+    }
+
+    @Override
+    public void onToolbarHtmlButtonClicked() {
+
+    }
+
+    @Override
+    public void onToolbarListButtonClicked() {
+
+    }
+
+    @Override
+    public boolean onToolbarMediaButtonClicked() {
+        return false;
     }
 
 
