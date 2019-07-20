@@ -1011,9 +1011,9 @@
     <string name="add_instances">Engadir unha instancia</string>
     <string name="export_instances">Exportar instancias</string>
     <string name="import_instances">Importar instancias</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Informes de fallos</string>
+    <string name="set_enable_crash_report">Activar informes de fallos</string>
+    <string name="set_enable_crash_report_indication">Se se activa, crearase un informe local sobre o fallo que despois poderá compartir.</string>
     <string name="crash_title">Mastalab detívose :(</string>
     <string name="crash_message">Pode enviarme un correo-e co informe do fallo. Axudará a arranxalo :)\n\nPode engadir contido adicional. Grazas!</string>
     <plurals name="number_of_vote">
