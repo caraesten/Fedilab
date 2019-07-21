@@ -1003,6 +1003,8 @@
     <string name="set_enable_crash_report_indication">有効にすると、クラッシュレポートが作成され、共有できるようになります</string>
     <string name="crash_title">Fedilabは停止しました :(</string>
     <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
