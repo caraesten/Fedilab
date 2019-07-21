@@ -472,7 +472,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="show_boost_count">Mostra el recompte de difusions/preferits</string>
     <string name="issue_login_title">L\'autenticació falla?</string>
     <string name="issue_login_message">        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
-- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://framagit.org/tom79/fedilab/issues    </string>
+- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del Framagit a https://framagit.org/tom79/fedilab/issues    </string>
     <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
     <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
     <string name="data_export_running">Segueix processant, espereu sisplau…</string>
