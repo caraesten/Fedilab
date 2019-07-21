@@ -474,12 +474,12 @@
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="show_boost_count">Vis boosts-/favoritantal</string>
     <string name="issue_login_title">Kan ikke godkendes?</string>
-    <string name="issue_login_message">        <b>Her er nogle tjek, som måske hjælper:</b>\n\n
+    <string name="issue_login_message"><b>Her er nogle tjek, som måske hjælper:</b>\n\n
         - Tjek, at der ikke er stavefejl i instansnavnet\n\n
         - Tjek, at din instans ikke er utilgængelig\n\n
         - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når instansnavnet er udfyldt) i bunden\n\n
         - Du kan også benytte linket uden brug af 2FA\n\n
-        - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://gitlab.com/tom79/mastalab/issues
+        - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Medie er indlæst. Tryk hér for at vise det.</string>
     <string name="data_export_start">Denne handling kan tage ganske lang tid. Du underrettes, når den er færdig.</string>
