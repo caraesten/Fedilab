@@ -55,7 +55,7 @@
     <string name="validate">Conferma</string>
     <string name="media">Media</string>
     <string name="share_with">Condividi con</string>
-    <string name="shared_via">Condiviso via Mastalab</string>
+    <string name="shared_via">Condiviso via Fedilab</string>
     <string name="replies">Risposte</string>
     <string name="username">Nome utente</string>
     <string name="drafts">Bozze</string>
@@ -474,12 +474,12 @@
     <string name="account_moved_to">%1$s è stato spostato su %2$s</string>
     <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
     <string name="issue_login_title">L\'autenticazione non funziona?</string>
-    <string name="issue_login_message">        <b>Qui ci sono alcuni controlli che possono aiutare:</b>\n\n
+    <string name="issue_login_message"><b>Qui ci sono alcuni controlli che possono aiutare:</b>\n\n
         - Controlla che non ci siano errori di trascrizione nel nome dell\'istanza\n\n
         - Controlla che la tua istanza sia raggiungibile\n\n
         - Se usi l\'autenticazione a due fattori (2FA), usa il link in basso (una volta che il nome dell\'istanza è stato inserito)\n\n
         - Puoi anche usare questo link senza usare la 2FA\n\n
-        - Se ancora continua a non funzionare, apri un issue su Github all\'indirizzo https://github.com/stom79/mastalab/issues
+        - Se ancora continua a non funzionare, apri un issue su Framagit all\'indirizzo https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Il media è stato caricato. Fai clic qui per visualizzarlo.</string>
     <string name="data_export_start">Questa azione richiede molto tempo. Verrai avvisato quando sarà finita.</string>
@@ -1013,7 +1013,7 @@
     <string name="set_crash_reports">Segnalazioni di crash</string>
     <string name="set_enable_crash_report">Abilita segnalazioni di crash</string>
     <string name="set_enable_crash_report_indication">Se abilitato, una segnalazione di crash sarà creata localmente e quindi sarai in grado di condividerla.</string>
-    <string name="crash_title">Mastalab ha smesso di funzionare :-(</string>
+    <string name="crash_title">Fedilab ha smesso di funzionare :-(</string>
     <string name="crash_message">Puoi inviarmi via email il rapporto sul problema. Mi aiuterà a risolverlo :-)\n\nPuoi aggiungere ulteriori commenti. Grazie!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>

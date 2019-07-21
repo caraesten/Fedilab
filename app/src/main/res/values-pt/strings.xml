@@ -474,12 +474,12 @@
     <string name="account_moved_to">%1$s mudou-se para %2$s</string>
     <string name="show_boost_count">Mostrar número de boosts/favoritos</string>
     <string name="issue_login_title">Falha ao autenticar?</string>
-    <string name="issue_login_message">        <b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
+    <string name="issue_login_message"><b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
         - Verifique se não há erros de digitação no nome da instância\n\n
         - Verifique se a sua instância não está fora do ar\n\n
         - Se você utiliza a autenticação de dois fatores (2FA), use o link na parte inferior (uma vez que o nome da instância estiver preenchido) \n\n
         - Você também pode usar este link sem usar o 2FA\n\n
-        - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
+        - Se ainda não funcionar, por favor, crie um issue no Framagit em https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">A mídia foi carregada. Toque aqui para vê-la.</string>
     <string name="data_export_start">Esta ação pode ser demorada. Você será notificado quando ela terminar.</string>

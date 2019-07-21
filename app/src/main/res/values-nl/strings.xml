@@ -479,7 +479,7 @@
         - Controleer of er de server niet offline is\n\n
         - Wanneer je tweestapsverificatie gebruikt, gebruik dan (nadat je de domeinnaam van de server hebt ingevuld) de link daaronder.\n\n
         - Je kan deze link ook gebruiken zonder dat je van tweestapsverificatie gebruikt maakt (wanneer het op dit aanmeldscherm niet lukt).\n\n
-        - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Github via https://github.com/stom79/mastalab/issues
+        - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Framagit via https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Media is geladen. Klik hier om het te tonen.</string>
     <string name="data_export_start">Deze actie kan vrij lang duren. Je krijgt een melding wanneer het klaar is.</string>
@@ -587,7 +587,7 @@
     <string name="comment">Reageren</string>
     <string name="peertube_instance">PeerTube-server</string>
     <string name="set_display_direct">Tijdlijn met directe berichten tonen</string>
-    <string name="set_keep_background_process">Mastalab op de achtergrond blijven uitvoeren</string>
+    <string name="set_keep_background_process">Fedilab op de achtergrond blijven uitvoeren</string>
     <string name="no_comments">Wees de eerste om op deze video te reageren m.b.v. de knop rechtsboven!</string>
     <string name="number_view_video">%s keer bekeken</string>
     <string name="duration_video">Duur: %s</string>
@@ -1010,7 +1010,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab is gestopt :(</string>
+    <string name="crash_title">Fedilab is gestopt :(</string>
     <string name="crash_message">Je kunt mij per e-mail foutrapportages sturen. Dit helpt om het probleem op te lossen :)\n\nJe kunt extra informatie toevoegen. Dank je!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>

@@ -55,7 +55,7 @@
     <string name="validate">Подтвердить</string>
     <string name="media">Медиа</string>
     <string name="share_with">Поделиться через</string>
-    <string name="shared_via">Поделился через Mastalab</string>
+    <string name="shared_via">Поделился через Fedilab</string>
     <string name="replies">Ответы</string>
     <string name="username">Имя пользователя</string>
     <string name="drafts">Черновики</string>
@@ -487,7 +487,7 @@
         - Убедитесь в доступности вашего инстанса\n\n
         - Если вы используете двухфакторную аутентификацию (2FA), используйте ссылку внизу (после заполнения имени сервера)\n\n
         - Вы также можете использовать эту ссылку без 2FA\n\n
-        - Если все перечисленное вам не помогло, создайте проблему на Github: https://github.com/stom79/mastalab/issues
+        - Если все перечисленное вам не помогло, создайте проблему на Framagit: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
     <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
@@ -1018,10 +1018,10 @@
     <string name="add_instances">Добавить инстанс</string>
     <string name="export_instances">Экспорт инстансов</string>
     <string name="import_instances">Импорт инстансов</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab остановился :(</string>
+    <string name="set_crash_reports">Отчеты о сбоях</string>
+    <string name="set_enable_crash_report">Включить отчеты о сбоях</string>
+    <string name="set_enable_crash_report_indication">Если включено, отчет о сбое будет создан локально. Вы сможете поделиться им при необходимости.</string>
+    <string name="crash_title">Fedilab остановился :(</string>
     <string name="crash_message">Вы можете отправить мне по электронной почте отчет о сбое. Это поможет его исправить :)\n\nВы можете добавить дополнительную информацию. Спасибо!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>

@@ -55,7 +55,7 @@
     <string name="validate">Potrdi</string>
     <string name="media">Vsebine</string>
     <string name="share_with">Deli z</string>
-    <string name="shared_via">Deljeno z Mastalab</string>
+    <string name="shared_via">Deljeno z Fedilab</string>
     <string name="replies">Odgovori</string>
     <string name="username">Uporabniško ime</string>
     <string name="drafts">Osnutki</string>
@@ -487,7 +487,7 @@
         - Preverite, da je instanca deujoča.\n\n
         - Če uporabljate dvostopenjsko prijavljanje (2FA), uporabite spodnjo povezavo (zatem, ko je vpisano ime instance).\n\n
         - To povezavo lahko uporabite tudi brez dvostopenjskega prijavljanja.\n\n
-        - Če našteto ne pomaga, prosimo, prijavite napako na GitLab naslovu: https://gitlab.com/tom79/mastalab/issues
+        - Če našteto ne pomaga, prosimo, prijavite napako na Framagit naslovu: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Vsebina je naložena. Pritisnite tu, da jo prikažete.</string>
     <string name="data_export_start">Ta akcija lahko traja precej dolgo. Obvestili vas bomo, ko bo zaključeno.</string>
@@ -1021,7 +1021,7 @@
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab se je ustavil :(</string>
+    <string name="crash_title">Fedilab se je ustavil :(</string>
     <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

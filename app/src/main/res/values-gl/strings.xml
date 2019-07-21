@@ -55,7 +55,7 @@
     <string name="validate">Validar</string>
     <string name="media">Medios</string>
     <string name="share_with">Compartir con</string>
-    <string name="shared_via">Compartido con Mastalab</string>
+    <string name="shared_via">Compartido con Fedilab</string>
     <string name="replies">Respostas</string>
     <string name="username">Nome de usuaria</string>
     <string name="drafts">Borradores</string>
@@ -479,7 +479,7 @@
         - Comprobe que a súa instancia está a funcionar\n\n
         - Si utiliza autenticación de doble factor (2FA), utilice a ligazón inferior (unha vez escriba o nome da instancia)\n\n
         - Pode utilizar tamén esta ligazón sin ter que usar a 2FA\n\n
-        - Si aínda non pode conectar, por favor suba o problema a Github en https://github.com/stom79/mastalab/issues
+        - Si aínda non pode conectar, por favor suba o problema a Framagit en https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Cargáronse os medios. Pulse aquí para mostralos.</string>
     <string name="data_export_start">Esta acción podería prolongarse. Notificarémoslle cando esté rematada.</string>
@@ -1011,10 +1011,10 @@
     <string name="add_instances">Engadir unha instancia</string>
     <string name="export_instances">Exportar instancias</string>
     <string name="import_instances">Importar instancias</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab detívose :(</string>
+    <string name="set_crash_reports">Informes de fallos</string>
+    <string name="set_enable_crash_report">Activar informes de fallos</string>
+    <string name="set_enable_crash_report_indication">Se se activa, crearase un informe local sobre o fallo que despois poderá compartir.</string>
+    <string name="crash_title">Fedilab detívose :(</string>
     <string name="crash_message">Pode enviarme un correo-e co informe do fallo. Axudará a arranxalo :)\n\nPode engadir contido adicional. Grazas!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>

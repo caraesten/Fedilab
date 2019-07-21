@@ -55,7 +55,7 @@
     <string name="validate">确认</string>
     <string name="media">媒体</string>
     <string name="share_with">分享给</string>
-    <string name="shared_via">通过 Mastalab 分享</string>
+    <string name="shared_via">通过 Fedilab 分享</string>
     <string name="replies">回复</string>
     <string name="username">用户名</string>
     <string name="drafts">草稿</string>
@@ -475,7 +475,7 @@
         - 检查您的实例是否下线\n\n 
         - 如果您使用双因素身份验证（2FA），请使用底部的链接（实例名填好后）\n\n 
         - 您也可以使用这个链接但不使用双因素身份验证（2FA）\n\n 
-        - 如果仍不工作，请向 https://github.com/stom79/mastalab/issues 提交问题。
+        - 如果仍不工作，请向 https://framagit.org/tom79/fedilab/issues 提交问题。
     </string>
     <string name="media_ready">媒体已加载。单击此处显示。</string>
     <string name="data_export_start">此操作可能会很久。完成时会通知您。</string>
@@ -1010,7 +1010,7 @@
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab 已停止 :(</string>
+    <string name="crash_title">Fedilab 已停止 :(</string>
     <string name="crash_message">您可以通过电子邮件给我发送崩溃报告。这有助于修复问题 :)\n\n您可以添加其他内容。谢谢！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>

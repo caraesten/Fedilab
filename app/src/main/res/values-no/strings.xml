@@ -55,7 +55,7 @@
     <string name="validate">OK</string>
     <string name="media">Media</string>
     <string name="share_with">Del med</string>
-    <string name="shared_via">Delt via Mastalab</string>
+    <string name="shared_via">Delt via Fedilab</string>
     <string name="replies">Svar</string>
     <string name="username">Brukernavn</string>
     <string name="drafts">Utkast</string>
@@ -472,7 +472,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
 - Kontroller at instansen ikke er nede (offline)\n\n
 - Hvis du bruker tofaktorautentisering (2FA), vennligst benytt linken på bunnen (etter at adressen til instansen er fylt inn)\n\n
 - Du kan også benytte denne linken for å logge inn med 2FA\n\n
-- Hvis det fortsatt ikke fungerer å koble til instansen, vennligst opprett en sak på GitLab, https://gitlab.com/tom79/mastalab/issues\n\n    </string>
+- Hvis det fortsatt ikke fungerer å koble til instansen, vennligst opprett en sak på Framagit, https://framagit.org/tom79/fedilab/issues\n\n    </string>
     <string name="media_ready">Mediet er lastet. Klikk her for å vise.</string>
     <string name="data_export_start">Denne handlingen kan ta lang tid. Du vil bli varslet når det er ferdig.</string>
     <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
@@ -1001,7 +1001,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab har stoppet :(</string>
+    <string name="crash_title">Fedilab har stoppet :(</string>
     <string name="crash_message">Du kan sende meg krasjrapporten på e-post. Det vil hjelpe til med å fikse problemet :)\n\nDu kan også legge til ekstra informasjon du mener er nyttig. Tusen takk!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>

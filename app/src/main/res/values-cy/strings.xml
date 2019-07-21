@@ -55,7 +55,7 @@
     <string name="validate">Dilysu</string>
     <string name="media">Cyfryngau</string>
     <string name="share_with">Rhannu gyda</string>
-    <string name="shared_via">Rhannwyd drwy Mastalab</string>
+    <string name="shared_via">Rhannwyd drwy Fedilab</string>
     <string name="replies">Ymatebion</string>
     <string name="username">Enwdefnyddiwr</string>
     <string name="drafts">Drafftiau</string>
@@ -494,7 +494,7 @@
         - Gwiriwch nad yw eich achos i lawr\n\n
         - Os ydych yn defnyddio dilysu dau gam (2FA), defnyddiwch y ddolen ar y gwaelod (unwaith y mae enw\'r achos wedi\'i lenwi)\n\n
         - Mae modd defnyddio\'r ddolen yma heb ddefnyddio 2FA\n\n
-        - Os yw dal ddim yn gweithio, codwch y mater ar GitLab: https://gitlab.com/tom79/mastalab/issues
+        - Os yw dal ddim yn gweithio, codwch y mater ar Framagit: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Mae\'r cyfryngau wedi eu llwytho. Cliciwch yma i\'w harddangos.</string>
     <string name="data_export_start">Mae\'r weithred yma\'n gallu cymryd amser. Cewch eich hysbysu pan y mae wedi gorffen.</string>
@@ -1028,7 +1028,7 @@
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mae Mastalab wedi stopio :(</string>
+    <string name="crash_title">Mae Fedilab wedi stopio :(</string>
     <string name="crash_message">Mae modd i chi anfon adroddiad crash ata\'i drwy ebost. Bydd yn help i\'w ddatrys. :)\n\nMae modd i chi ychwanegu cynnwys ychwanegol! Diolch!</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>

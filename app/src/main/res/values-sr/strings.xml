@@ -55,7 +55,7 @@
     <string name="validate">Потврди</string>
     <string name="media">Мултимедија</string>
     <string name="share_with">Поделите са</string>
-    <string name="shared_via">Дељено преко Mastalab-а</string>
+    <string name="shared_via">Дељено преко Fedilab-а</string>
     <string name="replies">Одговори</string>
     <string name="username">Корисничко име</string>
     <string name="drafts">Нацрти</string>
@@ -483,7 +483,7 @@
         - Проверите да ли је инстанца жива и ради\n\n
         - Ако користите двофакторско пријављивање (2FA), користите линк на дну (када попуните име инстанце)\n\n
         - Линк испод можете користити и без да користите 2FA\n\n
-        - Ако ништа ни даље не ради, пријавите нам проблем на Github-у, на https://github.com/stom79/mastalab/issues
+        - Ако ништа ни даље не ради, пријавите нам проблем на Framagit-у, на https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
     <string name="data_export_start">Ова акција може да потраје. Бићете обавештени када се заврши.</string>
