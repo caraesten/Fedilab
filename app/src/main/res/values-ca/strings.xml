@@ -1007,6 +1007,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
     <string name="crash_title">Malaslab s\'ha aturat :(</string>
     <string name="crash_message">Pots enviar-me l\'informe de la fallada per email. Ajudarà a resoldre-ho :)\n\nPots afegir-hi contingut. Gràcies!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
