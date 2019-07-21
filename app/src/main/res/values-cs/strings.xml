@@ -485,7 +485,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         - Ověřte, že vaše instance běží\n\n
         - V případě, že používáte dvoufaktorovou autentizaci (2FA), použijte prosím odkaz dole (jakmile je vyplněno jméno instance)\n\n
         - Můžete také použít tento link bez použití 2FA\n\n
-        - Pokud problém přetrvává, vytvořte tiket na  https://gitlab.com/tom79/mastalab/issues
+        - Pokud problém přetrvává, vytvořte tiket na  https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
     <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
@@ -1018,7 +1018,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab přestal fungovat :(</string>
+    <string name="crash_title">Fedilab přestal fungovat :(</string>
     <string name="crash_message">Pošlete mi mailem údaje o chybě. Pomůžete tak při opravě :)\n\nMůžete přidat dodatečný obsah. Děkuji!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
