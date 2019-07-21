@@ -475,7 +475,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         - 檢查您的站台是否仍在運行\n\n
         - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫站台名稱後）\n\n
         - 您也可以在不使用 2FA 的狀況下使用此連結\n\n
-        - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://framagit.org/tom79/fedilab/issues
+        - 若還是無法運作，請在 Framagit 上回報問題，網址為 https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
     <string name="data_export_start">此動作可能會很久，您將在完成時收到通知。</string>
