@@ -1023,6 +1023,8 @@
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
     <string name="crash_title">Fedilab se je ustavil :(</string>
     <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>
