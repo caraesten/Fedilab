@@ -125,6 +125,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1301,17 +1302,27 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
                 if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                    Uri uri = filesMap.get(attachment.getUrl());
-                    Glide.with(imageView.getContext())
-                            .asBitmap()
-                            .load(uri)
-                            .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    imageView.setImageBitmap(resource);
-                                }
-                            });
+                    if( uploadInfo.getSuccessfullyUploadedFiles() != null && uploadInfo.getSuccessfullyUploadedFiles().size() > 0) {
+
+                        Iterator it = filesMap.entrySet().iterator();
+                        Uri fileName = null;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            fileName = (Uri) pair.getValue();
+                            it.remove();
+                        }
+                        if (fileName != null ) {
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(fileName)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            imageView.setImageBitmap(resource);
+                                        }
+                                    });
+                        }
+                    }
 
                 }else {
                     String finalUrl = url;
@@ -2804,6 +2815,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         try {
             tempInput = getContentResolver().openInputStream(inUri);
             File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            filesMap.put(file.getAbsolutePath(), inUri);
             tempOut = new FileOutputStream(file.getAbsoluteFile());
             byte[] buff = new byte[1024];
             int read;
@@ -2847,9 +2859,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     .setClearOnActionForAllStatuses(true);
             uploadConfig.getProgress().message = getString(R.string.uploading);
             uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest(context,uploadId, url)
-                    .addHeader("Authorization", "Bearer " + token)
-                    .setNotificationConfig(uploadConfig);
+            MultipartUploadRequest request = new MultipartUploadRequest(context,uploadId, url);
+            if (token != null && !token.startsWith("Basic "))
+                request.addHeader("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                request.addHeader("Authorization", token);
+            request.setNotificationConfig(uploadConfig);
             if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 request.addFileToUpload(uri.toString().replace("file://",""), "file");
             }else {
