@@ -1018,9 +1018,9 @@
     <string name="add_instances">Добавить инстанс</string>
     <string name="export_instances">Экспорт инстансов</string>
     <string name="import_instances">Импорт инстансов</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Отчеты о сбоях</string>
+    <string name="set_enable_crash_report">Включить отчеты о сбоях</string>
+    <string name="set_enable_crash_report_indication">Если включено, отчет о сбое будет создан локально. Вы сможете поделиться им при необходимости.</string>
     <string name="crash_title">Mastalab остановился :(</string>
     <string name="crash_message">Вы можете отправить мне по электронной почте отчет о сбое. Это поможет его исправить :)\n\nВы можете добавить дополнительную информацию. Спасибо!</string>
     <plurals name="number_of_vote">
