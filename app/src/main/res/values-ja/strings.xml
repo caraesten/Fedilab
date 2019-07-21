@@ -468,7 +468,7 @@
         - インスタンスがダウンしていないかをチェック\n\n
         - もし2段階認証（2FA）を利用している場合は、下部のリンクを使用してください（先にインスタンス名を入力）\n\n
         - このリンクは、2FAを利用していなくても使用することができます\n\n
-        - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
+        - もしまだ解決しない場合、Framagit（https://framagit.org/tom79/fedilab/issues）にissueを投稿してください
     </string>
     <string name="media_ready">メディアが読み込まれました。ここをタップして表示します。</string>
     <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
@@ -1001,7 +1001,7 @@
     <string name="set_crash_reports">クラッシュレポート</string>
     <string name="set_enable_crash_report">クラッシュレポートを有効にする</string>
     <string name="set_enable_crash_report_indication">有効にすると、クラッシュレポートが作成され、共有できるようになります</string>
-    <string name="crash_title">Mastalabは停止しました :(</string>
+    <string name="crash_title">Fedilabは停止しました :(</string>
     <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
