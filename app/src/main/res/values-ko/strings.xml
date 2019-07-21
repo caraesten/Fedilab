@@ -55,7 +55,7 @@
     <string name="validate">확인</string>
     <string name="media">미디어</string>
     <string name="share_with">공유</string>
-    <string name="shared_via">Mastalab으로 공유</string>
+    <string name="shared_via">Fedilab으로 공유</string>
     <string name="replies">답글</string>
     <string name="username">사용자명</string>
     <string name="drafts">초안</string>
