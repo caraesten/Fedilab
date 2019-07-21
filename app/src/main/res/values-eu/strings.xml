@@ -479,7 +479,7 @@
         - Egiaztatu instantzia ez dagoela erorita\n\n
         - Bi faktoreetako autentifikazioa erabiltzen baduzu (2FA), erabili beheko esteka (behin instantziaren izena bete eta gero)\n\n
         - Esteka hori erabili dezakezu 2FA erabiltzen ez baduzu ere\n\n
-        - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://framagit.org/tom79/fedilab/issues
+        - Oraindik ez badabil, ireki arazo bat Framagit kontu honetan https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
     <string name="data_export_start">Ekintza honek denbora behar dezake. Bukatzean jakinaraziko zaizu.</string>
