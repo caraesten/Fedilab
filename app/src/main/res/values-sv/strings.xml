@@ -246,7 +246,7 @@
     <string name="pinned_toots">Fastnålad</string>
     <!-- TOAST -->
     <string name="client_error">Kan inte få tag på klientid!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Kan inte ansluta till instansdomänen!</string>
     <string name="no_internet">Ingen internetuppkoppling!</string>
     <string name="toast_block">Kontot är spärrat!</string>
     <string name="toast_unblock">Kontot är inte längre spärrat!</string>
@@ -1010,9 +1010,9 @@
     <string name="add_instances">Lägg till en instans</string>
     <string name="export_instances">Exportera instanser</string>
     <string name="import_instances">Importera instanser</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Kraschrapport</string>
+    <string name="set_enable_crash_report">Aktivera felrapporter</string>
+    <string name="set_enable_crash_report_indication">Om aktiverad kommer en krachrapport att skapas lokalt och du kan sen dela den.</string>
     <string name="crash_title">Fedilab har stängts :(</string>
     <string name="crash_message">Du kan skicka felrapport via e-post. Det kommer vara till hjälp för att åtgärda det :)\n\nDu kan också lägga till mer information. Tack så mycket!</string>
     <plurals name="number_of_vote">
