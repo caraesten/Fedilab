@@ -3,7 +3,7 @@
 <resources>
     <string name="navigation_drawer_open">Otwórz menu</string>
     <string name="navigation_drawer_close">Zamknij menu</string>
-    <string name="action_about">O Mastalab</string>
+    <string name="action_about">O Fedilab</string>
     <string name="action_about_instance">O instancji</string>
     <string name="action_privacy">Prywatność</string>
     <string name="action_cache">Pamięć podręczna</string>
@@ -55,7 +55,7 @@
     <string name="validate">Zatwierdź</string>
     <string name="media">Media</string>
     <string name="share_with">Udostępnij</string>
-    <string name="shared_via">Udostępniony przez Mastalab</string>
+    <string name="shared_via">Udostępniony przez Fedilab</string>
     <string name="replies">Odpowiedzi</string>
     <string name="username">Nazwa użytkownika</string>
     <string name="drafts">Szkice</string>
@@ -449,14 +449,14 @@
         <b>&#9888; Te uprawnienia są wykorzystywane wyłącznie na Twoje żądanie.</b>
     </string>
     <string name="privacy_API_title">Śledzenie i biblioteki</string>
-    <string name="privacy_API">        Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
+    <string name="privacy_API">        Fedilab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
         Używane biblioteki: \n
         - <b>Glide</b>: zarządzanie zawartością multimedialną\n
         - <b>Android-Job</b>: zarządzanie usługami\n
         - <b>PhotoView</b>: zarządzanie obrazami\n
     </string>
     <string name="privacy_API_yandex_title">Automatyczne tłumaczenie wpisów:</string>
-    <string name="privacy_API_yandex_authorizations">        Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        Fedilab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
         Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text_dev">Podziękowania dla:    </string>
@@ -485,7 +485,7 @@
         - Sprawdź, czy instancja jest dostępna\n\n
         - Jeśli używasz dwustopniowego uwierzytelniania (2FA), kliknij w link poniżej (po wpisaniu nazwy instancji)\n\n
         - Możesz użyć tego linku nawet gdy nie używasz 2FA\n\n
-        - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://github.com/stom79/mastalab/issues
+        - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Załadowano zawartość multimedialną. Naciśnij tutaj, aby ją wyświetlić.</string>
     <string name="data_export_start">To działanie może trochę potrwać. Powiadomimy cię o jego zakończeniu.</string>
@@ -1016,7 +1016,7 @@
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab został zatrzymany :(</string>
+    <string name="crash_title">Fedilab został zatrzymany :(</string>
     <string name="crash_message">Możesz wysłać mi email z raportem o błędzie. To pomoże go naprawić :)\n\nMożesz dopisać coś więcej. Dziękuję!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>

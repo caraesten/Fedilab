@@ -55,7 +55,7 @@
     <string name="validate">확인</string>
     <string name="media">미디어</string>
     <string name="share_with">공유</string>
-    <string name="shared_via">Mastalab으로 공유</string>
+    <string name="shared_via">Fedilab으로 공유</string>
     <string name="replies">답글</string>
     <string name="username">사용자명</string>
     <string name="drafts">초안</string>
@@ -475,7 +475,7 @@
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+        - If it still does not work, please raise an issue on FramaGit at https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>

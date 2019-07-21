@@ -59,7 +59,7 @@
     <string name="replies">Respondoj</string>
     <string name="username">Uzantnomo</string>
     <string name="drafts">Malnetoj</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Nova datumo estas havebla! Ĉu vi volas aperigi ilin?</string>
     <string name="favourite">Stelumoj</string>
     <string name="follow">Novaj sekvantoj</string>
     <string name="mention">Mencioj</string>
@@ -78,7 +78,7 @@
     <string name="communication_menu_title">Komunikado</string>
     <string name="muted_menu">Silentigitaj uzantoj</string>
     <string name="blocked_menu">Blokitaj uzantoj</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">Izolita sekvi</string>
     <string name="notifications">Sciigoj</string>
     <string name="follow_request">Petoj de sekvado</string>
     <string name="optimization">Optimigo</string>
@@ -88,18 +88,18 @@
     <string name="delete_account_title">Forigi konton</string>
     <string name="delete_account_message" formatted="false">Forigi la konton %1$s de la apliko?</string>
     <string name="send_email">Sendi per retmesaĝo</string>
-    <string name="choose_file">Please select a file</string>
+    <string name="choose_file">Bonvolu elekti dosieron</string>
     <string name="choose_file_error">Neniu dosiero esploristo trovis!</string>
     <string name="click_to_change">Click on the path to change it</string>
     <string name="failed">Fiaskis!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="scheduled_toots">Planita hupoj</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Enmeti emoĝion</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
+    <string name="fav_added">La hup estis aldonita al ŝatolistoj</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>

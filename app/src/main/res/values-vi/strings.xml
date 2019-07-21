@@ -55,7 +55,7 @@
     <string name="validate">Xác thực</string>
     <string name="media">Phương tiện truyền thông</string>
     <string name="share_with">Chia sẽ với</string>
-    <string name="shared_via">Chia sẻ qua Mastalab</string>
+    <string name="shared_via">Chia sẻ qua Fedilab</string>
     <string name="replies">Trả lời</string>
     <string name="username">Tên người dùng</string>
     <string name="drafts">Bản nháp</string>
@@ -473,7 +473,7 @@ và %d toots khác để khám phá</item>
         - Kiểm tra rằng trường hợp của bạn không xuống\n\n
         - Nếu bạn sử dụng xác thực hai yếu tố (2FA), vui lòng sử dụng liên kết ở cuối (khi tên cá thể được điền)\n\n
         - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
-        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
+        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Framagit tại https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>

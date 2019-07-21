@@ -55,7 +55,7 @@
     <string name="validate">Godkend</string>
     <string name="media">Medier</string>
     <string name="share_with">Del med</string>
-    <string name="shared_via">Delt via Mastalab</string>
+    <string name="shared_via">Delt via Fedilab</string>
     <string name="replies">Svar</string>
     <string name="username">Brugernavn</string>
     <string name="drafts">Kladder</string>
@@ -474,12 +474,12 @@
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="show_boost_count">Vis boosts-/favoritantal</string>
     <string name="issue_login_title">Kan ikke godkendes?</string>
-    <string name="issue_login_message">        <b>Her er nogle tjek, som måske hjælper:</b>\n\n
+    <string name="issue_login_message"><b>Her er nogle tjek, som måske hjælper:</b>\n\n
         - Tjek, at der ikke er stavefejl i instansnavnet\n\n
         - Tjek, at din instans ikke er utilgængelig\n\n
         - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når instansnavnet er udfyldt) i bunden\n\n
         - Du kan også benytte linket uden brug af 2FA\n\n
-        - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://gitlab.com/tom79/mastalab/issues
+        - Fungerer det stadig ikke, så opert en problemrapport på Framagit via https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Medie er indlæst. Tryk hér for at vise det.</string>
     <string name="data_export_start">Denne handling kan tage ganske lang tid. Du underrettes, når den er færdig.</string>
@@ -1010,9 +1010,9 @@
     <string name="add_instances">Tilføj en instans</string>
     <string name="export_instances">Eksportér instanser</string>
     <string name="import_instances">Importér instanser</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_crash_reports">Nedbrudsrapporter</string>
+    <string name="set_enable_crash_report">Aktivér nedbrudsrapporter</string>
+    <string name="set_enable_crash_report_indication">Hvis aktiveret, vil en nedbrudsrapport blive oprettet lokalt, hvorefter du vil kunne dele den.</string>
     <string name="crash_title">Fedilab er stoppet :(</string>
     <string name="crash_message">Du kan sende mig nedbrudsrapporten på e-mail. Det vil bidrage til problemløsningen :-)\n\nDu kan selv tilføje yderlige info. Mange tak!</string>
     <plurals name="number_of_vote">

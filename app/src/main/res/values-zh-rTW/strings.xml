@@ -55,7 +55,7 @@
     <string name="validate">確認</string>
     <string name="media">媒體</string>
     <string name="share_with">分享給</string>
-    <string name="shared_via">已透過 Mastalab 分享</string>
+    <string name="shared_via">已透過 Fedilab 分享</string>
     <string name="replies">回覆</string>
     <string name="username">使用者名稱</string>
     <string name="drafts">草稿</string>
@@ -475,7 +475,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         - 檢查您的站台是否仍在運行\n\n
         - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫站台名稱後）\n\n
         - 您也可以在不使用 2FA 的狀況下使用此連結\n\n
-        - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
+        - 若還是無法運作，請在 Framagit 上回報問題，網址為 https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
     <string name="data_export_start">此動作可能會很久，您將在完成時收到通知。</string>
@@ -1006,10 +1006,10 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="add_instances">新增站台</string>
     <string name="export_instances">匯出站台</string>
     <string name="import_instances">匯入站台</string>
-    <string name="set_crash_reports">Crash reports</string>
-    <string name="set_enable_crash_report">Enable crash reports</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab 已停止 :(</string>
+    <string name="set_crash_reports">當機回報</string>
+    <string name="set_enable_crash_report">啟用當機回報</string>
+    <string name="set_enable_crash_report_indication">若啟用，將會在本機建立當機回報，然後您就可以分享它了。</string>
+    <string name="crash_title">Fedilab 已停止 :(</string>
     <string name="crash_message">您可以透過電子郵件傳送當機報告給我。這可以協助我修復它 :)\n\n您可以加入鵝外的內容。感謝您！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
