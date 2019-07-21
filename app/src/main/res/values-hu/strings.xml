@@ -477,7 +477,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
         - Ellenőrizd, hogy a szervered elérhető\n\n
         - Használd az alsó linket, ha két faktoros hitelesítést (2FA) használsz  (miután kitöltötted a szerver nevét)\n\n
         - Ezt a linket 2FA nélkül is használhatod\n\n
-        - Ha még mindig nem sikerül bejelentkezni, jelentsd a GitLabon  a https://gitlab.com/tom79/mastalab/issues címen
+        - Ha még mindig nem sikerül bejelentkezni, jelentsd a Framagiton a https://framagit.org/tom79/fedilab/issues címen
     </string>
     <string name="media_ready">Betöltöttük a médiát. Klikkelj ide a megjelenítéshez.</string>
     <string name="data_export_start">Ez a folyamat sokáig tarthat. Értesítünk majd, amikor befejeződött.</string>
@@ -1011,7 +1011,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab leállt :(</string>
+    <string name="crash_title">Fedilab leállt :(</string>
     <string name="crash_message">Küldhetsz nekem e-mailt a hibajelentéssel. Ez segít majd a javításnál :)\n\nHozzáadhatsz még további tartalmakat is. Köszönöm!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
