@@ -468,12 +468,12 @@
     <string name="account_moved_to">%1$s, %2$s\'e taşındı</string>
     <string name="show_boost_count">Hızlandırmaları göster/Favori sayısı</string>
     <string name="issue_login_title">Kimlik doğrulama çalışmıyor?</string>
-    <string name="issue_login_message">        <b>Yardımı olabilecek bazı kontroller:</b>\n\n
+    <string name="issue_login_message"><b>Yardımı olabilecek bazı kontroller:</b>\n\n
         - Sunucu adını kontrol et\n\n
         - Sunucunda hata olmadığından emin ol\n\n
         - İki aşamalı doğrulama (2FA) kullanıyorsan, alttaki bağlantıyı kullan (sunucu adı doldurulduktan sonra)\n\n
         - Bağlantıyı 2FA olmadan da kullanabilirsin\n\n
-        - Eğer hala çalışmıyorsa, Gitlab üzerinde hata kaydı aç: https://gitlab.com/tom79/mastalab/issues
+        - Eğer hala çalışmıyorsa, Framagit üzerinde hata kaydı aç: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Medya yüklendi. Görüntülemek için tıkla.</string>
     <string name="data_export_start">Bu işlem oldukça uzun sürebilir. Bitince haberdar olacaksın.</string>
