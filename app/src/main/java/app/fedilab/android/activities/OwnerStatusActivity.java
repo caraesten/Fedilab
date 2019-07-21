@@ -103,7 +103,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar);
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark_NoActionBar);

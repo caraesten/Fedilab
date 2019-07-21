@@ -339,6 +339,7 @@ public class Helper {
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
+    public static final String SET_WYSIWYG = "set_wysiwyg";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
@@ -3439,6 +3440,7 @@ public class Helper {
         }
         return text.length() - countWithEmoji(text);
     }
+
 
     public static int countWithEmoji(String text){
         int emojiCount = 0;

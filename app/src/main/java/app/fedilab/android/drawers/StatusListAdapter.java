@@ -133,6 +133,7 @@ import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipQuickReplyInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
@@ -185,7 +186,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface, OnRetrieveRelationshipQuickReplyInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveImageInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnPollInterface, OnRefreshCachedStatusInterface, OnRetrieveSearcAccountshInterface, OnRetrieveSearchInterface, OnPostStatusActionInterface, OnRetrieveRelationshipQuickReplyInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -535,6 +536,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status.setWarningFetched(0);
         }
     }
+
 
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
@@ -1457,6 +1459,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Status.transform(context, status);
             if (!status.isEmojiFound())
                 Status.makeEmojis(context, this, status);
+            if (!status.isImageFound())
+                Status.makeImage(context, this, status);
+
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -4106,6 +4111,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 } catch (Exception ignored) {
                 }
             }
+        }
+    }
+
+
+    @Override
+    public void onRetrieveImage(Status status, boolean fromTranslation) {
+        if( status != null) {
+            if( !fromTranslation) {
+                status.setImageFound(true);
+            }else {
+                status.setImageFound(true);
+            }
+            notifyStatusChanged(status);
         }
     }
 
