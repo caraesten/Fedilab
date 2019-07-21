@@ -472,12 +472,12 @@
     <string name="account_moved_to">%1$s відправлено до %2$s</string>
     <string name="show_boost_count">Показати лічильники передмухнутого/обраного</string>
     <string name="issue_login_title">Автентифікація не працює?</string>
-    <string name="issue_login_message">        <b>Деякі поради, що можуть допомогти:</b>\n\n
+    <string name="issue_login_message"><b>Деякі поради, що можуть допомогти:</b>\n\n
         - Перевірте правильність написання назви екземпляру\n\n
         - Перевірте, чи екземпляр працює\n\n
         - Якщо використовуєте двофакторну авторизацію (2FA), будь ласка скористайтеся посиланням внизу, коли назву екземпляру заповнено\n\n
         - Також можна використовувати посилання без 2FA\n\n
-        - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues
+        - Якщо все одно не працює, повідомте нам на Framagit: https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
     <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
@@ -1011,7 +1011,7 @@
     <string name="set_crash_reports">Crash reports</string>
     <string name="set_enable_crash_report">Enable crash reports</string>
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
-    <string name="crash_title">Mastalab зупинився :(</string>
+    <string name="crash_title">Fedilab зупинився :(</string>
     <string name="crash_message">Ви можете надіслати мені звіт про збій електронною поштою. Це допоможе виправити це:)\n\nВи можете додати додатковий вміст. Дякую!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
