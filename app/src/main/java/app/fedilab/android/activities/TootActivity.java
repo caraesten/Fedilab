@@ -278,6 +278,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private TextView warning_message;
     private Editor wysiwyg;
     private EditText wysiwygEditText;
+    private String url_for_media;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -516,7 +517,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 @Override
                 public void onUpload(Bitmap image, String uuid) {
-
+                    if( url_for_media != null) {
+                        wysiwyg.onImageUploadComplete(url_for_media, uuid);
+                    }
                 }
 
                 @Override
@@ -1322,8 +1325,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     imageView.setImageBitmap(resource);
                                     if( displayWYSIWYG()) {
+                                        url_for_media = finalUrl;
                                         wysiwyg.insertImage(resource);
-                                        wysiwyg.onImageUploadComplete(finalUrl,uuid);
                                     }
                                 }
                             });
@@ -3979,6 +3982,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         });
             }
         });
+        //Remove colours
+        findViewById(R.id.action_color).setVisibility(View.GONE);
 
         findViewById(R.id.action_unordered_numbered).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -4015,6 +4020,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 wysiwyg.clearAllContents();
             }
         });
+        //Remove eraser
+        findViewById(R.id.action_erase).setVisibility(View.GONE);
 
         findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
             @Override

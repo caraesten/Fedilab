@@ -1052,11 +1052,11 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final CheckBox set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
         set_wysiwyg.setChecked(wysiwyg);
 
-        set_capitalize.setOnClickListener(new View.OnClickListener() {
+        set_wysiwyg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_WYSIWYG, set_capitalize.isChecked());
+                editor.putBoolean(Helper.SET_WYSIWYG, set_wysiwyg.isChecked());
                 editor.apply();
             }
         });
