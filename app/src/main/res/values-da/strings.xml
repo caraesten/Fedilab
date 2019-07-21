@@ -479,7 +479,7 @@
         - Tjek, at din instans ikke er utilgængelig\n\n
         - Benytter du tofaktorgodkendelse, (2FA), så benyt linket (når instansnavnet er udfyldt) i bunden\n\n
         - Du kan også benytte linket uden brug af 2FA\n\n
-        - Fungerer det stadig ikke, så opert en problemrapport på GitLab via https://framagit.org/tom79/fedilab/issues
+        - Fungerer det stadig ikke, så opert en problemrapport på Framagit via https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Medie er indlæst. Tryk hér for at vise det.</string>
     <string name="data_export_start">Denne handling kan tage ganske lang tid. Du underrettes, når den er færdig.</string>
