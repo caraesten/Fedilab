@@ -479,7 +479,7 @@
         - Kontrollera att din instans inte är nere\n\n
         - Om du använder tvåstegsfaktor autentisering (2FA), vänligen använd länken längst ner (när instansnamnet är ifyllt)\n\n
         - Du kan också använda denna länk utan att använda 2FA\n\n
-        - Om det fortfarande inte fungerar, vänligen be om hjälp på GitLab https://gitlab.com/tom79/mastalab/issues
+        - Om det fortfarande inte fungerar, vänligen be om hjälp på Framagit https://framagit.org/tom79/fedilab/issues
     </string>
     <string name="media_ready">Media har laddats, klicka här för att visa.</string>
     <string name="data_export_start">Denna åtgärd kan ta ganska lång tid. Du kommer att meddelas när den är färdig.</string>
