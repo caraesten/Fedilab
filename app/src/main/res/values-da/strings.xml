@@ -55,7 +55,7 @@
     <string name="validate">Godkend</string>
     <string name="media">Medier</string>
     <string name="share_with">Del med</string>
-    <string name="shared_via">Delt via Mastalab</string>
+    <string name="shared_via">Delt via Fedilab</string>
     <string name="replies">Svar</string>
     <string name="username">Brugernavn</string>
     <string name="drafts">Kladder</string>
