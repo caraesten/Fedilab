@@ -1238,7 +1238,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             String filename = Helper.getFileName(TootActivity.this, data.getData());
-            upload(TootActivity.this, data.getData(), filename);
+            upload(TootActivity.this, data.getData(), "fedilabins_"+filename);
         }
     }
 
@@ -1337,7 +1337,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     imageView.setImageBitmap(resource);
                                     if( displayWYSIWYG()) {
                                         url_for_media = finalUrl;
-                                        wysiwyg.insertImage(resource);
+                                        Iterator it = filesMap.entrySet().iterator();
+                                        String fileName = null;
+                                        while (it.hasNext()) {
+                                            Map.Entry pair = (Map.Entry)it.next();
+                                            fileName = (String) pair.getKey();
+                                            it.remove();
+                                        }
+                                        if( fileName != null && fileName.toString().contains("fedilabins_")) {
+                                            wysiwyg.insertImage(resource);
+                                        }
                                     }
                                 }
                             });
@@ -2813,8 +2822,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         String suffix = "";
         if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
         try {
+            File file;
             tempInput = getContentResolver().openInputStream(inUri);
-            File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            if( fname.startsWith("fedilabins_")){
+                file = File.createTempFile("fedilabins_randomTemp1", suffix, getCacheDir());
+            }else{
+                file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            }
+
             filesMap.put(file.getAbsolutePath(), inUri);
             tempOut = new FileOutputStream(file.getAbsoluteFile());
             byte[] buff = new byte[1024];

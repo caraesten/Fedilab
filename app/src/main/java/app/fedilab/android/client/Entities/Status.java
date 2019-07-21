@@ -37,9 +37,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
-import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -637,8 +635,6 @@ public class Status implements Parcelable{
                 if( valArray.length > 1 ){
                     String contentOriginal = valArray[0];
                     String url = valArray[1];
-                    Log.v(Helper.TAG,"contentOriginal: " + contentOriginal);
-                    Log.v(Helper.TAG,"url: " + url);
                     Glide.with(context)
                             .asBitmap()
                             .load(url)
@@ -646,14 +642,10 @@ public class Status implements Parcelable{
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     final String targetedEmoji = contentOriginal;
-                                    Log.v(Helper.TAG,"contentSpan.toString(): " + spannableStringContent.toString());
                                     if (spannableStringContent != null && spannableStringContent.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
-                                        Log.v(Helper.TAG,"ok: " + spannableStringContent.toString());
                                         for (int startPosition = -1; (startPosition = spannableStringContent.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            Log.v(Helper.TAG,"startPosition: " + startPosition);
-                                            Log.v(Helper.TAG,"endPosition: " + endPosition);
                                             if( endPosition <= spannableStringContent.toString().length() && endPosition >= startPosition) {
                                                 spannableStringContent.setSpan(
                                                         new ImageSpan(context,
