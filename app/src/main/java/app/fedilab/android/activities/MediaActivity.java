@@ -725,7 +725,15 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     @Override
     protected void onDestroy() {
         try {
-            visualizerView.release();
+            if( visualizerView != null) {
+                visualizerView.release();
+            }
+            if( player != null) {
+                player.release();
+            }
+            if( playeraudio != null) {
+                playeraudio.release();
+            }
         } catch (Exception ignored){ }
         super.onDestroy();
     }
