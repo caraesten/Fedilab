@@ -1023,8 +1023,8 @@
     <string name="set_enable_crash_report_indication">Если включено, отчет о сбое будет создан локально. Вы сможете поделиться им при необходимости.</string>
     <string name="crash_title">Fedilab остановился :(</string>
     <string name="crash_message">Вы можете отправить мне по электронной почте отчет о сбое. Это поможет его исправить :)\n\nВы можете добавить дополнительную информацию. Спасибо!</string>
-    <string name="set_wysiwyg">Use the wysiwyg</string>
-    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
+    <string name="set_wysiwyg">Использовать WYSIWYG</string>
+    <string name="set_wysiwyg_indication">Если включено, вы сможете легко форматировать текст с помощью инструментов.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
