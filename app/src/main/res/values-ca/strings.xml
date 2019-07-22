@@ -1008,7 +1008,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="crash_title">Malaslab s\'ha aturat :(</string>
     <string name="crash_message">Pots enviar-me l\'informe de la fallada per email. Ajudarà a resoldre-ho :)\n\nPots afegir-hi contingut. Gràcies!</string>
     <string name="set_wysiwyg">Utilitza el wysiwyg (es-veu-com-ho-veus)</string>
-    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
+    <string name="set_wysiwyg_indication">Quan està habilitat, es pot formatar el text fàcilment amb unes eines.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
