@@ -18,7 +18,7 @@
     <string name="download_file">Elŝutante %1$s</string>
     <string name="download_over">Elŝutado plenumita</string>
     <string name="save_file">Konservi %1$s</string>
-    <string name="save_over">Media saved</string>
+    <string name="save_over">Aŭdvidaĵo savita</string>
     <string name="download_from" formatted="false">Dosiero: %1$s</string>
     <string name="password">Pasvorto</string>
     <string name="email">Retpoŝto</string>
@@ -98,7 +98,7 @@
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
+    <string name="no_status">Neniu hup por montri</string>
     <string name="fav_added">La hup estis aldonita al ŝatolistoj</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
@@ -151,22 +151,22 @@
     <string name="date_day">%d d</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Averto</string>
-    <string name="toot_placeholder">What is on your mind?</string>
+    <string name="toot_placeholder">Kion vi pensas?</string>
     <string name="toot_it">HUP!</string>
     <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
+    <string name="cw">ea</string>
+    <string name="toot_title">Skribi hup</string>
+    <string name="toot_title_reply">Respondi hup</string>
+    <string name="queet_title">Skribi queet</string>
+    <string name="queet_title_reply">Respondi queet</string>
+    <string name="toot_no_space">Vi atingis la 500 karakteroj permesis!</string>
     <string name="toot_select_image">Elekti aŭdovidaĵon</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
     <string name="toot_delete_media">Forigi ĉi tiun aŭdovidaĵon?</string>
     <string name="toot_error_no_content">Via tooto estas malplena!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
+    <string name="toot_visibility_tilte">Videbleco de la hup</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
+    <string name="toot_sent">La toot estis sendita!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Tikla enhavo?</string>
     <string-array name="toot_visibility">
@@ -175,11 +175,11 @@
         <item>Afiŝi nur al sekvantoj</item>
         <item>Afiŝi nur al menciitaj uzantoj</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
+    <string name="no_draft">Neniu malnetoj!</string>
+    <string name="choose_toot">Elekti hup</string>
     <string name="choose_accounts">Elekti kontojn</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
+    <string name="select_accounts">Elekti kelkaj kontoj</string>
+    <string name="remove_draft">Forigi malneto?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
@@ -209,7 +209,7 @@
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Forigi planita toot?</string>
-    <string name="media_count">Media: %d</string>
+    <string name="media_count">Aŭdvidaĵo %d</string>
     <string name="toot_scheduled">La toot estis planita!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
@@ -270,7 +270,7 @@
     <string name="toast_error_login">Ne povas ensaluti!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="toast_saved">La aŭdvidaĵo estis konservitaj!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Malneto saviĝis!</string>
@@ -650,7 +650,7 @@
     <string name="play_video">Play video</string>
     <string name="new_toot">New toot</string>
     <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="hide_media">Kaŝi aŭdovidaĵojn</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
@@ -674,8 +674,8 @@
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Nur aŭdvidaĵo</string>
+    <string name="show_media_nsfw">Montru NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Translation of the application</string>
@@ -728,7 +728,7 @@
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
     <string name="my_pictures">My pictures</string>
@@ -846,7 +846,7 @@
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
-    <string name="edit_media">Edit media</string>
+    <string name="edit_media">Redakti aŭdvidaĵo</string>
     <string name="redo">redo</string>
     <string name="gallery">Gallery</string>
     <string name="label_emoji">Emoĝio</string>
