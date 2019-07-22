@@ -3239,7 +3239,7 @@ public class Helper {
                 }
 
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_NO);
+                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
                 if( mediaType == MediaType.PROFILE)
                     resizeSet = Helper.S_1MO;
                 double resizeby = size;
