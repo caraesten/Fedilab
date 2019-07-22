@@ -206,6 +206,8 @@ import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
 import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
 import app.fedilab.android.sqlite.DomainBlockDAO;
+import app.fedilab.android.sqlite.StatusCacheDAO;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
@@ -2065,14 +2067,17 @@ public class Helper {
         if( directory == null || directory.length() == 0 )
             return -1;
         for (File file : directory.listFiles()) {
-            if (file.isFile())
+            if (file.isFile()){
                 try {
                     length += file.length();
-                }catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     return -1;
                 }
-            else
-                length += cacheSize(file);
+            }else {
+                if( !file.getName().equals("databases") && !file.getName().equals("shared_prefs")) {
+                    length += cacheSize(file);
+                }
+            }
         }
         return length;
     }
@@ -3858,6 +3863,11 @@ public class Helper {
                                         if (dir.isDirectory()) {
                                             Helper.deleteDir(dir);
                                         }
+                                        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
+                                        Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
+                                        String dateString = Helper.dateToString(date);
+                                        new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);
                                     } catch (Exception ignored) {
                                     }
                                 }

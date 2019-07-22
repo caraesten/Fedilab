@@ -189,6 +189,11 @@ public class StatusCacheDAO {
         return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
 
+    public void removeDuplicate(){
+        db.execSQL("DELETE FROM "+Sqlite.TABLE_STATUSES_CACHE+" WHERE "+Sqlite.COL_ID+" NOT IN (SELECT MIN("+Sqlite.COL_ID+") FROM "+Sqlite.TABLE_STATUSES_CACHE+" GROUP BY "+Sqlite.COL_STATUS_ID+","+Sqlite.COL_INSTANCE+")");
+    }
+
+
     /***
      * Remove stored status
      * @return int
