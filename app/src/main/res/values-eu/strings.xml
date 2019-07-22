@@ -1014,6 +1014,8 @@
     <string name="set_enable_crash_report_indication">Gaituta badago, krakatze txosten bat sortuko da lokalean eta gero partekatu ahal izango duzu.</string>
     <string name="crash_title">Fedilab gelditu da :(</string>
     <string name="crash_message">Kraskatze txostena e-mail bidez bidali diezadakezu. Konpontzen lagunduko dit :)\n\nEdukia gehitu dezakezu. Eskerrik asko!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>

@@ -1015,6 +1015,8 @@
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
     <string name="crash_title">Fedilab parou :(</string>
     <string name="crash_message">Você pode me enviar por e-mail o relatório de erros. Irá me ajudar a corrigí-los :) \n\nVocê pode adicionar conteúdo adicional. Obrigado!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>

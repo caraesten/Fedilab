@@ -1003,6 +1003,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
     <string name="crash_title">Fedilab har stoppet :(</string>
     <string name="crash_message">Du kan sende meg krasjrapporten på e-post. Det vil hjelpe til med å fikse problemet :)\n\nDu kan også legge til ekstra informasjon du mener er nyttig. Tusen takk!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
