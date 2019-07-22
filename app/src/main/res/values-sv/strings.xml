@@ -1015,6 +1015,8 @@
     <string name="set_enable_crash_report_indication">Om aktiverad kommer en krachrapport att skapas lokalt och du kan sen dela den.</string>
     <string name="crash_title">Fedilab har stängts :(</string>
     <string name="crash_message">Du kan skicka felrapport via e-post. Det kommer vara till hjälp för att åtgärda det :)\n\nDu kan också lägga till mer information. Tack så mycket!</string>
+    <string name="set_wysiwyg">Använd wysiwyg</string>
+    <string name="set_wysiwyg_indication">När den är aktiverad, kommer du att kunna formatera din text lätt med verktyg.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>

@@ -1019,6 +1019,8 @@
     <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
     <string name="crash_title">Масталаб је престао да ради :(</string>
     <string name="crash_message">Можете ми послати извештај о грешци е-поштом. То може да ми помогне да је исправим:)\n\nМожете додати и неки додатни садржај. Хвала!</string>
+    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
