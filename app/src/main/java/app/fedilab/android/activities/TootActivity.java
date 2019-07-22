@@ -3728,7 +3728,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
         if( !forced) {
-            if (toot_content.getText().toString().trim().length() == 0 && wysiwyg.getContentAsHTML().toString().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
+            if (toot_content.getText().toString().trim().length() == 0 && wysiwyg.getContentAsHTML().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
             if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim()))
                 return;
