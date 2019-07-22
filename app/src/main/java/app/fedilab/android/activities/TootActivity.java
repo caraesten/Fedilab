@@ -1063,8 +1063,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         @Override
         public void onReceive(Context context, Intent intent) {
             String imgpath = intent.getStringExtra("imgpath");
-            if( imgpath != null)
-                new asyncPicture(TootActivity.this, account, Uri.fromFile(new File(imgpath))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if( imgpath != null) {
+                prepareUpload(TootActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
+            }
         }
     };
 
@@ -1111,7 +1112,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        new asyncPicture(TootActivity.this, account, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        prepareUpload(TootActivity.this, fileUri, null, uploadReceiver);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1204,7 +1205,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if (mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif"))) {
-                    upload(TootActivity.this, data.getData(), filename);
+                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                 } else if (mime != null && mime.toLowerCase().contains("image")) {
                     if( photo_editor) {
                         Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1213,10 +1214,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         intent.putExtras(b);
                         startActivity(intent);
                     }else{
-                        upload(TootActivity.this, data.getData(), filename);
+                        prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                     }
                 }else if(mime != null && mime.toLowerCase().contains("audio")){
-                    upload(TootActivity.this, data.getData(), filename);
+                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                 }else {
                     Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
@@ -1225,7 +1226,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
 
             Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedilab_recorded_audio.wav"));
-            upload(TootActivity.this, uri, "fedilab_recorded_audio.wav");
+            prepareUpload(TootActivity.this, uri, "fedilab_recorded_audio.wav",uploadReceiver);
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
             if( photo_editor) {
                 Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1234,11 +1235,158 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 intent.putExtras(b);
                 startActivity(intent);
             }else {
-                new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                prepareUpload(TootActivity.this, photoFileUri, null, uploadReceiver);
             }
         }else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             String filename = Helper.getFileName(TootActivity.this, data.getData());
-            upload(TootActivity.this, data.getData(), "fedilabins_"+filename);
+            prepareUpload(TootActivity.this, data.getData(), "fedilabins_"+filename, uploadReceiver);
+        }
+    }
+
+
+    private void prepareUpload(Activity activity, android.net.Uri uri,String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        new asyncPicture(activity, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    static class asyncPicture extends AsyncTask<Void, Void, Void> {
+
+        ByteArrayInputStream bs;
+        WeakReference<Activity> activityWeakReference;
+        android.net.Uri uriFile;
+        boolean error = false;
+        UploadServiceSingleBroadcastReceiver uploadReceiver;
+        String filename;
+
+        asyncPicture(Activity activity, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+            this.activityWeakReference = new WeakReference<>(activity);
+            this.uriFile = uri;
+            this.uploadReceiver = uploadReceiver;
+            this.filename = filename;
+        }
+
+        @Override
+        protected  void onPreExecute(){
+            if( uriFile == null) {
+                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                error = true;
+            }
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if( error) {
+                return null;
+            }
+            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if( !error) {
+                if (bs == null)
+                    return;
+                ImageButton toot_picture;
+                Button toot_it;
+                LinearLayout toot_picture_container;
+                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
+                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
+
+                toot_picture_container.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
+                if( filename == null) {
+                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                }
+                filesMap.put(filename, uriFile);
+                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
+            }
+        }
+    }
+
+
+    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        String uploadId = UUID.randomUUID().toString();
+        uploadReceiver.setUploadID(uploadId);
+        Uri uri;
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            File file;
+            tempInput = activity.getContentResolver().openInputStream(inUri);
+            if( fname.startsWith("fedilabins_")){
+                file = File.createTempFile("fedilabins_randomTemp1", suffix,  activity.getCacheDir());
+            }else{
+                file = File.createTempFile("randomTemp1", suffix,  activity.getCacheDir());
+            }
+
+            filesMap.put(file.getAbsolutePath(), inUri);
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read;
+            assert tempInput != null;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            if(BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile( activity,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        file);
+            }else{
+                uri = FileProvider.getUriForFile( activity,
+                        "app.fedilab.android.fileProvider",
+                        file);
+            }
+            tempInput.close();
+            tempOut.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
+        try {
+            final String fileName = FileNameCleaner.cleanFileName(fname);
+            SharedPreferences sharedpreferences =  activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance( activity), "https");
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
+            String url = null;
+            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/v1/media";
+            }else {
+                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/media/upload.json";
+            }
+            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+            uploadConfig
+                    .setClearOnActionForAllStatuses(true);
+            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
+            uploadConfig.getCompleted().autoClear = true;
+            MultipartUploadRequest request = new MultipartUploadRequest( activity,uploadId, url);
+            if (token != null && !token.startsWith("Basic "))
+                request.addHeader("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                request.addHeader("Authorization", token);
+            request.setNotificationConfig(uploadConfig);
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                request.addFileToUpload(uri.toString().replace("file://",""), "file");
+            }else {
+                request.addFileToUpload(uri.toString().replace("file://",""), "media");
+            };
+            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
+                    .startUpload();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1430,58 +1578,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
 
-    class asyncPicture extends AsyncTask<Void, Void, Void> {
 
-        ByteArrayInputStream bs;
-        WeakReference<Activity> activityWeakReference;
-        android.net.Uri uriFile;
-        Account account;
-        boolean error = false;
-
-        asyncPicture(Activity activity, Account account, android.net.Uri uri){
-            this.activityWeakReference = new WeakReference<>(activity);
-            this.uriFile = uri;
-            this.account = account;
-        }
-
-        @Override
-        protected  void onPreExecute(){
-            if( uriFile == null) {
-                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                error = true;
-            }
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if( error)
-                return null;
-            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            if( !error) {
-                if (bs == null)
-                    return;
-                ImageButton toot_picture;
-                Button toot_it;
-                LinearLayout toot_picture_container;
-                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
-                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
-                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
-
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
-                String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
-                filesMap.put(filename, uriFile);
-                upload(activityWeakReference.get(), uriFile, filename);
-            }
-        }
-    }
 
 
     @Override
@@ -1496,15 +1593,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 return;
             }
             String filename =  Helper.getFileName(TootActivity.this, imageUri);
-            ContentResolver cr = getContentResolver();
-            String mime = cr.getType(imageUri);
-            if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("audio") || mime.toLowerCase().contains("gif")) ) {
-                upload(TootActivity.this, imageUri, filename);
-            } else if(mime != null && mime.toLowerCase().contains("image")) {
-                new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-            }
+
+            prepareUpload(TootActivity.this, imageUri, filename,uploadReceiver);
         }
 
     }
@@ -2194,7 +2284,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(TootActivity.this, uri, filename);
+            upload(TootActivity.this, uri, filename, uploadReceiver);
         }
     }
 
@@ -2810,89 +2900,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
 
-    private void upload(Context context, Uri inUri, String fname){
-        String uploadId = UUID.randomUUID().toString();
-        uploadReceiver.setUploadID(uploadId);
-        Uri uri = inUri;
 
-        InputStream tempInput = null;
-        FileOutputStream tempOut = null;
-        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
-        int suffixPosition = filename.lastIndexOf(".");
-        String suffix = "";
-        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
-        try {
-            File file;
-            tempInput = getContentResolver().openInputStream(inUri);
-            if( fname.startsWith("fedilabins_")){
-                file = File.createTempFile("fedilabins_randomTemp1", suffix, getCacheDir());
-            }else{
-                file = File.createTempFile("randomTemp1", suffix, getCacheDir());
-            }
-
-            filesMap.put(file.getAbsolutePath(), inUri);
-            tempOut = new FileOutputStream(file.getAbsoluteFile());
-            byte[] buff = new byte[1024];
-            int read;
-            assert tempInput != null;
-            while ((read = tempInput.read(buff)) > 0) {
-                tempOut.write(buff, 0, read);
-            }
-            if(BuildConfig.DONATIONS) {
-                uri = FileProvider.getUriForFile(this,
-                        "fr.gouv.etalab.mastodon.fileProvider",
-                        file);
-            }else{
-                uri = FileProvider.getUriForFile(this,
-                        "app.fedilab.android.fileProvider",
-                        file);
-            }
-            tempInput.close();
-            tempOut.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-            uri = inUri;
-        } finally {
-            IOUtils.closeQuietly(tempInput);
-            IOUtils.closeQuietly(tempOut);
-        }
-
-        try {
-            final String fileName = FileNameCleaner.cleanFileName(fname);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance(context), "https");
-            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
-            String url = null;
-            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/v1/media";
-            }else {
-                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/media/upload.json";
-            }
-            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
-            uploadConfig
-                    .setClearOnActionForAllStatuses(true);
-            uploadConfig.getProgress().message = getString(R.string.uploading);
-            uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest(context,uploadId, url);
-            if (token != null && !token.startsWith("Basic "))
-                request.addHeader("Authorization", "Bearer " + token);
-            else if( token != null && token.startsWith("Basic "))
-                request.addHeader("Authorization", token);
-            request.setNotificationConfig(uploadConfig);
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                request.addFileToUpload(uri.toString().replace("file://",""), "file");
-            }else {
-                request.addFileToUpload(uri.toString().replace("file://",""), "media");
-            };
-            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
-                .startUpload();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {

@@ -3202,78 +3202,99 @@ public class Helper {
         PROFILE
     }
 
+    
     public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType){
-        Bitmap takenImage;
+
+        ContentResolver cr = context.getContentResolver();
+        String mime = cr.getType(uriFile);
         ByteArrayInputStream bs = null;
-        try {
-            takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
-        } catch (IOException e) {
+        if(mime != null && mime.toLowerCase().contains("image")){
+            Bitmap takenImage;
             try {
-                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            }catch (Exception ignored){};
-            return null;
-        }
-        ExifInterface exif = null;
-        try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
-            assert inputStream != null;
-            exif = new ExifInterface(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Matrix matrix = null;
-        if( takenImage != null ){
-            int size = takenImage.getByteCount();
-            if( exif != null) {
-                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                int rotationDegree = 0;
-                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
-                else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
-                else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
-                matrix = new Matrix();
-                if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
+            } catch (IOException e) {
+                try {
+                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                }catch (Exception ignored){};
+                return null;
             }
-
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_NO);
-            if( mediaType == MediaType.PROFILE)
-                resizeSet = Helper.S_1MO;
-            double resizeby = size;
-            if( resizeSet == Helper.S_512KO){
-                resizeby = 4194304;
-            }else if(resizeSet == Helper.S_1MO){
-                resizeby = 8388608;
-            }else if(resizeSet == Helper.S_2MO){
-                resizeby = 16777216;
-            }else if(resizeSet == Helper.S_4MO){
-                resizeby = 33554432;
-            }else if(resizeSet == Helper.S_6MO){
-                resizeby = 50331648;
-            }else if(resizeSet == Helper.S_8MO) {
-                resizeby = 67108864;
+            ExifInterface exif = null;
+            try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
+                assert inputStream != null;
+                exif = new ExifInterface(inputStream);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            Matrix matrix = null;
+            if( takenImage != null ){
+                int size = takenImage.getByteCount();
+                if( exif != null) {
+                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    int rotationDegree = 0;
+                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                    matrix = new Matrix();
+                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                }
 
-            double resize = ((double)size)/resizeby;
-            if( resize > 1 ){
-                ContentResolver cr = context.getContentResolver();
-                String mime = cr.getType(uriFile);
-                Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
-                        (int) (takenImage.getHeight() / resize), true);
-                Bitmap adjustedBitmap;
-                if( matrix != null)
-                    try {
-                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
-                    }catch (Exception e){
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_NO);
+                if( mediaType == MediaType.PROFILE)
+                    resizeSet = Helper.S_1MO;
+                double resizeby = size;
+                if( resizeSet == Helper.S_512KO){
+                    resizeby = 4194304;
+                }else if(resizeSet == Helper.S_1MO){
+                    resizeby = 8388608;
+                }else if(resizeSet == Helper.S_2MO){
+                    resizeby = 16777216;
+                }else if(resizeSet == Helper.S_4MO){
+                    resizeby = 33554432;
+                }else if(resizeSet == Helper.S_6MO){
+                    resizeby = 50331648;
+                }else if(resizeSet == Helper.S_8MO) {
+                    resizeby = 67108864;
+                }
+
+                double resize = ((double)size)/resizeby;
+                if( resize > 1 ){
+                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                            (int) (takenImage.getHeight() / resize), true);
+                    Bitmap adjustedBitmap;
+                    if( matrix != null)
+                        try {
+                            adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                        }catch (Exception e){
+                            adjustedBitmap = newBitmap;
+                        }
+                    else
                         adjustedBitmap = newBitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    if( mime.contains("png") || mime.contains(".PNG"))
+                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                    else
+                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    bs = new ByteArrayInputStream(bitmapdata);
+                }else {
+                    try {
+                        InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                        byte[] buff = new byte[8 * 1024];
+                        int bytesRead;
+                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                        assert inputStream != null;
+                        while((bytesRead = inputStream.read(buff)) != -1) {
+                            bao.write(buff, 0, bytesRead);
+                        }
+                        byte[] data = bao.toByteArray();
+                        bs  = new ByteArrayInputStream(data);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                else
-                    adjustedBitmap = newBitmap;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
-                    adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                else
-                    adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-                byte[] bitmapdata = bos.toByteArray();
-                bs = new ByteArrayInputStream(bitmapdata);
+                }
             }else {
                 try {
                     InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
@@ -3292,7 +3313,7 @@ public class Helper {
                     e.printStackTrace();
                 }
             }
-        }else {
+        }else{
             try {
                 InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                 byte[] buff = new byte[8 * 1024];
@@ -3310,6 +3331,7 @@ public class Helper {
                 e.printStackTrace();
             }
         }
+
         return bs;
     }
 
