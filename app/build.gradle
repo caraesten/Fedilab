@@ -118,6 +118,6 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-limiter:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"
-    implementation 'com.github.irshulx:laser-native-editor:3.0.3'
+    implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.0.7'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
 }
