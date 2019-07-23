@@ -77,6 +77,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 import br.com.felix.horizontalbargraph.HorizontalBar;
 import br.com.felix.horizontalbargraph.model.BarItem;
 import es.dmoral.toasty.Toasty;
@@ -108,7 +109,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Adapter for Status
  */
 
-public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface, OnPollInterface {
+public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface, OnPollInterface, OnRetrieveImageInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -376,6 +377,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 Status.transform(context, status);
             if( !status.isEmojiFound())
                 Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
+            if( !status.isImageFound())
+                Status.makeImage(context, NotificationsListAdapter.this, status);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1342,6 +1345,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     public void onPoll(Status status, Poll poll) {
         status.setPoll(poll);
         notifyNotificationWithActionChanged(status);
+    }
+
+    @Override
+    public void onRetrieveImage(Status status, boolean fromTranslation) {
+        if( status != null ) {
+            status.setEmojiFound(true);
+            notifyNotificationWithActionChanged(status);
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
