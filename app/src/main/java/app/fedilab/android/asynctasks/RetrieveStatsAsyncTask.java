@@ -47,7 +47,7 @@ public class RetrieveStatsAsyncTask extends AsyncTask<Void, Void, Void> {
         statistics = new Statistics();
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-      
+
         return null;
     }
 
