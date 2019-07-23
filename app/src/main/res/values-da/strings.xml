@@ -1017,10 +1017,10 @@
     <string name="crash_message">Du kan sende mig nedbrudsrapporten på e-mail. Det vil bidrage til problemløsningen :-)\n\nDu kan selv tilføje yderlige info. Mange tak!</string>
     <string name="set_wysiwyg">Benyt wysiwyg</string>
     <string name="set_wysiwyg_indication">Når aktiveret, vil du let kunne formatere din tekst vha. værktøjerne.</string>
-    <string name="action_stats">Statistics</string>
-    <string name="total_statuses">Total statuses</string>
-    <string name="number_boosts">Number of boosts</string>
-    <string name="number_replies">Number of replies</string>
+    <string name="action_stats">Statistikker</string>
+    <string name="total_statuses">Samlet status</string>
+    <string name="number_boosts">Antal boosts</string>
+    <string name="number_replies">Antal svar</string>
     <string name="number_statuses">Number of statuses</string>
     <string name="statuses">Statuses</string>
     <string name="visibility">Visibility</string>
