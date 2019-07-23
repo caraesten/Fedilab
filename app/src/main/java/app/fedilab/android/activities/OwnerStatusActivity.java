@@ -31,7 +31,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -55,12 +54,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.asynctasks.RetrieveStatsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.services.BackupStatusInDataBaseService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -76,12 +78,11 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
  * Show owner's toots
  */
 
-public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface {
+public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveStatsInterface {
 
 
     private ImageView pp_actionBar;
     private StatusListAdapter statusListAdapter;
-    private SharedPreferences sharedpreferences;
     private String max_id;
     private List<Status> statuses;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
@@ -94,12 +95,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     private Button settings_time_from, settings_time_to;
     private FilterToots filterToots;
     private Date dateIni, dateEnd;
+    private View statsDialogView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -286,7 +288,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 Intent backupIntent = new Intent(OwnerStatusActivity.this, BackupStatusInDataBaseService.class);
                 startService(backupIntent);
                 return true;
-            case R.id.action_filter:
+            case R.id.action_stats:
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
@@ -298,6 +300,31 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
+                statsDialogView = inflater.inflate(R.layout.filter_owner_toots, null);
+                dialogBuilder.setView(statsDialogView);
+                dialogBuilder
+                        .setTitle(R.string.action_filter)
+                        .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                dialogBuilder.create().show();
+                new RetrieveStatsAsyncTask(getApplicationContext(),OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                return true;
+            case R.id.action_filter:
+                sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
+                inflater = this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
                 dialogBuilder.setView(dialogView);
 
@@ -411,9 +438,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 dialog.dismiss();
                             }
                         });
-                final AlertDialog alertDialog = dialogBuilder.create();
-
-                alertDialog.show();
+                dialogBuilder.create().show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -483,4 +508,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 .unregisterReceiver(backupFinishedReceiver);
     }
 
+    @Override
+    public void onStats(Statistics statistics) {
+
+    }
 }
