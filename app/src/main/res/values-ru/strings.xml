@@ -156,7 +156,7 @@
     <string name="toot_placeholder">О чем вы думаете?</string>
     <string name="toot_it">ТРУБИТЬ!</string>
     <string name="queet_it">КВИТ!</string>
-    <string name="cw">cw</string>
+    <string name="cw">18+</string>
     <string name="toot_title">Написать тут</string>
     <string name="toot_title_reply">Ответ на тут</string>
     <string name="queet_title">Написать квит</string>
@@ -338,7 +338,7 @@
     <string name="embedded_browser">Использовать встроенный браузер</string>
     <string name="custom_tabs">Внешний браузер</string>
     <string name="use_javascript">Включить Javascript</string>
-    <string name="expand_cw">Автоматически раскрывать cw</string>
+    <string name="expand_cw">Автоматически раскрывать 18+</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
     <string name="settings_ui_layout">Временные рамки ленты: </string>
     <string-array name="settings_menu_tabs">
@@ -1034,12 +1034,12 @@
     <string name="visibility">Видимость</string>
     <string name="number_with_media">Количество с медиа</string>
     <string name="number_with_sensitive_media">Количество с деликатным медиа</string>
-    <string name="number_with_cw">Количество с CW</string>
+    <string name="number_with_cw">Количество с 18+</string>
     <string name="first_toot_date">Дата первого статуса</string>
     <string name="last_toot_date">Дата последнего статуса</string>
-    <string name="frequency">Frequency</string>
-    <string name="toot_per_day">%s statuses per day</string>
-    <string name="date_range">Date range</string>
+    <string name="frequency">Периодичность</string>
+    <string name="toot_per_day">%s статусов в день</string>
+    <string name="date_range">Диапазон дат</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
