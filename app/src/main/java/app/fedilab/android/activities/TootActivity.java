@@ -335,8 +335,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     if( !storeToot ) {
                         if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
                             finish();
-                        }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                        }else if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim())){
                                 finish();
+                        }else if (displayWYSIWYG() && initialContent.trim().equals(wysiwyg.getContentAsHTML().trim())){
+                            finish();
                         }else {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                             dialogBuilder.setMessage(R.string.save_draft);
@@ -682,7 +684,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
 
-        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
 
 
         String url = account.getAvatar();
@@ -3144,7 +3146,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( !displayWYSIWYG()) {
             toot_content.setText(content);
         }else{
+            if( content != null){
+                content =content.replaceAll("<p[^>]*><\\/p>","");
+            }
             wysiwyg.render(content);
+            try {
+
+            }catch (Exception e){
+                e.printStackTrace();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+            }
         }
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
         if( !displayWYSIWYG()) {
@@ -3195,7 +3206,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
         invalidateOptionsMenu();
-        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
         if( !displayWYSIWYG()) {
             toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
         }else{
@@ -3341,7 +3352,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 setTitle(R.string.toot_title);
         }
         invalidateOptionsMenu();
-        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
     }
 
@@ -3455,7 +3466,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
 
         }
-        initialContent = displayWYSIWYG()?wysiwyg.getContent().toString():toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
     }
 
 
@@ -3735,12 +3746,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
+        String currentContent;
+        if( displayWYSIWYG()){
+            currentContent = wysiwyg.getContentAsHTML().trim();
+        }else{
+            currentContent = toot_content.getText().toString().trim();
+        }
         if( !forced) {
-            if (toot_content.getText().toString().trim().length() == 0 && wysiwyg.getContentAsHTML().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
+            if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
-            if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim()))
-                return;
-            if (displayWYSIWYG() && wysiwyg.getContentAsHTML().toString().trim().equals(toot_content.getText().toString().trim()))
+            if (initialContent.trim().equals(currentContent))
                 return;
         }
         Status toot = new Status();
@@ -3749,11 +3764,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        if( !displayWYSIWYG()) {
-            toot.setContent(toot_content.getText().toString().trim());
-        }else{
-            toot.setContent(wysiwyg.getContentAsHTML());
-        }
+        toot.setContent(currentContent);
 
         if( poll != null)
             toot.setPoll(poll);
