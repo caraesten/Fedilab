@@ -1,0 +1,15 @@
+Added:
+- WYSIWYG for Pleroma (can be disabled in settings)
+- Statistics (Your toots -> top right button)
+
+Changed
+- Upload automatically resized to 4Mb (can be disabled in settings)
+- Remove all exif (not for media orientation)
+
+Fixed
+- Last lists not removed
+- Play sounds
+- Upload with Friendica & GNU Social
+- Crash when replying to a message
+- Fix interactions with the News timeline
+
