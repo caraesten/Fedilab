@@ -1,6 +1,6 @@
 Nouveautés
-- Modération et administration de l'instance depuis l'application (doit être activé dans les paramètres)
-- Support des fichiers audio (téléversement et dans les pouets)
+- Modération et administration de l’instance depuis l’application (doit être activé dans les paramètres)
+- Support des fichiers audio dans Mastodon (écoute et transfert)
 
 Modifié
-- Suppression du blocage d'instances dans l'application
+- Suppression de l’option de blocage d’instances dans l’application

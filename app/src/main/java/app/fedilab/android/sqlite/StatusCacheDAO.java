@@ -23,7 +23,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
@@ -188,6 +190,11 @@ public class StatusCacheDAO {
         String instance = Helper.getLiveInstance(context);
         return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
+
+    public void removeDuplicate(){
+        db.execSQL("DELETE FROM "+Sqlite.TABLE_STATUSES_CACHE+" WHERE "+Sqlite.COL_ID+" NOT IN (SELECT MIN("+Sqlite.COL_ID+") FROM "+Sqlite.TABLE_STATUSES_CACHE+" GROUP BY "+Sqlite.COL_STATUS_ID+","+Sqlite.COL_INSTANCE+")");
+    }
+
 
     /***
      * Remove stored status
@@ -438,7 +445,117 @@ public class StatusCacheDAO {
         }
     }
 
+    public Statistics getStat(){
 
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+
+        Statistics statistics = new Statistics();
+
+        //Count All
+        Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setTotal_statuses(mCount.getInt(0));
+        mCount.close();
+
+        //Count boosts
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                + Sqlite.COL_REBLOG + " IS NOT NULL" + " AND " + Sqlite.COL_REBLOG + " != ''"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_boosts(mCount.getInt(0));
+        mCount.close();
+
+        //Count replies
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_IN_REPLY_TO_ID + " IS NOT NULL"  + " AND " + Sqlite.COL_IN_REPLY_TO_ID + " != 'null'"  + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_replies(mCount.getInt(0));
+        mCount.close();
+
+        statistics.setNumber_status(statistics.getTotal_statuses() - statistics.getNumber_boosts() - statistics.getNumber_replies());
+
+        //Count media
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_MEDIA_ATTACHMENTS + " IS NOT NULL"   + " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " !='"+Helper.attachmentToStringStorage(new ArrayList<>())+"' "   + " AND " +  Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_with_media(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count sensitive
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_SENSITIVE + "= 1 AND "  + Sqlite.COL_MEDIA_ATTACHMENTS + " IS NOT NULL"   + " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " !='"+Helper.attachmentToStringStorage(new ArrayList<>())+"' "   + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_with_sensitive_media(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count sensitive
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_SPOILER_TEXT + " IS NOT NULL"   + " AND " +   Sqlite.COL_SPOILER_TEXT + " != '' "   + " AND " +Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_with_cw(mCount.getInt(0));
+        mCount.close();
+
+        //Count public
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_VISIBILITY + "='public'"   + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setV_public(mCount.getInt(0));
+        mCount.close();
+
+        //Count unlisted
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_VISIBILITY + "='unlisted'"   + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setV_unlisted(mCount.getInt(0));
+        mCount.close();
+
+        //Count private
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_VISIBILITY + "='private'"   + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setV_private(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count private
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_STATUSES_CACHE
+                        + " where " + Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_VISIBILITY + "='direct'"   + " AND " + Sqlite.COL_REBLOG + " IS NULL"
+                , null);
+        mCount.moveToFirst();
+        statistics.setV_direct(mCount.getInt(0));
+        mCount.close();
+
+        statistics.setFirstTootDate(getSmallerDate(ARCHIVE_CACHE));
+        statistics.setLastTootDate(getGreaterDate(ARCHIVE_CACHE));
+
+        long diff = statistics.getLastTootDate().getTime() - statistics.getFirstTootDate().getTime();
+        long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        statistics.setFrequency((float)statistics.getTotal_statuses()/days);
+
+        return statistics;
+    }
 
 
     /***

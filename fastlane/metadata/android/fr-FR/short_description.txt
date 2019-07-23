@@ -1,1 +1,1 @@
-Client multi compte pour le Fediverse
+Un client multicomptes pour le Fédiverse

@@ -22,7 +22,6 @@ import android.os.Bundle;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.room.util.StringUtil;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -48,9 +47,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.LoginActivity;
 import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
@@ -2810,6 +2807,36 @@ public class API {
         return actionCode;
     }
 
+    public int reportStatus(List<Status> statuses, String comment, boolean forward){
+        String action;
+        HashMap<String, String> params = null;
+        action = "/reports";
+        params = new HashMap<>();
+        params.put("account_id", statuses.get(0).getAccount().getId());
+        params.put("comment", comment);
+        StringBuilder parameters = new StringBuilder();
+        for(Status val: statuses)
+            parameters.append("status_ids[]=").append(val).append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(13));
+            params.put("status_ids[]", parameters.toString());
+        }
+        params.put("forward", String.valueOf(forward));
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.post(getAbsoluteUrl(action), 10, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
 
 
 

@@ -31,7 +31,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -46,21 +45,26 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.asynctasks.RetrieveStatsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.services.BackupStatusInDataBaseService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -76,12 +80,11 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
  * Show owner's toots
  */
 
-public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface {
+public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveStatsInterface {
 
 
     private ImageView pp_actionBar;
     private StatusListAdapter statusListAdapter;
-    private SharedPreferences sharedpreferences;
     private String max_id;
     private List<Status> statuses;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
@@ -94,16 +97,19 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     private Button settings_time_from, settings_time_to;
     private FilterToots filterToots;
     private Date dateIni, dateEnd;
+    private View statsDialogView;
+    private Statistics statistics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar);
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark_NoActionBar);
@@ -161,7 +167,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         firstLoad = true;
         swiped = false;
         boolean isOnWifi = Helper.isOnWIFI(OwnerStatusActivity.this);
-        lv_status.addItemDecoration(new DividerItemDecoration(OwnerStatusActivity.this, DividerItemDecoration.VERTICAL));
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
@@ -172,6 +177,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         if( theme == Helper.THEME_DARK){
             style = R.style.DialogDark;
+        }else  if( theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
         }else {
             style = R.style.Dialog;
         }
@@ -284,8 +291,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             case R.id.action_sync:
                 Intent backupIntent = new Intent(OwnerStatusActivity.this, BackupStatusInDataBaseService.class);
                 startService(backupIntent);
+                statistics = null;
                 return true;
-            case R.id.action_filter:
+            case R.id.action_stats:
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
@@ -297,6 +305,35 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
+                statsDialogView = inflater.inflate(R.layout.stats_owner_toots, null);
+                dialogBuilder.setView(statsDialogView);
+                dialogBuilder
+                        .setTitle(R.string.action_stats)
+                        .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                dialogBuilder.create().show();
+                if( statistics == null) {
+                    new RetrieveStatsAsyncTask(getApplicationContext(), OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else{
+                    displayStats();
+                }
+                return true;
+            case R.id.action_filter:
+                sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
+                inflater = this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
                 dialogBuilder.setView(dialogView);
 
@@ -410,9 +447,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 dialog.dismiss();
                             }
                         });
-                final AlertDialog alertDialog = dialogBuilder.create();
-
-                alertDialog.show();
+                dialogBuilder.create().show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -482,4 +517,57 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 .unregisterReceiver(backupFinishedReceiver);
     }
 
+    @Override
+    public void onStats(Statistics statistics) {
+        this.statistics = statistics;
+        displayStats();
+    }
+
+    private void displayStats(){
+        if( statsDialogView != null){
+            ScrollView stats_container = statsDialogView.findViewById(R.id.stats_container);
+            RelativeLayout loader = statsDialogView.findViewById(R.id.loader);
+
+            TextView total_statuses = statsDialogView.findViewById(R.id.total_statuses);
+            TextView number_boosts = statsDialogView.findViewById(R.id.number_boosts);
+            TextView number_replies = statsDialogView.findViewById(R.id.number_replies);
+            TextView number_statuses = statsDialogView.findViewById(R.id.number_statuses);
+            TextView number_with_media = statsDialogView.findViewById(R.id.number_with_media);
+            TextView number_with_cw = statsDialogView.findViewById(R.id.number_with_cw);
+            TextView number_with_sensitive_media = statsDialogView.findViewById(R.id.number_with_sensitive_media);
+            TextView v_public = statsDialogView.findViewById(R.id.v_public);
+            TextView v_unlisted = statsDialogView.findViewById(R.id.v_unlisted);
+            TextView v_private = statsDialogView.findViewById(R.id.v_private);
+            TextView v_direct = statsDialogView.findViewById(R.id.v_direct);
+
+            TextView frequency = statsDialogView.findViewById(R.id.frequency);
+            TextView last_toot_date = statsDialogView.findViewById(R.id.last_toot_date);
+            TextView first_toot_date = statsDialogView.findViewById(R.id.first_toot_date);
+
+
+            total_statuses.setText(String.valueOf(statistics.getTotal_statuses()));
+            number_boosts.setText(String.valueOf(statistics.getNumber_boosts()));
+            number_replies.setText(String.valueOf(statistics.getNumber_replies()));
+            number_statuses.setText(String.valueOf(statistics.getNumber_status()));
+            number_with_media.setText(String.valueOf(statistics.getNumber_with_media()));
+            number_with_cw.setText(String.valueOf(statistics.getNumber_with_cw()));
+            number_with_sensitive_media.setText(String.valueOf(statistics.getNumber_with_sensitive_media()));
+            v_public.setText(String.valueOf(statistics.getV_public()));
+            v_unlisted.setText(String.valueOf(statistics.getV_unlisted()));
+            v_private.setText(String.valueOf(statistics.getV_private()));
+            v_direct.setText(String.valueOf(statistics.getV_direct()));
+
+
+            first_toot_date.setText(Helper.dateToString(statistics.getFirstTootDate()));
+            last_toot_date.setText(Helper.dateToString(statistics.getLastTootDate()));
+            DecimalFormat df = new DecimalFormat("#.##");
+            frequency.setText(getString(R.string.toot_per_day, df.format(statistics.getFrequency())));
+
+            stats_container.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.GONE);
+
+        }else{
+            Toasty.error(OwnerStatusActivity.this,getString(R.string.toast_error),Toast.LENGTH_SHORT).show();
+        }
+    }
 }

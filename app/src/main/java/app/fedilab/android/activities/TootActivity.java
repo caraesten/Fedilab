@@ -18,7 +18,6 @@ package app.fedilab.android.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -30,8 +29,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -40,7 +38,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.speech.RecognizerIntent;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -50,6 +47,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -63,7 +63,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -81,6 +80,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -89,6 +89,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.irshulx.Editor;
+import com.github.irshulx.EditorListener;
+import com.github.irshulx.models.EditorTextStyle;
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
 import com.github.stom79.mytransl.MyTransL;
@@ -96,11 +99,11 @@ import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
 import com.vanniktech.emoji.EmojiPopup;
 
+
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
 import net.gotev.uploadservice.UploadNotificationConfig;
-import net.gotev.uploadservice.UploadService;
 import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
@@ -122,8 +125,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -155,6 +160,7 @@ import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.client.Entities.Suggestion;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.GNUAPI;
@@ -164,10 +170,12 @@ import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.CustomEmojiAdapter;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
+import app.fedilab.android.drawers.SuggestionsAdapter;
 import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.helper.RecyclerItemClickListener;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -180,7 +188,6 @@ import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
-import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
@@ -188,11 +195,14 @@ import cafe.adriel.androidaudiorecorder.model.AudioChannel;
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import es.dmoral.toasty.Toasty;
+import top.defaults.colorpicker.ColorPickerPopup;
 
+import static app.fedilab.android.helper.Helper.THEME_BLACK;
+import static app.fedilab.android.helper.Helper.THEME_DARK;
+import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
-import static app.fedilab.android.helper.Helper.initNetCipher;
-import static app.fedilab.android.helper.Helper.orbotConnected;
+
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -267,6 +277,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
     public static final int SEND_VOICE_MESSAGE = 1423;
     private TextView warning_message;
+    private Editor wysiwyg;
+    private EditText wysiwygEditText;
+    private String url_for_media;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,8 +335,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     if( !storeToot ) {
                         if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
                             finish();
-                        }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+                        }else if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim())){
                                 finish();
+                        }else if (displayWYSIWYG() && initialContent.trim().equals(wysiwyg.getContentAsHTML().trim())){
+                            finish();
                         }else {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                             dialogBuilder.setMessage(R.string.save_draft);
@@ -366,6 +381,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         changeColor();
+
+
+
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         restoredScheduled = false;
@@ -390,6 +408,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
         warning_message = findViewById(R.id.warning_message);
         poll_action = findViewById(R.id.poll_action);
+
+
         isScheduled = false;
         if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
@@ -404,6 +424,113 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_emoji.setVisibility(View.GONE);
         }
 
+        ScrollView composer_container = findViewById(R.id.composer_container);
+        ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
+        wysiwyg = findViewById(R.id.editor);
+
+        switch (theme){
+            case THEME_LIGHT:
+                wysiwyg.setEditorTextColor("#000000");
+                break;
+            case THEME_BLACK:
+            case THEME_DARK:
+                wysiwyg.setEditorTextColor("#f3f3f3");
+                break;
+        }
+
+        if( displayWYSIWYG()){
+            wysiwyg_container.setVisibility(View.VISIBLE);
+            composer_container.setVisibility(View.GONE);
+            HorizontalScrollView toolbar = findViewById(R.id.toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            renderEditor();
+            wysiwyg.setEditorListener(new EditorListener() {
+                @Override
+                public void onTextChanged(EditText editText, Editable s) {
+                    wysiwygEditText = editText;
+
+                    String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
+                    final Pattern sPattern = Pattern.compile(pattern);
+
+                    String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
+                    final Pattern tPattern = Pattern.compile(patternTag);
+
+                    String patternEmoji = "^(.|\\s)*(:([\\w_]+))$";
+                    final Pattern ePattern = Pattern.compile(patternEmoji);
+                    int currentCursorPosition = editText.getSelectionStart();
+                    if (editText.getSelectionStart() != 0)
+                        currentCursorPosition = editText.getSelectionStart();
+                    if (s.toString().length() == 0)
+                        currentCursorPosition = 0;
+                    //Only check last 15 characters before cursor position to avoid lags
+                    int searchLength;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    } else {
+                        searchLength = 15;
+                    }
+                    int totalChar = countLength(wysiwyg, toot_cw_content);
+                    toot_space_left.setText(String.valueOf(totalChar));
+                    if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                        return;
+
+                    Matcher m, mt;
+                    if (s.toString().charAt(0) == '@')
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                    else
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                    if (m.matches()) {
+                        String search = m.group(3);
+                        if (pp_progress != null && pp_actionBar != null) {
+                            pp_progress.setVisibility(View.VISIBLE);
+                            pp_actionBar.setVisibility(View.GONE);
+                        }
+                        new RetrieveSearchAccountsAsyncTask(getApplicationContext(), search, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        if (s.toString().charAt(0) == '#')
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                        else
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                        if (mt.matches()) {
+                            String search = mt.group(3);
+                            if (pp_progress != null && pp_actionBar != null) {
+                                pp_progress.setVisibility(View.VISIBLE);
+                                pp_actionBar.setVisibility(View.GONE);
+                            }
+                            new RetrieveSearchAsyncTask(TootActivity.this, search, true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } else {
+                            if (s.toString().charAt(0) == ':')
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
+                            else
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                            if (mt.matches()) {
+                                String shortcode = mt.group(3);
+                                if (pp_progress != null && pp_actionBar != null) {
+                                    pp_progress.setVisibility(View.VISIBLE);
+                                    pp_actionBar.setVisibility(View.GONE);
+                                }
+                                new RetrieveEmojiAsyncTask(TootActivity.this, shortcode, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        }
+                    }
+
+
+                    totalChar = countLength(wysiwyg, toot_cw_content);
+                    toot_space_left.setText(String.valueOf(totalChar));
+                }
+                @Override
+                public void onUpload(Bitmap image, String uuid) {
+                    if( url_for_media != null) {
+                        wysiwyg.onImageUploadComplete(url_for_media, uuid);
+                    }
+                }
+
+                @Override
+                public View onRenderMacro(String name, Map<String, Object> props, int index) {
+                    return null;
+                }
+            });
+        }
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -557,7 +684,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
 
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
 
 
         String url = account.getAvatar();
@@ -661,11 +788,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendToot(null, null);
+                if( !displayWYSIWYG()) {
+                    sendToot(null, null);
+                }else{
+                    sendToot(null, "text/html");
+                }
             }
         });
 
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && !displayWYSIWYG())
             toot_it.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -934,8 +1065,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         @Override
         public void onReceive(Context context, Intent intent) {
             String imgpath = intent.getStringExtra("imgpath");
-            if( imgpath != null)
-                new asyncPicture(TootActivity.this, account, Uri.fromFile(new File(imgpath))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if( imgpath != null) {
+                prepareUpload(TootActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
+            }
         }
     };
 
@@ -982,7 +1114,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        new asyncPicture(TootActivity.this, account, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        prepareUpload(TootActivity.this, fileUri, null, uploadReceiver);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1075,7 +1207,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if (mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif"))) {
-                    upload(TootActivity.this, data.getData(), filename);
+                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                 } else if (mime != null && mime.toLowerCase().contains("image")) {
                     if( photo_editor) {
                         Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1084,10 +1216,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         intent.putExtras(b);
                         startActivity(intent);
                     }else{
-                        upload(TootActivity.this, data.getData(), filename);
+                        prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                     }
                 }else if(mime != null && mime.toLowerCase().contains("audio")){
-                    upload(TootActivity.this, data.getData(), filename);
+                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
                 }else {
                     Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
@@ -1096,7 +1228,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
 
             Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedilab_recorded_audio.wav"));
-            upload(TootActivity.this, uri, "fedilab_recorded_audio.wav");
+            prepareUpload(TootActivity.this, uri, "fedilab_recorded_audio.wav",uploadReceiver);
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
             if( photo_editor) {
                 Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
@@ -1105,8 +1237,158 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 intent.putExtras(b);
                 startActivity(intent);
             }else {
-                new asyncPicture(TootActivity.this, account, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                prepareUpload(TootActivity.this, photoFileUri, null, uploadReceiver);
             }
+        }else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            String filename = Helper.getFileName(TootActivity.this, data.getData());
+            prepareUpload(TootActivity.this, data.getData(), "fedilabins_"+filename, uploadReceiver);
+        }
+    }
+
+
+    private void prepareUpload(Activity activity, android.net.Uri uri,String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        new asyncPicture(activity, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    static class asyncPicture extends AsyncTask<Void, Void, Void> {
+
+        ByteArrayInputStream bs;
+        WeakReference<Activity> activityWeakReference;
+        android.net.Uri uriFile;
+        boolean error = false;
+        UploadServiceSingleBroadcastReceiver uploadReceiver;
+        String filename;
+
+        asyncPicture(Activity activity, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+            this.activityWeakReference = new WeakReference<>(activity);
+            this.uriFile = uri;
+            this.uploadReceiver = uploadReceiver;
+            this.filename = filename;
+        }
+
+        @Override
+        protected  void onPreExecute(){
+            if( uriFile == null) {
+                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                error = true;
+            }
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if( error) {
+                return null;
+            }
+            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if( !error) {
+                if (bs == null)
+                    return;
+                ImageButton toot_picture;
+                Button toot_it;
+                LinearLayout toot_picture_container;
+                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
+                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
+
+                toot_picture_container.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
+                if( filename == null) {
+                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                }
+                filesMap.put(filename, uriFile);
+                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
+            }
+        }
+    }
+
+
+    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        String uploadId = UUID.randomUUID().toString();
+        uploadReceiver.setUploadID(uploadId);
+        Uri uri;
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            File file;
+            tempInput = activity.getContentResolver().openInputStream(inUri);
+            if( fname.startsWith("fedilabins_")){
+                file = File.createTempFile("fedilabins_randomTemp1", suffix,  activity.getCacheDir());
+            }else{
+                file = File.createTempFile("randomTemp1", suffix,  activity.getCacheDir());
+            }
+
+            filesMap.put(file.getAbsolutePath(), inUri);
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read;
+            assert tempInput != null;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            if(BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile( activity,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        file);
+            }else{
+                uri = FileProvider.getUriForFile( activity,
+                        "app.fedilab.android.fileProvider",
+                        file);
+            }
+            tempInput.close();
+            tempOut.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
+        try {
+            final String fileName = FileNameCleaner.cleanFileName(fname);
+            SharedPreferences sharedpreferences =  activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance( activity), "https");
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
+            String url = null;
+            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/v1/media";
+            }else {
+                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/media/upload.json";
+            }
+            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+            uploadConfig
+                    .setClearOnActionForAllStatuses(true);
+            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
+            uploadConfig.getCompleted().autoClear = true;
+            MultipartUploadRequest request = new MultipartUploadRequest( activity,uploadId, url);
+            if (token != null && !token.startsWith("Basic "))
+                request.addHeader("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                request.addHeader("Authorization", token);
+            request.setNotificationConfig(uploadConfig);
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                request.addFileToUpload(uri.toString().replace("file://",""), "file");
+            }else {
+                request.addFileToUpload(uri.toString().replace("file://",""), "media");
+            };
+            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
+                    .startUpload();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1170,19 +1452,31 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
                 if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                    Uri uri = filesMap.get(attachment.getUrl());
-                    Glide.with(imageView.getContext())
-                            .asBitmap()
-                            .load(uri)
-                            .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    imageView.setImageBitmap(resource);
-                                }
-                            });
+                    if( uploadInfo.getSuccessfullyUploadedFiles() != null && uploadInfo.getSuccessfullyUploadedFiles().size() > 0) {
+
+                        Iterator it = filesMap.entrySet().iterator();
+                        Uri fileName = null;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            fileName = (Uri) pair.getValue();
+                            it.remove();
+                        }
+                        if (fileName != null ) {
+                            Glide.with(imageView.getContext())
+                                    .asBitmap()
+                                    .load(fileName)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            imageView.setImageBitmap(resource);
+                                        }
+                                    });
+                        }
+                    }
 
                 }else {
+                    String finalUrl = url;
+                    String uuid = attachment.getId();
                     Glide.with(imageView.getContext())
                             .asBitmap()
                             .load(url)
@@ -1191,6 +1485,19 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     imageView.setImageBitmap(resource);
+                                    if( displayWYSIWYG()) {
+                                        url_for_media = finalUrl;
+                                        Iterator it = filesMap.entrySet().iterator();
+                                        String fileName = null;
+                                        while (it.hasNext()) {
+                                            Map.Entry pair = (Map.Entry)it.next();
+                                            fileName = (String) pair.getKey();
+                                            it.remove();
+                                        }
+                                        if( fileName != null && fileName.toString().contains("fedilabins_")) {
+                                            wysiwyg.insertImage(resource);
+                                        }
+                                    }
                                 }
                             });
                 }
@@ -1204,7 +1511,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                 boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-                if (show_media_urls) {
+                if (show_media_urls && !displayWYSIWYG()) {
                     //Adds the shorter text_url of attachment at the end of the toot 
                     int selectionBefore = toot_content.getSelectionStart();
                     toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
@@ -1272,58 +1579,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    class asyncPicture extends AsyncTask<Void, Void, Void> {
-
-        ByteArrayInputStream bs;
-        WeakReference<Activity> activityWeakReference;
-        android.net.Uri uriFile;
-        Account account;
-        boolean error = false;
-
-        asyncPicture(Activity activity, Account account, android.net.Uri uri){
-            this.activityWeakReference = new WeakReference<>(activity);
-            this.uriFile = uri;
-            this.account = account;
-        }
-
-        @Override
-        protected  void onPreExecute(){
-            if( uriFile == null) {
-                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                error = true;
-            }
-        }
 
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if( error)
-                return null;
-            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            if( !error) {
-                if (bs == null)
-                    return;
-                ImageButton toot_picture;
-                Button toot_it;
-                LinearLayout toot_picture_container;
-                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
-                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
-                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
-
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
-                String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
-                filesMap.put(filename, uriFile);
-                upload(activityWeakReference.get(), uriFile, filename);
-            }
-        }
-    }
 
 
     @Override
@@ -1338,15 +1595,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 return;
             }
             String filename =  Helper.getFileName(TootActivity.this, imageUri);
-            ContentResolver cr = getContentResolver();
-            String mime = cr.getType(imageUri);
-            if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("audio") || mime.toLowerCase().contains("gif")) ) {
-                upload(TootActivity.this, imageUri, filename);
-            } else if(mime != null && mime.toLowerCase().contains("image")) {
-                new asyncPicture(TootActivity.this, account, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-            }
+
+            prepareUpload(TootActivity.this, imageUri, filename,uploadReceiver);
         }
 
     }
@@ -1853,7 +2103,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     private void sendToot(String timestamp, String content_type){
         toot_it.setEnabled(false);
-        if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
+        if(!displayWYSIWYG() && toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
+            Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
+            return;
+        }
+        if(displayWYSIWYG() && wysiwyg.getContent().toString().trim().length() == 0 && attachments.size() == 0){
             Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
             toot_it.setEnabled(true);
             return;
@@ -1867,11 +2122,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
 
+        if(displayWYSIWYG()){
+            split_toot = false;
+        }
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(toot_content, toot_cw_content)  < split_toot_size)){
-            tootContent = toot_content.getText().toString().trim();
+            if( !displayWYSIWYG()) {
+                tootContent = toot_content.getText().toString().trim();
+            }else{
+                tootContent = wysiwyg.getContentAsHTML();
+            }
         }else{
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
             tootContent = splitToot.get(0);
@@ -2024,7 +2286,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(TootActivity.this, uri, filename);
+            upload(TootActivity.this, uri, filename, uploadReceiver);
         }
     }
 
@@ -2376,50 +2638,106 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
-            int currentCursorPosition = toot_content.getSelectionStart();
-            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
-            toot_content.setThreshold(1);
-            toot_content.setAdapter(accountsListAdapter);
-            final String oldContent = toot_content.getText().toString();
-            if( oldContent.length() >= currentCursorPosition) {
-                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
-                if (searchA.length > 0) {
-                    final String search = searchA[searchA.length - 1];
-                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Account account = accounts.get(position);
-                            String deltaSearch = "";
-                            int searchLength = 15;
-                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                                searchLength = currentCursorPosition;
+            if( !displayWYSIWYG()) {
+                int currentCursorPosition = toot_content.getSelectionStart();
+                AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
+                toot_content.setThreshold(1);
+                toot_content.setAdapter(accountsListAdapter);
+                final String oldContent = toot_content.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Account account = accounts.get(position);
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("@" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "@" + account.getAcct() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                toot_content.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                                toot_content.setSelection(newPosition);
+                                AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
+                                toot_content.setThreshold(1);
+                                toot_content.setAdapter(accountsListAdapter);
                             }
-                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
-                            else {
-                                if (currentCursorPosition >= oldContent.length())
-                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
-                            }
-
-                            if (!search.equals(""))
-                                deltaSearch = deltaSearch.replace("@" + search, "");
-                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
-                            newContent += deltaSearch;
-                            newContent += "@" + account.getAcct() + " ";
-                            int newPosition = newContent.length();
-                            if (currentCursorPosition < oldContent.length() )
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
-                            toot_content.setText(newContent);
-                            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                            toot_content.setSelection(newPosition);
-                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
-                            toot_content.setThreshold(1);
-                            toot_content.setAdapter(accountsListAdapter);
-
-
-                        }
-                    });
+                        });
+                    }
                 }
+            }else { //For Pleroma and its wysiwyg
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                List<Suggestion> suggestions = new ArrayList<>();
+                for(Account account: accounts){
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(account.getAcct());
+                    suggestion.setImageUrl(account.getAvatar());
+                    suggestion.setType(Suggestion.suggestionType.ACCOUNT);
+                    suggestions.add(suggestion);
+                }
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("@" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "@" + suggestion.getContent() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
+
             }
         }
     }
@@ -2455,14 +2773,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        int currentCursorPosition = toot_content.getSelectionStart();
-        if( emojis != null && emojis.size() > 0){
+
+        if (emojis != null && emojis.size() > 0) {
+            if( !displayWYSIWYG()) {
+            int currentCursorPosition = toot_content.getSelectionStart();
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
             toot_content.setThreshold(1);
             toot_content.setAdapter(emojisSearchAdapter);
             final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
-            if( searchA.length > 0 ) {
+            String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
+            if (searchA.length > 0) {
                 final String search = searchA[searchA.length - 1];
                 toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -2498,6 +2818,62 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 });
             }
+        } else {
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                List<Suggestion> suggestions = new ArrayList<>();
+                for (Emojis emoji : emojis) {
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(emoji.getShortcode());
+                    suggestion.setImageUrl(emoji.getUrl());
+                    suggestion.setType(Suggestion.suggestionType.EMOJI);
+                    suggestions.add(suggestion);
+                }
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace(":" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += ":" + suggestion.getContent() + ": ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
+            }
         }
     }
 
@@ -2526,84 +2902,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
 
-    private void upload(Context context, Uri inUri, String fname){
-        String uploadId = UUID.randomUUID().toString();
-        uploadReceiver.setUploadID(uploadId);
-        Uri uri = inUri;
 
-        InputStream tempInput = null;
-        FileOutputStream tempOut = null;
-        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
-        int suffixPosition = filename.lastIndexOf(".");
-        String suffix = "";
-        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
-        try {
-            tempInput = getContentResolver().openInputStream(inUri);
-            File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
-            tempOut = new FileOutputStream(file.getAbsoluteFile());
-            byte[] buff = new byte[1024];
-            int read;
-            assert tempInput != null;
-            while ((read = tempInput.read(buff)) > 0) {
-                tempOut.write(buff, 0, read);
-            }
-            if(BuildConfig.DONATIONS) {
-                uri = FileProvider.getUriForFile(this,
-                        "fr.gouv.etalab.mastodon.fileProvider",
-                        file);
-            }else{
-                uri = FileProvider.getUriForFile(this,
-                        "app.fedilab.android.fileProvider",
-                        file);
-            }
-            tempInput.close();
-            tempOut.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-            uri = inUri;
-        } finally {
-            IOUtils.closeQuietly(tempInput);
-            IOUtils.closeQuietly(tempOut);
-        }
-
-        try {
-            final String fileName = FileNameCleaner.cleanFileName(fname);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance(context), "https");
-            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
-            String url = null;
-            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/v1/media";
-            }else {
-                url = scheme + "://" + Helper.getLiveInstance(context) + "/api/media/upload.json";
-            }
-            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
-            uploadConfig
-                    .setClearOnActionForAllStatuses(true);
-            uploadConfig.getProgress().message = getString(R.string.uploading);
-            uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest(context,uploadId, url)
-                    .addHeader("Authorization", "Bearer " + token)
-                    .setNotificationConfig(uploadConfig);
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                request.addFileToUpload(uri.toString().replace("file://",""), "file");
-            }else {
-                request.addFileToUpload(uri.toString().replace("file://",""), "media");
-            };
-            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
-                .startUpload();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
 
-        int currentCursorPosition = toot_content.getSelectionStart();
+
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
@@ -2613,51 +2917,109 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Results results = apiResponse.getResults();
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
-            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
-            toot_content.setThreshold(1);
-            toot_content.setAdapter(tagsSearchAdapter);
-            final String oldContent = toot_content.getText().toString();
-            if( oldContent.length() < currentCursorPosition)
-                return;
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
-            if( searchA.length < 1)
-                return;
-            final String search = searchA[searchA.length-1];
-            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if( position >= tags.size() )
-                        return;
-                    String tag = tags.get(position);
-                    String deltaSearch = "";
-                    int searchLength = 15;
-                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                        searchLength = currentCursorPosition;
-                    }
-                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
-                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
-                    else {
-                        if( currentCursorPosition >= oldContent.length() )
-                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
-                    }
+            if( !displayWYSIWYG()) {
+                int currentCursorPosition = toot_content.getSelectionStart();
+                TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
+                toot_content.setThreshold(1);
+                toot_content.setAdapter(tagsSearchAdapter);
+                final String oldContent = toot_content.getText().toString();
+                if (oldContent.length() < currentCursorPosition)
+                    return;
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("#");
+                if (searchA.length < 1)
+                    return;
+                final String search = searchA[searchA.length - 1];
+                toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (position >= tags.size())
+                            return;
+                        String tag = tags.get(position);
+                        String deltaSearch = "";
+                        int searchLength = 15;
+                        if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                            searchLength = currentCursorPosition;
+                        }
+                        if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                        else {
+                            if (currentCursorPosition >= oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                        }
 
-                    if( !search.equals(""))
-                        deltaSearch = deltaSearch.replace("#"+search,"");
-                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
-                    newContent += deltaSearch;
-                    newContent += "#" + tag + " ";
-                    int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() )
-                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
-                    toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    toot_content.setSelection(newPosition);
-                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
-                    toot_content.setThreshold(1);
-                    toot_content.setAdapter(tagsSearchAdapter);
-                    
+                        if (!search.equals(""))
+                            deltaSearch = deltaSearch.replace("#" + search, "");
+                        String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                        newContent += deltaSearch;
+                        newContent += "#" + tag + " ";
+                        int newPosition = newContent.length();
+                        if (currentCursorPosition < oldContent.length())
+                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                        toot_content.setText(newContent);
+                        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                        toot_content.setSelection(newPosition);
+                        TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
+                        toot_content.setThreshold(1);
+                        toot_content.setAdapter(tagsSearchAdapter);
+
+                    }
+                });
+            }else{
+                int currentCursorPosition = wysiwygEditText.getSelectionStart();
+
+                List<Suggestion> suggestions = new ArrayList<>();
+                for (String tag : tags) {
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setContent(tag);
+                    suggestion.setType(Suggestion.suggestionType.TAG);
+                    suggestions.add(suggestion);
                 }
-            });
+                RecyclerView suggestionsRV = findViewById(R.id.suggestions);
+                suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                suggestionsRV.setAdapter(suggestionsAdapter);
+                suggestionsRV.setVisibility(View.VISIBLE);
+                final String oldContent = wysiwygEditText.getText().toString();
+                if (oldContent.length() >= currentCursorPosition) {
+                    String[] searchA = oldContent.substring(0, currentCursorPosition).split("#");
+                    if (searchA.length > 0) {
+                        final String search = searchA[searchA.length - 1];
+                        suggestionsRV.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(final View view, final int position) {
+                                final Suggestion suggestion = suggestionsAdapter.getItem(position);
+
+
+                                String deltaSearch = "";
+                                int searchLength = 15;
+                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                    searchLength = currentCursorPosition;
+                                }
+                                if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                                else {
+                                    if (currentCursorPosition >= oldContent.length())
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                }
+
+                                if (!search.equals(""))
+                                    deltaSearch = deltaSearch.replace("#" + search, "");
+                                String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                                newContent += deltaSearch;
+                                newContent += "#" + suggestion.getContent() + " ";
+                                int newPosition = newContent.length();
+                                if (currentCursorPosition < oldContent.length())
+                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                wysiwygEditText.setText(newContent);
+                                toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
+                                wysiwygEditText.setSelection(newPosition);
+                                suggestionsRV.setVisibility(View.GONE);
+
+                            }
+                        }));
+                    }
+                }
+            }
         }
     }
 
@@ -2781,10 +3143,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
+        if( !displayWYSIWYG()) {
+            toot_content.setText(content);
+        }else{
+            if( content != null){
+                content =content.replaceAll("<p[^>]*><\\/p>","");
+            }
+            wysiwyg.render(content);
+            try {
 
-        toot_content.setText(content);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+            }
+        }
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-        toot_content.setSelection(toot_content.getText().length());
+        if( !displayWYSIWYG()) {
+            toot_content.setSelection(toot_content.getText().length());
+        }else{
+            if( wysiwygEditText != null) {
+                wysiwygEditText.setSelection(wysiwygEditText.getText().length());
+            }
+        }
+
         switch (status.getVisibility()){
             case "public":
                 visibility = "public";
@@ -2825,8 +3206,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
         invalidateOptionsMenu();
-        initialContent = toot_content.getText().toString();
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
+        if( !displayWYSIWYG()) {
+            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        }else{
+            toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
+        }
     }
 
 
@@ -2967,7 +3352,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 setTitle(R.string.toot_title);
         }
         invalidateOptionsMenu();
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
     }
 
@@ -3081,7 +3466,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
 
         }
-        initialContent = toot_content.getText().toString();
+        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
     }
 
 
@@ -3361,10 +3746,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
+        String currentContent;
+        if( displayWYSIWYG()){
+            currentContent = wysiwyg.getContentAsHTML().trim();
+        }else{
+            currentContent = toot_content.getText().toString().trim();
+        }
         if( !forced) {
-            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
+            if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
-            if (initialContent.trim().equals(toot_content.getText().toString().trim()))
+            if (initialContent.trim().equals(currentContent))
                 return;
         }
         Status toot = new Status();
@@ -3373,7 +3764,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        toot.setContent(toot_content.getText().toString().trim());
+        toot.setContent(currentContent);
 
         if( poll != null)
             toot.setPoll(poll);
@@ -3523,6 +3914,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
+     int countLength(Editor wysiwyg, EditText toot_cw_content){
+        if( wysiwyg == null || toot_cw_content == null) {
+            return -1;
+        }
+        String content = wysiwyg.getContentAsHTML();
+        String cwContent = toot_cw_content.getText().toString();
+        int contentLength = content.length() - countWithEmoji(content);
+        int cwLength = cwContent.length() - countWithEmoji(cwContent);
+        return cwLength + contentLength;
+    }
 
     private void recordAudio(){
         String filePath = getCacheDir() + "/fedilab_recorded_audio.wav";
@@ -3541,5 +3942,151 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 .setKeepDisplayOn(true)
                 // Start recording
                 .record();
+    }
+
+
+    private boolean displayWYSIWYG(){
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            return false;
+        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        return sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
+    }
+
+    private void renderEditor(){
+
+
+        findViewById(R.id.action_h1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H1);
+            }
+        });
+
+        findViewById(R.id.action_h2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H2);
+            }
+        });
+
+        findViewById(R.id.action_h3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.H3);
+            }
+        });
+
+        findViewById(R.id.action_bold).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.BOLD);
+            }
+        });
+
+        findViewById(R.id.action_Italic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.ITALIC);
+            }
+        });
+
+        findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.INDENT);
+            }
+        });
+
+        findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.OUTDENT);
+            }
+        });
+
+        findViewById(R.id.action_bulleted).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertList(false);
+            }
+        });
+
+        findViewById(R.id.action_color).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ColorPickerPopup.Builder(getApplicationContext())
+                        .enableAlpha(false)
+                        .okTitle(getString(R.string.validate))
+                        .cancelTitle(getString(R.string.cancel))
+                        .showIndicator(true)
+                        .showValue(true)
+                        .build()
+                        .show(findViewById(android.R.id.content), new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                wysiwyg.updateTextColor(colorHex(color));
+                            }
+
+                        });
+            }
+        });
+        //Remove colours
+        findViewById(R.id.action_color).setVisibility(View.GONE);
+
+        findViewById(R.id.action_unordered_numbered).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertList(true);
+            }
+        });
+
+        findViewById(R.id.action_hr).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertDivider();
+            }
+        });
+
+        findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.openImagePicker();
+            }
+        });
+
+        findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.insertLink();
+            }
+        });
+
+
+        findViewById(R.id.action_erase).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.clearAllContents();
+            }
+        });
+        //Remove eraser
+        findViewById(R.id.action_erase).setVisibility(View.GONE);
+
+        findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wysiwyg.updateTextStyle(EditorTextStyle.BLOCKQUOTE);
+                wysiwyg.updateTextColor("#000000");
+            }
+        });
+
+        wysiwyg.render();
+    }
+
+    private String colorHex(int color) {
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        return String.format(Locale.getDefault(), "#%02X%02X%02X", r, g, b);
     }
 }

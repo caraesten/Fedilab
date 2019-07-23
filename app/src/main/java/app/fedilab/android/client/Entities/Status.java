@@ -70,6 +70,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
+import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
@@ -112,6 +113,7 @@ public class Status implements Parcelable{
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isImageFound = false;
     private boolean isEmojiTranslateFound = false;
     private boolean isClickable = false;
     private boolean isTranslationShown = false;
@@ -144,6 +146,7 @@ public class Status implements Parcelable{
     private boolean shortReply = false;
 
     private int warningFetched = -1;
+    private List<String> imageURL;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -207,6 +210,7 @@ public class Status implements Parcelable{
         dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
         dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
         dest.writeInt(this.warningFetched);
+        dest.writeStringList(this.imageURL);
     }
 
     protected Status(Parcel in) {
@@ -272,6 +276,7 @@ public class Status implements Parcelable{
         this.customFeaturesDisplayed = in.readByte() != 0;
         this.shortReply = in.readByte() != 0;
         this.warningFetched = in.readInt();
+        this.imageURL = in.createStringArrayList();
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -559,12 +564,19 @@ public class Status implements Parcelable{
         return isEmojiFound;
     }
 
+    public boolean isImageFound() {
+        return isImageFound;
+    }
 
 
 
 
     public void setEmojiFound(boolean emojiFound) {
         isEmojiFound = emojiFound;
+    }
+
+    public void setImageFound(boolean imageFound) {
+        isImageFound = imageFound;
     }
 
 
@@ -605,7 +617,54 @@ public class Status implements Parcelable{
                 content = content.replaceFirst(Pattern.quote(beforemodification), Matcher.quoteReplacement(urlText));
             }
         }
+        Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
+        Matcher matcher = imgPattern.matcher(content);
+        List<String> imgs = new ArrayList<>();
+        int i = 1;
+        while (matcher.find()) {
+            content = content.replaceAll(Pattern.quote(matcher.group(0)), "<br/>[media_"+i+"]<br/>");
+            imgs.add("[media_"+i+"]|"+matcher.group(1));
+            i++;
+        }
+        status.setImageURL(imgs);
         spannableStringContent = new SpannableString(content);
+        final int[] j = {0};
+        if( status.getImageURL() != null && status.getImageURL().size() > 0){
+            for(String val: status.getImageURL()){
+                String[] valArray = val.split("\\|");
+                if( valArray.length > 1 ){
+                    String contentOriginal = valArray[0];
+                    String url = valArray[1];
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(url)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    final String targetedEmoji = contentOriginal;
+                                    if (spannableStringContent != null && spannableStringContent.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = spannableStringContent.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if( endPosition <= spannableStringContent.toString().length() && endPosition >= startPosition) {
+                                                spannableStringContent.setSpan(
+                                                        new ImageSpan(context,
+                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(300, context),
+                                                                        (int) Helper.convertDpToPixel(300, context), false)), startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }
+                                        }
+                                    }
+                                    j[0]++;
+                                    if( j[0] ==  (status.getImageURL().size())) {
+                                        status.setContentSpan(spannableStringContent);
+                                    }
+                                }
+                            });
+
+                }
+            }
+        }
         String spoilerText = "";
         if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null)
             spoilerText = status.getReblog().getSpoiler_text();
@@ -704,6 +763,9 @@ public class Status implements Parcelable{
                 accountsMentionUnknown.put(key, account);
             }
         }
+
+
+
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
@@ -1057,6 +1119,75 @@ public class Status implements Parcelable{
     }
 
 
+    public static void makeImage(final Context context, final OnRetrieveImageInterface listener, Status status){
+
+        if( ((Activity)context).isFinishing() )
+            return;
+        if( status.getAccount() == null)
+            return;
+        if( status.getImageURL() == null || status.getImageURL().size() == 0)
+            return;
+
+        SpannableString contentSpan = status.getContentSpan();
+
+        final int[] i = {0};
+        for (final String img : status.getImageURL()) {
+            final String name = img.split("\\|")[0];
+            final String imgURL = img.split("\\|")[1];
+            Glide.with(context)
+                    .asBitmap()
+                    .load(imgURL)
+                    .listener(new RequestListener<Bitmap>()  {
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                            i[0]++;
+                            if( i[0] ==  (status.getImageURL().size())) {
+                                listener.onRetrieveImage(status,false);
+                            }
+                            return false;
+                        }
+                    })
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+
+                            int w = resource.getWidth();
+                            int h = resource.getHeight();
+                            if( w > 300 ){
+                                h = (h * 300) / w;
+                                w = 300;
+                            }
+                            final String targetedEmoji = name;
+                            if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
+                                //emojis can be used several times so we have to loop
+                                for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                    final int endPosition = startPosition + targetedEmoji.length();
+                                    if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                        contentSpan.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(w, context),
+                                                                (int) Helper.convertDpToPixel(h, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                }
+                            }
+                            i[0]++;
+                            if( i[0] ==  (status.getImageURL().size())) {
+                                status.setContentSpan(contentSpan);
+                                status.setImageFound(true);
+                                listener.onRetrieveImage(status, false);
+                            }
+                        }
+                    });
+
+        }
+    }
+
+
     public static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() )
@@ -1382,5 +1513,13 @@ public class Status implements Parcelable{
 
     public void setWarningFetched(int warningFetched) {
         this.warningFetched = warningFetched;
+    }
+
+    public List<String> getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(List<String> imageURL) {
+        this.imageURL = imageURL;
     }
 }

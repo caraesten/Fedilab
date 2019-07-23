@@ -27,10 +27,8 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="?attr/popupOverlay"/>
         </com.google.android.material.appbar.AppBarLayout>
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/main_app_container"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
             android:layout_width="match_parent"
@@ -82,7 +80,7 @@
                     android:layout_height="match_parent" />
             </RelativeLayout>
             <!-- Main Loader -->
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <RelativeLayout
                 android:id="@+id/loader"
                 android:visibility="gone"
                 android:layout_width="match_parent"

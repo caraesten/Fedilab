@@ -28,6 +28,7 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.TagTimeline;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -243,10 +244,13 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
+        APIResponse apiResponse = null;
+        List<app.fedilab.android.client.Entities.List> lists  = null;
+        try {
+            apiResponse = new API(contextReference.get()).getLists();
+            lists = apiResponse.getLists();
+        }catch (Exception ignored){ }
 
-
-        APIResponse apiResponse = new API(contextReference.get()).getLists();
-        List<app.fedilab.android.client.Entities.List> lists = apiResponse.getLists();
         if( lists != null && lists.size() > 0){
             //Loop through results
             for(app.fedilab.android.client.Entities.List list: lists){
@@ -286,6 +290,12 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 if( shouldBeRemoved){
                     new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                 }
+            }
+        }else{
+            for(ManageTimelines manageTimelines: manageTimelines){
+                if( manageTimelines.getListTimeline() == null )
+                    continue;
+                new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
             }
         }
 

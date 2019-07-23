@@ -67,6 +67,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.collect.ImmutableSet;
 
+import org.apache.poi.sl.usermodel.Line;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1042,6 +1043,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            LinearLayout set_wysiwyg_container = rootView.findViewById(R.id.set_wysiwyg_container);
+            set_wysiwyg_container.setVisibility(View.VISIBLE);
+        }
+
+        boolean wysiwyg = sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
+        final CheckBox set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
+        set_wysiwyg.setChecked(wysiwyg);
+
+        set_wysiwyg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_WYSIWYG, set_wysiwyg.isChecked());
+                editor.apply();
+            }
+        });
+
+
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
         final CheckBox set_custom_tabs  = rootView.findViewById(R.id.set_custom_tabs);
@@ -1455,7 +1475,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
         resize_layout_spinner.setAdapter(adapterResize);
-        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_NO);
+        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
         resize_layout_spinner.setSelection(positionSpinnerResize);
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

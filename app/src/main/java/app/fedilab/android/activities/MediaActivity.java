@@ -41,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -546,7 +547,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 loader.setVisibility(View.GONE);
                 content_audio.setVisibility(View.VISIBLE);
                 int color = getResources().getColor(R.color.mastodonC1);
-                visualizerView = new GLAudioVisualizationView.Builder(this)
+                visualizerView = new GLAudioVisualizationView.Builder(MediaActivity.this)
                         .setLayersCount(1)
                         .setWavesCount(6)
                         .setWavesHeight(R.dimen.aar_wave_height)
@@ -594,7 +595,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
             playeraudio.prepare();
             playeraudio.start();
 
-            visualizerView.linkTo(DbmHandler.Factory.newVisualizerHandler(this, playeraudio));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    visualizerView.linkTo(DbmHandler.Factory.newVisualizerHandler(MediaActivity.this, playeraudio));
+                }
+
+            }
             visualizerView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -718,7 +725,15 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     @Override
     protected void onDestroy() {
         try {
-            visualizerView.release();
+            if( visualizerView != null) {
+                visualizerView.release();
+            }
+            if( player != null) {
+                player.release();
+            }
+            if( playeraudio != null) {
+                playeraudio.release();
+            }
         } catch (Exception ignored){ }
         super.onDestroy();
     }

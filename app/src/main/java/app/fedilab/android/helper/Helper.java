@@ -206,6 +206,8 @@ import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
 import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
 import app.fedilab.android.sqlite.DomainBlockDAO;
+import app.fedilab.android.sqlite.StatusCacheDAO;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
@@ -339,6 +341,7 @@ public class Helper {
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
+    public static final String SET_WYSIWYG = "set_wysiwyg";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
@@ -2064,14 +2067,17 @@ public class Helper {
         if( directory == null || directory.length() == 0 )
             return -1;
         for (File file : directory.listFiles()) {
-            if (file.isFile())
+            if (file.isFile()){
                 try {
                     length += file.length();
-                }catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     return -1;
                 }
-            else
-                length += cacheSize(file);
+            }else {
+                if( !file.getName().equals("databases") && !file.getName().equals("shared_prefs")) {
+                    length += cacheSize(file);
+                }
+            }
         }
         return length;
     }
@@ -3196,78 +3202,99 @@ public class Helper {
         PROFILE
     }
 
+    
     public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType){
-        Bitmap takenImage;
+
+        ContentResolver cr = context.getContentResolver();
+        String mime = cr.getType(uriFile);
         ByteArrayInputStream bs = null;
-        try {
-            takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
-        } catch (IOException e) {
+        if(mime != null && mime.toLowerCase().contains("image")){
+            Bitmap takenImage;
             try {
-                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            }catch (Exception ignored){};
-            return null;
-        }
-        ExifInterface exif = null;
-        try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
-            assert inputStream != null;
-            exif = new ExifInterface(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Matrix matrix = null;
-        if( takenImage != null ){
-            int size = takenImage.getByteCount();
-            if( exif != null) {
-                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                int rotationDegree = 0;
-                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
-                else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
-                else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
-                matrix = new Matrix();
-                if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
+            } catch (IOException e) {
+                try {
+                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                }catch (Exception ignored){};
+                return null;
             }
-
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_NO);
-            if( mediaType == MediaType.PROFILE)
-                resizeSet = Helper.S_1MO;
-            double resizeby = size;
-            if( resizeSet == Helper.S_512KO){
-                resizeby = 4194304;
-            }else if(resizeSet == Helper.S_1MO){
-                resizeby = 8388608;
-            }else if(resizeSet == Helper.S_2MO){
-                resizeby = 16777216;
-            }else if(resizeSet == Helper.S_4MO){
-                resizeby = 33554432;
-            }else if(resizeSet == Helper.S_6MO){
-                resizeby = 50331648;
-            }else if(resizeSet == Helper.S_8MO) {
-                resizeby = 67108864;
+            ExifInterface exif = null;
+            try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
+                assert inputStream != null;
+                exif = new ExifInterface(inputStream);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            Matrix matrix = null;
+            if( takenImage != null ){
+                int size = takenImage.getByteCount();
+                if( exif != null) {
+                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    int rotationDegree = 0;
+                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                    matrix = new Matrix();
+                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                }
 
-            double resize = ((double)size)/resizeby;
-            if( resize > 1 ){
-                ContentResolver cr = context.getContentResolver();
-                String mime = cr.getType(uriFile);
-                Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
-                        (int) (takenImage.getHeight() / resize), true);
-                Bitmap adjustedBitmap;
-                if( matrix != null)
-                    try {
-                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
-                    }catch (Exception e){
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
+                if( mediaType == MediaType.PROFILE)
+                    resizeSet = Helper.S_1MO;
+                double resizeby = size;
+                if( resizeSet == Helper.S_512KO){
+                    resizeby = 4194304;
+                }else if(resizeSet == Helper.S_1MO){
+                    resizeby = 8388608;
+                }else if(resizeSet == Helper.S_2MO){
+                    resizeby = 16777216;
+                }else if(resizeSet == Helper.S_4MO){
+                    resizeby = 33554432;
+                }else if(resizeSet == Helper.S_6MO){
+                    resizeby = 50331648;
+                }else if(resizeSet == Helper.S_8MO) {
+                    resizeby = 67108864;
+                }
+
+                double resize = ((double)size)/resizeby;
+                if( resize > 1 ){
+                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                            (int) (takenImage.getHeight() / resize), true);
+                    Bitmap adjustedBitmap;
+                    if( matrix != null)
+                        try {
+                            adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                        }catch (Exception e){
+                            adjustedBitmap = newBitmap;
+                        }
+                    else
                         adjustedBitmap = newBitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    if( mime.contains("png") || mime.contains(".PNG"))
+                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                    else
+                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    bs = new ByteArrayInputStream(bitmapdata);
+                }else {
+                    try {
+                        InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                        byte[] buff = new byte[8 * 1024];
+                        int bytesRead;
+                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                        assert inputStream != null;
+                        while((bytesRead = inputStream.read(buff)) != -1) {
+                            bao.write(buff, 0, bytesRead);
+                        }
+                        byte[] data = bao.toByteArray();
+                        bs  = new ByteArrayInputStream(data);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                else
-                    adjustedBitmap = newBitmap;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
-                    adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                else
-                    adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-                byte[] bitmapdata = bos.toByteArray();
-                bs = new ByteArrayInputStream(bitmapdata);
+                }
             }else {
                 try {
                     InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
@@ -3286,7 +3313,7 @@ public class Helper {
                     e.printStackTrace();
                 }
             }
-        }else {
+        }else{
             try {
                 InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                 byte[] buff = new byte[8 * 1024];
@@ -3304,6 +3331,7 @@ public class Helper {
                 e.printStackTrace();
             }
         }
+
         return bs;
     }
 
@@ -3439,6 +3467,7 @@ public class Helper {
         }
         return text.length() - countWithEmoji(text);
     }
+
 
     public static int countWithEmoji(String text){
         int emojiCount = 0;
@@ -3856,6 +3885,11 @@ public class Helper {
                                         if (dir.isDirectory()) {
                                             Helper.deleteDir(dir);
                                         }
+                                        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
+                                        Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
+                                        String dateString = Helper.dateToString(date);
+                                        new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);
                                     } catch (Exception ignored) {
                                     }
                                 }
