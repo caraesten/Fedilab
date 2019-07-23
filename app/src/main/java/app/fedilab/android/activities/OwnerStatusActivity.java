@@ -309,7 +309,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 dialogBuilder.setView(statsDialogView);
                 dialogBuilder
                         .setTitle(R.string.action_stats)
-                        .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
