@@ -529,7 +529,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( error != null){
             return;
         }
-        if( relationship.isBlocked_by() ){
+        if( relationship != null && relationship.isBlocked_by() ){
             warning_message.setVisibility(View.VISIBLE);
             status.setWarningFetched(1);
         }else{
