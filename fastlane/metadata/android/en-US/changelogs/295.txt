@@ -3,8 +3,9 @@ Added:
 - Statistics (Your toots -> top right button)
 
 Changed
-- Upload automatically resized to 4Mb (can be disabled in settings)
+- Uploads automatically resized to 4Mb (can be disabled in settings)
 - Remove all exif (not for media orientation)
+- <img> tags are automatically fetched (Pleroma, Friendica, GNU).
 
 Fixed
 - Last lists not removed
@@ -12,4 +13,3 @@ Fixed
 - Upload with Friendica & GNU Social
 - Crash when replying to a message
 - Fix interactions with the News timeline
-
