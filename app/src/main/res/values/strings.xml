@@ -1132,6 +1132,11 @@
     <string name="number_with_media">Number with media</string>
     <string name="number_with_sensitive_media">Number with sensitive media</string>
     <string name="number_with_cw">Number with CW</string>
+    <string name="first_toot_date">First status date</string>
+    <string name="last_toot_date">Last status date</string>
+    <string name="frequency">Frequency</string>
+    <string name="toot_per_day">%s statuses per day</string>
+    <string name="date_range">Date range</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

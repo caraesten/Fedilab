@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusCacheDAO;
 
 
 /**
@@ -44,9 +45,8 @@ public class RetrieveStatsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        statistics = new Statistics();
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
+        statistics = new StatusCacheDAO(contextReference.get(), db).getStat();
 
         return null;
     }

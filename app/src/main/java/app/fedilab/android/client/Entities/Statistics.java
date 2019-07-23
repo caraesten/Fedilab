@@ -14,19 +14,49 @@ package app.fedilab.android.client.Entities;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import java.util.Date;
+
 public class Statistics {
 
 
-    private int total_statuses;
-    private int number_boosts;
-    private int number_replies;
-    private int number_status;
-    private int number_with_media;
-    private int number_with_cw;
-    private int number_with_sensitive_media;
-    private int v_public;
-    private int v_unlisted;
-    private int v_private;
+    private int total_statuses = 0;
+    private int number_boosts = 0;
+    private int number_replies = 0;
+    private int number_status = 0;
+    private int number_with_media = 0;
+    private int number_with_cw = 0;
+    private int number_with_sensitive_media = 0;
+    private int v_public = 0;
+    private int v_unlisted = 0;
+    private int v_private = 0;
+    private Date firstTootDate;
+    private Date lastTootDate;
+    private float frequency;
+
+
+    public Date getFirstTootDate() {
+        return firstTootDate;
+    }
+
+    public void setFirstTootDate(Date firstTootDate) {
+        this.firstTootDate = firstTootDate;
+    }
+
+    public Date getLastTootDate() {
+        return lastTootDate;
+    }
+
+    public void setLastTootDate(Date lastTootDate) {
+        this.lastTootDate = lastTootDate;
+    }
+
+    public float getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(float frequency) {
+        this.frequency = frequency;
+    }
 
     public int getTotal_statuses() {
         return total_statuses;
