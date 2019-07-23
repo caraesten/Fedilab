@@ -161,7 +161,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         firstLoad = true;
         swiped = false;
         boolean isOnWifi = Helper.isOnWIFI(OwnerStatusActivity.this);
-        lv_status.addItemDecoration(new DividerItemDecoration(OwnerStatusActivity.this, DividerItemDecoration.VERTICAL));
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
@@ -172,6 +171,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         if( theme == Helper.THEME_DARK){
             style = R.style.DialogDark;
+        }else  if( theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
         }else {
             style = R.style.Dialog;
         }
