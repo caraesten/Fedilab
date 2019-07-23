@@ -3950,7 +3950,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return false;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        return sharedpreferences.getBoolean(Helper.SET_WYSIWYG, false);
+        return sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
     }
 
     private void renderEditor(){

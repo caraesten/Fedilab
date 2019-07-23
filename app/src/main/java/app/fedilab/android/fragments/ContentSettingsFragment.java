@@ -1048,7 +1048,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             set_wysiwyg_container.setVisibility(View.VISIBLE);
         }
 
-        boolean wysiwyg = sharedpreferences.getBoolean(Helper.SET_WYSIWYG, false);
+        boolean wysiwyg = sharedpreferences.getBoolean(Helper.SET_WYSIWYG, true);
         final CheckBox set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
         set_wysiwyg.setChecked(wysiwyg);
 
