@@ -1247,6 +1247,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
     private void prepareUpload(Activity activity, android.net.Uri uri,String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        if( uploadReceiver == null){
+            uploadReceiver = new UploadServiceSingleBroadcastReceiver(TootActivity.this);
+            uploadReceiver.register(this);
+        }
         new asyncPicture(activity, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -1303,6 +1307,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
+
                 upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
             }
         }
@@ -1311,7 +1316,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
         String uploadId = UUID.randomUUID().toString();
-        uploadReceiver.setUploadID(uploadId);
+        if( uploadReceiver != null) {
+            uploadReceiver.setUploadID(uploadId);
+        }
         Uri uri;
         InputStream tempInput = null;
         FileOutputStream tempOut = null;
