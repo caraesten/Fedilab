@@ -1006,11 +1006,11 @@
     <string name="set_wysiwyg">WYSIWYGを使用する</string>
     <string name="set_wysiwyg_indication">有効にすると、テキストの書式をツールで簡単に整形できるようになります。</string>
     <string name="action_stats">統計情報</string>
-    <string name="total_statuses">Total statuses</string>
+    <string name="total_statuses">合計投稿数</string>
     <string name="number_boosts">ブースト</string>
     <string name="number_replies">返信</string>
-    <string name="number_statuses">Number of statuses</string>
-    <string name="statuses">Statuses</string>
+    <string name="number_statuses">投稿</string>
+    <string name="statuses">投稿</string>
     <string name="visibility">公開範囲</string>
     <string name="number_with_media">メディア付き</string>
     <string name="number_with_sensitive_media">閲覧注意メディア付き</string>
@@ -1020,8 +1020,8 @@
     <string name="frequency">投稿頻度</string>
     <string name="toot_per_day">%s 投稿/日</string>
     <string name="date_range">対象期間</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
+    <string name="action_groups">グループ</string>
+    <string name="no_messages">グループがありません</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
