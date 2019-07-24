@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Şimdi %1$s hesabın aktif</string>
     <string name="add_account">Hesap ekle</string>
     <string name="clipboard">Toot içeriği panoya kopyalanmış</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Gönderinin URL\'si panoya kopyalandı</string>
     <string name="change">Değiştir</string>
     <string name="choose_picture">Resim seç…</string>
     <string name="clear">Temizle</string>
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Bu toot\'u sil?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Gönderi taslaklara kaydedilip &amp; silinsin mi?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d cevap</item>
@@ -233,8 +233,8 @@
         <item quantity="other">ve keşfetmek için başka bir toot</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d beğenme</item>
+        <item quantity="other">%d beğeni</item>
     </plurals>
     <string name="delete_notification_ask">Bildirimi sil?</string>
     <string name="delete_notification_ask_all">Bildirimleri sil?</string>
@@ -246,7 +246,7 @@
     <string name="pinned_toots">Sabitlenmiş</string>
     <!-- TOAST -->
     <string name="client_error">Müşteri kimliği alınamıyor!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Sunucuya bağlanılamıyor!</string>
     <string name="no_internet">İnternet bağlantısı yok!</string>
     <string name="toast_block">Hesap engellenmiş!</string>
     <string name="toast_unblock">Bu hesap artık engelli değil!</string>
@@ -272,7 +272,7 @@
     <string name="nothing_to_do">Yapılabilecek bir işlem yok</string>
     <string name="toast_saved">Medya kaydedildi!</string>
     <string name="toast_error_translate">Arama sırasında bir hata oluştu!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Çeviriler ayarlardan devre dışı bırakıldı</string>
     <string name="toast_toot_saved">Taslak kaydedildi!</string>
     <string name="toast_error_char_limit">Sunucunun bu kadar karaktere izin verdiğinden emin misin? Genelde, 500 civarı karakter olabilir.</string>
     <string name="toast_visibility_changed">Toot\'ların görünürlüğünü hesap %1$s için değiştirildi</string>
@@ -302,7 +302,7 @@
     <string name="set_notif_follow_share">Birisi durumunuzu artırdığında bildir</string>
     <string name="set_notif_follow_add">Ne zaman biri sizi favorilere eklerse bildir</string>
     <string name="set_notif_follow_mention">Biri kullanıcıyı takip ettiğinde bildir</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Bir anket sona erdiğinde bildir</string>
     <string name="set_share_validation">Yayın ya da etiket için onay iletişim kutusu göster</string>
     <string name="set_share_validation_fav">Favoriler için eklemeden önce onay iletişim kutusu göster</string>
     <string name="set_wifi_only">WIFI içinde yalnızca bildir</string>
@@ -311,7 +311,7 @@
     <string name="set_night_mode">Gece modu</string>
     <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
     <string name="settings_title_profile">Profil düzenle</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_title_custom_sharing">Özel paylaşım</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Özgeçmiş…</string>
     <string name="set_lock_account">Hesabı Kilitle</string>
