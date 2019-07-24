@@ -2338,6 +2338,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 sendToot();
                 status.setShortReply(false);
                 holder.quick_reply_container.setVisibility(View.GONE);
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
             });
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
