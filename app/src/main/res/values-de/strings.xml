@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Entferne diesen Toot?</item>
-        <item>Diesen Toot löschen &amp; neuentwerfen?</item>
+        <item>Diesen Toot löschen &amp; neu entwerfen?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d Antwort</item>
