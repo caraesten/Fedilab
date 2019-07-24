@@ -433,6 +433,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 gnuAPI = new GNUAPI(this.contextReference.get());
                 apiResponse = gnuAPI.getDirectTimeline(max_id);
                 break;
+            case GNU_GROUP_TIMELINE:
+                gnuAPI = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuAPI.getGroupTimeline(tag.trim(), max_id);
+                break;
         }
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
