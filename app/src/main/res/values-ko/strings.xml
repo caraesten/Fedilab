@@ -167,7 +167,7 @@
     <string name="toots_visibility_tilte">툿의 기본 공개설정: </string>
     <string name="toot_sent">툿이 성공적으로 보내졌습니다!</string>
     <string name="toot_reply_content_title">이 툿에 대해 답글을 작성하고 있습니다:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_sensitive">민감한 내용?</string>
     <string-array name="toot_visibility">
         <item>공개 타임라인에 작성</item>
         <item>공개 타임라인에 비표시</item>
@@ -179,12 +179,12 @@
     <string name="choose_accounts">계정을 선택하세요</string>
     <string name="select_accounts">계정들을 몇 개 선택하세요</string>
     <string name="remove_draft">임시 저장 된 글을 삭제할까요?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="show_reply">버튼을 눌러 원본 툿 보기</string>
+    <string name="upload_form_description">시각장애인을 위한 설명</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">설명이 존재하지 않습니다!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">릴리즈 %1$s</string>
     <string name="about_developer">개발자:</string>
     <string name="about_license">라이센스: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -198,44 +198,44 @@
     <!-- Accounts -->
     <string name="no_accounts">표시할 계정이 없습니다</string>
     <string name="no_follow_request">팔로우 요청이 없습니다</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="status_cnt">툿 \n %1$s</string>
+    <string name="following_cnt">팔로잉 \n %1$s</string>
+    <string name="followers_cnt">팔로워 \n %1$s</string>
+    <string name="pins_cnt">고정됨 \n %d</string>
+    <string name="authorize">권한 승인</string>
+    <string name="reject">거부</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="no_scheduled_toots">예약 된 툿이 없습니다!</string>
+    <string name="no_scheduled_toots_indications">툿을 작성한 뒤 상단 메뉴의 <b>스케줄</b>을 선택하세요.</string>
+    <string name="remove_scheduled">예약 된 툿을 지울까요?</string>
+    <string name="media_count">미디어: %d</string>
+    <string name="toot_scheduled">툿이 예약되었습니다!</string>
+    <string name="toot_scheduled_date">예약 날짜는 현재보다 미래여야 합니다!</string>
+    <string name="warning_battery">배터리 세이버가 활성화 되어 있습니다! 원하는대로 동작하지 않을 수 있습니다.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">뮤트할 시간은 1분보다 길어야 합니다.</string>
+    <string name="timed_mute_date">%1$s가 %2$s까지 뮤트 되었습니다.\n 상대의 프로필 페이지에서 뮤트를 취소할 수 있습니다.</string>
+    <string name="timed_mute_profile">%1$s는 %2$s까지 뮤트 되었습니다.\n 여기를 클릭하여 뮤트를 취소할 수 있습니다.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="no_notifications">표시할 알림이 없습니다</string>
+    <string name="notif_mention">당신을 언급했습니다</string>
+    <string name="notif_reblog">당신의 게시물을 부스트 했습니다</string>
+    <string name="notif_favourite">당신의 상태를 마음에 들어했습니다</string>
+    <string name="notif_follow">당신을 팔로우 했습니다</string>
+    <string name="notif_pouet">%1$s의 새로운 툿</string>
     <plurals name="other_notifications">
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">그리고 %d개의 다른 알림</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="other">그리고 %d개의 새로운 툿</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d명이 좋아합니다</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">알림을 삭제할까요?</string>
+    <string name="delete_notification_ask_all">알림을 모두 삭제할까요?</string>
+    <string name="delete_notification">알림이 삭제되었습니다!</string>
+    <string name="delete_notification_all">알림이 모두 삭제되었습니다!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
@@ -288,8 +288,8 @@
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
+    <string name="set_display_global">연합타임라인 보기</string>
+    <string name="set_disable_gif">GIF 아바타 비활성화</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
