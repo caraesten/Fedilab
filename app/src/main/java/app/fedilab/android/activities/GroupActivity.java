@@ -183,8 +183,12 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse == null || apiResponse.getError() != null){
+            if( apiResponse != null) {
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
