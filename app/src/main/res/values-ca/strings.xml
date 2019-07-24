@@ -1018,14 +1018,14 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="visibility">Visibilitat</string>
     <string name="number_with_media">Nombre d\'ítems amb mèdia</string>
     <string name="number_with_sensitive_media">Nombre d\'ítems amb mèdia sensibles</string>
-    <string name="number_with_cw">Number with CW</string>
+    <string name="number_with_cw">Nombre amb CW</string>
     <string name="first_toot_date">Data del primer estat</string>
     <string name="last_toot_date">Data del darrer estat</string>
     <string name="frequency">Freqüència</string>
     <string name="toot_per_day">%s estats per dia</string>
     <string name="date_range">Interval de dates</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
+    <string name="action_groups">Grups</string>
+    <string name="no_messages">No hi ha grups!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
