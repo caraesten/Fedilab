@@ -88,10 +88,14 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         if( target_account.getdisplayNameSpan() == null || target_account.getdisplayNameSpan().toString().trim().equals("")) {
             if( target_account.getDisplay_name() != null && !target_account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(target_account.getDisplay_name(), true));
-            else
-                holder.account_dn.setText(target_account.getUsername().replace("@",""));
-        }else
-            holder.account_dn.setText( target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            else {
+                if( target_account.getUsername() != null) {
+                    holder.account_dn.setText(target_account.getUsername().replace("@", ""));
+                }
+            }
+        }else {
+            holder.account_dn.setText(target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        }
 
 
 
