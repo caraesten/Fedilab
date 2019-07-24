@@ -61,6 +61,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.PeertubeActivity;
@@ -960,6 +961,40 @@ public class Status implements Parcelable{
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
+        }
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            matcher = Helper.groupPattern.matcher(spannableStringT);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String groupname = spannableStringT.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                    spannableStringT.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View textView) {
+                            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                                Intent intent = new Intent(context, GroupActivity.class);
+                                Bundle b = new Bundle();
+                                b.putString("groupname", groupname.substring(1));
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                        }
+                        @Override
+                        public void updateDrawState(@NonNull TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            }
         }
         return spannableStringT;
     }

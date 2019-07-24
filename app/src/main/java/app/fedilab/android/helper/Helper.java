@@ -502,6 +502,7 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
+    public static final Pattern groupPattern = Pattern.compile("(\\![\\w_]+(\\s|$))");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
@@ -1521,6 +1522,11 @@ public class Helper {
                 MenuItem nav_blocked_domains = menu.findItem(R.id.nav_blocked_domains);
                 if( nav_blocked_domains != null)
                     nav_blocked_domains.setVisible(false);
+                if(BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ){
+                    MenuItem nav_group = menu.findItem(R.id.nav_group);
+                    if( nav_group != null)
+                        nav_group.setVisible(true);
+                }
 
             }
         }

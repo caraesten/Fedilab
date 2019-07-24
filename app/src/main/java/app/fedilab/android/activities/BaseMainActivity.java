@@ -1820,6 +1820,14 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "LISTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_group){
+            toot.hide();
+            accountsFragment = new DisplayAccountsFragment();
+            bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.GROUPS);
+            accountsFragment.setArguments(bundle);
+            fragmentTag = "GROUPS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_peertube_playlists){
             toot.hide();
             DisplayPlaylistsFragment displayPlaylistsFragment = new DisplayPlaylistsFragment();

@@ -49,7 +49,8 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
         CHANNELS,
         REBLOGGED,
         FAVOURITED,
-        SEARCH
+        SEARCH,
+        GROUPS
     }
 
     public RetrieveAccountsAsyncTask(Context context, String instance, String name, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
@@ -146,6 +147,10 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
             case CHANNELS:
                 assert api != null;
                 apiResponse = api.getPeertubeChannel(instance, name);
+                break;
+            case GROUPS:
+                assert gnuapi != null;
+                apiResponse = gnuapi.getGroups(max_id);
                 break;
         }
         return null;

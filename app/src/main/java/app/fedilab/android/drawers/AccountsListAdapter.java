@@ -38,6 +38,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
@@ -219,29 +220,42 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 }
             }
         });
-        holder.account_pp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
-                    //Avoid to reopen details about the current account
-                    if (targetedId == null || !targetedId.equals(account.getId())) {
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-                            b.putBoolean("peertubeaccount", true);
-                            b.putBoolean("ischannel", true);
-                            b.putString("targetedid", account.getAcct());
+        if( action != RetrieveAccountsAsyncTask.Type.GROUPS ) {
+            holder.account_pp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                        //Avoid to reopen details about the current account
+                        if (targetedId == null || !targetedId.equals(account.getId())) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                                b.putBoolean("peertubeaccount", true);
+                                b.putBoolean("ischannel", true);
+                                b.putString("targetedid", account.getAcct());
+                            }
+                            b.putParcelable("account", account);
+                            intent.putExtras(b);
+                            context.startActivity(intent);
                         }
-                        b.putParcelable("account", account);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                    } else {
+                        CrossActions.doCrossProfile(context, account);
                     }
-                }else {
-                    CrossActions.doCrossProfile(context, account);
-                }
 
-            }
-        });
+                }
+            });
+        }else{
+            holder.account_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, GroupActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("groupname", account.getUsername());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

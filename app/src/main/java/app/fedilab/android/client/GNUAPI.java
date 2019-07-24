@@ -230,6 +230,166 @@ public class GNUAPI {
 
 
     /**
+     * Retrieves group *synchronously*
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getGroups(String max_id){
+        return getGroups(max_id, null);
+    }
+
+    /**
+     * Retrieves group *synchronously*
+     * @param max_id String id max
+     * @param since_id String since the id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getGroups(String max_id, String since_id){
+
+        HashMap<String, String> params = new HashMap<>();
+        if( max_id != null )
+            params.put("max_id", max_id);
+        if( since_id != null )
+            params.put("since_id", since_id);
+        accounts = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/groups/list.json"), 60, params, prefKeyOauthTokenT);
+            accounts = parseGroups(context, new JSONArray(response));
+            if( accounts.size() > 0) {
+                apiResponse.setSince_id(String.valueOf(Long.parseLong(accounts.get(0).getId())+1));
+                apiResponse.setMax_id(String.valueOf(Long.parseLong(accounts.get(accounts.size() - 1).getId())-1));
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
+    }
+
+    /**
+     * Parse json response for several groups
+     * @param jsonArray JSONArray
+     * @return List<Account>
+     */
+    private static List<Account> parseGroups(Context context, JSONArray jsonArray){
+
+        List<Account> groups = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Account group = parseGroups(context, resobj);
+                i++;
+                groups.add(group);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return groups;
+    }
+
+    /**
+     * Parse json response for unique group
+     * @param resobj JSONObject
+     * @return Account
+     */
+    private static Account parseGroups(Context context, JSONObject resobj){
+        Account group = new Account();
+        try {
+            group.setId(resobj.get("id").toString());
+            //group.setFollowers_count(resobj.getInt("admin_count"));
+            //group.setBlocked(resobj.getBoolean("blocked"));
+            group.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created")));
+            group.setNote(resobj.getString("description"));
+            group.setDisplay_name(resobj.getString("fullname"));
+            //group.setHomepage(resobj.getString("homepage"));
+            group.setUsername(resobj.getString("nickname"));
+
+            group.setAvatar(resobj.getString("homepage_logo"));
+            //group.setLocation(resobj.getString("location"));
+            group.setFollowing(resobj.getBoolean("member"));
+            group.setFollowers_count(resobj.getInt("member_count"));
+            //group.setMini_logo(resobj.getString("mini_logo"));
+            //group.setModified(Helper.mstStringToDate(context, resobj.getString("modified")));
+            group.setAcct("!"+resobj.getString("nickname"));
+            group.setAvatar_static(resobj.getString("original_logo"));
+            group.setHeader(resobj.getString("stream_logo"));
+            group.setUrl(resobj.getString("url"));
+        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+        return group;
+    }
+
+
+    /**
+     * Retrieves group timeline  *synchronously*
+     * @param groupName String id group
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    public APIResponse getGroupTimeline(String groupName, String max_id){
+        return getGroupTimeline(groupName, max_id, null);
+    }
+
+    /**
+     * Retrieves group timeline  *synchronously*
+     * @param groupName String id group
+     * @param max_id String id max
+     * @param since_id String since the id
+     * @return APIResponse
+     */
+    private APIResponse getGroupTimeline(String groupName, String max_id, String since_id){
+
+        HashMap<String, String> params = new HashMap<>();
+
+        if( max_id != null )
+            params.put("max_id", max_id);
+        if( since_id != null )
+            params.put("since_id", since_id);
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String url;
+            url = getAbsoluteUrl(String.format("/statusnet/groups/timeline/%s.json", groupName));
+            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
+            statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
+                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+
+
+    /**
      * Returns a relationship between the authenticated account and an account
      * @param accountId String account fetched
      * @return Relationship entity

@@ -111,6 +111,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         GNU_DM,
         GNU_ART,
         GNU_TAG,
+        GNU_GROUP_TIMELINE,
 
         SCHEDULED_TOOTS,
         CACHE_BOOKMARKS,
