@@ -54,7 +54,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import app.fedilab.android.asynctasks.RetrieveStatsAsyncTask;
 import app.fedilab.android.client.APIResponse;
@@ -543,7 +545,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             TextView frequency = statsDialogView.findViewById(R.id.frequency);
             TextView last_toot_date = statsDialogView.findViewById(R.id.last_toot_date);
             TextView first_toot_date = statsDialogView.findViewById(R.id.first_toot_date);
-
+            TextView tags = statsDialogView.findViewById(R.id.tags);
 
             total_statuses.setText(String.valueOf(statistics.getTotal_statuses()));
             number_boosts.setText(String.valueOf(statistics.getNumber_boosts()));
@@ -562,6 +564,22 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             last_toot_date.setText(Helper.dateToString(statistics.getLastTootDate()));
             DecimalFormat df = new DecimalFormat("#.##");
             frequency.setText(getString(R.string.toot_per_day, df.format(statistics.getFrequency())));
+
+            if( statistics.getTagsTrend() != null && statistics.getTagsTrend().size() > 0 ){
+                Iterator it = statistics.getTagsTrend() .entrySet().iterator();
+                StringBuilder text = new StringBuilder();
+                int i = 1;
+                while (it.hasNext() && i <= 10) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    System.out.println(pair.getKey() + " = " + pair.getValue());
+                    text.append(i).append(" - ").append(pair.getKey()).append(" ⟶ ").append(pair.getValue()).append("\r\n");
+                    it.remove();
+                    i++;
+                }
+                tags.setText(text.toString());
+            }else{
+                tags.setText(getString(R.string.no_tags));
+            }
 
             stats_container.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);

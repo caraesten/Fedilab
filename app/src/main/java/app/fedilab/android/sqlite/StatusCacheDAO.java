@@ -19,14 +19,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
 
@@ -547,11 +551,44 @@ public class StatusCacheDAO {
         statistics.setV_direct(mCount.getInt(0));
         mCount.close();
 
+
+        HashMap<String, Integer> countTags = new HashMap<>();
+        //Get tags
+        Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, new String[]{Sqlite.COL_TAGS}, Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_REBLOG + " IS NULL", null, null, null, null);
+        if (c.getCount() > 0) {
+            while (c.moveToNext()) {
+                //Restore cached status
+                List<Tag> tags = Helper.restoreTagFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAGS)));
+                if (tags != null && tags.size() > 0) {
+                    for (Tag tag : tags) {
+                        Log.v(Helper.TAG,"-> " + tag.getName() + " -- " + countTags.containsKey(tag.getName()));
+                        if (countTags.containsKey(tag.getName())) {
+                            int val = countTags.get(tag.getName());
+                            countTags.put(tag.getName(), val + 1);
+                        } else {
+                            countTags.put(tag.getName(), 1);
+                        }
+                    }
+                }
+            }
+        }
+        //Close the cursor
+        c.close();
+        if( countTags.size() > 0) {
+            statistics.setTagsTrend(Helper.sortByValue(countTags));
+        }else{
+            statistics.setTagsTrend(countTags);
+        }
+
+
         statistics.setFirstTootDate(getSmallerDate(ARCHIVE_CACHE));
         statistics.setLastTootDate(getGreaterDate(ARCHIVE_CACHE));
 
-        long diff = statistics.getLastTootDate().getTime() - statistics.getFirstTootDate().getTime();
-        long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        long days = 1;
+        if( statistics.getLastTootDate() != null && statistics.getFirstTootDate() != null) {
+            long diff = statistics.getLastTootDate().getTime() - statistics.getFirstTootDate().getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        }
         statistics.setFrequency((float)statistics.getTotal_statuses()/days);
 
         return statistics;

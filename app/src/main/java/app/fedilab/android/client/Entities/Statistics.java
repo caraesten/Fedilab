@@ -15,6 +15,8 @@ package app.fedilab.android.client.Entities;
  * see <http://www.gnu.org/licenses>. */
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Statistics {
 
@@ -32,7 +34,7 @@ public class Statistics {
     private Date firstTootDate;
     private Date lastTootDate;
     private float frequency;
-
+    private Map<String, Integer> tagsTrend = new HashMap<>();
 
     public Date getFirstTootDate() {
         return firstTootDate;
@@ -147,4 +149,12 @@ public class Statistics {
     }
 
     private int v_direct;
+
+    public Map<String, Integer> getTagsTrend() {
+        return tagsTrend;
+    }
+
+    public void setTagsTrend(Map<String, Integer> tagsTrend) {
+        this.tagsTrend = tagsTrend;
+    }
 }
