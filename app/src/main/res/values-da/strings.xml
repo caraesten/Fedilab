@@ -1032,8 +1032,8 @@
     <string name="frequency">Frekvens</string>
     <string name="toot_per_day">%s statusser pr. dag</string>
     <string name="date_range">Datointerval</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
+    <string name="action_groups">Grupper</string>
+    <string name="no_messages">Ingen grupper!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
