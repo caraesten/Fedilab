@@ -19,13 +19,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.client.Entities.Statistics;
@@ -561,7 +559,6 @@ public class StatusCacheDAO {
                 List<Tag> tags = Helper.restoreTagFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAGS)));
                 if (tags != null && tags.size() > 0) {
                     for (Tag tag : tags) {
-                        Log.v(Helper.TAG,"-> " + tag.getName() + " -- " + countTags.containsKey(tag.getName()));
                         if (countTags.containsKey(tag.getName())) {
                             int val = countTags.get(tag.getName());
                             countTags.put(tag.getName(), val + 1);
