@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Şimdi %1$s hesabın aktif</string>
     <string name="add_account">Hesap ekle</string>
     <string name="clipboard">Toot içeriği panoya kopyalanmış</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Gönderinin URL\'si panoya kopyalandı</string>
     <string name="change">Değiştir</string>
     <string name="choose_picture">Resim seç…</string>
     <string name="clear">Temizle</string>
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Bu toot\'u sil?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Gönderi taslaklara kaydedilip &amp; silinsin mi?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d cevap</item>
@@ -233,8 +233,8 @@
         <item quantity="other">ve keşfetmek için başka bir toot</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d beğenme</item>
+        <item quantity="other">%d beğeni</item>
     </plurals>
     <string name="delete_notification_ask">Bildirimi sil?</string>
     <string name="delete_notification_ask_all">Bildirimleri sil?</string>
@@ -246,7 +246,7 @@
     <string name="pinned_toots">Sabitlenmiş</string>
     <!-- TOAST -->
     <string name="client_error">Müşteri kimliği alınamıyor!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Sunucuya bağlanılamıyor!</string>
     <string name="no_internet">İnternet bağlantısı yok!</string>
     <string name="toast_block">Hesap engellenmiş!</string>
     <string name="toast_unblock">Bu hesap artık engelli değil!</string>
@@ -272,7 +272,7 @@
     <string name="nothing_to_do">Yapılabilecek bir işlem yok</string>
     <string name="toast_saved">Medya kaydedildi!</string>
     <string name="toast_error_translate">Arama sırasında bir hata oluştu!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Çeviriler ayarlardan devre dışı bırakıldı</string>
     <string name="toast_toot_saved">Taslak kaydedildi!</string>
     <string name="toast_error_char_limit">Sunucunun bu kadar karaktere izin verdiğinden emin misin? Genelde, 500 civarı karakter olabilir.</string>
     <string name="toast_visibility_changed">Toot\'ların görünürlüğünü hesap %1$s için değiştirildi</string>
@@ -302,7 +302,7 @@
     <string name="set_notif_follow_share">Birisi durumunuzu artırdığında bildir</string>
     <string name="set_notif_follow_add">Ne zaman biri sizi favorilere eklerse bildir</string>
     <string name="set_notif_follow_mention">Biri kullanıcıyı takip ettiğinde bildir</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Bir anket sona erdiğinde bildir</string>
     <string name="set_share_validation">Yayın ya da etiket için onay iletişim kutusu göster</string>
     <string name="set_share_validation_fav">Favoriler için eklemeden önce onay iletişim kutusu göster</string>
     <string name="set_wifi_only">WIFI içinde yalnızca bildir</string>
@@ -311,8 +311,8 @@
     <string name="set_night_mode">Gece modu</string>
     <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
     <string name="settings_title_profile">Profil düzenle</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Özel paylaşım</string>
+    <string name="settings_custom_sharing_url">Özel paylaşım URL&#8230;</string>
     <string name="set_profile_description">Özgeçmiş…</string>
     <string name="set_lock_account">Hesabı Kilitle</string>
     <string name="set_save_changes">Değişiklikleri kaydet</string>
@@ -343,7 +343,7 @@
         <item>DeepL</item>
         <item>Hayır</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">API anahtarınızı Yandex için boş bırakabilirsiniz</string>
     <string-array name="settings_theme">
         <item>Koyu</item>
         <item>Açık</item>
@@ -393,12 +393,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Önbelleği temizlendi! %1$s serbest bırakıldı</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Başlık</string>
+    <string name="title_hint_custom_sharing">Başlık&#8230;</string>
+    <string name="description_header_custom_sharing">Açıklama</string>
+    <string name="description_hint_custom_sharing">Açıklama&#8230;</string>
+    <string name="keywords_header_custom_sharing">Anahtar Sözcükler</string>
+    <string name="keywords_hint_custom_sharing">Anahtar Sözcükler&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Eşitle</string>
     <string name="action_filter">Filtrele</string>
@@ -482,11 +482,11 @@
     <string name="data_export_toots">%1$s için durumları dışarı aktar</string>
     <string name="data_export_success">%2$s toot\'tan %1$s tanesi dışarı aktarıldı.</string>
     <string name="data_export_error">%1$s toot\'ları dışarı aktarılırken sorun çıktı</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Veri dışa aktarılırken bir şeyler ters gitti!</string>
+    <string name="data_import_success_simple">Veriler içe aktarıldı!</string>
+    <string name="data_import_error_simple">Veri içe aktarılırken bir şeyler ters gitti!</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">Vekil</string>
     <string name="proxy_type">Tip</string>
     <string name="proxy_enable">Proxy aç?</string>
     <string name="poxy_host">Sunucu</string>
@@ -494,7 +494,7 @@
     <string name="poxy_login">Giriş</string>
     <string name="poxy_password">Parola</string>
     <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_compact_mode">Kompakt mod</string>
     <string name="set_share_details">Paylaşırken toot detayları ekle</string>
     <string name="support_the_app_on_liberapay">Uygulamayı Liberapay ile destekle</string>
     <string name="alert_regex">Düzenli ifadede sorun var!</string>
@@ -503,27 +503,27 @@
     <string name="delete_instance">Bu sunucuyu sil?</string>
     <string name="warning_delete_instance">%s\'i takip edilen sunuculardan çıkaracaksın.</string>
     <string name="which_language">Şu dile çevir: </string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
+    <string name="follow_instance">Durumları takip et</string>
+    <string name="toast_instance_already_added">Bu durumu zaten takip ediyorsun!</string>
+    <string name="toast_instance_followed">Durum takip edildi!</string>
+    <string name="action_partnership">İş birliği</string>
+    <string name="neutral_menu_information">Bilgi</string>
+    <string name="hide_boost">Yinelemelerini gizle %s</string>
     <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
+    <string name="hide_everything">Her şeyi gizle %s</string>
+    <string name="show_boost">Yinelemelerini göster %s</string>
     <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
+    <string name="show_everything">Her şeyi göster %s</string>
     <string name="toast_endorse">The account is now featured on profile</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
+    <string name="toast_show_boost">Yinelemeler şimdi gösterildi!</string>
+    <string name="toast_hide_boost">Yinelemeler şimdi gizlendi!</string>
+    <string name="direct_message">Doğrudan mesaj</string>
+    <string name="filters">Filtreler</string>
+    <string name="action_filters_empty_content">Görüntülenecek filtre yok. \"+\" Düğmesine tıklayarak bir tane oluşturabilirsiniz.</string>
+    <string name="filter_keyword">Anahtar kelime veya ifade</string>
+    <string name="context_home">Anasayfa</string>
+    <string name="context_public">Genel zaman çizelgesi</string>
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -1025,6 +1025,8 @@
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
     <string name="date_range">Date range</string>
+    <string name="action_groups">Groups</string>
+    <string name="no_messages">No groups!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

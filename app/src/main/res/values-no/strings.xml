@@ -1020,6 +1020,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
     <string name="date_range">Date range</string>
+    <string name="action_groups">Groups</string>
+    <string name="no_messages">No groups!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>

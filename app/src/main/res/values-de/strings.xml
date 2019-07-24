@@ -1019,6 +1019,8 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="frequency">Häufigkeit</string>
     <string name="toot_per_day">%s Status pro Tag</string>
     <string name="date_range">Datumsbereich</string>
+    <string name="action_groups">Gruppen</string>
+    <string name="no_messages">Keine Gruppen!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

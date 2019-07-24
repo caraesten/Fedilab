@@ -93,7 +93,7 @@
     <string name="click_to_change">경로를 바꾸려면 누르세요</string>
     <string name="failed">실패!</string>
     <string name="scheduled_toots">예약된 툿</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">아래의 정보는 사용자의 정보를 완전하게 나타내지 못할 수도 있습니다.</string>
     <string name="insert_emoji">이모티콘 삽입</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">실시간 알림</string>
@@ -128,7 +128,7 @@
     </string-array>
     <string-array name="action_notification">
         <item>알림</item>
-        <item>Silent</item>
+        <item>무음</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>이 툿을 삭제하시겠습니까?</item>
@@ -138,7 +138,7 @@
         <item quantity="other">답글 %d개</item>
     </plurals>
     <string name="bookmarks">북마크</string>
-    <string name="bookmark_add">Add to bookmarks</string>
+    <string name="bookmark_add">북마크에 추가</string>
     <string name="bookmark_remove">북마크 삭제</string>
     <string name="bookmarks_empty">북마크가 비어있습니다</string>
     <string name="status_bookmarked">게시물이 북마크에 추가 되었습니다!</string>
@@ -155,19 +155,19 @@
     <string name="queet_it">큇!</string>
     <string name="cw">열람주의</string>
     <string name="toot_title">툿 작성</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_title_reply">답글 작성</string>
+    <string name="queet_title">큇 작성</string>
+    <string name="queet_title_reply">답글 작성</string>
+    <string name="toot_no_space">500자 글자제한에 도달했습니다!</string>
+    <string name="toot_select_image">미디어 선택</string>
+    <string name="toot_select_image_error">미디어를 선택하는 도중 오류가 발생하였습니다!</string>
+    <string name="toot_delete_media">이 미디어를 삭제할까요?</string>
+    <string name="toot_error_no_content">툿 내용이 비어있습니다!</string>
+    <string name="toot_visibility_tilte">툿 공개설정</string>
+    <string name="toots_visibility_tilte">툿의 기본 공개설정: </string>
+    <string name="toot_sent">툿이 성공적으로 보내졌습니다!</string>
+    <string name="toot_reply_content_title">이 툿에 대해 답글을 작성하고 있습니다:</string>
+    <string name="toot_sensitive">민감한 내용?</string>
     <string-array name="toot_visibility">
         <item>공개 타임라인에 작성</item>
         <item>공개 타임라인에 비표시</item>
@@ -179,12 +179,12 @@
     <string name="choose_accounts">계정을 선택하세요</string>
     <string name="select_accounts">계정들을 몇 개 선택하세요</string>
     <string name="remove_draft">임시 저장 된 글을 삭제할까요?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="show_reply">버튼을 눌러 원본 툿 보기</string>
+    <string name="upload_form_description">시각장애인을 위한 설명</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">설명이 존재하지 않습니다!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">릴리즈 %1$s</string>
     <string name="about_developer">개발자:</string>
     <string name="about_license">라이센스: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -198,44 +198,44 @@
     <!-- Accounts -->
     <string name="no_accounts">표시할 계정이 없습니다</string>
     <string name="no_follow_request">팔로우 요청이 없습니다</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="status_cnt">툿 \n %1$s</string>
+    <string name="following_cnt">팔로잉 \n %1$s</string>
+    <string name="followers_cnt">팔로워 \n %1$s</string>
+    <string name="pins_cnt">고정됨 \n %d</string>
+    <string name="authorize">권한 승인</string>
+    <string name="reject">거부</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="no_scheduled_toots">예약 된 툿이 없습니다!</string>
+    <string name="no_scheduled_toots_indications">툿을 작성한 뒤 상단 메뉴의 <b>스케줄</b>을 선택하세요.</string>
+    <string name="remove_scheduled">예약 된 툿을 지울까요?</string>
+    <string name="media_count">미디어: %d</string>
+    <string name="toot_scheduled">툿이 예약되었습니다!</string>
+    <string name="toot_scheduled_date">예약 날짜는 현재보다 미래여야 합니다!</string>
+    <string name="warning_battery">배터리 세이버가 활성화 되어 있습니다! 원하는대로 동작하지 않을 수 있습니다.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">뮤트할 시간은 1분보다 길어야 합니다.</string>
+    <string name="timed_mute_date">%1$s가 %2$s까지 뮤트 되었습니다.\n 상대의 프로필 페이지에서 뮤트를 취소할 수 있습니다.</string>
+    <string name="timed_mute_profile">%1$s는 %2$s까지 뮤트 되었습니다.\n 여기를 클릭하여 뮤트를 취소할 수 있습니다.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="no_notifications">표시할 알림이 없습니다</string>
+    <string name="notif_mention">당신을 언급했습니다</string>
+    <string name="notif_reblog">당신의 게시물을 부스트 했습니다</string>
+    <string name="notif_favourite">당신의 상태를 마음에 들어했습니다</string>
+    <string name="notif_follow">당신을 팔로우 했습니다</string>
+    <string name="notif_pouet">%1$s의 새로운 툿</string>
     <plurals name="other_notifications">
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">그리고 %d개의 다른 알림</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="other">그리고 %d개의 새로운 툿</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d명이 좋아합니다</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">알림을 삭제할까요?</string>
+    <string name="delete_notification_ask_all">알림을 모두 삭제할까요?</string>
+    <string name="delete_notification">알림이 삭제되었습니다!</string>
+    <string name="delete_notification_all">알림이 모두 삭제되었습니다!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
@@ -288,65 +288,65 @@
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="set_display_global">연합타임라인 보기</string>
+    <string name="set_disable_gif">GIF 아바타 비활성화</string>
+    <string name="set_folder_title">경로: </string>
+    <string name="set_auto_store_toot">자동으로 초안 저장</string>
+    <string name="set_bubble_counter">카운터 표시</string>
+    <string name="set_auto_add_media_url">툿에 미디어 URL을 추가</string>
+    <string name="set_notif_follow">누군가가 나를 팔로우 할 때 알림</string>
+    <string name="set_notif_follow_share">누군가 내 게시물을 부스트 할 때 알림</string>
+    <string name="set_notif_follow_add">누군가 내 게시물을 마음에 들어 할 때 알림</string>
+    <string name="set_notif_follow_mention">누군가 나를 언급할 때 알림</string>
+    <string name="set_notif_follow_poll">투표가 끝나면 알림</string>
+    <string name="set_share_validation">부스트 하기 전에 확인창 표시</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
+    <string name="set_wifi_only">Wi-Fi에 연결 되었을 때만 알림</string>
+    <string name="set_notify">일림?</string>
     <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_night_mode">야간모드</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_profile">프로필 수정</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="set_profile_description">바이오…</string>
+    <string name="set_lock_account">계정 잠그기</string>
+    <string name="set_save_changes">변경사항 저장</string>
+    <string name="set_header_picture_overlay">헤더 사진 선택</string>
+    <string name="set_fit_preview">미리보기 이미지 크기 맞추기</string>
+    <string name="set_automatically_split_toot">이 글자 수를 넘기면 자동으로 답글을 통해 쪼갭니다:</string>
+    <string name="note_no_space">160자 글자 제한에 도달했습니다!</string>
+    <string name="username_no_space">30자 글자 제한에 도달했습니다!</string>
+    <string name="settings_time_from">사이에</string>
+    <string name="settings_time_to">그리고</string>
+    <string name="settings_time_greater">시간은 %1$s보다 길어야 합니다</string>
+    <string name="settings_time_lower">시간은 %1$s보다 짧아야 합니다</string>
+    <string name="settings_hour_init">시작 시간</string>
+    <string name="settings_hour_end">끝날 시간</string>
+    <string name="embedded_browser">내장 브라우저 사용</string>
+    <string name="custom_tabs">커스텀 탭</string>
+    <string name="use_javascript">자바스크립트 활성화</string>
+    <string name="expand_cw">CW를 자동으로 펼침</string>
+    <string name="use_cookies">서드파티 쿠키 허용</string>
+    <string name="settings_ui_layout">타임라인 레이아웃: </string>
     <string-array name="settings_menu_tabs">
         <item>탭</item>
         <item>메뉴</item>
-        <item>Tabs and menu</item>
+        <item>탭과 메뉴</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>아니오</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">API 키, Yandex에 대해 공백으로 남겨 둘 수 있습니다</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
+        <item>어두움</item>
+        <item>밝음</item>
         <item>블랙</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>아니오</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
@@ -403,17 +403,17 @@
     <string name="v_public">Public</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="v_direct">다이렉트</string>
+    <string name="v_keywords">키워드…</string>
+    <string name="show_media">미디어 보기</string>
+    <string name="show_pinned">고정된 항목 보기</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>아니오</item>
+        <item>오직</item>
+        <item>모두</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
@@ -423,7 +423,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">권한:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -431,7 +431,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">API 권한:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -444,31 +444,31 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">툿 번역</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text_dev">        Thank you to:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">정규식에 의한 걸러내기</string>
     <string name="search">검색</string>
     <string name="delete">삭제</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">툿 더 가져오기…</string>
     <!-- About lists -->
     <string name="action_lists">목록</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists_confirm_delete">이 리스트를 정말로 영원히 삭제하시겠습니까?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
+    <string name="action_lists_add_to">리스트에 추가</string>
+    <string name="action_lists_remove_from">리스트에서 삭제</string>
+    <string name="action_lists_create">리스트 추가</string>
+    <string name="action_lists_delete">리스트 삭제</string>
+    <string name="action_lists_update">리스트 수정</string>
+    <string name="action_lists_title_placeholder">새 리스트 제목</string>
     <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">내 리스트</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="account_moved_to">%1$s은 %2$s로 이동했습니다</string>
+    <string name="show_boost_count">부스트/즐겨찾기 카운트 표시</string>
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -480,7 +480,7 @@
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
+    <string name="data_export">게시물 내보내기</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
@@ -488,16 +488,16 @@
     <string name="data_import_success_simple">Data have been imported!</string>
     <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
-    <string name="poxy_port">Port</string>
+    <string name="proxy_set">프록시</string>
+    <string name="proxy_type">타입</string>
+    <string name="proxy_enable">프록시 활성화?</string>
+    <string name="poxy_host">호스트</string>
+    <string name="poxy_port">포트</string>
     <string name="poxy_login">로그인</string>
     <string name="poxy_password">비밀번호</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
+    <string name="set_theme">테마:</string>
+    <string name="set_compact_mode">간결한모드</string>
+    <string name="set_share_details">공유할 때 툿의 세부 정보 포함</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
@@ -529,22 +529,22 @@
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+    <string name="context_drop">숨기는 대신 삭제</string>
+    <string name="context_drop_explanations">필터링 된 툿은 필터가 삭제 된 뒤에도 돌아오지 않습니다.</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Whole word</string>
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
+    <string name="filter_expire">만료 시간</string>
+    <string name="add_new_filter">새 필터 추가</string>
+    <string name="action_filter_delete">필터를 삭제할까요?</string>
+    <string name="action_update_filter">필터 갱신</string>
+    <string name="action_filter_create">필터 만들기</string>
+    <string name="how_to_follow">팔로우 할 사람들</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
+    <string name="follow_account">팔로우</string>
+    <string name="select_all">모두 선택</string>
+    <string name="unselect_all">모두 선택 취소</string>
     <string name="follow_trunk">%s is followed!</string>
     <string name="create_list_trunk">Creating the list %s</string>
     <string name="add_account_list_trunk">Adding accounts to the list</string>
@@ -558,26 +558,26 @@
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_poll">Poll Ended</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
+    <string name="channel_notif_follow">새 팔로우</string>
+    <string name="channel_notif_boost">새 부스트</string>
+    <string name="channel_notif_fav">새 즐겨찾기</string>
+    <string name="channel_notif_mention">새로운 언급</string>
+    <string name="channel_notif_poll">투표 종료</string>
+    <string name="channel_notif_toot">새 툿</string>
+    <string name="channel_notif_backup">툿 백업</string>
+    <string name="channel_notif_media">미디어 다운로드</string>
+    <string name="set_notif_sound">알림음 변경</string>
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+    <string name="retrieve_remote_conversation">원격 글타래 불러오는 중!</string>
+    <string name="no_blocked_domain">차단 된 도메인이 없습니다!</string>
+    <string name="unblock_domain_confirm">도메인 차단 해제</string>
+    <string name="unblock_domain_confirm_message">정말로 %s의 차단을 해제할까요?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
+    <string name="blocked_domains">차단 된 도메인</string>
+    <string name="block_domain">도메인 차단</string>
+    <string name="toast_block_domain">도메인이 차단 되었습니다</string>
     <string name="toast_unblock_domain">The domain is no longer blocked!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Comment</string>
@@ -610,47 +610,47 @@
     <string name="action_bug_report">Bug Report</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="account_id_clipbloard">계정의 아이디가 클립보드에 복사되었습니다!</string>
+    <string name="settings_title_battery">배터리 최적화</string>
+    <string name="set_change_locale">언어 변경</string>
+    <string name="default_language">기본 언어</string>
+    <string name="truncate_long_toots">긴 툿 자르기</string>
+    <string name="set_truncate_toot">\'x\'줄을 넘는 툿을 자릅니다. 0으로 설정하면 비활성화 됩니다.</string>
+    <string name="display_toot_truncate">더 보기</string>
+    <string name="hide_toot_truncate">덜 보기</string>
+    <string name="manage_tags">태그 관리</string>
+    <string name="tags_already_stored">태그가 이미 존재합니다!</string>
+    <string name="tags_stored">태그가 저장되었습니다!</string>
+    <string name="tags_renamed">태그가 변경되었습니다!</string>
+    <string name="tags_deleted">태그가 삭제되었습니다!</string>
+    <string name="set_display_art">예술 타임라인 표시</string>
+    <string name="schedule_boost">예약된 부스트</string>
+    <string name="boost_scheduled">부스트가 예약되었습니다!</string>
+    <string name="no_scheduled_boosts">예약 된 부스트가 없습니다!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="go_back">Go back</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="art_menu">예술 타임라인</string>
+    <string name="open_menu">메뉴 열기</string>
+    <string name="go_back">뒤로 가기</string>
+    <string name="app_logo">응용프로그램 로고</string>
+    <string name="profile_picture">프로필 사진</string>
+    <string name="profile_banner">프로필 배너</string>
+    <string name="contact_instance_admin">인스턴스의 관리자에게 연락</string>
+    <string name="add_new">새로 추가</string>
+    <string name="mastohost_logo">MastoHost 로고</string>
+    <string name="emoji_picker">에모지 선택기</string>
     <string name="refresh">새로고침</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Add description for media (for the visually impaired)</string>
+    <string name="expand_conversation">대화 확장하기</string>
+    <string name="remove_account">계정 삭제</string>
+    <string name="delete_domain">도메인 차단 삭제</string>
+    <string name="custom_emoji_picker">커스텀 에모지 선택기</string>
+    <string name="play_video">동영상 재생</string>
+    <string name="new_toot">새 툿</string>
+    <string name="card_view_image">카드 이미지</string>
+    <string name="hide_media">미디어 숨기기</string>
+    <string name="favicon">파비콘</string>
+    <string name="media_description">미디어 설명 추가 (시각장에인을 위해)</string>
     <string-array name="filter_expire">
-        <item>Never</item>
+        <item>영원히</item>
         <item>30 분</item>
         <item>1 시간</item>
         <item>6 시간</item>
@@ -666,19 +666,19 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">더 많은 정보</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="languages">언어</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="show_media_only">미디어만</string>
+    <string name="show_media_nsfw">NSFW 보기</string>
+    <string name="crowdin_translations">Crowdin 번역</string>
+    <string name="crowdin_manager">Crowdin 매니저</string>
+    <string name="translation_app">응용프로그램 번역</string>
+    <string name="about_crowdin">Crowdin에 대하여</string>
+    <string name="bot">봇</string>
+    <string name="pixelfed_instance">픽셀페드 인스턴스</string>
+    <string name="mastodon_instance">마스토돈 인스턴스</string>
     <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <string name="any_tags">Any of these</string>
     <string name="all_tags">All of these</string>
@@ -728,20 +728,20 @@
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
     <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_notification">Notification service</string>
-    <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
+    <string name="choose_schedule">예약 모드 선택</string>
+    <string name="device_schedule">장치에서</string>
+    <string name="server_schedule">서버에서</string>
+    <string name="toots_server">툿(서버)</string>
+    <string name="toots_client">툿(장치)</string>
+    <string name="modify">변경</string>
+    <string name="set_display_content_after_fetch_more">\"새로 가져오기\" 버튼 위에 새 툿 표시</string>
+    <string name="settings_category_label_confirmations">확인</string>
+    <string name="settings_category_label_timelines">타임라인</string>
+    <string name="settings_category_label_notification">알림 서비스</string>
+    <string name="settings_category_label_interface">인터페이스</string>
+    <string name="settings_category_label_hiddencontent">숨겨진 내용</string>
+    <string name="settings_category_label_composing">작성</string>
+    <string name="contact">연락처</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
@@ -751,36 +751,36 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
+    <string name="export_data">데이터 내보내기</string>
+    <string name="import_data">데이터 가져오기</string>
+    <string name="toot_select_import">가져 올 파일을 선택하세요</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
+    <string name="add_public_comment">공개 댓글 추가</string>
+    <string name="send_comment">댓글 보내기</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">평문</string>
     <string name="action_html">HTML</string>
-    <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
+    <string name="action_markdown">마크다운</string>
+    <string name="action_logout_account">계정 로그아웃</string>
+    <string name="all">모두</string>
+    <string name="about_opencollective">응용프로그램 지원하기</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">링크 복사</string>
     <string name="connect_instance">연결</string>
-    <string name="set_normal">Normal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
-    <string name="data_base_exported">The data base has been exported!</string>
-    <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="set_normal">보통</string>
+    <string name="set_compact">간결</string>
+    <string name="set_console">콘솔</string>
+    <string name="set_mode">표시 모드 설정</string>
+    <string name="set_security_provider">보안 제공자(Security Provider) 패치</string>
+    <string name="update_tracking_domains">추적 도메인 갱신</string>
+    <string name="tracking_db_updated">추적 데이터가 갱신되었습니다!</string>
+    <string name="calls_blocked">http 호출이 응용프로그램에 의해 차단 되었습니다</string>
+    <string name="list_of_blocked_domains">차단 된 호출 내역</string>
+    <string name="submit">제출</string>
+    <string name="data_base_exported">데이터가 내보내졌습니다</string>
+    <string name="featured_hashtags">추천 해시태그</string>
+    <string name="filter_timeline_with_a_tag">타임라인을 태그로 필터링</string>
     <string name="no_tags">No tags</string>
     <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
@@ -822,56 +822,56 @@
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
-    <string name="set_remember_position">Remember the position in Home timeline</string>
-    <string name="history">History</string>
-    <string name="playlists">Playlists</string>
-    <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
-    <string name="create">Create</string>
+    <string name="gnu_instance">그누 인스턴스</string>
+    <string name="cached_status">캐시 된 게시물</string>
+    <string name="set_forward_tags">답글에 태그 전달</string>
+    <string name="set_long_press_media">길게 눌러 미디어 저장</string>
+    <string name="set_blur_sensitive">민감한 미디어를 흐리게 표시</string>
+    <string name="set_display_timeline_in_list">타임라인을 리스트로 표시</string>
+    <string name="display_timeline">타임라인 표시</string>
+    <string name="set_display_bot_icon">툿에 봇 계정 표시</string>
+    <string name="add_tags">태그 관리</string>
+    <string name="set_remember_position">홈 타임라인의 위치 기억하기</string>
+    <string name="history">내역</string>
+    <string name="playlists">재생목록</string>
+    <string name="display_name">표시되는 이름</string>
+    <string name="privacy">개인정보</string>
+    <string name="create">생성</string>
     <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
-    <string name="edit_media">Edit media</string>
-    <string name="redo">redo</string>
-    <string name="gallery">Gallery</string>
-    <string name="label_emoji">Emoji</string>
-    <string name="label_sticker">Sticker</string>
-    <string name="label_eraser">Eraser</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
-    <string name="label_brush">Brush</string>
-    <string name="confirm_exit_editing">Are you sure you want to exit without saving the image?</string>
-    <string name="discard">Discard</string>
-    <string name="saving">Saving…</string>
-    <string name="image_saved">Image Saved Successfully!</string>
-    <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
-    <string name="set_photo_editor">Enable photo editor</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
+    <string name="edit_media">미디어 편집</string>
+    <string name="redo">다시 실행</string>
+    <string name="gallery">갤러리</string>
+    <string name="label_emoji">에모지</string>
+    <string name="label_sticker">스티커</string>
+    <string name="label_eraser">지우개</string>
+    <string name="label_text">문자</string>
+    <string name="label_filter">필터</string>
+    <string name="label_adjust">조절</string>
+    <string name="label_brush">붓</string>
+    <string name="confirm_exit_editing">저장하지 않고 종료할까요?</string>
+    <string name="discard">버리기</string>
+    <string name="saving">저장…</string>
+    <string name="image_saved">성공적으로 저장되었습니다!</string>
+    <string name="save_image_failed">저장하는데 실패하였습니다</string>
+    <string name="opacity">불투명도</string>
+    <string name="label_crop">잘라내기</string>
+    <string name="set_photo_editor">사진 편집기 활성화</string>
+    <string name="add_poll_item">투표 항목 추가</string>
+    <string name="remove_poll_item">마지막 투표 항목 지우기</string>
+    <string name="mute_conversation">대화 뮤트</string>
+    <string name="unmute_conversation">대화 뮤트 해제</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
     <string name="toast_mute_conversation">The conversation is muted</string>
     <string name="app_features">Open application features</string>
     <string name="timed_mute">Timed mute</string>
     <string name="mention_account">Mention the account</string>
-    <string name="refresh_cache">Refresh cache</string>
+    <string name="refresh_cache">캐시 새로고침</string>
     <string name="see_boost_and_fav">See who boosted and added to favorites</string>
-    <string name="mention_status">Mention the status</string>
+    <string name="mention_status">게시물 언급하기</string>
     <string name="action_news">News</string>
     <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <string name="category_general">General</string>
@@ -1028,6 +1028,8 @@
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
     <string name="date_range">Date range</string>
+    <string name="action_groups">Groups</string>
+    <string name="no_messages">No groups!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
