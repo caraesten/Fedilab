@@ -86,7 +86,7 @@
     <string name="profile">Profil</string>
     <string name="make_a_choice">Was möchten Sie tun?</string>
     <string name="delete_account_title">Konto löschen</string>
-    <string name="delete_account_message" formatted="false">Konto %1$s aus der Anwendung löschen?</string>
+    <string name="delete_account_message" formatted="false">Möchten Sie das Konto %1$s wirklich aus der App entfernen?</string>
     <string name="send_email">E-Mail senden</string>
     <string name="choose_file">Datei wählen</string>
     <string name="choose_file_error">Kein Dateimanager gefunden!</string>
