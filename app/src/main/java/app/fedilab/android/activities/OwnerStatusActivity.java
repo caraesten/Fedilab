@@ -572,8 +572,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 while (it.hasNext() && i <= 10) {
                     Map.Entry pair = (Map.Entry)it.next();
                     System.out.println(pair.getKey() + " = " + pair.getValue());
-                    text.append(i).append(" - ").append(pair.getKey()).append(" ⟶ ").append(pair.getValue()).append("\r\n");
-                    it.remove();
+                    text.append(i).append(" - ").append(pair.getKey()).append(" → ").append(pair.getValue()).append("\r\n");
                     i++;
                 }
                 tags.setText(text.toString());
