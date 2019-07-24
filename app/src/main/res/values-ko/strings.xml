@@ -93,7 +93,7 @@
     <string name="click_to_change">경로를 바꾸려면 누르세요</string>
     <string name="failed">실패!</string>
     <string name="scheduled_toots">예약된 툿</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">아래의 정보는 사용자의 정보를 완전하게 나타내지 못할 수도 있습니다.</string>
     <string name="insert_emoji">이모티콘 삽입</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">실시간 알림</string>
@@ -128,7 +128,7 @@
     </string-array>
     <string-array name="action_notification">
         <item>알림</item>
-        <item>Silent</item>
+        <item>무음</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>이 툿을 삭제하시겠습니까?</item>
@@ -138,7 +138,7 @@
         <item quantity="other">답글 %d개</item>
     </plurals>
     <string name="bookmarks">북마크</string>
-    <string name="bookmark_add">Add to bookmarks</string>
+    <string name="bookmark_add">북마크에 추가</string>
     <string name="bookmark_remove">북마크 삭제</string>
     <string name="bookmarks_empty">북마크가 비어있습니다</string>
     <string name="status_bookmarked">게시물이 북마크에 추가 되었습니다!</string>
@@ -155,18 +155,18 @@
     <string name="queet_it">큇!</string>
     <string name="cw">열람주의</string>
     <string name="toot_title">툿 작성</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_title_reply">답글 작성</string>
+    <string name="queet_title">큇 작성</string>
+    <string name="queet_title_reply">답글 작성</string>
+    <string name="toot_no_space">500자 글자제한에 도달했습니다!</string>
+    <string name="toot_select_image">미디어 선택</string>
+    <string name="toot_select_image_error">미디어를 선택하는 도중 오류가 발생하였습니다!</string>
+    <string name="toot_delete_media">이 미디어를 삭제할까요?</string>
+    <string name="toot_error_no_content">툿 내용이 비어있습니다!</string>
+    <string name="toot_visibility_tilte">툿 공개설정</string>
+    <string name="toots_visibility_tilte">툿의 기본 공개설정: </string>
+    <string name="toot_sent">툿이 성공적으로 보내졌습니다!</string>
+    <string name="toot_reply_content_title">이 툿에 대해 답글을 작성하고 있습니다:</string>
     <string name="toot_sensitive">Sensitive content?</string>
     <string-array name="toot_visibility">
         <item>공개 타임라인에 작성</item>
