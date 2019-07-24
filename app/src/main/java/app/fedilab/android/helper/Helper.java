@@ -480,6 +480,7 @@ public class Helper {
     public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
     public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
     public static final String INTENT_SEND_MODIFIED_IMAGE = "intent_send_modified_image";
+    public static final String INTENT_ADD_UPLOADED_MEDIA = "intent_add_uploaded_media";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_ACTION = "receive_action";

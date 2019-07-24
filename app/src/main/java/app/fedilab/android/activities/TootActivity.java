@@ -281,6 +281,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private EditText wysiwygEditText;
     private String url_for_media;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -908,6 +909,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         uploadReceiver = new UploadServiceSingleBroadcastReceiver(this);
         uploadReceiver.register(this);
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(add_new_media,
+                        new IntentFilter(Helper.INTENT_ADD_UPLOADED_MEDIA));
+
     }
 
     public static TextWatcher initializeTextWatcher(Context context,
@@ -1071,7 +1077,158 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     };
 
+    private BroadcastReceiver add_new_media = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
+            JSONObject response = null;
+            ArrayList<String> successfullyUploadedFiles = null;
+            try {
+                response = new JSONObject(intent.getStringExtra("response"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            successfullyUploadedFiles = intent.getStringArrayListExtra("uploadInfo");
+            addNewMedia(response, successfullyUploadedFiles);
+        }
+    };
+
+
+    private void addNewMedia(JSONObject response, ArrayList<String>successfullyUploadedFiles){
+        Attachment attachment;
+        //response = new JSONObject(serverResponse.getBodyAsString());
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+            attachment = API.parseAttachmentResponse(response);
+        else
+            attachment = GNUAPI.parseUploadedAttachmentResponse(response);
+
+        boolean alreadyAdded = false;
+        int index = 0;
+        for(Attachment attach_: attachments){
+            if( attach_.getId().equals(attachment.getId())){
+                alreadyAdded = true;
+                break;
+            }
+            index++;
+        }
+
+        File audioFile = new File(getCacheDir() + "/fedilab_recorded_audio.wav");
+        audioFile.delete();
+        if( !alreadyAdded){
+            toot_picture_container.setVisibility(View.VISIBLE);
+            String url = attachment.getPreview_url();
+            if (url == null || url.trim().equals(""))
+                url = attachment.getUrl();
+
+
+            final ImageView imageView = new ImageView(getApplicationContext());
+            imageView.setId(Integer.parseInt(attachment.getId()));
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                if( successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
+
+                    Iterator it = filesMap.entrySet().iterator();
+                    Uri fileName = null;
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry)it.next();
+                        fileName = (Uri) pair.getValue();
+                        it.remove();
+                    }
+                    if (fileName != null ) {
+                        Glide.with(imageView.getContext())
+                                .asBitmap()
+                                .load(fileName)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        imageView.setImageBitmap(resource);
+                                    }
+                                });
+                    }
+                }
+
+            }else {
+                String finalUrl = url;
+                String uuid = attachment.getId();
+                Glide.with(imageView.getContext())
+                        .asBitmap()
+                        .load(url)
+                        .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                imageView.setImageBitmap(resource);
+                                if( displayWYSIWYG()) {
+                                    url_for_media = finalUrl;
+                                    Iterator it = filesMap.entrySet().iterator();
+                                    String fileName = null;
+                                    while (it.hasNext()) {
+                                        Map.Entry pair = (Map.Entry)it.next();
+                                        fileName = (String) pair.getKey();
+                                        it.remove();
+                                    }
+                                    if( fileName != null && fileName.toString().contains("fedilabins_")) {
+                                        wysiwyg.insertImage(resource);
+                                    }
+                                }
+                            }
+                        });
+            }
+
+
+
+            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            imParams.setMargins(20, 5, 20, 5);
+            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+            imageView.setAdjustViewBounds(true);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
+            if (show_media_urls && !displayWYSIWYG()) {
+                //Adds the shorter text_url of attachment at the end of the toot 
+                int selectionBefore = toot_content.getSelectionStart();
+                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
+                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                //Moves the cursor
+                toot_content.setSelection(selectionBefore);
+            }
+            imageView.setTag(attachment.getId());
+            toot_picture_container.addView(imageView, attachments.size(), imParams);
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    showRemove(imageView.getId());
+                    return false;
+                }
+            });
+            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+            if (instanceVersion != null) {
+                Version currentVersion = new Version(instanceVersion);
+                Version minVersion = new Version("2.0");
+                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showAddDescription(attachment);
+                        }
+                    });
+                }
+            }
+            attachments.add(attachment);
+            addBorder();
+            if (attachments.size() < max_media_count)
+                toot_picture.setEnabled(true);
+            toot_it.setEnabled(true);
+            toot_sensitive.setVisibility(View.VISIBLE);
+            if( account.isSensitive()){
+                toot_sensitive.setChecked(true);
+            }
+            picture_scrollview.setVisibility(View.VISIBLE);
+        }else {
+            if( attachments.size() > index && attachment.getDescription() != null) {
+                attachments.get(index).setDescription(attachment.getDescription());
+            }
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -1427,146 +1584,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
-        Attachment attachment;
         JSONObject response = null;
         try {
             response = new JSONObject(serverResponse.getBodyAsString());
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-                attachment = API.parseAttachmentResponse(response);
-            else
-                attachment = GNUAPI.parseUploadedAttachmentResponse(response);
-
-
-            boolean alreadyAdded = false;
-            int index = 0;
-            for(Attachment attach_: attachments){
-                if( attach_.getId().equals(attachment.getId())){
-                    alreadyAdded = true;
-                    break;
-                }
-                index++;
-            }
-
-            File audioFile = new File(getCacheDir() + "/fedilab_recorded_audio.wav");
-            audioFile.delete();
-            if( !alreadyAdded){
-                toot_picture_container.setVisibility(View.VISIBLE);
-                String url = attachment.getPreview_url();
-                if (url == null || url.trim().equals(""))
-                    url = attachment.getUrl();
-
-
-                final ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setId(Integer.parseInt(attachment.getId()));
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                    if( uploadInfo.getSuccessfullyUploadedFiles() != null && uploadInfo.getSuccessfullyUploadedFiles().size() > 0) {
-
-                        Iterator it = filesMap.entrySet().iterator();
-                        Uri fileName = null;
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry)it.next();
-                            fileName = (Uri) pair.getValue();
-                            it.remove();
-                        }
-                        if (fileName != null ) {
-                            Glide.with(imageView.getContext())
-                                    .asBitmap()
-                                    .load(fileName)
-                                    .into(new SimpleTarget<Bitmap>() {
-                                        @Override
-                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                            imageView.setImageBitmap(resource);
-                                        }
-                                    });
-                        }
-                    }
-
-                }else {
-                    String finalUrl = url;
-                    String uuid = attachment.getId();
-                    Glide.with(imageView.getContext())
-                            .asBitmap()
-                            .load(url)
-                            .error(Glide.with(imageView).asBitmap().load(R.drawable.ic_audio_wave))
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    imageView.setImageBitmap(resource);
-                                    if( displayWYSIWYG()) {
-                                        url_for_media = finalUrl;
-                                        Iterator it = filesMap.entrySet().iterator();
-                                        String fileName = null;
-                                        while (it.hasNext()) {
-                                            Map.Entry pair = (Map.Entry)it.next();
-                                            fileName = (String) pair.getKey();
-                                            it.remove();
-                                        }
-                                        if( fileName != null && fileName.toString().contains("fedilabins_")) {
-                                            wysiwyg.insertImage(resource);
-                                        }
-                                    }
-                                }
-                            });
-                }
-
-
-
-                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                imParams.setMargins(20, 5, 20, 5);
-                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                imageView.setAdjustViewBounds(true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-                if (show_media_urls && !displayWYSIWYG()) {
-                    //Adds the shorter text_url of attachment at the end of the toot 
-                    int selectionBefore = toot_content.getSelectionStart();
-                    toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
-                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
-                    //Moves the cursor
-                    toot_content.setSelection(selectionBefore);
-                }
-                imageView.setTag(attachment.getId());
-                toot_picture_container.addView(imageView, attachments.size(), imParams);
-                imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        showRemove(imageView.getId());
-                        return false;
-                    }
-                });
-                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                if (instanceVersion != null) {
-                    Version currentVersion = new Version(instanceVersion);
-                    Version minVersion = new Version("2.0");
-                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                showAddDescription(attachment);
-                            }
-                        });
-                    }
-                }
-                attachments.add(attachment);
-                addBorder();
-                if (attachments.size() < max_media_count)
-                    toot_picture.setEnabled(true);
-                toot_it.setEnabled(true);
-                toot_sensitive.setVisibility(View.VISIBLE);
-                if( account.isSensitive()){
-                    toot_sensitive.setChecked(true);
-                }
-                picture_scrollview.setVisibility(View.VISIBLE);
-            }else {
-                if( attachments.size() > index && attachment.getDescription() != null) {
-                    attachments.get(index).setDescription(attachment.getDescription());
-                }
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        addNewMedia(response, uploadInfo.getSuccessfullyUploadedFiles());
     }
 
     @Override
@@ -1584,10 +1608,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
     }
-
-
-
-
 
 
     @Override
@@ -2527,6 +2547,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         super.onDestroy();
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(imageReceiver);
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(add_new_media);
         uploadReceiver.unregister(this);
     }
 
