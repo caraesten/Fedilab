@@ -312,7 +312,7 @@
     <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
     <string name="settings_title_profile">Profil düzenle</string>
     <string name="settings_title_custom_sharing">Özel paylaşım</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_custom_sharing_url">Özel paylaşım URL&#8230;</string>
     <string name="set_profile_description">Özgeçmiş…</string>
     <string name="set_lock_account">Hesabı Kilitle</string>
     <string name="set_save_changes">Değişiklikleri kaydet</string>
@@ -343,7 +343,7 @@
         <item>DeepL</item>
         <item>Hayır</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">API anahtarınızı Yandex için boş bırakabilirsiniz</string>
     <string-array name="settings_theme">
         <item>Koyu</item>
         <item>Açık</item>
@@ -393,12 +393,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Önbelleği temizlendi! %1$s serbest bırakıldı</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Başlık</string>
+    <string name="title_hint_custom_sharing">Başlık&#8230;</string>
+    <string name="description_header_custom_sharing">Açıklama</string>
+    <string name="description_hint_custom_sharing">Açıklama&#8230;</string>
+    <string name="keywords_header_custom_sharing">Anahtar Sözcükler</string>
+    <string name="keywords_hint_custom_sharing">Anahtar Sözcükler&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Eşitle</string>
     <string name="action_filter">Filtrele</string>
@@ -482,11 +482,11 @@
     <string name="data_export_toots">%1$s için durumları dışarı aktar</string>
     <string name="data_export_success">%2$s toot\'tan %1$s tanesi dışarı aktarıldı.</string>
     <string name="data_export_error">%1$s toot\'ları dışarı aktarılırken sorun çıktı</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Veri dışa aktarılırken bir şeyler ters gitti!</string>
+    <string name="data_import_success_simple">Veriler içe aktarıldı!</string>
+    <string name="data_import_error_simple">Veri içe aktarılırken bir şeyler ters gitti!</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">Vekil</string>
     <string name="proxy_type">Tip</string>
     <string name="proxy_enable">Proxy aç?</string>
     <string name="poxy_host">Sunucu</string>
@@ -494,7 +494,7 @@
     <string name="poxy_login">Giriş</string>
     <string name="poxy_password">Parola</string>
     <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_compact_mode">Kompakt mod</string>
     <string name="set_share_details">Paylaşırken toot detayları ekle</string>
     <string name="support_the_app_on_liberapay">Uygulamayı Liberapay ile destekle</string>
     <string name="alert_regex">Düzenli ifadede sorun var!</string>
@@ -503,7 +503,7 @@
     <string name="delete_instance">Bu sunucuyu sil?</string>
     <string name="warning_delete_instance">%s\'i takip edilen sunuculardan çıkaracaksın.</string>
     <string name="which_language">Şu dile çevir: </string>
-    <string name="follow_instance">Follow instance</string>
+    <string name="follow_instance">Durumları takip et</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerships</string>
