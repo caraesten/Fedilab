@@ -94,14 +94,19 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
                 }
             }
         }else {
-            holder.account_dn.setText(target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            if( target_account.getdisplayNameSpan() != null) {
+                holder.account_dn.setText(target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            }
         }
 
 
-
-        Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
+        if( target_account.getAvatar() != null) {
+            Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
+        }
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
-        holder.account_ac.setText(target_account.getAcct());
+        if( target_account.getAcct() != null) {
+            holder.account_ac.setText(target_account.getAcct());
+        }
 
         holder.report_comment.setText(report.getComment());
 
