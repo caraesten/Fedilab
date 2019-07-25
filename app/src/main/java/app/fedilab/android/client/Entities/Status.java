@@ -1089,7 +1089,7 @@ public class Status implements Parcelable{
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 Glide.with(context)
-                        .asDrawable()
+                       // .asDrawable()
                         .load(emoji.getUrl())
                         .listener(new RequestListener<Drawable>()  {
                             @Override
