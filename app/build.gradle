@@ -121,7 +121,6 @@ dependencies {
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.2.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
-    implementation 'com.linecorp:apng:1.6.0'
 
     implementation 'com.github.pengfeizhou.android.animation:awebp:0.2.16'
     implementation 'com.github.pengfeizhou.android.animation:apng:0.2.16'
