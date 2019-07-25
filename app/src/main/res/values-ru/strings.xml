@@ -1040,8 +1040,8 @@
     <string name="frequency">Периодичность</string>
     <string name="toot_per_day">%s статусов в день</string>
     <string name="date_range">Диапазон дат</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
+    <string name="action_groups">Группы</string>
+    <string name="no_messages">Нет групп!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
