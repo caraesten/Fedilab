@@ -44,6 +44,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
@@ -1081,11 +1082,11 @@ public class Status implements Parcelable{
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 Glide.with(context)
-                        .asBitmap()
+                        .asGif()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener<Bitmap>()  {
+                        .listener(new RequestListener<GifDrawable>()  {
                             @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
 
@@ -1098,32 +1099,34 @@ public class Status implements Parcelable{
                                 return false;
                             }
                         })
-                        .into(new SimpleTarget<Bitmap>() {
+                        .into(new SimpleTarget<GifDrawable>() {
                             @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull GifDrawable resource, @Nullable Transition<? super GifDrawable> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
+                                            resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                            ImageSpan imageSpan = new ImageSpan(resource, ImageSpan.ALIGN_BASELINE);
                                             contentSpan.setSpan(
-                                                new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
-                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                    imageSpan, startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
                                     }
                                 }
                                 if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
-                                            displayNameSpan.setSpan(
-                                                    new ImageSpan(context,
-                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
+                                            resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                            ImageSpan imageSpan = new ImageSpan(resource, ImageSpan.ALIGN_BASELINE);
+                                            contentSpan.setSpan(
+                                                    imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
                                     }
                                 }
                                 status.setDisplayNameSpan(displayNameSpan);
@@ -1131,12 +1134,13 @@ public class Status implements Parcelable{
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
-                                            contentSpanCW.setSpan(
-                                                new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
-                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
+                                            resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                            ImageSpan imageSpan = new ImageSpan(resource, ImageSpan.ALIGN_BASELINE);
+                                            contentSpan.setSpan(
+                                                    imageSpan, startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
                                     }
                                 }
                                 i[0]++;
