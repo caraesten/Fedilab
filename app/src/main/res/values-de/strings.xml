@@ -86,7 +86,7 @@
     <string name="profile">Profil</string>
     <string name="make_a_choice">Was möchten Sie tun?</string>
     <string name="delete_account_title">Konto löschen</string>
-    <string name="delete_account_message" formatted="false">Konto %1$s aus der Anwendung löschen?</string>
+    <string name="delete_account_message" formatted="false">Möchten Sie das Konto %1$s wirklich aus der App entfernen?</string>
     <string name="send_email">E-Mail senden</string>
     <string name="choose_file">Datei wählen</string>
     <string name="choose_file_error">Kein Dateimanager gefunden!</string>
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Entferne diesen Toot?</item>
-        <item>Diesen Toot löschen &amp; neuentwerfen?</item>
+        <item>Diesen Toot löschen &amp; neu entwerfen?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d Antwort</item>
@@ -510,7 +510,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="hide_boost">Verstecke geteilte Beiträge von %s</string>
     <string name="endorse">Auf Profil hervorheben</string>
     <string name="hide_everything">Verberge alles von %s</string>
-    <string name="show_boost">Zeige geteilte Beiträge von %s</string>
+    <string name="show_boost">Geteilte Beiträge von %s anzeigen</string>
     <string name="unendorse">Nicht mehr im Profil hervorheben</string>
     <string name="show_everything">Alles von %s anzeigen</string>
     <string name="toast_endorse">Dieser Benutzer wird nun in deinem Profil hervorgehoben</string>
@@ -621,7 +621,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="tags_renamed">Dieses Schlagwort wurde geändert!</string>
     <string name="tags_deleted">Dieses Schlagwort wurde gelöscht!</string>
     <string name="set_display_art">Kunst-Zeitlinie anzeigen</string>
-    <string name="schedule_boost">Plane teilen des Beitrags</string>
+    <string name="schedule_boost">Teilen des Beitrags planen</string>
     <string name="boost_scheduled">Teilen geplant!</string>
     <string name="no_scheduled_boosts">Nichts geplant!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Öffne das Menü eines Toots und wähle <b>Teilen planen</b>.]]></string>
