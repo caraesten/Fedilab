@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:id="@+id/fedilab_features_panel"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginStart="5dp"
+    android:background="@color/custom_features_panel_background"
+    android:paddingStart="2dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="2dp"
+    android:paddingBottom="4dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fedilab_features"
+    app:layout_constraintStart_toEndOf="@id/fedilab_features"
+    app:layout_constraintTop_toTopOf="@id/fedilab_features">
+
 
     <ImageButton
-        android:id="@+id/custom_feature_timed_mute"
+        android:id="@+id/custom_feature_bookmark"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/mastodonC4"
-        android:contentDescription="@string/timed_mute"
-        android:src="@drawable/ic_timelapse"
-        android:tooltipText="@string/timed_mute"
+        android:contentDescription="@string/bookmark_add"
+        android:src="@drawable/ic_bookmark_white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/custom_feature_schedule"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/custom_feature_schedule"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_margin="5dp"
-        android:background="@color/mastodonC4"
-        android:contentDescription="@string/schedule"
-        android:src="@drawable/ic_schedule"
-        android:tooltipText="@string/schedule_boost"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/custom_feature_timed_mute"
-        app:layout_constraintRight_toLeftOf="@id/custom_feature_translate"
+        app:layout_constraintEnd_toStartOf="@id/custom_feature_translate"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -40,29 +36,44 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/mastodonC4"
         android:contentDescription="@string/translate"
         android:src="@drawable/ic_translate_white"
-        android:tooltipText="@string/translate"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/custom_feature_schedule"
-        app:layout_constraintRight_toLeftOf="@id/custom_feature_bookmark"
+        app:layout_constraintEnd_toStartOf="@id/custom_feature_timed_mute"
+        app:layout_constraintStart_toEndOf="@id/custom_feature_bookmark"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/custom_feature_bookmark"
+        android:id="@+id/custom_feature_timed_mute"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/mastodonC4"
-        android:contentDescription="@string/bookmark_add"
-        android:src="@drawable/ic_bookmark_white"
-        android:tooltipText="@string/bookmark_add"
+        android:contentDescription="@string/timed_mute"
+        android:src="@drawable/ic_timed_mute"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/custom_feature_translate"
-        app:layout_constraintRight_toLeftOf="@id/custom_feature_mention"
+        app:layout_constraintEnd_toStartOf="@id/custom_feature_schedule"
+        app:layout_constraintStart_toEndOf="@id/custom_feature_translate"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/custom_feature_schedule"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/mastodonC4"
+        android:contentDescription="@string/schedule"
+        android:src="@drawable/ic_schedule_boost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/custom_feature_mention"
+        app:layout_constraintStart_toEndOf="@id/custom_feature_timed_mute"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -70,14 +81,14 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/mastodonC4"
         android:contentDescription="@string/mention_account"
         android:src="@drawable/ic_mention_white"
-        android:tooltipText="@string/mention_status"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/custom_feature_bookmark"
-        app:layout_constraintRight_toLeftOf="@id/custom_feature_cache"
+        app:layout_constraintEnd_toStartOf="@id/custom_feature_cache"
+        app:layout_constraintStart_toEndOf="@id/custom_feature_schedule"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -85,14 +96,14 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_margin="5dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/mastodonC4"
         android:contentDescription="@string/refresh_cache"
         android:src="@drawable/ic_refresh"
-        android:tooltipText="@string/refresh_cache"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/custom_feature_mention"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/custom_feature_mention"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

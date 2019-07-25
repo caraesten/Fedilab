@@ -145,7 +145,7 @@
     <string name="status_unbookmarked">게시물이 북마크에서 삭제 되었습니다!</string>
     <!-- Date -->
     <string name="date_seconds">%d 초</string>
-    <string name="date_minutes">%d 초</string>
+    <string name="date_minutes">%d 분</string>
     <string name="date_hours">%d 시</string>
     <string name="date_day">%d 초</string>
     <!-- TOOT -->

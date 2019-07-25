@@ -1028,8 +1028,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="frequency">頻率</string>
     <string name="toot_per_day">每日狀態數</string>
     <string name="date_range">日期範圍</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
+    <string name="action_groups">群組</string>
+    <string name="no_messages">沒有群組！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
