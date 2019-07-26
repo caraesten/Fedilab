@@ -105,6 +105,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1171,7 +1173,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
                 holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
             }
-
+            if( !status.isStatusAnimated()) {
+                status.setStatusAnimated(true);
+                Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.status_content.invalidate();
+                    }
+                }, 0, 100, TimeUnit.MILLISECONDS);
+            }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
 
             switch (translator) {

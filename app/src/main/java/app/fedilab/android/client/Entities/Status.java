@@ -20,8 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimatedImageDrawable;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -41,7 +39,6 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -52,11 +49,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.github.pengfeizhou.animation.apng.APNGDrawable;
-import com.github.pengfeizhou.animation.loader.AssetStreamLoader;
-import com.github.pengfeizhou.animation.loader.StreamLoader;
-
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -77,7 +69,6 @@ import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.helper.CrossActions;
-import app.fedilab.android.helper.EmojiDrawableSpan;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
@@ -157,6 +148,7 @@ public class Status implements Parcelable{
 
     private int warningFetched = -1;
     private List<String> imageURL;
+    private boolean statusAnimated = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -1090,11 +1082,11 @@ public class Status implements Parcelable{
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 Glide.with(context)
-                        .asFile()
+                        .asDrawable()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener<File>()  {
+                        .listener(new RequestListener<Drawable>()  {
                             @Override
-                            public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
 
@@ -1107,19 +1099,19 @@ public class Status implements Parcelable{
                                 return false;
                             }
                         })
-                        .into(new SimpleTarget<File>() {
+                        .into(new SimpleTarget<Drawable>() {
                             @Override
-                            public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
-                                AssetStreamLoader assetLoader = new AssetStreamLoader(context, "test.png");
-                                APNGDrawable apngDrawable = APNGDrawable.fromFile(resource.getPath());
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
-                                            //resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                            EmojiDrawableSpan imageSpan = new EmojiDrawableSpan(context,apngDrawable);
+                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
+                                            resource.setVisible(true, true);
+                                            ImageSpan imageSpan = new ImageSpan(resource);
                                             contentSpan.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -1131,7 +1123,9 @@ public class Status implements Parcelable{
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
-                                            EmojiDrawableSpan imageSpan = new EmojiDrawableSpan(context,apngDrawable);
+                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
+                                            resource.setVisible(true, true);
+                                            ImageSpan imageSpan = new ImageSpan(resource);
                                             displayNameSpan.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -1144,7 +1138,9 @@ public class Status implements Parcelable{
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if( endPosition <= contentSpanCW.toString().length() && endPosition >= startPosition) {
-                                            EmojiDrawableSpan imageSpan = new EmojiDrawableSpan(context,apngDrawable);
+                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
+                                            resource.setVisible(true, true);
+                                            ImageSpan imageSpan = new ImageSpan(resource);
                                             contentSpanCW.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -1159,6 +1155,8 @@ public class Status implements Parcelable{
                                     listener.onRetrieveEmoji(status, false);
                                 }
                             }
+
+
 
 
 
@@ -1572,5 +1570,13 @@ public class Status implements Parcelable{
 
     public void setImageURL(List<String> imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public boolean isStatusAnimated() {
+        return statusAnimated;
+    }
+
+    public void setStatusAnimated(boolean statusAnimated) {
+        this.statusAnimated = statusAnimated;
     }
 }
