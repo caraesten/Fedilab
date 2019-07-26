@@ -19,6 +19,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -72,22 +75,15 @@ public class CustomEmojiAdapter extends ArrayAdapter {
         if (convertView == null) {
             imageView = new ImageView(context);
             float density = context.getResources().getDisplayMetrics().density;
-            imageView.setLayoutParams(new GridView.LayoutParams((int)(30*density), (int)(30*density)));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams((int)(40*density), (int)(40*density)));
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding((int)(2*density), (int)(5*density), (int)(2*density), (int)(5*density));
         } else {
             imageView = (ImageView) convertView;
         }
         Glide.with(context)
-                .asBitmap()
                 .load(emoji.getUrl())
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        BitmapDrawable icon = new BitmapDrawable(context.getResources(), resource);
-                        imageView.setImageDrawable(icon);
-                    }
-                });
+                .into(imageView);
         return imageView;
     }
 
