@@ -1033,6 +1033,7 @@
     <string name="date_range">Data-barrutia</string>
     <string name="action_groups">Taldeak</string>
     <string name="no_messages">Talderik ez!</string>
+    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
