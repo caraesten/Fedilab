@@ -1021,6 +1021,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="date_range">Datumsbereich</string>
     <string name="action_groups">Gruppen</string>
     <string name="no_messages">Keine Gruppen!</string>
+    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
