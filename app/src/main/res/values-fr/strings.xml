@@ -1014,13 +1014,13 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="set_wysiwyg">Utiliser l\'éditeur visuel</string>
     <string name="set_wysiwyg_indication">Lorsque cette option est activée, vous serez en mesure de mettre en forme votre texte facilement avec des outils.</string>
-    <string name="action_stats">Statistics</string>
+    <string name="action_stats">Statistiques</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
     <string name="number_replies">Number of replies</string>
     <string name="number_statuses">Number of statuses</string>
     <string name="statuses">Statuses</string>
-    <string name="visibility">Visibility</string>
+    <string name="visibility">Visibilité</string>
     <string name="number_with_media">Number with media</string>
     <string name="number_with_sensitive_media">Number with sensitive media</string>
     <string name="number_with_cw">Number with CW</string>
@@ -1031,6 +1031,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="date_range">Date range</string>
     <string name="action_groups">Groups</string>
     <string name="no_messages">No groups!</string>
+    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>

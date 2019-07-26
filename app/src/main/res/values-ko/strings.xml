@@ -145,7 +145,7 @@
     <string name="status_unbookmarked">게시물이 북마크에서 삭제 되었습니다!</string>
     <!-- Date -->
     <string name="date_seconds">%d 초</string>
-    <string name="date_minutes">%d 초</string>
+    <string name="date_minutes">%d 분</string>
     <string name="date_hours">%d 시</string>
     <string name="date_day">%d 초</string>
     <!-- TOOT -->
@@ -1030,6 +1030,7 @@
     <string name="date_range">Date range</string>
     <string name="action_groups">Groups</string>
     <string name="no_messages">No groups!</string>
+    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>

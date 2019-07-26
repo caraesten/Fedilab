@@ -1034,6 +1034,7 @@
     <string name="date_range">Datointerval</string>
     <string name="action_groups">Grupper</string>
     <string name="no_messages">Ingen grupper!</string>
+    <string name="set_disable_animated_emoji">Deaktivér tilpassede animerede emojis</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
