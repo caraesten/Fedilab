@@ -42,7 +42,7 @@
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Bitte sag etwas</string>
-    <string name="speech_not_supported">Dein Gerät unterstützt leider keine Spracheingabe!</string>
+    <string name="speech_not_supported">Leider unterstützt Ihr Gerät keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
     <string name="translate_toot">Toot übersetzen</string>
     <string name="schedule">Planen</string>
@@ -51,7 +51,7 @@
     <string name="icon_size_change">Aktuelle Symbolgröße ändern:</string>
     <string name="next">Weiter</string>
     <string name="previous">Zurück</string>
-    <string name="open_with">Öffne mit</string>
+    <string name="open_with">Öffnen mit</string>
     <string name="validate">Bestätigen</string>
     <string name="media">Medien</string>
     <string name="share_with">Teilen mit</string>
@@ -99,15 +99,15 @@
     <string name="live_notif">Echtzeit-Benachrichtigungen</string>
     <!-- Status -->
     <string name="no_status">Kein Toot zum Anzeigen</string>
-    <string name="fav_added">Der Toot wurde deinen Favoriten hinzugefügt</string>
-    <string name="fav_removed">Der Toot wurde aus deinen Favoriten enfernt!</string>
+    <string name="fav_added">Der Toot wurde zu den Favoriten hinzugefügt</string>
+    <string name="fav_removed">Der Toot wurde aus Ihren Favoriten enfernt!</string>
     <string name="reblog_added">Toot wurde geteilt!</string>
     <string name="reblog_removed">Toot wird nicht länger geteilt!</string>
     <string name="reblog_by">Geteilt von %1$s</string>
     <string name="favourite_add">Diesen Toot deinen Favoriten hinzufügen?</string>
-    <string name="favourite_remove">Diesen Toot aus deinen Favoriten entfernen?</string>
+    <string name="favourite_remove">Diesen Toot aus Ihren Favoriten entfernen?</string>
     <string name="reblog_add">Teile diesen Toot?</string>
-    <string name="reblog_remove">Toot nicht mehr teilen?</string>
+    <string name="reblog_remove">Geteilten Toot zurückziehen?</string>
     <string name="pin_add">Diesen Toot anheften?</string>
     <string name="pin_remove">Diesen Toot nicht mehr anheften?</string>
     <string name="more_action_1">Stummschalten</string>
@@ -121,9 +121,9 @@
     <string name="more_action_9">Löschen &amp; neu entwerfen</string>
     <string-array name="more_action_confirm">
         <item>Lautlosmodus für dieses Konto aktivieren?</item>
-        <item>Diesen Nutzer blockieren?</item>
+        <item>Diesen Nutzer sperren?</item>
         <item>Diesen Toot melden?</item>
-        <item>Diese Domäne blockieren?</item>
+        <item>Diese Domäne sperren?</item>
         <item>Lautlosmodus für dieses Konto aufheben?</item>
     </string-array>
     <string-array name="action_notification">
@@ -131,7 +131,7 @@
         <item>Stumm</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Entferne diesen Toot?</item>
+        <item>Diesen Toot entfernen?</item>
         <item>Diesen Toot löschen &amp; neu entwerfen?</item>
     </string-array>
     <plurals name="preview_replies">
@@ -151,7 +151,7 @@
     <string name="date_day">%d d</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Warnung</string>
-    <string name="toot_placeholder">Was beschäftigt dich?</string>
+    <string name="toot_placeholder">Was beschäftigt Sie?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
@@ -162,25 +162,25 @@
     <string name="toot_no_space">Sie haben das Limit von 500 Zeichen erreicht!</string>
     <string name="toot_select_image">Wähle eine Mediendatei</string>
     <string name="toot_select_image_error">Ein Fehler während der Auswahl ist aufgetreten!</string>
-    <string name="toot_delete_media">Lösche diese Datei?</string>
+    <string name="toot_delete_media">Diese Datei löschen?</string>
     <string name="toot_error_no_content">Dein Toot ist leer!</string>
-    <string name="toot_visibility_tilte">Sichtbarkeit des Toots</string>
-    <string name="toots_visibility_tilte">Standard Sichtbarkeit der Toots: </string>
+    <string name="toot_visibility_tilte">Sichtbarkeit des Toot</string>
+    <string name="toots_visibility_tilte">Standard-Sichtbarkeit der Toots: </string>
     <string name="toot_sent">Der Toot wurde gesendet!</string>
-    <string name="toot_reply_content_title">Du antwortest auf diesen Toot:</string>
-    <string name="toot_sensitive">Sensibler Inhalt?</string>
+    <string name="toot_reply_content_title">Sie antworten auf diesen Toot:</string>
+    <string name="toot_sensitive">Vertrauliche Inhalte?</string>
     <string-array name="toot_visibility">
         <item>In öffentliche Zeitleisten eintragen</item>
         <item>Nicht in öffentliche Zeitleisten eintragen</item>
         <item>Nur an Folgende senden</item>
-        <item>Nur an erwähnten Nutzer absenden</item>
+        <item>Nur für erwähnte Nutzer freigeben</item>
     </string-array>
     <string name="no_draft">Keine Entwürfe vorhanden!</string>
-    <string name="choose_toot">Wähle einen Toot</string>
-    <string name="choose_accounts">Wähle ein Konto</string>
-    <string name="select_accounts">Wähle einige Konten</string>
+    <string name="choose_toot">Toot auswählen</string>
+    <string name="choose_accounts">Konto auswählen</string>
+    <string name="select_accounts">Konten auswählen</string>
     <string name="remove_draft">Entwurf entfernen?</string>
-    <string name="show_reply">Klicke auf das Auge um den ursprünglichen Toot zu sehen</string>
+    <string name="show_reply">Auf die Schaltfläche klicken, um das ursprüngliche Toot anzuzeigen</string>
     <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
     <!-- Instance -->
     <string name="instance_no_description">Keine Beschreibung verfügbar!</string>
@@ -190,15 +190,15 @@
     <string name="about_license">Lizenz:</string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Quellcode:</string>
-    <string name="about_yandex">Übersetzung von Toots:</string>
+    <string name="about_yandex">Toot-Übersetzung:</string>
     <string name="about_thekinrar">Instanzensuche:</string>
-    <string name="thanks_text_logo">Icondesigner:</string>
-    <string name="thanks_text_banner">Banner Designer:</string>
+    <string name="thanks_text_logo">Symbolgestalter:</string>
+    <string name="thanks_text_banner">Bannergestalter:</string>
     <!-- Conversation -->
     <string name="conversation">Unterhaltung</string>
     <!-- Accounts -->
     <string name="no_accounts">Keinen Nutzer gefunden</string>
-    <string name="no_follow_request">Keine Folgeanfragen</string>
+    <string name="no_follow_request">Keine Anfragen zu Folgen</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Folgt \n %1$s</string>
     <string name="followers_cnt">Folgende \n %1$s</string>
@@ -211,17 +211,17 @@
     <string name="remove_scheduled">Geplanten Toot löschen?</string>
     <string name="media_count">Medien: %d</string>
     <string name="toot_scheduled">Der Toot wurde geplant!</string>
-    <string name="toot_scheduled_date">Der Zeitpunkt muss nach der aktuellen Stunde liegen!</string>
-    <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
+    <string name="toot_scheduled_date">Der geplante Termin muss nach dem aktuellen Zeitpunkt liegen!</string>
+    <string name="warning_battery">Der Batteriesparmodus ist aktiviert! Einiges funktioniert möglicherweise nicht wie erwartet.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Die Zeit zum stummschalten sollte größer sein als eine Minute.</string>
+    <string name="timed_mute_date_error">Die Dauer für den Lautlosmodus sollte mehr als eine Minute betragen.</string>
     <string name="timed_mute_date">%1$s wurde bis %2$s lautlos geschaltet.\n Sie können den Lautlosmodus für diesen Nutzer beenden, indem Sie sein/ihr Profil besuchen.</string>
     <string name="timed_mute_profile">%1$s ist bis %2$s lautlos geschaltet.\n Hier antippen, um den Lautlosmodus zu beenden.</string>
     <!-- Notifications -->
     <string name="no_notifications">Keine Benachrichtigungen</string>
-    <string name="notif_mention">hat deinen Beitrag erwähnt</string>
+    <string name="notif_mention">hat Sie erwähnt</string>
     <string name="notif_reblog">hat deinen Beitrag geteilt</string>
-    <string name="notif_favourite">favorisierte deinen Beitrag</string>
+    <string name="notif_favourite">hat Ihren Status favorisiert</string>
     <string name="notif_follow">folgt dir</string>
     <string name="notif_pouet">Neuer Toot von %1$s</string>
     <plurals name="other_notifications">
@@ -248,8 +248,8 @@
     <string name="client_error">Fehler beim Laden der Client ID!</string>
     <string name="connect_error">Verbinden zur Instanzdomain fehlgeschlagen!</string>
     <string name="no_internet">Keine Internetverbindung!</string>
-    <string name="toast_block">Nutzer wurde blockiert!</string>
-    <string name="toast_unblock">Der Nutzer wird nicht länger blockiert!</string>
+    <string name="toast_block">Konto wurde gesperrt!</string>
+    <string name="toast_unblock">Das Konto wurde entsperrt!</string>
     <string name="toast_mute">Nutzer wurde lautlos geschaltet!</string>
     <string name="toast_unmute">Lautlosmodus für dieses Konto aufgehoben!</string>
     <string name="toast_follow">Du folgst dem Nutzer!</string>
@@ -261,8 +261,8 @@
     <string name="toast_report">Toot wurde gemeldet!</string>
     <string name="toast_unstatus">Toot wurde gelöscht!</string>
     <string name="toast_pin">Toot wurde angeheftet!</string>
-    <string name="toast_unpin">Toot wird nicht mehr angeheftet!</string>
-    <string name="toast_error">Ups! Ein Fehler ist aufgetreten!</string>
+    <string name="toast_unpin">Toot wurde abgelöst!</string>
+    <string name="toast_error">Es ist ein Fehler aufgetreten!</string>
     <string name="toast_code_error">Ein Fehler ist aufgetreten! Die Instanz hat keinen Autorisierungscode gesendet!</string>
     <string name="toast_error_instance">Der Name der Instanz scheint ungültig zu sein!</string>
     <string name="toast_error_loading_account">Ein Fehler ist während des Kontowechsels aufgetreten!</string>
@@ -1021,7 +1021,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="date_range">Datumsbereich</string>
     <string name="action_groups">Gruppen</string>
     <string name="no_messages">Keine Gruppen!</string>
-    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
+    <string name="set_disable_animated_emoji">Eigene animierte Emojis deaktivieren</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
