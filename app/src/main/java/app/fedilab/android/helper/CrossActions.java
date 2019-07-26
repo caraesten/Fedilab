@@ -349,7 +349,7 @@ public class CrossActions {
                     Account fetchedAccount = null;
                     if( remoteAccounts.size() == 1){
                         Account acc = remoteAccounts.get(0);
-                        if (acc.getUsername().equals(remoteAccount.getUsername())) {
+                        if (remoteAccount.getUsername() == null || acc.getUsername().equals(remoteAccount.getUsername())) {
                             fetchedAccount = acc;
                         }
                     }else {
@@ -364,12 +364,12 @@ public class CrossActions {
                                 e.printStackTrace();
                             }
                             if( instance != null ) {
-                                if (acc.getUsername().equals(remoteAccount.getUsername()) && instance.equals(remoteAccount.getInstance())) {
+                                if ((acc.getUsername()).equals(remoteAccount.getAcct())) {
                                     fetchedAccount = acc;
                                     break;
                                 }
                             }else{
-                                if (acc.getUsername().equals(remoteAccount.getUsername())) {
+                                if (acc.getAcct().equals(remoteAccount.getAcct())) {
                                     fetchedAccount = acc;
                                     break;
                                 }
