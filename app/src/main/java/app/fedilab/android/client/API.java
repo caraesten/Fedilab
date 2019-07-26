@@ -4173,9 +4173,15 @@ public class API {
     private List<String> parseTags(JSONArray jsonArray){
         List<String> list_tmp = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
+
             try {
-                list_tmp.add(jsonArray.getJSONObject(i).getString("name"));
-            } catch (JSONException ignored) {}
+                if( jsonArray.get(i) instanceof JSONObject) {
+                    list_tmp.add(jsonArray.getJSONObject(i).getString("name"));
+                }else{
+                    list_tmp.add(jsonArray.getString(i));
+                }
+            } catch (JSONException ignored) {
+            }
         }
         return  list_tmp;
     }
