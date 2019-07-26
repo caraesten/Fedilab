@@ -2383,39 +2383,41 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
             });
 
-            holder.quick_reply_button.setOnLongClickListener(v -> {
-                android.widget.PopupMenu popup = new android.widget.PopupMenu(context, holder.quick_reply_button);
-                popup.getMenuInflater()
-                        .inflate(R.menu.main_content_type, popup.getMenu());
-                popup.setOnMenuItemClickListener(new android.widget.PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        String contentType = null;
-                        switch (item.getItemId()) {
-                            case R.id.action_plain_text:
-                                contentType = "text/plain";
-                                break;
-                            case R.id.action_html:
-                                contentType = "text/html";
-                                break;
-                            case R.id.action_markdown:
-                                contentType = "text/markdown";
-                                break;
-                            case R.id.action_bbcode:
-                                contentType = "text/bbcode";
-                                break;
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                holder.quick_reply_button.setOnLongClickListener(v -> {
+                    android.widget.PopupMenu popup = new android.widget.PopupMenu(context, holder.quick_reply_button);
+                    popup.getMenuInflater()
+                            .inflate(R.menu.main_content_type, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new android.widget.PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            String contentType = null;
+                            switch (item.getItemId()) {
+                                case R.id.action_plain_text:
+                                    contentType = "text/plain";
+                                    break;
+                                case R.id.action_html:
+                                    contentType = "text/html";
+                                    break;
+                                case R.id.action_markdown:
+                                    contentType = "text/markdown";
+                                    break;
+                                case R.id.action_bbcode:
+                                    contentType = "text/bbcode";
+                                    break;
+                            }
+                            popup.dismiss();
+                            sendToot(contentType);
+                            status.setShortReply(false);
+                            holder.quick_reply_container.setVisibility(View.GONE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
+                            return false;
                         }
-                        popup.dismiss();
-                        sendToot(contentType);
-                        status.setShortReply(false);
-                        holder.quick_reply_container.setVisibility(View.GONE);
-                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
-                        return false;
-                    }
+                    });
+                    popup.show();
+                    return false;
                 });
-                popup.show();
-                return false;
-            });
+            }
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
 
