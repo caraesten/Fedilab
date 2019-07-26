@@ -1026,7 +1026,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="date_range">Interval de dates</string>
     <string name="action_groups">Grups</string>
     <string name="no_messages">No hi ha grups!</string>
-    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
+    <string name="set_disable_animated_emoji">Deshabilita els emojis animats personalitzats</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
