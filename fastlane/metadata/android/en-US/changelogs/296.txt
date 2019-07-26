@@ -1,6 +1,6 @@
 Added:
 - Groups for GNU Social
-- Animated custom emojis
+- Animated custom emojis (can be disabled in settings)
 - Statistics for tags
 
 Changed
