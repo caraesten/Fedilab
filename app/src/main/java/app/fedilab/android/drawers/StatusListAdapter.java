@@ -105,6 +105,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -1173,14 +1175,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
                 holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
             }
-            if( !status.isStatusAnimated()) {
+            if( !status.isStatusAnimated() && status.getEmojis().size() > 0 ) {
                 status.setStatusAnimated(true);
-                Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
-                    @Override
-                    public void run() {
-                        holder.status_content.invalidate();
-                    }
-                }, 0, 100, TimeUnit.MILLISECONDS);
+                try{
+                    Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.status_content.invalidate();
+                        }
+                    }, 0, 130, TimeUnit.MILLISECONDS);
+                }catch (Exception ignored){}
+
             }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
 

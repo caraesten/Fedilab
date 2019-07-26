@@ -52,6 +52,7 @@ public class Notification implements Parcelable {
     private Date created_at;
     private Account account;
     private Status status;
+    private boolean notificationAnimated = false;
 
     protected Notification(Parcel in) {
         id = in.readString();
@@ -238,4 +239,11 @@ public class Notification implements Parcelable {
         }
     }
 
+    public boolean isNotificationAnimated() {
+        return notificationAnimated;
+    }
+
+    public void setNotificationAnimated(boolean notificationAnimated) {
+        this.notificationAnimated = notificationAnimated;
+    }
 }
