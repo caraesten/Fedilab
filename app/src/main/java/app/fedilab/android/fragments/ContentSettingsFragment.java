@@ -996,6 +996,18 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        final CheckBox set_disable_animated_emoji = rootView.findViewById(R.id.set_disable_animated_emoji);
+        set_disable_animated_emoji.setChecked(disableAnimatedEmoji);
+        set_disable_animated_emoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, set_disable_animated_emoji.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean livenotif = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         final CheckBox set_live_notif = rootView.findViewById(R.id.set_live_notify);
         set_live_notif.setChecked(livenotif);

@@ -306,6 +306,15 @@
                     android:layout_height="wrap_content" />
 
                 <CheckBox
+                    android:textSize="16sp"
+                    android:id="@+id/set_disable_animated_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/settings_checkbox_margin"
+                    android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                    android:text="@string/set_disable_animated_emoji"
+                    android:layout_height="wrap_content" />
+
+                <CheckBox
                     android:id="@+id/set_display_card"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/settings_checkbox_margin"

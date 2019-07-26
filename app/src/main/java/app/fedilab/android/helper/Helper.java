@@ -344,6 +344,7 @@ public class Helper {
     public static final String NEWS_ACCOUNT_ID = "news_account_id";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
+    public static final String SET_DISABLE_ANIMATED_EMOJI = "set_disable_animated_emoji";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_WYSIWYG = "set_wysiwyg";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
@@ -4405,5 +4406,28 @@ public class Helper {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
 
 
+    }
+
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 }

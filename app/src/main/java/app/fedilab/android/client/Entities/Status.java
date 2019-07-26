@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -76,6 +77,7 @@ import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
+import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -1076,6 +1078,8 @@ public class Status implements Parcelable{
         SpannableString displayNameSpan = status.getDisplayNameSpan();
         SpannableString contentSpan = status.getContentSpan();
         SpannableString contentSpanCW = status.getContentSpanCW();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( emojisAccounts != null)
             emojis.addAll(emojisAccounts);
         if( emojis != null && emojis.size() > 0 ) {
@@ -1109,9 +1113,18 @@ public class Status implements Parcelable{
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
-                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                            resource.setVisible(true, true);
-                                            ImageSpan imageSpan = new ImageSpan(resource);
+                                            ImageSpan imageSpan;
+                                            if( !disableAnimatedEmoji) {
+                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                resource.setVisible(true, true);
+                                                imageSpan = new ImageSpan(resource);
+                                            }else{
+                                                resource.setVisible(true, true);
+                                                Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                imageSpan = new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false));
+                                            }
                                             contentSpan.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -1123,9 +1136,19 @@ public class Status implements Parcelable{
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
-                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                            resource.setVisible(true, true);
-                                            ImageSpan imageSpan = new ImageSpan(resource);
+
+                                            ImageSpan imageSpan;
+                                            if( !disableAnimatedEmoji) {
+                                                resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
+                                                resource.setVisible(true, true);
+                                                imageSpan = new ImageSpan(resource);
+                                            }else{
+                                                resource.setVisible(true, true);
+                                                Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                imageSpan = new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false));
+                                            }
                                             displayNameSpan.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -1138,9 +1161,18 @@ public class Status implements Parcelable{
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if( endPosition <= contentSpanCW.toString().length() && endPosition >= startPosition) {
-                                            resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                            resource.setVisible(true, true);
-                                            ImageSpan imageSpan = new ImageSpan(resource);
+                                            ImageSpan imageSpan;
+                                            if( !disableAnimatedEmoji) {
+                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                resource.setVisible(true, true);
+                                                imageSpan = new ImageSpan(resource);
+                                            }else{
+                                                resource.setVisible(true, true);
+                                                Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                imageSpan = new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false));
+                                            }
                                             contentSpanCW.setSpan(
                                                     imageSpan, startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
