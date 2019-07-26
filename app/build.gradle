@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 295
         versionName "2.11.0"
@@ -52,6 +52,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com"}
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven {  url "https://dl.bintray.com/osborn/Android" }
     }
 }
 ext.supportLibraryVersion = '28.0.0'
@@ -120,4 +121,6 @@ dependencies {
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.2.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
+
+    implementation 'com.github.pengfeizhou.android.animation:glide-plugin:0.2.16'
 }
