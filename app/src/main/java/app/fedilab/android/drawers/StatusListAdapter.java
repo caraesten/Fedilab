@@ -2376,11 +2376,45 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             holder.quick_reply_button.setOnClickListener(view -> {
-                sendToot();
+                sendToot(null);
                 status.setShortReply(false);
                 holder.quick_reply_container.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
+            });
+
+            holder.quick_reply_button.setOnLongClickListener(v -> {
+                android.widget.PopupMenu popup = new android.widget.PopupMenu(context, holder.quick_reply_button);
+                popup.getMenuInflater()
+                        .inflate(R.menu.main_content_type, popup.getMenu());
+                popup.setOnMenuItemClickListener(new android.widget.PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        String contentType = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_plain_text:
+                                contentType = "text/plain";
+                                break;
+                            case R.id.action_html:
+                                contentType = "text/html";
+                                break;
+                            case R.id.action_markdown:
+                                contentType = "text/markdown";
+                                break;
+                            case R.id.action_bbcode:
+                                contentType = "text/bbcode";
+                                break;
+                        }
+                        popup.dismiss();
+                        sendToot(contentType);
+                        status.setShortReply(false);
+                        holder.quick_reply_container.setVisibility(View.GONE);
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
+                        return false;
+                    }
+                });
+                popup.show();
+                return false;
             });
 
             holder.quick_reply_privacy.setOnClickListener(view -> {
@@ -3951,7 +3985,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         context.startActivity(intent);
     }
 
-    private void sendToot(){
+    private void sendToot(String content_type){
 
         if(toot_content == null || toot_content.getText() == null){
             Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
@@ -3978,7 +4012,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             stepSpliToot = 1;
         }
         Status toot = new Status();
-
+        if(content_type != null)
+            toot.setContentType(content_type);
         toot.setSensitive(false);
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
