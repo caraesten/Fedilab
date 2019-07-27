@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -4776,6 +4777,7 @@ public class API {
     public static Status parseNotes(Context context, String instance, JSONObject resobj){
         Status status = new Status();
         try {
+
             status.setId(resobj.get("id").toString());
             status.setUri("https://" + instance + "/notes/" + resobj.get("id").toString());
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
@@ -4787,40 +4789,49 @@ public class API {
                 status.setVisibility(resobj.get("visibility").toString());
             }catch (Exception e){status.setVisibility("public"); e.printStackTrace();}
             status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
+            Log.v(Helper.TAG,"ici: " + resobj);
             //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("media");
-            ArrayList<Attachment> attachments = new ArrayList<>();
-            if( arrayAttachement != null){
-                for(int j = 0 ; j < arrayAttachement.length() ; j++){
-                    JSONObject attObj = arrayAttachement.getJSONObject(j);
-                    Attachment attachment = new Attachment();
-                    attachment.setId(attObj.get("id").toString());
-                    attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
-                    attachment.setRemote_url(attObj.get("url").toString());
-                    if( attObj.get("type").toString().contains("/")){
-                        attachment.setType(attObj.get("type").toString().split("/")[0]);
-                    }else
-                        attachment.setType(attObj.get("type").toString());
-                    attachment.setText_url(attObj.get("url").toString());
-                    attachment.setUrl(attObj.get("url").toString());
-                    if(attObj.get("isSensitive").toString().equals("true")){
-                        status.setSensitive(true);
+            if( resobj.has("media")) {
+                JSONArray arrayAttachement = resobj.getJSONArray("media");
+                ArrayList<Attachment> attachments = new ArrayList<>();
+                if (arrayAttachement != null) {
+                    for (int j = 0; j < arrayAttachement.length(); j++) {
+                        JSONObject attObj = arrayAttachement.getJSONObject(j);
+                        Attachment attachment = new Attachment();
+                        attachment.setId(attObj.get("id").toString());
+                        attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
+                        attachment.setRemote_url(attObj.get("url").toString());
+                        if (attObj.get("type").toString().contains("/")) {
+                            attachment.setType(attObj.get("type").toString().split("/")[0]);
+                        } else
+                            attachment.setType(attObj.get("type").toString());
+                        attachment.setText_url(attObj.get("url").toString());
+                        attachment.setUrl(attObj.get("url").toString());
+                        if (attObj.get("isSensitive").toString().equals("true")) {
+                            status.setSensitive(true);
+                        }
+                        try {
+                            attachment.setDescription(attObj.get("comment").toString());
+                        } catch (JSONException ignore) {
+                            ignore.printStackTrace();
+                        }
+                        attachments.add(attachment);
                     }
-                    try {
-                        attachment.setDescription(attObj.get("comment").toString());
-                    }catch (JSONException ignore){ignore.printStackTrace();}
-                    attachments.add(attachment);
                 }
+                status.setMedia_attachments(attachments);
+            }else{
+                status.setMedia_attachments(new ArrayList<>());
             }
             try {
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
             }catch (Exception e){status.setCard(null);}
 
-            status.setMedia_attachments(attachments);
+
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
 
             status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
+
             status.setContent(resobj.get("text").toString());
             try{
                 status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
@@ -4840,34 +4851,34 @@ public class API {
             status.setMentions(mentions);
             //Retrieves tags
             List<Tag> tags = new ArrayList<>();
-            JSONArray arrayTag = resobj.getJSONArray("tags");
-            if( arrayTag != null){
-                for(int j = 0 ; j < arrayTag.length() ; j++){
-                    JSONObject tagObj = arrayTag.getJSONObject(j);
-                    Tag tag = new Tag();
-                    tag.setName(tagObj.get("name").toString());
-                    tag.setUrl(tagObj.get("url").toString());
-                    tags.add(tag);
+            if( resobj.has("tags")) {
+                JSONArray arrayTag = resobj.getJSONArray("tags");
+                if (arrayTag != null) {
+                    for (int j = 0; j < arrayTag.length(); j++) {
+                        JSONObject tagObj = arrayTag.getJSONObject(j);
+                        Tag tag = new Tag();
+                        tag.setName(tagObj.get("name").toString());
+                        tag.setUrl(tagObj.get("url").toString());
+                        tags.add(tag);
+                    }
                 }
             }
             status.setTags(tags);
 
             //Retrieves emjis
             List<Emojis> emojiList = new ArrayList<>();
-            try {
+            if( resobj.has("emojis")) {
                 JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if( emojisTag != null){
-                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                if (emojisTag != null) {
+                    for (int j = 0; j < emojisTag.length(); j++) {
                         JSONObject emojisObj = emojisTag.getJSONObject(j);
                         Emojis emojis = parseMisskeyEmojis(emojisObj);
                         emojiList.add(emojis);
                     }
                 }
                 status.setEmojis(emojiList);
-            }catch (Exception e){
-                status.setEmojis(new ArrayList<>());
             }
-
+            status.setEmojis(emojiList);
             //Retrieve Application
             Application application = new Application();
             try {
@@ -5631,15 +5642,18 @@ public class API {
     private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj){
 
         Account account = new Account();
+        Log.v(Helper.TAG,"account: " + resobj);
         try {
             account.setId(resobj.get("id").toString());
             account.setUsername(resobj.get("username").toString());
-            String host = resobj.get("host").toString();
+            String host = null;
             String acct;
-            if( host == null || host.equals("null"))
+            if( resobj.isNull("host")) {
                 acct = resobj.get("username").toString();
-            else
+            }else{
+                host = resobj.get("host").toString();
                 acct = resobj.get("username").toString() + "@" + host;
+            }
             account.setAcct(acct);
             account.setDisplay_name(resobj.get("name").toString());
             account.setCreated_at(new Date());
@@ -5654,7 +5668,7 @@ public class API {
             }
             //Retrieves emjis
             List<Emojis> emojiList = new ArrayList<>();
-            try {
+            if( resobj.has("emojis")){
                 JSONArray emojisTag = resobj.getJSONArray("emojis");
                 if( emojisTag != null){
                     for(int j = 0 ; j < emojisTag.length() ; j++){
@@ -5663,11 +5677,10 @@ public class API {
                         emojiList.add(emojis);
                     }
                 }
-                account.setEmojis(emojiList);
-            }catch (Exception e){
-                account.setEmojis(new ArrayList<>());
             }
-        } catch (JSONException ignored) {}
+            account.setEmojis(emojiList);
+            Log.v(Helper.TAG,"accountxx: " + account);
+        } catch (JSONException ignored) {ignored.printStackTrace();}
         return account;
     }
 

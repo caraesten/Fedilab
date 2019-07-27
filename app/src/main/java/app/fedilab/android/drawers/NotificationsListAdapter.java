@@ -123,6 +123,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private boolean isOnWifi;
     private NotificationsListAdapter.ViewHolder holder;
     private int style;
+    private Timer timer;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -387,19 +388,22 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     }, 0, 130, TimeUnit.MILLISECONDS);
                 }catch (Exception ignored){}*/
-                new Timer().scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        ((Activity)context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.notification_account_username.invalidate();
-                                holder.notification_status_content.invalidate();
-                            }
-                        });
+                if( timer == null) {
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.notification_account_username.invalidate();
+                                    holder.notification_status_content.invalidate();
+                                }
+                            });
 
-                    }
-                }, 0, 130);
+                        }
+                    }, 0, 130);
+                }
             }
             if( !status.isClickable())
                 Status.transform(context, status);

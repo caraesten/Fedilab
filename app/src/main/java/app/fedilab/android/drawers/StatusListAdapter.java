@@ -52,6 +52,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -215,7 +216,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private TextView warning_message;
     private Status tootReply;
     private long currentToId = -1;
-
+    private Timer timer;
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -1182,19 +1183,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }, 0, 130, TimeUnit.MILLISECONDS);
                 }catch (Exception ignored){}*/
+                if( timer == null) {
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.status_account_displayname.invalidate();
+                                    holder.status_content.invalidate();
 
-               new Timer().scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        ((Activity)context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.status_account_displayname.invalidate();
-                                holder.status_content.invalidate();
-                            }
-                        });
-                    }
-                }, 0, 130);
+                                }
+                            });
+                        }
+                    }, 0, 130);
+                }
 
             }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
