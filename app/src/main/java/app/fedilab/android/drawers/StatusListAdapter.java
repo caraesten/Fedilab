@@ -96,9 +96,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.varunest.sparkbutton.SparkButton;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -107,14 +104,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipQuickReplyAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -1175,16 +1169,32 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
                 holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
             }
-            if( !status.isStatusAnimated() && status.getEmojis().size() > 0 ) {
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+
+
+            if( !disableAnimatedEmoji && !status.isStatusAnimated() && (status.getEmojis().size() > 0 || status.getAccount().getEmojis().size() > 0) ) {
                 status.setStatusAnimated(true);
-                try{
-                    Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
+                /*try{
+                   Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
                         @Override
                         public void run() {
                             holder.status_content.invalidate();
                         }
                     }, 0, 130, TimeUnit.MILLISECONDS);
-                }catch (Exception ignored){}
+                }catch (Exception ignored){}*/
+
+               new Timer().scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ((Activity)context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.status_account_displayname.invalidate();
+                                holder.status_content.invalidate();
+                            }
+                        });
+                    }
+                }, 0, 130);
 
             }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);

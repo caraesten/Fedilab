@@ -14,6 +14,7 @@ package app.fedilab.android.drawers;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -64,8 +65,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+
 
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.client.API;
@@ -105,7 +105,7 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
 import static app.fedilab.android.activities.BaseMainActivity.social;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
+
 
 
 /**
@@ -376,24 +376,30 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
-            if( !notification.isNotificationAnimated() && status.getEmojis().size() > 0) {
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+            if( !disableAnimatedEmoji && !notification.isNotificationAnimated() && (status.getEmojis().size() > 0 || status.getAccount().getEmojis().size() > 0) ) {
                 notification.setNotificationAnimated(true);
-                try{
+                /*try{
                     Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
                         @Override
                         public void run() {
                             holder.notification_status_content.invalidate();
                         }
                     }, 0, 130, TimeUnit.MILLISECONDS);
-                }catch (Exception ignored){}
-
-
-                /*new Timer().scheduleAtFixedRate(new TimerTask() {
+                }catch (Exception ignored){}*/
+                new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
-                        holder.notification_status_content.invalidate();
+                        ((Activity)context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.notification_account_username.invalidate();
+                                holder.notification_status_content.invalidate();
+                            }
+                        });
+
                     }
-                }, 0, 500);*/
+                }, 0, 130);
             }
             if( !status.isClickable())
                 Status.transform(context, status);

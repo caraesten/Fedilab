@@ -19,12 +19,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
@@ -66,6 +68,7 @@ import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
+import static app.fedilab.android.helper.Helper.drawableToBitmap;
 import static app.fedilab.android.helper.Helper.hashtagPattern;
 
 
@@ -924,6 +927,8 @@ public class Account implements Parcelable {
 
 
         final List<Emojis> emojis = account.getEmojis();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( emojis != null && emojis.size() > 0 ) {
 
             final int[] i = {0};
@@ -931,35 +936,57 @@ public class Account implements Parcelable {
                 fields = account.getFields();
                 try {
                     Glide.with(context)
-                            .asBitmap()
+                            .asDrawable()
                             .load(emoji.getUrl())
-                            .into(new SimpleTarget<Bitmap>() {
+                            .into(new SimpleTarget<Drawable>() {
                                 @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
 
                                     if (noteSpan != null && noteSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = noteSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= noteSpan.toString().length() && endPosition >= startPosition)
+                                            if (endPosition <= noteSpan.toString().length() && endPosition >= startPosition){
+                                                ImageSpan imageSpan;
+                                                if( !disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                }else{
+                                                    resource.setVisible(true, true);
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
                                                 noteSpan.setSpan(
-                                                        new ImageSpan(context,
-                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                        imageSpan, startPosition,
                                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }
                                         }
                                     }
                                     if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition){
+                                                ImageSpan imageSpan;
+                                                if( !disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                }else{
+                                                    resource.setVisible(true, true);
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
                                                 displayNameSpan.setSpan(
-                                                        new ImageSpan(context,
-                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                        imageSpan, startPosition,
                                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }
                                         }
                                     }
                                     Iterator it = fieldsSpan.entrySet().iterator();
@@ -971,12 +998,23 @@ public class Account implements Parcelable {
                                             //emojis can be used several times so we have to loop
                                             for (int startPosition = -1; (startPosition = fieldSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                                 final int endPosition = startPosition + targetedEmoji.length();
-                                                if (endPosition <= fieldSpan.toString().length() && endPosition >= startPosition)
+                                                if (endPosition <= fieldSpan.toString().length() && endPosition >= startPosition){
+                                                    ImageSpan imageSpan;
+                                                    if( !disableAnimatedEmoji) {
+                                                        resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                        resource.setVisible(true, true);
+                                                        imageSpan = new ImageSpan(resource);
+                                                    }else{
+                                                        resource.setVisible(true, true);
+                                                        Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                        imageSpan = new ImageSpan(context,
+                                                                Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                        (int) Helper.convertDpToPixel(20, context), false));
+                                                    }
                                                     fieldSpan.setSpan(
-                                                            new ImageSpan(context,
-                                                                    Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                            (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                            imageSpan, startPosition,
                                                             endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                }
                                             }
                                             fieldsSpan.put((SpannableString) pair.getKey(), fieldSpan);
                                         }else
@@ -1010,27 +1048,40 @@ public class Account implements Parcelable {
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
         final List<Emojis> emojis = account.getEmojis();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 try {
                     Glide.with(context)
-                            .asBitmap()
+                            .asDrawable()
                             .load(emoji.getUrl())
-                            .into(new SimpleTarget<Bitmap>() {
+                            .into(new SimpleTarget<Drawable>() {
                                 @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                     if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition){
+                                                ImageSpan imageSpan;
+                                                if( !disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                }else{
+                                                    resource.setVisible(true, true);
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
                                                 displayNameSpan.setSpan(
-                                                        new ImageSpan(context,
-                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                        imageSpan, startPosition,
                                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }
                                         }
                                     }
                                     i[0]++;
