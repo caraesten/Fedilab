@@ -991,7 +991,7 @@
     <string name="set_blur_sensitive_indication">عند التعطيل سيتم حجب المحتوى الحساس بواسطة زر</string>
     <string name="set_long_press_media_indication">حفظ الوسائط بالحجم الكامل بضغطة مطولة على معاينات</string>
     <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
-    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
+    <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدافا #Fedilab الوسم</string>
     <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
     <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
