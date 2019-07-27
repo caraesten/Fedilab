@@ -150,7 +150,7 @@ public class Status implements Parcelable{
 
     private int warningFetched = -1;
     private List<String> imageURL;
-    private boolean statusAnimated = false;
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -1602,13 +1602,5 @@ public class Status implements Parcelable{
 
     public void setImageURL(List<String> imageURL) {
         this.imageURL = imageURL;
-    }
-
-    public boolean isStatusAnimated() {
-        return statusAnimated;
-    }
-
-    public void setStatusAnimated(boolean statusAnimated) {
-        this.statusAnimated = statusAnimated;
     }
 }

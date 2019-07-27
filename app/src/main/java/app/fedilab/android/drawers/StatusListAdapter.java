@@ -216,7 +216,34 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private TextView warning_message;
     private Status tootReply;
     private long currentToId = -1;
-    private Timer timer;
+    private List<ViewHolder> lstHolders;
+    private Runnable updateAnimatedEmoji = new Runnable() {
+        @Override
+        public void run() {
+            synchronized (lstHolders) {
+                for (ViewHolder holder : lstHolders) {
+                    holder.updateAnimatedEmoji();
+                }
+            }
+        }
+    };
+    private Handler mHandler = new Handler();
+
+    private void startUpdateTimer() {
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        if( !disableAnimatedEmoji ){
+            Timer tmr = new Timer();
+            tmr.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mHandler.post(updateAnimatedEmoji);
+                }
+            }, 0, 130);
+        }
+    }
+
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
@@ -227,6 +254,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         redraft = false;
+        lstHolders = new ArrayList<>();
+        startUpdateTimer();
     }
 
     public StatusListAdapter(Context context, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses){
@@ -240,6 +269,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
+        lstHolders = new ArrayList<>();
+        startUpdateTimer();
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, List<Status> statuses){
@@ -252,6 +283,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         redraft = false;
+        lstHolders = new ArrayList<>();
+        startUpdateTimer();
     }
 
 
@@ -776,7 +809,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             quick_reply_privacy  = itemView.findViewById(R.id.quick_reply_privacy);
 
             warning_message  = itemView.findViewById(R.id.warning_message);
+        }
 
+        void updateAnimatedEmoji() {
+            status_account_displayname.invalidate();
+            status_content.invalidate();
         }
     }
 
@@ -831,7 +868,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
 
+
             final ViewHolder holder = (ViewHolder) viewHolder;
+            synchronized (lstHolders) {
+                lstHolders.add(holder);
+            }
             final Status status = statuses.get(i);
             if( status == null)
                 return;
@@ -1172,35 +1213,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
 
-
-            if( !disableAnimatedEmoji && !status.isStatusAnimated() && (status.getEmojis().size() > 0 || status.getAccount().getEmojis().size() > 0) ) {
-                status.setStatusAnimated(true);
-                /*try{
-                   Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.status_content.invalidate();
-                        }
-                    }, 0, 130, TimeUnit.MILLISECONDS);
-                }catch (Exception ignored){}*/
-                if( timer == null) {
-                    timer = new Timer();
-                    timer.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            ((Activity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    holder.status_account_displayname.invalidate();
-                                    holder.status_content.invalidate();
-
-                                }
-                            });
-                        }
-                    }, 0, 130);
-                }
-
-            }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
 
             switch (translator) {
