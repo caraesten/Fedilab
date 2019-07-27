@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -4789,7 +4788,6 @@ public class API {
                 status.setVisibility(resobj.get("visibility").toString());
             }catch (Exception e){status.setVisibility("public"); e.printStackTrace();}
             status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
-            Log.v(Helper.TAG,"ici: " + resobj);
             //Retrieves attachments
             if( resobj.has("media")) {
                 JSONArray arrayAttachement = resobj.getJSONArray("media");
@@ -5642,7 +5640,6 @@ public class API {
     private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj){
 
         Account account = new Account();
-        Log.v(Helper.TAG,"account: " + resobj);
         try {
             account.setId(resobj.get("id").toString());
             account.setUsername(resobj.get("username").toString());
@@ -5679,7 +5676,6 @@ public class API {
                 }
             }
             account.setEmojis(emojiList);
-            Log.v(Helper.TAG,"accountxx: " + account);
         } catch (JSONException ignored) {ignored.printStackTrace();}
         return account;
     }

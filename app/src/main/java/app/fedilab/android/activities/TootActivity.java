@@ -2574,7 +2574,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         int cwSize = toot_cw_content.getText().toString().trim().length();
         int size = toot_content.getText().toString().trim().length() + cwSize;
 
-        if( split_toot && splitToot != null && (size  >= split_toot_size) && stepSpliToot < splitToot.size()){
+        if( split_toot && splitToot != null && stepSpliToot < splitToot.size()){
             String tootContent = splitToot.get(stepSpliToot);
             stepSpliToot += 1;
             Status toot = new Status();

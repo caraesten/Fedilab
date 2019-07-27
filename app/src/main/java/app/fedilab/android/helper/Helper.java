@@ -3429,53 +3429,67 @@ public class Helper {
      */
     public static ArrayList<String> splitToots(String content, int maxChars){
         String[] splitContent = content.split("\\s");
-        ArrayList<String> splitToot = new ArrayList<>();
-        StringBuilder tempContent = new StringBuilder(splitContent[0]);
+
+
         ArrayList<String> mentions = new ArrayList<>();
         Matcher matcher = mentionLongPattern.matcher(content);
         while (matcher.find()) {
             String mentionLong = matcher.group(1);
             mentions.add(mentionLong);
         }
-        matcher = mentionPattern.matcher(content);
+        matcher = mentionLongPattern.matcher(content);
         while (matcher.find()) {
             String mentionLong = matcher.group(1);
-            mentions.add(mentionLong);
+            if( !mentions.contains(mentionLong)) {
+                mentions.add(mentionLong);
+            }
+        }
+        matcher = mentionPattern.matcher(content);
+        while (matcher.find()) {
+            String mention = matcher.group(1);
+            if( !mentions.contains(mention)) {
+                mentions.add(mention);
+            }
         }
         StringBuilder mentionString = new StringBuilder();
         for(String mention: mentions){
             mentionString.append(mention).append(" ");
         }
-        int mentionLength = mentionString.length();
-        int maxCharsMention = maxChars - mentionLength;
-        for(int i= 0 ; i < splitContent.length ; i++){
-            if (i < (splitContent.length - 1) && (countLength(tempContent.toString()) + countLength(splitContent[i + 1])) < (maxChars - 10)) {
-                tempContent.append(" ").append(splitContent[i + 1]);
+        int mentionLength = mentionString.length()+1;
+        int maxCharsPerMessage = (maxChars-10) - mentionLength;
+        int totalCurrent = 0;
+        ArrayList<String> reply = new ArrayList<>();
+        int index = 0;
+        for(int i= 0 ; i < splitContent.length ; i++) {
+            if ((totalCurrent + splitContent[i].length()+1) < maxCharsPerMessage) {
+                totalCurrent += (splitContent[i].length()+1);
             } else {
-                splitToot.add(tempContent.toString());
-                if (i < (splitContent.length - 1)) {
-                    if( maxCharsMention > 0){
-                        maxChars = maxCharsMention;
-                        tempContent = new StringBuilder(mentionString+splitContent[i + 1]);
-                    }else{
-                        tempContent = new StringBuilder(splitContent[i + 1]);
-                    }
+                if (content.length() > totalCurrent && totalCurrent > 0) {
+                    String tempContent = content.substring(0, (totalCurrent-1));
+                    content = content.substring(totalCurrent);
+
+                    reply.add(index, tempContent);
+                    index++;
+                    totalCurrent = 0;
                 }
             }
         }
-        int i=1;
-        ArrayList<String> reply = new ArrayList<>();
-        for(String newContent : splitToot){
-            if( splitToot.size() > 1 ) {
-                reply.add((i - 1), newContent + " - " + i + "/" + splitToot.size());
-            }else{
-                reply.add((i - 1), newContent);
+        if( totalCurrent > 0 ){
+            reply.add(index, content);
+        }
+        if( reply.size() > 1 ){
+            int i = 0;
+            for(String r: reply){
+                if( mentions.size() > 0 ){
+                    reply.set(i, r + " " + mentionString + " - " + (i+1) + "/" + reply.size());
+                }else{
+                    reply.set(i, r + " - " + (i+1) + "/" + reply.size());
+                }
+                i++;
             }
-            i++;
         }
         return reply;
     }
-
 
 
     public static int countLength(String text){
