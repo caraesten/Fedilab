@@ -1,0 +1,16 @@
+Added:
+- Groups for GNU Social
+- Animated custom emojis (can be disabled in settings)
+- Statistics for tags
+
+Changed
+- Emoji picker (bug fix + animation)
+- Improve auto-split feature
+
+
+Fixed
+- Fix an issue when fetching remote accounts
+- Auto-completion with tags
+- Multi-upload broken
+- Issue when sharing GIF
+- Keyboard not closed after a quick reply
