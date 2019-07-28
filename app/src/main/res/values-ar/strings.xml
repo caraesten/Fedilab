@@ -990,9 +990,9 @@
     <string name="set_remember_position_indication">عند التعطيل سيقوم التطبيق دائما بتحميل آخر المنشورات</string>
     <string name="set_blur_sensitive_indication">عند التعطيل سيتم حجب المحتوى الحساس بواسطة زر</string>
     <string name="set_long_press_media_indication">حفظ الوسائط بالحجم الكامل بضغطة مطولة على معاينات</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
+    <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثائل</string>
     <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدافا #Fedilab الوسم</string>
-    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
+    <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
     <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
@@ -1031,7 +1031,7 @@
     <string name="crash_title">لقد توقّفَ تطبيق Mastalab :(</string>
     <string name="crash_message">يمكنكم أن ترسلوا لي عن طريق البريد الإلكتروني تقرير الحادث. وستساعدون على إصلاح ذلك:)\n\n يمكن إضافة محتوى إضافي. شكرًا لكم!</string>
     <string name="set_wysiwyg">أستعمال محرر ما تشاهده هو ما تحصل</string>
-    <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
+    <string name="set_wysiwyg_indication">عند التفعيل سوف تستطيع تهيئت النص بسهولة.</string>
     <string name="action_stats">إحصائيات</string>
     <string name="total_statuses">مجموع المنشورات</string>
     <string name="number_boosts">عدد التدعيمات</string>
@@ -1041,7 +1041,7 @@
     <string name="visibility">الرؤية</string>
     <string name="number_with_media">عدد بالوسائط</string>
     <string name="number_with_sensitive_media">عدد بوسائط حساسة</string>
-    <string name="number_with_cw">Number with CW</string>
+    <string name="number_with_cw">عدد بتحذير المحتوى</string>
     <string name="first_toot_date">تاريخ أول منشور</string>
     <string name="last_toot_date">تاريخ آخر منشور</string>
     <string name="frequency">التردد</string>
