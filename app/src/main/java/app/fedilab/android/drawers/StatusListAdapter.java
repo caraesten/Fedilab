@@ -223,7 +223,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         @Override
         public void run() {
             synchronized (lstHolders) {
-                if( (mRecyclerView.getLayoutManager()) != null) {
+                if( mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
                     int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
                     for (ViewHolder holder : lstHolders) {

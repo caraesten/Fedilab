@@ -131,7 +131,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         @Override
         public void run() {
             synchronized (lstHolders) {
-                if( (mRecyclerView.getLayoutManager()) != null) {
+                if( mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
                     int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
