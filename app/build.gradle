@@ -123,4 +123,5 @@ dependencies {
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
 
     implementation 'com.github.pengfeizhou.android.animation:glide-plugin:0.2.16'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

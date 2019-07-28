@@ -20,12 +20,15 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.client.Entities.Charts;
 import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
@@ -433,6 +436,80 @@ public class StatusCacheDAO {
         }
     }
 
+
+
+    public Charts getCharts(Date dateIni, Date dateEnd){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        Charts charts = new Charts();
+        dateIni = new Date(dateIni.getYear(), dateIni.getMonth(), dateIni.getDay(), 0, 0, 0);
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(dateIni);
+        start.set(Calendar.HOUR,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(dateEnd);
+        end.set(Calendar.HOUR,23);
+        end.set(Calendar.MINUTE,59);
+        end.set(Calendar.SECOND,59);
+
+        StringBuilder selection = new StringBuilder(Sqlite.COL_CACHED_ACTION + " = '" + ARCHIVE_CACHE + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(Helper.dateToString(start.getTime())).append("'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(Helper.dateToString(end.getTime())).append("'");
+
+        List<Status> data = new ArrayList<>();
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " ASC");
+            data = cursorToListStatuses(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int inc = 0;
+        List<String> xLabel = new ArrayList<>();
+        List<Integer> xValues = new ArrayList<>();
+        List<Integer> statuses = new ArrayList<>();
+        List<Integer> boosts = new ArrayList<>();
+        List<Integer> replies = new ArrayList<>();
+        if( data != null && data.size() > 0) {
+            while (!start.after(end)) {
+                Date targetDay = start.getTime();
+                Date dateLimite = new Date(targetDay.getTime() - TimeUnit.DAYS.toMillis(1));
+                xLabel.add(Helper.shortDateToString(targetDay));
+                xValues.add(inc);
+                int boostsCount = 0;
+                int repliesCount = 0;
+                int statusesCount = 0;
+                for(Status status: data){
+                    if(status.getCreated_at().after(targetDay) && status.getCreated_at().before(dateLimite)){
+                        if( status.getReblog() != null){
+                            boostsCount++;
+                        }else if( status.getIn_reply_to_id() != null){
+                            repliesCount++;
+                        }else {
+                            statusesCount++;
+                        }
+                    }else{
+                        inc++;
+                        break;
+                    }
+                }
+                boosts.add(boostsCount);
+                replies.add(repliesCount);
+                statuses.add(statusesCount);
+                start.add(Calendar.DATE, 1);
+            }
+        }
+        charts.setxLabels(xLabel);
+        charts.setxValues(xValues);
+        charts.setBoosts(boosts);
+        charts.setReplies(replies);
+        charts.setStatuses(statuses);
+        return charts;
+    }
 
     /**
      * Returns a cached status by id in db
