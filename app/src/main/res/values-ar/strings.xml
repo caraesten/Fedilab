@@ -994,12 +994,12 @@
     <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدافا #Fedilab الوسم</string>
     <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
     <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بAPI البث. قم بتعطيل إذا كنت ترغب في الحفاظ على البطارية.</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
+    <string name="set_enable_time_slot_indication">خلال هذه الفتحة الزمنية سيقوم التطبيق بإرسال إخطارات. يمكنك عكس (أي تصميت) هذا الفتحة الزمنية باستخدام الزر الموافق.</string>
+    <string name="set_display_fedilab_features_button_indication">عرض زر فيديلاب تحت الصورة الشخصية على شكل اختصار لولوج خاصيات البرنامج.</string>
     <string name="set_quick_reply_indication">إتاحة الرد مباشرة في الخط الزمني أدنى المنشورات</string>
     <string name="set_fit_preview_indication">لتعطيل اقتصاص المعاينات في الخطوط الزمنية</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_video_preview_indication">إتاحة تشغيل الفيديوهات المدمجة في الخط الزمني</string>
+    <string name="set_display_content_after_fetch_more_indication">السماح بعكس طريقة قرأ المنشورات التي تظهر عند ضغط زر جَلب المزيد</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">خاص بPeertube. مكن الوضع أذا تعذر التشغيل الفيديوهات.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
