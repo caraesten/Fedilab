@@ -990,7 +990,7 @@
     <string name="set_remember_position_indication">عند التعطيل سيقوم التطبيق دائما بتحميل آخر المنشورات</string>
     <string name="set_blur_sensitive_indication">عند التعطيل سيتم حجب المحتوى الحساس بواسطة زر</string>
     <string name="set_long_press_media_indication">حفظ الوسائط بالحجم الكامل بضغطة مطولة على معاينات</string>
-    <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثائل</string>
+    <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثيلات</string>
     <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدفا #Fedilab الوسم</string>
     <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
     <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بAPI البث. قم بتعطيل إذا كنت ترغب في الحفاظ على البطارية.</string>
@@ -1014,11 +1014,11 @@
     <string name="folder_name">أدخل اسم المجلد</string>
     <string name="valid_folder_name">الرجاء ادخل اسم مجلد صحيح</string>
     <string name="folder_exists">هذا المجلد موجود بالفعل.\n يرجى إدخال اسم آخر للمجلد</string>
-    <string name="select">إختر</string>
+    <string name="select">اختار</string>
     <string name="default_directory">المجلد الافتراضي</string>
     <string name="folder">المجلد</string>
     <string name="create_folder">إنشاء مجلد</string>
-    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا</string>
+    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا.</string>
     <string name="set_display_confirm">عرض رسالة بعد تمام العمليات كالدعم والتفضيل وغيرها؟</string>
     <string name="export_muted_instance">تصدير مثيلات الخوادم المكتومة</string>
     <string name="muted_instance_exported">لقد تم تصدير مثيلات الخوادم المكتومة!</string>
@@ -1031,7 +1031,7 @@
     <string name="crash_title">لقد توقّفَ تطبيق Mastalab :(</string>
     <string name="crash_message">يمكنكم أن ترسلوا لي عن طريق البريد الإلكتروني تقرير الحادث. وستساعدون على إصلاح ذلك:)\n\n يمكن إضافة محتوى إضافي. شكرًا لكم!</string>
     <string name="set_wysiwyg">أستعمال محرر ما تشاهده هو ما تحصل</string>
-    <string name="set_wysiwyg_indication">عند التفعيل سوف تستطيع تهيئت النص بسهولة.</string>
+    <string name="set_wysiwyg_indication">عند التفعيل سوف تستطيع تهيأت النص بسهولة.</string>
     <string name="action_stats">إحصائيات</string>
     <string name="total_statuses">مجموع المنشورات</string>
     <string name="number_boosts">عدد التدعيمات</string>
