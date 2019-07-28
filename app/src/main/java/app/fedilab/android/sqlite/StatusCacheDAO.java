@@ -19,8 +19,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -443,17 +441,16 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         Charts charts = new Charts();
-        dateIni = new Date(dateIni.getYear(), dateIni.getMonth(), dateIni.getDay(), 0, 0, 0);
 
         Calendar start = Calendar.getInstance();
         start.setTime(dateIni);
-        start.set(Calendar.HOUR,0);
+        start.set(Calendar.HOUR_OF_DAY,0);
         start.set(Calendar.MINUTE,0);
         start.set(Calendar.SECOND,0);
 
         Calendar end = Calendar.getInstance();
         end.setTime(dateEnd);
-        end.set(Calendar.HOUR,23);
+        end.set(Calendar.HOUR_OF_DAY,23);
         end.set(Calendar.MINUTE,59);
         end.set(Calendar.SECOND,59);
 
@@ -477,7 +474,7 @@ public class StatusCacheDAO {
         if( data != null && data.size() > 0) {
             while (!start.after(end)) {
                 Date targetDay = start.getTime();
-                Date dateLimite = new Date(targetDay.getTime() - TimeUnit.DAYS.toMillis(1));
+                Date dateLimite = new Date(targetDay.getTime() + TimeUnit.DAYS.toMillis(1));
                 xLabel.add(Helper.shortDateToString(targetDay));
                 xValues.add(inc);
                 int boostsCount = 0;
@@ -492,15 +489,13 @@ public class StatusCacheDAO {
                         }else {
                             statusesCount++;
                         }
-                    }else{
-                        inc++;
-                        break;
                     }
                 }
                 boosts.add(boostsCount);
                 replies.add(repliesCount);
                 statuses.add(statusesCount);
                 start.add(Calendar.DATE, 1);
+                inc++;
             }
         }
         charts.setxLabels(xLabel);

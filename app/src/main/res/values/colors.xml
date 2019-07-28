@@ -152,4 +152,11 @@
     <color name="quick_reply_background_dark">#2d313c</color>
     <color name="quick_reply_background_black">#1A1A1A</color>
     <color name="quick_reply_background_light">#E0E0E0</color>
+
+
+    <color name="chart_boost">#7B1FA2</color>
+    <color name="chart_reply">#0097A7</color>
+    <color name="chart_status">#1976D2</color>
+
+
 </resources>

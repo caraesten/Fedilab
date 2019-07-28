@@ -547,6 +547,12 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             TextView first_toot_date = statsDialogView.findViewById(R.id.first_toot_date);
             TextView tags = statsDialogView.findViewById(R.id.tags);
 
+            Button charts = statsDialogView.findViewById(R.id.charts);
+            charts.setOnClickListener(w ->{
+                Intent intent = new Intent(OwnerStatusActivity.this, OwnerChartsActivity.class);
+                startActivity(intent);
+            });
+
             total_statuses.setText(String.valueOf(statistics.getTotal_statuses()));
             number_boosts.setText(String.valueOf(statistics.getNumber_boosts()));
             number_replies.setText(String.valueOf(statistics.getNumber_replies()));
