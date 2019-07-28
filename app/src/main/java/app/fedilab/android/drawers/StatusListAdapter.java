@@ -39,6 +39,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.text.InputType;
@@ -215,18 +216,37 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private TextView warning_message;
     private Status tootReply;
     private long currentToId = -1;
+    private RecyclerView mRecyclerView;
+
     private List<ViewHolder> lstHolders;
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
             synchronized (lstHolders) {
-                for (ViewHolder holder : lstHolders) {
-                    holder.updateAnimatedEmoji();
+                if( (mRecyclerView.getLayoutManager()) != null) {
+                    int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                    int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                    for (ViewHolder holder : lstHolders) {
+                        if (holder.getLayoutPosition() >= firstPosition && holder.getLayoutPosition() <= lastPosition) {
+                            holder.updateAnimatedEmoji();
+                        }
+                    }
+                }else{
+                    for (ViewHolder holder : lstHolders) {
+                        holder.updateAnimatedEmoji();
+                    }
                 }
             }
         }
     };
     private Handler mHandler = new Handler();
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        mRecyclerView = recyclerView;
+    }
 
     private void startUpdateTimer() {
 
@@ -809,7 +829,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             warning_message  = itemView.findViewById(R.id.warning_message);
         }
-
         void updateAnimatedEmoji() {
             status_account_displayname.invalidate();
             status_content.invalidate();

@@ -34,6 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -124,13 +125,26 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private boolean isOnWifi;
     private NotificationsListAdapter.ViewHolder holder;
     private int style;
+    private RecyclerView mRecyclerView;
     private List<NotificationsListAdapter.ViewHolder> lstHolders;
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
             synchronized (lstHolders) {
-                for (NotificationsListAdapter.ViewHolder holder : lstHolders) {
-                    holder.updateAnimatedEmoji();
+                if( (mRecyclerView.getLayoutManager()) != null) {
+                    int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                    int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+
+                    for (NotificationsListAdapter.ViewHolder holder : lstHolders) {
+
+                        if (holder.getLayoutPosition() >= firstPosition && holder.getLayoutPosition() <= lastPosition) {
+                            holder.updateAnimatedEmoji();
+                        }
+                    }
+                }else{
+                    for (NotificationsListAdapter.ViewHolder holder : lstHolders) {
+                        holder.updateAnimatedEmoji();
+                    }
                 }
             }
         }
@@ -162,7 +176,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         startUpdateTimer();
     }
 
-    
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        mRecyclerView = recyclerView;
+    }
 
     @NonNull
     @Override
@@ -1494,8 +1514,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
         void updateAnimatedEmoji() {
-            holder.notification_account_username.invalidate();
-            holder.notification_status_content.invalidate();
+            notification_status_content.invalidate();
+            notification_account_username.invalidate();
         }
     }
 
