@@ -1022,7 +1022,7 @@
     <string name="date_range">対象期間</string>
     <string name="action_groups">グループ</string>
     <string name="no_messages">グループがありません</string>
-    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
+    <string name="set_disable_animated_emoji">動くカスタム絵文字を無効にする</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
