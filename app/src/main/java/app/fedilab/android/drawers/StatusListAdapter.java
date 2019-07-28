@@ -217,7 +217,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status tootReply;
     private long currentToId = -1;
     private RecyclerView mRecyclerView;
-
+    public static Timer tmr;
     private List<ViewHolder> lstHolders;
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -253,7 +253,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( !disableAnimatedEmoji ){
-            Timer tmr = new Timer();
             tmr.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -273,7 +272,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         redraft = false;
+        if( tmr == null){
+            tmr = new Timer();
+        }
         lstHolders = new ArrayList<>();
+
         startUpdateTimer();
     }
 
@@ -288,6 +291,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
+        if( tmr == null){
+            tmr = new Timer();
+        }
         lstHolders = new ArrayList<>();
         startUpdateTimer();
     }
@@ -302,8 +308,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         redraft = false;
+        if( tmr == null){
+            tmr = new Timer();
+        }
         lstHolders = new ArrayList<>();
         startUpdateTimer();
+
     }
 
 
@@ -830,7 +840,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             warning_message  = itemView.findViewById(R.id.warning_message);
         }
         void updateAnimatedEmoji() {
-            status_account_displayname.invalidate();
+            if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION) {
+                status_account_displayname.invalidate();
+            }
             status_content.invalidate();
         }
     }
