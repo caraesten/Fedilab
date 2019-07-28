@@ -991,7 +991,7 @@
     <string name="set_blur_sensitive_indication">عند التعطيل سيتم حجب المحتوى الحساس بواسطة زر</string>
     <string name="set_long_press_media_indication">حفظ الوسائط بالحجم الكامل بضغطة مطولة على معاينات</string>
     <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثائل</string>
-    <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدافا #Fedilab الوسم</string>
+    <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدفا #Fedilab الوسم</string>
     <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
     <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بAPI البث. قم بتعطيل إذا كنت ترغب في الحفاظ على البطارية.</string>
     <string name="set_enable_time_slot_indication">خلال هذه الفتحة الزمنية سيقوم التطبيق بإرسال إخطارات. يمكنك عكس (أي تصميت) هذا الفتحة الزمنية باستخدام الزر الموافق.</string>
@@ -1018,8 +1018,8 @@
     <string name="default_directory">المجلد الافتراضي</string>
     <string name="folder">المجلد</string>
     <string name="create_folder">إنشاء مجلد</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
-    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا</string>
+    <string name="set_display_confirm">عرض رسالة بعد تمام العمليات كالدعم والتفضيل وغيرها؟</string>
     <string name="export_muted_instance">تصدير مثيلات الخوادم المكتومة</string>
     <string name="muted_instance_exported">لقد تم تصدير مثيلات الخوادم المكتومة!</string>
     <string name="add_instances">إضافة مثيل خادم</string>
@@ -1027,7 +1027,7 @@
     <string name="import_instances">استيراد مثيلات خوادم</string>
     <string name="set_crash_reports">تقارير الأعطال</string>
     <string name="set_enable_crash_report">تفعيل تقارير الأعطال</string>
-    <string name="set_enable_crash_report_indication">If enabled, a crash report will be created locally and then you will be able to share it.</string>
+    <string name="set_enable_crash_report_indication">عند التفعيل سيتم إنشاء تقرير الحادث محليا حتى تكون قادر على مشاركته.</string>
     <string name="crash_title">لقد توقّفَ تطبيق Mastalab :(</string>
     <string name="crash_message">يمكنكم أن ترسلوا لي عن طريق البريد الإلكتروني تقرير الحادث. وستساعدون على إصلاح ذلك:)\n\n يمكن إضافة محتوى إضافي. شكرًا لكم!</string>
     <string name="set_wysiwyg">أستعمال محرر ما تشاهده هو ما تحصل</string>
