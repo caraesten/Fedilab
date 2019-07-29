@@ -1034,6 +1034,9 @@
     <string name="action_groups">Groups</string>
     <string name="no_messages">No groups!</string>
     <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
+    <string name="owner_charts">Charts</string>
+    <string name="display_charts">Display charts</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
