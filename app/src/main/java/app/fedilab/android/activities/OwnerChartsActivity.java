@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,22 +30,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,11 +56,9 @@ import java.util.Locale;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveChartsAsyncTask;
-import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Charts;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveChartsInterface;
-import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 
@@ -80,59 +76,51 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     private Button settings_time_from, settings_time_to;
     private Date dateIni, dateEnd;
     private LineChart chart;
+    private int theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
+        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
+                setTheme(R.style.AppTheme);
                 break;
             case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
+                setTheme(R.style.AppThemeDark);
                 break;
             case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
+                setTheme(R.style.AppThemeBlack);
                 break;
             default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
+                setTheme(R.style.AppThemeDark);
         }
-        setContentView(R.layout.activity_ower_charts);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.black));
-        setSupportActionBar(toolbar);
-
+        if( getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if( actionBar != null ) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_action_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-            ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_conversation);
-            close_toot.setOnClickListener(v -> finish());
-            TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            ImageView pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
-            String url = account.getAvatar();
-            if (url.startsWith("/")) {
-                url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            toolbar_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            toolbar_title.setText(R.string.action_about);
+            if (theme == Helper.THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, OwnerChartsActivity.this);
             }
-            Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerChartsActivity.this);
-            }
-            toolbarTitle.setText(getString(R.string.owner_charts));
         }
+        setContentView(R.layout.activity_ower_charts);
 
 
         chart = findViewById(R.id.chart);
@@ -238,29 +226,91 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         }
         LineDataSet dataSetBoosts = new LineDataSet(boostsEntry, getString(R.string.reblog));
         dataSetBoosts.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_boost));
+        dataSetBoosts.setValueTextSize(12f);
         dataSetBoosts.setValueTextColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_boost));
+        dataSetBoosts.setFillColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_boost));
+        dataSetBoosts.setDrawValues(false);
+        dataSetBoosts.setDrawFilled(true);
+        dataSetBoosts.setDrawCircles(false);
+        dataSetBoosts.setDrawCircleHole(false);
+        dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         LineDataSet dateSetReplies = new LineDataSet(repliesEntry, getString(R.string.replies));
-        dataSetBoosts.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_reply));
-        dataSetBoosts.setValueTextColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_reply));
+        dateSetReplies.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_reply));
+        dateSetReplies.setValueTextSize(12f);
+        dateSetReplies.setValueTextColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_reply));
+        dateSetReplies.setFillColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_reply));
+        dateSetReplies.setDrawValues(false);
+        dateSetReplies.setDrawFilled(true);
+        dateSetReplies.setDrawCircles(false);
+        dateSetReplies.setDrawCircleHole(false);
+        dateSetReplies.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         LineDataSet dataSetStatuses = new LineDataSet(statusesEntry, getString(R.string.statuses));
-        dataSetBoosts.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_status));
-        dataSetBoosts.setValueTextColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_status));
+        dataSetStatuses.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_status));
+        dataSetStatuses.setValueTextSize(12f);
+        dataSetStatuses.setValueTextColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_status));
+        dataSetStatuses.setFillColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_status));
+        dataSetStatuses.setDrawValues(false);
+        dataSetStatuses.setDrawFilled(true);
+        dataSetStatuses.setDrawCircles(false);
+        dataSetStatuses.setDrawCircleHole(false);
+        dataSetStatuses.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        List<ILineDataSet> dataSets = new ArrayList<>();
 
 
         dataSets.add(dataSetBoosts);
         dataSets.add(dateSetReplies);
         dataSets.add(dataSetStatuses);
 
-
+        //X axis
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
         xAxis.setLabelRotationAngle(45);
-        xAxis.setTextColor(Color.RED);
+        xAxis.setTextSize(14f);
+
+        //Legend
+        Legend legend = chart.getLegend();
+        legend.setTextSize(16f);
+        legend.setXEntrySpace(15f);
+
+        //Left axis
+        YAxis leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
+        leftAxis.setTextSize(14f);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setDrawAxisLine(true);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawLabels(true);
+        //Remove right axis
+        chart.getAxis(YAxis.AxisDependency.RIGHT).setEnabled(false);
+
+
+        Description description = chart.getDescription();
+        description.setEnabled(false);
+
+        //Update colors
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                xAxis.setTextColor(Color.BLACK);
+                dataSetBoosts.setValueTextColor(Color.BLACK);
+                dateSetReplies.setValueTextColor(Color.BLACK);
+                dataSetStatuses.setValueTextColor(Color.BLACK);
+
+                legend.setTextColor(Color.BLACK);
+                leftAxis.setTextColor(Color.BLACK);
+                break;
+            case Helper.THEME_DARK:
+            case Helper.THEME_BLACK:
+                int color = ContextCompat.getColor(OwnerChartsActivity.this, R.color.dark_text);
+                xAxis.setTextColor(color);
+                dataSetBoosts.setValueTextColor(color);
+                dateSetReplies.setValueTextColor(color);
+                dataSetStatuses.setValueTextColor(color);
+                legend.setTextColor(color);
+                leftAxis.setTextColor(color);
+        }
+
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
 
