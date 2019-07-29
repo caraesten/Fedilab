@@ -1050,6 +1050,9 @@
     <string name="action_groups">المجموعات</string>
     <string name="no_messages">لا توجد أي مجموعة!</string>
     <string name="set_disable_animated_emoji">تعطيل الإيموجي الخاصة المتحركة</string>
+    <string name="owner_charts">Charts</string>
+    <string name="display_charts">Display charts</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
     <plurals name="number_of_vote">
         <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>
