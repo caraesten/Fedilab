@@ -29,7 +29,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,14 +41,18 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointF;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -81,6 +87,8 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     private Date dateIni, dateEnd;
     private LineChart chart;
     private int theme;
+    private RelativeLayout loader;
+    private ImageButton validate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,11 +157,57 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         chart = findViewById(R.id.chart);
         settings_time_from = findViewById(R.id.settings_time_from);
         settings_time_to = findViewById(R.id.settings_time_to);
-
+        loader =  findViewById(R.id.loader);
+        validate = findViewById(R.id.validate);
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerChartsActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         dateIni = new StatusCacheDAO(OwnerChartsActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
         dateEnd = new StatusCacheDAO(OwnerChartsActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
+
+
+        int style;
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else  if( theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(dateIni);
+        int yearIni = c.get(Calendar.YEAR);
+        int monthIni = c.get(Calendar.MONTH);
+        int dayIni = c.get(Calendar.DAY_OF_MONTH);
+
+        final DatePickerDialog dateIniPickerDialog = new DatePickerDialog(
+                OwnerChartsActivity.this, style, iniDateSetListener, yearIni, monthIni, dayIni);
+        settings_time_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateIniPickerDialog.show();
+            }
+        });
+
+
+        Calendar ce = Calendar.getInstance();
+        c.setTime(dateEnd);
+        int yearEnd = ce.get(Calendar.YEAR);
+        int monthEnd = ce.get(Calendar.MONTH);
+        int dayEnd = ce.get(Calendar.DAY_OF_MONTH);
+        final DatePickerDialog dateEndPickerDialog = new DatePickerDialog(
+                OwnerChartsActivity.this, style, endDateSetListener, yearEnd, monthEnd, dayEnd);
+        settings_time_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateEndPickerDialog.show();
+            }
+        });
+
+        dateIniPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
+        dateIniPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
+
+        dateEndPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
+        dateEndPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateEnd);
@@ -169,16 +223,48 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             dateEnd = new Date();
         }
 
-        String dateInitString = Helper.shortDateToString(dateIni);
-        String dateEndString = Helper.shortDateToString(dateEnd);
 
-        settings_time_from.setText(dateInitString);
-        settings_time_to.setText(dateEndString);
+        CustomMarkerView mv = new CustomMarkerView(getApplicationContext(), R.layout.markerview);
+        chart.setMarkerView(mv);
 
-        new RetrieveChartsAsyncTask(OwnerChartsActivity.this, dateIni, dateEnd, OwnerChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        validate.setOnClickListener(v->{
+            loadGraph(dateIni, dateEnd);
+        });
+
+        loadGraph(dateIni, dateEnd);
+
 
     }
 
+    public class CustomMarkerView extends MarkerView {
+        private TextView tvContent;
+
+        public CustomMarkerView(Context context, int layoutResource) {
+            super(context, layoutResource);
+            tvContent = findViewById(R.id.tvContent);
+            if( theme == Helper.THEME_DARK){
+                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+            }else  if( theme == Helper.THEME_BLACK){
+                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+            }else {
+                tvContent.setTextColor(ContextCompat.getColor(context, R.color.black));
+            }
+        }
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            Date date = new Date(((long) e.getX()));
+            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " +(int)e.getY()));
+            super.refreshContent(e, highlight);
+        }
+        private MPPointF mOffset;
+        @Override
+        public MPPointF getOffset() {
+            if(mOffset == null) {
+                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            }
+            return mOffset;
+        }
+    }
 
     private DatePickerDialog.OnDateSetListener iniDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
@@ -218,6 +304,18 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         }
     }
 
+    private void loadGraph(Date dateIni, Date dateEnd){
+        String dateInitString = Helper.shortDateToString(dateIni);
+        String dateEndString = Helper.shortDateToString(dateEnd);
+
+        settings_time_from.setText(dateInitString);
+        settings_time_to.setText(dateEndString);
+        chart.setVisibility(View.GONE);
+        loader.setVisibility(View.VISIBLE);
+        validate.setEnabled(false);
+        new RetrieveChartsAsyncTask(OwnerChartsActivity.this, dateIni, dateEnd, OwnerChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
 
     @Override
     public void onDestroy() {
@@ -343,7 +441,9 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         xAxis.setValueFormatter(new MyXAxisValueFormatter());
         LineData data = new LineData(dataSets);
         chart.setData(data);
-
+        chart.setVisibility(View.VISIBLE);
+        loader.setVisibility(View.GONE);
+        validate.setEnabled(true);
         chart.invalidate();
     }
 

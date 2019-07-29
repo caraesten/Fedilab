@@ -43,6 +43,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -547,7 +548,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             TextView first_toot_date = statsDialogView.findViewById(R.id.first_toot_date);
             TextView tags = statsDialogView.findViewById(R.id.tags);
 
-            Button charts = statsDialogView.findViewById(R.id.charts);
+            ImageButton charts = statsDialogView.findViewById(R.id.charts);
             charts.setOnClickListener(w ->{
                 Intent intent = new Intent(OwnerStatusActivity.this, OwnerChartsActivity.class);
                 startActivity(intent);
