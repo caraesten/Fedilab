@@ -21,7 +21,7 @@ public class Charts {
 
     private List<String> xLabels;
     private List<String> yLabels;
-    private List<Integer> xValues;
+    private List<Long> xValues;
     private List<Integer> statuses;
     private List<Integer> boosts;
     private List<Integer> replies;
@@ -42,11 +42,11 @@ public class Charts {
         this.yLabels = yLabels;
     }
 
-    public List<Integer> getxValues() {
+    public List<Long> getxValues() {
         return xValues;
     }
 
-    public void setxValues(List<Integer> xValues) {
+    public void setxValues(List<Long> xValues) {
         this.xValues = xValues;
     }
 

@@ -467,7 +467,7 @@ public class StatusCacheDAO {
         }
         int inc = 0;
         List<String> xLabel = new ArrayList<>();
-        List<Integer> xValues = new ArrayList<>();
+        List<Long> xValues = new ArrayList<>();
         List<Integer> statuses = new ArrayList<>();
         List<Integer> boosts = new ArrayList<>();
         List<Integer> replies = new ArrayList<>();
@@ -476,7 +476,7 @@ public class StatusCacheDAO {
                 Date targetDay = start.getTime();
                 Date dateLimite = new Date(targetDay.getTime() + TimeUnit.DAYS.toMillis(1));
                 xLabel.add(Helper.shortDateToString(targetDay));
-                xValues.add(inc);
+                xValues.add(targetDay.getTime());
                 int boostsCount = 0;
                 int repliesCount = 0;
                 int statusesCount = 0;
