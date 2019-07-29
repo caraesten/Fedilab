@@ -970,7 +970,7 @@
     <string name="set_enable_time_slot_indication">指定された時間帯に、アプリは通知を送信します。右のスピンボタンを押すと、設定を反転することができます。(指定された時間に非通知)</string>
     <string name="set_display_fedilab_features_button_indication">プロフィール画像の下にFedilabボタンを表示します。このボタンはアプリ内機能へのショートカットです。</string>
     <string name="set_quick_reply_indication">トゥートの下のタイムラインから直接返信できるようにします。</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_fit_preview_indication">タイムライン上のプレビューは切り取られません</string>
     <string name="set_display_video_preview_indication">タイムラインで埋め込み動画を直接再生できるようになります</string>
     <string name="set_display_content_after_fetch_more_indication">もっと見るボタンを押して取得したトゥートを古いほうから読めるようになります</string>
     <string name="set_security_provider_indication">このオプションは最新の暗号スイートをサポートします。これは古いAndroid デバイスやインスタンスに接続できない場合に有効です。</string>
