@@ -1034,6 +1034,9 @@
     <string name="action_groups">Taldeak</string>
     <string name="no_messages">Talderik ez!</string>
     <string name="set_disable_animated_emoji">Desgaitu animatutako emoji pertsonalizatuak</string>
+    <string name="owner_charts">Charts</string>
+    <string name="display_charts">Display charts</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
