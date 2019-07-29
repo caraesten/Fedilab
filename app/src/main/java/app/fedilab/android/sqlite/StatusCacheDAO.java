@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -484,7 +485,7 @@ public class StatusCacheDAO {
                     if(status.getCreated_at().after(targetDay) && status.getCreated_at().before(dateLimite)){
                         if( status.getReblog() != null){
                             boostsCount++;
-                        }else if( status.getIn_reply_to_id() != null){
+                        }else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")){
                             repliesCount++;
                         }else {
                             statusesCount++;

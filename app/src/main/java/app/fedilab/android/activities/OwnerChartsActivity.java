@@ -31,6 +31,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -56,12 +58,14 @@ import java.util.Locale;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveChartsAsyncTask;
+import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Charts;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveChartsInterface;
+import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
-
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -103,18 +107,37 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+
+
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+            Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
+            if( account != null) {
+                String url = account.getAvatar();
+                if (url.startsWith("/")) {
+                    url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
+                }
+                Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+            }
+
             toolbar_close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     finish();
                 }
             });
-            toolbar_title.setText(R.string.action_about);
+            if( account != null) {
+                toolbar_title.setText(getString(R.string.owner_charts) + " - " + account.getUsername() + "@" + account.getInstance());
+            }else{
+                toolbar_title.setText(R.string.owner_charts);
+            }
             if (theme == Helper.THEME_LIGHT){
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, OwnerChartsActivity.this);
@@ -233,6 +256,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         dataSetBoosts.setDrawFilled(true);
         dataSetBoosts.setDrawCircles(false);
         dataSetBoosts.setDrawCircleHole(false);
+        dataSetBoosts.setLineWidth(2f);
         dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         LineDataSet dateSetReplies = new LineDataSet(repliesEntry, getString(R.string.replies));
@@ -244,6 +268,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         dateSetReplies.setDrawFilled(true);
         dateSetReplies.setDrawCircles(false);
         dateSetReplies.setDrawCircleHole(false);
+        dateSetReplies.setLineWidth(2f);
         dateSetReplies.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         LineDataSet dataSetStatuses = new LineDataSet(statusesEntry, getString(R.string.statuses));
@@ -255,6 +280,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         dataSetStatuses.setDrawFilled(true);
         dataSetStatuses.setDrawCircles(false);
         dataSetStatuses.setDrawCircleHole(false);
+        dataSetStatuses.setLineWidth(2f);
         dataSetStatuses.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         List<ILineDataSet> dataSets = new ArrayList<>();

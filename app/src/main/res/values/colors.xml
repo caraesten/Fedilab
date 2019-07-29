@@ -154,9 +154,9 @@
     <color name="quick_reply_background_light">#E0E0E0</color>
 
 
-    <color name="chart_boost">#7B1FA2</color>
-    <color name="chart_reply">#0097A7</color>
-    <color name="chart_status">#1976D2</color>
+    <color name="chart_boost">#D32F2F</color>
+    <color name="chart_reply">#388E3C</color>
+    <color name="chart_status">#0288D1</color>
 
 
 </resources>
