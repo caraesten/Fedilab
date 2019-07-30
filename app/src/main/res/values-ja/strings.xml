@@ -1023,9 +1023,9 @@
     <string name="action_groups">グループ</string>
     <string name="no_messages">グループがありません</string>
     <string name="set_disable_animated_emoji">アニメーションカスタム絵文字を無効にする</string>
-    <string name="owner_charts">Charts</string>
-    <string name="display_charts">Display charts</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
+    <string name="owner_charts">グラフ</string>
+    <string name="display_charts">グラフを表示する</string>
+    <string name="collecting_data_wait">データを収集しています。しばらくお待ちください。</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
