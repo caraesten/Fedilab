@@ -472,33 +472,30 @@ public class StatusCacheDAO {
         List<Integer> statuses = new ArrayList<>();
         List<Integer> boosts = new ArrayList<>();
         List<Integer> replies = new ArrayList<>();
-        if( data != null && data.size() > 0) {
-            while (!start.after(end)) {
-                Date targetDay = start.getTime();
-                Date dateLimite = new Date(targetDay.getTime() + TimeUnit.DAYS.toMillis(1));
-                xLabel.add(Helper.shortDateToString(targetDay));
-                xValues.add(targetDay.getTime());
-                int boostsCount = 0;
-                int repliesCount = 0;
-                int statusesCount = 0;
-                for(Status status: data){
-                    if(status.getCreated_at().after(targetDay) && status.getCreated_at().before(dateLimite)){
-                        if( status.getReblog() != null){
-                            boostsCount++;
-                        }else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")){
-                            repliesCount++;
-                        }else {
-                            statusesCount++;
-                        }
-                    }
+
+        int boostsCount = 0;
+        int repliesCount = 0;
+        int statusesCount = 0;
+        if( data != null) {
+            for (Status status : data) {
+                Calendar tempdate = Calendar.getInstance();
+                tempdate.setTime(status.getCreated_at());
+                tempdate.set(Calendar.HOUR_OF_DAY, 0);
+                tempdate.set(Calendar.MINUTE, 0);
+                tempdate.set(Calendar.SECOND, 0);
+                xValues.add(tempdate.getTimeInMillis());
+                if (status.getReblog() != null) {
+                    boostsCount++;
+                } else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")) {
+                    repliesCount++;
+                } else {
+                    statusesCount++;
                 }
-                boosts.add(boostsCount);
-                replies.add(repliesCount);
-                statuses.add(statusesCount);
-                start.add(Calendar.DATE, 1);
-                inc++;
             }
         }
+        boosts.add(boostsCount);
+        replies.add(repliesCount);
+        statuses.add(statusesCount);
         charts.setxLabels(xLabel);
         charts.setxValues(xValues);
         charts.setBoosts(boosts);
