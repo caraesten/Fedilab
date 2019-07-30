@@ -3155,21 +3155,25 @@ public class Helper {
                 return;
             }
         }
-        if( !disableGif) {
-            try {
-                Glide.with(imageView.getContext())
-                        .load(url)
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .into(imageView);
-            } catch (Exception ignored) { }
-        }else {
-            try {
-                Glide.with(context)
-                        .asBitmap()
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .load(url)
-                        .into(imageView);
-            } catch (Exception ignored) {
+        if( url != null) {
+            if (!disableGif && url.endsWith(".gif")) {
+                try {
+                    Glide.with(imageView.getContext())
+                            .asGif()
+                            .load(url)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+            } else {
+                try {
+                    Glide.with(context)
+                            .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .load(url)
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
             }
         }
     }

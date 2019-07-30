@@ -1827,9 +1827,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.setAccount(account);
             }
             //Displays name & emoji in toot header
-            final Account ppurl;
+            final Account accountForUrl;
             if (status.getReblog() != null) {
-                ppurl = status.getReblog().getAccount();
+                accountForUrl = status.getReblog().getAccount();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
                 holder.status_account_displayname.setOnClickListener(new View.OnClickListener() {
@@ -1849,7 +1849,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
 
             } else {
-                ppurl = status.getAccount();
+                accountForUrl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
                 if (status.getAccount().getdisplayNameSpan() == null || status.getAccount().getdisplayNameSpan().toString().trim().length() == 0)
                     holder.status_account_displayname_owner.setText(status.getAccount().getUsername().replace("@", ""), TextView.BufferType.SPANNABLE);
@@ -2009,13 +2009,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if (status.getReblog() != null) {
-                Helper.loadGiF(context, ppurl, holder.status_account_profile_boost);
+                Helper.loadGiF(context, accountForUrl, holder.status_account_profile_boost);
                 Helper.loadGiF(context, status.getAccount().getAvatar(), holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             } else {
-                Helper.loadGiF(context, ppurl, holder.status_account_profile);
+                Helper.loadGiF(context, accountForUrl, holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
