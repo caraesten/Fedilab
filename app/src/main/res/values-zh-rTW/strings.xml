@@ -1031,6 +1031,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="action_groups">群組</string>
     <string name="no_messages">沒有群組！</string>
     <string name="set_disable_animated_emoji">停用自訂 Emoji 動畫</string>
+    <string name="owner_charts">Charts</string>
+    <string name="display_charts">Display charts</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

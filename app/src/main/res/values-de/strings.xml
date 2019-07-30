@@ -1022,6 +1022,9 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="action_groups">Gruppen</string>
     <string name="no_messages">Keine Gruppen!</string>
     <string name="set_disable_animated_emoji">Eigene animierte Emojis deaktivieren</string>
+    <string name="owner_charts">Diagramme</string>
+    <string name="display_charts">Diagramme anzeigen</string>
+    <string name="collecting_data_wait">Die Anwendung sammelt Ihre lokalen Daten, bitte warten …</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>

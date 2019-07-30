@@ -1043,6 +1043,9 @@
     <string name="action_groups">Группы</string>
     <string name="no_messages">Нет групп!</string>
     <string name="set_disable_animated_emoji">Отключить пользовательские анимированные эмодзи</string>
+    <string name="owner_charts">Графики</string>
+    <string name="display_charts">Отображать графики</string>
+    <string name="collecting_data_wait">Приложение собирает ваши локальные данные, пожалуйста, подождите...</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>
