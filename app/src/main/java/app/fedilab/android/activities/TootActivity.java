@@ -688,11 +688,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
 
 
-        String url = account.getAvatar();
-        if (url.startsWith("/")) {
-            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-        }
-        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+
+        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
 
 
         if (sharedContent != null) { //Shared content

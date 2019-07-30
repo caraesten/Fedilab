@@ -1827,9 +1827,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.setAccount(account);
             }
             //Displays name & emoji in toot header
-            final String ppurl;
+            final Account ppurl;
             if (status.getReblog() != null) {
-                ppurl = status.getReblog().getAccount().getAvatar();
+                ppurl = status.getReblog().getAccount();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
                 holder.status_account_displayname.setOnClickListener(new View.OnClickListener() {
@@ -1849,7 +1849,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
 
             } else {
-                ppurl = status.getAccount().getAvatar();
+                ppurl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
                 if (status.getAccount().getdisplayNameSpan() == null || status.getAccount().getdisplayNameSpan().toString().trim().length() == 0)
                     holder.status_account_displayname_owner.setText(status.getAccount().getUsername().replace("@", ""), TextView.BufferType.SPANNABLE);

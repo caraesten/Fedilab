@@ -3155,22 +3155,104 @@ public class Helper {
                 return;
             }
         }
-        if( !disableGif)
+        if( !disableGif) {
             try {
                 Glide.with(imageView.getContext())
                         .load(url)
                         .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                         .into(imageView);
-            }catch (Exception ignored){}
-        else
+            } catch (Exception ignored) { }
+        }else {
             try {
-            Glide.with(context)
-                    .asBitmap()
-                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                    .load(url)
-                    .into(imageView);
-            }catch (Exception ignored){}
+                Glide.with(context)
+                        .asBitmap()
+                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                        .load(url)
+                        .into(imageView);
+            } catch (Exception ignored) {
+            }
+        }
     }
+
+
+    public static void loadGiF(final Context context, Account account, final ImageView imageView){
+
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
+        if ( account == null){
+            return;
+        }
+        String url;
+        if( !disableGif){
+            url = account.getAvatar();
+        }else{
+            url = account.getAvatar_static();
+            if( url == null){
+                url = account.getAvatar();
+            }
+        }
+        if (context instanceof FragmentActivity) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed()) {
+                return;
+            }
+        }
+        if( url != null && url.startsWith("/")){
+            url = Helper.getLiveInstanceWithProtocol(context) + url;
+        }
+        if( url == null  || url.equals("null")|| url.equals("false") || url.contains("missing.png") || url.contains(".svg")) {
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.gnu_default_avatar)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }
+        }
+        if( url != null) {
+            if (!disableGif && url.endsWith(".gif")) {
+                try {
+                    Glide.with(imageView.getContext())
+                            .asGif()
+                            .load(url)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+            } else {
+                try {
+                    Glide.with(context)
+                            .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .load(url)
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
 
     /**
      * Manage URLs to open (built-in or external app)

@@ -250,7 +250,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
             holder.scheduled_toot_media_count.setVisibility(View.GONE);
             holder.scheduled_toot_date_creation.setVisibility(View.GONE);
             holder.scheduled_toot_privacy.setVisibility(View.GONE);
-            Helper.loadGiF(context, storedStatus.getStatus().getAccount().getAvatar(), holder.scheduled_toot_pp);
+            Helper.loadGiF(context, storedStatus.getStatus().getAccount(), holder.scheduled_toot_pp);
         }else {
             holder.scheduled_toot_pp.setVisibility(View.GONE);
         }

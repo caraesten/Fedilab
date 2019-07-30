@@ -199,7 +199,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_fgc.setText(Helper.withSuffix(account.getFollowing_count()));
         holder.account_frc.setText(Helper.withSuffix(account.getFollowers_count()));
         //Profile picture
-        Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
+        Helper.loadGiF(context, account, holder.account_pp);
         if( account.isMakingAction()){
             holder.account_follow.setEnabled(false);
         }else {

@@ -155,13 +155,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
-        String url = account.getAvatar();
-        if( url.startsWith("/") ){
-            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-        }
 
 
-        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+
+        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
 
         set_profile_name = findViewById(R.id.set_profile_name);
         set_profile_description = findViewById(R.id.set_profile_description);

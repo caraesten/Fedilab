@@ -182,7 +182,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                 Status.makeEmojis(context, this, status);
 
             if (status.getAccount() != null && status.getAccount().getAvatar() != null)
-                Helper.loadGiF(context, status.getAccount().getAvatar(), holder.art_pp);
+                Helper.loadGiF(context, status.getAccount(), holder.art_pp);
 
             if (status.getArt_attachment() != null)
                 Glide.with(context)

@@ -338,11 +338,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             actionbar_title.setText(account.getAcct());
         pp_actionBar = findViewById(R.id.pp_actionBar);
         if( account.getAvatar() != null){
-            String url = account.getAvatar();
-            if( url.startsWith("/") ){
-                url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-            }
-            Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+            Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
 
         }
         final AppBarLayout appBar = findViewById(R.id.appBar);

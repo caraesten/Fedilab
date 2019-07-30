@@ -123,12 +123,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
-        String url = account.getAvatar();
-        if( url.startsWith("/") ){
-            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-        }
 
-        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
         Bundle b = getIntent().getExtras();
         Status status = null;
         if(b != null) {

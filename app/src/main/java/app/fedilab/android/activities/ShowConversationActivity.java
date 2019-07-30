@@ -237,11 +237,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             Toasty.error(ShowConversationActivity.this,getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
-        String url = account.getAvatar();
-        if( url.startsWith("/") ){
-            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-        }
-        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
 
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
