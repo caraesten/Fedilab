@@ -59,8 +59,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveChartsAsyncTask;
@@ -324,23 +326,29 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
 
         List<Entry> boostsEntry = new ArrayList<>();
         int i = 0;
-        for (int boost : charts.getBoosts()) {
-            boostsEntry.add(new Entry(charts.getxValues().get(i), boost));
-            i++;
+        Iterator it = charts.getBoosts().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            boostsEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            it.remove();
         }
 
         List<Entry> repliesEntry = new ArrayList<>();
-        i = 0;
-        for (int reply : charts.getReplies()) {
-            repliesEntry.add(new Entry(charts.getxValues().get(i), reply));
-            i++;
+        it = charts.getReplies().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            repliesEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            it.remove();
         }
+
         List<Entry> statusesEntry = new ArrayList<>();
-        i = 0;
-        for (int status : charts.getStatuses()) {
-            statusesEntry.add(new Entry(charts.getxValues().get(i), status));
-            i++;
+        it = charts.getStatuses().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            statusesEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            it.remove();
         }
+
         LineDataSet dataSetBoosts = new LineDataSet(boostsEntry, getString(R.string.reblog));
         dataSetBoosts.setColor(ContextCompat.getColor(OwnerChartsActivity.this, R.color.chart_boost));
         dataSetBoosts.setValueTextSize(12f);

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -466,16 +467,11 @@ public class StatusCacheDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int inc = 0;
         List<String> xLabel = new ArrayList<>();
-        List<Long> xValues = new ArrayList<>();
-        List<Integer> statuses = new ArrayList<>();
-        List<Integer> boosts = new ArrayList<>();
-        List<Integer> replies = new ArrayList<>();
 
-        int boostsCount = 0;
-        int repliesCount = 0;
-        int statusesCount = 0;
+        charts.setStatuses(new LinkedHashMap<>());
+        charts.setBoosts(new LinkedHashMap<>());
+        charts.setReplies(new LinkedHashMap<>());
         if( data != null) {
             for (Status status : data) {
                 Calendar tempdate = Calendar.getInstance();
@@ -483,24 +479,30 @@ public class StatusCacheDAO {
                 tempdate.set(Calendar.HOUR_OF_DAY, 0);
                 tempdate.set(Calendar.MINUTE, 0);
                 tempdate.set(Calendar.SECOND, 0);
-                xValues.add(tempdate.getTimeInMillis());
+                long date = tempdate.getTimeInMillis();
                 if (status.getReblog() != null) {
-                    boostsCount++;
+                    if(charts.getBoosts().containsKey(date)){
+                        charts.getBoosts().put(date,(charts.getBoosts().get(date)+1));
+                    }else{
+                        charts.getBoosts().put(date,1);
+                    }
+
                 } else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")) {
-                    repliesCount++;
+                    if(charts.getReplies().containsKey(date)){
+                        charts.getReplies().put(date,(charts.getReplies().get(date)+1));
+                    }else{
+                        charts.getReplies().put(date,1);
+                    }
                 } else {
-                    statusesCount++;
+                    if(charts.getStatuses().containsKey(date)){
+                        charts.getStatuses().put(date,(charts.getStatuses().get(date)+1));
+                    }else{
+                        charts.getStatuses().put(date,1);
+                    }
                 }
             }
         }
-        boosts.add(boostsCount);
-        replies.add(repliesCount);
-        statuses.add(statusesCount);
         charts.setxLabels(xLabel);
-        charts.setxValues(xValues);
-        charts.setBoosts(boosts);
-        charts.setReplies(replies);
-        charts.setStatuses(statuses);
         return charts;
     }
 

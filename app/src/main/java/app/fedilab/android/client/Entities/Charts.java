@@ -1,5 +1,7 @@
 package app.fedilab.android.client.Entities;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /* Copyright 2019 Thomas Schneider
@@ -21,10 +23,9 @@ public class Charts {
 
     private List<String> xLabels;
     private List<String> yLabels;
-    private List<Long> xValues;
-    private List<Integer> statuses;
-    private List<Integer> boosts;
-    private List<Integer> replies;
+    private LinkedHashMap<Long, Integer> statuses;
+    private LinkedHashMap<Long, Integer> boosts;
+    private LinkedHashMap<Long, Integer> replies;
 
     public List<String> getxLabels() {
         return xLabels;
@@ -42,35 +43,27 @@ public class Charts {
         this.yLabels = yLabels;
     }
 
-    public List<Long> getxValues() {
-        return xValues;
-    }
-
-    public void setxValues(List<Long> xValues) {
-        this.xValues = xValues;
-    }
-
-    public List<Integer> getStatuses() {
+    public LinkedHashMap<Long, Integer> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<Integer> statuses) {
+    public void setStatuses(LinkedHashMap<Long, Integer> statuses) {
         this.statuses = statuses;
     }
 
-    public List<Integer> getBoosts() {
+    public LinkedHashMap<Long, Integer> getBoosts() {
         return boosts;
     }
 
-    public void setBoosts(List<Integer> boosts) {
+    public void setBoosts(LinkedHashMap<Long, Integer> boosts) {
         this.boosts = boosts;
     }
 
-    public List<Integer> getReplies() {
+    public LinkedHashMap<Long, Integer> getReplies() {
         return replies;
     }
 
-    public void setReplies(List<Integer> replies) {
+    public void setReplies(LinkedHashMap<Long, Integer> replies) {
         this.replies = replies;
     }
 }
