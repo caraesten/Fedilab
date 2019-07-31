@@ -1033,7 +1033,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_disable_animated_emoji">停用自訂 Emoji 動畫</string>
     <string name="owner_charts">圖表</string>
     <string name="display_charts">顯示圖表</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
+    <string name="collecting_data_wait">應用程式蒐集您的本機資料中，請稍候……</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
