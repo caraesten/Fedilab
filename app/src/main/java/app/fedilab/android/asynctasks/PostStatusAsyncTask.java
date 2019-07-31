@@ -31,7 +31,6 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 
 
@@ -47,19 +46,20 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     private app.fedilab.android.client.Entities.Status status;
     private Account account;
     private WeakReference<Context> contextReference;
+    private UpdateAccountInfoAsyncTask.SOCIAL social;
 
-
-    public PostStatusAsyncTask(Context context, Account account, app.fedilab.android.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
+    public PostStatusAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Account account, app.fedilab.android.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.status = status;
         this.account = account;
+        this.social = social;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
             if( isconnected) {
                 if (account == null) {

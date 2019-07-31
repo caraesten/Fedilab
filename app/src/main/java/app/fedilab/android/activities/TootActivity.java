@@ -280,7 +280,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private Editor wysiwyg;
     private EditText wysiwygEditText;
     private String url_for_media;
-
+    private UpdateAccountInfoAsyncTask.SOCIAL social;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,11 +310,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             style = R.style.Dialog;
         }
         filesMap = new HashMap<>();
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            max_media_count = 9999;
-        } else {
-            max_media_count = 4;
-        }
+        social = MainActivity.social;
+
+
         autocomplete = false;
         setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();
@@ -395,8 +393,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Button toot_cw = findViewById(R.id.toot_cw);
         toot_space_left = findViewById(R.id.toot_space_left);
         toot_visibility = findViewById(R.id.toot_visibility);
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-            toot_visibility.setVisibility(View.GONE);
+
         toot_picture = findViewById(R.id.toot_picture);
         toot_picture_container = findViewById(R.id.toot_picture_container);
         toot_content = findViewById(R.id.toot_content);
@@ -605,7 +602,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
         }
-
         String userIdReply, instanceReply;
         if (accountReply == null) {
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -619,24 +615,22 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         else
             account = accountReply;
 
-        if (MainActivity.social == null) {
-
+        if (social == null || accountReply != null) {
             //Update the static variable which manages account type
             if (account.getSocial() == null || account.getSocial().equals("MASTODON"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
             else if (account.getSocial().equals("PEERTUBE"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
             else if (account.getSocial().equals("PIXELFED"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
             else if (account.getSocial().equals("PLEROMA"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
             else if (account.getSocial().equals("GNU"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
             else if (account.getSocial().equals("FRIENDICA"))
-                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+                social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
         }
-
-        switch (MainActivity.social) {
+        switch (social) {
             case GNU:
                 toot_it.setText(getText(R.string.queet_it));
                 break;
@@ -649,18 +643,25 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             default:
                 toot_it.setText(getText(R.string.toot_it));
         }
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            max_media_count = 9999;
+        } else {
+            max_media_count = 4;
+        }
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+            toot_visibility.setVisibility(View.GONE);
 
         if (tootReply != null) {
             tootReply();
         } else {
             if (title != null) {
-                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     title.setText(getString(R.string.queet_title));
                 else
                     title.setText(getString(R.string.toot_title));
 
             } else {
-                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     setTitle(R.string.queet_title);
                 else
                     setTitle(R.string.toot_title);
@@ -672,15 +673,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if (mentionAccount != null) {
                 toot_content.setText(String.format("@%s\n", mentionAccount));
                 toot_content.setSelection(toot_content.getText().length());
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
             if (tootMention != null && urlMention != null) {
                 toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
         }else{
             toot_content.setText(quickmessagecontent);
-            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+            toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             toot_content.setSelection(toot_content.getText().length());
         }
 
@@ -712,7 +713,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     toot_content.setText(sharedContent);
                     if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                         toot_content.setSelection(selectionBefore);
-                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                    toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                 }
                 if (image != null) {
                     new HttpsConnection(TootActivity.this, instance).download(image, TootActivity.this);
@@ -721,7 +722,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_content.setText(String.format("\n%s", sharedContent));
                 if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                     toot_content.setSelection(selectionBefore);
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
         }
 
@@ -761,7 +762,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
         toot_cw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -794,7 +795,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && !displayWYSIWYG())
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && !displayWYSIWYG())
             toot_it.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -875,12 +876,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
         });
 
-        textWatcher = initializeTextWatcher(getApplicationContext(), toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        textWatcher = initializeTextWatcher(getApplicationContext(), social, toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             toot_content.addTextChangedListener(textWatcher);
 
 
@@ -898,7 +899,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(imageReceiver,
@@ -913,7 +914,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static TextWatcher initializeTextWatcher(Context context,
+    public static TextWatcher initializeTextWatcher(Context context,  UpdateAccountInfoAsyncTask.SOCIAL social,
             MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
             ImageView pp_actionBar, ProgressBar pp_progress,
             OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
@@ -954,7 +955,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                             newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
 
-                            int currentLength = countLength(toot_content, toot_cw_content);
+                            int currentLength = countLength(social, toot_content, toot_cw_content);
                             int toFill = 500  - currentLength;
                             if(toFill <= 0) {
                                 return;
@@ -977,7 +978,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     toot_content.setSelection(toot_content.getText().length());
                                    // toot_content.addTextChangedListener(finalTextw);
                                     autocomplete = false;
-                                    toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                                    toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                                 }
                             };
                             mainHandler.post(myRunnable);
@@ -1000,7 +1001,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
 
 
-                int totalChar = countLength(toot_content, toot_cw_content);
+                int totalChar = countLength(social, toot_content, toot_cw_content);
                 toot_space_left.setText(String.valueOf(totalChar));
                 if (currentCursorPosition[0] - (searchLength[0] - 1) < 0 || currentCursorPosition[0] == 0 || currentCursorPosition[0] > s.toString().length())
                     return;
@@ -1056,7 +1057,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
 
 
-                totalChar = countLength(toot_content, toot_cw_content);
+                totalChar = countLength(social, toot_content, toot_cw_content);
                 toot_space_left.setText(String.valueOf(totalChar));
             }
         };
@@ -1094,7 +1095,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private void addNewMedia(JSONObject response, ArrayList<String>successfullyUploadedFiles){
         Attachment attachment;
         //response = new JSONObject(serverResponse.getBodyAsString());
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             attachment = API.parseAttachmentResponse(response);
         else
             attachment = GNUAPI.parseUploadedAttachmentResponse(response);
@@ -1120,7 +1121,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                 if( successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
 
                     Iterator it = filesMap.entrySet().iterator();
@@ -1184,7 +1185,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
                 toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                 //Moves the cursor
                 toot_content.setSelection(selectionBefore);
             }
@@ -1405,7 +1406,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(TootActivity.this);
             uploadReceiver.register(this);
         }
-        new asyncPicture(activity, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new asyncPicture(activity, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     static class asyncPicture extends AsyncTask<Void, Void, Void> {
@@ -1416,12 +1417,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         boolean error = false;
         UploadServiceSingleBroadcastReceiver uploadReceiver;
         String filename;
+        UpdateAccountInfoAsyncTask.SOCIAL social;
 
-        asyncPicture(Activity activity, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
             this.uploadReceiver = uploadReceiver;
             this.filename = filename;
+            this.social = social;
         }
 
         @Override
@@ -1462,13 +1465,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 filesMap.put(filename, uriFile);
 
-                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
+                upload(activityWeakReference.get(), social, uriFile, filename, uploadReceiver);
             }
         }
     }
 
 
-    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
+    static private void upload(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
         String uploadId = UUID.randomUUID().toString();
         if( uploadReceiver != null) {
             uploadReceiver.setUploadID(uploadId);
@@ -1523,7 +1526,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
             String url = null;
-            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+            if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/v1/media";
             }else {
                 url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/media/upload.json";
@@ -1539,7 +1542,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             else if( token != null && token.startsWith("Basic "))
                 request.addHeader("Authorization", token);
             request.setNotificationConfig(uploadConfig);
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 request.addFileToUpload(uri.toString().replace("file://",""), "file");
             }else {
                 request.addFileToUpload(uri.toString().replace("file://",""), "media");
@@ -2152,7 +2155,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(toot_content, toot_cw_content)  < split_toot_size)){
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(social, toot_content, toot_cw_content)  < split_toot_size)){
             if( !displayWYSIWYG()) {
                 tootContent = toot_content.getText().toString().trim();
             }else{
@@ -2174,7 +2177,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             if (poll != null) {
                 toot.setPoll(poll);
             } else {
@@ -2188,17 +2191,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         if( timestamp == null)
             if( scheduledstatus == null)
-                new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(),  social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else {
                 toot.setScheduled_at(Helper.dateToString(scheduledstatus.getScheduled_date()));
                 scheduledstatus.setStatus(toot);
                 isScheduled = true;
                 new PostActionAsyncTask(getApplicationContext(), API.StatusAction.DELETESCHEDULED, scheduledstatus, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         else {
             toot.setScheduled_at(timestamp);
-            new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
     }
@@ -2258,7 +2261,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
         }
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+        if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
             MenuItem itemPoll = menu.findItem(R.id.action_poll);
             if( itemPoll != null)
                 itemPoll.setVisible(false);
@@ -2291,7 +2294,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if( itemStore != null)
                 itemStore.setVisible(false);
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             MenuItem itemContacts = menu.findItem(R.id.action_contacts);
             if( itemContacts != null)
                 itemContacts.setVisible(false);
@@ -2310,7 +2313,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(TootActivity.this, uri, filename, uploadReceiver);
+            upload(TootActivity.this, social, uri, filename, uploadReceiver);
         }
     }
 
@@ -2414,7 +2417,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             //Clears the text_url at the end of the toot  for this attachment
                             int selectionBefore = toot_content.getSelectionStart();
                             toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
-                            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                            toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                             //Moves the cursor
                             if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                                 toot_content.setSelection(selectionBefore);
@@ -2583,7 +2586,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
             toot.setContent(tootContent);
-            new PostStatusAsyncTask(getApplicationContext(), account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
         }
@@ -2699,7 +2702,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 if (currentCursorPosition < oldContent.length())
                                     newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                                 toot_content.setText(newContent);
-                                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                                 toot_content.setSelection(newPosition);
                                 AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
                                 toot_content.setThreshold(1);
@@ -2835,7 +2838,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         if (currentCursorPosition < oldContent.length())
                             newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
                         toot_content.setText(newContent);
-                        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                         toot_content.setSelection(newPosition);
                         EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
                         toot_content.setThreshold(1);
@@ -2982,7 +2985,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         if (currentCursorPosition < oldContent.length())
                             newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
                         toot_content.setText(newContent);
-                        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                         toot_content.setSelection(newPosition);
                         TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
                         toot_content.setThreshold(1);
@@ -3091,7 +3094,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( status.getPoll() != null) {
             poll = status.getPoll();
             poll_action.setVisibility(View.VISIBLE);
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 toot_picture.setVisibility(View.GONE);
                 picture_scrollview.setVisibility(View.GONE);
             }
@@ -3183,7 +3186,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             }
         }
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
         if( !displayWYSIWYG()) {
             toot_content.setSelection(toot_content.getText().length());
         }else{
@@ -3219,13 +3222,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }else {
             if( title != null){
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                if(social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     title.setText(getString(R.string.queet_title));
                 else
                     title.setText(getString(R.string.toot_title));
             }
             else {
-                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     setTitle(R.string.queet_title);
                 else
                     setTitle(R.string.toot_title);
@@ -3234,7 +3237,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         invalidateOptionsMenu();
         initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
         if( !displayWYSIWYG()) {
-            toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+            toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
         }else{
             toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
         }
@@ -3344,7 +3347,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         toot_content.setText(content);
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
         toot_content.setSelection(toot_content.getText().length());
         switch (status.getVisibility()){
             case "public":
@@ -3366,32 +3369,32 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         if( title != null) {
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 title.setText(getString(R.string.queet_title));
             else
                 title.setText(getString(R.string.toot_title));
         }
         else {
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 setTitle(R.string.queet_title);
             else
                 setTitle(R.string.toot_title);
         }
         invalidateOptionsMenu();
         initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
-        toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
     }
 
     private void tootReply(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if( title != null) {
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 title.setText(getString(R.string.queet_title_reply));
             else
                 title.setText(getString(R.string.toot_title_reply));
         }
         else {
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 setTitle(R.string.queet_title_reply);
             else
                 setTitle(R.string.toot_title_reply);
@@ -3478,7 +3481,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
 
             if( tootReply != null) {
-                manageMentions(getApplicationContext(), userIdReply, toot_content, toot_cw_content, toot_space_left, tootReply);
+                manageMentions(getApplicationContext(), social, userIdReply, toot_content, toot_cw_content, toot_space_left, tootReply);
             }
             boolean forwardTags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
             if( tootReply != null && forwardTags && tootReply.getTags() != null && tootReply.getTags().size() > 0){
@@ -3488,7 +3491,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     toot_content.setText(toot_content.getText() +" #"+tag.getName());
                 }
                 toot_content.setSelection(currentCursorPosition);
-                toot_space_left.setText(String.valueOf(countLength(toot_content, toot_cw_content)));
+                toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
 
         }
@@ -3496,7 +3499,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    public static void manageMentions(Context context, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply){
+    public static void manageMentions(Context context,  UpdateAccountInfoAsyncTask.SOCIAL social, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply){
 
         //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
         ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
@@ -3531,7 +3534,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 else
                     contentView.append(" ");
             }
-            counterView.setText(String.valueOf(countLength(contentView, CWView)));
+            counterView.setText(String.valueOf(countLength(social, contentView, CWView)));
             contentView.requestFocus();
 
             if( capitalize) {
@@ -3760,7 +3763,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     dialog.dismiss();
                 }
                 poll_action.setVisibility(View.VISIBLE);
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if(social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     toot_picture.setVisibility(View.GONE);
                     picture_scrollview.setVisibility(View.GONE);
                 }
@@ -3922,13 +3925,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static int countLength(MastalabAutoCompleteTextView toot_content, EditText toot_cw_content){
+    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content, EditText toot_cw_content){
         if( toot_content == null || toot_cw_content == null) {
             return -1;
         }
         String content = toot_content.getText().toString();
         String cwContent = toot_cw_content.getText().toString();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON ){
             Matcher matcherALink = Patterns.WEB_URL.matcher(content);
             while (matcherALink.find()){
                 final String url = matcherALink.group(1);
@@ -3972,7 +3975,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
     private boolean displayWYSIWYG(){
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        if( social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             return false;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);

@@ -407,7 +407,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if (currentCursorPosition < oldContent.length() )
                                 newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
-                            toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                            toot_space_left.setText(String.valueOf(TootActivity.countLength(social, toot_content, toot_cw_content)));
                             toot_content.setSelection(newPosition);
                             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, new ArrayList<>());
                             toot_content.setThreshold(1);
@@ -461,7 +461,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(social, toot_content, toot_cw_content)));
                     toot_content.setSelection(newPosition);
                     EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, new ArrayList<>());
                     toot_content.setThreshold(1);
@@ -518,7 +518,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
-                    toot_space_left.setText(String.valueOf(TootActivity.countLength(toot_content, toot_cw_content)));
+                    toot_space_left.setText(String.valueOf(TootActivity.countLength(social,toot_content, toot_cw_content)));
                     toot_content.setSelection(newPosition);
                     TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, new ArrayList<>());
                     toot_content.setThreshold(1);
@@ -561,7 +561,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setContent(tootContent);
             final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-            new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
         }
@@ -2647,9 +2647,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.quick_reply_text.requestFocus();
                             EditText content_cw = new EditText(context);
                             content_cw.setText(status.getReblog()!=null?status.getReblog().getSpoiler_text():status.getSpoiler_text());
-                            TootActivity.manageMentions(context, userId,
+                            TootActivity.manageMentions(context, social,userId,
                                     holder.quick_reply_text,content_cw, holder.toot_space_left,status.getReblog()!=null?status.getReblog():status);
-                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
+                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
 
                             toot_content = holder.quick_reply_text;
                             int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
@@ -4062,7 +4062,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(toot_content, toot_cw_content)  < split_toot_size)){
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content)  < split_toot_size)){
             tootContent = toot_content.getText().toString().trim();
         }else{
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
@@ -4080,7 +4080,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         toot.setVisibility(visibility);
         toot.setIn_reply_to_id(in_reply_to_status);
         toot.setContent(tootContent);
-        new PostStatusAsyncTask(context, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
