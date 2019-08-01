@@ -930,7 +930,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 drawer.openDrawer(GravityCompat.START);
             }
         });
-        Helper.loadPictureIcon(BaseMainActivity.this, account.getAvatar(),iconbar);
+        Helper.loadPictureIcon(BaseMainActivity.this, account,iconbar);
         headerLayout = navigationView.getHeaderView(0);
 
         final ImageView menuMore = headerLayout.findViewById(R.id.header_option_menu);

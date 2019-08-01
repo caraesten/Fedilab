@@ -2010,7 +2010,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if (status.getReblog() != null) {
                 Helper.loadGiF(context, accountForUrl, holder.status_account_profile_boost);
-                Helper.loadGiF(context, status.getAccount().getAvatar(), holder.status_account_profile_boost_by);
+                Helper.loadGiF(context, status.getAccount(), holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);

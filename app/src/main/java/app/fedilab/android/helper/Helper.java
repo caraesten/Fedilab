@@ -1620,13 +1620,10 @@ public class Helper {
     /**
      * Load the profile picture at the place of hamburger icon
      * @param activity Activity The current activity
-     * @param url String the url of the profile picture
+     * @param account Account for the profile picture
      */
-    public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
-        if( url.startsWith("/") ){
-            url = Helper.getLiveInstanceWithProtocol(activity) + url;
-        }
-        loadGiF(activity,url, imageView);
+    public static void loadPictureIcon(final Activity activity, Account account, final ImageView imageView){
+        loadGiF(activity,account, imageView);
     }
 
 
@@ -2019,11 +2016,7 @@ public class Helper {
             account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-            String url = account.getAvatar();
-            if( url.startsWith("/") ){
-                url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
-            }
-            loadGiF(activity, url, profilePicture);
+            loadGiF(activity, account, profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
