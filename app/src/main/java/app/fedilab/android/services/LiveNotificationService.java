@@ -393,8 +393,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             if (targeted_account != null) {
                                 intent.putExtra(Helper.INTENT_TARGETED_ACCOUNT, targeted_account);
                             }
-                            long notif_id = Long.parseLong(account.getId());
-                            final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
                             final String finalTitle = title;
                             Handler mainHandler = new Handler(Looper.getMainLooper());
                             Helper.NotifType finalNotifType = notifType;
@@ -413,7 +411,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                        Helper.notify_user(getApplicationContext(),account, intent, notificationId, BitmapFactory.decodeResource(getResources(),
+                                                        Helper.notify_user(getApplicationContext(),account, intent, BitmapFactory.decodeResource(getResources(),
                                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                         if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
@@ -428,7 +426,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
 
-                                                        Helper.notify_user(getApplicationContext(), account,intent, notificationId, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+                                                        Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                         if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                             SharedPreferences.Editor editor = sharedpreferences.edit();

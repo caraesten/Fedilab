@@ -1058,63 +1058,66 @@ public class Helper {
      * Sends notification with intent
      * @param context Context
      * @param intent Intent associated to the notifcation
-     * @param notificationId int id of the notification
      * @param icon Bitmap profile picture
      * @param title String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, Account account, Intent intent, int notificationId, Bitmap icon, NotifType notifType, String title, String message ) {
+    public static void notify_user(Context context, Account account, Intent intent, Bitmap icon, NotifType notifType, String title, String message ) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        int notificationId = Integer.parseInt(account.getId());
+
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
         String channelId;
         String channelTitle;
+
         switch(notifType){
             case BOOST:
                 channelId = "channel_boost"+account.getAcct()+"@"+account.getInstance();
                 channelTitle = context.getString(R.string.channel_notif_boost);
                 break;
             case FAV:
-                channelId = "channel_fav"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_fav);
+                channelId = "channel_fav";
+                channelTitle = context.getString(R.string.channel_notif_fav);
                 break;
             case FOLLLOW:
-                channelId = "channel_follow"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_follow);
+                channelId = "channel_follow";
+                channelTitle = context.getString(R.string.channel_notif_follow);
                 break;
             case MENTION:
-                channelId = "channel_mention"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_mention);
+                channelId = "channel_mention";
+                channelTitle = context.getString(R.string.channel_notif_mention);
                 break;
             case POLL:
-                channelId = "channel_poll"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_poll);
+                channelId = "channel_poll";
+                channelTitle = context.getString(R.string.channel_notif_poll);
                 break;
             case BACKUP:
-                channelId = "channel_backup"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_backup);
+                channelId = "channel_backup";
+                channelTitle = context.getString(R.string.channel_notif_backup);
                 break;
             case STORE:
-                channelId = "channel_store"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_media);
+                channelId = "channel_store";
+                channelTitle = context.getString(R.string.channel_notif_media);
                 break;
             case TOOT:
-                channelId = "channel_toot"+account.getAcct()+"@"+account.getInstance();
-                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_toot);
+                channelId = "channel_toot";
+                channelTitle = context.getString(R.string.channel_notif_toot);
                 break;
             default:
-                channelId = "channel_boost"+account.getAcct()+"@"+account.getInstance();
-                channelTitle =account.getAcct()+"@"+account.getInstance() + " - " +  context.getString(R.string.channel_notif_boost);
+                channelId = "channel_boost";
+                channelTitle = context.getString(R.string.channel_notif_boost);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.fedilab_notification_icon)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
+                .setGroup(account.getAcct()+"@"+account.getInstance())
                 .setContentIntent(pIntent)
                 .setContentText(message);
         int ledColour = Color.BLUE;
@@ -1212,8 +1215,6 @@ public class Helper {
                 copy(fileVideo, fileVideoTargeded);
                 file = fileVideoTargeded;
             }
-            Random r = new Random();
-            final int notificationIdTmp = r.nextInt(10000);
             // prepare intent which is triggered if the
             // notification is selected
             final Intent intent = new Intent();
@@ -1238,7 +1239,7 @@ public class Helper {
                                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                                notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
                                         R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                                 Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                                 return false;
@@ -1251,7 +1252,7 @@ public class Helper {
                                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                                notify_user(context, account, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                notify_user(context, account, intent, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                                 Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                             }
                         });
@@ -4102,8 +4103,6 @@ public class Helper {
                     String mime = Helper.getMimeType(url);
                     File file = new File(download.getFileUri().getPath());
                     final Intent intent = new Intent();
-                    Random r = new Random();
-                    final int notificationIdTmp = r.nextInt(10000);
                     intent.setAction(android.content.Intent.ACTION_VIEW);
                     Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
                     intent.setDataAndType(uri, mime);
@@ -4111,7 +4110,7 @@ public class Helper {
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                    Helper.notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                    Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
                             R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                 }
             }
@@ -4304,8 +4303,6 @@ public class Helper {
                                     } catch (Exception ignored) {
                                     }
                                     final Intent intent = new Intent();
-                                    Random r = new Random();
-                                    final int notificationIdTmp = r.nextInt(10000);
                                     intent.setAction(android.content.Intent.ACTION_VIEW);
                                     Uri uri = Uri.fromFile(new File(filename));
                                     intent.setDataAndType(uri, "text/csv");
@@ -4313,7 +4310,7 @@ public class Helper {
                                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                                    Helper.notify_user(context, account,intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                    Helper.notify_user(context, account,intent, BitmapFactory.decodeResource(context.getResources(),
                                             R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
                                 }
                             }.start();

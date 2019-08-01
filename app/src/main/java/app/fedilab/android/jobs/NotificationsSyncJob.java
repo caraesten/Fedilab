@@ -266,13 +266,6 @@ public class NotificationsSyncJob extends Job {
             if( targeted_account != null && notifType == Helper.NotifType.FOLLLOW)
                 intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
             intent.putExtra(PREF_INSTANCE, account.getInstance());
-            long notif_id;
-            if( account.getId() != null &&  account.getId().matches("-?\\d+(\\.\\d+)?")){
-                notif_id =  Long.parseLong(account.getId());
-            }else{
-                notif_id = new Random().nextLong();
-            }
-            final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             if( notificationUrl != null ){
                 final String finalTitle = title;
                 Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -294,7 +287,7 @@ public class NotificationsSyncJob extends Job {
 
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        notify_user(getContext(), account, intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                        notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
@@ -308,7 +301,7 @@ public class NotificationsSyncJob extends Job {
                                 .into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        notify_user(getContext(), account, intent, notificationId, resource, finalNotifType, finalTitle, message);
+                                        notify_user(getContext(), account, intent, resource, finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

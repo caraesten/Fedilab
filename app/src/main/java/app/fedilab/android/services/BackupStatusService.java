@@ -182,10 +182,8 @@ public class BackupStatusService extends IntentService {
             intentOpen.setAction(android.content.Intent.ACTION_VIEW);
             Uri uri = Uri.parse("file://" + fullPath);
             intentOpen.setDataAndType(uri, "text/csv");
-            long notif_id = Long.parseLong(account.getId());
-            int notificationId = ((notif_id + 3) > 2147483647) ? (int) (2147483647 - notif_id - 3) : (int) (notif_id + 3);
             String title = getString(R.string.data_export_toots, account.getAcct());
-            Helper.notify_user(getApplicationContext(), account, intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
+            Helper.notify_user(getApplicationContext(), account, intentOpen, BitmapFactory.decodeResource(getResources(),
                     R.drawable.mastodonlogo),Helper.NotifType.BACKUP, title, message);
         } catch (Exception e) {
             e.printStackTrace();

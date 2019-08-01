@@ -514,8 +514,6 @@ public class Sqlite extends SQLiteOpenHelper {
                 src.close();
                 dst.close();
                 final Intent intent = new Intent();
-                Random r = new Random();
-                final int notificationIdTmp = r.nextInt(10000);
                 intent.setAction(android.content.Intent.ACTION_VIEW);
                 Uri uri = Uri.fromFile(dbDest);
                 intent.setDataAndType(uri, "*/*");
@@ -524,7 +522,7 @@ public class Sqlite extends SQLiteOpenHelper {
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                Helper.notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
                         R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
                 Toasty.success(context, context.getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
             }
