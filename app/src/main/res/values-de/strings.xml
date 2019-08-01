@@ -999,7 +999,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="import_instances">Instanzen importieren</string>
     <string name="set_crash_reports">Absturzberichte</string>
     <string name="set_enable_crash_report">Absturzberichte aktivieren</string>
-    <string name="set_enable_crash_report_indication">Wenn aktiviert, wird lokal ein Absturzbericht erstellt. Anschließend können Sie diesen teilen.</string>
+    <string name="set_enable_crash_report_indication">Wenn aktiviert, wird lokal ein Absturzbericht erstellt. Anschließend kannst du diesen teilen.</string>
     <string name="crash_title">Fedilab ist abgestürzt :(</string>
     <string name="crash_message">Du kannst mir den Fehlerreport per E-Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
     <string name="set_wysiwyg">WYSIWYG-Funktionalität verwenden</string>
