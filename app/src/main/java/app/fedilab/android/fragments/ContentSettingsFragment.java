@@ -288,6 +288,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_display_content_after_fetch_more_text = rootView.findViewById(R.id.set_display_content_after_fetch_more_text);
+        set_display_content_after_fetch_more_text.setOnClickListener(v -> set_display_content_after_fetch_more.performClick());
 
         count1 = 0;
         count2 = 0;
@@ -428,6 +430,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_security_provider_text = rootView.findViewById(R.id.set_security_provider_text);
+        set_security_provider_text.setOnClickListener(v -> set_security_provider.performClick());
 
 
         boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
@@ -506,7 +510,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
-
+        final LinearLayout set_display_video_preview_text = rootView.findViewById(R.id.set_display_video_preview_text);
+        set_display_video_preview_text.setOnClickListener(v -> set_display_video_preview.performClick());
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = rootView.findViewById(R.id.set_share_validation);
@@ -646,6 +651,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_remember_position_text = rootView.findViewById(R.id.set_remember_position_text);
+        set_remember_position_text.setOnClickListener(v -> set_remember_position.performClick());
 
 
 
@@ -681,6 +688,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_blur_sensitive_text = rootView.findViewById(R.id.set_blur_sensitive_text);
+        set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
 
         boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
         final CheckBox set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
@@ -694,6 +703,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_long_press_media_text = rootView.findViewById(R.id.set_long_press_media_text);
+        set_long_press_media_text.setOnClickListener(v -> set_long_press_media.performClick());
 
 
         boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
@@ -717,6 +728,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
+        final LinearLayout set_display_timeline_in_list_text = rootView.findViewById(R.id.set_display_timeline_in_list_text);
+        set_display_timeline_in_list_text.setOnClickListener(v -> set_display_timeline_in_list.performClick());
 
 
         boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
@@ -740,6 +753,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
+        final LinearLayout set_display_news_text = rootView.findViewById(R.id.set_display_news_text);
+        set_display_news_text.setOnClickListener(v -> set_display_news.performClick());
 
 
         boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
@@ -756,6 +771,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     getActivity().recreate();
             }
         });
+        final LinearLayout set_enable_crash_report_text = rootView.findViewById(R.id.set_enable_crash_report_text);
+        set_enable_crash_report_text.setOnClickListener(v -> set_enable_crash_report.performClick());
 
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
@@ -804,6 +821,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_display_fedilab_features_button_text = rootView.findViewById(R.id.set_display_fedilab_features_button_text);
+        set_display_fedilab_features_button_text.setOnClickListener(v -> set_fedilab_features_button.performClick());
 
         boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
         final CheckBox set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
@@ -843,6 +862,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_quick_reply_text = rootView.findViewById(R.id.set_quick_reply_text);
+        set_quick_reply_text.setOnClickListener(v -> set_quick_reply.performClick());
 
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
@@ -856,6 +877,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_fit_preview_text = rootView.findViewById(R.id.set_fit_preview_text);
+        set_fit_preview_text.setOnClickListener(v -> set_fit_preview.performClick());
 
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
@@ -941,6 +964,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     edit_custom_sharing_url.setVisibility(View.GONE);
             }
         });
+        final LinearLayout set_custom_sharing_text = rootView.findViewById(R.id.set_custom_sharing_text);
+        set_custom_sharing_text.setOnClickListener(v -> set_custom_sharing.performClick());
 
         // forward tags in replies
         boolean forward_tags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
@@ -1027,6 +1052,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
             }
         });
+        final LinearLayout set_live_notify_text = rootView.findViewById(R.id.set_live_notify_text);
+        set_live_notify_text.setOnClickListener(v -> set_live_notif.performClick());
 
         boolean keep_background_process = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         final CheckBox set_keep_background_process = rootView.findViewById(R.id.set_keep_background_process);
@@ -1039,6 +1066,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_keep_background_process_text = rootView.findViewById(R.id.set_keep_background_process_text);
+        set_keep_background_process_text.setOnClickListener(v -> set_keep_background_process.performClick());
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
@@ -1053,6 +1082,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_capitalize_text = rootView.findViewById(R.id.set_capitalize_text);
+        set_capitalize_text.setOnClickListener(v -> set_capitalize.performClick());
 
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
@@ -1125,6 +1156,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_custom_tabs_text = rootView.findViewById(R.id.set_custom_tabs_text);
+        set_custom_tabs_text.setOnClickListener(v -> set_custom_tabs.performClick());
 
         final LinearLayout set_cookies_container = rootView.findViewById(R.id.set_cookies_container);
         final SwitchCompat set_cookies = rootView.findViewById(R.id.set_cookies);

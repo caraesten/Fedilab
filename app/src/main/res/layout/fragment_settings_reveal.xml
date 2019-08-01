@@ -51,6 +51,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_remember_position_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -81,6 +82,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_blur_sensitive_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -132,6 +134,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_long_press_media_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -193,6 +196,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_display_fedilab_features_button_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -223,7 +227,6 @@
                     android:layout_height="wrap_content" />
 
 
-                <!-- DISPLAY BOT ICON -->
                 <CheckBox
                     android:id="@+id/set_display_confirm"
                     android:layout_width="wrap_content"
@@ -246,6 +249,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_quick_reply_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -278,6 +282,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_fit_preview_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -337,6 +342,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_display_video_preview_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -367,6 +373,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_display_content_after_fetch_more_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -890,6 +897,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_display_timeline_in_list_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -920,6 +928,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_display_news_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -955,6 +964,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_enable_crash_report_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1014,6 +1024,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_security_provider_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1246,6 +1257,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_custom_tabs_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1384,6 +1396,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_live_notify_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1415,6 +1428,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_keep_background_process_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1472,6 +1486,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_capitalize_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1617,6 +1632,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
+                        android:id="@+id/set_custom_sharing_text"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
