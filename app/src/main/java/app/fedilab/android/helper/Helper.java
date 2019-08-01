@@ -1063,7 +1063,7 @@ public class Helper {
      * @param title String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, NotifType notifType, String title, String message ) {
+    public static void notify_user(Context context, Account account, Intent intent, int notificationId, Bitmap icon, NotifType notifType, String title, String message ) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -1075,40 +1075,40 @@ public class Helper {
         String channelTitle;
         switch(notifType){
             case BOOST:
-                channelId = "channel_boost";
+                channelId = "channel_boost"+account.getAcct()+"@"+account.getInstance();
                 channelTitle = context.getString(R.string.channel_notif_boost);
                 break;
             case FAV:
-                channelId = "channel_fav";
-                channelTitle = context.getString(R.string.channel_notif_fav);
+                channelId = "channel_fav"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_fav);
                 break;
             case FOLLLOW:
-                channelId = "channel_follow";
-                channelTitle = context.getString(R.string.channel_notif_follow);
+                channelId = "channel_follow"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_follow);
                 break;
             case MENTION:
-                channelId = "channel_mention";
-                channelTitle = context.getString(R.string.channel_notif_mention);
+                channelId = "channel_mention"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_mention);
                 break;
             case POLL:
-                channelId = "channel_poll";
-                channelTitle = context.getString(R.string.channel_notif_poll);
+                channelId = "channel_poll"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_poll);
                 break;
             case BACKUP:
-                channelId = "channel_backup";
-                channelTitle = context.getString(R.string.channel_notif_backup);
+                channelId = "channel_backup"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_backup);
                 break;
             case STORE:
-                channelId = "channel_store";
-                channelTitle = context.getString(R.string.channel_notif_media);
+                channelId = "channel_store"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_media);
                 break;
             case TOOT:
-                channelId = "channel_toot";
-                channelTitle = context.getString(R.string.channel_notif_toot);
+                channelId = "channel_toot"+account.getAcct()+"@"+account.getInstance();
+                channelTitle = account.getAcct()+"@"+account.getInstance() + " - " + context.getString(R.string.channel_notif_toot);
                 break;
             default:
-                channelId = "channel_boost";
-                channelTitle = context.getString(R.string.channel_notif_boost);
+                channelId = "channel_boost"+account.getAcct()+"@"+account.getInstance();
+                channelTitle =account.getAcct()+"@"+account.getInstance() + " - " +  context.getString(R.string.channel_notif_boost);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.fedilab_notification_icon)
@@ -1234,7 +1234,11 @@ public class Helper {
 
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                                notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
                                         R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                                 Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                                 return false;
@@ -1243,7 +1247,11 @@ public class Helper {
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                                notify_user(context, account, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                                 Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                             }
                         });
@@ -4099,7 +4107,11 @@ public class Helper {
                     intent.setAction(android.content.Intent.ACTION_VIEW);
                     Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
                     intent.setDataAndType(uri, mime);
-                    Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                    Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                    Helper.notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
                             R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                 }
             }
@@ -4297,7 +4309,11 @@ public class Helper {
                                     intent.setAction(android.content.Intent.ACTION_VIEW);
                                     Uri uri = Uri.fromFile(new File(filename));
                                     intent.setDataAndType(uri, "text/csv");
-                                    Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                                    Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                                    Helper.notify_user(context, account,intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
                                             R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
                                 }
                             }.start();

@@ -18,6 +18,7 @@ package app.fedilab.android.sqlite;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.BitmapFactory;
@@ -34,9 +35,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -515,7 +519,12 @@ public class Sqlite extends SQLiteOpenHelper {
                 intent.setAction(android.content.Intent.ACTION_VIEW);
                 Uri uri = Uri.fromFile(dbDest);
                 intent.setDataAndType(uri, "*/*");
-                Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                Helper.notify_user(context, account, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
                         R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
                 Toasty.success(context, context.getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
             }

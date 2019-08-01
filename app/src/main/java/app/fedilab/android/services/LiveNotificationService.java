@@ -413,7 +413,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                        Helper.notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
+                                                        Helper.notify_user(getApplicationContext(),account, intent, notificationId, BitmapFactory.decodeResource(getResources(),
                                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                         if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
@@ -427,7 +427,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                 .into(new SimpleTarget<Bitmap>() {
                                                     @Override
                                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                                        Helper.notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+
+                                                        Helper.notify_user(getApplicationContext(), account,intent, notificationId, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                         if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                             SharedPreferences.Editor editor = sharedpreferences.edit();

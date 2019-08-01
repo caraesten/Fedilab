@@ -294,7 +294,7 @@ public class NotificationsSyncJob extends Job {
 
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                        notify_user(getContext(), account, intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
@@ -308,7 +308,7 @@ public class NotificationsSyncJob extends Job {
                                 .into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        notify_user(getContext(), intent, notificationId, resource, finalNotifType, finalTitle, message);
+                                        notify_user(getContext(), account, intent, notificationId, resource, finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
