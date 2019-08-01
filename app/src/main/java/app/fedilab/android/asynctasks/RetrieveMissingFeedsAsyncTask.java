@@ -17,7 +17,6 @@ package app.fedilab.android.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.GNUAPI;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
@@ -119,8 +117,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if (conversations != null && conversations.size() > 0) {
                         for (Conversation conversation : conversations) {
                             app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                            List<Account> ppConversation = new ArrayList<>(conversation.getAccounts());
-                            status.setConversationAccounts(ppConversation);
+                            List<String> ppConversationStatic = new ArrayList<>();
+                            List<String> ppConversation = new ArrayList<>();
+                            for (Account account : conversation.getAccounts()) {
+                                ppConversationStatic.add(account.getAvatar_static());
+                                ppConversation.add(account.getAvatar());
+                            }
+                            status.setConversationProfilePicture(ppConversation);
+                            status.setConversationProfilePictureStatic(ppConversationStatic);
                             status.setConversationId(conversation.getId());
                             tempStatus.add(status);
                         }
@@ -166,8 +170,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if (conversations != null && conversations.size() > 0) {
                         for (Conversation conversation : conversations) {
                             app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                            List<Account> ppConversation = new ArrayList<>(conversation.getAccounts());
-                            status.setConversationAccounts(ppConversation);
+                            List<String> ppConversationStatic = new ArrayList<>();
+                            List<String> ppConversation = new ArrayList<>();
+                            for (Account account : conversation.getAccounts()) {
+                                ppConversationStatic.add(account.getAvatar_static());
+                                ppConversation.add(account.getAvatar());
+                            }
+                            status.setConversationProfilePicture(ppConversation);
+                            status.setConversationProfilePictureStatic(ppConversationStatic);
                             status.setConversationId(conversation.getId());
                             tempStatus.add(status);
                         }

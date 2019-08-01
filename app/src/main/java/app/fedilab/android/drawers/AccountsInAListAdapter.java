@@ -88,7 +88,7 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         else
             holder.account_ac.setVisibility(View.VISIBLE);
         //Profile picture
-        Helper.loadGiF(context, account, holder.account_pp);
+        Helper.loadGiF(context,  account.getAvatar_static(), account.getAvatar(), holder.account_pp);
 
         if( actionType == type.CURRENT){
             holder.account_action.setImageResource(R.drawable.ic_close);

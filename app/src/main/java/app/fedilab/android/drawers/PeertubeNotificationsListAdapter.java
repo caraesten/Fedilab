@@ -101,7 +101,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         PeertubeVideoNotification videoAction = null;
         if( notification.getPeertubeActorFollow() != null){
             String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeActorFollow().getFollower().getAvatar();
-            Helper.loadGiF(context,profileUrl, holder.peertube_notif_pp);
+            Helper.loadGiF(context,profileUrl, profileUrl, holder.peertube_notif_pp);
             accountAction =notification.getPeertubeActorFollow().getFollower();
             String type = notification.getPeertubeActorFollow().getFollowing().getType();
             String message;
@@ -126,7 +126,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
             });
         }else if( notification.getPeertubeComment() != null){ //Comment Notification
             String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeComment().getPeertubeAccountNotification().getAvatar();
-            Helper.loadGiF(context, profileUrl, holder.peertube_notif_pp);
+            Helper.loadGiF(context, profileUrl,  profileUrl, holder.peertube_notif_pp);
             accountAction = notification.getPeertubeComment().getPeertubeAccountNotification();
             videoAction  = notification.getPeertubeComment().getPeertubeVideoNotification();
             String message = context.getString(R.string.peertube_comment_on_video,accountAction.getDisplayName(), videoAction.getName());
@@ -148,7 +148,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         }else {//Other Notifications
             if (notification.getPeertubeVideoNotification() != null && notification.getPeertubeVideoNotification().getPeertubeAccountNotification() != null){
                 String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeVideoNotification().getPeertubeAccountNotification().getAvatar();
-                Helper.loadGiF(context, profileUrl, holder.peertube_notif_pp);
+                Helper.loadGiF(context, profileUrl, profileUrl, holder.peertube_notif_pp);
                 accountAction = notification.getPeertubeVideoNotification().getPeertubeAccountNotification();
                 videoAction  = notification.getPeertubeVideoNotification();
                 String message = "";

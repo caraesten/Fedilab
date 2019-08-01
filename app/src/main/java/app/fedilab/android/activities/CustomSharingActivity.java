@@ -124,7 +124,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
 
-        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar_static(), account.getAvatar(), pp_actionBar);
         Bundle b = getIntent().getExtras();
         Status status = null;
         if(b != null) {

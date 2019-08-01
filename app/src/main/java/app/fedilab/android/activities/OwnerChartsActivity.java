@@ -130,7 +130,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
             if( account != null) {
-                Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
+                Helper.loadGiF(getApplicationContext(), account.getAvatar_static(), account.getAvatar(), pp_actionBar);
             }
 
             toolbar_close.setOnClickListener(new View.OnClickListener() {

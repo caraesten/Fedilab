@@ -158,7 +158,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
 
 
-        Helper.loadGiF(getApplicationContext(), account, pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar_static(), account.getAvatar(), pp_actionBar);
 
         set_profile_name = findViewById(R.id.set_profile_name);
         set_profile_description = findViewById(R.id.set_profile_description);

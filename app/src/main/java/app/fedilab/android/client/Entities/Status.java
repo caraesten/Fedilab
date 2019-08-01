@@ -133,7 +133,8 @@ public class Status implements Parcelable{
     private boolean showSpoiler = false;
 
     public Status(){}
-    private List<Account> conversationAccounts;
+    private List<String> conversationProfilePicture;
+    private List<String> conversationProfilePictureStatic;
     private String webviewURL = null;
 
     private boolean isBoostAnimated = false, isFavAnimated = false;
@@ -199,7 +200,8 @@ public class Status implements Parcelable{
         dest.writeString(this.conversationId);
         dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
         dest.writeInt(this.numberLines);
-        dest.writeTypedList(this.conversationAccounts);
+        dest.writeStringList(this.conversationProfilePicture);
+        dest.writeStringList(this.conversationProfilePictureStatic);
         dest.writeString(this.webviewURL);
         dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
@@ -265,7 +267,8 @@ public class Status implements Parcelable{
         this.conversationId = in.readString();
         this.isExpanded = in.readByte() != 0;
         this.numberLines = in.readInt();
-        this.conversationAccounts = in.createTypedArrayList(Account.CREATOR);
+        this.conversationProfilePicture = in.createStringArrayList();
+        this.conversationProfilePictureStatic = in.createStringArrayList();
         this.webviewURL = in.readString();
         this.isBoostAnimated = in.readByte() != 0;
         this.isFavAnimated = in.readByte() != 0;
@@ -591,7 +594,7 @@ public class Status implements Parcelable{
         SpannableString spannableStringContent, spannableStringCW;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
-        
+
         String content = status.getReblog() != null ?status.getReblog().getContent():status.getContent();
         Pattern aLink = Pattern.compile("<a((?!href).)*href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
@@ -1437,12 +1440,12 @@ public class Status implements Parcelable{
         this.type = type;
     }
 
-    public List<Account> getConversationAccounts() {
-        return conversationAccounts;
+    public List<String> getConversationProfilePicture() {
+        return conversationProfilePicture;
     }
 
-    public void setConversationAccounts(List<Account> conversationAccounts) {
-        this.conversationAccounts = conversationAccounts;
+    public void setConversationProfilePicture(List<String> conversationProfilePicture) {
+        this.conversationProfilePicture = conversationProfilePicture;
     }
 
     public String getWebviewURL() {
@@ -1602,5 +1605,13 @@ public class Status implements Parcelable{
 
     public void setImageURL(List<String> imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public List<String> getConversationProfilePictureStatic() {
+        return conversationProfilePictureStatic;
+    }
+
+    public void setConversationProfilePictureStatic(List<String> conversationProfilePictureStatic) {
+        this.conversationProfilePictureStatic = conversationProfilePictureStatic;
     }
 }
