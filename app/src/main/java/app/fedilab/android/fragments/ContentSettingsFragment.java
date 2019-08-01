@@ -1620,7 +1620,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_boost");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_boost" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1630,7 +1632,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_fav");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_fav" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1640,7 +1644,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_follow");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_follow" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1650,7 +1656,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1660,7 +1668,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_poll");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_poll" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1670,7 +1680,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_backup");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_backup" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
@@ -1680,7 +1692,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_store");
+                    if( account != null) {
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_store" + account.getAcct() + "@" + account.getInstance());
+                    }
                     startActivity(intent);
                 }
             });
