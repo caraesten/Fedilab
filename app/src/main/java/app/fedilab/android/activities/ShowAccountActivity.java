@@ -724,9 +724,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             if( url != null && url.startsWith("/")){
                 url = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + url;
             }
-            if( !disableGif)
-                Glide.with(getApplicationContext()).load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
-            else {
+            if( !disableGif && url != null && url.endsWith(".gif")) {
+                Glide.with(getApplicationContext()).asGif().load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
+            }else {
                 Glide.with(getApplicationContext())
                         .asBitmap()
                         .load(url)
