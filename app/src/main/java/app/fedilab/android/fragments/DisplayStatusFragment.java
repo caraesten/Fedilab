@@ -506,10 +506,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Status status = conversation.getLast_status();
                         if (status != null) {
                             status.setConversationId(conversation.getId());
-                            List<String> ppConversation = new ArrayList<>();
-                            for (Account account : conversation.getAccounts())
-                                ppConversation.add(account.getAvatar());
-                            status.setConversationProfilePicture(ppConversation);
+                            List<Account> ppConversation = new ArrayList<>(conversation.getAccounts());
+                            status.setConversationAccounts(ppConversation);
                         }
                         statusesConversations.add(status);
                     }

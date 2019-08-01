@@ -133,7 +133,7 @@ public class Status implements Parcelable{
     private boolean showSpoiler = false;
 
     public Status(){}
-    private List<String> conversationProfilePicture;
+    private List<Account> conversationAccounts;
     private String webviewURL = null;
 
     private boolean isBoostAnimated = false, isFavAnimated = false;
@@ -199,7 +199,7 @@ public class Status implements Parcelable{
         dest.writeString(this.conversationId);
         dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
         dest.writeInt(this.numberLines);
-        dest.writeStringList(this.conversationProfilePicture);
+        dest.writeTypedList(this.conversationAccounts);
         dest.writeString(this.webviewURL);
         dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
@@ -265,7 +265,7 @@ public class Status implements Parcelable{
         this.conversationId = in.readString();
         this.isExpanded = in.readByte() != 0;
         this.numberLines = in.readInt();
-        this.conversationProfilePicture = in.createStringArrayList();
+        this.conversationAccounts = in.createTypedArrayList(Account.CREATOR);
         this.webviewURL = in.readString();
         this.isBoostAnimated = in.readByte() != 0;
         this.isFavAnimated = in.readByte() != 0;
@@ -1437,12 +1437,12 @@ public class Status implements Parcelable{
         this.type = type;
     }
 
-    public List<String> getConversationProfilePicture() {
-        return conversationProfilePicture;
+    public List<Account> getConversationAccounts() {
+        return conversationAccounts;
     }
 
-    public void setConversationProfilePicture(List<String> conversationProfilePicture) {
-        this.conversationProfilePicture = conversationProfilePicture;
+    public void setConversationAccounts(List<Account> conversationAccounts) {
+        this.conversationAccounts = conversationAccounts;
     }
 
     public String getWebviewURL() {
