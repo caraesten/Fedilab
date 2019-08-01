@@ -1402,13 +1402,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
                 if (theme == Helper.THEME_BLACK) {
-                    holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_translate.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_timed_mute.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_schedule.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_mention.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
-                    holder.custom_feature_cache.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4__));
+                    holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_translate.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_timed_mute.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_schedule.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_mention.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    holder.custom_feature_cache.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
                 } else if (theme == Helper.THEME_DARK) {
                     holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
                     holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
