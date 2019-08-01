@@ -68,7 +68,7 @@
     <string name="show_replies">Antworten anzeigen</string>
     <string name="action_open_in_web">Im Browser öffnen</string>
     <string name="translate">Übersetzen</string>
-    <string name="please_wait">Bitte warten Sie einige Sekunden, bevor Sie diese Aktion durchführen.</string>
+    <string name="please_wait">Bitte warte einige Sekunden, bevor du diese Aktion durchführst.</string>
     <!--- Menu -->
     <string name="home_menu">Startseite</string>
     <string name="local_menu">Lokale Zeitleiste</string>
@@ -84,9 +84,9 @@
     <string name="optimization">Optimierung</string>
     <string name="settings">Einstellungen</string>
     <string name="profile">Profil</string>
-    <string name="make_a_choice">Was möchten Sie tun?</string>
+    <string name="make_a_choice">Was möchtest du tun?</string>
     <string name="delete_account_title">Konto löschen</string>
-    <string name="delete_account_message" formatted="false">Möchten Sie das Konto %1$s wirklich aus der App entfernen?</string>
+    <string name="delete_account_message" formatted="false">Möchtest du das Konto %1$s wirklich aus der App entfernen?</string>
     <string name="send_email">E-Mail senden</string>
     <string name="choose_file">Datei wählen</string>
     <string name="choose_file_error">Kein Dateimanager gefunden!</string>
@@ -151,7 +151,7 @@
     <string name="date_day">%d d</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Warnung</string>
-    <string name="toot_placeholder">Was beschäftigt Sie?</string>
+    <string name="toot_placeholder">Was beschäftigt dich?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
@@ -159,7 +159,7 @@
     <string name="toot_title_reply">Auf einen Toot antworten</string>
     <string name="queet_title">Schreib einen Queet</string>
     <string name="queet_title_reply">Auf einen Queet antworten</string>
-    <string name="toot_no_space">Sie haben das Limit von 500 Zeichen erreicht!</string>
+    <string name="toot_no_space">Du hast das Limit von 500 Zeichen erreicht!</string>
     <string name="toot_select_image">Wähle eine Mediendatei</string>
     <string name="toot_select_image_error">Ein Fehler während der Auswahl ist aufgetreten!</string>
     <string name="toot_delete_media">Diese Datei löschen?</string>
@@ -167,7 +167,7 @@
     <string name="toot_visibility_tilte">Sichtbarkeit des Toot</string>
     <string name="toots_visibility_tilte">Standard-Sichtbarkeit der Toots: </string>
     <string name="toot_sent">Der Toot wurde gesendet!</string>
-    <string name="toot_reply_content_title">Sie antworten auf diesen Toot:</string>
+    <string name="toot_reply_content_title">Du antwortest auf diesen Toot:</string>
     <string name="toot_sensitive">Vertrauliche Inhalte?</string>
     <string-array name="toot_visibility">
         <item>In öffentliche Zeitleisten eintragen</item>
@@ -215,13 +215,13 @@
     <string name="warning_battery">Der Batteriesparmodus ist aktiviert! Einiges funktioniert möglicherweise nicht wie erwartet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Die Dauer für den Lautlosmodus sollte mehr als eine Minute betragen.</string>
-    <string name="timed_mute_date">%1$s wurde bis %2$s lautlos geschaltet.\n Sie können den Lautlosmodus für diesen Nutzer beenden, indem Sie sein/ihr Profil besuchen.</string>
+    <string name="timed_mute_date">%1$s wurde bis %2$s lautlos geschaltet.\n Du kannst den Lautlosmodus für diesen Nutzer beenden, indem du sein/ihr Profil besuchst.</string>
     <string name="timed_mute_profile">%1$s ist bis %2$s lautlos geschaltet.\n Hier antippen, um den Lautlosmodus zu beenden.</string>
     <!-- Notifications -->
     <string name="no_notifications">Keine Benachrichtigungen</string>
-    <string name="notif_mention">hat Sie erwähnt</string>
+    <string name="notif_mention">hat dich erwähnt</string>
     <string name="notif_reblog">hat deinen Beitrag geteilt</string>
-    <string name="notif_favourite">hat Ihren Status favorisiert</string>
+    <string name="notif_favourite">hat deinen Status favorisiert</string>
     <string name="notif_follow">folgt dir</string>
     <string name="notif_pouet">Neuer Toot von %1$s</string>
     <plurals name="other_notifications">
@@ -425,7 +425,7 @@
     <string name="privacy_data">Auf dem Gerät werden nur allgemeine Informationen aus den Konten gespeichert.
 Diese Daten sind streng vertraulich und können nur von der Anwendung verwendet werden.
 Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
-&#9888; Anmeldedaten und Passwörter werden nie gespeichert. Sie werden nur bei einer sicheren Authentifizierung (SSL) mit einer Instanz verwendet.</string>
+&#9888; Anmeldedaten und Passwörter werden nie gespeichert. Sie werden nur bei einer sicheren Authentifizierung (TLS) mit einer Instanz verwendet.    </string>
     <string name="privacy_authorizations_title">Berechtigungen:</string>
     <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
              - <b>INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
@@ -446,7 +446,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
         -<b>PhotoView</b>: Bilder verwalten\n
     </string>
     <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
-    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die Sie hier finden können: https://yandex.ru/legal/confidential/?lang=en</string>
+    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die du hier finden kannst: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text_dev">Danke an:</string>
     <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
     <string name="search">Suche</string>
@@ -500,7 +500,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="no_account_yet">Noch ohne Konto?</string>
     <string name="toast_instance_unavailable">Es wurden keine Zeitleisten in dieser Instanz gefunden!</string>
     <string name="delete_instance">Diese Instanz löschen?</string>
-    <string name="warning_delete_instance">Sie löschen %s aus Ihren folgenden Instanzen.</string>
+    <string name="warning_delete_instance">Du löschst %s aus deinen folgenden Instanzen.</string>
     <string name="which_language">Übersetzen in</string>
     <string name="follow_instance">Folge Instanz</string>
     <string name="toast_instance_already_added">Du folgst dieser Instanz bereits!</string>
@@ -570,8 +570,8 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="retrieve_remote_conversation">Rufe entferntes Thema ab!</string>
     <string name="no_blocked_domain">Keine blockierten Domänen!</string>
     <string name="unblock_domain_confirm">Domäne nicht mehr blockieren</string>
-    <string name="unblock_domain_confirm_message">Möchten Sie %s wirklich entsperren?</string>
-    <string name="block_domain_confirm_message">Möchten Sie %s wirklich sperren?\n\nEs werden keine Inhalte aus dieser Domain in einer öffentlichen Zeitleiste oder in Ihren Benachrichtigungen angezeigt. Ihre Follower aus dieser Domain werden entfernt.</string>
+    <string name="unblock_domain_confirm_message">Möchtest du %s wirklich entsperren?</string>
+    <string name="block_domain_confirm_message">Möchtest du %s wirklich sperren?\n\nEs werden keine Inhalte aus dieser Domain in einer öffentlichen Zeitleiste oder in deinen Benachrichtigungen angezeigt. Deine Follower aus dieser Domain werden entfernt.</string>
     <string name="blocked_domains">Blockierte Domänen</string>
     <string name="block_domain">Blockiere Domäne</string>
     <string name="toast_block_domain">Die Domäne ist blockiert</string>
@@ -655,9 +655,9 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
         <item>1 Tag</item>
         <item>1 Woche</item>
     </string-array>
-    <string name="showcase_instance">In diesem Feld müssen Sie Ihren Instanz-Hostnamen eingeben.\nWenn Sie zum Beispiel ein Konto auf https://mastodon.social erstellt haben\nschreiben Sie einfach <b>mastodon.social</b> (ohne https://)\n
-Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n\n
-⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!</string>
+    <string name="showcase_instance">In diesem Feld musst du deinen Instanz-Hostnamen eingeben.\nWenn du zum Beispiel ein Konto auf https://mastodon.social erstellt hast\nschreibe einfach <b>mastodon.social</b> (ohne https://)\n
+Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\n
+⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!    </string>
     <string name="showcase_uid">Tragen Sie hier die E-Mail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.    </string>
     <string name="showcase_pwd">Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     </string>
@@ -694,7 +694,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="upload_video">Hochladen</string>
     <string name="reply">Antworten</string>
     <string name="delete_comment">Kommentar entfernen</string>
-    <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
+    <string name="delete_comment_confirm">Möchtest du diesen Kommentar wirklich löschen?</string>
     <string name="fullscreen">Vollbild-Video</string>
     <string name="set_video_mode">Modus für Videoaufnahmen</string>
     <string name="file_to_upload">Datei zum Hochladen auswählen</string>
@@ -714,7 +714,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="uploading">Wird hochgeladen, bitte warten …</string>
     <string name="video_uploaded_action">Hier klicken, um die Videodaten zu bearbeiten.</string>
     <string name="delete_video">Video löschen</string>
-    <string name="delete_video_confirmation">Möchten Sie dieses Video wirklich löschen?</string>
+    <string name="delete_video_confirmation">Möchtest du dieses Video wirklich löschen?</string>
     <string name="no_video_uploaded">Noch keine Videos hochgeladen!</string>
     <string name="display_nsfw_videos">Videos mit heiklen Inhalten anzeigen</string>
     <string name="default_channel_of">Standard %s Kanal</string>
@@ -786,7 +786,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="poll_choice_1">Möglichkeit 1</string>
     <string name="poll_choice_2">Möglichkeit 2</string>
     <string name="poll_choice_s">%d auswählen</string>
-    <string name="poll_invalid_choices">Sie benötigen mindestens zwei Möglichkeiten für die Umfrage!</string>
+    <string name="poll_invalid_choices">Du benötigst mindestens zwei Möglichkeiten für die Umfrage!</string>
     <string name="done">Fertig</string>
     <string name="poll_finish_at">endet um %s</string>
     <string name="refresh_poll">Umfrage aktualisieren</string>
@@ -812,7 +812,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="undo">Widerrufen</string>
     <string name="visible_tabs_needed">Es müssen zwei sichtbare Tabs vorhanden sein!</string>
     <string name="action_reorder_timeline">Zeitleisten neu ordnen</string>
-    <string name="warning_list_deletion">Verwenden Sie den Listeneintrag zum Löschen dieser Liste!</string>
+    <string name="warning_list_deletion">Verwende den Listeneintrag zum Löschen dieser Liste!</string>
     <string name="warning_main_timeline">Hauptzeitleisten können nur ausgeblendet werden!</string>
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Zeitleiste hinzufügen</string>
@@ -833,7 +833,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="privacy">Datenschutz</string>
     <string name="create">Erstellen</string>
     <string name="action_playlist_add">Sie haben noch keine Wiedergabelisten. Klicken Sie auf das Symbol „➕”, um eine neue Wiedergabeliste hinzuzufügen.</string>
-    <string name="error_display_name">Sie müssen einen Anzeigenamen angeben!</string>
+    <string name="error_display_name">Du musst einen Anzeigenamen angeben!</string>
     <string name="error_channel_mandatory">Ein Kanal wird benötigt, wenn es sich um eine öffentliche Wiedergabeliste handelt.</string>
     <string name="action_playlist_create">Wiedergabeliste erstellen</string>
     <string name="action_playlist_empty_content">Diese Wiedergabeliste ist leer.</string>
@@ -847,7 +847,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Anpassen</string>
     <string name="label_brush">Pinsel</string>
-    <string name="confirm_exit_editing">Möchten Sie die Grafik wirklich verlassen, ohne sie zu speichern?</string>
+    <string name="confirm_exit_editing">Möchtest du den Editor wirklich verlassen, ohne die Grafik zu speichern?</string>
     <string name="discard">Verwerfen</string>
     <string name="saving">Speichern …</string>
     <string name="image_saved">Grafik erfolgreich gespeichert!</string>
@@ -894,18 +894,18 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="password_error">Die Passwörter stimmen nicht überein!</string>
     <string name="email_error">Ungültige E-Mail-Adresse!</string>
     <string name="username_indicator">Ihr Benutzername muss auf %1$s eindeutig sein</string>
-    <string name="email_indicator">Sie erhalten eine Bestätigungs-E-Mail</string>
+    <string name="email_indicator">Du erhältst eine Bestätigungs-E-Mail</string>
     <string name="password_indicator">Mindestens 8 Zeichen verwenden</string>
     <string name="password_too_short">Das Passwort muss mindestens 8 Zeichen lang sein</string>
     <string name="username_error">Der Benutzername darf nur Buchstaben, Ziffern und Unterstriche enthalten</string>
     <string name="account_created">Konto erfolgreich erstellt.</string>
-    <string name="account_created_message">Ihr Konto wurde erfolgreich erstellt!\n\nDenken Sie daran, Ihre E-Mail-Adresse innerhalb der nächsten 48 Stunden zu bestätigen.\n\nSie können nun Ihr Konto verbinden, indem Sie <b>%1$s</b> in das erste Feld schreiben und auf die Schaltfläche <b>Verbinden</b> klicken.\n\n<b>Wichtig</b>: Wenn Ihre Instanz eine Bestätigung benötigt, erhalten Sie eine E-Mail, sobald sie geprüft wurde!</string>
-    <string name="save_draft">Möchten Sie die Nachricht als Entwurf speichern?</string>
+    <string name="account_created_message">Dein Konto wurde erfolgreich erstellt!\n\nDenke daran, deine E-Mail-Adresse innerhalb der nächsten 48 Stunden zu bestätigen.\n\nDu kannst nun dein Konto verbinden, indem du <b>%1$s</b> in das erste Feld schreibst und auf die Schaltfläche <b>Verbinden</b> klickst.\n\n<b>Wichtig</b>: Wenn deine Instanz eine Bestätigung benötigt, erhältst du eine E-Mail, sobald sie geprüft wurde!    </string>
+    <string name="save_draft">Möchtest du die Nachricht als Entwurf speichern?</string>
     <string name="administration">Verwaltung</string>
     <string name="reports">Berichte</string>
     <string name="no_reports">Keine Berichte vorhanden!</string>
     <string name="reconnect_account">Erneut mit Konto verbinden</string>
-    <string name="reconnect_account_message">Die Anwendung konnte nicht auf die Verwaltungsfunktionen zugreifen. Möglicherweise müssen Sie das Konto erneut verbinden, um vollständigen Zugriff zu erhalten.</string>
+    <string name="reconnect_account_message">Die Anwendung konnte nicht auf die Verwaltungsfunktionen zugreifen. Möglicherweise musst du das Konto erneut verbinden, um vollständigen Zugriff zu erhalten.</string>
     <string name="unresolved">Ungelöst</string>
     <string name="resolved">Gelöst</string>
     <string name="remote">Fernzugriff</string>
@@ -958,23 +958,23 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="toot_message_record_error">Aufnahme der Sprachnachricht fehlgeschlagen!</string>
     <string name="voice_message">Sprachnachricht</string>
     <string name="set_quick_reply">Schnelles Antworten aktivieren</string>
-    <string name="reply_might_be_useless">Das Konto, dem Sie antworten, sieht Ihre Nachricht möglicherweise nicht!</string>
+    <string name="reply_might_be_useless">Der Nutzer, dem du antwortest, sieht deine Nachricht möglicherweise nicht!</string>
     <string name="set_remember_position_indication">Wenn deaktiviert, lädt die App immer die letzten Status</string>
     <string name="set_blur_sensitive_indication">Wenn deaktiviert, werden sensible Medien mit Hilfe einer Schaltfläche ausgeblendet</string>
     <string name="set_long_press_media_indication">Medien in voller Größe speichern durch langes Antippen der Vorschaubilder</string>
-    <string name="set_display_timeline_in_list_indication">Fügen Sie oben rechts eine Dreipunkt-Schaltfläche […] hinzu, um alle Schlagwörter/Instanzen/Listen aufzulisten</string>
+    <string name="set_display_timeline_in_list_indication">Füge oben rechts eine Dreipunkt-Schaltfläche […] hinzu, um alle Schlagwörter/Instanzen/Listen aufzulisten</string>
     <string name="set_display_news_from_fedilab_indication">Anzeige eines Elements im Hauptmenü für einen schnellen Zugriff auf das Zeitlisten-Zielen #Fedilab-Tag</string>
-    <string name="live_notif_indication">Halten Sie eine offene Verbindung zur Streaming-API für Echtzeit-Mitteilungen aufrecht.</string>
-    <string name="set_keep_background_process_indication">Dieser Ordner besteht bereits.\n Bitte geben Sie einen anderen Namen für den Ordner an.</string>
-    <string name="set_enable_time_slot_indication">Innerhalb des Zeitfensters sendet die App Mitteilungen. Sie können dieses Zeitfenster mit dem richtigen Drehwähler umkehren (d.h. leise).</string>
+    <string name="live_notif_indication">Halte eine offene Verbindung zur Streaming-API für Echtzeit-Mitteilungen aufrecht.</string>
+    <string name="set_keep_background_process_indication">Dieser Ordner besteht bereits.\n Bitte gib einen anderen Namen für den Ordner an.</string>
+    <string name="set_enable_time_slot_indication">Innerhalb des Zeitfensters sendet die App Mitteilungen. Du kannst dieses Zeitfenster mit dem richtigen Drehwähler umkehren (d. h. leise).</string>
     <string name="set_display_fedilab_features_button_indication">Zeigt eine Fedilab-Schaltfläche unter dem Profilbild. Dies ermöglicht einen Schnellzugriff auf In-App-Funktionen.</string>
     <string name="set_quick_reply_indication">Ermöglicht das direkte Antworten in Zeitachsen unterhalb des Status</string>
     <string name="set_fit_preview_indication">Vorschauen in Zeitachsen werden nicht beschnitten</string>
     <string name="set_display_video_preview_indication">Ermöglicht die Wiedergabe eingebetteter Videos direkt in der Zeitleiste</string>
     <string name="set_display_content_after_fetch_more_indication">Ermöglicht es, die Art und Weise umzukehren, wie Zustände gelesen werden, die nach dem Klicken auf die Schaltfläche „Mehr nachladen” angezeigt werden.</string>
-    <string name="set_security_provider_indication">Diese Option ermöglicht die Unterstützung aktueller Verschlüsselungs-Suiten. Es ist nützlich für ältere Android-Geräte oder wenn Sie keine Verbindung zu Ihrer Instanz herstellen können.</string>
-    <string name="set_video_mode_indication">Exklusiv für PeerTube-Videos. Aktivieren Sie diesen Modus, wenn Sie diese nicht wiedergeben können.</string>
-    <string name="featured_hashtags_indication">Diese Schlagwörter ermöglichen es, den Status von Profilen zu filtern. Sie müssen das Kontextmenü verwenden, um diese anzuzeigen.</string>
+    <string name="set_security_provider_indication">Diese Option ermöglicht die Unterstützung aktueller Verschlüsselungs-Suiten. Es ist nützlich für ältere Android-Geräte oder wenn du keine Verbindung zu deiner Instanz herstellen kannst.</string>
+    <string name="set_video_mode_indication">Exklusiv für PeerTube-Videos. Aktiviere diesen Modus, wenn Videos nicht wiedergeben können.</string>
+    <string name="featured_hashtags_indication">Diese Schlagwörter ermöglichen es, den Status von Profilen zu filtern. Du musst das Kontextmenü verwenden, um diese anzuzeigen.</string>
     <string name="set_capitalize_indication">Automatisches Einfügen eines Zeilenumbruchs nach der Anweisung den ersten Buchstaben groß zu schreiben.</string>
     <string name="settings_title_custom_sharing_indication">Ermöglicht es Inhaltserstellern, den Status ihrer RSS-Feeds zu teilen</string>
     <string name="timelines">Zeitleisten</string>
@@ -990,7 +990,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="default_directory">Standardordner</string>
     <string name="folder">Ordner</string>
     <string name="create_folder">Ordner erstellen</string>
-    <string name="custom_tabs_indication">Verwenden Sie Ihren bevorzugten Browser innerhalb der Anwendung. Durch das Deaktivieren werden Links extern geöffnet.</string>
+    <string name="custom_tabs_indication">Verwende deinen bevorzugten Browser innerhalb der Anwendung. Durch das Deaktivieren werden Links extern geöffnet</string>
     <string name="set_display_confirm">Toast-Benachrichtigung anzeigen, nachdem eine Aktion abgeschlossen ist (boost, fav, usw)?</string>
     <string name="export_muted_instance">Lautlos geschaltete Instanzen exportieren</string>
     <string name="muted_instance_exported">Lautlos geschaltete Instanzen wurden exportiert!</string>
