@@ -558,7 +558,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             String accountReplyToken = b.getString("accountReplyToken", null);
             accountReply = null;
             if (accountReplyToken != null) {
-                accountReply = new AccountDAO(getApplicationContext(), db).getAccountByToken(accountReplyToken);
+                String[] val = accountReplyToken.split("\\|");
+                if( val.length == 2) {
+                    accountReply = new AccountDAO(getApplicationContext(), db).getUniqAccount(val[0], val[1]);
+                }
             }
             tootMention = b.getString("tootMention", null);
             urlMention = b.getString("urlMention", null);

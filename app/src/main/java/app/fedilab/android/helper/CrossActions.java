@@ -644,7 +644,7 @@ public class CrossActions {
                                         b.putParcelable("tootReply", remoteStatuses.get(0));
                                         b.putParcelable("idRedirect", status);
                                     }
-                                    b.putString("accountReplyToken", account.getToken());
+                                    b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
                                     intent.putExtras(b); //Put your id to your next Intent
                                     contextReference.get().startActivity(intent);
                                     if (type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
@@ -661,7 +661,7 @@ public class CrossActions {
                         }else{
                             Intent intent = new Intent(context, TootActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("accountReplyToken", account.getToken());
+                            b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
                             intent.putExtras(b); //Put your id to your next Intent
                             context.startActivity(intent);
                         }
@@ -717,7 +717,7 @@ public class CrossActions {
                             b.putParcelable("tootReply", remoteStatuses.get(0));
                             b.putParcelable("idRedirect", remoteStatuses.get(0));
                         }
-                        b.putString("accountReplyToken", account.getToken());
+                        b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
                         intent.putExtras(b); //Put your id to your next Intent
                         contextReference.get().startActivity(intent);
                     }
@@ -756,7 +756,7 @@ public class CrossActions {
                 public void onClick(final DialogInterface dialog, int which) {
                     final Account account = accountArray[which];
                     Intent intentToot = new Intent(context, TootActivity.class);
-                    bundle.putString("accountReplyToken", account.getToken());
+                    bundle.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
                     intentToot.putExtras(bundle);
                     context.startActivity(intentToot);
                     ((BaseActivity)context).finish();
