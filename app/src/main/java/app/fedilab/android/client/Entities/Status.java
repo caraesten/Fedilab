@@ -46,10 +46,15 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.model.FileLoader;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.loader.AssetStreamLoader;
+
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -1089,11 +1094,11 @@ public class Status implements Parcelable{
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 Glide.with(context)
-                        .asDrawable()
+                        .asFile()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener<Drawable>()  {
+                        .listener(new RequestListener<File>()  {
                             @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
 
@@ -1106,10 +1111,10 @@ public class Status implements Parcelable{
                                 return false;
                             }
                         })
-                        .into(new SimpleTarget<Drawable>() {
+                        .into(new SimpleTarget<File>() {
                             @Override
-                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
+                            public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                Drawable resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
@@ -1190,12 +1195,6 @@ public class Status implements Parcelable{
                                     listener.onRetrieveEmoji(status, false);
                                 }
                             }
-
-
-
-
-
-
                         });
 
             }

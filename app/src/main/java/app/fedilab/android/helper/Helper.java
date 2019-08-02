@@ -64,7 +64,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.browser.customtabs.CustomTabsIntent;
 
-import com.github.penfeizhou.animation.glide.AnimationDecoderOption;
 import com.google.android.material.navigation.NavigationView;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
@@ -3121,62 +3120,65 @@ public class Helper {
     public static void loadGiF(final Context context, String url, final ImageView imageView){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
-        Glide.with(imageView.getContext())
-                .asDrawable()
-                .load(url)
-                .thumbnail(0.1f)
-                .set(AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, true)
-                //.apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                .listener(new RequestListener<Drawable>()  {
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                            Glide.with(imageView.getContext())
-                                    .asDrawable()
-                                    .load(R.drawable.missing)
-                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                    .into(imageView);
-                        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                            Glide.with(imageView.getContext())
-                                    .asDrawable()
-                                    .load(R.drawable.missing_peertube)
-                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                    .into(imageView);
-                        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                            Glide.with(imageView.getContext())
-                                    .asDrawable()
-                                    .load(R.drawable.gnu_default_avatar)
-                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                    .into(imageView);
-                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            imageView.setClipToOutline(true);
-                        }
-                        imageView.setBackgroundResource(R.drawable.rounded_corner_10);
-                        return false;
-                    }
-                })
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        if( !disableGif) {
-                            resource.setVisible(true, true);
-                            imageView.setImageDrawable(resource);
-                        }else{
-                            resource.setVisible(true, true);
-                            Bitmap bitmap = drawableToBitmap(resource.getCurrent());
-                            imageView.setImageBitmap(bitmap);
-                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            imageView.setClipToOutline(true);
-                        }
-                        imageView.setBackgroundResource(R.drawable.rounded_corner_10);
-                    }
-                });
+        if( disableGif){
+            try {
+                Glide.with(imageView.getContext())
+                        .asBitmap()
+                        .load(url)
+                        .thumbnail(0.1f)
+                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                        .into(imageView);
+            }catch (Exception e){
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.missing)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.gnu_default_avatar)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }
+            }
+        }else{
+            try {
+                Glide.with(imageView.getContext())
+                        .load(url)
+                        .thumbnail(0.1f)
+                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                        .into(imageView);
+            }catch (Exception e){
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.missing)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                    Glide.with(imageView.getContext())
+                            .asDrawable()
+                            .load(R.drawable.gnu_default_avatar)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                }
+            }
+        }
+
     }
 
 
