@@ -737,24 +737,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         }
-        boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
-        if( (account.getAvatar() == null || account.getAvatar().equals("null"))&& MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            Glide.with(getApplicationContext()).load(R.drawable.missing_peertube).apply(RequestOptions.circleCropTransform()).into(account_pp);
-        }else{
-            String url = account.getAvatar();
-            if( url != null && url.startsWith("/")){
-                url = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + url;
-            }
-            if( !disableGif ) {
-                Glide.with(getApplicationContext()).load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
-            }else {
-                Glide.with(getApplicationContext())
-                        .asBitmap()
-                        .load(url)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(account_pp);
-            }
-        }
+        Helper.loadGiF(getApplicationContext(),account.getAvatar(), account_pp);
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
