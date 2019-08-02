@@ -120,7 +120,7 @@ dependencies {
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.2.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
-
+    implementation 'com.github.penfeizhou.android.animation:gif:1.0.0'
     implementation 'com.github.penfeizhou.android.animation:glide-plugin:1.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 

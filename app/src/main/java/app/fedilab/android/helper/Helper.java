@@ -63,6 +63,8 @@ import android.provider.OpenableColumns;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.browser.customtabs.CustomTabsIntent;
+
+import com.github.penfeizhou.animation.glide.AnimationDecoderOption;
 import com.google.android.material.navigation.NavigationView;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentActivity;
@@ -3122,6 +3124,8 @@ public class Helper {
         Glide.with(imageView.getContext())
                 .asDrawable()
                 .load(url)
+                .thumbnail(0.1f)
+                .set(AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, true)
                 //.apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                 .listener(new RequestListener<Drawable>()  {
                     @Override
@@ -3130,7 +3134,6 @@ public class Helper {
                     }
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                        e.printStackTrace();
                         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                             Glide.with(imageView.getContext())
                                     .asDrawable()
