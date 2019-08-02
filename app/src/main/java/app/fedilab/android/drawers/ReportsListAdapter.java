@@ -101,9 +101,9 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
 
 
         if( target_account.getAvatar() != null) {
-            Helper.loadGiF(context, target_account.getAvatar_static(), target_account.getAvatar(), holder.account_pp);
+            Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
         }
-        Helper.loadGiF(context, account.getAvatar_static(), account.getAvatar(), holder.account_pp_reporter);
+        Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
         if( target_account.getAcct() != null) {
             holder.account_ac.setText(target_account.getAcct());
         }

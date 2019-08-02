@@ -338,7 +338,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             actionbar_title.setText(account.getAcct());
         pp_actionBar = findViewById(R.id.pp_actionBar);
         if( account.getAvatar() != null){
-            Helper.loadGiF(getApplicationContext(),  account.getAvatar_static(), account.getAvatar(), pp_actionBar);
+            Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         }
         final AppBarLayout appBar = findViewById(R.id.appBar);
@@ -740,6 +740,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         });
             }
         }
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), account_pp);
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

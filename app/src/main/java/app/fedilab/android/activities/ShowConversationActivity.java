@@ -237,7 +237,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             Toasty.error(ShowConversationActivity.this,getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
-        Helper.loadGiF(getApplicationContext(),  account.getAvatar_static(), account.getAvatar(), pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);

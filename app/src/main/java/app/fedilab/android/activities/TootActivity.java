@@ -693,7 +693,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
 
-        Helper.loadGiF(getApplicationContext(), account.getAvatar_static(), account.getAvatar(), pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
 
         if (sharedContent != null) { //Shared content

@@ -58,7 +58,7 @@
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         app:layout_scrollFlags="scroll"
-                        android:background="@drawable/circle_background_white"
+
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/profile_picture" />
                     <com.google.android.material.floatingactionbutton.FloatingActionButton

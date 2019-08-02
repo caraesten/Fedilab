@@ -83,6 +83,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -1632,7 +1633,7 @@ public class Helper {
      * @param account Account for the profile picture
      */
     public static void loadPictureIcon(final Activity activity, Account account, final ImageView imageView){
-        loadGiF(activity,account.getAvatar_static(), account.getAvatar(), imageView);
+        loadGiF(activity,account.getAvatar(), imageView);
     }
 
 
@@ -2025,7 +2026,7 @@ public class Helper {
             account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-            loadGiF(activity, account.getAvatar_static(), account.getAvatar(), profilePicture);
+            loadGiF(activity, account.getAvatar(), profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
@@ -3115,71 +3116,66 @@ public class Helper {
             return String.format(Locale.getDefault(), "%s:%s",strMin,strSec);
     }
 
-    public static void loadGiF(final Context context, String urlStatic, String url, final ImageView imageView){
+    public static void loadGiF(final Context context, String url, final ImageView imageView){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
-        if( url == null){
-            url = urlStatic;
-        }
-        if (context instanceof FragmentActivity) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed()) {
-                return;
-            }
-        }
-        if( urlStatic != null && urlStatic.startsWith("/")){
-            url = Helper.getLiveInstanceWithProtocol(context) + url;
-            urlStatic  = Helper.getLiveInstanceWithProtocol(context) + urlStatic;
-        }
-        if( urlStatic == null  || urlStatic.equals("null")|| urlStatic.equals("false") || urlStatic.contains("missing.png") || urlStatic.contains(".svg")) {
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                try {
-                    Glide.with(imageView.getContext())
-                            .load(R.drawable.missing)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                } catch (Exception ignored) {
-                }
-                return;
-            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                try {
-                    Glide.with(imageView.getContext())
-                            .load(R.drawable.missing_peertube)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                } catch (Exception ignored) {
-                }
-                return;
-            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                try {
-                    Glide.with(imageView.getContext())
-                            .load(R.drawable.gnu_default_avatar)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                } catch (Exception ignored) {
-                }
-                return;
-            }
-        }
-        if (!disableGif && url.endsWith(".gif")) {
-            try {
-                Glide.with(imageView.getContext())
-                        .asGif()
-                        .load(url)
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .into(imageView);
-            } catch (Exception ignored) {
-            }
-        } else {
-            try {
-                Glide.with(context)
-                        .asBitmap()
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .load(urlStatic)
-                        .into(imageView);
-            } catch (Exception ignored) {
-            }
-        }
+        Glide.with(imageView.getContext())
+                .asDrawable()
+                .load(url)
+                //.apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                .listener(new RequestListener<Drawable>()  {
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                        e.printStackTrace();
+                        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                            Glide.with(imageView.getContext())
+                                    .asDrawable()
+                                    .load(R.drawable.missing)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .into(imageView);
+                        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                            Glide.with(imageView.getContext())
+                                    .asDrawable()
+                                    .load(R.drawable.missing_peertube)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .into(imageView);
+                        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                            Glide.with(imageView.getContext())
+                                    .asDrawable()
+                                    .load(R.drawable.gnu_default_avatar)
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                    .into(imageView);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            imageView.setClipToOutline(true);
+                        }
+                        imageView.setBackgroundResource(R.drawable.rounded_corner_10);
+                        return false;
+                    }
+                })
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        if( !disableGif) {
+                            resource.setVisible(true, true);
+                            imageView.setImageDrawable(resource);
+                        }else{
+                            resource.setVisible(true, true);
+                            Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                            imageView.setImageBitmap(bitmap);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            imageView.setClipToOutline(true);
+                        }
+                        imageView.setBackgroundResource(R.drawable.rounded_corner_10);
+                    }
+                });
     }
+
 
     /**
      * Manage URLs to open (built-in or external app)

@@ -225,7 +225,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
-        Helper.loadGiF(getApplicationContext(),  account.getAvatar_static(), account.getAvatar(), my_pp);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), my_pp);
         Bundle b = getIntent().getExtras();
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);

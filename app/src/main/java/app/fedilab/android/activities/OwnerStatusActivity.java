@@ -189,7 +189,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(OwnerStatusActivity.this,db).getUniqAccount(userId, instance);
 
-        Helper.loadGiF(getApplicationContext(),  account.getAvatar_static(), account.getAvatar(), pp_actionBar);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

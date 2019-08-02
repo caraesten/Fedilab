@@ -2009,13 +2009,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if (status.getReblog() != null) {
-                Helper.loadGiF(context, accountForUrl.getAvatar_static(), accountForUrl.getAvatar(), holder.status_account_profile_boost);
-                Helper.loadGiF(context, status.getAccount().getAvatar_static(), status.getAccount().getAvatar(),holder.status_account_profile_boost_by);
+                Helper.loadGiF(context, accountForUrl.getAvatar(), holder.status_account_profile_boost);
+                Helper.loadGiF(context, status.getAccount().getAvatar(),holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             } else {
-                Helper.loadGiF(context, accountForUrl.getAvatar_static(), accountForUrl.getAvatar(), holder.status_account_profile);
+                Helper.loadGiF(context, accountForUrl.getAvatar(), holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
@@ -2031,7 +2031,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.conversation_pp_2.setVisibility(View.GONE);
                     holder.conversation_pp_3.setVisibility(View.GONE);
                     holder.conversation_pp_4.setVisibility(View.GONE);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(0), status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
                 } else if (status.getConversationProfilePicture().size() == 2) {
                     holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
                     holder.conversation_pp_3_container.setVisibility(View.GONE);
@@ -2039,8 +2039,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.conversation_pp_2.setVisibility(View.VISIBLE);
                     holder.conversation_pp_3.setVisibility(View.GONE);
                     holder.conversation_pp_4.setVisibility(View.GONE);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(0), status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(1), status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
                 } else if (status.getConversationProfilePicture().size() == 3) {
                     holder.conversation_pp_4.setVisibility(View.GONE);
                     holder.conversation_pp_1.setVisibility(View.VISIBLE);
@@ -2049,9 +2049,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.conversation_pp_4.setVisibility(View.GONE);
                     holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
                     holder.conversation_pp_3_container.setVisibility(View.VISIBLE);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(0), status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(1), status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(2), status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
                 } else if (status.getConversationProfilePicture().size() == 4) {
                     holder.conversation_pp_1.setVisibility(View.VISIBLE);
                     holder.conversation_pp_2.setVisibility(View.VISIBLE);
@@ -2059,10 +2059,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.conversation_pp_4.setVisibility(View.VISIBLE);
                     holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
                     holder.conversation_pp_3_container.setVisibility(View.VISIBLE);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(0), status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(1), status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(2), status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
-                    Helper.loadGiF(context, status.getConversationProfilePictureStatic().get(3), status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
                 }
             }
 

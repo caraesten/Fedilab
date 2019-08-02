@@ -1144,7 +1144,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        Helper.loadGiF(context, notification.getAccount().getAvatar_static(), notification.getAccount().getAvatar(), holder.notification_account_profile);
+        Helper.loadGiF(context, notification.getAccount().getAvatar(), holder.notification_account_profile);
 
     }
 

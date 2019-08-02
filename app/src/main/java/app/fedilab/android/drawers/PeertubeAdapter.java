@@ -117,7 +117,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 .into(holder.peertube_video_image);
         if (account.getAvatar() != null && !account.getAvatar().equals("null") && !account.getAvatar().startsWith("http"))
             account.setAvatar("https://" + peertube.getInstance() + account.getAvatar());
-        Helper.loadGiF(context, account.getAvatar_static(), account.getAvatar(), holder.peertube_profile);
+        Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
 
 
         if( peertube.getHeaderType() != null && peertube.getHeaderTypeValue() != null) {

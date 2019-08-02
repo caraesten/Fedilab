@@ -76,7 +76,7 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
             holder.suggestion_image.setVisibility(View.GONE);
         }else{
             holder.suggestion_content.setText(suggestion.getContent());
-            Helper.loadGiF(context, suggestion.getImageUrl(), suggestion.getImageUrl(), holder.suggestion_image);
+            Helper.loadGiF(context, suggestion.getImageUrl(), holder.suggestion_image);
         }
     }
 
