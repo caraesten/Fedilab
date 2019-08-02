@@ -3120,6 +3120,10 @@ public class Helper {
     public static void loadGiF(final Context context, String url, final ImageView imageView){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
+        if( url != null && url.startsWith("/")){
+            url = Helper.getLiveInstanceWithProtocol(context) + url;
+        }
+
         if( disableGif){
             try {
                 Glide.with(imageView.getContext())

@@ -16,6 +16,7 @@ package app.fedilab.android.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -278,31 +279,51 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         if (urlHeader != null && !urlHeader.contains("missing.png")) {
 
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(urlHeader)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            ImageView banner_pp = findViewById(R.id.banner_pp);
-                            banner_pp.setImageBitmap(resource);
-                            if( theme == Helper.THEME_LIGHT){
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    banner_pp.setImageAlpha(80);
+            boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
+            if( !disableGif){
+                ImageView banner_pp = findViewById(R.id.banner_pp);
+                Glide.with(getApplicationContext())
+                        .load(urlHeader)
+                        .into(banner_pp);
+                if( theme == Helper.THEME_LIGHT){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        banner_pp.setImageAlpha(80);
+                    }else {
+                        banner_pp.setAlpha(80);
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        banner_pp.setImageAlpha(60);
+                    }else {
+                        banner_pp.setAlpha(60);
+                    }
+                }
+            }else{
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(urlHeader)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                ImageView banner_pp = findViewById(R.id.banner_pp);
+                                banner_pp.setImageBitmap(resource);
+                                if( theme == Helper.THEME_LIGHT){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        banner_pp.setImageAlpha(80);
+                                    }else {
+                                        banner_pp.setAlpha(80);
+                                    }
                                 }else {
-                                    banner_pp.setAlpha(80);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        banner_pp.setImageAlpha(60);
+                                    }else {
+                                        banner_pp.setAlpha(60);
+                                    }
                                 }
-                            }else {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    banner_pp.setImageAlpha(60);
-                                }else {
-                                    banner_pp.setAlpha(60);
-                                }
+
                             }
-
-                        }
-                    });
-
+                        });
+            }
         }
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
@@ -724,23 +745,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             if( url != null && url.startsWith("/")){
                 url = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + url;
             }
-            if( !disableGif && url != null && url.endsWith(".gif")) {
-                Glide.with(getApplicationContext()).asGif().load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
+            if( !disableGif ) {
+                Glide.with(getApplicationContext()).load(url).apply(RequestOptions.circleCropTransform()).into(account_pp);
             }else {
                 Glide.with(getApplicationContext())
                         .asBitmap()
                         .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
-                                circularBitmapDrawable.setCircular(true);
-                                account_pp.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(account_pp);
             }
         }
-        Helper.loadGiF(getApplicationContext(), account.getAvatar(), account_pp);
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

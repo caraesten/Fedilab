@@ -55,6 +55,7 @@
                         android:padding="1dp"
                         android:layout_margin="10dp"
                         android:id="@+id/account_pp"
+                        android:background="@drawable/circle_background_white"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         app:layout_scrollFlags="scroll"
