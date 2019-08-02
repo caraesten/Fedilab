@@ -44,9 +44,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.gif.GifDrawable;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -936,11 +939,18 @@ public class Account implements Parcelable {
                 fields = account.getFields();
                 try {
                     Glide.with(context)
-                            .asDrawable()
+                            .asFile()
                             .load(emoji.getUrl())
-                            .into(new SimpleTarget<Drawable>() {
+                            .into(new SimpleTarget<File>() {
                                 @Override
-                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                    Drawable resource;
+                                    if( emoji.getUrl().endsWith(".gif")){
+                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                        ((GifDrawable) resource).start();
+                                    }else{
+                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    }
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
 
                                     if (noteSpan != null && noteSpan.toString().contains(targetedEmoji)) {
@@ -1030,6 +1040,7 @@ public class Account implements Parcelable {
                                             listener.onRetrieveEmojiAccount(account);
                                     }
                                 }
+
                             });
                 }catch (Exception ignored){}
 
@@ -1055,11 +1066,18 @@ public class Account implements Parcelable {
             for (final Emojis emoji : emojis) {
                 try {
                     Glide.with(context)
-                            .asDrawable()
+                            .asFile()
                             .load(emoji.getUrl())
-                            .into(new SimpleTarget<Drawable>() {
+                            .into(new SimpleTarget<File>() {
                                 @Override
-                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                    Drawable resource;
+                                    if( emoji.getUrl().endsWith(".gif")){
+                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                        ((GifDrawable) resource).start();
+                                    }else{
+                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    }
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                     if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
@@ -1090,6 +1108,7 @@ public class Account implements Parcelable {
                                             listener.onRetrieveEmojiAccount(account);
                                     }
                                 }
+
                             });
                 }catch (Exception ignored){}
 

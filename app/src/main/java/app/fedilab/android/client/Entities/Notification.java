@@ -36,7 +36,10 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.gif.GifDrawable;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +60,7 @@ public class Notification implements Parcelable {
     private Account account;
     private Status status;
     private boolean notificationAnimated = false;
+    private boolean isEmojiFound = false;
 
     protected Notification(Parcel in) {
         id = in.readString();
@@ -167,14 +171,13 @@ public class Notification implements Parcelable {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 Glide.with(context)
-                        .asDrawable()
+                        .asFile()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener<Drawable>()  {
+                        .listener(new RequestListener<File>()  {
                             @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
-
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 i[0]++;
@@ -184,9 +187,16 @@ public class Notification implements Parcelable {
                                 return false;
                             }
                         })
-                        .into(new SimpleTarget<Drawable>() {
+                        .into(new SimpleTarget<File>() {
                             @Override
-                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                Drawable resource;
+                                if( emoji.getUrl().endsWith(".gif")){
+                                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    ((GifDrawable) resource).start();
+                                }else{
+                                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                }
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
@@ -269,5 +279,13 @@ public class Notification implements Parcelable {
 
     public void setNotificationAnimated(boolean notificationAnimated) {
         this.notificationAnimated = notificationAnimated;
+    }
+
+    public boolean isEmojiFound() {
+        return isEmojiFound;
+    }
+
+    public void setEmojiFound(boolean emojiFound) {
+        isEmojiFound = emojiFound;
     }
 }
