@@ -51,7 +51,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.penfeizhou.animation.FrameAnimationDrawable;
 import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.loader.AssetStreamLoader;
 
 import java.io.File;
@@ -1114,7 +1116,13 @@ public class Status implements Parcelable{
                         .into(new SimpleTarget<File>() {
                             @Override
                             public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                                Drawable resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                Drawable resource;
+                                if( emoji.getUrl().endsWith(".gif")){
+                                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    ((GifDrawable) resource).start();
+                                }else{
+                                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                }
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
@@ -1126,6 +1134,7 @@ public class Status implements Parcelable{
                                                 resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                 resource.setVisible(true, true);
                                                 imageSpan = new ImageSpan(resource);
+
                                             }else{
                                                 resource.setVisible(true, true);
                                                 Bitmap bitmap = drawableToBitmap(resource.getCurrent());
