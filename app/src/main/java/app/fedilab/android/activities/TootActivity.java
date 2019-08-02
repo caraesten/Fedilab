@@ -55,6 +55,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -439,8 +440,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if( displayWYSIWYG()){
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
-            HorizontalScrollView toolbar = findViewById(R.id.toolbar);
-            toolbar.setVisibility(View.VISIBLE);
+            HorizontalScrollView toolbar_scrollview = findViewById(R.id.toolbar_scrollview);
+            toolbar_scrollview.setVisibility(View.VISIBLE);
             renderEditor();
             wysiwyg.setEditorListener(new EditorListener() {
                 @Override
@@ -3934,14 +3935,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         String content = toot_content.getText().toString();
         String cwContent = toot_cw_content.getText().toString();
+        String contentCount = content;
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON ){
-            Matcher matcherALink = Patterns.WEB_URL.matcher(content);
+            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)","$1@$3");
+            Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
             while (matcherALink.find()){
                 final String url = matcherALink.group(1);
-                content = content.replace(url,"abcdefghijklmnopkrstuvw");
+                contentCount = contentCount.replace(url,"abcdefghijklmnopkrstuvw");
             }
         }
-        int contentLength = content.length() - countWithEmoji(content);
+
+        int contentLength = contentCount.length() - countWithEmoji(content);
         int cwLength = cwContent.length() - countWithEmoji(cwContent);
         return cwLength + contentLength;
     }

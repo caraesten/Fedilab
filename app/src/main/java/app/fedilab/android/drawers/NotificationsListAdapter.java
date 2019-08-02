@@ -59,6 +59,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.varunest.sparkbutton.SparkButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.social;
-
+import static app.fedilab.android.drawers.StatusListAdapter.tmr;
 
 
 /**
@@ -155,7 +157,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( !disableAnimatedEmoji ){
-            Timer tmr = new Timer();
             tmr.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -178,9 +179,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
         mRecyclerView = recyclerView;
     }
 
@@ -353,7 +353,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        notification.getAccount().makeAccountNameEmoji(context, NotificationsListAdapter.this, notification.getAccount());
+
+        if( !notification.isEmojiFound()) {
+            notification.setEmojiFound(true);
+            notification.getAccount().makeAccountNameEmoji(context, NotificationsListAdapter.this, notification.getAccount());
+        }
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));

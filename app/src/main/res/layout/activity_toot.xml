@@ -73,7 +73,7 @@
                 android:inputType="textMultiLine|textCapSentences"
                 android:minLines="4" />
         </ScrollView>
-        <HorizontalScrollView android:id="@+id/toolbar"
+        <HorizontalScrollView android:id="@+id/toolbar_scrollview"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         <ScrollView
             android:id="@+id/wysiwyg_container"
             android:visibility="gone"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/toolbar_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
