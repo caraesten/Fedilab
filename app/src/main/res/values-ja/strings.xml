@@ -991,7 +991,7 @@
     <string name="default_directory">既定のディレクトリ</string>
     <string name="folder">フォルダー</string>
     <string name="create_folder">フォルダーを作成</string>
-    <string name="custom_tabs_indication">アプリ内でお気に入りのブラウザが使用できます。無効にすると、リンクは外部アプリで開かれます</string>
+    <string name="custom_tabs_indication">アプリ内でお気に入りのブラウザを使用します。無効にすると、リンクは外部アプリで開きます</string>
     <string name="set_display_confirm">アクション(ブースト、お気に入りなど)が完了したらトースト通知を表示します。</string>
     <string name="export_muted_instance">ミュートしたインスタンスをエクスポートします</string>
     <string name="muted_instance_exported">ミュートしたインスタンスをエクスポートしました！</string>
