@@ -3123,7 +3123,9 @@ public class Helper {
         if( url != null && url.startsWith("/")){
             url = Helper.getLiveInstanceWithProtocol(context) + url;
         }
-
+        if( ((Activity)context).isFinishing()){
+            return;
+        }
         if( disableGif){
             try {
                 Glide.with(imageView.getContext())
