@@ -3123,7 +3123,7 @@ public class Helper {
         if( url != null && url.startsWith("/")){
             url = Helper.getLiveInstanceWithProtocol(context) + url;
         }
-        if( ((Activity)context).isFinishing()){
+        if( !(context instanceof MainApplication) && ((Activity)context).isFinishing()){
             return;
         }
         if( disableGif){
