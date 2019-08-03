@@ -105,6 +105,9 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 
+import static app.fedilab.android.helper.Helper.THEME_BLACK;
+import static app.fedilab.android.helper.Helper.THEME_DARK;
+import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
@@ -183,6 +186,18 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_un = findViewById(R.id.account_un);
         account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
+        switch (theme){
+            case THEME_LIGHT:
+                account_pp.setBackgroundResource(R.drawable.account_pp_border_light);
+                break;
+            case THEME_DARK:
+                account_pp.setBackgroundResource(R.drawable.account_pp_border_dark);
+                break;
+            case THEME_BLACK:
+                account_pp.setBackgroundResource(R.drawable.account_pp_border_black);
+                break;
+        }
+
         if(b != null){
             account = b.getParcelable("account");
             if( account == null){

@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
     defaultConfig {
         minSdkVersion 18
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 298
         versionName "2.13.0-beta-1"
         multiDexEnabled true
@@ -54,7 +54,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 }
-ext.supportLibraryVersion = '28.0.0'
+ext.supportLibraryVersion = '29.0.0'
 ext.glideLibraryVersion = '4.9.0'
 ext.conscryptLibraryVersion = '2.1.0'
 ext.evernoteLibraryVersion = '1.3.0-rc1'

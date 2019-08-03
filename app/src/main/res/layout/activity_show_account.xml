@@ -60,7 +60,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/account_pp_border"
+                        android:background="@drawable/account_pp_border_light"
                         android:contentDescription="@string/profile_picture"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="@id/banner_pp"
