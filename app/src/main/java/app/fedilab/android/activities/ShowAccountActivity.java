@@ -285,19 +285,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 Glide.with(getApplicationContext())
                         .load(urlHeader)
                         .into(banner_pp);
-                if( theme == Helper.THEME_LIGHT){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        banner_pp.setImageAlpha(80);
-                    }else {
-                        banner_pp.setAlpha(80);
-                    }
-                }else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        banner_pp.setImageAlpha(60);
-                    }else {
-                        banner_pp.setAlpha(60);
-                    }
-                }
             }else{
                 Glide.with(getApplicationContext())
                         .asBitmap()
@@ -307,20 +294,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 ImageView banner_pp = findViewById(R.id.banner_pp);
                                 banner_pp.setImageBitmap(resource);
-                                if( theme == Helper.THEME_LIGHT){
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                        banner_pp.setImageAlpha(80);
-                                    }else {
-                                        banner_pp.setAlpha(80);
-                                    }
-                                }else {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                        banner_pp.setImageAlpha(60);
-                                    }else {
-                                        banner_pp.setAlpha(60);
-                                    }
-                                }
-
                             }
                         });
             }
