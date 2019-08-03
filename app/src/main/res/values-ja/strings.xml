@@ -1022,7 +1022,7 @@
     <string name="date_range">対象期間</string>
     <string name="action_groups">グループ</string>
     <string name="no_messages">グループがありません</string>
-    <string name="set_disable_animated_emoji">アニメーションカスタム絵文字を無効にする</string>
+    <string name="set_disable_animated_emoji">動くカスタム絵文字を無効にする</string>
     <string name="owner_charts">グラフ</string>
     <string name="display_charts">グラフを表示する</string>
     <string name="collecting_data_wait">データを収集しています。しばらくお待ちください。</string>
