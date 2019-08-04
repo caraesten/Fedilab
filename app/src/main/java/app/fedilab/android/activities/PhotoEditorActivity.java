@@ -18,9 +18,10 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import androidx.annotation.NonNull;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.view.Window;
 
 
@@ -63,6 +64,7 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -170,6 +172,18 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         mPhotoEditorView.getSource().setImageURI(uri);
 
 
+        if( uri != null ) {
+            try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+                assert inputStream != null;
+                ExifInterface exif = new ExifInterface(inputStream);
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int rotationInDegrees = exifToDegrees(rotation);
+                mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         Button send = findViewById(R.id.send);
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +193,13 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 saveImage();
             }
         });
+    }
+
+    private static int exifToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        return 0;
     }
 
     private void initViews() {
@@ -232,9 +253,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     public void onAddViewListener(ViewType viewType, int numberOfAddedViews) {
     }
 
-    @Override
-    public void onRemoveViewListener(int numberOfAddedViews) {
-    }
 
     @Override
     public void onRemoveViewListener(ViewType viewType, int numberOfAddedViews) {
@@ -331,11 +349,25 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
+            ExifInterface exif = null;
+            int rotation = 0;
+            int rotationInDegrees = 0;
+            if( data != null && data.getData() != null) {
+                try (InputStream inputStream = getContentResolver().openInputStream(data.getData())) {
+                    assert inputStream != null;
+                    exif = new androidx.exifinterface.media.ExifInterface(inputStream);
+                    rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    rotationInDegrees = exifToDegrees(rotation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             switch (requestCode) {
                 case CAMERA_REQUEST:
                     mPhotoEditor.clearAllViews();
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
                     mPhotoEditorView.getSource().setImageBitmap(photo);
+                    mPhotoEditorView.getSource().setRotation(rotationInDegrees);
                     break;
                 case PICK_REQUEST:
                     try {
@@ -343,6 +375,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                         Uri uri = data.getData();
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -351,6 +384,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                     final Uri resultUri = UCrop.getOutput(data);
                     if( resultUri != null) {
                         mPhotoEditorView.getSource().setImageURI(resultUri);
+                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
                         File fdelete = new File(uri.getPath());
                         if (fdelete.exists()) {
                            fdelete.delete();

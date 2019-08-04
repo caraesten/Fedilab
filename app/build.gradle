@@ -104,7 +104,7 @@ dependencies {
     implementation 'com.github.stom79:horizontalbargraph:1.5'
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
-    implementation 'ja.burhanrashid52:photoeditor:0.3.3'
+    implementation 'ja.burhanrashid52:photoeditor:0.4.0'
     implementation 'com.github.yalantis:ucrop:2.2.3'
 
     implementation "net.gotev:uploadservice:$uploadServiceVersion"
