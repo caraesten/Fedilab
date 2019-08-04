@@ -167,7 +167,6 @@ public abstract class BaseMainActivity extends BaseActivity
     private Activity activity;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     private final int PICK_IMPORT = 5556;
-    private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
     private BroadcastReceiver hidde_menu;
 
@@ -1195,8 +1194,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(dialogBuilderOptin == null && !popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
-            dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
+        if( !popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+            AlertDialog.Builder dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
             dialogBuilderOptin.setView(dialogView);
