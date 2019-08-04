@@ -1,0 +1,14 @@
+Added
+- Charts for statistics
+- Cross-account replies and posts (GNU Social and Friendica)
+- Animated banners
+
+Changed
+- Profiles
+- Counter with mentions
+
+Fixed
+- German translations
+- Orientation issue with media editor
+- Issue with GIF no longer loaded
+- Improve custom animated emojis
