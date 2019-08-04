@@ -253,6 +253,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if( !disableAnimatedEmoji ){
+            if( tmr == null){
+                tmr = new Timer();
+            }
             tmr.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -272,9 +275,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         redraft = false;
-        if( tmr == null){
-            tmr = new Timer();
-        }
         lstHolders = new ArrayList<>();
 
         startUpdateTimer();
@@ -291,9 +291,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
-        if( tmr == null){
-            tmr = new Timer();
-        }
         lstHolders = new ArrayList<>();
         startUpdateTimer();
     }
@@ -308,9 +305,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         redraft = false;
-        if( tmr == null){
-            tmr = new Timer();
-        }
         lstHolders = new ArrayList<>();
         startUpdateTimer();
 
