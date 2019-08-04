@@ -174,8 +174,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         }else {
             holder.account_follow.hide();
         }
-
-        account.makeAccountNameEmoji(context, AccountsListAdapter.this, account);
+        if( !account.isEmojiFound()) {
+            Account.makeAccountNameEmoji(context, AccountsListAdapter.this, account);
+        }
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
@@ -331,7 +332,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
     @Override
     public void onRetrieveEmojiAccount(Account account) {
-
+        account.setEmojiFound(true);
         notifyAccountChanged(account);
     }
 

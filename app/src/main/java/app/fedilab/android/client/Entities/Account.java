@@ -132,7 +132,7 @@ public class Account implements Parcelable {
     private String invite_request;
     private String created_by_application_id;
     private String invited_by_account_id;
-
+    private boolean emojiFound = false;
 
 
 
@@ -457,6 +457,14 @@ public class Account implements Parcelable {
 
     public void setInvited_by_account_id(String invited_by_account_id) {
         this.invited_by_account_id = invited_by_account_id;
+    }
+
+    public boolean isEmojiFound() {
+        return emojiFound;
+    }
+
+    public void setEmojiFound(boolean emojiFound) {
+        this.emojiFound = emojiFound;
     }
 
 
@@ -947,7 +955,6 @@ public class Account implements Parcelable {
                                     Drawable resource;
                                     if( emoji.getUrl().endsWith(".gif")){
                                         resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                        ((GifDrawable) resource).start();
                                     }else{
                                         resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
                                     }
@@ -1053,11 +1060,14 @@ public class Account implements Parcelable {
     }
 
 
-    public void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
+    public static void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
-        if( account.getDisplay_name() != null)
-            displayNameSpan = new SpannableString(account.getDisplay_name());
+
+        account.setdisplayNameSpan(new SpannableString(account.getDisplay_name()));
+        SpannableString displayNameSpan = account.getdisplayNameSpan();
+        if( displayNameSpan == null)
+            return;
         final List<Emojis> emojis = account.getEmojis();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
@@ -1074,12 +1084,11 @@ public class Account implements Parcelable {
                                     Drawable resource;
                                     if( emoji.getUrl().endsWith(".gif")){
                                         resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                        ((GifDrawable) resource).start();
                                     }else{
                                         resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
                                     }
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                                    if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                    if (displayNameSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
@@ -1104,6 +1113,7 @@ public class Account implements Parcelable {
                                     }
                                     i[0]++;
                                     if (i[0] == (emojis.size())) {
+                                        account.setdisplayNameSpan(displayNameSpan);
                                         if (listener != null)
                                             listener.onRetrieveEmojiAccount(account);
                                     }
