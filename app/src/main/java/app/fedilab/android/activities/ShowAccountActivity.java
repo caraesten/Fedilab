@@ -121,14 +121,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
-    private FloatingActionButton account_follow;
+    private ImageButton account_follow;
 
     private ViewPager mPager;
     private TabLayout tabLayout;
     private TextView account_note, account_follow_request, account_type, account_bot;
     private String userId;
     private Relationship relationship;
-    private FloatingActionButton header_edit_profile;
+    private ImageButton header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
     private int maxScrollSize;
@@ -830,31 +830,35 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
-        account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
+        }
         if( account.getId() != null && account.getId().equals(userId) && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
-            account_follow.hide();
-            header_edit_profile.show();
+            account_follow.setVisibility(View.GONE);
+            header_edit_profile.setVisibility(View.VISIBLE);
             header_edit_profile.bringToFront();
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
-            account_follow.show();
+            account_follow.setVisibility(View.VISIBLE);
         }else if( relationship.isRequested()){
             account_follow_request.setVisibility(View.VISIBLE);
             account_follow.setImageResource(R.drawable.ic_hourglass_full);
-            account_follow.show();
+            account_follow.setVisibility(View.VISIBLE);
             doAction = action.UNFOLLOW;
         }else if( relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_times);
-            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.unfollow)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.red_1)));
+            }
             doAction = action.UNFOLLOW;
-            account_follow.show();
+            account_follow.setVisibility(View.VISIBLE);
         }else if( !relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = action.FOLLOW;
-            account_follow.show();
+            account_follow.setVisibility(View.VISIBLE);;
         }else{
-            account_follow.hide();
+            account_follow.setVisibility(View.GONE);
             doAction = action.NOTHING;
         }
     }

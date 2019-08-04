@@ -60,6 +60,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:background="@drawable/account_pp_border_light"
                         android:contentDescription="@string/profile_picture"
                         android:padding="2dp"
@@ -68,28 +69,28 @@
                         app:layout_constraintTop_toBottomOf="@id/banner_pp"
                         app:layout_scrollFlags="scroll" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <ImageButton
                         android:id="@+id/account_follow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginStart="10dp"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_marginTop="10dp"
-                        android:textAllCaps="false"
+                        android:scaleType="fitCenter"
                         android:visibility="gone"
-                        app:fabSize="mini"
                         app:layout_constraintStart_toEndOf="@id/account_pp"
                         app:layout_constraintTop_toBottomOf="@id/banner_pp" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <ImageButton
                         android:id="@+id/header_edit_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/ic_edit"
-                        android:textAllCaps="false"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:scaleType="fitCenter"
                         android:visibility="gone"
-                        app:fabSize="mini"
                         app:layout_constraintStart_toEndOf="@id/account_pp"
                         app:layout_constraintTop_toBottomOf="@id/banner_pp" />
 

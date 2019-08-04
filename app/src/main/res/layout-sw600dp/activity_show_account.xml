@@ -69,28 +69,28 @@
                         app:layout_constraintTop_toBottomOf="@id/banner_pp"
                         app:layout_scrollFlags="scroll" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <ImageButton
                         android:id="@+id/account_follow"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:textAllCaps="false"
+                        android:scaleType="fitCenter"
                         android:visibility="gone"
-                        app:fabSize="mini"
                         app:layout_constraintStart_toEndOf="@id/account_pp"
                         app:layout_constraintTop_toBottomOf="@id/banner_pp" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <ImageButton
                         android:id="@+id/header_edit_profile"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/ic_edit"
-                        android:textAllCaps="false"
+                        android:scaleType="fitCenter"
                         android:visibility="gone"
-                        app:fabSize="mini"
                         app:layout_constraintStart_toEndOf="@id/account_pp"
                         app:layout_constraintTop_toBottomOf="@id/banner_pp" />
 

@@ -1119,7 +1119,6 @@ public class Status implements Parcelable{
                                 Drawable resource;
                                 if( emoji.getUrl().endsWith(".gif")){
                                     resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                    ((GifDrawable) resource).start();
                                 }else{
                                     resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
                                 }
