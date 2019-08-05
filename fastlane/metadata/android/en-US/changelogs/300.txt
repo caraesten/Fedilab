@@ -1,0 +1,4 @@
+Fixed
+- Crashes with Pleroma notifications
+- Crashes when changing the theme
+- Some other bug fixes
