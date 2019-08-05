@@ -1068,7 +1068,9 @@ public class Helper {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        int notificationId = Integer.parseInt(account.getId());
+        String val = account.getId().replaceAll("[^A-Za-z]", "");
+
+        int notificationId = Integer.parseInt(val);
 
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
