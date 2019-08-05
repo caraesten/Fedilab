@@ -52,6 +52,7 @@
                         android:layout_height="@dimen/layout_height_header"
                         android:contentDescription="@string/profile_banner"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/default_banner"
                         app:layout_collapseMode="parallax"
                         app:layout_constraintTop_toTopOf="parent" />
 
