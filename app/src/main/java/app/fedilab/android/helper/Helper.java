@@ -1056,6 +1056,11 @@ public class Helper {
         return type;
     }
 
+
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
     /**
      * Sends notification with intent
      * @param context Context
@@ -1068,7 +1073,16 @@ public class Helper {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        String val = account.getId().replaceAll("[^A-Za-z]", "");
+        String val;
+        if( isNumeric(account.getId())){
+            val = account.getId();
+        }else{
+            int count = 0;
+            for (int i = 0; i < account.getId().length(); ++i) {
+                count += (int)account.getId().charAt(i);
+            }
+            val = String.valueOf(count);
+        }
 
         int notificationId = Integer.parseInt(val);
 
