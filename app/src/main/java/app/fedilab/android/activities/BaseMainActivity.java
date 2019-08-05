@@ -2209,7 +2209,10 @@ public abstract class BaseMainActivity extends BaseActivity
             this.mNumOfTabs = NumOfTabs;
         }
 
-
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
         @Override
         public Fragment getItem(int position) {
             if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
