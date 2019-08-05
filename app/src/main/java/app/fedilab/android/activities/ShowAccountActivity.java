@@ -240,14 +240,18 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
 
-
+        View fake_actionbar = findViewById(R.id.fake_actionbar);
         final ImageButton account_menu = findViewById(R.id.account_menu);
         ImageButton action_more = findViewById(R.id.action_more);
         ImageButton action_back = findViewById(R.id.action_back);
         if(theme == Helper.THEME_LIGHT){
+            fake_actionbar.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.light_grey));
             changeDrawableColor(getApplicationContext(),action_more,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(),account_menu,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(),action_back,R.color.dark_icon);
+        }
+        if(theme == THEME_BLACK){
+            fake_actionbar.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.light_black));
         }
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
