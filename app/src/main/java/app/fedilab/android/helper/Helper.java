@@ -3151,25 +3151,27 @@ public class Helper {
                         .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                         .into(imageView);
             }catch (Exception e){
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.missing)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.missing_peertube)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.gnu_default_avatar)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }
+                try {
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.missing)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.missing_peertube)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.gnu_default_avatar)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    }
+                }catch (Exception ignored){}
             }
         }else{
             try {
@@ -3179,25 +3181,27 @@ public class Helper {
                         .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                         .into(imageView);
             }catch (Exception e){
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.missing)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.missing_peertube)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                    Glide.with(imageView.getContext())
-                            .asDrawable()
-                            .load(R.drawable.gnu_default_avatar)
-                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                            .into(imageView);
-                }
+                try {
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.missing)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.missing_peertube)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                        Glide.with(imageView.getContext())
+                                .asDrawable()
+                                .load(R.drawable.gnu_default_avatar)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(imageView);
+                    }
+                }catch (Exception ignored){}
             }
         }
 

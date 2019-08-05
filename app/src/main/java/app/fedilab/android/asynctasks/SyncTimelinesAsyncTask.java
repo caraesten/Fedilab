@@ -245,60 +245,63 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         }
         APIResponse apiResponse = null;
-        List<app.fedilab.android.client.Entities.List> lists  = null;
-        try {
-            apiResponse = new API(contextReference.get()).getLists();
-            lists = apiResponse.getLists();
-        }catch (Exception ignored){ }
-
-        if( lists != null && lists.size() > 0){
-            //Loop through results
-            for(app.fedilab.android.client.Entities.List list: lists){
-                boolean isInDb = false;
-                ManageTimelines timelines_tmp = null;
-                for(ManageTimelines manageTimeline: manageTimelines){
-                    if( manageTimeline.getListTimeline() == null )
-                        continue;
-                    if(manageTimeline.getListTimeline().getId().equals(list.getId())){
-                        isInDb = true;
-                        timelines_tmp = manageTimeline;
-                        break;
-                    }
-                }
-                if( !isInDb){
-                    ManageTimelines manageTL = new ManageTimelines();
-                    manageTL.setListTimeline(list);
-                    manageTL.setDisplayed(true);
-                    manageTL.setType(ManageTimelines.Type.LIST);
-                    manageTL.setPosition(manageTimelines.size());
-                    new TimelinesDAO(contextReference.get(), db).insert(manageTL);
-                }else{
-                    //Update list
-                    timelines_tmp.setListTimeline(list);
-                    new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
-                }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            List<app.fedilab.android.client.Entities.List> lists = null;
+            try {
+                apiResponse = new API(contextReference.get()).getLists();
+                lists = apiResponse.getLists();
+            } catch (Exception ignored) {
             }
-            for(ManageTimelines manageTimelines: manageTimelines){
-                if( manageTimelines.getListTimeline() == null )
-                    continue;
-                boolean shouldBeRemoved = true;
-                for(app.fedilab.android.client.Entities.List list: lists){
-                    if( list.getId().equals(manageTimelines.getListTimeline().getId())){
-                        shouldBeRemoved = false;
+
+            if (lists != null && lists.size() > 0) {
+                //Loop through results
+                for (app.fedilab.android.client.Entities.List list : lists) {
+                    boolean isInDb = false;
+                    ManageTimelines timelines_tmp = null;
+                    for (ManageTimelines manageTimeline : manageTimelines) {
+                        if (manageTimeline.getListTimeline() == null)
+                            continue;
+                        if (manageTimeline.getListTimeline().getId().equals(list.getId())) {
+                            isInDb = true;
+                            timelines_tmp = manageTimeline;
+                            break;
+                        }
+                    }
+                    if (!isInDb) {
+                        ManageTimelines manageTL = new ManageTimelines();
+                        manageTL.setListTimeline(list);
+                        manageTL.setDisplayed(true);
+                        manageTL.setType(ManageTimelines.Type.LIST);
+                        manageTL.setPosition(manageTimelines.size());
+                        new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                    } else {
+                        //Update list
+                        timelines_tmp.setListTimeline(list);
+                        new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                     }
                 }
-                if( shouldBeRemoved){
+                for (ManageTimelines manageTimelines : manageTimelines) {
+                    if (manageTimelines.getListTimeline() == null)
+                        continue;
+                    boolean shouldBeRemoved = true;
+                    for (app.fedilab.android.client.Entities.List list : lists) {
+                        if (list.getId().equals(manageTimelines.getListTimeline().getId())) {
+                            shouldBeRemoved = false;
+                        }
+                    }
+                    if (shouldBeRemoved) {
+                        new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+                    }
+                }
+            } else {
+                for (ManageTimelines manageTimelines : manageTimelines) {
+                    if (manageTimelines.getListTimeline() == null)
+                        continue;
                     new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                 }
             }
-        }else{
-            for(ManageTimelines manageTimelines: manageTimelines){
-                if( manageTimelines.getListTimeline() == null )
-                    continue;
-                new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
-            }
-        }
 
+        }
         for (Iterator<ManageTimelines> it = manageTimelines.iterator(); it.hasNext();) {
             if (!it.next().isDisplayed()) {
                 it.remove();
