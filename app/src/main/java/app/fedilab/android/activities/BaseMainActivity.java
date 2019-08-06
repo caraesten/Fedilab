@@ -1049,12 +1049,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                         ActivityCompat.requestPermissions(BaseMainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
                                     } else {
                                         Intent backupIntent = new Intent(BaseMainActivity.this, BackupStatusService.class);
-                                        backupIntent.putExtra("userId", userId);
                                         startService(backupIntent);
                                     }
                                 }else{
                                     Intent backupIntent = new Intent(BaseMainActivity.this, BackupStatusService.class);
-                                    backupIntent.putExtra("userId", userId);
                                     startService(backupIntent);
                                 }
                                 return true;

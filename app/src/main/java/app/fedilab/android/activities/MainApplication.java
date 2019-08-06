@@ -41,6 +41,7 @@ import java.util.Locale;
 
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.jobs.ApplicationJob;
+import app.fedilab.android.jobs.BackupStatusesSyncJob;
 import app.fedilab.android.jobs.NotificationsSyncJob;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.BuildConfig;
@@ -68,6 +69,7 @@ public class MainApplication extends MultiDexApplication {
         //System.setProperty("java.net.preferIPv4Stack" , "true");
         JobManager.create(this).addJobCreator(new ApplicationJob());
         NotificationsSyncJob.schedule(false);
+        BackupStatusesSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);

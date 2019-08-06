@@ -81,18 +81,32 @@ public class BackupStatusService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
+        String userId = null;
+        String instance = null;
+        boolean toastMessage = false;
+        if( intent != null){
+            userId = intent.getStringExtra("userId");
+            instance = intent.getStringExtra("instance");
+            toastMessage = true;
+        }
+        boolean finalToastMessage = toastMessage;
         if( instanceRunning == 0 ){
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toasty.info(getApplicationContext(), getString(R.string.data_export_start), Toast.LENGTH_LONG).show();
+                    if(finalToastMessage) {
+                        Toasty.info(getApplicationContext(), getString(R.string.data_export_start), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toasty.info(getApplicationContext(), getString(R.string.data_export_running), Toast.LENGTH_LONG).show();
+                    if(finalToastMessage) {
+                        Toasty.info(getApplicationContext(), getString(R.string.data_export_running), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             return;
@@ -100,8 +114,10 @@ public class BackupStatusService extends IntentService {
         instanceRunning++;
         String message;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        if( userId == null || instance == null) {
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        }
         SQLiteDatabase db = Sqlite.getInstance(BackupStatusService.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
@@ -192,7 +208,9 @@ public class BackupStatusService extends IntentService {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toasty.error(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
+                    if( finalToastMessage) {
+                        Toasty.error(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }

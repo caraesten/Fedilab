@@ -297,6 +297,20 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         count4 = 0;
         count5 = 0;
 
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+
+        boolean auto_backup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES+userId+instance, false);
+        final CheckBox set_auto_backup = rootView.findViewById(R.id.set_auto_backup);
+        set_auto_backup.setChecked(auto_backup);
+        set_auto_backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_AUTO_BACKUP_STATUSES+userId+instance, set_auto_backup.isChecked());
+                editor.apply();
+            }
+        });
 
 
         TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
@@ -447,8 +461,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
 
         boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
 
