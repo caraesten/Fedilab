@@ -237,7 +237,7 @@ public class ManageTimelines {
                             return RetrieveFeedsAsyncTask.Type.DIRECT;
                         }
                     } else {
-                        return RetrieveFeedsAsyncTask.Type.DIRECT;
+                        return RetrieveFeedsAsyncTask.Type.CONVERSATION;
                     }
                 case NOTIFICATION:
                     return RetrieveFeedsAsyncTask.Type.NOTIFICATION;

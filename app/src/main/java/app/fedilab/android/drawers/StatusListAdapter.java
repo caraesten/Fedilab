@@ -468,7 +468,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
 
-        if( apiResponse == null || apiResponse.getResults() == null)
+        if( apiResponse == null || apiResponse.getResults() == null || toot_content == null)
             return;
         app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
         int currentCursorPosition = toot_content.getSelectionStart();
