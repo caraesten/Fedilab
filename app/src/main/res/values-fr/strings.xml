@@ -1038,6 +1038,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="report_account">Report account</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
