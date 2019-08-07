@@ -45,12 +45,14 @@ import java.util.concurrent.TimeUnit;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.OwnerStatusActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.services.BackupStatusInDataBaseService;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -118,7 +120,7 @@ public class BackupStatusesSyncJob extends Job {
         for(Account account: accounts) {
             boolean autobackup =  sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + account.getId() + account.getInstance(), false);
             if( autobackup) {
-                Intent backupIntent = new Intent(getContext(), BackupStatusService.class);
+                Intent backupIntent = new Intent(getContext(), BackupStatusInDataBaseService.class);
                 backupIntent.putExtra("userId", account.getId());
                 backupIntent.putExtra("instance", account.getInstance());
                 getContext().startService(backupIntent);
