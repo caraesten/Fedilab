@@ -117,16 +117,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if (conversations != null && conversations.size() > 0) {
                         for (Conversation conversation : conversations) {
                             app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                            List<String> ppConversationStatic = new ArrayList<>();
-                            List<String> ppConversation = new ArrayList<>();
-                            for (Account account : conversation.getAccounts()) {
-                                ppConversationStatic.add(account.getAvatar_static());
-                                ppConversation.add(account.getAvatar());
+                            if( status != null) {
+                                List<String> ppConversation = new ArrayList<>();
+                                for (Account account : conversation.getAccounts())
+                                    ppConversation.add(account.getAvatar());
+                                status.setConversationProfilePicture(ppConversation);
+                                status.setConversationId(conversation.getId());
+                                tempStatus.add(status);
                             }
-                            status.setConversationProfilePicture(ppConversation);
-                            status.setConversationProfilePictureStatic(ppConversationStatic);
-                            status.setConversationId(conversation.getId());
-                            tempStatus.add(status);
                         }
                     }
                 }
@@ -170,16 +168,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if (conversations != null && conversations.size() > 0) {
                         for (Conversation conversation : conversations) {
                             app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                            List<String> ppConversationStatic = new ArrayList<>();
-                            List<String> ppConversation = new ArrayList<>();
-                            for (Account account : conversation.getAccounts()) {
-                                ppConversationStatic.add(account.getAvatar_static());
-                                ppConversation.add(account.getAvatar());
+                            if (status != null) {
+                                List<String> ppConversation = new ArrayList<>();
+                                for (Account account : conversation.getAccounts())
+                                    ppConversation.add(account.getAvatar());
+                                status.setConversationProfilePicture(ppConversation);
+                                status.setConversationId(conversation.getId());
+                                tempStatus.add(status);
                             }
-                            status.setConversationProfilePicture(ppConversation);
-                            status.setConversationProfilePictureStatic(ppConversationStatic);
-                            status.setConversationId(conversation.getId());
-                            tempStatus.add(status);
                         }
                     }
                 }

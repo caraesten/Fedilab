@@ -141,7 +141,6 @@ public class Status implements Parcelable{
 
     public Status(){}
     private List<String> conversationProfilePicture;
-    private List<String> conversationProfilePictureStatic;
     private String webviewURL = null;
 
     private boolean isBoostAnimated = false, isFavAnimated = false;
@@ -208,7 +207,6 @@ public class Status implements Parcelable{
         dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
         dest.writeInt(this.numberLines);
         dest.writeStringList(this.conversationProfilePicture);
-        dest.writeStringList(this.conversationProfilePictureStatic);
         dest.writeString(this.webviewURL);
         dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
@@ -275,7 +273,6 @@ public class Status implements Parcelable{
         this.isExpanded = in.readByte() != 0;
         this.numberLines = in.readInt();
         this.conversationProfilePicture = in.createStringArrayList();
-        this.conversationProfilePictureStatic = in.createStringArrayList();
         this.webviewURL = in.readString();
         this.isBoostAnimated = in.readByte() != 0;
         this.isFavAnimated = in.readByte() != 0;
@@ -1614,11 +1611,4 @@ public class Status implements Parcelable{
         this.imageURL = imageURL;
     }
 
-    public List<String> getConversationProfilePictureStatic() {
-        return conversationProfilePictureStatic;
-    }
-
-    public void setConversationProfilePictureStatic(List<String> conversationProfilePictureStatic) {
-        this.conversationProfilePictureStatic = conversationProfilePictureStatic;
-    }
 }

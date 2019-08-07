@@ -503,17 +503,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 List<Status> statusesConversations = new ArrayList<>();
                 if( conversations != null) {
                     for (Conversation conversation : conversations) {
-                        app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                        List<String> ppConversationStatic = new ArrayList<>();
-                        List<String> ppConversation = new ArrayList<>();
-                        for (Account account : conversation.getAccounts()) {
-                            ppConversationStatic.add(account.getAvatar_static());
-                            ppConversation.add(account.getAvatar());
+                        Status status = conversation.getLast_status();
+                        if (status != null) {
+                            status.setConversationId(conversation.getId());
+                            List<String> ppConversation = new ArrayList<>();
+                            for (Account account : conversation.getAccounts())
+                                ppConversation.add(account.getAvatar());
+                            status.setConversationProfilePicture(ppConversation);
+                            statusesConversations.add(status);
                         }
-                        status.setConversationProfilePicture(ppConversation);
-                        status.setConversationProfilePictureStatic(ppConversationStatic);
-                        status.setConversationId(conversation.getId());
-                        statusesConversations.add(status);
                     }
                 }
                 apiResponse.setStatuses(statusesConversations);
