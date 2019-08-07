@@ -1026,6 +1026,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="owner_charts">Charts</string>
     <string name="display_charts">Display charts</string>
     <string name="collecting_data_wait">The application collects your local data, please wait...</string>
+    <string name="set_backup">Backup</string>
+    <string name="set_auto_backup">Auto backup statuses</string>
+    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
