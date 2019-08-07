@@ -121,7 +121,7 @@ public class BackupStatusesSyncJob extends Job {
             boolean autobackup =  sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + account.getId() + account.getInstance(), false);
             if( autobackup) {
                 Intent backupIntent = new Intent(getContext(), BackupStatusInDataBaseService.class);
-                backupIntent.putExtra("userId", account.getId());
+                backupIntent.putExtra("userid", account.getId());
                 backupIntent.putExtra("instance", account.getInstance());
                 getContext().startService(backupIntent);
             }

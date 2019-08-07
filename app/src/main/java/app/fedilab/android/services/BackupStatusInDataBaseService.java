@@ -27,6 +27,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import app.fedilab.android.client.API;
@@ -77,8 +78,9 @@ public class BackupStatusInDataBaseService extends IntentService {
         boolean toastMessage = true;
         String userId = null;
         String instance = null;
-        if( intent != null){
-            userId = intent.getStringExtra("userId");
+
+        if( intent != null && intent.hasExtra("userid") && intent.hasExtra("instance")){
+            userId = intent.getStringExtra("userid");
             instance = intent.getStringExtra("instance");
             toastMessage = false;
         }
@@ -115,7 +117,7 @@ public class BackupStatusInDataBaseService extends IntentService {
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         try {
             //Starts from the last recorded ID
-            String since_id = new StatusCacheDAO(BackupStatusInDataBaseService.this, db).getLastTootIDCache(StatusCacheDAO.ARCHIVE_CACHE);
+            Date sinceDate = new StatusCacheDAO(BackupStatusInDataBaseService.this, db).getLastTootDateCache(StatusCacheDAO.ARCHIVE_CACHE);
             String max_id = null;
             List<Status> backupStatus = new ArrayList<>();
             boolean canContinue = true;
@@ -124,7 +126,7 @@ public class BackupStatusInDataBaseService extends IntentService {
                 max_id = apiResponse.getMax_id();
                 List<Status> statuses = apiResponse.getStatuses();
                 for(Status tmpStatus : statuses) {
-                    if(since_id != null && max_id != null && Long.parseLong(tmpStatus.getId()) <= Long.parseLong(since_id)){
+                    if(sinceDate != null && max_id != null &&  tmpStatus.getCreated_at().before(sinceDate)){
                         canContinue = false;
                         break;
                     }
