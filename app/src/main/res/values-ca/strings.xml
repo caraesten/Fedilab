@@ -1030,9 +1030,9 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="owner_charts">Gràfiques</string>
     <string name="display_charts">Mostra les gràfiques</string>
     <string name="collecting_data_wait">L\'aplicació està recollint les dades locals, cal esperar...</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="set_backup">Còpia de seguretat</string>
+    <string name="set_auto_backup">Estatus de còpia de seguretat automàtica</string>
+    <string name="set_auto_backup_indication">Aquesta opció s\'aplica a un sol compte. Posarà en marxa un servei que guardarà localment els teus estatus de forma automàtica a la base de dades. Això permet obtenir estadístiques i gràfiques</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
