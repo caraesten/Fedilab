@@ -2623,6 +2623,16 @@ public class API {
         return postAction(API.StatusAction.REPORT, null, status, comment);
     }
 
+    /**
+     * Makes the post action
+     * @param targetedId targeted account
+     * @param comment String comment for the report
+     * @return in status code - Should be equal to 200 when action is done
+     */
+    public int reportAction(String targetedId, String comment){
+        return postAction(API.StatusAction.REPORT, targetedId, null, comment);
+    }
+
     public int statusAction(Status status){
         return postAction(StatusAction.CREATESTATUS, null, status, null);
     }
@@ -2720,9 +2730,14 @@ public class API {
             case REPORT:
                 action = "/reports";
                 params = new HashMap<>();
-                params.put("account_id", status.getAccount().getId());
+                if( status != null )
+                    params.put("account_id", status.getAccount().getId());
+                else
+                    params.put("account_id", targetedId);
                 params.put("comment", comment);
-                params.put("status_ids[]", status.getId());
+                if( status != null) {
+                    params.put("status_ids[]", status.getId());
+                }
                 break;
             case CREATESTATUS:
                 params = new HashMap<>();

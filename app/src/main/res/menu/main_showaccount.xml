@@ -52,6 +52,11 @@
         android:icon="@drawable/ic_public_world"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_report"
+        android:title="@string/more_action_3"
+        android:icon="@drawable/ic_block"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_block_instance"
         android:title="@string/block_domain"
         android:icon="@drawable/ic_block"

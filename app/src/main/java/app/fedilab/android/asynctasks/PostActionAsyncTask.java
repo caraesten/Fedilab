@@ -161,8 +161,13 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                     }
                 }
             } else {
-                if (apiAction == API.StatusAction.REPORT)
-                    statusCode = api.reportAction(status, comment);
+                if (apiAction == API.StatusAction.REPORT) {
+                    if( status != null ) {
+                        statusCode = api.reportAction(status, comment);
+                    }else{
+                        statusCode = api.reportAction(targetedId, comment);
+                    }
+                }
                 else if (apiAction == API.StatusAction.CREATESTATUS)
                     statusCode = api.statusAction(status);
                 else if(apiAction == API.StatusAction.UPDATESERVERSCHEDULE) {

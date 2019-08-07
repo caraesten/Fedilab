@@ -41,6 +41,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -50,6 +52,7 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1026,6 +1029,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         }if( isOwner) {
             popup.getMenu().findItem(R.id.action_block).setVisible(false);
+            popup.getMenu().findItem(R.id.action_report).setVisible(false);
             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
             popup.getMenu().findItem(R.id.action_mention).setVisible(false);
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
@@ -1223,6 +1227,36 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             doActionAccount = API.StatusAction.MUTE;
                         }
                         break;
+                    case R.id.action_report:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        builderInner.setTitle(R.string.report_account);
+                        //Text for report
+                        EditText input = new EditText(ShowAccountActivity.this);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        input.setLayoutParams(lp);
+                        builderInner.setView(input);
+                        doActionAccount = API.StatusAction.REPORT;
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                String targetedId;
+                                String comment = null;
+                                if (input.getText() != null)
+                                    comment = input.getText().toString();
+                                new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), null, comment, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                        return true;
                     case R.id.action_block:
                         builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
                         builderInner.setTitle(stringArrayConf[1]);
