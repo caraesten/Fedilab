@@ -74,13 +74,13 @@ public class BackupStatusInDataBaseService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        boolean toastMessage = false;
+        boolean toastMessage = true;
         String userId = null;
         String instance = null;
         if( intent != null){
             userId = intent.getStringExtra("userId");
             instance = intent.getStringExtra("instance");
-            toastMessage = true;
+            toastMessage = false;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( userId == null || instance == null) {
