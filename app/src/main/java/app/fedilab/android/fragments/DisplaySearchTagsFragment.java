@@ -83,10 +83,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             search = bundle.getString("search");
-            if (search != null)
-                new RetrieveSearchAsyncTask(context, search.trim(), DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else
+            if (search == null) {
                 Toasty.error(context, getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
+            }
         } else {
             Toasty.error(context, getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }
@@ -123,7 +122,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
                 tags = new ArrayList<>();
                 max_id = "0";
                 searchTagsAdapter.notifyItemRangeRemoved(0, size);
-                new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( search != null) {
+                    new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
             }
         });
         lv_search_tags.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -136,7 +137,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
                 if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                     if(!flag_loading ) {
                         flag_loading = true;
-                        new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, max_id, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if( search != null) {
+                            new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, max_id, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                         loading_next_tags.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -145,7 +148,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
             }
             }
         });
-        new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( search != null) {
+            new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         return rootView;
     }
 
