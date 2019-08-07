@@ -158,9 +158,7 @@ public class Notification implements Parcelable {
             return;
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
-        status.getAccount().makeAccountNameEmoji(context, null, status.getAccount());
-
-        //SpannableString displayNameSpan = status.getDisplayNameSpan();
+        SpannableString displayNameSpan = status.getDisplayNameSpan();
         SpannableString contentSpan = status.getContentSpan();
         SpannableString contentSpanCW = status.getContentSpanCW();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -221,7 +219,7 @@ public class Notification implements Parcelable {
                                         }
                                     }
                                 }
-                               /* if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
@@ -235,7 +233,6 @@ public class Notification implements Parcelable {
                                         }
                                     }
                                 }
-                                status.setDisplayNameSpan(displayNameSpan);*/
                                 if (contentSpanCW != null && contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -263,6 +260,7 @@ public class Notification implements Parcelable {
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
+                                    status.setDisplayNameSpan(displayNameSpan);
                                     status.setEmojiFound(true);
                                     listener.onRetrieveEmoji(notification);
                                 }

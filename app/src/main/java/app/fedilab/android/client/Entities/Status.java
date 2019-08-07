@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -46,15 +45,12 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.model.FileLoader;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.github.penfeizhou.animation.FrameAnimationDrawable;
 import com.github.penfeizhou.animation.apng.APNGDrawable;
 import com.github.penfeizhou.animation.gif.GifDrawable;
-import com.github.penfeizhou.animation.loader.AssetStreamLoader;
 
 import java.io.File;
 import java.net.URI;
@@ -688,10 +684,10 @@ public class Status implements Parcelable{
         if( spannableStringContent.length() > 0)
             status.setContentSpan(treatment(context, spannableStringContent, status));
         if( spannableStringCW.length() > 0)
-            status.setContentSpanCW(treatment(context, spannableStringCW, status));
+            status.setContentSpanCW(spannableStringCW);
         SpannableString displayNameSpan = new SpannableString(status.reblog!=null?status.getReblog().getAccount().getDisplay_name():status.getAccount().getDisplay_name());
-        status.setDisplayNameSpan(displayNameSpan);
-        status.setClickable(true);
+        if( displayNameSpan.length() > 0)
+            status.setDisplayNameSpan(displayNameSpan);
     }
 
 
@@ -774,8 +770,6 @@ public class Status implements Parcelable{
                 accountsMentionUnknown.put(key, account);
             }
         }
-
-
 
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1080,7 +1074,7 @@ public class Status implements Parcelable{
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
-        status.getAccount().makeAccountNameEmoji(context, null, status.getAccount());
+        //Account.makeAccountNameEmoji(context, null, status.getAccount());
 
         SpannableString displayNameSpan = status.getDisplayNameSpan();
         SpannableString contentSpan = status.getContentSpan();
@@ -1168,7 +1162,6 @@ public class Status implements Parcelable{
                                         }
                                     }
                                 }
-                                status.setDisplayNameSpan(displayNameSpan);
                                 if (contentSpanCW != null && contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -1196,6 +1189,7 @@ public class Status implements Parcelable{
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
+                                    status.setDisplayNameSpan(displayNameSpan);
                                     status.setEmojiFound(true);
                                     listener.onRetrieveEmoji(status, false);
                                 }

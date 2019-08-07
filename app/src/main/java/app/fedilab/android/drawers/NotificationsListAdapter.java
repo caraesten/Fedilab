@@ -438,12 +438,18 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            if( !status.isClickable())
+            if( !status.isClickable()) {
+                status.setClickable(true);
                 Status.transform(context, status);
-            if( !status.isEmojiFound())
+            }
+            if( !status.isEmojiFound()) {
+                status.setEmojiFound(true);
                 Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
-            if( !status.isImageFound())
+            }
+            if( !status.isImageFound()) {
+                status.setImageFound(true);
                 Status.makeImage(context, NotificationsListAdapter.this, status);
+            }
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());

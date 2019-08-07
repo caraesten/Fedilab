@@ -1546,12 +1546,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Helper.changeDrawableColor(context, holder.hide_preview_h, R.color.white);
             }
 
-            if (!status.isClickable())
+            if (!status.isClickable()) {
+                status.setClickable(true);
                 Status.transform(context, status);
-            if (!status.isEmojiFound())
+            }
+            if (!status.isEmojiFound()) {
+                status.setEmojiFound(true);
                 Status.makeEmojis(context, this, status);
-            if (!status.isImageFound())
+            }
+            if (!status.isImageFound()) {
+                status.setImageFound(true);
                 Status.makeImage(context, this, status);
+            }
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -1845,10 +1851,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else {
                 accountForUrl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
-                if (status.getAccount().getdisplayNameSpan() == null || status.getAccount().getdisplayNameSpan().toString().trim().length() == 0)
+                if (status.getDisplayNameSpan() == null || status.getDisplayNameSpan().toString().trim().length() == 0)
                     holder.status_account_displayname_owner.setText(status.getAccount().getUsername().replace("@", ""), TextView.BufferType.SPANNABLE);
                 else
-                    holder.status_account_displayname_owner.setText(status.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+                    holder.status_account_displayname_owner.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             }
             //-------- END -> Displays name & emoji in toot header
 
