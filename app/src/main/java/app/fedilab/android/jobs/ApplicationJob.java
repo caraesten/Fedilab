@@ -34,6 +34,8 @@ public class ApplicationJob implements JobCreator {
                 return new ScheduledTootsSyncJob();
             case ScheduledBoostsSyncJob.SCHEDULED_BOOST:
                 return new ScheduledBoostsSyncJob();
+            case BackupStatusesSyncJob.BACKUP_SYNC:
+                return new BackupStatusesSyncJob();
             default:
                 return null;
         }
