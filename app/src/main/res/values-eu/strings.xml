@@ -1037,6 +1037,9 @@
     <string name="owner_charts">Diagramak</string>
     <string name="display_charts">Erakutsi diagramak</string>
     <string name="collecting_data_wait">Aplikazioa zure datu lokalak biltzen ari da, itxaron mesedez...</string>
+    <string name="set_backup">Backup</string>
+    <string name="set_auto_backup">Auto backup statuses</string>
+    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
