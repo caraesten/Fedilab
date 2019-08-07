@@ -2042,7 +2042,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
+            Account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             loadGiF(activity, account.getAvatar(), profilePicture);
