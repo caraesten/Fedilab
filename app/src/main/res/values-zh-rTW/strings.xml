@@ -1034,6 +1034,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="owner_charts">圖表</string>
     <string name="display_charts">顯示圖表</string>
     <string name="collecting_data_wait">應用程式蒐集您的本機資料中，請稍候……</string>
+    <string name="set_backup">Backup</string>
+    <string name="set_auto_backup">Auto backup statuses</string>
+    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
