@@ -424,10 +424,12 @@ public class StatusCacheDAO {
      * Returns the last date of backup for a user depending of the type of cache
      * @return Date
      */
-    public Date getLastTootDateCache(int cacheType){
+    public Date getLastTootDateCache(int cacheType, String userId, String instance){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = Helper.getLiveInstance(context);
+        if( userId == null || instance == null) {
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            instance = Helper.getLiveInstance(context);
+        }
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "1");
             //No element found

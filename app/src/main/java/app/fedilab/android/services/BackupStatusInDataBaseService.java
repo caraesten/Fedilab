@@ -117,7 +117,7 @@ public class BackupStatusInDataBaseService extends IntentService {
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         try {
             //Starts from the last recorded ID
-            Date sinceDate = new StatusCacheDAO(BackupStatusInDataBaseService.this, db).getLastTootDateCache(StatusCacheDAO.ARCHIVE_CACHE);
+            Date sinceDate = new StatusCacheDAO(BackupStatusInDataBaseService.this, db).getLastTootDateCache(StatusCacheDAO.ARCHIVE_CACHE, userId, instance);
             String max_id = null;
             List<Status> backupStatus = new ArrayList<>();
             boolean canContinue = true;
@@ -130,7 +130,7 @@ public class BackupStatusInDataBaseService extends IntentService {
                         canContinue = false;
                         break;
                     }
-                    new StatusCacheDAO(BackupStatusInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus);
+                    new StatusCacheDAO(BackupStatusInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus, userId, instance);
                     backupStatus.add(tmpStatus);
                 }
             }while (max_id != null && canContinue);
