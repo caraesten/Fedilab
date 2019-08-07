@@ -39,6 +39,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -706,16 +707,18 @@ public class Status implements Parcelable{
         matcher = linkPattern.matcher(spannableString);
         HashMap<String, String> targetedURL = new HashMap<>();
         HashMap<String, Account> accountsMentionUnknown = new HashMap<>();
-
+        String liveInstance = Helper.getLiveInstance(context);
         while (matcher.find()){
             String key;
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 key = new SpannableString(Html.fromHtml(matcher.group(3), Html.FROM_HTML_MODE_LEGACY)).toString();
             else
                 key = new SpannableString(Html.fromHtml(matcher.group(3))).toString();
             key = key.substring(1);
 
-            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(2).contains("search?tag=")) {
+            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(2).contains("search?tag=") && !matcher.group(2).contains(liveInstance+"/users/")) {
+
                 String url;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     url = Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -724,7 +727,7 @@ public class Status implements Parcelable{
                     url = Html.fromHtml(matcher.group(2)).toString();
                 }
                 targetedURL.put(key, url);
-            }else if( key.startsWith("@") ){
+            }else if( key.startsWith("@") || matcher.group(2).contains(liveInstance+"/users/") ){
                 String acct;
                 String url;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -742,7 +745,10 @@ public class Status implements Parcelable{
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-                acct = key.substring(1).split("\\|")[0];
+                if( key.startsWith("@"))
+                    acct = key.substring(1).split("\\|")[0];
+                else
+                    acct = key.split("\\|")[0];
                 Account account = new Account();
                 account.setAcct(acct);
                 account.setInstance(instance);
