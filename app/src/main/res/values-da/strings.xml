@@ -1038,9 +1038,9 @@
     <string name="owner_charts">Diagrammer</string>
     <string name="display_charts">Vis diagrammer</string>
     <string name="collecting_data_wait">App\'en indsamler dine lokale data, vent venligst...</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="set_backup">Sikkerhedskopi</string>
+    <string name="set_auto_backup">Auto-sikkerhedskopiér statusser</string>
+    <string name="set_auto_backup_indication">Denne er en pr. konto mulighed. Den starter en tjeneste, der automatisk gemmer dine statusser lokalt i databasen. Dette muliggør statistikker og diagrammer</string>
     <string name="report_account">Report account</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
