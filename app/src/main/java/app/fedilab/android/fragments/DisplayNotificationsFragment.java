@@ -416,7 +416,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( notifications != null && notifications.size() > 0) {
             if( type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) >= Long.parseLong(MainActivity.lastNotificationId)) {
+                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) >= 0 ) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
                 }
@@ -428,7 +428,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             int inserted = 0;
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications != null && this.notifications.size() == 0 ||
-                        Long.parseLong(notifications.get(i).getId()) > Long.parseLong(this.notifications.get(0).getId())) {
+                        notifications.get(i).getId().compareTo(this.notifications.get(0).getId()) >= 1) {
                     countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
                     inserted++;
@@ -450,7 +450,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private void updateNotificationLastId(String notificationId){
         if( type == Type.ALL) {
             String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-            if (lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)) {
+            if (lastNotif == null || notificationId.compareTo(lastNotif) >= 1) {
                 countNewNotifications = 0;
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);

@@ -414,7 +414,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                         Helper.notify_user(getApplicationContext(),account, intent, BitmapFactory.decodeResource(getResources(),
                                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                        if (lastNotif == null || notification.getId().compareTo(lastNotif) >= 1) {
                                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
                                                             editor.apply();
@@ -428,7 +428,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
                                                         Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
                                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                        if (lastNotif == null || notification.getId().compareTo(lastNotif) >= 1) {
                                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
                                                             editor.apply();
