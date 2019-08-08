@@ -3,4 +3,4 @@ Added
 
 Fixed
 - Fix recent crashes
-- Search results: Tag list duplicated 
+- Search results: Tag list duplicated
