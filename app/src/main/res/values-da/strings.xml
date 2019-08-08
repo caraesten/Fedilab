@@ -1041,7 +1041,7 @@
     <string name="set_backup">Sikkerhedskopi</string>
     <string name="set_auto_backup">Auto-sikkerhedskopiér statusser</string>
     <string name="set_auto_backup_indication">Denne er en pr. konto mulighed. Den starter en tjeneste, der automatisk gemmer dine statusser lokalt i databasen. Dette muliggør statistikker og diagrammer</string>
-    <string name="report_account">Report account</string>
+    <string name="report_account">Rapportér konto</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
