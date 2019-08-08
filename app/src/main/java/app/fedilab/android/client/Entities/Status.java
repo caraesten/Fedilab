@@ -1080,15 +1080,74 @@ public class Status implements Parcelable{
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
-        //Account.makeAccountNameEmoji(context, null, status.getAccount());
+        Account.makeAccountNameEmoji(context, null, status.getAccount());
 
         SpannableString displayNameSpan = status.getDisplayNameSpan();
         SpannableString contentSpan = status.getContentSpan();
         SpannableString contentSpanCW = status.getContentSpanCW();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( emojisAccounts != null)
-            emojis.addAll(emojisAccounts);
+
+        if( emojisAccounts != null && emojisAccounts.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojisAccounts) {
+                Glide.with(context)
+                        .asDrawable()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Drawable>()  {
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                i[0]++;
+                                if( i[0] ==  (emojisAccounts.size())) {
+                                    listener.onRetrieveEmoji(status,false);
+                                }
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
+
+                                            ImageSpan imageSpan;
+                                            if( !disableAnimatedEmoji) {
+                                                resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
+                                                resource.setVisible(true, true);
+                                                imageSpan = new ImageSpan(resource);
+                                            }else{
+                                                resource.setVisible(true, true);
+                                                Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                imageSpan = new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false));
+                                            }
+                                            displayNameSpan.setSpan(
+                                                    imageSpan, startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
+                                    }
+                                }
+                                i[0]++;
+                                if( i[0] ==  (emojisAccounts.size())) {
+                                    status.setDisplayNameSpan(displayNameSpan);
+                                    listener.onRetrieveEmoji(status, false);
+                                }
+                            }
+                        });
+
+            }
+
+        }
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
@@ -1144,30 +1203,6 @@ public class Status implements Parcelable{
                                         }
                                     }
                                 }
-                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
-                                    //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                        final int endPosition = startPosition + targetedEmoji.length();
-                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
-
-                                            ImageSpan imageSpan;
-                                            if( !disableAnimatedEmoji) {
-                                                resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                                resource.setVisible(true, true);
-                                                imageSpan = new ImageSpan(resource);
-                                            }else{
-                                                resource.setVisible(true, true);
-                                                Bitmap bitmap = drawableToBitmap(resource.getCurrent());
-                                                imageSpan = new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false));
-                                            }
-                                            displayNameSpan.setSpan(
-                                                    imageSpan, startPosition,
-                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                        }
-                                    }
-                                }
                                 if (contentSpanCW != null && contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -1195,7 +1230,6 @@ public class Status implements Parcelable{
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
-                                    status.setDisplayNameSpan(displayNameSpan);
                                     status.setEmojiFound(true);
                                     listener.onRetrieveEmoji(status, false);
                                 }

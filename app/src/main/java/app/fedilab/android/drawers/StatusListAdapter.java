@@ -4225,9 +4225,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    statusListAdapter.notifyItemChanged(i);
+                    statuses.set(i, status);
+                    if( mRecyclerView != null) {
+                        int finalI = i;
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                statusListAdapter.notifyItemChanged(finalI);
+                            }
+                        });
+                    }
                 } catch (Exception ignored) {
                 }
+                break;
             }
         }
     }
@@ -4240,9 +4250,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
                     statuses.set(i, status);
-                    statusListAdapter.notifyItemChanged(i);
+                    if( mRecyclerView != null) {
+                        int finalI = i;
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                statusListAdapter.notifyItemChanged(finalI);
+                            }
+                        });
+                    }
                 } catch (Exception ignored) {
                 }
+                break;
             }
         }
     }

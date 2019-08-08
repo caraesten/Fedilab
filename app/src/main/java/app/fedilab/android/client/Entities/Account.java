@@ -1076,17 +1076,11 @@ public class Account implements Parcelable {
             for (final Emojis emoji : emojis) {
                 try {
                     Glide.with(context)
-                            .asFile()
+                            .asDrawable()
                             .load(emoji.getUrl())
-                            .into(new SimpleTarget<File>() {
+                            .into(new SimpleTarget<Drawable>() {
                                 @Override
-                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                                    Drawable resource;
-                                    if( emoji.getUrl().endsWith(".gif")){
-                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                    }else{
-                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
-                                    }
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                     if (displayNameSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
@@ -1118,6 +1112,7 @@ public class Account implements Parcelable {
                                             listener.onRetrieveEmojiAccount(account);
                                     }
                                 }
+
 
                             });
                 }catch (Exception ignored){}

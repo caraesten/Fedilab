@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -353,14 +354,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         if( notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
             notification.getAccount().setStored_displayname(notification.getAccount().getDisplay_name());
-            notification.getAccount().setDisplay_name(typeString);
+           // notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
-        if( !notification.isEmojiFound()) {
-            notification.setEmojiFound(true);
-            notification.getAccount().makeAccountNameEmoji(context, NotificationsListAdapter.this, notification.getAccount());
-        }
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -442,8 +439,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 status.setClickable(true);
                 Status.transform(context, status);
             }
-            if( !status.isEmojiFound()) {
-                status.setEmojiFound(true);
+            if( !notification.isEmojiFound()) {
+                notification.setEmojiFound(true);
                 Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
             }
             if( !status.isImageFound()) {
@@ -1163,10 +1160,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     private void notifyNotificationChanged(Notification notification){
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(notification.getId())) {
+
+            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().trim().compareTo(notification.getId().trim()) == 0) {
                 try {
-                    notificationsListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) { }
+                    if( mRecyclerView != null) {
+                        int finalI = i;
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                notificationsListAdapter.notifyItemChanged(finalI);
+                            }
+                        });
+                    }
+                    break;
+                } catch (Exception ignored) {}
             }
         }
     }
@@ -1178,7 +1185,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 try {
                     if( notifications.get(i).getStatus() != null){
                         notifications.get(i).setStatus(status);
-                        notificationsListAdapter.notifyItemChanged(i);
+                        notifyItemChanged(i);
+                        if( mRecyclerView != null) {
+                            int finalI = i;
+                            mRecyclerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    notificationsListAdapter.notifyItemChanged(finalI);
+                                }
+                            });
+                        }
                         break;
                     }
                 } catch (Exception ignored) {}
@@ -1375,13 +1391,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-
+        notifyNotificationWithActionChanged(status);
     }
 
     @Override
     public void onRetrieveEmoji(Notification notification) {
         if( notification != null && notification.getStatus() != null) {
-            notification.getStatus().setEmojiFound(true);
             notifyNotificationChanged(notification);
         }
     }
