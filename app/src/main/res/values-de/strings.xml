@@ -1026,9 +1026,9 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="display_charts">Diagramme anzeigen</string>
     <string name="collecting_data_wait">Die Anwendung sammelt Ihre lokalen Daten, bitte warten …</string>
     <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
+    <string name="set_auto_backup">Status automatisch als Backup sichern</string>
+    <string name="set_auto_backup_indication">Diese Option ist pro Konto. Es wird einen Dienst starten, der deine Status automatisch in einer lokalen Datenbank speichert. Dies erlaubt dir, Statistiken und Diagramme zu erhalten</string>
+    <string name="report_account">Konto melden</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
