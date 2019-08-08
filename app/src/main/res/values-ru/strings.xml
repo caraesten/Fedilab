@@ -1046,6 +1046,10 @@
     <string name="owner_charts">Графики</string>
     <string name="display_charts">Отображать графики</string>
     <string name="collecting_data_wait">Приложение собирает ваши локальные данные, пожалуйста, подождите...</string>
+    <string name="set_backup">Резервное копирование</string>
+    <string name="set_auto_backup">Статус автоматического резервного копирования</string>
+    <string name="set_auto_backup_indication">Эта опция для каждого аккаунта. Он запустит службу, которая автоматически сохранит ваши статусы в локальной базе данных. Это позволит получать статистику и графики</string>
+    <string name="report_account">Сообщить об аккаунте</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d голос</item>
         <item quantity="few">%d голоса</item>

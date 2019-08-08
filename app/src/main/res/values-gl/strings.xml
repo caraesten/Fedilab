@@ -1039,6 +1039,10 @@
     <string name="owner_charts">Gráficos</string>
     <string name="display_charts">Mostrar gráficos</string>
     <string name="collecting_data_wait">A aplicación recolle os seus datos locais, agarde por favor...</string>
+    <string name="set_backup">Copia de respaldo</string>
+    <string name="set_auto_backup">Estado do respaldo automático</string>
+    <string name="set_auto_backup_indication">Actívase para cada conta. Lanzará un servizo que gardará de xeito automático os seus estados localmente na base de datos. Esto permítelle obter estatísticas e gráficas</string>
+    <string name="report_account">Report account</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
