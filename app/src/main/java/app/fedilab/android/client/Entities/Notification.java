@@ -220,7 +220,7 @@ public class Notification implements Parcelable {
                         @Override
                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                             final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                            if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                            if (displayNameSpan.toString().contains(targetedEmoji)) {
                                 //emojis can be used several times so we have to loop
                                 for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                     final int endPosition = startPosition + targetedEmoji.length();

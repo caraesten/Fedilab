@@ -4226,7 +4226,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
                     statuses.set(i, status);
-                    if( mRecyclerView != null) {
+                    statusListAdapter.notifyItemChanged(i);
+                    /*if( mRecyclerView != null) {
                         int finalI = i;
                         mRecyclerView.post(new Runnable() {
                             @Override
@@ -4234,9 +4235,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 statusListAdapter.notifyItemChanged(finalI);
                             }
                         });
-                    }
-                } catch (Exception ignored) {
-                }
+                    }*/
+                } catch (Exception ignored) {}
                 break;
             }
         }
@@ -4250,7 +4250,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
                     statuses.set(i, status);
-                    if( mRecyclerView != null) {
+                    statusListAdapter.notifyItemChanged(i);
+                    /*if( mRecyclerView != null) {
                         int finalI = i;
                         mRecyclerView.post(new Runnable() {
                             @Override
@@ -4258,9 +4259,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 statusListAdapter.notifyItemChanged(finalI);
                             }
                         });
-                    }
-                } catch (Exception ignored) {
-                }
+                    }*/
+                } catch (Exception ignored) {}
                 break;
             }
         }
