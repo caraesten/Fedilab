@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
+
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -237,7 +237,6 @@ public class Notification implements Parcelable {
                             j[0]++;
                             if( j[0] ==  (emojisAccounts.size())) {
                                 notification.getAccount().setdisplayNameSpan(displayNameSpan);
-                                Log.v(Helper.TAG,"displayNameSpan: " + displayNameSpan);
                                 listener.onRetrieveEmoji(notification);
                             }
                         }
