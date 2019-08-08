@@ -1,0 +1,6 @@
+Added
+- Report accounts from their profile
+
+Fixed
+- Fix recent crashes
+- Search results: Tag list duplicated 
