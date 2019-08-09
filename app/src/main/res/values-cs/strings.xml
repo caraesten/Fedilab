@@ -835,7 +835,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_blur_sensitive">Rozostřít citlivá média</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Zobraz časové osy</string>
     <string name="set_display_bot_icon">Mark bot accounts in toots</string>
