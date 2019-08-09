@@ -244,11 +244,11 @@
     <string name="client_error">クライアントIDを取得できませんでした。</string>
     <string name="connect_error">インスタンスドメインに接続できません！</string>
     <string name="no_internet">インターネット接続がありません！</string>
-    <string name="toast_block">アカウントがブロックされました！</string>
+    <string name="toast_block">アカウントをブロックしました！</string>
     <string name="toast_unblock">このアカウントのブロックを解除しました！</string>
     <string name="toast_mute">アカウントはミュートされました。</string>
     <string name="toast_unmute">このアカウントのミュートを解除しました！</string>
-    <string name="toast_follow">アカウントがフォローされました！</string>
+    <string name="toast_follow">アカウントをフォローしました！</string>
     <string name="toast_unfollow">このアカウントのフォローを解除しました！</string>
     <string name="toast_reblog">トゥートをブーストしました</string>
     <string name="toast_unreblog">トゥートはブーストされていません！</string>
