@@ -3081,8 +3081,7 @@ public class API {
         if( notificationId == null)
             action = "/notifications/clear";
         else {
-            params.put("id",notificationId);
-            action = "/notifications/dismiss";
+            action = "/notifications/" + notificationId + "/dismiss";
         }
         try {
             new HttpsConnection(context, this.instance).post(getAbsoluteUrl(action), 10, params, prefKeyOauthTokenT);
