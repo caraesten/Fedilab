@@ -1026,10 +1026,10 @@
     <string name="owner_charts">グラフ</string>
     <string name="display_charts">グラフを表示する</string>
     <string name="collecting_data_wait">データを収集しています。しばらくお待ちください。</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
+    <string name="set_backup">バックアップ</string>
+    <string name="set_auto_backup">トゥートを自動でバックアップ</string>
+    <string name="set_auto_backup_indication">これはアカウントごとの設定です。あなたのトゥートをローカルのデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
+    <string name="report_account">アカウントを報告</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
