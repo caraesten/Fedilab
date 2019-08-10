@@ -252,7 +252,7 @@
     <string name="toast_unblock">El compte ja no està blocat!</string>
     <string name="toast_mute">El compte s\'ha silenciat!</string>
     <string name="toast_unmute">El compte ja no està silenciat!</string>
-    <string name="toast_follow">El compte tenia seguidors!</string>
+    <string name="toast_follow">Seguiment del compte confirmat!</string>
     <string name="toast_unfollow">El compte ja no té seguidors!</string>
     <string name="toast_reblog">El toot ha estat difós!</string>
     <string name="toast_unreblog">El toot ja no està difós!</string>
