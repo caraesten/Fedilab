@@ -311,6 +311,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+        final LinearLayout set_auto_backup_text = rootView.findViewById(R.id.set_auto_backup_text);
+        set_auto_backup_text.setOnClickListener(view -> set_auto_backup.performClick());
 
 
         TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
