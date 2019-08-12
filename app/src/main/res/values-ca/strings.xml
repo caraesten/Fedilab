@@ -503,7 +503,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="which_language">Tradueix al</string>
     <string name="follow_instance">Segueix la instància</string>
     <string name="toast_instance_already_added">Ja estàs seguint aquesta instància!</string>
-    <string name="toast_instance_followed">La instància ja té seguidors!</string>
+    <string name="toast_instance_followed">Confirmat, ja segueixes la instància!</string>
     <string name="action_partnership">Socis</string>
     <string name="neutral_menu_information">Informació</string>
     <string name="hide_boost">Amaga les difusions de %s</string>
