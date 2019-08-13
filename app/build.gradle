@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 301
         versionName "2.13.2"
@@ -120,7 +120,8 @@ dependencies {
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.2.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
-    implementation 'com.linecorp:apng:1.6.0'
+    implementation 'com.github.penfeizhou.android.animation:apng:1.0.1'
+    implementation 'com.github.penfeizhou.android.animation:gif:1.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
