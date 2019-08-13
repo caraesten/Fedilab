@@ -3653,12 +3653,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             int width = resource.getWidth();
                                             int height = resource.getHeight();
 
-                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                            /*if (height < Helper.convertDpToPixel(200, context)) {
                                                 double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
                                                 width = (int) (ratio * width);
                                                 height = (int) Helper.convertDpToPixel(200, context);
                                                 resource = Bitmap.createScaledBitmap(resource, width, height, false);
-                                            }
+                                            }*/
                                             imageView.setImageBitmap(resource);
                                             status.setMedia_height(container.getHeight());
                                         }
@@ -3676,12 +3676,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             int width = resource.getWidth();
                                             int height = resource.getHeight();
 
-                                            if (height < Helper.convertDpToPixel(200, context)) {
+                                            /*if (height < Helper.convertDpToPixel(200, context)) {
                                                 double ratio = ((double) Helper.convertDpToPixel(200, context) / (double) height);
                                                 width = (int) (ratio * width);
                                                 height = (int) Helper.convertDpToPixel(200, context);
                                                 resource = Bitmap.createScaledBitmap(resource, width, height, false);
-                                            }
+                                            }*/
                                             imageView.setImageBitmap(resource);
                                         }
                                     });

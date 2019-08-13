@@ -120,10 +120,12 @@ public class BackupStatusesSyncJob extends Job {
         for(Account account: accounts) {
             boolean autobackup =  sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + account.getId() + account.getInstance(), false);
             if( autobackup) {
-                Intent backupIntent = new Intent(getContext(), BackupStatusInDataBaseService.class);
-                backupIntent.putExtra("userid", account.getId());
-                backupIntent.putExtra("instance", account.getInstance());
-                getContext().startService(backupIntent);
+                try {
+                    Intent backupIntent = new Intent(getContext(), BackupStatusInDataBaseService.class);
+                    backupIntent.putExtra("userid", account.getId());
+                    backupIntent.putExtra("instance", account.getInstance());
+                    getContext().startService(backupIntent);
+                }catch (Exception ignored){}
             }
         }
     }
