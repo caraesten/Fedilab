@@ -49,10 +49,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.github.penfeizhou.animation.apng.APNGDrawable;
-import com.github.penfeizhou.animation.gif.GifDrawable;
+import com.linecorp.apng.ApngDrawable;
+import com.linecorp.apng.decoder.ApngException;
+
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -1171,12 +1173,17 @@ public class Status implements Parcelable{
                         .into(new SimpleTarget<File>() {
                             @Override
                             public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                                Drawable resource;
-                                if( emoji.getUrl().endsWith(".gif")){
-                                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                }else{
-                                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                ApngDrawable resource = null;
+                                try {
+                                    resource = ApngDrawable.Companion.decode(resourceFile.getAbsolutePath(),  (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                } catch (ApngException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
+                                if( resource == null)
+                                    return;
+
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
@@ -1188,6 +1195,8 @@ public class Status implements Parcelable{
                                                 resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                 resource.setVisible(true, true);
                                                 imageSpan = new ImageSpan(resource);
+                                                resource.setLoopCount(1000);
+                                                resource.start();
 
                                             }else{
                                                 resource.setVisible(true, true);

@@ -44,12 +44,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.github.penfeizhou.animation.apng.APNGDrawable;
-import com.github.penfeizhou.animation.gif.GifDrawable;
+import com.linecorp.apng.ApngDrawable;
+import com.linecorp.apng.decoder.ApngException;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -952,12 +953,16 @@ public class Account implements Parcelable {
                             .into(new SimpleTarget<File>() {
                                 @Override
                                 public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                                    Drawable resource;
-                                    if( emoji.getUrl().endsWith(".gif")){
-                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                    }else{
-                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    ApngDrawable resource = null;
+                                    try {
+                                        resource = ApngDrawable.Companion.decode(resourceFile.getAbsolutePath(),  (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                    } catch (ApngException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
+                                    if( resource == null)
+                                        return;
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
 
                                     if (noteSpan != null && noteSpan.toString().contains(targetedEmoji)) {
@@ -970,8 +975,8 @@ public class Account implements Parcelable {
                                                     resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                     resource.setVisible(true, true);
                                                     imageSpan = new ImageSpan(resource);
+                                                    resource.start();
                                                 }else{
-                                                    resource.setVisible(true, true);
                                                     Bitmap bitmap = drawableToBitmap(resource.getCurrent());
                                                     imageSpan = new ImageSpan(context,
                                                             Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
