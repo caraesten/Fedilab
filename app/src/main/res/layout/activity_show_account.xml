@@ -237,6 +237,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -249,6 +250,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/mastodonC4"
+                            android:background="@drawable/blue_border"
+                            android:visibility="gone"
+                            android:id="@+id/instance_info"
+                            android:layout_marginEnd="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/seperator"
+                            android:text="-"
+                            android:visibility="gone"
+                            android:gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:id="@+id/account_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                     <!-- Fields container -->
                     <LinearLayout
                         android:visibility="gone"

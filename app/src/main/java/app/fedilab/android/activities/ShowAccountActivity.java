@@ -64,6 +64,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -79,6 +81,7 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
@@ -112,6 +115,7 @@ import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import static app.fedilab.android.helper.Helper.getLiveInstance;
 
 
 /**
@@ -781,6 +785,32 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 return false;
             }
         });
+        TextView account_date = findViewById(R.id.account_date);
+        account_date.setText(Helper.shortDateToString(account.getCreated_at()));
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+
+                String instance = getLiveInstance(getApplicationContext());
+                if( account.getAcct().split("@").length > 1 ){
+                    instance = account.getAcct().split("@")[1];
+                }
+                InstanceNodeInfo instanceNodeInfo = new API(ShowAccountActivity.this).displayNodeInfo(instance);
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        if(instanceNodeInfo != null && instanceNodeInfo.getName() != null){
+                            TextView instance_info  = findViewById(R.id.instance_info);
+                            instance_info.setText(instanceNodeInfo.getName());
+                            instance_info.setVisibility(View.VISIBLE);
+                            TextView seperator = findViewById(R.id.seperator);
+                            seperator.setVisibility(View.VISIBLE);
+                        }
+                    }});
+
+
+            }
+        }).start();
     }
 
 

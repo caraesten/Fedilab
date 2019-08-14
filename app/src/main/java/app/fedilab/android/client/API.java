@@ -692,6 +692,76 @@ public class API {
     }
 
 
+
+    public InstanceNodeInfo displayNodeInfo(String domain){
+
+        String response;
+        InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
+        try {
+            response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
+            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
+            try {
+                int i = 0;
+                while (i < jsonArray.length() ){
+
+                    JSONObject resobj = jsonArray.getJSONObject(i);
+                    NodeInfo nodeInfo = new NodeInfo();
+                    nodeInfo.setHref(resobj.getString("href"));
+                    nodeInfo.setRel(resobj.getString("rel"));
+                    i++;
+                    nodeInfos.add(nodeInfo);
+                }
+                if( nodeInfos.size() > 0){
+                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size()-1);
+                    response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
+                    JSONObject resobj = new JSONObject(response);
+                    JSONObject jsonObject = resobj.getJSONObject("software");
+                    String name= null;
+                    name = jsonObject.getString("name").toUpperCase();
+                    instanceNodeInfo.setName(name);
+                    instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                    instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
+                }
+            } catch (JSONException e) {
+                setDefaultError(e);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+            try {
+                response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
+                JSONObject jsonObject = new JSONObject(response);
+                instanceNodeInfo.setName("MASTODON");
+                instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                instanceNodeInfo.setOpenRegistrations(true);
+            } catch (IOException e1) {
+                instanceNodeInfo.setConnectionError(true);
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            } catch (KeyManagementException e1) {
+                e1.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e1) {
+                instanceNodeInfo.setName("GNU");
+                instanceNodeInfo.setVersion("unknown");
+                instanceNodeInfo.setOpenRegistrations(true);
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceNodeInfo;
+    }
+
     public API(Context context, String instance, String token) {
         this.context = context;
         if( context == null) {
