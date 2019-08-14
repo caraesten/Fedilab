@@ -49,6 +49,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -250,6 +251,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         View fake_actionbar = findViewById(R.id.fake_actionbar);
         final ImageButton account_menu = findViewById(R.id.account_menu);
         ImageButton action_more = findViewById(R.id.action_more);
+        ImageButton reload_tabs = findViewById(R.id.reload_tabs);
         ImageButton action_back = findViewById(R.id.action_back);
         if(theme == Helper.THEME_LIGHT){
             fake_actionbar.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.light_grey));
@@ -270,6 +272,29 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             @Override
             public void onClick(View v) {
                 showMenu(account_menu);
+            }
+        });
+        reload_tabs.setOnClickListener(view -> {
+
+            if( mPager != null &&  mPager
+                    .getAdapter() != null){
+                if(mPager.getCurrentItem() == 0) {
+                    if( mPager
+                            .getAdapter()
+                            .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  DisplayStatusFragment){
+                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment)mPager
+                                .getAdapter()
+                                .instantiateItem(mPager, mPager.getCurrentItem());
+                        displayStatusFragment.pullToRefresh();
+                    }else if( mPager
+                            .getAdapter()
+                            .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  DisplayAccountsFragment) {
+                        DisplayAccountsFragment displayAccountsFragment = (DisplayAccountsFragment) mPager
+                                .getAdapter()
+                                .instantiateItem(mPager, mPager.getCurrentItem());
+                        displayAccountsFragment.pullToRefresh();
+                    }
+                }
             }
         });
         action_back.setOnClickListener(new View.OnClickListener() {
@@ -345,9 +370,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
 
         //Peertube account watched by a Mastodon account
-        if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
+        /*if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
             account_type.setVisibility(View.VISIBLE);
-        }
+        }*/
         //Bot account
         if( account.isBot()){
             account_bot.setVisibility(View.VISIBLE);

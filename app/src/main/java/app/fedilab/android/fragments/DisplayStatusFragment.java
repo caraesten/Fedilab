@@ -1113,4 +1113,39 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             firstLoad = false;
         }
     }
+
+    public void pullToRefresh() {
+        if(swipeRefreshLayout != null){
+            swipeRefreshLayout.setRefreshing(true);
+        }else {
+            return;
+        }
+        if (instanceType == null || !instanceType.equals("PEERTUBE")){
+            if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                MainActivity.countNewStatus = 0;
+            isSwipped = true;
+            if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
+                retrieveMissingToots(null);
+            else{
+                if( statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+                else
+                    retrieveMissingToots(null);
+            }
+        }else if( peertubes != null){
+            if (peertubes.size() > 0) {
+                int size = peertubes.size();
+                isSwipped = true;
+                peertubes.clear();
+                peertubes = new ArrayList<>();
+                max_id = "0";
+                peertubeAdapater.notifyItemRangeRemoved(0, size);
+                if (search_peertube == null) { //Not a Peertube search
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
+                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        }
+    }
 }
