@@ -1593,8 +1593,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                                return;
+                          /*  if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                return;*/
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1618,8 +1618,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                                return;
+                           /* if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                return;*/
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
@@ -1643,8 +1643,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                                return;
+                            /*if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                return;*/
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                                 b.putString("conversationId", status.getConversationId());
