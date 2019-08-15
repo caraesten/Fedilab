@@ -1124,14 +1124,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( type == RetrieveFeedsAsyncTask.Type.HOME)
                 MainActivity.countNewStatus = 0;
             isSwipped = true;
-            if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
-                retrieveMissingToots(null);
-            else{
-                if( statuses.size() > 0)
-                    retrieveMissingToots(statuses.get(0).getId());
-                else
-                    retrieveMissingToots(null);
+            int lenght = statuses.size();
+            statuses.clear();
+            switch (instanceType) {
+                case "MASTODON":
+                case "MISSKEY":
+                case "GNU":
+                    statusListAdapter.notifyItemRangeRemoved(0, lenght);
+                    break;
+                case "PIXELFED":
+                    pixelfedListAdapter.notifyItemRangeRemoved(0, lenght);
+                    break;
+                case "ART":
+                    artListAdapter.notifyItemRangeRemoved(0, lenght);
+                    break;
             }
+            max_id = null;
+            manageAsyncTask(false);
+
         }else if( peertubes != null){
             if (peertubes.size() > 0) {
                 int size = peertubes.size();
