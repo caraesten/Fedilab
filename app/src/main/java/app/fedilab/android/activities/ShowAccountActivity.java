@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,27 +28,21 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
-
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,11 +54,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -278,22 +268,29 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
             if( mPager != null &&  mPager
                     .getAdapter() != null){
-                if(mPager.getCurrentItem() == 0) {
-                    if( mPager
+                if( mPager
+                        .getAdapter()
+                        .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  TabLayoutTootsFragment){
+                    TabLayoutTootsFragment tabLayoutTootsFragment = (TabLayoutTootsFragment)mPager
                             .getAdapter()
-                            .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  DisplayStatusFragment){
-                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment)mPager
+                            .instantiateItem(mPager, mPager.getCurrentItem());
+                    ViewPager viewPager = tabLayoutTootsFragment.getViewPager();
+                    if( viewPager != null && viewPager.getAdapter() != null && viewPager
+                            .getAdapter()
+                            .instantiateItem(viewPager, viewPager.getCurrentItem()) instanceof  DisplayStatusFragment){
+                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment)viewPager
                                 .getAdapter()
-                                .instantiateItem(mPager, mPager.getCurrentItem());
+                                .instantiateItem(viewPager, viewPager.getCurrentItem());
                         displayStatusFragment.pullToRefresh();
-                    }else if( mPager
-                            .getAdapter()
-                            .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  DisplayAccountsFragment) {
-                        DisplayAccountsFragment displayAccountsFragment = (DisplayAccountsFragment) mPager
-                                .getAdapter()
-                                .instantiateItem(mPager, mPager.getCurrentItem());
-                        displayAccountsFragment.pullToRefresh();
                     }
+
+                }else if( mPager
+                        .getAdapter()
+                        .instantiateItem(mPager, mPager.getCurrentItem()) instanceof  DisplayAccountsFragment) {
+                    DisplayAccountsFragment displayAccountsFragment = (DisplayAccountsFragment) mPager
+                            .getAdapter()
+                            .instantiateItem(mPager, mPager.getCurrentItem());
+                    displayAccountsFragment.pullToRefresh();
                 }
             }
         });

@@ -39,6 +39,7 @@ public class TabLayoutTootsFragment extends Fragment {
 
 
     private String targetedId;
+    private ViewPager viewPager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -53,7 +54,7 @@ public class TabLayoutTootsFragment extends Fragment {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pinned_toots)));
         }
 
-        final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
+        viewPager = inflatedView.findViewById(R.id.viewpager);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             this.targetedId = bundle.getString("targetedid", null);
@@ -137,5 +138,9 @@ public class TabLayoutTootsFragment extends Fragment {
         public int getCount() {
             return mNumOfTabs;
         }
+    }
+
+    public ViewPager getViewPager(){
+        return viewPager;
     }
 }
