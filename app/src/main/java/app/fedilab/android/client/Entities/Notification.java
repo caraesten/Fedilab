@@ -149,16 +149,12 @@ public class Notification implements Parcelable {
         if( ((Activity)context).isFinishing() )
             return;
         Status status = notification.getStatus();
-        if (status == null)
-            return;
-        if( status.getReblog() == null &&  status.getEmojis() == null)
-            return;
-        final java.util.List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
-        if( status.getReblog() != null && status.getReblog().getAccount() == null)
-            return;
-        if( status.getReblog() == null && status.getAccount() == null)
-            return;
-        final List<Emojis> emojisAccounts = status.getAccount().getEmojis();
+
+        java.util.List<Emojis> emojis = null;
+        if (status != null){
+            emojis = status.getEmojis();
+        }
+        List<Emojis> emojisAccounts = notification.getAccount().getEmojis();
 
         String typeString = "";
         switch (notification.getType()){
@@ -191,8 +187,6 @@ public class Notification implements Parcelable {
                 break;
         }
         SpannableString displayNameSpan = new SpannableString(typeString);
-        SpannableString contentSpan = status.getContentSpan();
-        SpannableString contentSpanCW = status.getContentSpanCW();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
 
@@ -244,9 +238,12 @@ public class Notification implements Parcelable {
             }
         }
 
-        if( emojis != null && emojis.size() > 0 ) {
+        if( status != null && emojis != null && emojis.size() > 0 ) {
+            SpannableString contentSpan = status.getContentSpan();
+            SpannableString contentSpanCW = status.getContentSpanCW();
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
+                List<Emojis> finalEmojis = emojis;
                 Glide.with(context)
                         .asFile()
                         .load(emoji.getUrl())
@@ -258,7 +255,7 @@ public class Notification implements Parcelable {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 i[0]++;
-                                if( i[0] ==  (emojis.size())) {
+                                if( i[0] ==  (finalEmojis.size())) {
                                     listener.onRetrieveEmoji(status,false);
                                 }
                                 return false;
@@ -321,7 +318,7 @@ public class Notification implements Parcelable {
                                     }
                                 }
                                 i[0]++;
-                                if( i[0] ==  (emojis.size())) {
+                                if( i[0] ==  (finalEmojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
                                     status.setEmojiFound(true);

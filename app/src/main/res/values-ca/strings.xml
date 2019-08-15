@@ -253,7 +253,7 @@
     <string name="toast_mute">El compte s\'ha silenciat!</string>
     <string name="toast_unmute">El compte ja no està silenciat!</string>
     <string name="toast_follow">Seguiment del compte confirmat!</string>
-    <string name="toast_unfollow">El compte ja no té seguidors!</string>
+    <string name="toast_unfollow">Ja no estàs seguint el compte!</string>
     <string name="toast_reblog">El toot ha estat difós!</string>
     <string name="toast_unreblog">El toot ja no està difós!</string>
     <string name="toast_favourite">S\'ha afegit el toot als teus preferits!</string>
@@ -503,7 +503,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="which_language">Tradueix al</string>
     <string name="follow_instance">Segueix la instància</string>
     <string name="toast_instance_already_added">Ja estàs seguint aquesta instància!</string>
-    <string name="toast_instance_followed">La instància ja té seguidors!</string>
+    <string name="toast_instance_followed">Confirmat, ja segueixes la instància!</string>
     <string name="action_partnership">Socis</string>
     <string name="neutral_menu_information">Informació</string>
     <string name="hide_boost">Amaga les difusions de %s</string>

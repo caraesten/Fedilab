@@ -147,7 +147,7 @@
     <string name="date_seconds">%d 초</string>
     <string name="date_minutes">%d 분</string>
     <string name="date_hours">%d 시</string>
-    <string name="date_day">%d 초</string>
+    <string name="date_day">%d 일</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">경고</string>
     <string name="toot_placeholder">무슨 생각을 하고 있나요?</string>

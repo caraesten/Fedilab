@@ -1015,7 +1015,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_wysiwyg">Utiliser l\'éditeur visuel</string>
     <string name="set_wysiwyg_indication">Lorsque cette option est activée, vous serez en mesure de mettre en forme votre texte facilement avec des outils.</string>
     <string name="action_stats">Statistiques</string>
-    <string name="total_statuses">Total statuses</string>
+    <string name="total_statuses">Total des publications</string>
     <string name="number_boosts">Boosts</string>
     <string name="number_replies">Réponses</string>
     <string name="number_statuses">Nombre de publications</string>
@@ -1035,10 +1035,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="owner_charts">Graphiques</string>
     <string name="display_charts">Afficher les graphiques</string>
     <string name="collecting_data_wait">L\'application collecte vos données locales, veuillez patienter …</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
+    <string name="set_backup">Sauvegarder</string>
+    <string name="set_auto_backup">Sauvegarde automatique des publications</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
+    <string name="report_account">Signaler le compte</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
