@@ -1586,13 +1586,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Click on a conversation
 
             if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
+
                 holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position)
+                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                                 return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
@@ -1617,7 +1618,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position)
+                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                                 return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
@@ -1642,7 +1643,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             int position = closePanels();
-                            if(  holder.getAdapterPosition() == position)
+                            if(  holder.getAdapterPosition() == position && type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                                 return;
                             Bundle b = new Bundle();
                             if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
