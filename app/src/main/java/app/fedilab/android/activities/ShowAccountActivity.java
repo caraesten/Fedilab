@@ -357,14 +357,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_un.setCompoundDrawables( null, null, null, null);
         }
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( !disableAnimatedEmoji) {
+        /*if( !disableAnimatedEmoji) {
             Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     account_dn.invalidate();
                 }
             }, 0, 130, TimeUnit.MILLISECONDS);
-        }
+        }*/
 
         //Peertube account watched by a Mastodon account
         /*if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
