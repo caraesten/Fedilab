@@ -65,6 +65,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.client.API;
@@ -142,6 +144,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ImageView pp_actionBar;
     private String accountId;
     private boolean ischannel;
+    private ScheduledExecutorService scheduledExecutorService;
 
     public enum action{
         FOLLOW,
@@ -356,16 +359,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }else{
             account_un.setCompoundDrawables( null, null, null, null);
         }
-        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        /*if( !disableAnimatedEmoji) {
-            Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    account_dn.invalidate();
-                }
-            }, 0, 130, TimeUnit.MILLISECONDS);
-        }*/
-
         //Peertube account watched by a Mastodon account
         /*if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
             account_type.setVisibility(View.VISIBLE);
@@ -1060,6 +1053,19 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 i++;
             }
         }
+        if( account.getEmojis() != null && account.getEmojis().size() > 0 ){
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+            if( !disableAnimatedEmoji) {
+                scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+                scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+                    @Override
+                    public void run() {
+                        account_dn.invalidate();
+                    }
+                }, 0, 130, TimeUnit.MILLISECONDS);
+            }
+        }
     }
 
     private void showMenu(View account_menu){
@@ -1348,6 +1354,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
         popup.show();
     }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if( scheduledExecutorService != null) {
+            scheduledExecutorService.shutdownNow();
+        }
+    }
+
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
 
