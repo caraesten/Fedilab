@@ -357,8 +357,10 @@ public class AccountDAO {
      */
     private List<Account> cursorToListUser(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<Account> accounts = new ArrayList<>();
         while (c.moveToNext() ) {
             //New user

@@ -133,8 +133,10 @@ public class TempMuteDAO {
      */
     private List<String> cursorToTimeMute(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<String> timeMutes = new ArrayList<>();
         while (c.moveToNext() ) {
             timeMutes.add(c.getString(c.getColumnIndex(Sqlite.COL_TARGETED_USER_ID)));

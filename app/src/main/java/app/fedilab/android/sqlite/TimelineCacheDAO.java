@@ -164,8 +164,10 @@ public class TimelineCacheDAO {
      */
     private Status cursorToSingleStatus(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         c.moveToFirst();
         Status status = null;
         try {
@@ -187,8 +189,10 @@ public class TimelineCacheDAO {
      */
     private List<Status> cursorToListStatus(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<Status> statuses = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore cached status
