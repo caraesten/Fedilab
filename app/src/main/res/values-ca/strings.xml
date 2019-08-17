@@ -1057,6 +1057,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
         <item>Visualització web</item>
         <item>Stream directe</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Per unir-te a la meva instància\"%1$s\", pots descarregar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nDesprés obres l\'enllaç de sota amb Fedilab i crees el teu compte :)\n\n%4$s
     </string>
 </resources>
