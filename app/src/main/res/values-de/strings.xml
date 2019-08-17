@@ -1029,6 +1029,8 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="set_auto_backup">Status automatisch als Backup sichern</string>
     <string name="set_auto_backup_indication">Diese Option ist pro Konto. Es wird einen Dienst starten, der deine Status automatisch in einer lokalen Datenbank speichert. Dies erlaubt dir, Statistiken und Diagramme zu erhalten</string>
     <string name="report_account">Konto melden</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
@@ -1050,4 +1052,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
         <item>Torrent</item>
         <item>Webansicht</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>

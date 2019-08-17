@@ -1041,6 +1041,8 @@
     <string name="set_auto_backup">Mezuen babes-kopia automatikoa</string>
     <string name="set_auto_backup_indication">Aukera hau kontu bakoitzeko da. Zure mezuak lokalki datu-basean gordeko dituen zerbitzu bat abiatuko du. Honek estatistikak eta diagramak ahalbidetzen ditu</string>
     <string name="report_account">Salatu kontua</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
@@ -1062,4 +1064,6 @@
         <item>Webview</item>
         <item>Jario zuzena</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>
