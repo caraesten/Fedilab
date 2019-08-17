@@ -1,0 +1,7 @@
+Added
+- Network and creation date in profiles
+- Allow to send an invitation an easily create an account with the app
+
+Fixed
+- Fix bookmarks and threads where last message couldn't be expanded
+- Fix lags and some crashes
