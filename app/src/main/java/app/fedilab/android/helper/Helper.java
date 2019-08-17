@@ -180,6 +180,7 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLContext;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.activities.MutedInstanceActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
@@ -234,7 +235,6 @@ import static app.fedilab.android.activities.BaseMainActivity.filters;
 public class Helper {
 
 
-    @SuppressWarnings({"unused", "WeakerAccess"})
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
@@ -1485,6 +1485,7 @@ public class Helper {
     }
 
     public static void hideMenuItem(Menu menu){
+
         if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             MenuItem itemCom = menu.findItem(R.id.nav_main_com);
             if( itemCom != null)
@@ -1545,6 +1546,16 @@ public class Helper {
                         nav_group.setVisible(true);
                 }
 
+            }
+        }
+        if (!BuildConfig.DONATIONS) {
+            MenuItem openCollectiveItem = menu.findItem(R.id.nav_opencollective);
+            if( openCollectiveItem != null){
+                openCollectiveItem.setVisible(false);
+            }
+            MenuItem partnerShipItem = menu.findItem(R.id.nav_partnership);
+            if( partnerShipItem != null){
+                partnerShipItem.setVisible(false);
             }
         }
     }
