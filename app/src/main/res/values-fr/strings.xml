@@ -1039,8 +1039,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_auto_backup">Sauvegarde automatique des publications</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Signaler le compte</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Envoyer une invitation</string>
+    <string name="registration_closed">Votre instance ne permet pas de créer de nouveaux comptes !</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
@@ -1062,6 +1062,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
         <item>Torrent</item>
         <item>Flux direct</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Pour rejoindre mon instance « %1$s », vous pouvez télécharger Fedilab :\n\nF-Droid : %2$s\nGoogle : %3$s\n\nEnsuite ouvrez le lien ci-dessous avec Fedilab et créez votre compte :)\n\n%4$s
     </string>
 </resources>
