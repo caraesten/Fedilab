@@ -145,6 +145,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private String accountId;
     private boolean ischannel;
     private ScheduledExecutorService scheduledExecutorService;
+    private AsyncTask<Void, Void, Void> accountAsync;
+    private AsyncTask<Void, Void, Void> retrieveRelationship;
 
     public enum action{
         FOLLOW,
@@ -209,7 +211,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             ischannel = b.getBoolean("ischannel", false);
             peertubeAccount = b.getBoolean("peertubeaccount", false);
             if (account == null) {
-                new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+               accountAsync = new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
@@ -322,7 +324,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             accountIdRelation = account.getAcct();
         }
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        retrieveRelationship = new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {
@@ -1401,6 +1403,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( scheduledExecutorService != null) {
             scheduledExecutorService.shutdownNow();
         }
+        if( accountAsync != null && !accountAsync.isCancelled()){
+            accountAsync.cancel(true);
+        }
+        if( retrieveRelationship != null && !retrieveRelationship.isCancelled()){
+            retrieveRelationship.cancel(true);
+        }
     }
 
     @Override
@@ -1421,7 +1429,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             target = account.getAcct();
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), target,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        retrieveRelationship = new RetrieveRelationshipAsyncTask(getApplicationContext(), target, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
