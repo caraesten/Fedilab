@@ -635,11 +635,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
+                    statusListAdapter.notifyItemInserted(0);
                     try {
                         ((MainActivity) context).updateHomeCounter();
                     }catch (Exception ignored){}
 
-                    statusListAdapter.notifyItemInserted(0);
                 }
 
             } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL|| type == RetrieveFeedsAsyncTask.Type.DIRECT|| type == RetrieveFeedsAsyncTask.Type.GNU_DM) {
@@ -1010,10 +1010,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             StatusListAdapter.fetch_all_more = false;
         }
         this.statuses.addAll(position, tmpStatuses);
+        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
         boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
         if( position > 0 && display_content_after_fetch_more)
             lv_status.scrollToPosition(position + tmpStatuses.size());
-        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
         if( textviewNoAction.getVisibility() == View.VISIBLE && tmpStatuses.size() > 0){
             textviewNoAction.setVisibility(View.GONE);
             lv_status.setVisibility(View.VISIBLE);
