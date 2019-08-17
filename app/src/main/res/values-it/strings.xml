@@ -1042,6 +1042,8 @@
     <string name="set_auto_backup">Fai automaticamente il backup degli stati</string>
     <string name="set_auto_backup_indication">Questa azione è per account. Lancerà un servizio che automaticamente salva i tuoi stati localmente nel database. Questo consentirà di avere statistiche e grafici</string>
     <string name="report_account">Segnala account</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
@@ -1063,4 +1065,6 @@
         <item>Webview</item>
         <item>Stream diretto</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>

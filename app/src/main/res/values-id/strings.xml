@@ -1040,6 +1040,8 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Report account</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
@@ -1060,4 +1062,6 @@ https://yandex.ru/legal/confidential/?lang=en
         <item>Webview</item>
         <item>Direct stream</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>

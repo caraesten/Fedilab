@@ -1038,6 +1038,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_auto_backup">自動備份狀態</string>
     <string name="set_auto_backup_indication">此選項是每個帳號分開生效的。它將會啟動一個會自動將您的狀態儲存到本機資料庫的服務。這樣就可以取得統計資料與圖表</string>
     <string name="report_account">回報帳號</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
@@ -1058,4 +1060,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         <item>Torrent</item>
         <item>Webview</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>
