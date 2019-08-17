@@ -733,7 +733,6 @@ public class API {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
-            e.printStackTrace();
             try {
                 response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
                 JSONObject jsonObject = new JSONObject(response);
