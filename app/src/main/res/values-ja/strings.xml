@@ -1030,6 +1030,8 @@
     <string name="set_auto_backup">トゥートを自動でバックアップ</string>
     <string name="set_auto_backup_indication">これはアカウントごとの設定です。あなたのトゥートをローカルのデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
     <string name="report_account">アカウントを報告</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
@@ -1050,4 +1052,6 @@
         <item>WebView</item>
         <item>ダイレクトストリーム</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>
