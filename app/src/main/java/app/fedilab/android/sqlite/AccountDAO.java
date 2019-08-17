@@ -311,8 +311,10 @@ public class AccountDAO {
      */
     private Account cursorToUser(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         //Take the first element
         c.moveToFirst();
         //New user

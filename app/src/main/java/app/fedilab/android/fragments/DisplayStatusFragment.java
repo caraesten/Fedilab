@@ -32,6 +32,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -439,6 +441,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         this.context = context;
     }
 
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if( statusListAdapter != null){
+            statusListAdapter.storeToot();
+        }
+       /* if( asyncTask != null && !asyncTask.isCancelled()){
+            asyncTask.cancel(true);
+        }*/
+        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
+            editor.apply();
+            context.stopService(streamingFederatedIntent);
+        }else if(type == RetrieveFeedsAsyncTask.Type.LOCAL && streamingLocalIntent != null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, false);
+            editor.apply();
+            context.stopService(streamingLocalIntent);
+        }
+    }
+
     @Override
     public void onDestroy (){
         super.onDestroy();
@@ -790,24 +815,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        if( statusListAdapter != null){
-            statusListAdapter.storeToot();
-        }
-       if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
-            editor.apply();
-            context.stopService(streamingFederatedIntent);
-        }else if(type == RetrieveFeedsAsyncTask.Type.LOCAL && streamingLocalIntent != null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, false);
-            editor.apply();
-            context.stopService(streamingLocalIntent);
-        }
-    }
+
 
     public void scrollToTop(){
         if( lv_status != null && instanceType != null) {

@@ -202,6 +202,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -253,6 +256,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -294,6 +300,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -326,6 +335,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -390,6 +402,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -447,6 +462,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -498,6 +516,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -539,6 +560,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -586,6 +610,9 @@ public class HttpsConnection {
                 }catch (Exception e){e.printStackTrace();}
             }
             int responseCode = httpsURLConnection.getResponseCode();
+            try {
+                httpsURLConnection.getInputStream().close();
+            }catch (Exception ignored){}
             throw new HttpsConnectionException(responseCode, error);
         }
         getSinceMaxId();
@@ -978,6 +1005,9 @@ public class HttpsConnection {
                 try {
                     httpsURLConnection.getInputStream().close();
                 }catch (Exception ignored){}
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             httpsURLConnection.getInputStream().close();
@@ -1117,6 +1147,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -1176,6 +1209,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
             getSinceMaxId();
@@ -1240,6 +1276,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
         }else {
@@ -1296,6 +1335,9 @@ public class HttpsConnection {
                     }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
                 throw new HttpsConnectionException(responseCode, error);
             }
         }

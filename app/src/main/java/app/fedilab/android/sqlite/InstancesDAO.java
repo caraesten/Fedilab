@@ -153,8 +153,10 @@ public class InstancesDAO {
      */
     private List<RemoteInstance> cursorToListSearch(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<RemoteInstance> remoteInstances = new ArrayList<>();
         while (c.moveToNext() ) {
             RemoteInstance remoteInstance = new RemoteInstance();
