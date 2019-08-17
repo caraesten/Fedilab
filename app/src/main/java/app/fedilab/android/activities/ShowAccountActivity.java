@@ -544,10 +544,27 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
-                        if( fragment != null) {
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
+                        if( mPager != null &&  mPager
+                                .getAdapter() != null) {
+                            if (mPager
+                                    .getAdapter()
+                                    .instantiateItem(mPager, mPager.getCurrentItem()) instanceof TabLayoutTootsFragment) {
+                                TabLayoutTootsFragment tabLayoutTootsFragment = (TabLayoutTootsFragment) mPager
+                                        .getAdapter()
+                                        .instantiateItem(mPager, mPager.getCurrentItem());
+                                ViewPager viewPager = tabLayoutTootsFragment.getViewPager();
+                                if (viewPager != null && viewPager.getAdapter() != null && viewPager
+                                        .getAdapter()
+                                        .instantiateItem(viewPager, viewPager.getCurrentItem()) instanceof DisplayStatusFragment) {
+                                    DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) viewPager
+                                            .getAdapter()
+                                            .instantiateItem(viewPager, viewPager.getCurrentItem());
+                                    displayStatusFragment.scrollToTop();
+                                }
+
+                            }
                         }
+
                         break;
                     case 1:
                     case 2:
