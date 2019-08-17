@@ -222,8 +222,10 @@ public class BoostScheduleDAO {
      */
     private StoredStatus cursorToStoredStatus(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         //Take the first element
         c.moveToFirst();
         //New user
@@ -255,8 +257,10 @@ public class BoostScheduleDAO {
      */
     private List<StoredStatus> cursorToListStatuses(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<StoredStatus> storedStatuses = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore the status

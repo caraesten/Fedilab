@@ -166,8 +166,10 @@ public class CustomEmojiDAO {
      */
     private Emojis cursorToEmoji(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         //Take the first element
         c.moveToFirst();
         //New user
@@ -188,8 +190,10 @@ public class CustomEmojiDAO {
      */
     private List<Emojis> cursorToListEmojis(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<Emojis> emojis = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore the emojis

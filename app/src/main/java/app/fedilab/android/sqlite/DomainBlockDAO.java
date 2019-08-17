@@ -100,8 +100,10 @@ public class DomainBlockDAO {
      */
     private List<String> cursorToDomain(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<String> domains = new ArrayList<>();
         while (c.moveToNext() ) {
             domains.add(c.getString(c.getColumnIndex(Sqlite.COL_DOMAIN)));

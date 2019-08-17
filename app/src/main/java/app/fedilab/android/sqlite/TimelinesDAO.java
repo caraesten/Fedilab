@@ -160,8 +160,10 @@ public class TimelinesDAO {
      */
     private ManageTimelines cursorToTimeline(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         //Take the first element
         c.moveToFirst();
         //New timeline
@@ -190,8 +192,10 @@ public class TimelinesDAO {
      */
     private List<ManageTimelines> cursorToTimelines(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<ManageTimelines> remoteInstances = new ArrayList<>();
         while (c.moveToNext() ) {
 

@@ -154,8 +154,10 @@ public class TempMuteDAO {
      */
     private String cursorToDate(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         c.moveToNext();
         String date = c.getString(c.getColumnIndex(Sqlite.COL_DATE_END));
         //Close the cursor

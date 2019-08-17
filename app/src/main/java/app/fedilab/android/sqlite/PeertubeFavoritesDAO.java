@@ -126,8 +126,10 @@ public class PeertubeFavoritesDAO {
      */
     private List<Peertube> cursorToListPeertube(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<Peertube> peertubes = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore cached status

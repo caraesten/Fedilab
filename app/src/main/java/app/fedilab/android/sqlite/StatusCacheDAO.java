@@ -339,8 +339,10 @@ public class StatusCacheDAO {
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_DATE_BACKUP + " DESC", "1");
             //No element found
-            if (c.getCount() == 0)
+            if (c.getCount() == 0) {
+                c.close();
                 return null;
+            }
             //Take the first element
             c.moveToFirst();
             String date = c.getString(c.getColumnIndex(Sqlite.COL_DATE_BACKUP));
@@ -362,8 +364,10 @@ public class StatusCacheDAO {
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " ASC", "1");
             //No element found
-            if (c.getCount() == 0)
+            if (c.getCount() == 0) {
+                c.close();
                 return null;
+            }
             //Take the first element
             c.moveToFirst();
             String date = c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT));
@@ -385,8 +389,10 @@ public class StatusCacheDAO {
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "1");
             //No element found
-            if (c.getCount() == 0)
+            if (c.getCount() == 0) {
+                c.close();
                 return null;
+            }
             //Take the first element
             c.moveToFirst();
             String date = c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT));
@@ -408,8 +414,10 @@ public class StatusCacheDAO {
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "1");
             //No element found
-            if (c.getCount() == 0)
+            if (c.getCount() == 0) {
+                c.close();
                 return null;
+            }
             //Take the first element
             c.moveToFirst();
             String last_id = c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID));
@@ -433,8 +441,10 @@ public class StatusCacheDAO {
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "1");
             //No element found
-            if (c.getCount() == 0)
+            if (c.getCount() == 0) {
+                c.close();
                 return null;
+            }
             //Take the first element
             c.moveToFirst();
             Date last_id = Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT)));
@@ -696,8 +706,10 @@ public class StatusCacheDAO {
      */
     private Status cursorToStoredStatus(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         //Take the first element
         c.moveToFirst();
         //New status
@@ -740,8 +752,10 @@ public class StatusCacheDAO {
      */
     private List<Status> cursorToListStatuses(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<Status> statuses = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore cached status
@@ -787,8 +801,10 @@ public class StatusCacheDAO {
      */
     private List<String> cursorToListStatusesId(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<String> statusesId = new ArrayList<>();
         while (c.moveToNext() ) {
             //Restore cached status

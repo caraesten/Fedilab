@@ -118,8 +118,10 @@ public class TagsCacheDAO {
      */
     private List<String> cursorToTag(Cursor c){
         //No element found
-        if (c.getCount() == 0)
+        if (c.getCount() == 0) {
+            c.close();
             return null;
+        }
         List<String> tags = new ArrayList<>();
         while (c.moveToNext() ) {
             tags.add(c.getString(c.getColumnIndex(Sqlite.COL_TAGS)));
