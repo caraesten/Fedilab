@@ -217,8 +217,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status tootReply;
     private long currentToId = -1;
     private RecyclerView mRecyclerView;
-    public static Timer tmr;
+    static Timer tmr;
     private List<ViewHolder> lstHolders;
+
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
@@ -239,6 +240,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
         }
     };
+
     private Handler mHandler = new Handler();
 
     @Override

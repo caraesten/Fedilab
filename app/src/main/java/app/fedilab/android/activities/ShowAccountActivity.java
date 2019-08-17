@@ -125,7 +125,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     private ViewPager mPager;
     private TabLayout tabLayout;
-    private TextView account_note, account_follow_request, account_type, account_bot;
+    private TextView account_note;
+    private TextView account_follow_request;
+    private TextView account_bot;
     private String userId;
     private Relationship relationship;
     private ImageButton header_edit_profile;
@@ -133,7 +135,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private String accountUrl;
     private int maxScrollSize;
     private boolean avatarShown = true;
-    private DisplayStatusFragment displayStatusFragment;
     private ImageView account_pp;
     private TextView account_dn;
     private TextView account_un;
@@ -141,7 +142,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private boolean show_boosts, show_replies;
     private boolean showMediaOnly, showPinned;
     private boolean peertubeAccount;
-    private ImageView pp_actionBar;
     private String accountId;
     private boolean ischannel;
     private ScheduledExecutorService scheduledExecutorService;
@@ -185,7 +185,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_pp = findViewById(R.id.account_pp);
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
-        account_type = findViewById(R.id.account_type);
+        TextView account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
         switch (theme){
             case THEME_LIGHT:
@@ -371,7 +371,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         TextView actionbar_title = findViewById(R.id.show_account_title);
         if( account.getAcct() != null)
             actionbar_title.setText(account.getAcct());
-        pp_actionBar = findViewById(R.id.pp_actionBar);
+        ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
         if( account.getAvatar() != null){
             Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
@@ -544,8 +544,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
-                        if( displayStatusFragment != null )
+                        if( fragment != null) {
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
+                        }
                         break;
                     case 1:
                     case 2:
@@ -698,8 +700,28 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                         @Override
                         public void onDismiss(PopupMenu menu) {
-                            if( displayStatusFragment != null)
-                                displayStatusFragment.refreshFilter();
+                            if( mPager != null &&  mPager
+                                    .getAdapter() != null) {
+                                if (mPager
+                                        .getAdapter()
+                                        .instantiateItem(mPager, mPager.getCurrentItem()) instanceof TabLayoutTootsFragment) {
+                                    TabLayoutTootsFragment tabLayoutTootsFragment = (TabLayoutTootsFragment) mPager
+                                            .getAdapter()
+                                            .instantiateItem(mPager, mPager.getCurrentItem());
+                                    ViewPager viewPager = tabLayoutTootsFragment.getViewPager();
+                                    if (viewPager != null && viewPager.getAdapter() != null && viewPager
+                                            .getAdapter()
+                                            .instantiateItem(viewPager, viewPager.getCurrentItem()) instanceof DisplayStatusFragment) {
+                                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) viewPager
+                                                .getAdapter()
+                                                .instantiateItem(viewPager, viewPager.getCurrentItem());
+                                        displayStatusFragment.pullToRefresh();
+                                        displayStatusFragment.refreshFilter();
+                                    }
+
+                                }
+                            }
+
                         }
                     });
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
