@@ -129,10 +129,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private int style;
     private RecyclerView mRecyclerView;
     private List<NotificationsListAdapter.ViewHolder> lstHolders;
+    private final Object lock = new Object();
+
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
-            synchronized (lstHolders) {
+            synchronized (lock) {
                 if( mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
                     int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
@@ -198,7 +200,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         holder = (NotificationsListAdapter.ViewHolder) viewHolder;
 
-        synchronized (lstHolders) {
+        synchronized (lock) {
             lstHolders.add(holder);
         }
 

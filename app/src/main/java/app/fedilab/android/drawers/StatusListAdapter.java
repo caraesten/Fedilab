@@ -219,11 +219,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private RecyclerView mRecyclerView;
     static Timer tmr;
     private List<ViewHolder> lstHolders;
+    private final Object lock = new Object();
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
-            synchronized (lstHolders) {
+            synchronized (lock) {
                 if( mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
                     int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
@@ -896,7 +897,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             final ViewHolder holder = (ViewHolder) viewHolder;
-            synchronized (lstHolders) {
+            synchronized (lock) {
                 lstHolders.add(holder);
             }
             final Status status = statuses.get(i);
