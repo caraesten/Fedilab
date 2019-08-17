@@ -56,6 +56,8 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.Html;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -84,6 +86,7 @@ import app.fedilab.android.BuildConfig;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Filters;
+import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
@@ -173,6 +176,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
     private static boolean notificationChecked = false;
     public static HashMap<String, Integer> poll_limits = new HashMap<>();
+    private Instance instanceClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -973,6 +977,22 @@ public abstract class BaseMainActivity extends BaseActivity
                             case R.id.action_about_instance:
                                 intent = new Intent(getApplicationContext(), InstanceActivity.class);
                                 startActivity(intent);
+                                return true;
+                            case R.id.action_send_invitation:
+                                if( instanceClass != null){
+                                    if(instanceClass.isRegistration()){
+                                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                        String extra_text = getString(R.string.join_instance, Helper.getLiveInstance(getApplicationContext()),
+                                                "https://f-droid.org/en/packages/fr.gouv.etalab.mastodon/",
+                                                "https://play.google.com/store/apps/details?id=app.fedilab.android",
+                                                "https://fedilab.app/registration_helper/" + Helper.getLiveInstance(getApplicationContext()));
+                                        sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                                        sendIntent.setType("text/plain");
+                                        startActivity(Intent.createChooser(sendIntent, getString(R.string.share_with)));
+                                    }else{
+                                        Toasty.info(getApplicationContext(), getString(R.string.registration_closed), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                                 return true;
                             case R.id.action_cache:
                                 new Helper.CacheTask(BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1923,6 +1943,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         if( apiResponse.getInstance() == null || apiResponse.getInstance().getVersion() == null || apiResponse.getInstance().getVersion().trim().length() == 0)
             return;
+
+        instanceClass = apiResponse.getInstance();
         poll_limits = apiResponse.getInstance().getPoll_limits();
         Version currentVersion = new Version(apiResponse.getInstance().getVersion());
         Version minVersion = new Version("1.6");

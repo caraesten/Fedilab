@@ -28,6 +28,9 @@ public class Instance {
     private String description;
     private String email;
     private String version;
+    private boolean registration;
+    private boolean approval_required;
+
     private HashMap<String, Integer> poll_limits;
 
     public String getUri() {
@@ -76,5 +79,21 @@ public class Instance {
 
     public void setPoll_limits(HashMap<String, Integer> poll_limits) {
         this.poll_limits = poll_limits;
+    }
+
+    public boolean isRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(boolean registration) {
+        this.registration = registration;
+    }
+
+    public boolean isApproval_required() {
+        return approval_required;
+    }
+
+    public void setApproval_required(boolean approval_required) {
+        this.approval_required = approval_required;
     }
 }

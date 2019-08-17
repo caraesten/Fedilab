@@ -4226,6 +4226,7 @@ public class API {
             instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
             instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -4993,7 +4994,16 @@ public class API {
             instance.setDescription(resobj.get("description").toString());
             instance.setEmail(resobj.get("email").toString());
             instance.setVersion(resobj.get("version").toString());
-
+            if( resobj.has("registrations")){
+                instance.setRegistration(resobj.getBoolean("registrations"));
+            }else{
+                instance.setRegistration(false);
+            }
+            if( resobj.has("approval_required")){
+                instance.setApproval_required(resobj.getBoolean("approval_required"));
+            }else{
+                instance.setApproval_required(false);
+            }
             if(resobj.has("poll_limits")){
                 HashMap<String, Integer> poll_limits = new HashMap<>();
                 JSONObject polllimits = resobj.getJSONObject("poll_limits");

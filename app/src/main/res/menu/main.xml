@@ -10,6 +10,10 @@
         android:title="@string/action_about_instance"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_send_invitation"
+        android:title="@string/send_invitation"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_size"
         android:title="@string/text_size"
         app:showAsAction="never" />
