@@ -1057,6 +1057,8 @@
     <string name="set_auto_backup">النسخ الاحتياطي التلقائي المنشورات</string>
     <string name="set_auto_backup_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ منشوراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
     <string name="report_account">التبغليع عن الحساب</string>
+    <string name="send_invitation">Send an invitation</string>
+    <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>
@@ -1082,4 +1084,6 @@
         <item>Webview</item>
         <item>تدفق مباشر</item>
     </string-array>
+    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    </string>
 </resources>
