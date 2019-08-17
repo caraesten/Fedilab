@@ -24,7 +24,6 @@ import android.app.FragmentManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -56,8 +55,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import androidx.annotation.NonNull;
@@ -66,7 +63,6 @@ import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.google.android.material.navigation.NavigationView;
 import androidx.exifinterface.media.ExifInterface;
-import androidx.fragment.app.FragmentActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -75,16 +71,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
-
-import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -109,7 +101,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,7 +152,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -188,7 +178,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import app.fedilab.android.activities.MutedInstanceActivity;
@@ -201,21 +190,16 @@ import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Filters;
-import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.RemoteInstance;
-import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
-import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
-import app.fedilab.android.sqlite.DomainBlockDAO;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.BuildConfig;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.HashTagActivity;
@@ -230,9 +214,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import info.guardianproject.netcipher.client.StrongBuilder;
-import info.guardianproject.netcipher.client.StrongConnectionBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
-import info.guardianproject.netcipher.proxy.OrbotHelper;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
@@ -1676,7 +1658,7 @@ public class Helper {
                     int endPosition = startPosition + targetedAccount.length();
                     spannableString.setSpan(new ClickableSpan() {
                                 @Override
-                                public void onClick(View textView) {
+                                public void onClick(@NotNull View textView) {
                                     Intent intent = new Intent(context, ShowAccountActivity.class);
                                     Bundle b = new Bundle();
                                     b.putString("accountId", mention.getId());
@@ -1684,7 +1666,7 @@ public class Helper {
                                     context.startActivity(intent);
                                 }
                                 @Override
-                                public void updateDrawState(TextPaint ds) {
+                                public void updateDrawState(@NotNull TextPaint ds) {
                                     super.updateDrawState(ds);
                                     ds.setUnderlineText(false);
                                     if (theme == THEME_DARK)
@@ -2204,11 +2186,11 @@ public class Helper {
                 if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
-                        public void onClick(View textView) {
+                        public void onClick(@NotNull View textView) {
                             Helper.openBrowser(context, url);
                         }
                         @Override
-                        public void updateDrawState(TextPaint ds) {
+                        public void updateDrawState(@NotNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
                             if (theme == THEME_DARK)
@@ -2236,7 +2218,7 @@ public class Helper {
                         context.startActivity(intent);
                     }
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
                         if (theme == THEME_DARK)
@@ -2258,11 +2240,11 @@ public class Helper {
                         if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
                             spannableString.setSpan(new ClickableSpan() {
                                  @Override
-                                 public void onClick(View textView) {
+                                 public void onClick(@NotNull View textView) {
                                      CrossActions.doCrossProfile(context,account);
                                  }
                                  @Override
-                                 public void updateDrawState(TextPaint ds) {
+                                 public void updateDrawState(@NotNull TextPaint ds) {
                                      super.updateDrawState(ds);
                                      ds.setUnderlineText(false);
                                      if (theme == THEME_DARK)
@@ -2290,7 +2272,7 @@ public class Helper {
                     spannableString.removeSpan(span);
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
-                    public void onClick(View textView) {
+                    public void onClick(@NotNull View textView) {
                         try {
                             final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                             emailIntent.setType("plain/text");
@@ -2301,7 +2283,7 @@ public class Helper {
                         }
                     }
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
                         if (theme == THEME_DARK)
@@ -2326,7 +2308,7 @@ public class Helper {
                     spannableString.removeSpan(span);
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
-                    public void onClick(View textView) {
+                    public void onClick(@NotNull View textView) {
                         try {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                             context.startActivity(intent);
@@ -2335,7 +2317,7 @@ public class Helper {
                         }
                     }
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
                         if (theme == THEME_DARK)
@@ -2500,7 +2482,6 @@ public class Helper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 userLocale = context.getResources().getConfiguration().getLocales().get(0);
             } else {
-                //noinspection deprecation
                 userLocale = context.getResources().getConfiguration().locale;
             }
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", userLocale);
@@ -2544,7 +2525,6 @@ public class Helper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 userLocale = context.getResources().getConfiguration().getLocales().get(0);
             } else {
-                //noinspection deprecation
                 userLocale = context.getResources().getConfiguration().locale;
             }
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", userLocale);
