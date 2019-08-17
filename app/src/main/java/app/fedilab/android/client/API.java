@@ -750,7 +750,6 @@ public class API {
                 instanceNodeInfo.setName("GNU");
                 instanceNodeInfo.setVersion("unknown");
                 instanceNodeInfo.setOpenRegistrations(true);
-                e1.printStackTrace();
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
