@@ -97,6 +97,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.varunest.sparkbutton.SparkButton;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -245,9 +247,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Handler mHandler = new Handler();
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
         mRecyclerView = recyclerView;
     }
 

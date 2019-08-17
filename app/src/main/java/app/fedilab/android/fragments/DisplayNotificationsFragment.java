@@ -268,6 +268,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        swipeRefreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        swipeRefreshLayout.setEnabled(false);
+    }
+
+    @Override
     public void onRetrieveNotifications(APIResponse apiResponse, Account account, boolean refreshData) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
