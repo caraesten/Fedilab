@@ -845,7 +845,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public int getItemViewType(int position) {
-        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, statuses.get(position), type))
+        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type))
             return   HIDDEN_STATUS;
         if( statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;

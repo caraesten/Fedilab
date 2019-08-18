@@ -678,7 +678,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
             if( getUserVisibleHint() ){
-                statusListAdapter.updateMuted(mutedAccount);
                 if( statuses != null && statuses.size() > 0 && asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
                     retrieveMissingToots(statuses.get(0).getId());
                 }

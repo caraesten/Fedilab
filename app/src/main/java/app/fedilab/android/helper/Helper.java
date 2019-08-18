@@ -222,6 +222,9 @@ import okhttp3.TlsVersion;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
+import static app.fedilab.android.activities.BaseMainActivity.regex_home;
+import static app.fedilab.android.activities.BaseMainActivity.regex_local;
+import static app.fedilab.android.activities.BaseMainActivity.regex_public;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
 import static app.fedilab.android.activities.BaseMainActivity.filters;
 
@@ -3554,20 +3557,20 @@ public class Helper {
         return emojiCount/2;
     }
 
-    public static boolean filterToots(Context context, Status status, RetrieveFeedsAsyncTask.Type type){
+    public static boolean filterToots(Status status, RetrieveFeedsAsyncTask.Type type){
         String filter;
         if( status == null)
             return true;
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         if( type != null) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME)
-                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+                filter = regex_home;
             else if (type == RetrieveFeedsAsyncTask.Type.LOCAL)
-                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+                filter = regex_local;
             else
-                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+                filter = regex_public;
         }else {
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+            filter = regex_public;
         }
 
         String content = status.getContent();
@@ -3575,8 +3578,8 @@ public class Helper {
             content += " "+ status.getSpoiler_text();
         if( status.getAccount()  == null)
             return false;
-        boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
-        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive())
+
+        if( type == RetrieveFeedsAsyncTask.Type.ART && !MainActivity.show_art_nsfw && status.isSensitive())
             return false;
 
         if(MainActivity.filters != null){
@@ -3612,9 +3615,9 @@ public class Helper {
             }catch (Exception ignored){ }
         }
         if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-            if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
+            if (status.getReblog() != null && !MainActivity.show_boosts)
                 return false;
-            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
+            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !MainActivity.show_replies) {
                 return false;
             }
         } else {

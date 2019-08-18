@@ -179,6 +179,11 @@ public abstract class BaseMainActivity extends BaseActivity
     public static HashMap<String, Integer> poll_limits = new HashMap<>();
     private Instance instanceClass;
     public static List<String> mutedAccount = new ArrayList<>();
+    public static String regex_home, regex_local, regex_public;
+    public static boolean show_boosts, show_replies, show_art_nsfw;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +220,14 @@ public abstract class BaseMainActivity extends BaseActivity
             social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
         countNewStatus = 0;
         countNewNotifications = 0;
+
+
+        regex_home = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+        regex_local = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+        regex_public = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        show_art_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
+        show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
+        show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
 
         if (!isTaskRoot()
                 && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)

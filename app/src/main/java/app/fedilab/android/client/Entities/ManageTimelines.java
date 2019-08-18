@@ -595,6 +595,7 @@ public class ManageTimelines {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putBoolean(Helper.SET_ART_WITH_NSFW, show_nsfw[0]);
                         editor.apply();
+                        MainActivity.show_art_nsfw = show_nsfw[0];
                     }
                     return false;
                 }
@@ -674,12 +675,14 @@ public class ManageTimelines {
                             editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts[0]);
                             itemShowBoosts.setChecked(show_boosts[0]);
                             editor.apply();
+                            MainActivity.show_boosts = show_boosts[0];
                             break;
                         case R.id.action_show_replies:
                             show_replies[0] = !show_replies[0];
                             editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies[0]);
                             itemShowReplies.setChecked(show_replies[0]);
                             editor.apply();
+                            MainActivity.show_replies = show_replies[0];
                             break;
                         case R.id.action_filter:
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
@@ -715,12 +718,18 @@ public class ManageTimelines {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     itemFilter.setTitle(editText.getText().toString().trim());
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME) {
                                         editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
+                                        MainActivity.regex_home = editText.getText().toString().trim();
+                                    }
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL) {
                                         editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC)
+                                        MainActivity.regex_local = editText.getText().toString().trim();
+                                    }
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC) {
                                         editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
+                                        MainActivity.regex_public = editText.getText().toString().trim();
+                                    }
                                     editor.apply();
                                 }
                             });
