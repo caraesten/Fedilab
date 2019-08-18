@@ -81,7 +81,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
     private BroadcastReceiver receive_action;
-    private static BroadcastReceiver receive_data;
+    private BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment(){
     }
@@ -276,7 +276,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onPause() {
         super.onPause();
-        swipeRefreshLayout.setEnabled(false);
+        if (swipeRefreshLayout!=null) {
+            swipeRefreshLayout.setEnabled(false);
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.clearAnimation();
+        }
     }
 
     @Override

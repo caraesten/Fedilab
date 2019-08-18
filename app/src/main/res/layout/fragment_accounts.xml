@@ -22,18 +22,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- Listview Accounts -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/swipeContainer"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lv_accounts"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null"
-            />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:id="@+id/swipeContainer"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_accounts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:divider="@null"
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"

@@ -21,18 +21,22 @@
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- Listview drafts toots -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/swipeContainer"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lv_search_tags"
+        <!-- Listview drafts toots -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:id="@+id/swipeContainer"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_search_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"

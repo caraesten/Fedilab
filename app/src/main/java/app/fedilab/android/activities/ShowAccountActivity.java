@@ -1398,6 +1398,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
     @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
+
+
+    @Override
     public void onStop(){
         super.onStop();
         if( scheduledExecutorService != null) {

@@ -36,17 +36,21 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="app.fedilab.android.activities.OwnerStatusActivity"
             >
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:id="@+id/swipeContainer"
                 android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lv_status"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:id="@+id/swipeContainer"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lv_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </FrameLayout>
             <RelativeLayout
                 android:id="@+id/no_action"
                 android:visibility="gone"

@@ -22,18 +22,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- Listview Notifications -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/swipeContainer"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lv_notifications"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
+            android:id="@+id/swipeContainer"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
 
-            />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"

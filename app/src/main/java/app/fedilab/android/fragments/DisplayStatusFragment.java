@@ -411,7 +411,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onPause(){
         super.onPause();
-        swipeRefreshLayout.setEnabled(false);
+        if (swipeRefreshLayout!=null) {
+            swipeRefreshLayout.setEnabled(false);
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.clearAnimation();
+        }
         //Store bookmark on pause
         if (context instanceof BaseMainActivity && type == RetrieveFeedsAsyncTask.Type.HOME) {
             SharedPreferences.Editor editor = sharedpreferences.edit();

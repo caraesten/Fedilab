@@ -29,10 +29,8 @@
                 app:popupTheme="?attr/popupOverlay"/>
         </com.google.android.material.appbar.AppBarLayout>
         <!-- Framelayout to display Fragments -->
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/main_app_container"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
             android:layout_width="match_parent"
@@ -40,17 +38,21 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="app.fedilab.android.activities.ShowConversationActivity"
             >
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:id="@+id/swipeContainer"
                 android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lv_status"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:divider="@null" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:id="@+id/swipeContainer"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lv_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        android:divider="@null" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </FrameLayout>
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
