@@ -150,8 +150,13 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
 
     @Override
     public int getItemViewType(int position) {
-
-        if( !Helper.filterToots(statuses.get(position), null))
+        boolean show_boosts = false;
+        boolean show_replies = false;
+        if( context instanceof ShowAccountActivity){
+            show_boosts = ((ShowAccountActivity) context).showBoosts();
+            show_replies = ((ShowAccountActivity) context).showReplies();
+        }
+        if( !Helper.filterToots(statuses.get(position), null,context instanceof ShowAccountActivity,show_boosts, show_replies))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;

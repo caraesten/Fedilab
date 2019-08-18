@@ -3557,7 +3557,7 @@ public class Helper {
         return emojiCount/2;
     }
 
-    public static boolean filterToots(Status status, RetrieveFeedsAsyncTask.Type type){
+    public static boolean filterToots(Status status, RetrieveFeedsAsyncTask.Type type, boolean showAccountActivity, boolean showAccountActivityBoost, boolean showAccountActivityReplies){
         String filter;
         if( status == null)
             return true;
@@ -3621,10 +3621,10 @@ public class Helper {
                 return false;
             }
         } else {
-            if (context instanceof ShowAccountActivity) {
-                if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
+            if( showAccountActivity) {
+                if (status.getReblog() != null && !showAccountActivityBoost)
                     return false;
-                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
+                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !showAccountActivityReplies)
                     return false;
             }
         }
