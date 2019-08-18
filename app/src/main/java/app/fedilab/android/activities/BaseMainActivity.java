@@ -2422,7 +2422,6 @@ public abstract class BaseMainActivity extends BaseActivity
     public void updateNotifCounter(){
         if( timelines == null)
             return;
-        ManageTimelines notifTimeline;
         int i = 0;
         int position = -1;
         for(ManageTimelines tl: timelines){
@@ -2476,7 +2475,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
     public void manageFloatingButton(boolean display){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             if (display) {
                 tootShow();

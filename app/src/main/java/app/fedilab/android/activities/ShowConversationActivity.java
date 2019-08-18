@@ -118,6 +118,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             finish();
 
 
+        detailsStatus.setFocused(true);
+
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
 
             if( receive_action != null)
