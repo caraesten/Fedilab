@@ -199,6 +199,7 @@ public class TimelineCacheDAO {
             try {
                 Status status = API.parseStatuses(context, new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));
                 status.setcached(true);
+                status.setViewType(context);
                 statuses.add(status);
             } catch (JSONException e) {
                 e.printStackTrace();

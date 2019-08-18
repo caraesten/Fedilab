@@ -714,6 +714,7 @@ public class StatusCacheDAO {
         c.moveToFirst();
         //New status
         Status status = new Status();
+        status.setViewType(context);
         status.setId(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID)));
         status.setUri(c.getString(c.getColumnIndex(Sqlite.COL_URI)));
         status.setUrl(c.getString(c.getColumnIndex(Sqlite.COL_URL)));
@@ -760,6 +761,7 @@ public class StatusCacheDAO {
         while (c.moveToNext() ) {
             //Restore cached status
             Status status = new Status();
+            status.setViewType(context);
             status.setId(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID)));
             status.setUri(c.getString(c.getColumnIndex(Sqlite.COL_URI)));
             status.setUrl(c.getString(c.getColumnIndex(Sqlite.COL_URL)));
