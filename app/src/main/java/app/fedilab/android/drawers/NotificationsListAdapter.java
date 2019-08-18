@@ -109,7 +109,6 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.social;
-import static app.fedilab.android.drawers.StatusListAdapter.tmr;
 
 
 /**
@@ -155,22 +154,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     };
     private Handler mHandler = new Handler();
 
-    private void startUpdateTimer() {
-
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( !disableAnimatedEmoji ){
-            if( tmr == null){
-                tmr = new Timer();
-            }
-            tmr.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    mHandler.post(updateAnimatedEmoji);
-                }
-            }, 0, 130);
-        }
-    }
 
     public NotificationsListAdapter(boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.notifications = notifications;
@@ -208,11 +191,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder = (NotificationsListAdapter.ViewHolder) viewHolder;
         context = holder.status_document_container.getContext();
 
-        startUpdateTimer();
+
         synchronized (lock) {
             lstHolders.add(holder);
         }
-
+        holder.startUpdateTimer();
         final Notification notification = notifications.get(position);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -1495,6 +1478,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
+        Timer tmr;
         public View getView(){
             return itemView;
         }
@@ -1554,6 +1538,23 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         void updateAnimatedEmoji() {
             notification_status_content.invalidate();
             notification_account_username.invalidate();
+        }
+
+        void startUpdateTimer() {
+
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+            if( !disableAnimatedEmoji ){
+                if( tmr == null){
+                    tmr = new Timer();
+                }
+                tmr.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        mHandler.post(updateAnimatedEmoji);
+                    }
+                }, 0, 130);
+            }
         }
     }
 

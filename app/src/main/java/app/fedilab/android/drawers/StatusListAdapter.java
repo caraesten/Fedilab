@@ -219,7 +219,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Status tootReply;
     private long currentToId = -1;
     private RecyclerView mRecyclerView;
-    static Timer tmr;
+
     private List<ViewHolder> lstHolders;
     private final Object lock = new Object();
 
@@ -257,23 +257,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onDetachedFromRecyclerView (@NotNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         mRecyclerView = null;
-    }
-
-    private void startUpdateTimer() {
-
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( !disableAnimatedEmoji ){
-            if( tmr == null){
-                tmr = new Timer();
-            }
-            tmr.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    mHandler.post(updateAnimatedEmoji);
-                }
-            }, 0, 130);
-        }
     }
 
     public StatusListAdapter(RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
@@ -710,6 +693,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView quick_reply_emoji;
         Button quick_reply_button;
         ImageView quick_reply_privacy;
+        Timer tmr;
 
         public View getView(){
             return itemView;
@@ -837,6 +821,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             status_content.invalidate();
         }
+
+
+        private void startUpdateTimer() {
+
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+            if( !disableAnimatedEmoji ){
+                if( tmr == null){
+                    tmr = new Timer();
+                }
+                tmr.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        mHandler.post(updateAnimatedEmoji);
+                    }
+                }, 0, 130);
+            }
+        }
+
     }
 
     public Status getItem(int position){
@@ -867,7 +870,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         context = parent.getContext();
         layoutInflater = LayoutInflater.from(this.context);
-        startUpdateTimer();
        if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else if(viewType == COMPACT_STATUS)
@@ -893,6 +895,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             synchronized (lock) {
                 lstHolders.add(holder);
             }
+
+
+            holder.startUpdateTimer();
             final Status status = statuses.get(i);
             if( status == null)
                 return;

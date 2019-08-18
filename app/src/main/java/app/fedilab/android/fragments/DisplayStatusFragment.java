@@ -847,18 +847,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      */
     public void refreshFilter(){
 
-        switch (instanceType) {
-            case "MASTODON":
-            case "MISSKEY":
-            case "GNU":
-                statusListAdapter.notifyDataSetChanged();
-                break;
-            case "PIXELFED":
-                pixelfedListAdapter.notifyDataSetChanged();
-                break;
-            case "ART":
-                artListAdapter.notifyDataSetChanged();
-                break;
+        if( statusListAdapter != null) {
+            statusListAdapter.notifyDataSetChanged();
+        }else if( pixelfedListAdapter != null) {
+            pixelfedListAdapter.notifyDataSetChanged();
+        }else if( artListAdapter != null){
+            artListAdapter.notifyDataSetChanged();
         }
     }
 
