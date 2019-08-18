@@ -179,6 +179,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
+import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.activities.MainActivity.currentLocale;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -203,7 +204,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public static final int COMPACT_STATUS = 3;
     public static final int CONSOLE_STATUS = 4;
     private int conversationPosition;
-    private List<String> timedMute;
     private boolean redraft;
     private Status toot;
     private TagTimeline tagTimeline;
@@ -308,10 +308,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-
-    public void updateMuted(List<String> timedMute){
-        this.timedMute = timedMute;
-    }
 
     @Override
     public long getItemId(int position) {
@@ -849,6 +845,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public int getItemViewType(int position) {
+        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, statuses.get(position), type))
+            return   HIDDEN_STATUS;
         if( statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
         else
@@ -3866,11 +3864,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                     new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
-                    if (timedMute != null && !timedMute.contains(account.getId()))
-                        timedMute.add(targeted_id);
-                    else if (timedMute == null) {
-                        timedMute = new ArrayList<>();
-                        timedMute.add(targeted_id);
+                    if (mutedAccount != null && !mutedAccount.contains(account.getId()))
+                        mutedAccount.add(targeted_id);
+                    else if (mutedAccount == null) {
+                        mutedAccount = new ArrayList<>();
+                        mutedAccount.add(targeted_id);
                     }
                     Toasty.success(context, context.getString(R.string.timed_mute_date, status.getAccount().getAcct(), Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                     alertDialog.dismiss();

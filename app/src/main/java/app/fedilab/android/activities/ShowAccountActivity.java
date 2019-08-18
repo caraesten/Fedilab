@@ -66,7 +66,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.client.API;
@@ -104,6 +103,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 
+import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
@@ -420,6 +420,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     @Override
                     public void onClick(View view) {
                         new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, accountId);
+                        mutedAccount.remove(accountId);
                         Toasty.success(getApplicationContext(), getString(R.string.toast_unmute), Toast.LENGTH_LONG).show();
                         temp_mute.setVisibility(View.GONE);
                     }

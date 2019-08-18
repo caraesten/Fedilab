@@ -1669,16 +1669,13 @@ public class Status implements Parcelable{
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
-        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, this, type))
-            this.viewType =  HIDDEN_STATUS;
-        else {
-            if( isCompactMode)
-                this.viewType =  COMPACT_STATUS;
-            else if( isConsoleMode)
-                this.viewType =   CONSOLE_STATUS;
-            else
-                this.viewType =  DISPLAYED_STATUS;
-        }
+        if( isCompactMode)
+            this.viewType =  COMPACT_STATUS;
+        else if( isConsoleMode)
+            this.viewType =   CONSOLE_STATUS;
+        else
+            this.viewType =  DISPLAYED_STATUS;
+
     }
 
     public boolean isFocused() {
