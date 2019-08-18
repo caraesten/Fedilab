@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -113,7 +114,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_filter, null);
+                View dialogView = inflater.inflate(R.layout.add_filter,   new LinearLayout(context), false);
                 dialogBuilder.setView(dialogView);
 
                 EditText add_phrase = dialogView.findViewById(R.id.add_phrase);

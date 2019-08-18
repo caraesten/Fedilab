@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -105,7 +106,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
+                View dialogView = inflater.inflate(R.layout.add_list,   new LinearLayout(context), false);
                 dialogBuilder.setView(dialogView);
                 final EditText editText = dialogView.findViewById(R.id.add_list);
                 editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});

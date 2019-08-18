@@ -3795,7 +3795,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+        View dialogView = inflater.inflate(R.layout.datetime_picker,   new LinearLayout(context), false);
         dialogBuilder.setView(dialogView);
         final AlertDialog alertDialog = dialogBuilder.create();
         final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
@@ -3909,7 +3909,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         AlertDialog.Builder dialogBuilderBoost = new AlertDialog.Builder(context, style);
         LayoutInflater inflaterBoost = ((Activity) context).getLayoutInflater();
-        @SuppressLint("InflateParams") View dialogViewBoost = inflaterBoost.inflate(R.layout.datetime_picker, null);
+        View dialogViewBoost = inflaterBoost.inflate(R.layout.datetime_picker,   new LinearLayout(context), false);
         dialogBuilderBoost.setView(dialogViewBoost);
         final AlertDialog alertDialogBoost = dialogBuilderBoost.create();
 

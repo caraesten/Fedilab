@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -223,7 +224,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ListActivity.this, style);
                 LayoutInflater inflater = getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
+                View dialogView = inflater.inflate(R.layout.add_list, new LinearLayout(getApplicationContext()), false);
                 dialogBuilder.setView(dialogView);
                 final EditText editText = dialogView.findViewById(R.id.add_list);
                 editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});

@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,7 +114,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);

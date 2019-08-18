@@ -35,6 +35,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -158,7 +159,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                     LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_playlist, null);
+                    View dialogView = inflater.inflate(R.layout.add_playlist,   new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
                     EditText display_name = dialogView.findViewById(R.id.display_name);
                     EditText description = dialogView.findViewById(R.id.description);

@@ -319,7 +319,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.toot_action_bar, null);
+            View view = inflater.inflate(R.layout.toot_action_bar,  new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
@@ -1700,14 +1700,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
                 picker.setListener(new CountryPickerListener() {
-                    @SuppressLint("InflateParams")
                     @Override
                     public void onSelectCountry(String name, String locale, int flagDrawableResID) {
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this, style);
                         transAlert.setTitle(R.string.translate_toot);
 
-                        popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
+                        popup_trans = getLayoutInflater().inflate( R.layout.popup_translate,  new LinearLayout(getApplicationContext()), false );
                         transAlert.setView(popup_trans);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
@@ -1881,7 +1880,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 builderSingle.setTitle(getString(R.string.select_accounts));
                 LayoutInflater inflater = getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_contact, null);
+                View dialogView = inflater.inflate(R.layout.popup_contact,  new LinearLayout(getApplicationContext()), false);
 
                 loader = dialogView.findViewById(R.id.loader);
                 EditText search_account = dialogView.findViewById(R.id.search_account);
@@ -2344,7 +2343,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
         builderInner.setTitle(R.string.upload_form_description);
 
-        @SuppressLint("InflateParams") View popup_media_description = getLayoutInflater().inflate( R.layout.popup_media_description, null );
+        View popup_media_description = getLayoutInflater().inflate( R.layout.popup_media_description,  new LinearLayout(getApplicationContext()), false );
         builderInner.setView(popup_media_description);
 
         //Text for report

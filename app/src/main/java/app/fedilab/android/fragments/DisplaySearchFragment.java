@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -101,7 +102,7 @@ public class DisplaySearchFragment extends Fragment {
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                     LayoutInflater inflater = getLayoutInflater();
-                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_toot, null);
+                    View dialogView = inflater.inflate(R.layout.search_toot,   new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
                     final EditText editText = dialogView.findViewById(R.id.search_toot);
                     editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});

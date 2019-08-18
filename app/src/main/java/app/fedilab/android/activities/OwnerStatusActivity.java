@@ -45,6 +45,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -140,7 +141,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         if( actionBar != null ){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.toot_action_bar, null);
+            View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
@@ -334,7 +335,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 }
                 dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
                 inflater = this.getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
+                View dialogView = inflater.inflate(R.layout.filter_owner_toots, new LinearLayout(getApplicationContext()), false);
                 dialogBuilder.setView(dialogView);
 
 

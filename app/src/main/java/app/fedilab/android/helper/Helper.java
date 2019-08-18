@@ -4277,7 +4277,7 @@ public class Helper {
                 linearLayout_main.setOrientation(LinearLayout.VERTICAL);
 
                 for(String domain: domains){
-                    @SuppressLint("InflateParams") View item = inflater.inflate(R.layout.muted_instance_popup, null);
+                    View item = inflater.inflate(R.layout.muted_instance_popup,   new LinearLayout(context), false);
                     CheckBox checkBox = item.findViewById(R.id.popup_domain);
                     checkBox.setText(domain);
                     linearLayout_main.addView(item);
@@ -4376,7 +4376,7 @@ public class Helper {
         Iterator it = instances.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            @SuppressLint("InflateParams") View item = inflater.inflate(R.layout.muted_instance_popup, null);
+            View item = inflater.inflate(R.layout.muted_instance_popup,   new LinearLayout(context), false);
             CheckBox checkBox = item.findViewById(R.id.popup_domain);
             checkBox.setText(pair.getKey().toString().trim());
             item.findViewById(R.id.popup_comment).setVisibility(View.GONE);

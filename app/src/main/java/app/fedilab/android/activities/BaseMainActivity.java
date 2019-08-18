@@ -1010,7 +1010,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 builder.setTitle(R.string.text_size);
 
-                                @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+                                View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, new LinearLayout(getApplicationContext()), false );
                                 builder.setView(popup_quick_settings);
 
                                 SeekBar set_text_size = popup_quick_settings.findViewById(R.id.set_text_size);
@@ -1220,7 +1220,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( !popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
             AlertDialog.Builder dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
-            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
+            View dialogView = inflater.inflate(R.layout.popup_quick_settings, new LinearLayout(getApplicationContext()), false);
             dialogBuilderOptin.setView(dialogView);
 
             //final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);

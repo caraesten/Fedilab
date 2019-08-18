@@ -684,7 +684,7 @@ public class ManageTimelines {
                         case R.id.action_filter:
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                             LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
-                            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
+                            View dialogView = inflater.inflate(R.layout.filter_regex,  new LinearLayout(context), false);
                             dialogBuilder.setView(dialogView);
                             final EditText editText = dialogView.findViewById(R.id.filter_regex);
                             Toast alertRegex = Toasty.warning(context, context.getString(R.string.alert_regex), Toast.LENGTH_LONG);
@@ -837,7 +837,7 @@ public class ManageTimelines {
                     case R.id.action_any:
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                         LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
-                        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_any, null);
+                        View dialogView = inflater.inflate(R.layout.tags_any,   new LinearLayout(context), false);
                         dialogBuilder.setView(dialogView);
                         final EditText editText = dialogView.findViewById(R.id.filter_any);
                         if(tagTimeline.getAny() != null) {
@@ -1090,7 +1090,7 @@ public class ManageTimelines {
                 changes[0] = true;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_instance, null);
+                View dialogView = inflater.inflate(R.layout.tags_instance,   new LinearLayout(context), false);
                 dialogBuilder.setView(dialogView);
                 final EditText editText = dialogView.findViewById(R.id.filter_words);
                 if(remoteInstance.getTags() != null) {

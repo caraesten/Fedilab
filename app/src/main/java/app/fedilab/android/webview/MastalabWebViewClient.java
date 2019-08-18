@@ -26,6 +26,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayInputStream;
@@ -126,7 +127,7 @@ public class MastalabWebViewClient extends WebViewClient {
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(activity);
         if( actionBar != null){
-            @SuppressLint("InflateParams") View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
+            View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar,   new LinearLayout(activity), false);
             TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
             webview_title.setText(url);
             actionBar.setCustomView(webview_actionbar);

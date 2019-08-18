@@ -154,6 +154,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
     };
     private Handler mHandler = new Handler();
+
     private void startUpdateTimer() {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -171,15 +172,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
     }
 
-    public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
-        this.context = context;
+    public NotificationsListAdapter(boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.notifications = notifications;
-        layoutInflater = LayoutInflater.from(this.context);
         notificationsListAdapter = this;
         this.isOnWifi = isOnWifi;
         this.behaviorWithAttachments = behaviorWithAttachments;
         lstHolders = new ArrayList<>();
-        startUpdateTimer();
+
     }
 
 
@@ -192,6 +191,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(this.context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_notification, parent, false));
     }
 
@@ -199,7 +200,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
         holder = (NotificationsListAdapter.ViewHolder) viewHolder;
+        context = holder.status_document_container.getContext();
 
+        startUpdateTimer();
         synchronized (lock) {
             lstHolders.add(holder);
         }

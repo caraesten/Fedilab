@@ -27,6 +27,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -85,7 +86,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
             LayoutInflater mInflater = LayoutInflater.from(activity);
             ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
             if( actionBar != null){
-                @SuppressLint("InflateParams") View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
+                View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar,   new LinearLayout(activity), false);
                 TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
                 webview_title.setText(view.getTitle());
                 ImageView webview_favicon = webview_actionbar.findViewById(R.id.webview_favicon);

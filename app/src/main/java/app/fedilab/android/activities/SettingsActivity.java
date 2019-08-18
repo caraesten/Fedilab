@@ -90,7 +90,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);

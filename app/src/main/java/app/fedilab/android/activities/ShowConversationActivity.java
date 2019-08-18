@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -140,7 +141,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         if( getSupportActionBar() != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            View view = inflater.inflate(R.layout.conversation_action_bar,  new LinearLayout(getApplicationContext()), false);
             getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);

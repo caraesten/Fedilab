@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,7 +122,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar_muted_instance, null);
+            View view = inflater.inflate(R.layout.simple_bar_muted_instance, new LinearLayout(getApplicationContext()),false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -148,7 +149,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                 }
                                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MutedInstanceActivity.this, style);
                                 LayoutInflater inflater = getLayoutInflater();
-                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_blocked_instance, null);
+                                View dialogView = inflater.inflate(R.layout.add_blocked_instance, new LinearLayout(getApplicationContext()), false);
                                 dialogBuilder.setView(dialogView);
 
                                 EditText add_domain = dialogView.findViewById(R.id.add_domain);

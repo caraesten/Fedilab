@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -173,7 +174,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                     LayoutInflater inflater = getLayoutInflater();
-                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_blocked_instance, null);
+                    View dialogView = inflater.inflate(R.layout.add_blocked_instance,   new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
 
                     EditText add_domain = dialogView.findViewById(R.id.add_domain);

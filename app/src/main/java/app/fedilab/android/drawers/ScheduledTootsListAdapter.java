@@ -259,7 +259,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
             public void onClick(View v) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                View dialogView = inflater.inflate(R.layout.datetime_picker,   new LinearLayout(context), false);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
