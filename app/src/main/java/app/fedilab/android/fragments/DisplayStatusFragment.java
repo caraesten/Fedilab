@@ -33,7 +33,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +108,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean showMediaOnly, showPinned, showReply;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
-    boolean firstTootsLoaded;
+    private boolean firstTootsLoaded;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     private boolean isSwipped;
@@ -192,7 +191,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-        mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+
 
         //For Home timeline, fetch stored values for bookmark and last read toot
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
@@ -207,12 +206,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
                 if( tagTimelines != null && tagTimelines.size() > 0) {
                     tagTimeline = tagTimelines.get(0);
-                    statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, this.statuses);
+                    statusListAdapter = new StatusListAdapter(tagTimeline, targetedId, isOnWifi, this.statuses);
                     lv_status.setAdapter(statusListAdapter);
                 }
             }else{
                 BaseMainActivity.displayPeertube = null;
-                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
+                statusListAdapter = new StatusListAdapter(type, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
         }else if( instanceType.equals("PEERTUBE")){
@@ -665,6 +664,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
+    public void onDestroyView() {
+        if( lv_status != null) {
+            lv_status.setAdapter(null);
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
         swipeRefreshLayout.setEnabled(true);
@@ -727,7 +734,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * Called from main activity in onResume to retrieve missing toots (home timeline)
      * @param sinceId String
      */
-    public void retrieveMissingToots(String sinceId){
+    private void retrieveMissingToots(String sinceId){
 
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -841,12 +848,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      */
     public void refreshFilter(){
 
-        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")|| instanceType.equals("GNU"))
-            statusListAdapter.notifyDataSetChanged();
-        else if( instanceType.equals("PIXELFED"))
-            pixelfedListAdapter.notifyDataSetChanged();
-        else if( instanceType.equals("ART"))
-            artListAdapter.notifyDataSetChanged();
+        switch (instanceType) {
+            case "MASTODON":
+            case "MISSKEY":
+            case "GNU":
+                statusListAdapter.notifyDataSetChanged();
+                break;
+            case "PIXELFED":
+                pixelfedListAdapter.notifyDataSetChanged();
+                break;
+            case "ART":
+                artListAdapter.notifyDataSetChanged();
+                break;
+        }
     }
 
     @Override
@@ -1087,7 +1101,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted

@@ -116,6 +116,7 @@ import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TempMuteDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
@@ -177,6 +178,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private static boolean notificationChecked = false;
     public static HashMap<String, Integer> poll_limits = new HashMap<>();
     private Instance instanceClass;
+    public static List<String> mutedAccount = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1286,6 +1288,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 new TimelineCacheDAO(BaseMainActivity.this, db).removeAfterDate(dateString);
             }
         });
+
+        mutedAccount = new TempMuteDAO(getApplicationContext(), db).getAllTimeMuted(account);
 
     }
 

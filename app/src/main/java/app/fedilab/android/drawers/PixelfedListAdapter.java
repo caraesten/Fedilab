@@ -176,7 +176,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @Override
     public int getItemViewType(int position) {
 
-        if( !Helper.filterToots(context, statuses.get(position), timedMute, null))
+        if( !Helper.filterToots(context, statuses.get(position), null))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;

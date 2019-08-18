@@ -172,7 +172,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         boolean isOnWifi = Helper.isOnWIFI(OwnerStatusActivity.this);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-        statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
+        statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(OwnerStatusActivity.this);
         lv_status.setLayoutManager(mLayoutManager);

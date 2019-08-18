@@ -118,7 +118,7 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
         textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(GroupActivity.this, RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, null, isOnWifi, this.statuses);
+        statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, null, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         setTitle(String.format("!%s", groupname));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

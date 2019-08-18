@@ -268,6 +268,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     @Override
+    public void onDestroyView() {
+        if( lv_notifications != null) {
+            lv_notifications.setAdapter(null);
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         swipeRefreshLayout.setEnabled(true);

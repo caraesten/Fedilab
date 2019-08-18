@@ -2181,6 +2181,7 @@ public class GNUAPI {
             e.printStackTrace();
 
         }
+        status.setViewType(context);
         return status;
     }
 

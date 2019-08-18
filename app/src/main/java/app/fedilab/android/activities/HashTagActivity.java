@@ -116,7 +116,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, this.statuses);
+        statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         setTitle(String.format("#%s", tag));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

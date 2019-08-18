@@ -772,7 +772,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, statuses);
+            StatusListAdapter statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, statuses);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(PeertubeActivity.this);
             lv_comments.setLayoutManager(mLayoutManager);
             lv_comments.setNestedScrollingEnabled(false);

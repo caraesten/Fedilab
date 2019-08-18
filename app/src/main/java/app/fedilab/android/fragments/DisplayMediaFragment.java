@@ -64,6 +64,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     private SharedPreferences sharedpreferences;
     private ArrayList<Status> statuses;
     private ImageAdapter gridAdaper;
+    private RecyclerView gridview;
 
     public DisplayMediaFragment(){
     }
@@ -95,7 +96,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
 
         statuses = new ArrayList<>();
         gridAdaper = new ImageAdapter(context, statuses);
-        RecyclerView gridview = rootView.findViewById(R.id.gridview_media);
+        gridview = rootView.findViewById(R.id.gridview_media);
 
         gridview.setAdapter(gridAdaper);
 
@@ -149,6 +150,14 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     }
 
 
+
+    @Override
+    public void onDestroyView() {
+        if(gridview  != null) {
+            gridview.setAdapter(null);
+        }
+        super.onDestroyView();
+    }
 
     @Override
     public void onAttach(Context context) {

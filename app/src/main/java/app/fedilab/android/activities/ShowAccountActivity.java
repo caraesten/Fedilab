@@ -223,7 +223,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         show_replies = true;
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, this.statuses);
+        statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, this.statuses);
 
         showMediaOnly = false;
         showPinned = false;

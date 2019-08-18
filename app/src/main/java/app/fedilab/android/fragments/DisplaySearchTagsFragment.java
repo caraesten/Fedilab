@@ -168,6 +168,14 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
 
 
     @Override
+    public void onDestroyView() {
+        if( lv_search_tags != null) {
+            lv_search_tags.setAdapter(null);
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;

@@ -78,6 +78,12 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 
+import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.drawers.StatusListAdapter.HIDDEN_STATUS;
+import static app.fedilab.android.drawers.StatusListAdapter.COMPACT_STATUS;
+import static app.fedilab.android.drawers.StatusListAdapter.CONSOLE_STATUS;
+import static app.fedilab.android.drawers.StatusListAdapter.DISPLAYED_STATUS;
+import static app.fedilab.android.drawers.StatusListAdapter.FOCUSED_STATUS;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
@@ -154,7 +160,8 @@ public class Status implements Parcelable{
 
     private int warningFetched = -1;
     private List<String> imageURL;
-
+    private int viewType;
+    private boolean isFocused = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -219,6 +226,9 @@ public class Status implements Parcelable{
         dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
         dest.writeInt(this.warningFetched);
         dest.writeStringList(this.imageURL);
+        dest.writeInt(this.viewType);
+        dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
+
     }
 
     protected Status(Parcel in) {
@@ -285,6 +295,8 @@ public class Status implements Parcelable{
         this.shortReply = in.readByte() != 0;
         this.warningFetched = in.readInt();
         this.imageURL = in.createStringArrayList();
+        this.viewType = in.readInt();
+        this.isFocused = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1649,4 +1661,31 @@ public class Status implements Parcelable{
         this.imageURL = imageURL;
     }
 
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(Context context) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
+        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, this, type))
+            this.viewType =  HIDDEN_STATUS;
+        else {
+            if( isCompactMode)
+                this.viewType =  COMPACT_STATUS;
+            else if( isConsoleMode)
+                this.viewType =   CONSOLE_STATUS;
+            else
+                this.viewType =  DISPLAYED_STATUS;
+        }
+    }
+
+    public boolean isFocused() {
+        return isFocused;
+    }
+
+    public void setFocused(boolean focused) {
+        isFocused = focused;
+    }
 }

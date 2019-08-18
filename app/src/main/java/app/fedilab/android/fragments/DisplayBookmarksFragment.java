@@ -105,7 +105,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         statuses = apiResponse.getStatuses();
         if( statuses != null && statuses.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
-            statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, this.statuses);
+            statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             lv_status.setLayoutManager(mLayoutManager);
         }else {
@@ -136,7 +136,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
                                     new StatusCacheDAO(context, db).removeAllStatus(StatusCacheDAO.STATUS_CACHE);
                                     statuses = new ArrayList<>();
                                     statuses.clear();
-                                    statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
+                                    statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
                                     lv_status.setAdapter(statusListAdapter);
                                     statusListAdapter.notifyDataSetChanged();
                                     textviewNoAction.setVisibility(View.VISIBLE);

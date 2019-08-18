@@ -4802,6 +4802,7 @@ public class API {
         } catch (JSONException ignored) {} catch (ParseException e) {
             e.printStackTrace();
         }
+        status.setViewType(context);
         return status;
     }
 

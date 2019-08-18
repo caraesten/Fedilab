@@ -221,6 +221,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
 import static app.fedilab.android.activities.BaseMainActivity.filters;
 
@@ -3553,7 +3554,7 @@ public class Helper {
         return emojiCount/2;
     }
 
-    public static boolean filterToots(Context context, Status status, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
+    public static boolean filterToots(Context context, Status status, RetrieveFeedsAsyncTask.Type type){
         String filter;
         if( status == null)
             return true;
@@ -3624,7 +3625,7 @@ public class Helper {
                     return false;
             }
         }
-        if (timedMute != null && timedMute.size() > 0 && timedMute.contains(status.getAccount().getId()))
+        if (mutedAccount != null && mutedAccount.size() > 0 && mutedAccount.contains(status.getAccount().getId()))
             return false;
         if( status.isNotice())
             return false;

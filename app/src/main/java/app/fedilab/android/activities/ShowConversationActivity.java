@@ -246,7 +246,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             statuses.add(initialStatus);
         else
             statuses.add(detailsStatus);
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, statuses);
+        statusListAdapter = new StatusListAdapter(0, null, isOnWifi, statuses);
 
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
@@ -389,7 +389,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                 for(Status status: context.getAncestors()){
                     statuses.add(0,status);
                 }
-                statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, (statuses.size()-1-i), null, isOnWifi, statuses);
+                statusListAdapter = new StatusListAdapter((statuses.size()-1-i), null, isOnWifi, statuses);
                 statusListAdapter.setConversationPosition((statuses.size()-1-i));
                 final LinearLayoutManager mLayoutManager;
                 mLayoutManager = new LinearLayoutManager(this);

@@ -53,6 +53,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -196,11 +197,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
-    private final int HIDDEN_STATUS = 0;
-    private static final int DISPLAYED_STATUS = 1;
-    static final int FOCUSED_STATUS = 2;
-    private static final int COMPACT_STATUS = 3;
-    private static final int CONSOLE_STATUS = 4;
+    public static final int HIDDEN_STATUS = 0;
+    public static final int DISPLAYED_STATUS = 1;
+    public static final int FOCUSED_STATUS = 2;
+    public static final int COMPACT_STATUS = 3;
+    public static final int CONSOLE_STATUS = 4;
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
@@ -252,6 +253,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         mRecyclerView = recyclerView;
     }
 
+
+
+
     private void startUpdateTimer() {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -269,48 +273,38 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
+    public StatusListAdapter(RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
-        this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = type;
         this.targetedId = targetedId;
         redraft = false;
         lstHolders = new ArrayList<>();
-
-        startUpdateTimer();
     }
 
-    public StatusListAdapter(Context context, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses){
+    public StatusListAdapter(TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
-        this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = RetrieveFeedsAsyncTask.Type.TAG;
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
         lstHolders = new ArrayList<>();
-        startUpdateTimer();
     }
 
-    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, List<Status> statuses){
-        this.context = context;
+    public StatusListAdapter(int position, String targetedId, boolean isOnWifi, List<Status> statuses){
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
         this.conversationPosition = position;
         this.targetedId = targetedId;
         redraft = false;
         lstHolders = new ArrayList<>();
-        startUpdateTimer();
 
     }
 
@@ -607,6 +601,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
+        context = holder.itemView.getContext();
+        Log.v(Helper.TAG,"ctx1: " + context);
         if( type != RetrieveFeedsAsyncTask.Type.ART && type != RetrieveFeedsAsyncTask.Type.PIXELFED && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS|| holder.getItemViewType() == CONSOLE_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
@@ -853,27 +849,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public int getItemViewType(int position) {
-
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
-        boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
-        if( !isConsoleMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
-            return FOCUSED_STATUS;
-        else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(context, statuses.get(position), timedMute, type))
-            return HIDDEN_STATUS;
-        else {
-            if( isCompactMode)
-                return COMPACT_STATUS;
-            else if( isConsoleMode)
-                return  CONSOLE_STATUS;
-            else
-                return DISPLAYED_STATUS;
-        }
+        return statuses.get(position).getViewType();
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(this.context);
+        Log.v(Helper.TAG,"ctx3: " + context);
+        startUpdateTimer();
        if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else if(viewType == COMPACT_STATUS)
@@ -893,10 +879,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-
+        context = viewHolder.itemView.getContext();
+        Log.v(Helper.TAG,"ctx2: " + context);
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
-
-
             final ViewHolder holder = (ViewHolder) viewHolder;
             synchronized (lock) {
                 lstHolders.add(holder);

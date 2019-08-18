@@ -115,7 +115,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         nextElementLoader.setVisibility(View.GONE);
         boolean isOnWifi = Helper.isOnWIFI(ListActivity.this);
 
-        statusListAdapter = new StatusListAdapter(ListActivity.this, RetrieveFeedsAsyncTask.Type.LIST, null, isOnWifi, this.statuses);
+        statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.LIST, null, isOnWifi, this.statuses);
 
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(ListActivity.this);
