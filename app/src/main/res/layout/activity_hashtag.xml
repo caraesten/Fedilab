@@ -49,24 +49,20 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <FrameLayout
+            <!-- Listview status -->
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
+                android:id="@+id/swipeContainer"
                 android:layout_height="match_parent">
-                <!-- Listview status -->
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lv_status"
                     android:layout_width="match_parent"
-                    android:id="@+id/swipeContainer"
-                    android:layout_height="match_parent">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/lv_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        android:divider="@null"
-                        >
-                    </androidx.recyclerview.widget.RecyclerView>
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-            </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             <RelativeLayout
                 android:id="@+id/no_action"
                 android:visibility="gone"
