@@ -188,6 +188,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         mRecyclerView = recyclerView;
     }
 
+    @Override
+    public void onDetachedFromRecyclerView (@NotNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mRecyclerView = null;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

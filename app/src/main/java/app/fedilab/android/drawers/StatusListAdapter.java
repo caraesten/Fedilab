@@ -53,7 +53,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -254,7 +253,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
 
-
+    @Override
+    public void onDetachedFromRecyclerView (@NotNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mRecyclerView = null;
+    }
 
     private void startUpdateTimer() {
 
@@ -598,7 +601,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         context = holder.itemView.getContext();
-        Log.v(Helper.TAG,"ctx1: " + context);
         if( type != RetrieveFeedsAsyncTask.Type.ART && type != RetrieveFeedsAsyncTask.Type.PIXELFED && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS|| holder.getItemViewType() == CONSOLE_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
@@ -865,7 +867,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         context = parent.getContext();
         layoutInflater = LayoutInflater.from(this.context);
-        Log.v(Helper.TAG,"ctx3: " + context);
         startUpdateTimer();
        if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
@@ -887,7 +888,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         context = viewHolder.itemView.getContext();
-        Log.v(Helper.TAG,"ctx2: " + context);
         if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
             final ViewHolder holder = (ViewHolder) viewHolder;
             synchronized (lock) {
