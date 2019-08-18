@@ -830,7 +830,9 @@ public class Status implements Parcelable{
                         key = key.split("\\|")[0];
                         SpannableStringBuilder ssb = new SpannableStringBuilder();
                         ssb.append(spannableStringT, 0, spannableStringT.length());
-                        ssb.replace(startPosition,endPosition, key);
+                        if( ssb.length() >= endPosition) {
+                            ssb.replace(startPosition,endPosition, key);
+                        }
                         spannableStringT = SpannableString.valueOf(ssb);
                         endPosition = startPosition + key.length();
                     }
@@ -881,7 +883,9 @@ public class Status implements Parcelable{
                         key = key.split("…")[0]+"…";
                         SpannableStringBuilder ssb = new SpannableStringBuilder();
                         ssb.append(spannableStringT, 0, spannableStringT.length());
-                        ssb.replace(startPosition,endPosition, key);
+                        if( ssb.length() >= endPosition) {
+                            ssb.replace(startPosition, endPosition, key);
+                        }
                         spannableStringT = SpannableString.valueOf(ssb);
                         endPosition = startPosition + key.length();
                     }
