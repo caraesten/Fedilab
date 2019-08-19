@@ -95,7 +95,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         }
 
         statuses = new ArrayList<>();
-        gridAdaper = new ImageAdapter(context, statuses);
+        gridAdaper = new ImageAdapter(statuses);
         gridview = rootView.findViewById(R.id.gridview_media);
 
         gridview.setAdapter(gridAdaper);

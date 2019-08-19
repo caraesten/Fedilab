@@ -92,7 +92,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        filterAdapter = new FilterAdapter(context, filters, textviewNoAction);
+        filterAdapter = new FilterAdapter(filters, textviewNoAction);
         lv_filters.setAdapter(filterAdapter);
         asyncTask = new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.GET_ALL_FILTER, null, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {

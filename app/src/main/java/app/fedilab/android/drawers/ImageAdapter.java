@@ -45,12 +45,9 @@ import app.fedilab.android.activities.ShowConversationActivity;
 public class ImageAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Status> statuses;
-    private LayoutInflater layoutInflater;
 
-    public ImageAdapter(Context context, List<Status> statuses) {
-        this.context = context;
+    public ImageAdapter(List<Status> statuses) {
         this.statuses = statuses;
-        this.layoutInflater = LayoutInflater.from(this.context);
     }
 
     public int getCount() {
@@ -64,6 +61,8 @@ public class ImageAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_media, parent, false));
     }
 

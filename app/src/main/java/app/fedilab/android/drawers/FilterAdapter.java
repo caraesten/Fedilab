@@ -15,7 +15,6 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -58,15 +57,12 @@ import app.fedilab.android.interfaces.OnFilterActionInterface;
 public class FilterAdapter extends BaseAdapter implements OnFilterActionInterface {
 
     private List<Filters> filters;
-    private LayoutInflater layoutInflater;
     private Context context;
     private FilterAdapter filterAdapter;
     private RelativeLayout textviewNoAction;
 
-    public FilterAdapter(Context context, List<Filters> filters, RelativeLayout textviewNoAction){
+    public FilterAdapter(List<Filters> filters, RelativeLayout textviewNoAction){
         this.filters = filters;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.filterAdapter = this;
         this.textviewNoAction = textviewNoAction;
     }
@@ -89,7 +85,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final Filters filter = filters.get(position);
         final ViewHolder holder;
         if (convertView == null) {

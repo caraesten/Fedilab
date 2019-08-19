@@ -48,14 +48,11 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrieveDomainsInterface {
 
     private List<String> domains;
-    private LayoutInflater layoutInflater;
     private Context context;
     private DomainsListAdapter domainsListAdapter;
     private RelativeLayout textviewNoAction;
 
-    public DomainsListAdapter(Context context, List<String> domains, RelativeLayout textviewNoAction){
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
+    public DomainsListAdapter(List<String> domains, RelativeLayout textviewNoAction){
         this.domains = domains;
         this.domainsListAdapter = this;
         this.textviewNoAction = textviewNoAction;
@@ -65,6 +62,8 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_domain, parent, false));
     }
 

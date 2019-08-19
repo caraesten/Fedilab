@@ -56,11 +56,8 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public HowToVideosAdapter(Context context, List<HowToVideo> howToVideos){
+    public HowToVideosAdapter(List<HowToVideo> howToVideos){
         this.howToVideos = howToVideos;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
-
     }
 
     @Override
@@ -82,6 +79,8 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         final HowToVideo howToVideo = howToVideos.get(position);
         final ViewHolder holder;
         if (convertView == null) {

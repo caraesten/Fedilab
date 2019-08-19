@@ -235,7 +235,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        domainsListAdapter = new DomainsListAdapter(MutedInstanceActivity.this, this.domains, textviewNoAction);
+        domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
         lv_domains.setAdapter(domainsListAdapter);
 
         final LinearLayoutManager mLayoutManager;
@@ -330,7 +330,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
         if( swiped ){
-            domainsListAdapter = new DomainsListAdapter(MutedInstanceActivity.this,  this.domains, textviewNoAction);
+            domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
             lv_domains.setAdapter(domainsListAdapter);
             swiped = false;
         }

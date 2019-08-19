@@ -94,7 +94,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        domainsListAdapter = new DomainsListAdapter(context, this.domains, textviewNoAction);
+        domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
         lv_domains.setAdapter(domainsListAdapter);
 
         final LinearLayoutManager mLayoutManager;
@@ -250,7 +250,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
         if( swiped ){
-            domainsListAdapter = new DomainsListAdapter(context,  this.domains, textviewNoAction);
+            domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
             lv_domains.setAdapter(domainsListAdapter);
             swiped = false;
         }

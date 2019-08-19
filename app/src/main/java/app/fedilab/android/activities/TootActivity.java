@@ -1968,7 +1968,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                     builderSingle = new AlertDialog.Builder(TootActivity.this, style);
                     builderSingle.setTitle(getString(R.string.choose_toot));
-                    final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(TootActivity.this, drafts);
+                    final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(drafts);
                     final int[] ids = new int[drafts.size()];
                     int i = 0;
                     for(StoredStatus draft: drafts){

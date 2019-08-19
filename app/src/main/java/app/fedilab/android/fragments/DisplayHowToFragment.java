@@ -104,7 +104,7 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
             Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
-        HowToVideosAdapter howToVideosAdapter = new HowToVideosAdapter(context, howToVideos);
+        HowToVideosAdapter howToVideosAdapter = new HowToVideosAdapter(howToVideos);
         lv_howto.setAdapter(howToVideosAdapter);
     }
 }

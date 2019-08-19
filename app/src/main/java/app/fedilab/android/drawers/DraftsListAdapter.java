@@ -51,24 +51,19 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 public class DraftsListAdapter extends BaseAdapter  {
 
     private List<StoredStatus> storedStatuses;
-    private LayoutInflater layoutInflater;
     private Context context;
     private DraftsListAdapter draftsListAdapter;
     private boolean clickable;
     private RelativeLayout textviewNoAction;
 
-    public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses){
+    public DraftsListAdapter(List<StoredStatus> storedStatuses){
         this.storedStatuses = storedStatuses;
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
         draftsListAdapter = this;
         this.clickable = false;
     }
 
-    public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses, boolean clickable, RelativeLayout textviewNoAction){
+    public DraftsListAdapter(List<StoredStatus> storedStatuses, boolean clickable, RelativeLayout textviewNoAction){
         this.storedStatuses = storedStatuses;
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
         draftsListAdapter = this;
         this.clickable = clickable;
         this.textviewNoAction = textviewNoAction;
@@ -92,7 +87,8 @@ public class DraftsListAdapter extends BaseAdapter  {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final StoredStatus draft = storedStatuses.get(position);
         final ViewHolder holder;
         if (convertView == null) {
