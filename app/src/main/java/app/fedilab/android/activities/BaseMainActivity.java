@@ -1650,7 +1650,8 @@ public abstract class BaseMainActivity extends BaseActivity
             sendBroadcast(new Intent("StopLiveNotificationService"));
         if( hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
-
+        if( mPageReferenceMap != null)
+            mPageReferenceMap = null;
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 
