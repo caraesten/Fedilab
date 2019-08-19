@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,7 +166,6 @@ public class TimelineCacheDAO {
                     String search = word.replace("\"","");
                     query = new StringBuilder(Sqlite.COL_CACHE + " LIKE '%").append(search).append("%'");
                 }
-
                 if (max_id != null) {
                     c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_STATUS_ID + " < '" + max_id + "' AND " + query, null, null, null, Sqlite.COL_STATUS_ID + " DESC", "40");
                     return cursorToListStatus(c);

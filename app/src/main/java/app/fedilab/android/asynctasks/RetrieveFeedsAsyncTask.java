@@ -348,13 +348,15 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if( statuses != null){
                         statusesNew = new ArrayList<>();
                         for(app.fedilab.android.client.Entities.Status status: statuses){
-                            if (tag != null) {
+                            if (tag != null && !tag.contains("\"")) {
                                 String[] searches = tag.split(" ");
                                 for (String search : searches) {
                                     if (status.getContent().contains(search) || status.getSpoiler_text().contains(search)) {
                                         statusesNew.add(status);
                                     }
                                 }
+                            }else{
+                                statusesNew.addAll(statuses);
                             }
                         }
                     }
