@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -307,7 +308,8 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
         }else if(actionType == ManageListsAsyncTask.action.UPDATE_LIST) {
-
+            Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentUP);
         }
     }
 }

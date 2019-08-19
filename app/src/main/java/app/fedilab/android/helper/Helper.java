@@ -479,6 +479,7 @@ public class Helper {
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_HIDE_ITEM = "receive_hide_item";
+    public static final String RECEIVE_UPDATE_TOPBAR = "receive_update_topbar";
     //User agent
     //public static final String USER_AGENT = "Fedilab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
     public static final String USER_AGENT = System.getProperty("http.agent");

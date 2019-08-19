@@ -26,6 +26,8 @@ import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,12 +199,16 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                 this.lists.add(0, apiResponse.getLists().get(0));
                 listAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
+                Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentUP);
             }else{
                 Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             }
         }else if( actionType == ManageListsAsyncTask.action.DELETE_LIST){
             if( this.lists.size() == 0)
                 textviewNoAction.setVisibility(View.VISIBLE);
+            Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intentUP);
         }
     }
 }

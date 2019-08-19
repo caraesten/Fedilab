@@ -32,6 +32,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnSyncTimelineInterface;
@@ -250,57 +251,68 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             try {
                 apiResponse = new API(contextReference.get()).getLists();
                 lists = apiResponse.getLists();
-            } catch (Exception ignored) {
-            }
-
-            if (lists != null && lists.size() > 0) {
-                //Loop through results
-                for (app.fedilab.android.client.Entities.List list : lists) {
-                    boolean isInDb = false;
-                    ManageTimelines timelines_tmp = null;
-                    for (ManageTimelines manageTimeline : manageTimelines) {
-                        if (manageTimeline.getListTimeline() == null)
-                            continue;
-                        if (manageTimeline.getListTimeline().getId().equals(list.getId())) {
-                            isInDb = true;
-                            timelines_tmp = manageTimeline;
-                            break;
-                        }
-                    }
-                    if (!isInDb) {
-                        ManageTimelines manageTL = new ManageTimelines();
-                        manageTL.setListTimeline(list);
-                        manageTL.setDisplayed(true);
-                        manageTL.setType(ManageTimelines.Type.LIST);
-                        manageTL.setPosition(manageTimelines.size());
-                        new TimelinesDAO(contextReference.get(), db).insert(manageTL);
-                    } else {
-                        //Update list
-                        timelines_tmp.setListTimeline(list);
-                        new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
+                List<ManageTimelines>  duplicated_id = new ArrayList<>();
+                List<String> present_id = new ArrayList<>();
+                for (ManageTimelines manageTimeline : manageTimelines) {
+                    if (manageTimeline.getListTimeline() == null)
+                        continue;
+                    if( !present_id.contains(manageTimeline.getListTimeline().getId())) {
+                        present_id.add(manageTimeline.getListTimeline().getId());
+                    }else{
+                        duplicated_id.add(manageTimeline);
+                        new TimelinesDAO(contextReference.get(), db).remove(manageTimeline);
                     }
                 }
-                for (ManageTimelines manageTimelines : manageTimelines) {
-                    if (manageTimelines.getListTimeline() == null)
-                        continue;
-                    boolean shouldBeRemoved = true;
+                manageTimelines.removeAll(duplicated_id);
+                if (lists != null && lists.size() > 0) {
+                    //Loop through results
                     for (app.fedilab.android.client.Entities.List list : lists) {
-                        if (list.getId().equals(manageTimelines.getListTimeline().getId())) {
-                            shouldBeRemoved = false;
+                        boolean isInDb = false;
+                        ManageTimelines timelines_tmp = null;
+                        for (ManageTimelines manageTimeline : manageTimelines) {
+                            if (manageTimeline.getListTimeline() == null)
+                                continue;
+                            if (manageTimeline.getListTimeline().getId().equals(list.getId())) {
+                                isInDb = true;
+                                timelines_tmp = manageTimeline;
+                                break;
+                            }
+                        }
+                        if (!isInDb) {
+                            ManageTimelines manageTL = new ManageTimelines();
+                            manageTL.setListTimeline(list);
+                            manageTL.setDisplayed(true);
+                            manageTL.setType(ManageTimelines.Type.LIST);
+                            manageTL.setPosition(manageTimelines.size());
+                            new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                        } else {
+                            //Update list
+                            timelines_tmp.setListTimeline(list);
+                            new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                         }
                     }
-                    if (shouldBeRemoved) {
+                    for (ManageTimelines manageTimelines : manageTimelines) {
+                        if (manageTimelines.getListTimeline() == null)
+                            continue;
+                        boolean shouldBeRemoved = true;
+                        for (app.fedilab.android.client.Entities.List list : lists) {
+                            if (list.getId().equals(manageTimelines.getListTimeline().getId())) {
+                                shouldBeRemoved = false;
+                            }
+                        }
+                        if (shouldBeRemoved) {
+                            new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+                        }
+                    }
+                } else {
+                    for (ManageTimelines manageTimelines : manageTimelines) {
+                        if (manageTimelines.getListTimeline() == null)
+                            continue;
                         new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                     }
                 }
-            } else {
-                for (ManageTimelines manageTimelines : manageTimelines) {
-                    if (manageTimelines.getListTimeline() == null)
-                        continue;
-                    new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
-                }
+            } catch (Exception ignored) {
             }
-
         }
         for (Iterator<ManageTimelines> it = manageTimelines.iterator(); it.hasNext();) {
             if (!it.next().isDisplayed()) {

@@ -170,7 +170,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     private final int PICK_IMPORT = 5556;
     public static List<ManageTimelines> timelines;
-    private BroadcastReceiver hidde_menu;
+    private BroadcastReceiver hidde_menu, update_topbar;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap;
     private static boolean notificationChecked = false;
@@ -694,6 +694,9 @@ public abstract class BaseMainActivity extends BaseActivity
 
         if( hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
+
+        if( update_topbar != null)
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(update_topbar);
         hidde_menu = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -736,7 +739,17 @@ public abstract class BaseMainActivity extends BaseActivity
 
             }
         };
+        update_topbar = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int position = 0;
+                if( tabLayout != null)
+                    position = tabLayout.getSelectedTabPosition();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        };
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(hidde_menu, new IntentFilter(Helper.RECEIVE_HIDE_ITEM));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(update_topbar, new IntentFilter(Helper.RECEIVE_UPDATE_TOPBAR));
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -1649,6 +1662,8 @@ public abstract class BaseMainActivity extends BaseActivity
             sendBroadcast(new Intent("StopLiveNotificationService"));
         if( hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
+        if( update_topbar != null)
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(update_topbar);
         if( mPageReferenceMap != null)
             mPageReferenceMap = null;
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
