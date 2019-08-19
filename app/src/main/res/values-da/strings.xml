@@ -1042,8 +1042,8 @@
     <string name="set_auto_backup">Auto-sikkerhedskopiér statusser</string>
     <string name="set_auto_backup_indication">Denne er en pr. konto mulighed. Den starter en tjeneste, der automatisk gemmer dine statusser lokalt i databasen. Dette muliggør statistikker og diagrammer</string>
     <string name="report_account">Rapportér konto</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Send en invitation</string>
+    <string name="registration_closed">Dit instans tillader ikke registrering af en ny konto!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
@@ -1065,6 +1065,6 @@
         <item>Webview</item>
         <item>Direkte stream</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">For deltagelse i min instans \"%1$s\" kan du downloade Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nÅbn derefter linket nedenfor med Fedilab og opret din konto :-)\n\n%4$s
     </string>
 </resources>
