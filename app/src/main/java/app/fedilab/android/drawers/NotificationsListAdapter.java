@@ -71,6 +71,7 @@ import java.util.TimerTask;
 
 
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -1478,7 +1479,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
-        Timer tmr;
         public View getView(){
             return itemView;
         }
@@ -1545,10 +1545,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
             if( !disableAnimatedEmoji ){
-                if( tmr == null){
-                    tmr = new Timer();
+                if( BaseMainActivity.timer == null){
+                    BaseMainActivity.timer = new Timer();
                 }
-                tmr.schedule(new TimerTask() {
+                BaseMainActivity.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         mHandler.post(updateAnimatedEmoji);

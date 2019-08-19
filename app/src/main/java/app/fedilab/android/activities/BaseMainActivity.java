@@ -79,6 +79,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -1649,6 +1650,7 @@ public abstract class BaseMainActivity extends BaseActivity
             sendBroadcast(new Intent("StopLiveNotificationService"));
         if( hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
+
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 

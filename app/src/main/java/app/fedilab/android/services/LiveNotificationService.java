@@ -61,8 +61,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
@@ -243,13 +241,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (ex != null) {
                         if( !canStartStream.containsKey(account.getAcct()+"@"+account.getInstance()) || canStartStream.get(account.getAcct()+"@"+account.getInstance())) {
                             canStartStream.put(account.getAcct()+"@"+account.getInstance(),false);
-                            new Timer().schedule(new TimerTask() {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+
                                 @Override
                                 public void run() {
                                     startStream(account);
                                     canStartStream.put(account.getAcct()+"@"+account.getInstance(),true);
                                 }
-                            }, 15000);
+
+                            }, 15000); // 5000ms delay
                         }
                         return;
                     }

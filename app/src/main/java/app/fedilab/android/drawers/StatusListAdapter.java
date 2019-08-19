@@ -692,7 +692,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView quick_reply_emoji;
         Button quick_reply_button;
         ImageView quick_reply_privacy;
-        Timer tmr;
 
         public View getView(){
             return itemView;
@@ -827,10 +826,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
             if( !disableAnimatedEmoji ){
-                if( tmr == null){
-                    tmr = new Timer();
+                if( BaseMainActivity.timer == null){
+                    BaseMainActivity.timer = new Timer();
                 }
-                tmr.schedule(new TimerTask() {
+                BaseMainActivity.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         mHandler.post(updateAnimatedEmoji);

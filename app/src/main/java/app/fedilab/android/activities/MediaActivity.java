@@ -723,7 +723,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         try {
             if( visualizerView != null) {
                 visualizerView.release();

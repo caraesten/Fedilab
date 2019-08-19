@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,7 +19,8 @@ import com.franmontiel.localechanger.LocaleChanger;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
 
-import app.fedilab.android.BuildConfig;
+import java.util.Timer;
+
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
 
@@ -34,6 +34,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public static final int READ_WRITE_STORAGE = 52;
+    public static Timer timer;
     private ProgressDialog mProgressDialog;
 
     static {
@@ -63,6 +64,15 @@ public class BaseActivity extends AppCompatActivity {
         }*/
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if( timer != null){
+            timer.cancel();
+            timer = null;
+        }
     }
 
 
