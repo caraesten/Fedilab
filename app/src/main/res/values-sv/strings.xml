@@ -470,6 +470,8 @@
     <string name="action_lists_title_placeholder">Ny titel för lista</string>
     <string name="action_lists_search_users">Sök bland användare som du följer</string>
     <string name="action_lists_owner">Din lista</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s har flyttats till %2$s</string>
     <string name="show_boost_count">Visa knuffar/favoriter antal</string>

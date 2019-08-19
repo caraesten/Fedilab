@@ -468,6 +468,8 @@
     <string name="action_lists_title_placeholder">Нова назва списку</string>
     <string name="action_lists_search_users">Шукати серед людей, за якими ви слідкуєте</string>
     <string name="action_lists_owner">Ваші списки</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s відправлено до %2$s</string>
     <string name="show_boost_count">Показати лічильники передмухнутого/обраного</string>
