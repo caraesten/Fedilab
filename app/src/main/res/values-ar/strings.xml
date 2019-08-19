@@ -1057,8 +1057,8 @@
     <string name="set_auto_backup">النسخ الاحتياطي التلقائي المنشورات</string>
     <string name="set_auto_backup_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ منشوراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
     <string name="report_account">التبغليع عن الحساب</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">ارسل دعوة</string>
+    <string name="registration_closed">مثيل خادمك لا يسمح بإنشاء حسابات جديدة!</string>
     <plurals name="number_of_vote">
         <item quantity="zero">صوت %d واحد</item>
         <item quantity="one">صوت واحد</item>

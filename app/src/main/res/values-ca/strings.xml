@@ -1034,8 +1034,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_auto_backup">Estatus de còpia de seguretat automàtica</string>
     <string name="set_auto_backup_indication">Aquesta opció s\'aplica a un sol compte. Posarà en marxa un servei que guardarà localment els teus estatus de forma automàtica a la base de dades. Això permet obtenir estadístiques i gràfiques</string>
     <string name="report_account">Denuncia el compte</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Envia una invitació</string>
+    <string name="registration_closed">La teva instància no permet donar d\'alta un altre compte!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
@@ -1057,6 +1057,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
         <item>Visualització web</item>
         <item>Stream directe</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Per unir-te a la meva instància\"%1$s\", pots descarregar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nDesprés obres l\'enllaç de sota amb Fedilab i crees el teu compte :)\n\n%4$s
     </string>
 </resources>

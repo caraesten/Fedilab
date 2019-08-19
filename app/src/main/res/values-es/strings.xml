@@ -1036,8 +1036,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_auto_backup">Estatus del auto respaldo</string>
     <string name="set_auto_backup_indication">Esta opción es por cuenta. Se lanzará un servicio que almacenará automáticamente sus estados de forma local en la base de datos. Esto permite obtener estadísticas y gráficos</string>
     <string name="report_account">Reportar cuenta</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Enviar invitación</string>
+    <string name="registration_closed">¡Tu instancia no permite registrar una nueva cuenta!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voto</item>
@@ -1059,6 +1059,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
         <item>WebView</item>
         <item>Flujo directo</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Para unirte a mi instancia \"%1$s\", puedes descargar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nLuego abre el enlace siguiente con Fedilab y crea tu cuenta :)\n\n%4$s
     </string>
 </resources>

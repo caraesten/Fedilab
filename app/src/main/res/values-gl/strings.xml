@@ -1043,8 +1043,8 @@
     <string name="set_auto_backup">Estado do respaldo automático</string>
     <string name="set_auto_backup_indication">Actívase para cada conta. Lanzará un servizo que gardará de xeito automático os seus estados localmente na base de datos. Esto permítelle obter estatísticas e gráficas</string>
     <string name="report_account">Informar sobre a conta</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Envíar un convite</string>
+    <string name="registration_closed">A súa instancia non permite o rexistro de novas contas!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
@@ -1066,6 +1066,6 @@
         <item>Torrent</item>
         <item>Vista web</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Para unirse a miña instancia \"%1$s\", podes descargar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nE despois abrir a ligazón inferior con Fedilab e crear a súa conta: :)\n\n%4$s
     </string>
 </resources>
