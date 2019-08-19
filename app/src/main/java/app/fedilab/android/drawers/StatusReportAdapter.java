@@ -37,8 +37,7 @@ public class StatusReportAdapter  extends RecyclerView.Adapter<StatusReportAdapt
     private ItemClickListener mClickListener;
 
 
-    public StatusReportAdapter(Context context, List<String> data) {
-        this.mInflater = LayoutInflater.from(context);
+    public StatusReportAdapter(List<String> data) {
         this.mData = data;
     }
 
@@ -46,6 +45,8 @@ public class StatusReportAdapter  extends RecyclerView.Adapter<StatusReportAdapt
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        this.mInflater = LayoutInflater.from(context);
         View view = mInflater.inflate(R.layout.drawer_status_report, parent, false);
         return new ViewHolder(view);
     }

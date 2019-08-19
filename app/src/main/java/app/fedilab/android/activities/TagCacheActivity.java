@@ -114,7 +114,7 @@ public class TagCacheActivity extends BaseActivity {
                 if( tagsTemp != null)
                     tags = tagsTemp;
                 if( tags != null){
-                    tagsEditAdapter = new TagsEditAdapter(TagCacheActivity.this, tags);
+                    tagsEditAdapter = new TagsEditAdapter(tags);
                     tag_list.setAdapter(tagsEditAdapter);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(TagCacheActivity.this);
                     tag_list.setLayoutManager(mLayoutManager);

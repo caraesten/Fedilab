@@ -94,7 +94,7 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
         mainLoader.setVisibility(View.GONE);
         if( list != null){
             ListView lv_list = rootView.findViewById(R.id.lv_list);
-            WhoToFollowAdapter whoToFollowAdapter = new WhoToFollowAdapter(context, list);
+            WhoToFollowAdapter whoToFollowAdapter = new WhoToFollowAdapter(list);
             lv_list.setAdapter(whoToFollowAdapter);
         }else{
             Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();

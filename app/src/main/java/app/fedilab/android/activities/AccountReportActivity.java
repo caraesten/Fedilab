@@ -155,7 +155,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 contents.add(status.getContent());
             }
             lv_statuses.setLayoutManager(new LinearLayoutManager(this));
-            StatusReportAdapter adapter = new StatusReportAdapter(this, contents);
+            StatusReportAdapter adapter = new StatusReportAdapter(contents);
             lv_statuses.setAdapter(adapter);
 
             Group statuses_group = findViewById(R.id.statuses_group);

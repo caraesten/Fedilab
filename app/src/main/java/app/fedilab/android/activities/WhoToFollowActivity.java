@@ -135,7 +135,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         if( trunkAccounts != null){
             if( trunkAccounts.size() > 0) {
                 ListView lv_list = findViewById(R.id.lv_list);
-                whoToFollowAccountsAdapter = new WhoToFollowAccountsAdapter(WhoToFollowActivity.this, trunkAccounts);
+                whoToFollowAccountsAdapter = new WhoToFollowAccountsAdapter(trunkAccounts);
                 lv_list.setAdapter(whoToFollowAccountsAdapter);
             }else {
                 no_action.setVisibility(View.VISIBLE);

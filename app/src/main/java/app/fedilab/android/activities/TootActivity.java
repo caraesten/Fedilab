@@ -2724,7 +2724,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     suggestion.setType(Suggestion.suggestionType.ACCOUNT);
                     suggestions.add(suggestion);
                 }
-                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(suggestions);
                 suggestionsRV.setAdapter(suggestionsAdapter);
                 suggestionsRV.setVisibility(View.VISIBLE);
                 final String oldContent = wysiwygEditText.getText().toString();
@@ -2861,7 +2861,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     suggestion.setType(Suggestion.suggestionType.EMOJI);
                     suggestions.add(suggestion);
                 }
-                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(suggestions);
                 suggestionsRV.setAdapter(suggestionsAdapter);
                 suggestionsRV.setVisibility(View.VISIBLE);
                 final String oldContent = wysiwygEditText.getText().toString();
@@ -3007,7 +3007,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 RecyclerView suggestionsRV = findViewById(R.id.suggestions);
                 suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
-                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(TootActivity.this, suggestions);
+                SuggestionsAdapter suggestionsAdapter = new SuggestionsAdapter(suggestions);
                 suggestionsRV.setAdapter(suggestionsAdapter);
                 suggestionsRV.setVisibility(View.VISIBLE);
                 final String oldContent = wysiwygEditText.getText().toString();

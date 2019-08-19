@@ -56,8 +56,6 @@ public class SearchTootsListAdapter extends BaseAdapter  {
 
     public SearchTootsListAdapter(Context context, List<String> searches, RelativeLayout textviewNoAction){
         this.searches = searches;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.searchTootsListAdapter = this;
         this.textviewNoAction = textviewNoAction;
     }
@@ -80,7 +78,8 @@ public class SearchTootsListAdapter extends BaseAdapter  {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         final String search = searches.get(position);
         final ViewHolder holder;
         if (convertView == null) {

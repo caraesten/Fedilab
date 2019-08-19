@@ -101,7 +101,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        reportsListAdapter = new ReportsListAdapter(context, this.reports);
+        reportsListAdapter = new ReportsListAdapter(this.reports);
         lv_reports.setAdapter(reportsListAdapter);
 
         final LinearLayoutManager mLayoutManager;
@@ -247,7 +247,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
         max_id = apiResponse.getMax_id();
 
         if( swiped ){
-            reportsListAdapter = new ReportsListAdapter(context, this.reports);
+            reportsListAdapter = new ReportsListAdapter(this.reports);
             lv_reports.setAdapter(reportsListAdapter);
             swiped = false;
         }

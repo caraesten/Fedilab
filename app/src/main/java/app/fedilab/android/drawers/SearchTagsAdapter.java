@@ -38,14 +38,9 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<String> tags;
 
-    private LayoutInflater layoutInflater;
-
-    public SearchTagsAdapter(Context context, List<String> tags){
-        this.context = context;
+    public SearchTagsAdapter(List<String> tags){
         this.tags = ( tags != null)?tags:new ArrayList<>();
-        layoutInflater = LayoutInflater.from(context);
     }
-
 
     public String getItem(int position) {
        return tags.get(position);
@@ -54,6 +49,8 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search_tab, parent, false));
     }
 

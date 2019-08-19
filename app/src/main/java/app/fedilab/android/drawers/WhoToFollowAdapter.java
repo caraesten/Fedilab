@@ -46,10 +46,8 @@ public class WhoToFollowAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public WhoToFollowAdapter(Context context, List<String> lists){
+    public WhoToFollowAdapter(List<String> lists){
         this.lists = lists;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @Override
@@ -71,6 +69,8 @@ public class WhoToFollowAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         String item = lists.get(position);
         final ViewHolder holder;
         if (convertView == null) {

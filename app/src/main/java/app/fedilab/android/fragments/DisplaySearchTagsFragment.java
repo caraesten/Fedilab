@@ -185,7 +185,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
 
-        searchTagsAdapter = new SearchTagsAdapter(context, tags);
+        searchTagsAdapter = new SearchTagsAdapter(tags);
         loader.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(false);
         if (apiResponse.getError() != null) {
@@ -204,7 +204,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
             newTags = apiResponse.getResults().getHashtags();
         }
         tags.addAll(newTags);
-        SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(context, tags);
+        SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(tags);
         lv_search_tags.setAdapter(searchTagsAdapter);
         searchTagsAdapter.notifyDataSetChanged();
         if( newTags.size() == 0 && tags.size() == 0 )

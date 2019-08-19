@@ -42,13 +42,11 @@ public class TagsEditAdapter extends RecyclerView.Adapter  {
 
     private Context context;
     private List<String> tags;
-    private LayoutInflater layoutInflater;
     private TagsEditAdapter tagsEditAdapter;
 
-    public TagsEditAdapter(Context context, List<String> tags){
+    public TagsEditAdapter(List<String> tags){
         this.tags = tags;
-        this.layoutInflater = LayoutInflater.from(context);
-        this.context = context;
+
         tagsEditAdapter = this;
     }
 
@@ -56,6 +54,8 @@ public class TagsEditAdapter extends RecyclerView.Adapter  {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_edit, parent, false));
     }
 

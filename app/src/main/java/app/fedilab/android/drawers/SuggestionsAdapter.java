@@ -37,12 +37,9 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Suggestion> suggestions;
 
-    private LayoutInflater layoutInflater;
-
-    public SuggestionsAdapter(Context context, List<Suggestion> suggestions){
-        this.context = context;
+    public SuggestionsAdapter(List<Suggestion> suggestions){
         this.suggestions = suggestions;
-        layoutInflater = LayoutInflater.from(context);
+
     }
 
 
@@ -53,6 +50,8 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_suggestions, parent, false));
     }
 

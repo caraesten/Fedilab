@@ -38,13 +38,10 @@ import app.fedilab.android.R;
 public class WhoToFollowAccountsAdapter extends BaseAdapter {
 
     private List<TrunkAccount> lists;
-    private LayoutInflater layoutInflater;
     private Context context;
 
-    public WhoToFollowAccountsAdapter(Context context, List<TrunkAccount> lists){
+    public WhoToFollowAccountsAdapter(List<TrunkAccount> lists){
         this.lists = lists;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @Override
@@ -65,7 +62,8 @@ public class WhoToFollowAccountsAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         TrunkAccount trunkAccount = lists.get(position);
         final ViewHolder holder;
         if (convertView == null) {

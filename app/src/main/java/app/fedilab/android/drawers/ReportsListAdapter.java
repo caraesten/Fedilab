@@ -31,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.helper.Helper;
@@ -45,16 +44,11 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrieveEmojiAccountInterface {
 
     private List<Report> reports;
-    private LayoutInflater layoutInflater;
-    private RetrieveAccountsAsyncTask.Type action;
     private Context context;
     private ReportsListAdapter reportsListAdapter;
-    private String targetedId;
 
-    public ReportsListAdapter(Context context,  List<Report> reports){
-        this.context = context;
+    public ReportsListAdapter(List<Report> reports){
         this.reports = reports;
-        layoutInflater = LayoutInflater.from(context);
         this.reportsListAdapter = this;
     }
 
@@ -64,6 +58,8 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_report, parent, false));
     }
 
@@ -73,10 +69,8 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         Report report = reports.get(position);
         Account account = report.getAccount().getAccount();
         Account target_account = report.getTarget_account().getAccount();
-
-
-        account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
-        target_account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
+        Account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
+        Account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn_reporter.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
