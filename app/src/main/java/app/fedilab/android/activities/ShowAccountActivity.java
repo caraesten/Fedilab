@@ -333,19 +333,19 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if (urlHeader != null && !urlHeader.contains("missing.png")) {
 
             boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
+            ImageView banner_pp = findViewById(R.id.banner_pp);
             if( !disableGif){
-                ImageView banner_pp = findViewById(R.id.banner_pp);
-                Glide.with(getApplicationContext())
+                Glide.with(banner_pp.getContext())
                         .load(urlHeader)
                         .into(banner_pp);
             }else{
-                Glide.with(getApplicationContext())
+                Glide.with(banner_pp.getContext())
                         .asBitmap()
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                ImageView banner_pp = findViewById(R.id.banner_pp);
+
                                 banner_pp.setImageBitmap(resource);
                             }
                         });

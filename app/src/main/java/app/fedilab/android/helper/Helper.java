@@ -1394,7 +1394,7 @@ public class Helper {
                         url = "https://" + account.getInstance() + account.getAvatar();
                     }
                     if(!url.equals("null"))
-                    Glide.with(activity.getApplicationContext())
+                    Glide.with(navigationView.getContext())
                             .asBitmap()
                             .load(url)
                             .into(new SimpleTarget<Bitmap>() {
@@ -1405,7 +1405,7 @@ public class Helper {
                                 }
                             });
                     else
-                        Glide.with(activity.getApplicationContext())
+                        Glide.with(navigationView.getContext())
                                 .asBitmap()
                                 .load(R.drawable.missing_peertube)
                                 .into(new SimpleTarget<Bitmap>() {
@@ -1852,7 +1852,7 @@ public class Helper {
                 if (currrentUserId != null && (!currrentUserId.equals(accountChoice.getId()) || !getLiveInstance(activity).equals(accountChoice.getInstance()))) {
                     icon = new ImageView(activity);
                     ImageView finalIcon = icon;
-                    Glide.with(activity.getApplicationContext())
+                    Glide.with(finalIcon.getContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .listener(new RequestListener<Bitmap>(){
@@ -1905,7 +1905,7 @@ public class Helper {
                     if( !accountChoice.getAvatar().startsWith("http"))
                         accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
                     ImageView itemIconAcc = new ImageView(activity);
-                    Glide.with(activity.getApplicationContext())
+                    Glide.with(itemIconAcc.getContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .load(accountChoice.getAvatar())
@@ -2060,13 +2060,14 @@ public class Helper {
                 changeDrawableColor(activity, header_option_menu,R.color.light_black);
             }
             if (!urlHeader.contains("missing.png")) {
-                Glide.with(activity.getApplicationContext())
+                ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
+                Glide.with(backgroundImage.getContext())
                         .asBitmap()
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
+
                                 backgroundImage.setImageBitmap(resource);
                                 if( theme == THEME_LIGHT){
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
