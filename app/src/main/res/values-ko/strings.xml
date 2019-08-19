@@ -466,6 +466,8 @@
     <string name="action_lists_title_placeholder">새 리스트 제목</string>
     <string name="action_lists_search_users">Search among people you follow</string>
     <string name="action_lists_owner">내 리스트</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s은 %2$s로 이동했습니다</string>
     <string name="show_boost_count">부스트/즐겨찾기 카운트 표시</string>
