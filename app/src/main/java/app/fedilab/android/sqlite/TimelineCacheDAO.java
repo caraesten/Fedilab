@@ -141,6 +141,31 @@ public class TimelineCacheDAO {
         }
     }
 
+
+    /**
+     * Returns all cached Statuses
+     * @return stored Status List<Status>
+     */
+    public List<Status> search(String word, String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c;
+            if( word != null && max_id != null) {
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_STATUS_ID +" < '" + max_id +"' AND " + Sqlite.COL_CACHE + " LIKE '%" + word +"%'", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+                return cursorToListStatus(c);
+            }else if (word != null){
+                c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null,   Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_CACHE + " LIKE '%" + word +"%'", null, null, null, Sqlite.COL_STATUS_ID+ " DESC", "40");
+                return cursorToListStatus(c);
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
     /**
      * Returns one cached Statuses
      * @return stored Status List<Status>

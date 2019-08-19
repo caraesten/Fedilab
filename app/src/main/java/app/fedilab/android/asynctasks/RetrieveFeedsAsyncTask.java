@@ -27,7 +27,9 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
+import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.RetrieveFeedsParam;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.FilterToots;
@@ -36,6 +38,7 @@ import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
+import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
@@ -329,7 +332,20 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
             case SEARCH:
-                apiResponse = api.search2(tag, API.searchType.STATUSES, max_id);
+
+                if( !tag.contains("_cache_")) {
+                    apiResponse = api.search2(tag, API.searchType.STATUSES, max_id);
+                }else{
+                    tag = tag.replace("_cache_","");
+                    apiResponse = new APIResponse();
+                    Results results = new Results();
+                    List<app.fedilab.android.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).search(tag, max_id);
+                    results.setStatuses(statuses);
+                    if( statuses != null && statuses.size() > 0 ) {
+                        apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+                    }
+                    apiResponse.setResults(results);
+                }
                 break;
             case TAG:
                 if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {

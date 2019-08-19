@@ -14,7 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplaySearchTagsFragment;
@@ -55,7 +57,6 @@ public class SearchResultTabActivity extends BaseActivity  {
     private String search;
     private TabLayout tabLayout;
     private ViewPager search_viewpager;
-    private DisplayStatusFragment displayStatusFragment;
 
 
     @Override
@@ -122,6 +123,7 @@ public class SearchResultTabActivity extends BaseActivity  {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tags)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.accounts)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.action_cache)));
 
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         search_viewpager.setAdapter(mPagerAdapter);
@@ -179,14 +181,12 @@ public class SearchResultTabActivity extends BaseActivity  {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -221,6 +221,13 @@ public class SearchResultTabActivity extends BaseActivity  {
                     bundle.putSerializable("tag", search);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
+                case 3:
+                    displayStatusFragment = new DisplayStatusFragment();
+                    bundle = new Bundle();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.SEARCH);
+                    bundle.putSerializable("tag", search + "_cache_");
+                    displayStatusFragment.setArguments(bundle);
+                    return displayStatusFragment;
             }
             return null;
         }
@@ -228,7 +235,7 @@ public class SearchResultTabActivity extends BaseActivity  {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 }

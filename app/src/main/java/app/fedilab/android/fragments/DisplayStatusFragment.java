@@ -558,7 +558,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     max_id = "1";
                 //max_id needs to work like an offset
                 max_id = String.valueOf(Integer.valueOf(max_id) + 1);
-            }else if( type == RetrieveFeedsAsyncTask.Type.SEARCH) {
+            }else if( type == RetrieveFeedsAsyncTask.Type.SEARCH && !tag.contains("_cache_")) {
                 if(max_id == null)
                     max_id = "0";
                 max_id = String.valueOf(Integer.valueOf(max_id) + 20);
