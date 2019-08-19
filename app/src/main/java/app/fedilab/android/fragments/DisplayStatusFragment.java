@@ -190,7 +190,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
-        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
 
         //For Home timeline, fetch stored values for bookmark and last read toot
@@ -216,13 +215,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }else if( instanceType.equals("PEERTUBE")){
             if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) //if it's a Peertube account connected
-                remoteInstance = account.getInstance();
+                remoteInstance = instance;
             BaseMainActivity.displayPeertube = remoteInstance;
             peertubeAdapater = new PeertubeAdapter(remoteInstance, ownVideos, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }else if( instanceType.equals("PIXELFED")){
             if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) //if it's a Peertube account connected
-                remoteInstance = account.getInstance();
+                remoteInstance = instance;
             pixelfedListAdapter = new PixelfedListAdapter(type, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
         }else if( instanceType.equals("ART")){
