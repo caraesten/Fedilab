@@ -245,13 +245,13 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         lv_designers.setExpanded(true);
         lv_ux.setExpanded(true);
 
-        accountSearchWebAdapterContributors = new AccountSearchDevAdapter(AboutActivity.this, contributors);
+        accountSearchWebAdapterContributors = new AccountSearchDevAdapter(contributors);
         lv_contributors.setAdapter(accountSearchWebAdapterContributors);
-        accountSearchWebAdapterDesigner = new AccountSearchDevAdapter(AboutActivity.this, designers);
+        accountSearchWebAdapterDesigner = new AccountSearchDevAdapter(designers);
         lv_designers.setAdapter(accountSearchWebAdapterDesigner);
-        accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
+        accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
-        accountSearchWebAdapterUxUiDesigners = new AccountSearchDevAdapter(AboutActivity.this, uxuidesigners);
+        accountSearchWebAdapterUxUiDesigners = new AccountSearchDevAdapter(uxuidesigners);
         lv_ux.setAdapter(accountSearchWebAdapterUxUiDesigners);
 
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {

@@ -82,26 +82,19 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     private Context context;
     private List<Status> statuses;
-    private LayoutInflater layoutInflater;
     private PixelfedListAdapter pixelfedListAdapter;
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
-    private List<String> timedMute;
     private RetrieveFeedsAsyncTask.Type type;
 
-    public PixelfedListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
+    public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
         super();
-        this.context = context;
         this.statuses = statuses;
         this.type = type;
-        layoutInflater = LayoutInflater.from(this.context);
+
         pixelfedListAdapter = this;
     }
 
-
-    public void updateMuted(List<String> timedMute){
-        this.timedMute = timedMute;
-    }
 
     @Override
     public long getItemId(int position) {
@@ -190,6 +183,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         if( viewType == DISPLAYED_STATUS)
             return new ViewHolderPixelfed(layoutInflater.inflate(R.layout.drawer_pixelfed, parent, false));
         else

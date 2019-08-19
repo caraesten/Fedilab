@@ -130,7 +130,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
         setTitle(R.string.languages);
         lv_translator_manager.setExpanded(true);
 
-        translatorManager = new AccountSearchDevAdapter(LanguageActivity.this, translators);
+        translatorManager = new AccountSearchDevAdapter(translators);
         lv_translator_manager.setAdapter(translatorManager);
 
 

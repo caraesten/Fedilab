@@ -89,7 +89,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(context, this.accounts);
+        accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(this.accounts);
         lv_accounts.setAdapter(accountsFollowRequestAdapter);
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(context);
@@ -194,7 +194,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
         if( swiped ){
-            accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(context, this.accounts);
+            accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(this.accounts);
             lv_accounts.setAdapter(accountsFollowRequestAdapter);
             swiped = false;
         }

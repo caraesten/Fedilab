@@ -52,15 +52,10 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<PeertubeNotification> notifications;
-    private LayoutInflater layoutInflater;
     private PeertubeNotificationsListAdapter peertubeNotificationsListAdapter;
 
-    private int style;
-
-    public PeertubeNotificationsListAdapter(Context context, List<PeertubeNotification> notifications){
-        this.context = context;
+    public PeertubeNotificationsListAdapter( List<PeertubeNotification> notifications){
         this.notifications = notifications;
-        layoutInflater = LayoutInflater.from(this.context);
         peertubeNotificationsListAdapter = this;
 
     }
@@ -69,6 +64,8 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_peertube_notification, parent, false));
     }
 
@@ -89,16 +86,9 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
             holder.main_container_trans.setAlpha(.5f);
         }
-        if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
-            style = R.style.DialogBlack;
-        }else {
-            style = R.style.Dialog;
-        }
         //Follow Notification
         PeertubeAccountNotification accountAction = null;
-        PeertubeVideoNotification videoAction = null;
+        PeertubeVideoNotification videoAction;
         if( notification.getPeertubeActorFollow() != null){
             String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeActorFollow().getFollower().getAvatar();
             Helper.loadGiF(context,profileUrl, holder.peertube_notif_pp);
@@ -113,7 +103,6 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 holder.peertube_notif_message.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
             else
-                //noinspection deprecation
                 holder.peertube_notif_message.setText(Html.fromHtml(message));
             PeertubeAccountNotification finalAccountAction1 = accountAction;
             holder.peertube_notif_pp.setOnClickListener(v -> {
@@ -134,7 +123,6 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 holder.peertube_notif_message.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
             else
-                //noinspection deprecation
                 holder.peertube_notif_message.setText(Html.fromHtml(message));
             PeertubeVideoNotification finalVideoAction1 = videoAction;
             holder.peertube_notif_message.setOnClickListener(v -> {
@@ -168,7 +156,6 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     holder.peertube_notif_message.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
                 else
-                    //noinspection deprecation
                     holder.peertube_notif_message.setText(Html.fromHtml(message));
                 PeertubeVideoNotification finalVideoAction = videoAction;
                 holder.peertube_notif_message.setOnClickListener(v -> {

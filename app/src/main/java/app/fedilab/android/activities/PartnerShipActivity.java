@@ -124,7 +124,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
         lv_mastohost.setExpanded(true);
 
 
-        mastohostAdapter = new AccountSearchDevAdapter(PartnerShipActivity.this, mastohostAcct);
+        mastohostAdapter = new AccountSearchDevAdapter(mastohostAcct);
         lv_mastohost.setAdapter(mastohostAdapter);
 
 

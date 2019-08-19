@@ -64,16 +64,13 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiAccountInterface {
 
     private List<Account> accounts;
-    private LayoutInflater layoutInflater;
     private RetrieveAccountsAsyncTask.Type action;
     private Context context;
     private AccountsListAdapter accountsListAdapter;
     private String targetedId;
 
-    public AccountsListAdapter(Context context, RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
-        this.context = context;
+    public AccountsListAdapter(RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
         this.accounts = accounts;
-        layoutInflater = LayoutInflater.from(context);
         this.action = action;
         this.accountsListAdapter = this;
         this.targetedId = targetedId;
@@ -85,6 +82,8 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_account, parent, false));
     }
 

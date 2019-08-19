@@ -111,7 +111,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
-        notificationsListAdapter = new PeertubeNotificationsListAdapter(context,this.notifications);
+        notificationsListAdapter = new PeertubeNotificationsListAdapter(this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
         lv_notifications.setLayoutManager(mLayoutManager);

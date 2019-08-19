@@ -101,7 +101,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        accountsListAdapter = new AccountsListAdapter(context, type, targetedId, this.accounts);
+        accountsListAdapter = new AccountsListAdapter(type, targetedId, this.accounts);
         lv_accounts.setAdapter(accountsListAdapter);
 
         final LinearLayoutManager mLayoutManager;
@@ -233,7 +233,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             max_id = apiResponse.getMax_id();
         }
         if (swiped) {
-            accountsListAdapter = new AccountsListAdapter(context, type, targetedId, this.accounts);
+            accountsListAdapter = new AccountsListAdapter(type, targetedId, this.accounts);
             lv_accounts.setAdapter(accountsListAdapter);
             swiped = false;
         }

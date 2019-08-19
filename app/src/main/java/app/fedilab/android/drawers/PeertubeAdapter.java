@@ -62,19 +62,15 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     private String instance;
     private boolean ownVideos;
 
-    public PeertubeAdapter(Context context, String instance, List<Peertube> peertubes){
+    public PeertubeAdapter(String instance, List<Peertube> peertubes){
         this.peertubes = peertubes;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.instance = instance;
         this.ownVideos = false;
 
     }
 
-    public PeertubeAdapter(Context context, String instance, boolean ownVideos, List<Peertube> peertubes){
+    public PeertubeAdapter(String instance, boolean ownVideos, List<Peertube> peertubes){
         this.peertubes = peertubes;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.instance = instance;
         this.ownVideos = ownVideos;
     }
@@ -83,6 +79,8 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         return new PeertubeAdapter.ViewHolder(layoutInflater.inflate(R.layout.drawer_peertube, parent, false));
     }
 

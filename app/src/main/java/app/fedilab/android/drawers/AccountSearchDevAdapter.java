@@ -58,10 +58,8 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     private Context context;
     private ViewHolder holder;
 
-    public AccountSearchDevAdapter(Context context, List<Account> accounts){
-        this.context = context;
+    public AccountSearchDevAdapter(List<Account> accounts){
         this.accounts = accounts;
-        layoutInflater = LayoutInflater.from(context);
     }
 
 
@@ -85,7 +83,8 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         final Account account = accounts.get(position);
 
         if (convertView == null) {

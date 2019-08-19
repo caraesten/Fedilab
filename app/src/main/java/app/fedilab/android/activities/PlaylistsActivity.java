@@ -138,7 +138,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         nextElementLoader.setVisibility(View.GONE);
         boolean isOnWifi = Helper.isOnWIFI(PlaylistsActivity.this);
 
-        peertubeAdapter = new PeertubeAdapter(PlaylistsActivity.this, Helper.getLiveInstance(PlaylistsActivity.this), false, this.peertubes);
+        peertubeAdapter = new PeertubeAdapter(Helper.getLiveInstance(PlaylistsActivity.this), false, this.peertubes);
 
         lv_playlist.setAdapter(peertubeAdapter);
         mLayoutManager = new LinearLayoutManager(PlaylistsActivity.this);

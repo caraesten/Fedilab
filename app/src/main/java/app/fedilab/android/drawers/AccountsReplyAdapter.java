@@ -47,17 +47,13 @@ public class AccountsReplyAdapter extends BaseAdapter{
     private boolean[] checked;
     private Context context;
 
-    public AccountsReplyAdapter(Context context, List<Account> accounts, boolean[] checked){
+    public AccountsReplyAdapter(List<Account> accounts, boolean[] checked){
         this.accounts = accounts;
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
         this.checked = checked;
     }
 
-    public AccountsReplyAdapter(Context context, List<Account> accounts, List<Boolean> checked){
+    public AccountsReplyAdapter(List<Account> accounts, List<Boolean> checked){
         this.accounts = accounts;
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
         this.checked = new boolean[checked.size()];
         int index = 0;
         for (Boolean val : checked) {
@@ -85,7 +81,8 @@ public class AccountsReplyAdapter extends BaseAdapter{
     @NonNull
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-
+        context = parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         final Account account = accounts.get(position);
         final ViewHolder holder;
         if (convertView == null) {

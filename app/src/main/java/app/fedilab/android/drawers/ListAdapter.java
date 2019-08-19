@@ -45,13 +45,10 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 public class ListAdapter extends BaseAdapter {
 
     private List<app.fedilab.android.client.Entities.List> lists;
-    private LayoutInflater layoutInflater;
     private Context context;
 
-    public ListAdapter(Context context, List<app.fedilab.android.client.Entities.List> lists, RelativeLayout textviewNoAction){
+    public ListAdapter(List<app.fedilab.android.client.Entities.List> lists, RelativeLayout textviewNoAction){
         this.lists = lists;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @Override
@@ -72,7 +69,8 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final app.fedilab.android.client.Entities.List list = lists.get(position);
         final ViewHolder holder;
         if (convertView == null) {

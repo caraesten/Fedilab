@@ -64,22 +64,15 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
 
     private Context context;
     private List<Status> statuses;
-    private LayoutInflater layoutInflater;
     private ArtListAdapter statusListAdapter;
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
-    private List<String> timedMute;
 
 
-    public ArtListAdapter(Context context,  List<Status> statuses){
-        this.context = context;
+    public ArtListAdapter(List<Status> statuses){
+
         this.statuses = statuses;
-        layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
-    }
-
-    public void updateMuted(List<String> timedMute){
-        this.timedMute = timedMute;
     }
 
     @Override
@@ -165,6 +158,9 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        this.context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         if( viewType != HIDDEN_STATUS)
             return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
         else

@@ -106,7 +106,7 @@ public class DisplayFavoritesPeertubeFragment extends Fragment implements OnRetr
         peertubes = apiResponse.getPeertubes();
         if( peertubes != null && peertubes.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
-            peertubeAdapter = new PeertubeAdapter(context, peertubes.get(0).getInstance(), this.peertubes);
+            peertubeAdapter = new PeertubeAdapter(peertubes.get(0).getInstance(), this.peertubes);
             lv_status.setAdapter(peertubeAdapter);
             lv_status.setLayoutManager(mLayoutManager);
             textviewNoAction.setVisibility(View.GONE);
@@ -139,7 +139,7 @@ public class DisplayFavoritesPeertubeFragment extends Fragment implements OnRetr
                                     new PeertubeFavoritesDAO(context, db).removeAll();
                                     peertubes = new ArrayList<>();
                                     peertubes.clear();
-                                    peertubeAdapter = new PeertubeAdapter(context,null, peertubes);
+                                    peertubeAdapter = new PeertubeAdapter(null, peertubes);
                                     lv_status.setAdapter(peertubeAdapter);
                                     peertubeAdapter.notifyDataSetChanged();
                                     textviewNoAction.setVisibility(View.VISIBLE);

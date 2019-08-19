@@ -31,10 +31,8 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.AccountAdmin;
-import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 
@@ -46,16 +44,11 @@ import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 public class AccountsAdminListAdapter extends RecyclerView.Adapter implements OnRetrieveEmojiAccountInterface {
 
     private List<AccountAdmin> accountAdmins;
-    private LayoutInflater layoutInflater;
-    private RetrieveAccountsAsyncTask.Type action;
     private Context context;
     private AccountsAdminListAdapter accountsAdminListAdapter;
-    private String targetedId;
 
-    public AccountsAdminListAdapter(Context context, List<AccountAdmin> accountAdmins){
-        this.context = context;
+    public AccountsAdminListAdapter(List<AccountAdmin> accountAdmins){
         this.accountAdmins = accountAdmins;
-        layoutInflater = LayoutInflater.from(context);
         this.accountsAdminListAdapter = this;
     }
 
@@ -65,6 +58,8 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_account_admin, parent, false));
     }
 
@@ -75,20 +70,22 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
         Account account = accountAdmin.getAccount();
 
 
-        account.makeAccountNameEmoji(context, AccountsAdminListAdapter.this, account);
+        Account.makeAccountNameEmoji(context, AccountsAdminListAdapter.this, account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            else
+            else if (account.getDisplay_name() != null) {
                 holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+            }
         }else
             holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            else
+            else if (account.getDisplay_name() != null) {
                 holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+            }
         }else
             holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
         holder.account_un.setText(String.format("@%s",account.getUsername()));

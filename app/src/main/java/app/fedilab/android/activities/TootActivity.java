@@ -2784,7 +2784,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
         this.loader.setVisibility(View.GONE);
-        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(TootActivity.this, this.contacts, this.checkedValues);
+        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(this.contacts, this.checkedValues);
         this.lv_accounts_search.setAdapter(contactAdapter);
     }
 
@@ -3871,7 +3871,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             i++;
         }
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
-        AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(TootActivity.this, accounts, checkedValues);
+        AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(accounts, checkedValues);
         builderSingle.setTitle(getString(R.string.select_accounts)).setAdapter(accountsReplyAdapter, null);
         builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override

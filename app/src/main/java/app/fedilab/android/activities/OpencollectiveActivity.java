@@ -124,9 +124,9 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
         lv_sponsors.setExpanded(true);
 
 
-        backersAdapter = new AccountSearchDevAdapter(OpencollectiveActivity.this, bakers);
+        backersAdapter = new AccountSearchDevAdapter(bakers);
         lv_backers.setAdapter(backersAdapter);
-        sponsorsAdapter = new AccountSearchDevAdapter(OpencollectiveActivity.this, sponsors);
+        sponsorsAdapter = new AccountSearchDevAdapter(sponsors);
         lv_sponsors.setAdapter(sponsorsAdapter);
 
         new RetrieveOpenCollectiveAsyncTask(getApplicationContext(), RetrieveOpenCollectiveAsyncTask.Type.BACKERS, OpencollectiveActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

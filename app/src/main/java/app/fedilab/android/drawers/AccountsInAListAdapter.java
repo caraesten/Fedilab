@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
@@ -48,7 +50,6 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnListActionInterface {
 
     private List<Account> accounts;
-    private LayoutInflater layoutInflater;
     private Context context;
     private AccountsInAListAdapter accountsInAListAdapter;
     private type actionType;
@@ -60,22 +61,24 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         SEARCH
     }
 
-    public AccountsInAListAdapter(Context context, type actionType, String listId, List<Account> accounts){
-        this.context = context;
+    public AccountsInAListAdapter(type actionType, String listId, List<Account> accounts){
         this.accounts = accounts;
-        layoutInflater = LayoutInflater.from(context);
         this.accountsInAListAdapter = this;
         this.actionType = actionType;
         this.listId = listId;
     }
 
+    @NotNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_account_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NotNull RecyclerView.ViewHolder viewHolder, int position) {
         final AccountsInAListAdapter.ViewHolder holder = (AccountsInAListAdapter.ViewHolder) viewHolder;
         final Account account = accounts.get(position);
 

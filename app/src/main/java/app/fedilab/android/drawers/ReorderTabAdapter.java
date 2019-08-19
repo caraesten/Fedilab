@@ -62,17 +62,17 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     private Context context;
     private SharedPreferences sharedpreferences;
 
-    public ReorderTabAdapter(Context context, List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener, OnUndoListener undoListener) {
+    public ReorderTabAdapter(List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener, OnUndoListener undoListener) {
         this. mDragStartListener = dragStartListener;
         this.mUndoListener = undoListener;
         this.mItems = manageTimelines;
-        this.context = context;
-        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
     }
 
     @NotNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_reorder, parent, false);
         return new ItemViewHolder(view);
     }

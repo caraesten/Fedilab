@@ -102,7 +102,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        accountsAdminListAdapter = new AccountsAdminListAdapter(context, this.accountAdmins);
+        accountsAdminListAdapter = new AccountsAdminListAdapter(this.accountAdmins);
         lv_admin_accounts.setAdapter(accountsAdminListAdapter);
 
         final LinearLayoutManager mLayoutManager;
@@ -244,7 +244,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
         max_id = apiResponse.getMax_id();
 
         if( swiped ){
-            accountsAdminListAdapter = new AccountsAdminListAdapter(context, this.accountAdmins);
+            accountsAdminListAdapter = new AccountsAdminListAdapter(this.accountAdmins);
             lv_admin_accounts.setAdapter(accountsAdminListAdapter);
             swiped = false;
         }

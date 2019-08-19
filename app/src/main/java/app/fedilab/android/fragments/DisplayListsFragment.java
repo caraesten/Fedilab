@@ -84,7 +84,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         lists = new ArrayList<>();
-        listAdapter = new ListAdapter(context, lists, textviewNoAction);
+        listAdapter = new ListAdapter(lists, textviewNoAction);
         lv_lists.setAdapter(listAdapter);
         asyncTask = new ManageListsAsyncTask(context, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {

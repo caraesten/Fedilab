@@ -30,12 +30,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
@@ -54,25 +52,25 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implements OnPostActionInterface {
 
     private List<Account> accounts;
-    private LayoutInflater layoutInflater;
     private Context context;
     private AccountsFollowRequestAdapter accountsFollowRequestAdapter;
 
-    public AccountsFollowRequestAdapter(Context context, List<Account> accounts){
+    public AccountsFollowRequestAdapter(List<Account> accounts){
         this.accounts = accounts;
-        layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         accountsFollowRequestAdapter = this;
     }
 
 
+    @NotNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new AccountsFollowRequestAdapter.ViewHolder(layoutInflater.inflate(R.layout.drawer_account_follow_request, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NotNull RecyclerView.ViewHolder viewHolder, int position) {
 
         final AccountsFollowRequestAdapter.ViewHolder holder = (AccountsFollowRequestAdapter.ViewHolder) viewHolder;
         final Account account = accounts.get(position);
@@ -167,7 +165,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         TextView account_dn;
         TextView account_un;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             account_pp = itemView.findViewById(R.id.account_pp);
             account_dn = itemView.findViewById(R.id.account_dn);

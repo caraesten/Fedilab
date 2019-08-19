@@ -348,7 +348,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         timelines = new TimelinesDAO(getApplicationContext(), db).getAllTimelines();
-        adapter = new ReorderTabAdapter(getApplicationContext(), timelines, ReorderTimelinesActivity.this, ReorderTimelinesActivity.this);
+        adapter = new ReorderTabAdapter(timelines, ReorderTimelinesActivity.this, ReorderTimelinesActivity.this);
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(adapter);
