@@ -464,6 +464,8 @@
     <string name="action_lists_title_placeholder">Yeni liste başlığı</string>
     <string name="action_lists_search_users">Takip ettiklerin arasında ara</string>
     <string name="action_lists_owner">Listelerin</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s, %2$s\'e taşındı</string>
     <string name="show_boost_count">Hızlandırmaları göster/Favori sayısı</string>
