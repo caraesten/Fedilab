@@ -192,7 +192,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private Context context;
     private List<Status> statuses;
-    private LayoutInflater layoutInflater;
     private boolean isOnWifi;
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
@@ -869,7 +868,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         context = parent.getContext();
-        layoutInflater = LayoutInflater.from(this.context);
+        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
        if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else if(viewType == COMPACT_STATUS)
