@@ -485,6 +485,8 @@
     <string name="action_lists_title_placeholder">Teitl y rhestr newydd</string>
     <string name="action_lists_search_users">Chwilo ymysg pobl yr ydych yn eu nabod</string>
     <string name="action_lists_owner">Eich rhestrau</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">Mae %1$s wedi symud i %2$s</string>
     <string name="show_boost_count">Dangos nifer hybiadau/ffefrynnau</string>

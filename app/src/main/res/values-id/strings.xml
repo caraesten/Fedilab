@@ -467,6 +467,8 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="action_lists_title_placeholder">Judul daftar baru</string>
     <string name="action_lists_search_users">Pencarian di antara orang yang Anda ikuti</string>
     <string name="action_lists_owner">Daftar Anda</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s telah dipindahkan ke%2$s</string>
     <string name="show_boost_count">Tampilkan dorongan/jumlah favorit</string>

@@ -476,6 +476,8 @@
     <string name="action_lists_title_placeholder">Nowy tytuł listy</string>
     <string name="action_lists_search_users">Szukaj wśród osób, które śledzisz</string>
     <string name="action_lists_owner">Twoje listy</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s przeniósł się do %2$s</string>
     <string name="show_boost_count">Pokaż liczbę podbić i polubień</string>

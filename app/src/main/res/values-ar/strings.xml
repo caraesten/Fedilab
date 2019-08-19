@@ -485,6 +485,8 @@
     <string name="action_lists_title_placeholder">عنوان جديد للقائمة</string>
     <string name="action_lists_search_users">البحث فيما بين الحسابات التي تتبعها</string>
     <string name="action_lists_owner">قوائمك</string>
+    <string name="action_lists_add_user">تمت إضافة الحساب إلى القائمة!</string>
+    <string name="action_lists_empty">لا توجد لديك أية قوائم إلى حدّ الآن!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>

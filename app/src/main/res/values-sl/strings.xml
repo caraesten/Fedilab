@@ -478,6 +478,8 @@
     <string name="action_lists_title_placeholder">Naslov novega seznama</string>
     <string name="action_lists_search_users">Išči med svojimi spremljevalci</string>
     <string name="action_lists_owner">Tvoji seznami</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s je premaknjen na %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>

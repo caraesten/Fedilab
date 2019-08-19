@@ -476,6 +476,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="action_lists_title_placeholder">Nový název seznamu</string>
     <string name="action_lists_search_users">Hledat mezi sledovanými lidmi</string>
     <string name="action_lists_owner">Vaše seznamy</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
     <string name="show_boost_count">Zobrazit počet boostů/oblíbení</string>

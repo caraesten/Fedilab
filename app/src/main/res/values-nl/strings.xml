@@ -470,6 +470,8 @@
     <string name="action_lists_title_placeholder">Naam nieuwe lijst</string>
     <string name="action_lists_search_users">Zoek naar mensen die je volgt</string>
     <string name="action_lists_owner">Jouw lijsten</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s is naar %2$s verhuisd</string>
     <string name="show_boost_count">Aantal boosts/favorieten tonen</string>
