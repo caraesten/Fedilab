@@ -27,6 +27,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
@@ -46,6 +48,7 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -69,22 +72,26 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
+import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.HttpsConnection;
+import app.fedilab.android.drawers.AccountsInAListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.fragments.TabLayoutTootsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -105,6 +112,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
+import static app.fedilab.android.activities.BaseMainActivity.timelines;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
@@ -117,13 +125,13 @@ import static app.fedilab.android.helper.Helper.getLiveInstance;
  * Show account activity class
  */
 
-public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface {
+public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface, OnListActionInterface {
 
 
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private ImageButton account_follow;
-
+    private String addToList;
     private ViewPager mPager;
     private TabLayout tabLayout;
     private TextView account_note;
@@ -148,6 +156,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ScheduledExecutorService scheduledExecutorService;
     private AsyncTask<Void, Void, Void> accountAsync;
     private AsyncTask<Void, Void, Void> retrieveRelationship;
+
+
 
     public enum action{
         FOLLOW,
@@ -190,6 +200,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_un = findViewById(R.id.account_un);
         TextView account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
+        addToList = null;
         switch (theme){
             case THEME_LIGHT:
                 account_pp.setBackgroundResource(R.drawable.account_pp_border_light);
@@ -1138,6 +1149,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
             popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+            popup.getMenu().findItem(R.id.action_add_to_list).setVisible(false);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
         }else {
             popup.getMenu().findItem(R.id.action_block).setVisible(true);
@@ -1149,6 +1161,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
             popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+            popup.getMenu().findItem(R.id.action_add_to_list).setVisible(false);
         }
         if( relationship != null){
             if( !relationship.isFollowing()) {
@@ -1303,6 +1316,50 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         intent.putExtras(b);
                         startActivity(intent);
                         return true;
+                    case R.id.action_add_to_list:
+                        if( timelines!= null){
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ShowAccountActivity.this, android.R.layout.select_dialog_item);
+                            boolean hasLists = false;
+                            for(ManageTimelines timeline: timelines){
+                                if( timeline.getListTimeline() != null){
+                                    arrayAdapter.add(timeline.getListTimeline().getTitle());
+                                    hasLists = true;
+                                }
+                            }
+                            if(! hasLists){
+                                Toasty.info(getApplicationContext(), getString(R.string.action_lists_empty), Toast.LENGTH_SHORT).show();
+                                return true;
+                            }
+                            AlertDialog.Builder builderSingle = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                            builderSingle.setTitle(getString(R.string.action_lists_add_to));
+                            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String listTitle = arrayAdapter.getItem(which);
+                                    for(ManageTimelines timeline: timelines){
+                                        if( timeline.getListTimeline() != null && timeline.getListTimeline().getTitle().equals(listTitle)){
+                                            app.fedilab.android.client.Entities.List list = timeline.getListTimeline();
+                                            if( relationship == null || !relationship.isFollowing()){
+                                                addToList = list.getId();
+                                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                            }else{
+                                                new ManageListsAsyncTask(ShowAccountActivity.this, ManageListsAsyncTask.action.ADD_USERS, new String[]{account.getId()}, null, list.getId(), null, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            });
+                            builderSingle.show();
+                        }
+                        return true;
                     case R.id.action_open_browser:
                         if( accountUrl != null) {
                             if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
@@ -1427,7 +1484,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
+        if( addToList != null){
+            new ManageListsAsyncTask(ShowAccountActivity.this, ManageListsAsyncTask.action.ADD_USERS, new String[]{account.getId()}, null, addToList, null, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else {
+            Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
+        }
         String target = account.getId();
         //IF action is unfollow or mute, sends an intent to remove statuses
         if( statusAction == API.StatusAction.UNFOLLOW || statusAction == API.StatusAction.MUTE){
@@ -1456,6 +1517,17 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         ManageAccount();
     }
 
+    @Override
+    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        if (apiResponse.getError() != null) {
+            if ( !apiResponse.getError().getError().startsWith("404 -"))
+                Toasty.error(ShowAccountActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( actionType == ManageListsAsyncTask.action.ADD_USERS) {
+            Toasty.success(ShowAccountActivity.this, getString(R.string.action_lists_add_user), Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     public boolean showReplies(){

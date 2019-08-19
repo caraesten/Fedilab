@@ -169,7 +169,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private Activity activity;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     private final int PICK_IMPORT = 5556;
-    private List<ManageTimelines> timelines;
+    public static List<ManageTimelines> timelines;
     private BroadcastReceiver hidde_menu;
 
     public static HashMap<Integer, Fragment> mPageReferenceMap;
@@ -2302,10 +2302,16 @@ public abstract class BaseMainActivity extends BaseActivity
                     }
                     bundle.putInt("timelineId", tl.getId());
                     displayStatusFragment.setArguments(bundle);
+                    if( mPageReferenceMap == null){
+                        mPageReferenceMap = new HashMap<>();
+                    }
                     mPageReferenceMap.put(tl.getPosition(), displayStatusFragment);
                     return displayStatusFragment;
                 }else{
                     TabLayoutNotificationsFragment tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
+                    if( mPageReferenceMap == null){
+                        mPageReferenceMap = new HashMap<>();
+                    }
                     mPageReferenceMap.put(tl.getPosition(), tabLayoutNotificationsFragment);
                     return tabLayoutNotificationsFragment;
                 }

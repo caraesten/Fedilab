@@ -525,7 +525,8 @@
     <string name="action_lists_title_placeholder">New list title</string>
     <string name="action_lists_search_users">Search among people you follow</string>
     <string name="action_lists_owner">Your lists</string>
-
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
 
