@@ -57,7 +57,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
-import android.text.Html;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,7 +78,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -101,7 +99,6 @@ import app.fedilab.android.fragments.DisplayFiltersFragment;
 import app.fedilab.android.fragments.DisplayFollowRequestSentFragment;
 import app.fedilab.android.fragments.DisplayHowToFragment;
 import app.fedilab.android.fragments.DisplayListsFragment;
-import app.fedilab.android.fragments.DisplayMutedInstanceFragment;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPlaylistsFragment;
@@ -196,7 +193,6 @@ public abstract class BaseMainActivity extends BaseActivity
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         if( account == null){
             Helper.logout(getApplicationContext());
