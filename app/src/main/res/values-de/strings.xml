@@ -464,6 +464,8 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="action_lists_title_placeholder">Neuer Listentitel</string>
     <string name="action_lists_search_users">Suche innerhalb von Leuten denen du folgst</string>
     <string name="action_lists_owner">Deine Listen</string>
+    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s wurde verschoben nach %2$s</string>
     <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
