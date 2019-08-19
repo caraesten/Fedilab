@@ -175,7 +175,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private List<ManageTimelines> timelines;
     private BroadcastReceiver hidde_menu;
 
-    public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
+    public static HashMap<Integer, Fragment> mPageReferenceMap;
     private static boolean notificationChecked = false;
     public static HashMap<String, Integer> poll_limits = new HashMap<>();
     private Instance instanceClass;
@@ -230,6 +230,9 @@ public abstract class BaseMainActivity extends BaseActivity
         show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
         show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
 
+        if(  mPageReferenceMap == null ){
+            mPageReferenceMap = new HashMap<>();
+        }
         if (!isTaskRoot()
                 && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
                 && getIntent().getAction() != null
