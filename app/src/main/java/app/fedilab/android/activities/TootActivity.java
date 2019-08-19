@@ -119,6 +119,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -197,6 +198,8 @@ import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import es.dmoral.toasty.Toasty;
 import top.defaults.colorpicker.ColorPickerPopup;
 
+import static app.fedilab.android.helper.Helper.ALPHA;
+import static app.fedilab.android.helper.Helper.MORSE;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
@@ -954,38 +957,86 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         @Override
                         public void run() {
                             String fedilabHugsTrigger = ":fedilab_hugs:";
+                            String fedilabMorseTrigger = ":fedilab_morse:";
 
-
-                            newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
-
-                            int currentLength = countLength(social, toot_content, toot_cw_content);
-                            int toFill = 500  - currentLength;
-                            if(toFill <= 0) {
-                                return;
-                            }
-
-
-
-                            StringBuilder hugs = new StringBuilder();
-                            for(int i = 0; i < toFill; i++) {
-                                hugs.append(new String(Character.toChars(0x1F917)));
-                            }
-
-                            Handler mainHandler = new Handler(Looper.getMainLooper());
-
-                            Runnable myRunnable = new Runnable() {
-                                @Override
-                                public void run() {
-                                    newContent[0] = newContent[0] + hugs.toString();
-                                    toot_content.setText(newContent[0]);
-                                    toot_content.setSelection(toot_content.getText().length());
-                                   // toot_content.addTextChangedListener(finalTextw);
-                                    autocomplete = false;
-                                    toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                            if( s.toString().contains(fedilabHugsTrigger)){
+                                newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
+                                int currentLength = countLength(social, toot_content, toot_cw_content);
+                                int toFill = 500  - currentLength;
+                                if(toFill <= 0) {
+                                    return;
                                 }
-                            };
-                            mainHandler.post(myRunnable);
 
+
+
+                                StringBuilder hugs = new StringBuilder();
+                                for(int i = 0; i < toFill; i++) {
+                                    hugs.append(new String(Character.toChars(0x1F917)));
+                                }
+
+                                Handler mainHandler = new Handler(Looper.getMainLooper());
+
+                                Runnable myRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        newContent[0] = newContent[0] + hugs.toString();
+                                        toot_content.setText(newContent[0]);
+                                        toot_content.setSelection(toot_content.getText().length());
+                                        // toot_content.addTextChangedListener(finalTextw);
+                                        autocomplete = false;
+                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                                    }
+                                };
+                                mainHandler.post(myRunnable);
+                            }else if(s.toString().contains(fedilabMorseTrigger)){
+                                newContent[0] = s.toString().replaceAll(fedilabMorseTrigger, "").trim();
+                                List<String> mentions = new ArrayList<>();
+                                String mentionPattern = "@[a-z0-9_]+(@[a-z0-9\\.\\-]+[a-z0-9]+)?";
+                                final Pattern mPattern = Pattern.compile(mentionPattern, Pattern.CASE_INSENSITIVE);
+                                Matcher matcherMentions = mPattern.matcher(newContent[0]);
+                                while ( matcherMentions.find()){
+                                    mentions.add(matcherMentions.group());
+                                }
+                                for(String mention: mentions){
+                                    newContent[0] = newContent[0].replace(mention, "");
+                                }
+                                newContent[0] = Normalizer.normalize(newContent[0], Normalizer.Form.NFD);
+                                newContent[0] = newContent[0].replaceAll("[^\\p{ASCII}]", "");
+
+                                HashMap<String, String> ALPHA_TO_MORSE = new HashMap<>();
+                                for (int i = 0; i < ALPHA.length  &&  i < MORSE.length; i++) {
+                                    ALPHA_TO_MORSE.put(ALPHA[i], MORSE[i]);
+                                }
+                                StringBuilder builder = new StringBuilder();
+                                String[] words = newContent[0].trim().split(" ");
+
+                                for (String word : words) {
+                                    for (int i = 0; i < word.length(); i++) {
+                                        String morse = ALPHA_TO_MORSE.get(word.substring(i, i + 1).toLowerCase());
+                                        builder.append(morse).append(" ");
+                                    }
+
+                                    builder.append("  ");
+                                }
+                                newContent[0] = "";
+                                for(String mention: mentions){
+                                    newContent[0] += mention + " ";
+                                }
+                                newContent[0] +=  builder.toString();
+
+                                Handler mainHandler = new Handler(Looper.getMainLooper());
+
+                                Runnable myRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toot_content.setText(newContent[0]);
+                                        toot_content.setSelection(toot_content.getText().length());
+                                        autocomplete = false;
+                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                                    }
+                                };
+                                mainHandler.post(myRunnable);
+                            }
                         }
                     };
                     thread.start();
@@ -1017,6 +1068,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     autocomplete = true;
                     return;
                 }
+
+                String patternM = "^(.|\\s)*(:fedilab_morse:)$";
+                final Pattern mPattern = Pattern.compile(patternM);
+                Matcher mm = mPattern.matcher((s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])));
+                if (mm.matches()) {
+                    autocomplete = true;
+                    return;
+                }
+
                 Matcher m, mt;
                 if (s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0]));
