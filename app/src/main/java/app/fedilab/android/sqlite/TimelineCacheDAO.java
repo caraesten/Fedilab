@@ -154,13 +154,20 @@ public class TimelineCacheDAO {
         try {
             Cursor c;
             if (word != null){
-                String[] searches = word.split(" ");
-                StringBuilder query = new StringBuilder(" (");
-                for(String search: searches){
-                    query.append(Sqlite.COL_CACHE + " LIKE '%").append(search).append("%' OR ");
+                StringBuilder query;
+                if( !word.contains("\"")) {
+                    String[] searches = word.split(" ");
+                    query = new StringBuilder(" (");
+                    for (String search : searches) {
+                        query.append(Sqlite.COL_CACHE + " LIKE '%").append(search).append("%' OR ");
+                    }
+                    query = new StringBuilder(query.substring(0, query.length() - 3));
+                    query.append(") ");
+                }else{
+                    String search = word.replace("\"","");
+                    query = new StringBuilder(Sqlite.COL_CACHE + " LIKE '%").append(search).append("%'");
                 }
-                query = new StringBuilder(query.substring(0, query.length() - 3));
-                query.append(") ");
+
                 if (max_id != null) {
                     c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_STATUS_ID + " < '" + max_id + "' AND " + query, null, null, null, Sqlite.COL_STATUS_ID + " DESC", "40");
                     return cursorToListStatus(c);
