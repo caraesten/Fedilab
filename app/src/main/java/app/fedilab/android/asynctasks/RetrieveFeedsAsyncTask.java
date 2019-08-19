@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.client.API;
@@ -340,10 +341,25 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     apiResponse = new APIResponse();
                     Results results = new Results();
                     List<app.fedilab.android.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).search(tag, max_id);
-                    results.setStatuses(statuses);
                     if( statuses != null && statuses.size() > 0 ) {
                         apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                     }
+                    List<app.fedilab.android.client.Entities.Status> statusesNew = null;
+                    if( statuses != null){
+                        statusesNew = new ArrayList<>();
+                        for(app.fedilab.android.client.Entities.Status status: statuses){
+                            if (tag != null) {
+                                String[] searches = tag.split(" ");
+                                for (String search : searches) {
+                                    if (status.getContent().contains(search) || status.getSpoiler_text().contains(search)) {
+                                        statusesNew.add(status);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    results.setStatuses(statusesNew);
+
                     apiResponse.setResults(results);
                 }
                 break;
