@@ -461,7 +461,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toasty.error(OwnerStatusActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -589,7 +589,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             loader.setVisibility(View.GONE);
 
         }else{
-            Toasty.error(OwnerStatusActivity.this,getString(R.string.toast_error),Toast.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_SHORT).show();
         }
     }
 }

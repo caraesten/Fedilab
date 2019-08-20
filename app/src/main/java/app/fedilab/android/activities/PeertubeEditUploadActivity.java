@@ -284,9 +284,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     public void onRetrievePeertube(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
             if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(PeertubeEditUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(PeertubeEditUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             set_upload_submit.setEnabled(true);
             return;
         }
@@ -295,7 +295,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         Peertube peertube = apiResponse.getPeertubes().get(0);
 
         if( peertube.isUpdate()){
-            Toasty.success(PeertubeEditUploadActivity.this, getString(R.string.toast_peertube_video_updated), Toast.LENGTH_LONG).show();
+            Toasty.success(getApplicationContext(), getString(R.string.toast_peertube_video_updated), Toast.LENGTH_LONG).show();
             peertube.setUpdate(false);
             set_upload_submit.setEnabled(true);
         }else {
@@ -571,9 +571,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
             if ( apiResponse.getError().getError() != null)
-                Toasty.error(PeertubeEditUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(PeertubeEditUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
 

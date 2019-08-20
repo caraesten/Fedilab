@@ -200,7 +200,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 });
                 builderInner.show();
             }else{
-                Toasty.error(AccountReportActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             }
             return;
         }

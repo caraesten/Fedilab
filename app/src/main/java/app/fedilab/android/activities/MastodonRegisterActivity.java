@@ -182,23 +182,23 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             error_message.setVisibility(View.GONE);
             if( username.getText().toString().trim().length() == 0 || email.getText().toString().trim().length() == 0 ||
                     password.getText().toString().trim().length() == 0 ||  password_confirm.getText().toString().trim().length() == 0 || !agreement.isChecked()){
-                Toasty.error(MastodonRegisterActivity.this, getString(R.string.all_field_filled)).show();
+                Toasty.error(getApplicationContext(), getString(R.string.all_field_filled)).show();
                 return;
             }
             if(!password.getText().toString().trim().equals(password_confirm.getText().toString().trim())){
-                Toasty.error(MastodonRegisterActivity.this, getString(R.string.password_error)).show();
+                Toasty.error(getApplicationContext(), getString(R.string.password_error)).show();
                 return;
             }
             if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
-                Toasty.error(MastodonRegisterActivity.this, getString(R.string.email_error)).show();
+                Toasty.error(getApplicationContext(), getString(R.string.email_error)).show();
                 return;
             }
             if(password.getText().toString().trim().length() < 8 ){
-                Toasty.error(MastodonRegisterActivity.this, getString(R.string.password_too_short)).show();
+                Toasty.error(getApplicationContext(), getString(R.string.password_too_short)).show();
                 return;
             }
             if(username.getText().toString().matches("[a-zA-Z0-9_]")){
-                Toasty.error(MastodonRegisterActivity.this, getString(R.string.username_error)).show();
+                Toasty.error(getApplicationContext(), getString(R.string.username_error)).show();
                 return;
             }
             signup.setEnabled(false);
@@ -221,7 +221,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
         if( apiResponse.getError() != null ){
-            Toasty.error(MastodonRegisterActivity.this, getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }
         List<InstanceReg> instanceRegs = apiResponse.getInstanceRegs();

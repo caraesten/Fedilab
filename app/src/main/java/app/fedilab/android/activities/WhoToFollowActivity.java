@@ -142,7 +142,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                 return;
             }
         }else{
-            Toasty.error(WhoToFollowActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -187,7 +187,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                         account.setInstance(val[1]);
                         new PostActionAsyncTask(WhoToFollowActivity.this, null, account, API.StatusAction.FOLLOW, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else {
-                        Toasty.error(WhoToFollowActivity.this,getString(R.string.toast_impossible_to_follow), Toast.LENGTH_LONG).show();
+                        Toasty.error(getApplicationContext(),getString(R.string.toast_impossible_to_follow), Toast.LENGTH_LONG).show();
                         follow_accounts.setEnabled(true);
                         follow_accounts_select.setEnabled(true);
                         progess_action.setVisibility(View.GONE);

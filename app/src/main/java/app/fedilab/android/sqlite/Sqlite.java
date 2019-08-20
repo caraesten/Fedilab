@@ -494,7 +494,7 @@ public class Sqlite extends SQLiteOpenHelper {
             Helper.logoutCurrentUser(activity);
         } catch (Exception e) {
             e.printStackTrace();
-            Toasty.error(activity, activity.getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
+            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
         }
     }
 

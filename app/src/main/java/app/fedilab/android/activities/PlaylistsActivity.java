@@ -148,7 +148,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         if(b != null){
             playlist = b.getParcelable("playlist");
         }else{
-            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
             return;
         }
         if( getSupportActionBar() != null)
@@ -236,7 +236,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
             if ( !apiResponse.getError().getError().startsWith("404 -"))
-                Toasty.error(PlaylistsActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;

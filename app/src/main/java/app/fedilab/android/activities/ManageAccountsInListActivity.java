@@ -95,7 +95,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
             title = b.getString("title");
             listId = b.getString("id");
         }else{
-            Toasty.error(this,getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
         }
 
         main_account_container = findViewById(R.id.main_account_container);
@@ -181,7 +181,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         loader.setVisibility(View.GONE);
         main_account_container.setVisibility(View.VISIBLE);
         if( apiResponse.getError() != null){
-            Toasty.error(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT){

@@ -388,7 +388,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 return true;
             case R.id.action_comment:
                 if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-                    Toasty.info(PeertubeActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                     new AsyncTask<Void, Void, Void>() {
 
                         private List<app.fedilab.android.client.Entities.Status> remoteStatuses;
@@ -425,7 +425,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
                     if(! peertube.isCommentsEnabled()) {
-                        Toasty.info(PeertubeActivity.this, getString(R.string.comment_no_allowed_peertube),Toast.LENGTH_LONG).show();
+                        Toasty.info(getApplicationContext(), getString(R.string.comment_no_allowed_peertube),Toast.LENGTH_LONG).show();
                         return true;
                     }
                     int style;
@@ -483,12 +483,12 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onRetrievePeertube(APIResponse apiResponse) {
 
         if( apiResponse == null || (apiResponse.getError() != null) || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
-            Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
         if( apiResponse.getPeertubes() == null || apiResponse.getPeertubes().get(0) == null || apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
-            Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
@@ -679,10 +679,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 List<Peertube> peertubes = new PeertubeFavoritesDAO(PeertubeActivity.this, db).getSinglePeertube(peertube);
                 if( peertubes == null || peertubes.size() == 0){
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).insert(peertube);
-                    Toasty.success(PeertubeActivity.this,getString(R.string.bookmark_add_peertube), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(),getString(R.string.bookmark_add_peertube), Toast.LENGTH_SHORT).show();
                 }else{
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).remove(peertube);
-                    Toasty.success(PeertubeActivity.this,getString(R.string.bookmark_remove_peertube), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(),getString(R.string.bookmark_remove_peertube), Toast.LENGTH_SHORT).show();
                 }
                 if( peertubes != null && peertubes.size() > 0) //Was initially in cache
                     peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border), null ,null);
@@ -754,9 +754,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
-                Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
-                Toasty.error(PeertubeActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();

@@ -338,9 +338,9 @@ public class LoginActivity extends BaseActivity {
                                             }
                                         }
                                     }else if(instanceNodeInfo != null && instanceNodeInfo.isConnectionError()){
-                                        Toasty.error(LoginActivity.this,getString(R.string.connect_error), Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(),getString(R.string.connect_error), Toast.LENGTH_LONG).show();
                                     }else{
-                                        Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(),getString(R.string.client_error), Toast.LENGTH_LONG).show();
                                     }
                                 }});
 
@@ -542,7 +542,7 @@ public class LoginActivity extends BaseActivity {
             try {
                 instance =  URLEncoder.encode(host, "utf-8");
             } catch (UnsupportedEncodingException e) {
-                Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.client_error), Toast.LENGTH_LONG).show();
             }
             if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                 actionToken = "/api/v1/oauth-clients/local";

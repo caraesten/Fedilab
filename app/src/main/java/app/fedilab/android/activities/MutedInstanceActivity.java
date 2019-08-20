@@ -160,7 +160,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                             new PostActionAsyncTask(MutedInstanceActivity.this, API.StatusAction.BLOCK_DOMAIN, add_domain.getText().toString().trim(), MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                             dialog.dismiss();
                                         }else{
-                                            Toasty.error(MutedInstanceActivity.this, getString(R.string.toast_empty_content)).show();
+                                            Toasty.error(getApplicationContext(), getString(R.string.toast_empty_content)).show();
                                         }
                                     }
                                 });
@@ -316,7 +316,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toasty.error(MutedInstanceActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -374,7 +374,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                 }
                 Helper.importInstanceBlock(MutedInstanceActivity.this,resultList);
             } catch (Exception e) {
-                Toasty.error(MutedInstanceActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -384,7 +384,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if( error != null){
-            Toasty.error(MutedInstanceActivity.this, error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(MutedInstanceActivity.this, statusCode, statusAction);

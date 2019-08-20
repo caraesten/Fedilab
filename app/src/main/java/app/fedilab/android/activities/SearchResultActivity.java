@@ -89,9 +89,9 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             if( search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
-                Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }else{
-            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

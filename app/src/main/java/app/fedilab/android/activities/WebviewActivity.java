@@ -269,7 +269,7 @@ public class WebviewActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = arrayAdapter.getItem(which);
                         assert strName != null;
-                        Toasty.info(WebviewActivity.this, strName, Toast.LENGTH_LONG).show();
+                        Toasty.info(getApplicationContext(), strName, Toast.LENGTH_LONG).show();
                     }
                 });
                 builder.show();
@@ -280,11 +280,11 @@ public class WebviewActivity extends BaseActivity {
                 try {
                     startActivity(browserIntent);
                 }catch (Exception e){
-                    Toasty.error(WebviewActivity.this,getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                 }
                 return true;
             case R.id.action_comment:
-                Toasty.info(WebviewActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
+                Toasty.info(getApplicationContext(), getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                 new AsyncTask<Void, Void, Void>() {
 
                     private List<app.fedilab.android.client.Entities.Status> remoteStatuses;

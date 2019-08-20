@@ -128,7 +128,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
             title = b.getString("title");
             listId = b.getString("id");
         }else{
-            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -275,7 +275,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
             if ( !apiResponse.getError().getError().startsWith("404 -"))
-                Toasty.error(ListActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;

@@ -237,7 +237,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
         if( account.getAvatar() == null){
-            Toasty.error(ShowConversationActivity.this,getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);

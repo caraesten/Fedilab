@@ -208,9 +208,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
             if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(PeertubeUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(PeertubeUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
 

@@ -85,9 +85,9 @@ public class SearchResultTabActivity extends BaseActivity  {
         if(b != null){
             search = b.getString("search");
             if( search == null)
-                Toasty.error(this,getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }else{
-            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }
         if( search == null)
             finish();

@@ -1316,7 +1316,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toasty.error(this, message, Toast.LENGTH_SHORT);
+        mToast = Toasty.error(getApplicationContext(), message, Toast.LENGTH_SHORT);
         mToast.show();
     }
 
@@ -2304,7 +2304,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         isSensitive = false;
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
-        Toasty.info(TootActivity.this,getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+        Toasty.info(getApplicationContext(),getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -2683,13 +2683,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if (scheduledstatus == null && !isScheduled) {
                 boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
                 if( display_confirm){
-                    Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+                    Toasty.success(getApplicationContext(), getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
                 }
             }else
-                Toasty.success(TootActivity.this, getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+                Toasty.success(getApplicationContext(), getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
         }else {
             if(apiResponse.getError().getStatusCode() == -33)
-                Toasty.info(TootActivity.this, getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
+                Toasty.info(getApplicationContext(), getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
         toot_it.setEnabled(true);
         //It's a reply, so the user will be redirect to its answer

@@ -132,7 +132,7 @@ public class BaseActivity extends AppCompatActivity {
         if (view != null) {
             Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
         } else {
-            Toasty.info(this, message, Toast.LENGTH_SHORT).show();
+            Toasty.info(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
     }
 }

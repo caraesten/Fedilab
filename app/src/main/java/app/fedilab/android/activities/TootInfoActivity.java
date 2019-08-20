@@ -79,7 +79,7 @@ public class TootInfoActivity extends BaseActivity {
             toot_favorites_count = b.getInt("toot_favorites_count", 0);
         }
         if( toot_id == null){
-            Toasty.error(this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             finish();
         }
         userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

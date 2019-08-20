@@ -1422,7 +1422,7 @@ public class Helper {
                         public boolean onMenuItemClick(MenuItem item) {
                             if( ! activity.isFinishing() ) {
                                 menuAccountsOpened = false;
-                                Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
+                                Toasty.info(activity.getApplicationContext(), activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
                                 changeUser(activity, account.getId(), account.getInstance(), false);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
@@ -1953,7 +1953,7 @@ public class Helper {
                                     editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
                                     editor.commit();
                                     if (accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
-                                        Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
+                                        Toasty.info(activity.getApplicationContext(), activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
                                     else
                                         Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
                                     Intent changeAccount = new Intent(activity, MainActivity.class);
@@ -2036,7 +2036,7 @@ public class Helper {
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
-            Toasty.error(activity,activity.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            Toasty.error(activity.getApplicationContext(),activity.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {

@@ -228,7 +228,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         }else{
-            Toasty.error(this,getString(R.string.toast_error_loading_account),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error_loading_account),Toast.LENGTH_LONG).show();
         }
         accountUrl = null;
         show_boosts = true;
@@ -1508,9 +1508,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         if( error != null || account == null || account.getAcct() == null){
             if( error == null)
-                Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
-                Toasty.error(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.account = account;
@@ -1521,11 +1521,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         if (apiResponse.getError() != null) {
             if ( !apiResponse.getError().getError().startsWith("404 -"))
-                Toasty.error(ShowAccountActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageListsAsyncTask.action.ADD_USERS) {
-            Toasty.success(ShowAccountActivity.this, getString(R.string.action_lists_add_user), Toast.LENGTH_LONG).show();
+            Toasty.success(getApplicationContext(), getString(R.string.action_lists_add_user), Toast.LENGTH_LONG).show();
         }
     }
 
