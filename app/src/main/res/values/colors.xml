@@ -168,4 +168,7 @@
     <color name="successColor">#c8c8c8</color>
     <color name="warningColor">#c8c8c8</color>
     <color name="normalColor">#c8c8c8</color>
+
+
+    <color name="dark_blockquote">#5E68A0</color>
 </resources>
