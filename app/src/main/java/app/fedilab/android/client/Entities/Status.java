@@ -649,7 +649,7 @@ public class Status implements Parcelable{
             i++;
         }
         status.setImageURL(imgs);
-        content = content.replaceAll("<\\s?p\\s?>&gt;(.*)<\\s?\\/p\\s?>","<blockquote>$1</blockquote>");
+        content = content.replaceAll("<\\s?p\\s?>&gt;([^>]*>*)<\\s?\\/p\\s?>","<blockquote>$1</blockquote>");
 
         spannableStringContent = new SpannableString(content);
         final int[] j = {0};
