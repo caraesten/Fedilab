@@ -1074,4 +1074,5 @@
     </string-array>
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>
