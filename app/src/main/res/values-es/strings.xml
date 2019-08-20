@@ -1063,4 +1063,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     </string-array>
     <string name="join_instance">Para unirte a mi instancia \"%1$s\", puedes descargar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nLuego abre el enlace siguiente con Fedilab y crea tu cuenta :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>
