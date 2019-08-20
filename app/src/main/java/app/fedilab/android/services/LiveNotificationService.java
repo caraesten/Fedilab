@@ -241,16 +241,15 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (ex != null) {
                         if( !canStartStream.containsKey(account.getAcct()+"@"+account.getInstance()) || canStartStream.get(account.getAcct()+"@"+account.getInstance())) {
                             canStartStream.put(account.getAcct()+"@"+account.getInstance(),false);
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
 
+                            Handler handler = new Handler(Looper.getMainLooper());
+                            handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     startStream(account);
                                     canStartStream.put(account.getAcct()+"@"+account.getInstance(),true);
                                 }
-
-                            }, 15000); // 5000ms delay
+                            }, 15000 );
                         }
                         return;
                     }
