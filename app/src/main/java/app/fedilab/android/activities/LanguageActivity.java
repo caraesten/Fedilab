@@ -225,11 +225,17 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                         case 17:
                             editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
                             editor.commit();
+                            break;
                         case 18:
                             editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
                             editor.commit();
+                            break;
                         case 19:
                             editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
+                            editor.commit();
+                            break;
+                        case 20:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "kab");
                             editor.commit();
                             break;
                     }

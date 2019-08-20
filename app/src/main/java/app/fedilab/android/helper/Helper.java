@@ -3756,30 +3756,6 @@ public class Helper {
     }
 
 
-    public static String[] getLocales(Context context){
-        String[] locale = new String[20];
-        locale[0] = context.getString(R.string.default_language);
-        locale[1] = context.getString(R.string.english);
-        locale[2] = context.getString(R.string.french);
-        locale[3] = context.getString(R.string.german);
-        locale[4] = context.getString(R.string.italian);
-        locale[5] = context.getString(R.string.japanese);
-        locale[6] = context.getString(R.string.simplified_chinese);
-        locale[7] = context.getString(R.string.traditional_chinese);
-        locale[8] = context.getString(R.string.basque);
-        locale[9] = context.getString(R.string.arabic);
-        locale[10] = context.getString(R.string.dutch);
-        locale[11] = context.getString(R.string.galician);
-        locale[12] = context.getString(R.string.greek);
-        locale[13] = context.getString(R.string.portuguese);
-        locale[14] = context.getString(R.string.spanish);
-        locale[15] = context.getString(R.string.polish);
-        locale[16] = context.getString(R.string.serbian);
-        locale[17] = context.getString(R.string.ukrainian);
-        locale[18] = context.getString(R.string.russian);
-        locale[19] = context.getString(R.string.norwegian);
-        return locale;
-    }
 
 
     public static String getLocalesTwoChars(int stringLocaleId){
@@ -3838,6 +3814,10 @@ public class Helper {
     }
 
 
+
+
+
+
     public static int languageSpinnerPosition(Context context){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, "NOT_DEFINED");
@@ -3882,9 +3862,37 @@ public class Helper {
                 return 18;
             case "no":
                 return 19;
+            case "kab":
+                return 20;
             default:
                 return 0;
         }
+    }
+
+    public static String[] getLocales(Context context){
+        String[] locale = new String[21];
+        locale[0] = context.getString(R.string.default_language);
+        locale[1] = context.getString(R.string.english);
+        locale[2] = context.getString(R.string.french);
+        locale[3] = context.getString(R.string.german);
+        locale[4] = context.getString(R.string.italian);
+        locale[5] = context.getString(R.string.japanese);
+        locale[6] = context.getString(R.string.simplified_chinese);
+        locale[7] = context.getString(R.string.traditional_chinese);
+        locale[8] = context.getString(R.string.basque);
+        locale[9] = context.getString(R.string.arabic);
+        locale[10] = context.getString(R.string.dutch);
+        locale[11] = context.getString(R.string.galician);
+        locale[12] = context.getString(R.string.greek);
+        locale[13] = context.getString(R.string.portuguese);
+        locale[14] = context.getString(R.string.spanish);
+        locale[15] = context.getString(R.string.polish);
+        locale[16] = context.getString(R.string.serbian);
+        locale[17] = context.getString(R.string.ukrainian);
+        locale[18] = context.getString(R.string.russian);
+        locale[19] = context.getString(R.string.norwegian);
+        locale[20] = context.getString(R.string.kabyle);
+        return locale;
     }
 
     public static boolean containsCaseInsensitive(String s, List<String> l){
