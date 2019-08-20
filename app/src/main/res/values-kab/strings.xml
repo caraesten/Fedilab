@@ -60,7 +60,7 @@
     <string name="username">Isem n useqdac</string>
     <string name="drafts">Irewwayen</string>
     <string name="new_data">New data are available! Do you want to display them?</string>
-    <string name="favourite">Inurifen</string>
+    <string name="favourite">Ismenyifen</string>
     <string name="follow">New followers</string>
     <string name="mention">Mentions</string>
     <string name="reblog">Boosts</string>
@@ -74,7 +74,7 @@
     <string name="local_menu">Local timeline</string>
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Tinefrunin</string>
-    <string name="favorites_menu">Inurifen</string>
+    <string name="favorites_menu">Ismenyifen</string>
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
@@ -878,7 +878,7 @@
     <string name="refresh_cache">Refresh cache</string>
     <string name="see_boost_and_fav">See who boosted and added to favorites</string>
     <string name="mention_status">Mention the status</string>
-    <string name="action_news">News</string>
+    <string name="action_news">Isallen</string>
     <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <string name="category_general">General</string>
     <string name="category_regional">Regional</string>
