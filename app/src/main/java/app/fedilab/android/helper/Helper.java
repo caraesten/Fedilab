@@ -1709,6 +1709,9 @@ public class Helper {
      * @param headerLayout View - the menu header
      */
     public static void updateHeaderAccountInfo(Activity activity, final Account account, final View headerLayout){
+
+        if( activity.isFinishing())
+            return;
         ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
         TextView username = headerLayout.findViewById(R.id.username);
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
