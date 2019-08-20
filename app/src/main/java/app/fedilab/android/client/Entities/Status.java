@@ -38,6 +38,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
 import android.util.Patterns;
 import android.view.View;
@@ -74,6 +75,7 @@ import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.helper.CrossActions;
+import app.fedilab.android.helper.CustomQuoteSpan;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
@@ -647,6 +649,8 @@ public class Status implements Parcelable{
             i++;
         }
         status.setImageURL(imgs);
+        content = content.replaceAll("<\\s?p\\s?>&gt;(.*)<\\s?\\/p\\s?>","<blockquote>$1</blockquote>");
+
         spannableStringContent = new SpannableString(content);
         final int[] j = {0};
         if( status.getImageURL() != null && status.getImageURL().size() > 0){
@@ -795,6 +799,7 @@ public class Status implements Parcelable{
         else
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
 
+        replaceQuoteSpans(context, spannableStringT);
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
         for (URLSpan span : spans) {
             spannableStringT.removeSpan(span);
@@ -1397,7 +1402,23 @@ public class Status implements Parcelable{
     }
 
 
-
+    private static void replaceQuoteSpans(Context context, Spannable spannable) {
+        QuoteSpan[] quoteSpans = spannable.getSpans(0, spannable.length(), QuoteSpan.class);
+        for (QuoteSpan quoteSpan : quoteSpans) {
+            int start = spannable.getSpanStart(quoteSpan);
+            int end = spannable.getSpanEnd(quoteSpan);
+            int flags = spannable.getSpanFlags(quoteSpan);
+            spannable.removeSpan(quoteSpan);
+            spannable.setSpan(new CustomQuoteSpan(
+                            ContextCompat.getColor(context, R.color.mastodonC4__),
+                            ContextCompat.getColor(context, R.color.mastodonC4),
+                            10,
+                            20),
+                    start,
+                    end,
+                    flags);
+        }
+    }
 
 
     public SpannableString getContentSpan() {
