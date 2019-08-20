@@ -1710,8 +1710,7 @@ public class Helper {
      */
     public static void updateHeaderAccountInfo(Activity activity, final Account account, final View headerLayout){
 
-        if( activity.isFinishing())
-            return;
+
         ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
         TextView username = headerLayout.findViewById(R.id.username);
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
@@ -1842,7 +1841,8 @@ public class Helper {
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
-
+        if( activity.isFinishing())
+            return;
         if( accounts != null && accounts.size() > 1) {
 
             FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(37, activity), (int) Helper.convertDpToPixel(37, activity));
@@ -1856,7 +1856,7 @@ public class Helper {
                 if (currrentUserId != null && (!currrentUserId.equals(accountChoice.getId()) || !getLiveInstance(activity).equals(accountChoice.getInstance()))) {
                     icon = new ImageView(activity);
                     ImageView finalIcon = icon;
-                    Glide.with(finalIcon.getContext())
+                    Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .listener(new RequestListener<Bitmap>(){
@@ -1909,7 +1909,7 @@ public class Helper {
                     if( !accountChoice.getAvatar().startsWith("http"))
                         accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
                     ImageView itemIconAcc = new ImageView(activity);
-                    Glide.with(itemIconAcc.getContext())
+                    Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .load(accountChoice.getAvatar())
@@ -2065,7 +2065,7 @@ public class Helper {
             }
             if (!urlHeader.contains("missing.png")) {
                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
-                Glide.with(backgroundImage.getContext())
+                Glide.with(activity.getApplicationContext())
                         .asBitmap()
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
@@ -3977,9 +3977,10 @@ public class Helper {
                                         }
                                         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                         new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
-                                        Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
+                                       /* Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
                                         String dateString = Helper.dateToString(date);
-                                        new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);
+                                        new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);*/
+                                        new TimelineCacheDAO(contextReference.get(), db).removeAll();
                                     } catch (Exception ignored) {
                                     }
                                 }
