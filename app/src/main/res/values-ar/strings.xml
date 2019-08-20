@@ -1086,7 +1086,7 @@
         <item>Webview</item>
         <item>تدفق مباشر</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">إن أردت الانضمام إلى مثيل خادومي \"%1$s\" ، يمكنك تنزيل Fedilab:\n\nF-Droid: %2$s\nغوغل: %3$s\n\nثم افتح الرابط أدناه بـ Fedilab وأنشئ حسابك :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">لا يمكن لاستطلاع رأيك أن يحتوي على خيارات مكرّرة!</string>
 </resources>
