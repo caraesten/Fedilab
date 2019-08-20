@@ -470,8 +470,8 @@
     <string name="action_lists_title_placeholder">Novo título da listaxe</string>
     <string name="action_lists_search_users">Buscar entre a xente a que vostede segue</string>
     <string name="action_lists_owner">As súas listas</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">A conta foi engadida a lista!</string>
+    <string name="action_lists_empty">Aínda non tes ningunha lista!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s mudouse a %2$s</string>
     <string name="show_boost_count">Mostrar a conta de promocións/favoritos</string>
@@ -1070,4 +1070,5 @@
     </string-array>
     <string name="join_instance">Para unirse a miña instancia \"%1$s\", podes descargar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nE despois abrir a ligazón inferior con Fedilab e crear a súa conta: :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>

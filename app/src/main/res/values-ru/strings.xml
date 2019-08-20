@@ -478,8 +478,8 @@
     <string name="action_lists_title_placeholder">Название нового списка</string>
     <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
     <string name="action_lists_owner">Ваши списки</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Аккаунт был добавлен в список!</string>
+    <string name="action_lists_empty">У вас еще нет списков!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s был перенесен в %2$s</string>
     <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
@@ -1079,4 +1079,5 @@
     </string-array>
     <string name="join_instance">Чтобы присоединиться к моему инстансу \"%1$s\", вам необходимо загрузить Fedilab:\n\nF-Droid: %2$s\nnGoogle: %3$s\n\nЗатем откройте ссылку ниже при помощи Fedilab и создайте свой аккаунт :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>

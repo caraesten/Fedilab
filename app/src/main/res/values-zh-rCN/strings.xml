@@ -792,7 +792,7 @@
     <string name="create_poll">创建投票</string>
     <string name="poll_choice_1">选项一</string>
     <string name="poll_choice_2">选项二</string>
-    <string name="poll_choice_s">选择d%</string>
+    <string name="poll_choice_s">选择 %d</string>
     <string name="poll_invalid_choices">你至少需要两个选项才能开投票！</string>
     <string name="done">完成</string>
     <string name="poll_finish_at">在 %s 结束</string>
@@ -1065,4 +1065,5 @@
     </string-array>
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>
