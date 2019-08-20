@@ -40,6 +40,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -649,8 +650,7 @@ public class Status implements Parcelable{
             i++;
         }
         status.setImageURL(imgs);
-        content = content.replaceAll("<\\s?p\\s?>&gt;([^>]*>*)<\\s?\\/p\\s?>","<blockquote>$1</blockquote>");
-
+        content = content.replaceAll("(<\\s?p\\s?>)?&gt;(((?!(<\\/p>)|(<br)).)*)(<\\s?\\/p\\s?><\\s?p\\s?>|<\\s?br\\s?\\/?>)","<blockquote>$2</blockquote><p>");
         spannableStringContent = new SpannableString(content);
         final int[] j = {0};
         if( status.getImageURL() != null && status.getImageURL().size() > 0){
