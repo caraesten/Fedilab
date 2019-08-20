@@ -1066,4 +1066,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     </string-array>
     <string name="join_instance">Pour rejoindre mon instance « %1$s », vous pouvez télécharger Fedilab :\n\nF-Droid : %2$s\nGoogle : %3$s\n\nEnsuite ouvrez le lien ci-dessous avec Fedilab et créez votre compte :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Votre sondage ne peut contenir des options dupliquées !</string>
 </resources>

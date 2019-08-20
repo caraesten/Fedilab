@@ -1063,4 +1063,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         <item>Webview</item>
     </string-array>
     <string name="join_instance">要加入我的站臺「%1$s」，您可以在這些地方下載 Fedilab：\n\nF-Droid：%2$s\nGoogle：%3$s\n\n然後用 Fedilab 開啟下方的連結並建立您的帳號 :)\n\n%4$s</string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>

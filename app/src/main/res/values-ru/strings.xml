@@ -1079,4 +1079,5 @@
     </string-array>
     <string name="join_instance">Чтобы присоединиться к моему инстансу \"%1$s\", вам необходимо загрузить Fedilab:\n\nF-Droid: %2$s\nnGoogle: %3$s\n\nЗатем откройте ссылку ниже при помощи Fedilab и создайте свой аккаунт :)\n\n%4$s
     </string>
+    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
 </resources>
