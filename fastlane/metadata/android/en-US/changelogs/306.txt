@@ -1,7 +1,13 @@
 Added
-- Network and creation date in profiles
-- Allow to send an invitation an easily create an account with the app
+- Add accounts in list from their profile
+- Search are also performed in cache
+- Quoting with ">" have a custom layout
+
+Changed
+- Improve memory usage
+- Cache clearing removes all statuses in cache for the home timeline
 
 Fixed
-- Fix bookmarks and threads where last message couldn't be expanded
-- Fix lags and some crashes
+- Some crashes
+
+fedilab_morse
