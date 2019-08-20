@@ -113,11 +113,7 @@ public class MainApplication extends MultiDexApplication {
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
         initNetCipher(this);
         Toasty.Config.getInstance()
-                .setErrorColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
-                .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
-                .setSuccessColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
-                .setWarningColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
-                .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_text))
+                .allowQueue(false)
                 .apply();
                     Toasty.Config.getInstance().apply();
         }

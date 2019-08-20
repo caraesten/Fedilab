@@ -101,9 +101,7 @@
     <color name="light_link_toot">#27a7fc</color>
 
 
-    <!-- TOASTY -->
-    <color name="toasty_text">#2e2e2e</color>
-    <color name="toasty_background">#c8c8c8</color>
+
 
 
 
@@ -160,5 +158,14 @@
     <color name="chart_reply">#388E3C</color>
     <color name="chart_status">#0288D1</color>
 
+    <!-- TOASTY -->
+    <color name="toasty_text">#2e2e2e</color>
+    <color name="toasty_background">#c8c8c8</color>
 
+    <color name="defaultTextColor">#2e2e2e</color>
+    <color name="errorColor">#c8c8c8</color>
+    <color name="infoColor">#c8c8c8</color>
+    <color name="successColor">#c8c8c8</color>
+    <color name="warningColor">#c8c8c8</color>
+    <color name="normalColor">#c8c8c8</color>
 </resources>
