@@ -3689,7 +3689,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         poll_duration.setAdapter(pollduration);
         poll_duration.setSelection(4);
         poll_choice.setSelection(0);
-        if( poll != null){
+        if( poll != null && poll.getOptionsList() != null){
             int i = 1;
             for(PollOptions pollOptions: poll.getOptionsList()){
                 if( i == 1){
@@ -3760,79 +3760,101 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 dialog.dismiss();
             }
         });
+        alertPoll.setPositiveButton(R.string.validate, null);
+        final AlertDialog alertPollDiaslog = alertPoll.create();
+        alertPollDiaslog.setOnShowListener(new DialogInterface.OnShowListener() {
 
-        alertPoll.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                int poll_duration_pos = poll_duration.getSelectedItemPosition();
+            @Override
+            public void onShow(DialogInterface dialog) {
 
-                int poll_choice_pos = poll_choice.getSelectedItemPosition();
-                String choice1 = choice_1.getText().toString().trim();
-                String choice2 = choice_2.getText().toString().trim();
+                Button b = alertPollDiaslog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
 
-                if( choice1.isEmpty() && choice2.isEmpty()){
-                    Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
-                }else{
-                    poll = new Poll();
-                    poll.setMultiple(poll_choice_pos != 0);
-                    int expire = 0;
-                    switch (poll_duration_pos){
-                        case 0:
-                            expire = 300;
-                            break;
-                        case 1:
-                            expire = 1800;
-                            break;
-                        case 2:
-                            expire = 3600;
-                            break;
-                        case 3:
-                            expire = 21600;
-                            break;
-                        case 4:
-                            expire = 86400;
-                            break;
-                        case 5:
-                            expire = 259200;
-                            break;
-                        case 6:
-                            expire = 604800;
-                            break;
-                        default:
-                            expire = 864000;
-                    }
-                    poll.setExpires_in(expire);
+                    @Override
+                    public void onClick(View view) {
+                        int poll_duration_pos = poll_duration.getSelectedItemPosition();
 
-                    List<PollOptions> pollOptions = new ArrayList<>();
-                    PollOptions pollOption1 = new PollOptions();
-                    pollOption1.setTitle(choice1);
-                    pollOptions.add(pollOption1);
+                        int poll_choice_pos = poll_choice.getSelectedItemPosition();
+                        String choice1 = choice_1.getText().toString().trim();
+                        String choice2 = choice_2.getText().toString().trim();
 
-                    PollOptions pollOption2 = new PollOptions();
-                    pollOption2.setTitle(choice2);
-                    pollOptions.add(pollOption2);
+                        if( choice1.isEmpty() && choice2.isEmpty()){
+                            Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
+                        }else{
+                            poll = new Poll();
+                            poll.setMultiple(poll_choice_pos != 0);
+                            int expire = 0;
+                            switch (poll_duration_pos){
+                                case 0:
+                                    expire = 300;
+                                    break;
+                                case 1:
+                                    expire = 1800;
+                                    break;
+                                case 2:
+                                    expire = 3600;
+                                    break;
+                                case 3:
+                                    expire = 21600;
+                                    break;
+                                case 4:
+                                    expire = 86400;
+                                    break;
+                                case 5:
+                                    expire = 259200;
+                                    break;
+                                case 6:
+                                    expire = 604800;
+                                    break;
+                                default:
+                                    expire = 864000;
+                            }
+                            poll.setExpires_in(expire);
 
-                    int childCount = poll_items_container.getChildCount();
-                    if( childCount > 2){
-                        for( int i = 2 ; i < childCount; i++){
-                            PollOptions pollItem = new PollOptions();
-                            pollItem.setTitle(((EditText)poll_items_container.getChildAt(i)).getText().toString());
-                            pollOptions.add(pollItem);
+                            List<PollOptions> pollOptions = new ArrayList<>();
+                            PollOptions pollOption1 = new PollOptions();
+                            pollOption1.setTitle(choice1);
+                            pollOptions.add(pollOption1);
+
+                            PollOptions pollOption2 = new PollOptions();
+                            pollOption2.setTitle(choice2);
+                            pollOptions.add(pollOption2);
+
+                            int childCount = poll_items_container.getChildCount();
+                            if( childCount > 2){
+                                for( int i = 2 ; i < childCount; i++){
+                                    PollOptions pollItem = new PollOptions();
+                                    pollItem.setTitle(((EditText)poll_items_container.getChildAt(i)).getText().toString());
+                                    pollOptions.add(pollItem);
+                                }
+                            }
+                            List<String> options = new ArrayList<>();
+                            boolean doubleTitle = false;
+                            for(PollOptions po: pollOptions){
+                                if( !options.contains(po.getTitle().trim())){
+                                    options.add(po.getTitle().trim());
+                                }else{
+                                    doubleTitle = true;
+                                }
+                            }
+                            if( !doubleTitle) {
+                                poll.setOptionsList(pollOptions);
+                                dialog.dismiss();
+                            }else {
+                                Toasty.error(getApplicationContext(), getString(R.string.poll_duplicated_entry), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        poll_action.setVisibility(View.VISIBLE);
+                        if(social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                            toot_picture.setVisibility(View.GONE);
+                            picture_scrollview.setVisibility(View.GONE);
                         }
                     }
-
-                    poll.setOptionsList(pollOptions);
-
-                    dialog.dismiss();
-                }
-                poll_action.setVisibility(View.VISIBLE);
-                if(social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-                    toot_picture.setVisibility(View.GONE);
-                    picture_scrollview.setVisibility(View.GONE);
-                }
-
+                });
             }
         });
-        alertPoll.show();
+
+        alertPollDiaslog.show();
     }
 
     private void storeToot(boolean message, boolean forced){
