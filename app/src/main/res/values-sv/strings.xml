@@ -470,8 +470,8 @@
     <string name="action_lists_title_placeholder">Ny titel för lista</string>
     <string name="action_lists_search_users">Sök bland användare som du följer</string>
     <string name="action_lists_owner">Din lista</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Kontot har lagts till i listan!</string>
+    <string name="action_lists_empty">Du har inga listor ännu!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s har flyttats till %2$s</string>
     <string name="show_boost_count">Visa knuffar/favoriter antal</string>
@@ -1044,8 +1044,8 @@
     <string name="set_auto_backup">Status på automatisk säkerhetskopia</string>
     <string name="set_auto_backup_indication">Det här alternativet är per konto. Det kommer starta en tjänst som sparar dina statusar lokalt i en databas. Detta kommer göra det möjligt att få ut statistik och diagram</string>
     <string name="report_account">Rapportera konto</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Skicka inbjudan</string>
+    <string name="registration_closed">Din instans tillåter inte nyregistreringar!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
@@ -1067,7 +1067,7 @@
         <item>Webbvy</item>
         <item>Direktström</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">För att gå med i instansen \"%1$s\", så kan du ladda ner Fedilab:\n\nF-Droid:%2$s\nGoogle: %3$s\n\nSen öppna länken nedan med Fedilab och skapa ditt konto :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="poll_duplicated_entry">Din enkät kan inte ha duplicerade alternativ!</string>
 </resources>
