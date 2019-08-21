@@ -1069,5 +1069,5 @@
     </string-array>
     <string name="join_instance">For deltagelse i min instans \"%1$s\" kan du downloade Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nÅbn derefter linket nedenfor med Fedilab og opret din konto :-)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="poll_duplicated_entry">Din meningsmåling må ikke indeholde dubletvalg!</string>
 </resources>
