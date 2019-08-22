@@ -2394,7 +2394,11 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            mPageReferenceMap.remove(position);
+            if( mPageReferenceMap != null) {
+                mPageReferenceMap.remove(position);
+            }else{
+                mPageReferenceMap = new HashMap<>();
+            }
             super.destroyItem(container, position, object);
         }
         @Override
