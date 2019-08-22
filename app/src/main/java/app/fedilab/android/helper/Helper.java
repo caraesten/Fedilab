@@ -59,6 +59,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.google.android.material.navigation.NavigationView;
@@ -102,6 +103,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -3959,10 +3961,18 @@ public class Helper {
                 style = R.style.Dialog;
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
+            LayoutInflater inflater = ((MainActivity)contextReference.get()).getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.popup_cache,  new LinearLayout((MainActivity)contextReference.get()), false);
+            TextView message = dialogView.findViewById(R.id.message);
+            message.setText(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))));
+            builder.setView(dialogView);
             builder.setTitle(R.string.cache_title);
-
+            final CheckBox cache_timeline = dialogView.findViewById(R.id.cache_timeline);
+            final CheckBox cache_owntoots = dialogView.findViewById(R.id.cache_owntoots);
+            final CheckBox cache_bookmarks = dialogView.findViewById(R.id.cache_bookmarks);
+            final SwitchCompat clean_all = dialogView.findViewById(R.id.clean_all);
             final float finalCacheSize = cacheSize;
-            builder.setMessage(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))))
+            builder
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
@@ -3977,10 +3987,32 @@ public class Helper {
                                         }
                                         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                         new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
+                                        if( clean_all.isChecked()){
+                                            if( cache_timeline.isChecked()){
+                                                new TimelineCacheDAO(contextReference.get(), db).removeAll();
+                                            }
+                                            if( cache_owntoots.isChecked()){
+
+                                            }
+                                            if( cache_bookmarks.isChecked()){
+
+                                            }
+                                        }else{
+                                            if( cache_timeline.isChecked()){
+                                                new TimelineCacheDAO(contextReference.get(), db).removeAllConnected();
+                                            }
+                                            if( cache_owntoots.isChecked()){
+
+                                            }
+                                            if( cache_bookmarks.isChecked()){
+
+                                            }
+                                        }
+
                                        /* Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
                                         String dateString = Helper.dateToString(date);
                                         new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);*/
-                                        new TimelineCacheDAO(contextReference.get(), db).removeAll();
+
                                     } catch (Exception ignored) {
                                     }
                                 }
