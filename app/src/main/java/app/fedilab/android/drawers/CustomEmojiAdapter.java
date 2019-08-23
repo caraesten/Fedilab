@@ -20,37 +20,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.text.Spannable;
-import android.text.style.ImageSpan;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.apng.decode.APNGParser;
 import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.gif.decode.GifParser;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.helper.Helper;
 
-import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 /**
  * Created by Thomas on 03/11/2017.
@@ -95,44 +91,70 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
             imageView = (ImageView) convertView;
         }
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
 
-        Glide.with(context)
-                .asFile()
-                .load(emoji.getUrl())
-                .listener(new RequestListener<File>()  {
-                    @Override
-                    public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
 
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(new SimpleTarget<File>() {
-                    @Override
-                    public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                        Drawable resource;
-                        if(GifParser.isGif(resourceFile.getAbsolutePath())){
-                            resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                        }else{
-                            resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+        if( !emoji.isDrawableFound()  ) {
+            emoji.setDrawableFound(true);
+            Glide.with(context)
+                    .asFile()
+                    .load(emoji.getUrl())
+                    .thumbnail(0.1f)
+                    .into(new SimpleTarget<File>() {
+                        @Override
+                        public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                            new transform(context, emoji,resourceFile, imageView).execute();
                         }
-
-                        if( !disableAnimatedEmoji) {
-                            resource.setVisible(true, true);
-                            imageView.setImageDrawable(resource);
-
-                        }else{
-                            Bitmap bitmap = drawableToBitmap(resource.getCurrent());
-                            imageView.setImageBitmap(bitmap);
-                        }
-                    }
-                });
+                    });
+        }else{
+            imageView.setImageDrawable(emoji.getDrawable());
+        }
         return convertView;
     }
 
+
+
+    private static class transform extends AsyncTask<Void, Void, Drawable> {
+
+        private WeakReference<Context> contextWeakReference;
+        private File resourceFile;
+        private Emojis emoji;
+        private WeakReference<ImageView> imageViewWeakReference;
+
+        transform(Context context, Emojis emoji, File resource, ImageView imageView) {
+            this.contextWeakReference = new WeakReference<>(context);
+            this.resourceFile = resource;
+            this.emoji = emoji;
+            this.imageViewWeakReference = new WeakReference<>(imageView);
+        }
+
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            Drawable resource;
+            SharedPreferences sharedpreferences = contextWeakReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+            if( !disableAnimatedEmoji) {
+                if (GifParser.isGif(resourceFile.getAbsolutePath())) {
+                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                    emoji.setDrawable(resource);
+                } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
+                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                    emoji.setDrawable(resource);
+                } else {
+                    resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                    emoji.setDrawable(resource);
+
+                }
+            }else{
+                resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                emoji.setDrawable(resource);
+            }
+            return resource;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable result) {
+
+            imageViewWeakReference.get().setImageDrawable(result);
+        }
+    }
 }

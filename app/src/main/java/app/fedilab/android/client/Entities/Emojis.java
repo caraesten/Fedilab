@@ -15,6 +15,7 @@
 package app.fedilab.android.client.Entities;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,6 +29,8 @@ public class Emojis implements Parcelable {
     private String static_url;
     private String url;
     private boolean visible_in_picker;
+    private Drawable drawable;
+    private boolean drawableFound;
 
     public Emojis(){}
 
@@ -94,4 +97,20 @@ public class Emojis implements Parcelable {
             return new Emojis[size];
         }
     };
+
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+    }
+
+    public boolean isDrawableFound() {
+        return drawableFound;
+    }
+
+    public void setDrawableFound(boolean drawableFound) {
+        this.drawableFound = drawableFound;
+    }
 }
