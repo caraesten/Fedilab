@@ -794,9 +794,9 @@ public class Status implements Parcelable{
 
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
         else
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","").replaceAll("<br />","<br/>").replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
 
         replaceQuoteSpans(context, spannableStringT);
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
