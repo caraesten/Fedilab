@@ -625,7 +625,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="schedule_boost">Temporalitza difusió</string>
     <string name="boost_scheduled">Aquesta difusió s\'ha temporalitzat!</string>
     <string name="no_scheduled_boosts">No hi ha temporalitzacions de difusió per mostrar!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Obre el menú d'un toot i selecciona <b>Temporalitza la difusió</b>.]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Obre el menú d\'un toot i selecciona <b>Temporalitza la difusió</b>.]]></string>
     <string name="art_menu">Pissarra de l\'art</string>
     <string name="open_menu">Obrir menú</string>
     <string name="go_back">Torna</string>
@@ -743,12 +743,12 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> ha comentat el teu vídeo <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> segueix el teu canal <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> segueix el teu compte]]></string>
-    <string name="peertube_video_published"><![CDATA[S'ha publicat el teu vídeo <b>%1$s</b>]]></string>
+    <string name="peertube_video_published"><![CDATA[S\'ha publicat el teu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_import_success"><![CDATA[Ha reeixit la importació del teu vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_import_error"><![CDATA[Ha fallat la importació del vídeo <b>%1$s</b>]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> ha publicat un nou vídeo: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Han posat el teu vídeo <b>%1$s</b> en una llista negra]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Han tret el teu vídeo <b>%1$s</b> d'una llista negra]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Han tret el teu vídeo <b>%1$s</b> d\'una llista negra]]></string>
     <string name="export_data">Exportar dades</string>
     <string name="import_data">Importar dades</string>
     <string name="toot_select_import">Selecciona el document a importar</string>

@@ -766,12 +766,12 @@
     <string name="peertube_comment_on_video"><![CDATA[Nath <b>%1$s</b> wneud sylw ar eich fideo <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[Mae <b>%1$s</b> yn dilyn eich sianel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[Mae <b>%1$s</b> yn dilyn eich cyfrif]]></string>
-    <string name="peertube_video_published"><![CDATA[Mae eich fideo <b>%1$s</b> wedi'i gyhoeddi]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Mae'r fideo a fewnforiwyd <b>%1$s</b> wedi llwyddo]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Mae'r fideo a fewnforiwyd <b>%1$s</b> wedi methu]]></string>
+    <string name="peertube_video_published"><![CDATA[Mae eich fideo <b>%1$s</b> wedi\'i gyhoeddi]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Mae\'r fideo a fewnforiwyd <b>%1$s</b> wedi llwyddo]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Mae\'r fideo a fewnforiwyd <b>%1$s</b> wedi methu]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[Cyhoeddodd <b>%1$s</b> fideo newydd: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Mae eich fideo <b>%1$s</b> wedi ei osod ar y rhestr ddu]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Mae eich fideo <b>%1$s</b> wedi ei dynnu o'r rhestr ddu]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Mae eich fideo <b>%1$s</b> wedi ei dynnu o\'r rhestr ddu]]></string>
     <string name="export_data">Allforio data</string>
     <string name="import_data">Mewnforio Data</string>
     <string name="toot_select_import">Dewiswch ddogfen i\'w fewnforio</string>
