@@ -1063,4 +1063,10 @@ và %d toots khác để khám phá</item>
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="all_accounts">For all accounts</string>
+    <string name="database_cache">Database cache</string>
+    <string name="cache_timeline_clear">Clear your home timeline cache</string>
+    <string name="cache_owntoots_clear">Clear your cached statuses</string>
+    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
+    <string name="file_cache">Files in cache</string>
 </resources>
