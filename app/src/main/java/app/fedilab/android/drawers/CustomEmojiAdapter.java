@@ -17,6 +17,14 @@ package app.fedilab.android.drawers;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.style.ImageSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,10 +33,23 @@ import android.widget.ImageView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.gif.GifDrawable;
 
+import java.io.File;
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Emojis;
+import app.fedilab.android.helper.Helper;
+
+import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 /**
  * Created by Thomas on 03/11/2017.
@@ -66,18 +87,51 @@ public class CustomEmojiAdapter extends ArrayAdapter {
         final ImageView imageView;
         Emojis emoji = emojis.get(position);
         if (convertView == null) {
-            imageView = new ImageView(context);
-            float density = context.getResources().getDisplayMetrics().density;
-            imageView.setLayoutParams(new GridView.LayoutParams((int)(40*density), (int)(40*density)));
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setPadding((int)(2*density), (int)(5*density), (int)(2*density), (int)(5*density));
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            convertView = layoutInflater.inflate(R.layout.drawer_emoji_picker, parent, false);
+            imageView = convertView.findViewById(R.id.img_custom_emoji);
         } else {
             imageView = (ImageView) convertView;
         }
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+
         Glide.with(context)
+                .asFile()
                 .load(emoji.getUrl())
-                .into(imageView);
-        return imageView;
+                .listener(new RequestListener<File>()  {
+                    @Override
+                    public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                        Drawable resource;
+                        if( emoji.getUrl().endsWith(".gif")){
+                            resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                        }else{
+                            resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                        }
+
+                        if( !disableAnimatedEmoji) {
+                            resource.setVisible(true, true);
+                            imageView.setImageDrawable(resource);
+
+                        }else{
+                            Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    }
+                });
+        return convertView;
     }
 
 }
