@@ -4554,7 +4554,8 @@ public class API {
      * @return List<Status>
      */
     private List<Status> parseStatusesForCache(Context context, JSONArray jsonArray){
-
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
         List<Status> statuses = new ArrayList<>();
         try {
             int i = 0;
@@ -4562,10 +4563,8 @@ public class API {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
-                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
                 if (alreadyCached == null) {
-                    Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
                     new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString(), account.getId(), account.getInstance());
                 }
                 i++;
