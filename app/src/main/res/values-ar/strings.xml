@@ -1093,6 +1093,6 @@
     <string name="database_cache">Database cache</string>
     <string name="cache_timeline_clear">Clear your home timeline cache</string>
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
+    <string name="cache_bookmarks_clear">امسح كافة فواصلك المرجعية</string>
+    <string name="file_cache">الملفات في ذاكرة التخزين المؤقتة</string>
 </resources>
