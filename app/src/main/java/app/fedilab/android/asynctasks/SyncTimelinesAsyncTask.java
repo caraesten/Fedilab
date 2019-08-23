@@ -245,12 +245,13 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-        APIResponse apiResponse = null;
+        APIResponse apiResponse;
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            List<app.fedilab.android.client.Entities.List> lists = null;
+            List<app.fedilab.android.client.Entities.List> listsAPI = null;
             try {
                 apiResponse = new API(contextReference.get()).getLists();
-                lists = apiResponse.getLists();
+                listsAPI = apiResponse.getLists();
+                //Check potential duplicated lists in db
                 List<ManageTimelines>  duplicated_id = new ArrayList<>();
                 List<String> present_id = new ArrayList<>();
                 for (ManageTimelines manageTimeline : manageTimelines) {
@@ -264,9 +265,9 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     }
                 }
                 manageTimelines.removeAll(duplicated_id);
-                if (lists != null && lists.size() > 0) {
+                if (listsAPI != null && listsAPI.size() > 0) {
                     //Loop through results
-                    for (app.fedilab.android.client.Entities.List list : lists) {
+                    for (app.fedilab.android.client.Entities.List list : listsAPI) {
                         boolean isInDb = false;
                         ManageTimelines timelines_tmp = null;
                         for (ManageTimelines manageTimeline : manageTimelines) {
@@ -278,6 +279,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                                 break;
                             }
                         }
+                        //The current list is not registred in the database
                         if (!isInDb) {
                             ManageTimelines manageTL = new ManageTimelines();
                             manageTL.setListTimeline(list);
@@ -285,30 +287,43 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                             manageTL.setType(ManageTimelines.Type.LIST);
                             manageTL.setPosition(manageTimelines.size());
                             new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                            manageTimelines.add(manageTL);
                         } else {
                             //Update list
                             timelines_tmp.setListTimeline(list);
                             new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                         }
                     }
-                    for (ManageTimelines manageTimelines : manageTimelines) {
-                        if (manageTimelines.getListTimeline() == null)
+                    ArrayList<ManageTimelines> manageTimelinesToRemove = new ArrayList<>();
+                    for (ManageTimelines dbtTimelines : manageTimelines) {
+                        if (dbtTimelines.getListTimeline() == null)
                             continue;
                         boolean shouldBeRemoved = true;
-                        for (app.fedilab.android.client.Entities.List list : lists) {
-                            if (list.getId().equals(manageTimelines.getListTimeline().getId())) {
+                        for (app.fedilab.android.client.Entities.List list : listsAPI) {
+                            if (list.getId().equals(dbtTimelines.getListTimeline().getId())) {
                                 shouldBeRemoved = false;
                             }
                         }
                         if (shouldBeRemoved) {
-                            new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+                            new TimelinesDAO(contextReference.get(), db).remove(dbtTimelines);
+                            manageTimelinesToRemove.add(dbtTimelines);
                         }
                     }
-                } else {
-                    for (ManageTimelines manageTimelines : manageTimelines) {
-                        if (manageTimelines.getListTimeline() == null)
-                            continue;
-                        new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+                    if( manageTimelinesToRemove.size() > 0 ){
+                        manageTimelines.removeAll(manageTimelinesToRemove);
+                    }
+                } else { //No lists, all are removed if exist in db
+                    ArrayList<ManageTimelines> manageTimelinesToRemove = new ArrayList<>();
+                    if( apiResponse.getError() == null) { //Only done if there is no errors when fetching lists
+                        for (ManageTimelines manageTimelines : manageTimelines) {
+                            if (manageTimelines.getListTimeline() == null)
+                                continue;
+                            new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+                            manageTimelinesToRemove.add(manageTimelines);
+                        }
+                        if( manageTimelinesToRemove.size() > 0 ){
+                            manageTimelines.removeAll(manageTimelinesToRemove);
+                        }
                     }
                 }
             } catch (Exception ignored) {
