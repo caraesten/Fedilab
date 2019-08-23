@@ -1070,4 +1070,10 @@
     <string name="join_instance">Per unirti alla mia istanza \"%1$s\", è possibile scaricare Fedilab:\n\nF-Droid: %2$s\n: %3$s\n\nQuindi apri il link qui sotto con Fedilab e crea il tuo account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Il tuo sondaggio non può avere opzioni duplicate!</string>
+    <string name="all_accounts">For all accounts</string>
+    <string name="database_cache">Database cache</string>
+    <string name="cache_timeline_clear">Clear your home timeline cache</string>
+    <string name="cache_owntoots_clear">Clear your cached statuses</string>
+    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
+    <string name="file_cache">Files in cache</string>
 </resources>
