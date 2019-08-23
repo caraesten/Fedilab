@@ -137,7 +137,7 @@
                     android:orientation="vertical">
                     <app.fedilab.android.helper.CustomTextView
                         android:id="@+id/notification_status_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="-20dp"
                         android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

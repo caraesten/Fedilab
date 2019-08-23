@@ -284,6 +284,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private EditText wysiwygEditText;
     private String url_for_media;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
+    List<Emojis>  emojis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1897,7 +1898,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
             case R.id.action_emoji:
-                final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis(account.getInstance());
+                emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis(account.getInstance());
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;
                 float density = getResources().getDisplayMetrics().density;

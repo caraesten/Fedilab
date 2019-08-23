@@ -21,9 +21,6 @@ import androidx.annotation.Nullable;
 
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +37,6 @@ import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.gif.decode.GifParser;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import app.fedilab.android.R;
@@ -57,11 +53,13 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
 
     private Context context;
     private List<Emojis> emojis;
+    private CustomEmojiAdapter customEmojiAdapter;
 
     public CustomEmojiAdapter(@NonNull Context context, int resource, List<Emojis> emojis) {
         super(context, resource, resource);
         this.context = context;
         this.emojis = emojis;
+        customEmojiAdapter = this;
     }
 
     @Override
@@ -102,59 +100,32 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
                     .into(new SimpleTarget<File>() {
                         @Override
                         public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
-                            new transform(context, emoji,resourceFile, imageView).execute();
+                            //new transform(context, emoji,resourceFile, imageView).execute();
+                            Drawable resource;
+                            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+                            if( !disableAnimatedEmoji) {
+                                if (GifParser.isGif(resourceFile.getAbsolutePath())) {
+                                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    emoji.setDrawable(resource);
+                                } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
+                                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    emoji.setDrawable(resource);
+                                } else {
+                                    resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                    emoji.setDrawable(resource);
+
+                                }
+                            }else{
+                                resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                emoji.setDrawable(resource);
+                            }
+                            customEmojiAdapter.notifyDataSetChanged();
                         }
                     });
         }else{
             imageView.setImageDrawable(emoji.getDrawable());
         }
         return convertView;
-    }
-
-
-
-    private static class transform extends AsyncTask<Void, Void, Drawable> {
-
-        private WeakReference<Context> contextWeakReference;
-        private File resourceFile;
-        private Emojis emoji;
-        private WeakReference<ImageView> imageViewWeakReference;
-
-        transform(Context context, Emojis emoji, File resource, ImageView imageView) {
-            this.contextWeakReference = new WeakReference<>(context);
-            this.resourceFile = resource;
-            this.emoji = emoji;
-            this.imageViewWeakReference = new WeakReference<>(imageView);
-        }
-
-        @Override
-        protected Drawable doInBackground(Void... params) {
-            Drawable resource;
-            SharedPreferences sharedpreferences = contextWeakReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-            if( !disableAnimatedEmoji) {
-                if (GifParser.isGif(resourceFile.getAbsolutePath())) {
-                    resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                    emoji.setDrawable(resource);
-                } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
-                    resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
-                    emoji.setDrawable(resource);
-                } else {
-                    resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
-                    emoji.setDrawable(resource);
-
-                }
-            }else{
-                resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
-                emoji.setDrawable(resource);
-            }
-            return resource;
-        }
-
-        @Override
-        protected void onPostExecute(Drawable result) {
-
-            imageViewWeakReference.get().setImageDrawable(result);
-        }
     }
 }

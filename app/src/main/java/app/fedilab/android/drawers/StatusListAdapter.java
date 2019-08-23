@@ -221,6 +221,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private List<ViewHolder> lstHolders;
     private final Object lock = new Object();
+    private List<Emojis>  emojisPicker;
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -1170,7 +1171,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                final List<Emojis>  emojis = new CustomEmojiDAO(context, db).getAllEmojis(Helper.getLiveInstance(context));
+                emojisPicker = new CustomEmojiDAO(context, db).getAllEmojis(Helper.getLiveInstance(context));
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 int paddingPixel = 15;
                 float density = context.getResources().getDisplayMetrics().density;
@@ -1181,14 +1182,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
                 builder.setTitle(R.string.insert_emoji);
-                if( emojis != null && emojis.size() > 0) {
+                if( emojisPicker != null && emojisPicker.size() > 0) {
                     GridView gridView = new GridView(context);
-                    gridView.setAdapter(new CustomEmojiAdapter(context, android.R.layout.simple_list_item_1, emojis));
+                    gridView.setAdapter(new CustomEmojiAdapter(context, android.R.layout.simple_list_item_1, emojisPicker));
                     gridView.setNumColumns(5);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            holder.quick_reply_text.getText().insert(holder.quick_reply_text.getSelectionStart(), " :" + emojis.get(position).getShortcode()+": ");
+                            holder.quick_reply_text.getText().insert(holder.quick_reply_text.getSelectionStart(), " :" + emojisPicker.get(position).getShortcode()+": ");
                             alertDialogEmoji.dismiss();
                         }
                     });
