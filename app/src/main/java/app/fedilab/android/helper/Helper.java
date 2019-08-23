@@ -227,6 +227,8 @@ import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.activities.BaseMainActivity.regex_local;
 import static app.fedilab.android.activities.BaseMainActivity.regex_public;
+import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
+import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
 import static app.fedilab.android.activities.BaseMainActivity.filters;
 
@@ -3992,27 +3994,22 @@ public class Helper {
                                                 new TimelineCacheDAO(contextReference.get(), db).removeAll();
                                             }
                                             if( cache_owntoots.isChecked()){
-
+                                                new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
                                             }
                                             if( cache_bookmarks.isChecked()){
-
+                                                new StatusCacheDAO(contextReference.get(), db).removeAll(BOOKMARK_CACHE);
                                             }
                                         }else{
                                             if( cache_timeline.isChecked()){
                                                 new TimelineCacheDAO(contextReference.get(), db).removeAllConnected();
                                             }
                                             if( cache_owntoots.isChecked()){
-
+                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(ARCHIVE_CACHE);
                                             }
                                             if( cache_bookmarks.isChecked()){
-
+                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(BOOKMARK_CACHE);
                                             }
                                         }
-
-                                       /* Date date = new Date( System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
-                                        String dateString = Helper.dateToString(date);
-                                        new TimelineCacheDAO(contextReference.get(), db).removeAfterDate(dateString);*/
-
                                     } catch (Exception ignored) {
                                     }
                                 }

@@ -133,7 +133,6 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
                                 @Override
                                 public void onClick(DialogInterface dialogConfirm, int which) {
                                     new StatusCacheDAO(context, db).removeAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
-                                    new StatusCacheDAO(context, db).removeAllStatus(StatusCacheDAO.STATUS_CACHE);
                                     statuses = new ArrayList<>();
                                     statuses.clear();
                                     statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);

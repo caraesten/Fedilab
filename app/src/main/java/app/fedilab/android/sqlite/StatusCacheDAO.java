@@ -48,7 +48,7 @@ public class StatusCacheDAO {
     //Type of cache
     public static int BOOKMARK_CACHE = 0;
     public static int ARCHIVE_CACHE = 1;
-    public static int STATUS_CACHE = 2;
+
 
     public StatusCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
@@ -214,6 +214,10 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
+    }
+
+    public int removeAll(int cacheType){
+        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\"", null);
     }
 
     //------- GETTERS  -------
