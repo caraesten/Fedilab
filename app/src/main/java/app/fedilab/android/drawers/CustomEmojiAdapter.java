@@ -41,6 +41,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.penfeizhou.animation.apng.APNGDrawable;
 import com.github.penfeizhou.animation.gif.GifDrawable;
+import com.github.penfeizhou.animation.gif.decode.GifParser;
 
 import java.io.File;
 import java.util.List;
@@ -55,7 +56,7 @@ import static app.fedilab.android.helper.Helper.drawableToBitmap;
  * Created by Thomas on 03/11/2017.
  * Adapter to display custom emojis
  */
-public class CustomEmojiAdapter extends ArrayAdapter {
+public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
 
 
     private Context context;
@@ -115,7 +116,7 @@ public class CustomEmojiAdapter extends ArrayAdapter {
                     @Override
                     public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
                         Drawable resource;
-                        if( emoji.getUrl().endsWith(".gif")){
+                        if(GifParser.isGif(resourceFile.getAbsolutePath())){
                             resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
                         }else{
                             resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
