@@ -209,7 +209,7 @@
     <string name="no_scheduled_toots_indications">トゥートを書き、トップメニューから <b>スケジュール</b> を選択します。</string>
     <string name="remove_scheduled">スケジュールトゥートを削除しますか？</string>
     <string name="media_count">メディア：%d</string>
-    <string name="toot_scheduled">トゥイットが予定されている！</string>
+    <string name="toot_scheduled">トゥートを予約しました！</string>
     <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
     <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
     <!-- timed mute -->
