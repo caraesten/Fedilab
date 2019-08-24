@@ -38,7 +38,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.penfeizhou.animation.apng.APNGDrawable;
+import com.github.penfeizhou.animation.apng.decode.APNGParser;
 import com.github.penfeizhou.animation.gif.GifDrawable;
+import com.github.penfeizhou.animation.gif.decode.GifParser;
 
 import java.io.File;
 import java.util.Date;
@@ -265,10 +267,15 @@ public class Notification implements Parcelable {
                             @Override
                             public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
                                 Drawable resource;
-                                if( emoji.getUrl().endsWith(".gif")){
+                                if (GifParser.isGif(resourceFile.getAbsolutePath())) {
                                     resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
-                                }else{
+                                } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
                                     resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                } else {
+                                    resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                }
+                                if( resource == null){
+                                    return;
                                 }
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
@@ -282,7 +289,6 @@ public class Notification implements Parcelable {
                                                 resource.setVisible(true, true);
                                                 imageSpan = new ImageSpan(resource);
                                             }else{
-                                                resource.setVisible(true, true);
                                                 Bitmap bitmap = drawableToBitmap(resource);
                                                 imageSpan = new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
