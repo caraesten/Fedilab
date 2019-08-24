@@ -459,8 +459,8 @@
     <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
     <string name="action_lists_search_users">フォローしている人の中から検索</string>
     <string name="action_lists_owner">あなたのリスト</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">アカウントをリストに追加しました！</string>
+    <string name="action_lists_empty">リストはありません！</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
     <string name="show_boost_count">ブースト/お気に入りの数を表示</string>
@@ -1056,11 +1056,11 @@
     </string-array>
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
+    <string name="poll_duplicated_entry">アンケートに重複した選択肢を作ることはできません！</string>
+    <string name="all_accounts">すべてのアカウントで実行</string>
+    <string name="database_cache">データベースキャッシュ</string>
+    <string name="cache_timeline_clear">キャッシュしたホームタイムラインを削除</string>
+    <string name="cache_owntoots_clear">キャッシュしたトゥートを削除</string>
+    <string name="cache_bookmarks_clear">ブックマークを削除</string>
+    <string name="file_cache">キャッシュ内のファイル</string>
 </resources>
