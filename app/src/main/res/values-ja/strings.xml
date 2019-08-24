@@ -756,7 +756,7 @@
     <string name="action_plain_text">プレーンテキスト</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">マークダウン</string>
-    <string name="action_logout_account">アカウントからログアウトする</string>
+    <string name="action_logout_account">アカウントからログアウト</string>
     <string name="all">すべて</string>
     <string name="about_opencollective">アプリを支援する</string>
     <string name="more_about_opencollective">Open Collectiveを使用すると、グループは資金を調達し透明性をもって管理するための集団をすばやく立ち上げることができます。</string>
@@ -1032,8 +1032,8 @@
     <string name="set_auto_backup">トゥートを自動でバックアップ</string>
     <string name="set_auto_backup_indication">これはアカウントごとの設定です。あなたのトゥートをローカルのデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
     <string name="report_account">アカウントを報告</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">招待を送信</string>
+    <string name="registration_closed">このインスタンスは新規登録の受付を停止しています！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
@@ -1054,8 +1054,7 @@
         <item>WebView</item>
         <item>ダイレクトストリーム</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
-    </string>
+    <string name="join_instance">Fedilabをダウンロードしてインスタンス「%1$s」に参加できます:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nダウンロードしたら、下のリンクをタップしてFedilabを開いて、アカウントを作成しましょう ^_^\n\n%4$s    </string>
     <string name="poll_duplicated_entry">アンケートに重複した選択肢を作ることはできません！</string>
     <string name="all_accounts">すべてのアカウントで実行</string>
     <string name="database_cache">データベースキャッシュ</string>
