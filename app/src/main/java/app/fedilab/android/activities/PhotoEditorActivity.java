@@ -60,7 +60,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.yalantis.ucrop.UCrop;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -380,8 +380,9 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                         e.printStackTrace();
                     }
                     break;
-                case UCrop.REQUEST_CROP:
-                    final Uri resultUri = UCrop.getOutput(data);
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    Uri resultUri = result.getUri();
                     if( resultUri != null) {
                         mPhotoEditorView.getSource().setImageURI(resultUri);
                         mPhotoEditorView.getSource().setRotation(rotationInDegrees);
@@ -511,10 +512,8 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 mStickerBSFragment.show(getSupportFragmentManager(), mStickerBSFragment.getTag());
                 break;
             case CROP:
-                String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
-                tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
-                UCrop.of(uri, Uri.fromFile(new File(getCacheDir(),tempname)))
-                        .start(PhotoEditorActivity.this);
+                CropImage.activity(uri)
+                        .start(this);
                 break;
         }
     }
