@@ -256,8 +256,8 @@
     <string name="toast_unfavourite">トゥートをお気に入りから削除しました</string>
     <string name="toast_report">トゥートを報告しました</string>
     <string name="toast_unstatus">トゥートを削除しました</string>
-    <string name="toast_pin">トゥートをピン留めしました</string>
-    <string name="toast_unpin">トゥートはピン留めを解除されました！</string>
+    <string name="toast_pin">トゥートがピン留めされました！</string>
+    <string name="toast_unpin">トゥートのピン留めを解除しました！</string>
     <string name="toast_error">エラーが発生しました！</string>
     <string name="toast_code_error">エラーが発生しました！ インスタンスは認証コードを返しませんでした！</string>
     <string name="toast_error_instance">インスタンスのドメインが有効ではないようです！</string>
