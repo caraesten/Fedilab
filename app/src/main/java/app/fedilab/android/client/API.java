@@ -899,7 +899,7 @@ public class API {
             }
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
-            if( account != null && account.getSocial().equals("PLEROMA")){
+            if( account != null && account.getSocial() != null && account.getSocial().equals("PLEROMA")){
                 isPleromaAdmin(account.getAcct());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
