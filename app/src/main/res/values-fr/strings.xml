@@ -1067,10 +1067,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="join_instance">Pour rejoindre mon instance « %1$s », vous pouvez télécharger Fedilab :\n\nF-Droid : %2$s\nGoogle : %3$s\n\nEnsuite ouvrez le lien ci-dessous avec Fedilab et créez votre compte :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Votre sondage ne peut contenir des options dupliquées !</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
+    <string name="all_accounts">Pour tous les comptes</string>
+    <string name="database_cache">Cache de la base de données</string>
+    <string name="cache_timeline_clear">Effacer le cache de votre fil principal</string>
+    <string name="cache_owntoots_clear">Effacer vos statuts mis en cache</string>
+    <string name="cache_bookmarks_clear">Effacer vos signets</string>
+    <string name="file_cache">Fichiers en cache</string>
 </resources>
