@@ -32,6 +32,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -96,11 +97,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-        startStream(null);
     }
 
     private void startStream(Account account){
-
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
@@ -124,6 +123,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             thread = new Thread() {
                                 @Override
                                 public void run() {
+
                                     taks(accountStream);
                                 }
                             };
@@ -139,6 +139,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (webSocketFutures.get(key) != null && Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
                         try {
                             Objects.requireNonNull(webSocketFutures.get(key)).close();
+
                         }catch (Exception ignored){}
                     }
                 }
@@ -248,7 +249,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     startStream(account);
                                     canStartStream.put(account.getAcct()+"@"+account.getInstance(),true);
                                 }
-                            }, 15000 );
+                            }, 60000 );
                         }
                         return;
                     }
