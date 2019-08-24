@@ -433,7 +433,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     newContent += ":" + shortcode + ": ";
                     int newPosition = newContent.length();
                     if( currentCursorPosition < oldContent.length() )
-                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length());
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(TootActivity.countLength(social, toot_content, toot_cw_content)));
                     toot_content.setSelection(newPosition);
@@ -490,7 +490,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     newContent += "#" + tag + " ";
                     int newPosition = newContent.length();
                     if( currentCursorPosition < oldContent.length() )
-                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length());
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(TootActivity.countLength(social,toot_content, toot_cw_content)));
                     toot_content.setSelection(newPosition);

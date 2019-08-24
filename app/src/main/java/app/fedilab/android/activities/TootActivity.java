@@ -2899,7 +2899,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         newContent += ":" + shortcode + ": ";
                         int newPosition = newContent.length();
                         if (currentCursorPosition < oldContent.length())
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                            newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                         toot_content.setText(newContent);
                         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                         toot_content.setSelection(newPosition);
@@ -3046,7 +3046,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         newContent += "#" + tag + " ";
                         int newPosition = newContent.length();
                         if (currentCursorPosition < oldContent.length())
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                            newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                         toot_content.setText(newContent);
                         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                         toot_content.setSelection(newPosition);
