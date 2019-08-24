@@ -116,7 +116,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         if ((pair.getValue()) != null)
                             ((Thread) pair.getValue()).interrupt();
                     }
-                    it.remove();
                 }
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
                 if (accountStreams != null) {
