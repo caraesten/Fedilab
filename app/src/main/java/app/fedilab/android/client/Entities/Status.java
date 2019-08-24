@@ -800,7 +800,6 @@ public class Status implements Parcelable{
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("[\\s]{2}","&nbsp;&nbsp;"), Html.FROM_HTML_MODE_LEGACY));
         else
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("[\\s]{2}","&nbsp;&nbsp;")));
-
         replaceQuoteSpans(context, spannableStringT);
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
         for (URLSpan span : spans) {

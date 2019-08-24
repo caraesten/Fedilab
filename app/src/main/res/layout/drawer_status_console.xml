@@ -677,6 +677,7 @@
         android:id="@+id/status_action_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="10dp">
 
         <ImageView
