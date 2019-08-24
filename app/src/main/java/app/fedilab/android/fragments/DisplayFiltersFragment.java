@@ -265,6 +265,9 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         MainActivity.filters = apiResponse.getFilters();
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+        if( mPageReferenceMap == null) {
+            return;
+        }
         for(ManageTimelines tl: timelines) {
             if( tl.getType() == ManageTimelines.Type.HOME || tl.getType() == ManageTimelines.Type.LOCAL || tl.getType() == ManageTimelines.Type.PUBLIC) {
                 DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());

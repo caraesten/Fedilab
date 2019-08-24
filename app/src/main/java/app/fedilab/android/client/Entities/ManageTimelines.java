@@ -463,9 +463,11 @@ public class ManageTimelines {
                         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                             @Override
                             public void onDismiss(PopupMenu menu) {
-                                TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(tl.getPosition());
-                                assert tabLayoutNotificationsFragment != null;
-                                tabLayoutNotificationsFragment.refreshAll();
+                                if( mPageReferenceMap != null) {
+                                    TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(tl.getPosition());
+                                    assert tabLayoutNotificationsFragment != null;
+                                    tabLayoutNotificationsFragment.refreshAll();
+                                }
                             }
                         });
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -564,12 +566,14 @@ public class ManageTimelines {
                 @Override
                 public void onDismiss(PopupMenu menu) {
                     if(changes[0]) {
-                        FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
-                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                        assert displayStatusFragment != null;
-                        fragTransaction.detach(displayStatusFragment);
-                        fragTransaction.attach(displayStatusFragment);
-                        fragTransaction.commit();
+                        if( mPageReferenceMap != null) {
+                            FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
+                            DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
+                            assert displayStatusFragment != null;
+                            fragTransaction.detach(displayStatusFragment);
+                            fragTransaction.attach(displayStatusFragment);
+                            fragTransaction.commit();
+                        }
                     }
                 }
             });
@@ -608,8 +612,10 @@ public class ManageTimelines {
             final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
             final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
             final MenuItem itemFilter = menu.findItem(R.id.action_filter);
+            if( mPageReferenceMap == null) {
+                return;
+            }
             DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-
             if(tl.getType() != Type.HOME){
                 itemShowBoosts.setVisible(false);
                 itemShowReplies.setVisible(false);
@@ -789,6 +795,8 @@ public class ManageTimelines {
             @Override
             public void onDismiss(PopupMenu menu) {
                 if(changes[0]) {
+                    if( mPageReferenceMap == null)
+                        return;
                     FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                     if( displayStatusFragment == null)
@@ -1013,6 +1021,8 @@ public class ManageTimelines {
                 });
                 changes[0] = true;
                 FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                if( mPageReferenceMap == null)
+                    return true;
                 DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                 if( displayStatusFragment == null)
                     return false;
@@ -1053,6 +1063,8 @@ public class ManageTimelines {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                        if( mPageReferenceMap == null)
+                            return true;
                         DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                         if( displayStatusFragment == null)
                             return false;
@@ -1135,6 +1147,8 @@ public class ManageTimelines {
             public void onDismiss(PopupMenu menu) {
                 if(changes[0]) {
                     FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                    if( mPageReferenceMap == null)
+                        return;
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                     if( displayStatusFragment == null)
                         return;

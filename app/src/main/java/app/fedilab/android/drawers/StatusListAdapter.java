@@ -1902,7 +1902,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                             List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
                             for(ManageTimelines tl: timelines) {
-                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                if( tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap != null) {
                                     DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                                     if (homeFragment != null)
                                         homeFragment.fetchMore(status.getId());
@@ -1924,7 +1924,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                             List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
                             for(ManageTimelines tl: timelines) {
-                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                if( tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap != null) {
                                     DisplayStatusFragment homeFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                                     if (homeFragment != null) {
                                         fetch_all_more = true;

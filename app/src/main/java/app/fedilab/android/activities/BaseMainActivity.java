@@ -1626,7 +1626,7 @@ public abstract class BaseMainActivity extends BaseActivity
             //Refresh home if needed
             if( dateAllowed.after(date) ) {
                 for (ManageTimelines tl : timelines) {
-                    if (tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap.containsKey(tl.getPosition())) {
+                    if (tl.getType() == ManageTimelines.Type.HOME && mPageReferenceMap != null && mPageReferenceMap.containsKey(tl.getPosition())) {
                         DisplayStatusFragment homeTimeline = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                         if (homeTimeline != null) {
                             homeTimeline.retrieveMissingHome();
