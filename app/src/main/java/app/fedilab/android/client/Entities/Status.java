@@ -652,6 +652,7 @@ public class Status implements Parcelable{
         }
         status.setImageURL(imgs);
         content = content.replaceAll("(<\\s?p\\s?>)&gt;(((?!(<\\/p>)|(<br)).){5,})(<\\s?\\/p\\s?><\\s?p\\s?>|<\\s?br\\s?\\/?>)","<blockquote>$2</blockquote><p>");
+        content = content.replaceAll("^<\\s?p\\s?>(.*)<\\s?\\/p\\s?>$","$1");
         spannableStringContent = new SpannableString(content);
         final int[] j = {0};
         if( status.getImageURL() != null && status.getImageURL().size() > 0){
