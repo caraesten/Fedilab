@@ -36,6 +36,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.TootInfoActivity;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Relationship;
@@ -241,6 +242,13 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             int currentPosition = this.accounts.size();
             this.accounts.addAll(accounts);
             accountsListAdapter.notifyItemRangeChanged(currentPosition, accounts.size());
+        }
+        if( context instanceof TootInfoActivity && this.accounts != null){
+            if( type ==  RetrieveAccountsAsyncTask.Type.REBLOGGED) {
+                ((TootInfoActivity) context).updateBoostCount(this.accounts.size());
+            }else  if( type ==  RetrieveAccountsAsyncTask.Type.FAVOURITED) {
+                ((TootInfoActivity) context).updateFavCount(this.accounts.size());
+            }
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;

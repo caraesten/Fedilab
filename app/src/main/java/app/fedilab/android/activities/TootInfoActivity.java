@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
@@ -67,7 +69,7 @@ public class TootInfoActivity extends BaseActivity {
                 setTheme(R.style.AppThemeDark);
         }
         setContentView(R.layout.activity_toot_info);
-        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         Bundle b = getIntent().getExtras();
         if( getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -127,6 +129,14 @@ public class TootInfoActivity extends BaseActivity {
         });
     }
 
+
+    public void updateBoostCount(int count){
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.reblog) + " ("+count+")");
+    }
+
+    public void updateFavCount(int count){
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.favourite) + " ("+count+")");
+    }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
