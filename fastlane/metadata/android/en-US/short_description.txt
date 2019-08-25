@@ -1,1 +1,1 @@
-A multi-account client for the Fediverse
+Fedilab is a multifunctional Android client to access the distributed Fediverse
