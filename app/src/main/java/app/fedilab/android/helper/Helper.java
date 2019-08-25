@@ -313,6 +313,7 @@ public class Helper {
     public static final int SEARCH_REMOTE = 9;
     public static final int RELOAD_MYVIDEOS = 10;
     public static final int REFRESH_TIMELINE = 11;
+    public static final int BACKUP_NOTIFICATION_INTENT = 12;
     //Settings
     public static final int TOOTS_PER_PAGE = 20;
     public static final int ACCOUNTS_PER_PAGE = 20;

@@ -1207,6 +1207,11 @@ public abstract class BaseMainActivity extends BaseActivity
             if( adminItem != null){
                 adminItem.setVisible(false);
             }
+            MenuItem notificationArchive = navigationView.getMenu().findItem(R.id.nav_archive_notifications);
+            if( notificationArchive != null){
+                notificationArchive.setVisible(false);
+            }
+
         }else{
             boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
             if( !display_admin_menu){
@@ -1423,7 +1428,11 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
-            }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG){
+            }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.BACKUP_NOTIFICATION_INTENT){
+                Intent myIntent = new Intent(BaseMainActivity.this, OwnerNotificationActivity.class);
+                startActivity(myIntent);
+            }
+            else if( extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG){
                 new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else if( extras.getInt(Helper.INTENT_ACTION) == Helper.REFRESH_TIMELINE){
                 int position = 0;
@@ -1676,6 +1685,10 @@ public abstract class BaseMainActivity extends BaseActivity
         int id = item.getItemId();
         if( id == R.id.nav_archive) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+            startActivity(myIntent);
+            return false;
+        }else  if( id == R.id.nav_archive_notifications) {
+            Intent myIntent = new Intent(BaseMainActivity.this, OwnerNotificationActivity.class);
             startActivity(myIntent);
             return false;
         }else if(id == R.id.nav_drag_timelines){

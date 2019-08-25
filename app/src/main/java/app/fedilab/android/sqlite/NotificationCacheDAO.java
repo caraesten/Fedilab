@@ -33,6 +33,7 @@ import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
+import app.fedilab.android.helper.FilterNotifications;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
 
@@ -92,6 +93,58 @@ public class NotificationCacheDAO {
             e.printStackTrace();
         }
         return last_id;
+    }
+
+
+
+
+    /**
+     * Returns all cached notifications in db after filter
+     * @return stored notifications List<Notification>
+     */
+    public List<Notification> getNotificationsFromID(FilterNotifications filterNotifications, String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        //That the basic selection for all toots
+        StringBuilder selection = new StringBuilder( Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
+        if( max_id != null)
+            selection.append(" AND " + Sqlite.COL_NOTIFICATION_ID + " < '").append(max_id).append("'");
+        //BOOST
+        if(filterNotifications.isBoost() || filterNotifications.isFavorite() || filterNotifications.isFollow() ||filterNotifications.isMention() || filterNotifications.isPoll() ){
+            selection.append(" AND ( ");
+            if (filterNotifications.isBoost() ) {
+                selection.append(Sqlite.COL_TYPE + "='boost' OR ");
+            }
+            if (filterNotifications.isPoll() ) {
+                selection.append(Sqlite.COL_TYPE + "='poll' OR ");
+            }
+            if (filterNotifications.isFollow() ) {
+                selection.append(Sqlite.COL_TYPE + "='follow' OR ");
+            }
+            if (filterNotifications.isMention() ) {
+                selection.append(Sqlite.COL_TYPE + "='mention' OR ");
+            }
+            if (filterNotifications.isFavorite() ) {
+                selection.append(Sqlite.COL_TYPE + "='favorite' OR ");
+            }
+            String selectionStr = selection.toString().substring(0, selection.toString().length()-3);
+            selection = new StringBuilder(selectionStr);
+            selection.append(") ");
+        }
+        if( filterNotifications.getDateIni() != null)
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(filterNotifications.getDateIni()).append("'");
+
+        if( filterNotifications.getDateEnd() != null)
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(filterNotifications.getDateEnd()).append("'");
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_NOTIFICATION_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "40");
+            return cursorToListNotifications(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     //------- INSERTIONS  -------

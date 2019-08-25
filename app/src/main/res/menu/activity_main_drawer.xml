@@ -40,6 +40,10 @@
                         android:icon="@drawable/ic_archive"
                         android:title="@string/owner_cached_toots" />
                     <item
+                        android:id="@+id/nav_archive_notifications"
+                        android:icon="@drawable/ic_archive"
+                        android:title="@string/owner_cached_notifications" />
+                    <item
                         android:id="@+id/nav_bookmarks"
                         android:icon="@drawable/ic_bookmark_menu"
                         android:title="@string/bookmarks" />

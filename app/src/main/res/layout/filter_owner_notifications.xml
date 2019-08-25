@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Thomas Schneider
+
+    This file is a part of Fedilab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Fedilab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Fedilab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/settings_time_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginStart="10dp"
+                android:focusableInTouchMode="false"
+                android:id="@+id/settings_time_from"
+                style="?attr/borderlessColored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginStart="10dp"
+                android:text="@string/settings_time_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginStart="10dp"
+                android:focusableInTouchMode="false"
+                style="?attr/borderlessColored"
+                android:id="@+id/settings_time_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/filter_boosts"
+            android:layout_width="wrap_content"
+            android:text="@string/reblog"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_fav"
+            android:layout_width="wrap_content"
+            android:text="@string/favourite"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_mention"
+            android:layout_width="wrap_content"
+            android:text="@string/mention"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_follow"
+            android:layout_width="wrap_content"
+            android:text="@string/follow"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_poll"
+            android:layout_width="wrap_content"
+            android:text="@string/poll"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

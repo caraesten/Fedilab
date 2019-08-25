@@ -143,7 +143,7 @@ public class BackupNotificationInDataBaseService extends IntentService {
             }
             message = getString(R.string.data_backup_success, String.valueOf(backupNotifications.size()));
             Intent mainActivity = new Intent(BackupNotificationInDataBaseService.this, MainActivity.class);
-            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_INTENT);
+            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_NOTIFICATION_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());
             if(finalToastMessage) {
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
