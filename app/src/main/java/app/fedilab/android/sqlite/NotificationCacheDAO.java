@@ -111,6 +111,8 @@ public class NotificationCacheDAO {
         if( max_id != null)
             selection.append(" AND " + Sqlite.COL_NOTIFICATION_ID + " < '").append(max_id).append("'");
         //BOOST
+        if( filterNotifications == null)
+            filterNotifications = new FilterNotifications();
         if(filterNotifications.isBoost() || filterNotifications.isFavorite() || filterNotifications.isFollow() ||filterNotifications.isMention() || filterNotifications.isPoll() ){
             selection.append(" AND ( ");
             if (filterNotifications.isBoost() ) {

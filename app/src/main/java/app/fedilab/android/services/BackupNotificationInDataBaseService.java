@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -41,7 +42,6 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
 
 
@@ -117,9 +117,10 @@ public class BackupNotificationInDataBaseService extends IntentService {
         SQLiteDatabase db = Sqlite.getInstance(BackupNotificationInDataBaseService.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
+        //new NotificationCacheDAO(getApplicationContext(), db).removeAll();
         try {
             //Starts from the last recorded ID
-            Date sinceDate = new StatusCacheDAO(BackupNotificationInDataBaseService.this, db).getLastTootDateCache(StatusCacheDAO.ARCHIVE_CACHE, userId, instance);
+            Date sinceDate = new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).getLastNotificationDateCache(userId, instance);
             String max_id = null;
             List<Notification> backupNotifications = new ArrayList<>();
             boolean canContinue = true;
@@ -128,7 +129,7 @@ public class BackupNotificationInDataBaseService extends IntentService {
                 max_id = apiResponse.getMax_id();
                 List<Notification> notifications = apiResponse.getNotifications();
                 for(Notification tmpNotification : notifications) {
-                    if(sinceDate != null && max_id != null &&  tmpNotification.getCreated_at().before(sinceDate)){
+                    if(sinceDate != null && tmpNotification.getCreated_at().before(sinceDate)){
                         canContinue = false;
                         break;
                     }
