@@ -98,6 +98,10 @@ public class Sqlite extends SQLiteOpenHelper {
     public static final String TABLE_REMOTE_INSTANCE_TAGS = "REMOTE_INSTANCE_TAGS";
 
 
+    //Table for notifications
+    public static final String TABLE_NOTIFICATION_CACHE = "NOTIFICATION_CACHE";
+
+
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
     static final String COL_ACCT = "ACCT";
@@ -303,7 +307,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_NOTIFICATION_ID = "NOTIFICATION_ID";
     static final String COL_STATUS_ID_CACHE = "STATUS_ID_CACHE";
     private static final String CREATE_TABLE_NOTIFICATIONS = "CREATE TABLE "
-            + TABLE_TIMELINE_CACHE + "("
+            + TABLE_NOTIFICATION_CACHE + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_NOTIFICATION_ID + " TEXT NOT NULL, "
             + COL_INSTANCE + " TEXT NOT NULL, "

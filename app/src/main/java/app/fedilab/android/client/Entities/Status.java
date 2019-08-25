@@ -166,6 +166,7 @@ public class Status implements Parcelable{
     private List<String> imageURL;
     private int viewType;
     private boolean isFocused = false;
+    private long db_id;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -1723,5 +1724,13 @@ public class Status implements Parcelable{
 
     public void setFocused(boolean focused) {
         isFocused = focused;
+    }
+
+    public long getDb_id() {
+        return db_id;
+    }
+
+    public void setDb_id(long db_id) {
+        this.db_id = db_id;
     }
 }
