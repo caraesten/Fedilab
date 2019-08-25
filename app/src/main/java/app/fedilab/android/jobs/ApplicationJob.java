@@ -36,6 +36,8 @@ public class ApplicationJob implements JobCreator {
                 return new ScheduledBoostsSyncJob();
             case BackupStatusesSyncJob.BACKUP_SYNC:
                 return new BackupStatusesSyncJob();
+            case BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC:
+                return new BackupNotificationsSyncJob();
             default:
                 return null;
         }

@@ -372,6 +372,7 @@ public class Helper {
     public static final String SET_DISPLAY_ADMIN_STATUSES = "set_display_admin_statuses";
     public static final String SET_DISPLAY_FEDILAB_FEATURES_BUTTON = "set_display_fedilab_features_button";
     public static final String SET_AUTO_BACKUP_STATUSES = "set_auto_backup_statuses";
+    public static final String SET_AUTO_BACKUP_NOTIFICATIONS = "set_auto_backup_notifications";
 
     public static final int S_NO = 0;
     static final int S_512KO = 1;

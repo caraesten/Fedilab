@@ -311,6 +311,19 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
+
+        boolean auto_backup_notifications = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS+userId+instance, false);
+        final CheckBox set_auto_backup_notifications = rootView.findViewById(R.id.set_auto_backup_notifications);
+        set_auto_backup_notifications.setChecked(auto_backup_notifications);
+        set_auto_backup_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS+userId+instance, set_auto_backup_notifications.isChecked());
+                editor.apply();
+            }
+        });
+
         final LinearLayout set_auto_backup_text = rootView.findViewById(R.id.set_auto_backup_text);
         set_auto_backup_text.setOnClickListener(view -> set_auto_backup.performClick());
 

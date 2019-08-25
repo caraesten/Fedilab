@@ -1149,6 +1149,8 @@
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Report account</string>
     <string name="send_invitation">Send an invitation</string>
     <string name="registration_closed">Your instance does not allow to register a new account!</string>
