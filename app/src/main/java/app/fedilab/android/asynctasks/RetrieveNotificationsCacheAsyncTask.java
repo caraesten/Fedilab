@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.helper.FilterNotifications;
@@ -53,7 +52,6 @@ public class RetrieveNotificationsCacheAsyncTask extends AsyncTask<Void, Void, V
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api;
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Notification> notifications = new NotificationCacheDAO(contextReference.get(), db).getNotificationsFromID(filterNotifications, max_id);
         apiResponse = new APIResponse();

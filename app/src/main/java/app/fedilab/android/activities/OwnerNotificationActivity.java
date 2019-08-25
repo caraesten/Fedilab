@@ -157,7 +157,7 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
             if (theme == Helper.THEME_LIGHT){
                 Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerNotificationActivity.this);
             }
-            toolbarTitle.setText(getString(R.string.owner_cached_toots));
+            toolbarTitle.setText(getString(R.string.owner_cached_notifications));
         }
         notifications = new ArrayList<>();
         RecyclerView lv_notifications = findViewById(R.id.lv_notifications);
@@ -307,7 +307,7 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerNotificationActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
-                statsDialogView = inflater.inflate(R.layout.stats_owner_toots, null);
+                statsDialogView = inflater.inflate(R.layout.stats_owner_notifications, null);
                 dialogBuilder.setView(statsDialogView);
                 dialogBuilder
                         .setTitle(R.string.action_stats)

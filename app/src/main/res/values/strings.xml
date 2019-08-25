@@ -1128,6 +1128,10 @@
     <string name="action_stats">Statistics</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">Number of replies</string>
     <string name="number_statuses">Number of statuses</string>
     <string name="statuses">Statuses</string>
@@ -1188,4 +1192,5 @@
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>

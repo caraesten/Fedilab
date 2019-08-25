@@ -116,7 +116,7 @@ public class NotificationCacheDAO {
         if(filterNotifications.isBoost() || filterNotifications.isFavorite() || filterNotifications.isFollow() ||filterNotifications.isMention() || filterNotifications.isPoll() ){
             selection.append(" AND ( ");
             if (filterNotifications.isBoost() ) {
-                selection.append(Sqlite.COL_TYPE + "='boost' OR ");
+                selection.append(Sqlite.COL_TYPE + "='reblog' OR ");
             }
             if (filterNotifications.isPoll() ) {
                 selection.append(Sqlite.COL_TYPE + "='poll' OR ");
@@ -128,7 +128,7 @@ public class NotificationCacheDAO {
                 selection.append(Sqlite.COL_TYPE + "='mention' OR ");
             }
             if (filterNotifications.isFavorite() ) {
-                selection.append(Sqlite.COL_TYPE + "='favorite' OR ");
+                selection.append(Sqlite.COL_TYPE + "='favourite' OR ");
             }
             String selectionStr = selection.toString().substring(0, selection.toString().length()-3);
             selection = new StringBuilder(selectionStr);
