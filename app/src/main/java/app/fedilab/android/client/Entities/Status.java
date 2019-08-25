@@ -918,10 +918,16 @@ public class Status implements Parcelable{
                                              if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
                                                  CrossActions.doCrossConversation(context, finalUrl);
                                              }else{//It's an account
-                                                 Account account = status.getAccount();
-                                                 account.setAcct(matcherLink.group(2));
-                                                 account.setInstance(matcherLink.group(1));
-                                                 CrossActions.doCrossProfile(context, account);
+                                                 Account account = new Account();
+                                                 String acct = matcherLink.group(2);
+                                                 if( acct != null){
+                                                     if( acct.startsWith("@"))
+                                                         acct = acct.substring(1);
+                                                     account.setAcct(acct);
+                                                     account.setInstance(matcherLink.group(1));
+                                                     CrossActions.doCrossProfile(context, account);
+                                                 }
+
                                              }
 
                                          }else  {
