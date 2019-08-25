@@ -48,7 +48,7 @@ public class StatusCacheDAO {
     //Type of cache
     public static int BOOKMARK_CACHE = 0;
     public static int ARCHIVE_CACHE = 1;
-
+    public static int NOTIFICATION_CACHE = 2;
 
     public StatusCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

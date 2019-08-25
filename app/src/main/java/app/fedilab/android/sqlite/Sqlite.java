@@ -49,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 32;
+    public static final int DB_VERSION = 33;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -300,6 +300,22 @@ public class Sqlite extends SQLiteOpenHelper {
 
 
 
+    static final String COL_NOTIFICATION_ID = "NOTIFICATION_ID";
+    static final String COL_STATUS_ID_CACHE = "STATUS_ID_CACHE";
+    private static final String CREATE_TABLE_NOTIFICATIONS = "CREATE TABLE "
+            + TABLE_TIMELINE_CACHE + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_NOTIFICATION_ID + " TEXT NOT NULL, "
+            + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_ACCOUNT + " TEXT NOT NULL, "
+            + COL_TYPE + " TEXT NOT NULL, "
+            + COL_STATUS_ID + " TEXT NOT NULL, "
+            + COL_STATUS_ID_CACHE + " INTEGER, "
+            + COL_CREATED_AT + " TEXT NOT NULL)";
+
+
+
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -330,6 +346,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
         db.execSQL(CREATE_TABLE_TIMELINES);
         db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
+        db.execSQL(CREATE_TABLE_NOTIFICATIONS);
     }
 
     @Override
@@ -459,6 +476,9 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(insert);
                 db.execSQL("DROP TABLE "+TABLE_USER_ACCOUNT);
                 db.execSQL("ALTER TABLE "+TABLE_USER_ACCOUNT_TEMP + " RENAME TO "+ TABLE_USER_ACCOUNT);
+
+            case 32:
+                db.execSQL(CREATE_TABLE_NOTIFICATIONS);
             default:
                 break;
         }
