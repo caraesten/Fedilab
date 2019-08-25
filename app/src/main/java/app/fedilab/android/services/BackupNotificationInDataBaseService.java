@@ -36,9 +36,10 @@ import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
@@ -120,27 +121,27 @@ public class BackupNotificationInDataBaseService extends IntentService {
             //Starts from the last recorded ID
             Date sinceDate = new StatusCacheDAO(BackupNotificationInDataBaseService.this, db).getLastTootDateCache(StatusCacheDAO.ARCHIVE_CACHE, userId, instance);
             String max_id = null;
-            List<Status> backupStatus = new ArrayList<>();
+            List<Notification> backupNotifications = new ArrayList<>();
             boolean canContinue = true;
             do {
-                APIResponse apiResponse = api.getStatus(userId, max_id);
+                APIResponse apiResponse = api.getNotifications(max_id);
                 max_id = apiResponse.getMax_id();
-                List<Status> statuses = apiResponse.getStatuses();
-                for(Status tmpStatus : statuses) {
-                    if(sinceDate != null && max_id != null &&  tmpStatus.getCreated_at().before(sinceDate)){
+                List<Notification> notifications = apiResponse.getNotifications();
+                for(Notification tmpNotification : notifications) {
+                    if(sinceDate != null && max_id != null &&  tmpNotification.getCreated_at().before(sinceDate)){
                         canContinue = false;
                         break;
                     }
-                    new StatusCacheDAO(BackupNotificationInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus, userId, instance);
-                    backupStatus.add(tmpStatus);
+                    new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).insertNotification(tmpNotification, userId, instance);
+                    backupNotifications.add(tmpNotification);
                 }
             }while (max_id != null && canContinue);
 
-            if(backupStatus.size() > 0){
+            if(backupNotifications.size() > 0){
                 Intent backupIntent = new Intent(Helper.INTENT_BACKUP_FINISH);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(backupIntent);
             }
-            message = getString(R.string.data_backup_success, String.valueOf(backupStatus.size()));
+            message = getString(R.string.data_backup_success, String.valueOf(backupNotifications.size()));
             Intent mainActivity = new Intent(BackupNotificationInDataBaseService.this, MainActivity.class);
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());

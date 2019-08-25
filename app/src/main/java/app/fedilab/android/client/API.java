@@ -3198,6 +3198,46 @@ public class API {
     /**
      * Retrieves notifications for the authenticated account *synchronously*
      * @param max_id String id max
+     * @return APIResponse
+     */
+    public APIResponse getNotifications( String max_id){
+
+        HashMap<String, String> params = new HashMap<>();
+        if( max_id != null )
+            params.put("max_id", max_id);
+        params.put("limit","30");
+        if( context == null){
+            apiResponse = new APIResponse();
+            Error error = new Error();
+            apiResponse.setError(error);
+            return apiResponse;
+        }
+        List<Notification> notifications = new ArrayList<>();
+
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/notifications"), 15, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            notifications = parseNotificationResponse(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setNotifications(notifications);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves notifications for the authenticated account *synchronously*
+     * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
      * @return APIResponse

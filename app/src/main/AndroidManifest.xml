@@ -55,6 +55,8 @@
             android:exported="false"/>
         <service android:name="app.fedilab.android.services.BackupStatusInDataBaseService"
             android:exported="false"/>
+        <service android:name="app.fedilab.android.services.BackupNotificationInDataBaseService"
+            android:exported="false"/>
         <receiver android:name="app.fedilab.android.services.RestartLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>
