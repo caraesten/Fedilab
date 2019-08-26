@@ -19,11 +19,11 @@
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ScrollView
         android:id="@+id/stats_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
@@ -87,7 +87,7 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="2"
-                    android:text="@string/first_toot_date"
+                    android:text="@string/first_notification_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -103,7 +103,7 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_weight="2"
-                    android:text="@string/last_toot_date"
+                    android:text="@string/last_notification_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
