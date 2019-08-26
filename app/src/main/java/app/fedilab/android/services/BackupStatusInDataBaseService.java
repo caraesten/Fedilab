@@ -24,6 +24,8 @@ import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -133,6 +135,7 @@ public class BackupStatusInDataBaseService extends IntentService {
                     new StatusCacheDAO(BackupStatusInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus, userId, instance);
                     backupStatus.add(tmpStatus);
                 }
+                SystemClock.sleep(1000);
             }while (max_id != null && canContinue);
 
             if(backupStatus.size() > 0){

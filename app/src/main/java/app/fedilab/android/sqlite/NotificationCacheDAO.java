@@ -322,10 +322,7 @@ public class NotificationCacheDAO {
      * Returns the last id of backup for a use
      * @return Date
      */
-    public String getLastNotificationIDCache(){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String instance = Helper.getLiveInstance(context);
+    public String getLastNotificationIDCache(String userId, String instance){
         try {
             Cursor c = db.query(Sqlite.TABLE_NOTIFICATION_CACHE, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_NOTIFICATION_ID + " DESC", "1");
             //No element found

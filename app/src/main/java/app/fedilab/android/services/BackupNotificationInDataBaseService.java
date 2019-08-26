@@ -22,14 +22,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import app.fedilab.android.R;
@@ -120,22 +119,25 @@ public class BackupNotificationInDataBaseService extends IntentService {
         //new NotificationCacheDAO(getApplicationContext(), db).removeAll();
         try {
             //Starts from the last recorded ID
-            Date sinceDate = new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).getLastNotificationDateCache(userId, instance);
+            String lastId = new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).getLastNotificationIDCache(userId, instance);
             String max_id = null;
             List<Notification> backupNotifications = new ArrayList<>();
             boolean canContinue = true;
             do {
                 APIResponse apiResponse = api.getNotifications(max_id);
+
                 max_id = apiResponse.getMax_id();
                 List<Notification> notifications = apiResponse.getNotifications();
                 for(Notification tmpNotification : notifications) {
-                    if(sinceDate != null && tmpNotification.getCreated_at().before(sinceDate)){
+                    if(lastId != null && tmpNotification.getId().compareTo(lastId) <= 0){
                         canContinue = false;
                         break;
                     }
+
                     new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).insertNotification(tmpNotification, userId, instance);
                     backupNotifications.add(tmpNotification);
                 }
+                SystemClock.sleep(1000);
             }while (max_id != null && canContinue);
 
             if(backupNotifications.size() > 0){

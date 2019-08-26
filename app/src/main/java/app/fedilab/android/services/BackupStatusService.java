@@ -26,6 +26,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.Nullable;
+
+import android.os.SystemClock;
 import android.text.Html;
 import android.widget.Toast;
 
@@ -117,6 +119,7 @@ public class BackupStatusService extends IntentService {
                 List<Status> statuses = apiResponse.getStatuses();
                 if (statuses.size() > 0)
                     backupStatus.addAll(statuses);
+                SystemClock.sleep(1000);
             }while (max_id != null);
 
             String fileName = account.getAcct()+"@"+account.getInstance()+ Helper.dateFileToString(getApplicationContext(), new Date())+".csv";
