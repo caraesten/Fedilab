@@ -21,11 +21,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.client.Entities.Charts;
 import app.fedilab.android.client.Entities.Notification;
+import app.fedilab.android.client.Entities.NotificationCharts;
 import app.fedilab.android.client.Entities.StatisticsNotification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.FilterNotifications;
@@ -471,6 +475,90 @@ public class NotificationCacheDAO {
 
         return statistics;
     }
+
+
+    public NotificationCharts getCharts(Date dateIni, Date dateEnd){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        NotificationCharts charts = new NotificationCharts();
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(dateIni);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(dateEnd);
+        end.set(Calendar.HOUR_OF_DAY,23);
+        end.set(Calendar.MINUTE,59);
+        end.set(Calendar.SECOND,59);
+
+        StringBuilder selection = new StringBuilder(Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(Helper.dateToString(start.getTime())).append("'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(Helper.dateToString(end.getTime())).append("'");
+
+        List<Notification> data = new ArrayList<>();
+        try {
+            Cursor c = db.query(Sqlite.TABLE_NOTIFICATION_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " ASC");
+            data = cursorToListNotifications(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<String> xLabel = new ArrayList<>();
+
+        charts.setFavourites(new LinkedHashMap<>());
+        charts.setFollows(new LinkedHashMap<>());
+        charts.setMentions(new LinkedHashMap<>());
+        charts.setPolls(new LinkedHashMap<>());
+        charts.setReblogs(new LinkedHashMap<>());
+        if( data != null) {
+            for (Notification notification : data) {
+                Calendar tempdate = Calendar.getInstance();
+                tempdate.setTime(notification.getCreated_at());
+                tempdate.set(Calendar.HOUR_OF_DAY, 0);
+                tempdate.set(Calendar.MINUTE, 0);
+                tempdate.set(Calendar.SECOND, 0);
+                long date = tempdate.getTimeInMillis();
+                if (notification.getType().equals("reblog")) {
+                    if(charts.getReblogs().containsKey(date)){
+                        charts.getReblogs().put(date,(charts.getReblogs().get(date)+1));
+                    }else{
+                        charts.getReblogs().put(date,1);
+                    }
+
+                } else if (notification.getType().equals("favourite")) {
+                    if(charts.getFavourites().containsKey(date)){
+                        charts.getFavourites().put(date,(charts.getFavourites().get(date)+1));
+                    }else{
+                        charts.getFavourites().put(date,1);
+                    }
+                } else if (notification.getType().equals("follow")) {
+                    if(charts.getFollows().containsKey(date)){
+                        charts.getFollows().put(date,(charts.getFollows().get(date)+1));
+                    }else{
+                        charts.getFollows().put(date,1);
+                    }
+                } else if (notification.getType().equals("mention")) {
+                    if(charts.getMentions().containsKey(date)){
+                        charts.getMentions().put(date,(charts.getMentions().get(date)+1));
+                    }else{
+                        charts.getMentions().put(date,1);
+                    }
+                }else if (notification.getType().equals("poll")) {
+                    if(charts.getPolls().containsKey(date)){
+                        charts.getPolls().put(date,(charts.getPolls().get(date)+1));
+                    }else{
+                        charts.getPolls().put(date,1);
+                    }
+                }
+            }
+        }
+        charts.setxLabels(xLabel);
+        return charts;
+    }
+
 
     /***
      * Method to hydrate notification from database

@@ -479,7 +479,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
 
             ImageButton charts = statsDialogView.findViewById(R.id.charts);
             charts.setOnClickListener(w ->{
-                Intent intent = new Intent(OwnerNotificationActivity.this, OwnerChartsActivity.class);
+                Intent intent = new Intent(OwnerNotificationActivity.this, OwnerNotificationChartsActivity.class);
                 startActivity(intent);
             });
 
