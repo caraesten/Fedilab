@@ -977,7 +977,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_display_timeline_in_list_indication">Ajouter un bouton dans le coin supérieur droit pour lister tous les tags/instances/listes</string>
     <string name="set_display_news_from_fedilab_indication">Afficher un élément dans le menu principal pour avoir un accès rapide à un fil sur le tag #Fedilab</string>
     <string name="live_notif_indication">Garde une connexion ouverte à l\'API de streaming pour les notifications en direct.</string>
-    <string name="set_keep_background_process_indication">Lorsque l\'application est en arrière-plan, elle gardera une connexion à l\'API de streaming. Désactivez-la si vous vous souciez de la votre batterie.</string>
+    <string name="set_keep_background_process_indication">Lorsque l\'application est en arrière-plan, elle gardera une connexion à l\'API de streaming. Désactivez-la si vous vous souciez de votre batterie.</string>
     <string name="set_enable_time_slot_indication">Pendant l\'intervalle de temps, l\'application enverra des notifications. Vous pouvez inversez (ie: silencer) cette intervalle avec l\'option à droite.</string>
     <string name="set_display_fedilab_features_button_indication">Affiche un bouton Fedilab. C\'est un raccourci pour accéder aux fonctionnalités de l\'application.</string>
     <string name="set_quick_reply_indication">Permet de répondre directement dans les fils, en bas des statuts</string>
@@ -987,7 +987,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_security_provider_indication">Cette option permet de prendre en charge les suites de chiffrement récentes. Elle est utile pour les anciens appareils Android ou si vous ne n\'arrivez pas vous connecter à votre instance.</string>
     <string name="set_video_mode_indication">Exclusivement pour les vidéos Peertube. Basculez vers ce mode si vous ne pouvez pas les lire.</string>
     <string name="featured_hashtags_indication">Ces tags permettent de filtrer les statuts dans les profils. Vous devrez utiliser le menu contextuel pour les voir.</string>
-    <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscules</string>
+    <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscule</string>
     <string name="settings_title_custom_sharing_indication">Permet aux créateurs de contenu de partager leurs statuts sur leurs flux RSS</string>
     <string name="timelines">Fils</string>
     <string name="u_interface">Interface</string>
