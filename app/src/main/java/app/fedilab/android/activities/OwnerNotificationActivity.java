@@ -62,15 +62,18 @@ import java.util.List;
 import java.util.Map;
 
 import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveNotificationStatsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveNotificationsCacheAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Statistics;
+import app.fedilab.android.client.Entities.StatisticsNotification;
 import app.fedilab.android.drawers.NotificationsListAdapter;
 import app.fedilab.android.helper.FilterNotifications;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveCacheNotificationsInterface;
+import app.fedilab.android.interfaces.OnRetrieveNotificationStatsInterface;
 import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.services.BackupNotificationInDataBaseService;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -84,7 +87,7 @@ import es.dmoral.toasty.Toasty;
  * Show owner's notifications
  */
 
-public class OwnerNotificationActivity extends BaseActivity implements  OnRetrieveStatsInterface, OnRetrieveCacheNotificationsInterface {
+public class OwnerNotificationActivity extends BaseActivity implements OnRetrieveCacheNotificationsInterface, OnRetrieveNotificationStatsInterface {
 
 
     private ImageView pp_actionBar;
@@ -102,7 +105,7 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
     private FilterNotifications filterNotifications;
     private Date dateIni, dateEnd;
     private View statsDialogView;
-    private Statistics statistics;
+    private StatisticsNotification statistics;
 
 
     @Override
@@ -319,7 +322,7 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                         });
                 dialogBuilder.create().show();
                 if( statistics == null) {
-                    new RetrieveNotificationsCacheAsyncTask(getApplicationContext(), null, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveNotificationStatsAsyncTask(getApplicationContext(),  OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{
                     displayStats();
                 }
@@ -354,6 +357,10 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                 settings_time_from = dialogView.findViewById(R.id.settings_time_from);
                 settings_time_to = dialogView.findViewById(R.id.settings_time_to);
 
+
+                settings_time_from.setText(dateInitString);
+                settings_time_to.setText(dateEndString);
+
                 final CheckBox filter_boosts = dialogView.findViewById(R.id.filter_boosts);
                 final CheckBox filter_fav = dialogView.findViewById(R.id.filter_fav);
                 final CheckBox filter_mention = dialogView.findViewById(R.id.filter_mention);
@@ -366,7 +373,6 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                 filter_follow.setChecked(filterNotifications.isFollow());
                 filter_poll.setChecked(filterNotifications.isPoll());
 
-                final Spinner filter_boost = dialogView.findViewById(R.id.filter_boost);
 
 
                 Calendar c = Calendar.getInstance();
@@ -453,33 +459,23 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                 .unregisterReceiver(backupFinishedReceiver);
     }
 
-    @Override
-    public void onStats(Statistics statistics) {
-        this.statistics = statistics;
-        displayStats();
-    }
-
     private void displayStats(){
         if( statsDialogView != null){
             ScrollView stats_container = statsDialogView.findViewById(R.id.stats_container);
             RelativeLayout loader = statsDialogView.findViewById(R.id.loader);
 
-            TextView total_statuses = statsDialogView.findViewById(R.id.total_statuses);
+            TextView total_notifications = statsDialogView.findViewById(R.id.total_notifications);
             TextView number_boosts = statsDialogView.findViewById(R.id.number_boosts);
-            TextView number_replies = statsDialogView.findViewById(R.id.number_replies);
-            TextView number_statuses = statsDialogView.findViewById(R.id.number_statuses);
-            TextView number_with_media = statsDialogView.findViewById(R.id.number_with_media);
-            TextView number_with_cw = statsDialogView.findViewById(R.id.number_with_cw);
-            TextView number_with_sensitive_media = statsDialogView.findViewById(R.id.number_with_sensitive_media);
-            TextView v_public = statsDialogView.findViewById(R.id.v_public);
-            TextView v_unlisted = statsDialogView.findViewById(R.id.v_unlisted);
-            TextView v_private = statsDialogView.findViewById(R.id.v_private);
-            TextView v_direct = statsDialogView.findViewById(R.id.v_direct);
+            TextView number_favourites = statsDialogView.findViewById(R.id.number_favourites);
+            TextView number_mentions = statsDialogView.findViewById(R.id.number_mentions);
+            TextView number_follows = statsDialogView.findViewById(R.id.number_follows);
+            TextView number_polls = statsDialogView.findViewById(R.id.number_polls);
+
 
             TextView frequency = statsDialogView.findViewById(R.id.frequency);
             TextView last_toot_date = statsDialogView.findViewById(R.id.last_toot_date);
             TextView first_toot_date = statsDialogView.findViewById(R.id.first_toot_date);
-            TextView tags = statsDialogView.findViewById(R.id.tags);
+
 
             ImageButton charts = statsDialogView.findViewById(R.id.charts);
             charts.setOnClickListener(w ->{
@@ -487,38 +483,19 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
                 startActivity(intent);
             });
 
-            total_statuses.setText(String.valueOf(statistics.getTotal_statuses()));
-            number_boosts.setText(String.valueOf(statistics.getNumber_boosts()));
-            number_replies.setText(String.valueOf(statistics.getNumber_replies()));
-            number_statuses.setText(String.valueOf(statistics.getNumber_status()));
-            number_with_media.setText(String.valueOf(statistics.getNumber_with_media()));
-            number_with_cw.setText(String.valueOf(statistics.getNumber_with_cw()));
-            number_with_sensitive_media.setText(String.valueOf(statistics.getNumber_with_sensitive_media()));
-            v_public.setText(String.valueOf(statistics.getV_public()));
-            v_unlisted.setText(String.valueOf(statistics.getV_unlisted()));
-            v_private.setText(String.valueOf(statistics.getV_private()));
-            v_direct.setText(String.valueOf(statistics.getV_direct()));
+            total_notifications.setText(String.valueOf(statistics.getTotal_notification()));
+            number_boosts.setText(String.valueOf(statistics.getNumber_reblog()));
+            number_favourites.setText(String.valueOf(statistics.getNumber_favourite()));
+            number_mentions.setText(String.valueOf(statistics.getNumber_mentions()));
+            number_follows.setText(String.valueOf(statistics.getNumber_follow()));
+            number_polls.setText(String.valueOf(statistics.getNumber_poll()));
 
 
             first_toot_date.setText(Helper.dateToString(statistics.getFirstTootDate()));
             last_toot_date.setText(Helper.dateToString(statistics.getLastTootDate()));
             DecimalFormat df = new DecimalFormat("#.##");
-            frequency.setText(getString(R.string.toot_per_day, df.format(statistics.getFrequency())));
+            frequency.setText(getString(R.string.notification_per_day, df.format(statistics.getFrequency())));
 
-            if( statistics.getTagsTrend() != null && statistics.getTagsTrend().size() > 0 ){
-                Iterator it = statistics.getTagsTrend() .entrySet().iterator();
-                StringBuilder text = new StringBuilder();
-                int i = 1;
-                while (it.hasNext() && i <= 10) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    System.out.println(pair.getKey() + " = " + pair.getValue());
-                    text.append(i).append(" - ").append(pair.getKey()).append(" → ").append(pair.getValue()).append("\r\n");
-                    i++;
-                }
-                tags.setText(text.toString());
-            }else{
-                tags.setText(getString(R.string.no_tags));
-            }
 
             stats_container.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);
@@ -569,5 +546,11 @@ public class OwnerNotificationActivity extends BaseActivity implements  OnRetrie
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
+    }
+
+    @Override
+    public void onStats(StatisticsNotification statistics) {
+        this.statistics = statistics;
+        displayStats();
     }
 }

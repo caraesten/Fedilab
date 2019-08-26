@@ -454,6 +454,7 @@
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Only</item>
@@ -1143,6 +1144,7 @@
     <string name="last_toot_date">Last status date</string>
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Date range</string>
     <string name="action_groups">Groups</string>
     <string name="no_messages">No groups!</string>

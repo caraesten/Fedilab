@@ -116,7 +116,6 @@ public class BackupNotificationInDataBaseService extends IntentService {
         SQLiteDatabase db = Sqlite.getInstance(BackupNotificationInDataBaseService.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
-        //new NotificationCacheDAO(getApplicationContext(), db).removeAll();
         try {
             //Starts from the last recorded ID
             String lastId = new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).getLastNotificationIDCache(userId, instance);
@@ -137,14 +136,14 @@ public class BackupNotificationInDataBaseService extends IntentService {
                     new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).insertNotification(tmpNotification, userId, instance);
                     backupNotifications.add(tmpNotification);
                 }
-                SystemClock.sleep(1000);
+                SystemClock.sleep(500);
             }while (max_id != null && canContinue);
 
             if(backupNotifications.size() > 0){
                 Intent backupIntent = new Intent(Helper.INTENT_BACKUP_FINISH);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(backupIntent);
             }
-            message = getString(R.string.data_backup_success, String.valueOf(backupNotifications.size()));
+            message = getString(R.string.data_backup_notification_success, String.valueOf(backupNotifications.size()));
             Intent mainActivity = new Intent(BackupNotificationInDataBaseService.this, MainActivity.class);
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_NOTIFICATION_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());

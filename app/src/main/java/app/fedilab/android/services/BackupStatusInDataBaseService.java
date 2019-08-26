@@ -135,7 +135,7 @@ public class BackupStatusInDataBaseService extends IntentService {
                     new StatusCacheDAO(BackupStatusInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus, userId, instance);
                     backupStatus.add(tmpStatus);
                 }
-                SystemClock.sleep(1000);
+                SystemClock.sleep(500);
             }while (max_id != null && canContinue);
 
             if(backupStatus.size() > 0){

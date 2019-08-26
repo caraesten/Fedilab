@@ -21,20 +21,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import app.fedilab.android.client.Entities.Charts;
 import app.fedilab.android.client.Entities.Notification;
-import app.fedilab.android.client.Entities.Statistics;
+import app.fedilab.android.client.Entities.StatisticsNotification;
 import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.helper.FilterNotifications;
-import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
 
 
@@ -398,6 +392,85 @@ public class NotificationCacheDAO {
     }
 
 
+
+    public StatisticsNotification getStat(){
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+
+        StatisticsNotification statistics = new StatisticsNotification();
+
+        //Count All
+        Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setTotal_notification(mCount.getInt(0));
+        mCount.close();
+
+        //Count boosts
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_TYPE + " = 'reblog'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_reblog(mCount.getInt(0));
+        mCount.close();
+
+        //Count favorites
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_TYPE + " = 'favourite'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_favourite(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count mentions
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_TYPE + " = 'mention'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_mentions(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count follows
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_TYPE + " = 'follow'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_follow(mCount.getInt(0));
+        mCount.close();
+
+
+        //Count polls
+        mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                        + " where " + Sqlite.COL_USER_ID + " = '" + userId + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND "
+                        + Sqlite.COL_TYPE + " = 'poll'"
+                , null);
+        mCount.moveToFirst();
+        statistics.setNumber_poll(mCount.getInt(0));
+        mCount.close();
+
+
+
+        statistics.setFirstTootDate(getSmallerDate());
+        statistics.setLastTootDate(getGreaterDate());
+
+        long days = 1;
+        if( statistics.getLastTootDate() != null && statistics.getFirstTootDate() != null) {
+            long diff = statistics.getLastTootDate().getTime() - statistics.getFirstTootDate().getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        }
+        statistics.setFrequency((float)statistics.getTotal_notification()/days);
+
+        return statistics;
+    }
 
     /***
      * Method to hydrate notification from database

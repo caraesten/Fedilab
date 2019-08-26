@@ -169,7 +169,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
-                    android:id="@+id/total_statuses"
+                    android:id="@+id/total_notifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
