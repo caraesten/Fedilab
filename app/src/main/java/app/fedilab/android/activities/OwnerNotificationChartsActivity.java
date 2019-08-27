@@ -283,10 +283,10 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
 
         LineDataSet dataSetBoosts = new LineDataSet(boostsEntry, getString(R.string.reblog));
-        dataSetBoosts.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_boost));
-        dataSetBoosts.setValueTextSize(12f);
-        dataSetBoosts.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_boost));
-        dataSetBoosts.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_boost));
+        dataSetBoosts.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_boost));
+        dataSetBoosts.setValueTextSize(10f);
+        dataSetBoosts.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_boost));
+        dataSetBoosts.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_boost));
         dataSetBoosts.setDrawValues(false);
         dataSetBoosts.setDrawFilled(true);
         dataSetBoosts.setDrawCircles(false);
@@ -295,10 +295,10 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         LineDataSet dateSetFavorites = new LineDataSet(favEntry, getString(R.string.favourite));
-        dateSetFavorites.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_reply));
-        dateSetFavorites.setValueTextSize(12f);
-        dateSetFavorites.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_reply));
-        dateSetFavorites.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_reply));
+        dateSetFavorites.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_fav));
+        dateSetFavorites.setValueTextSize(10f);
+        dateSetFavorites.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_fav));
+        dateSetFavorites.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_fav));
         dateSetFavorites.setDrawValues(false);
         dateSetFavorites.setDrawFilled(true);
         dateSetFavorites.setDrawCircles(false);
@@ -306,11 +306,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dateSetFavorites.setLineWidth(2f);
         dateSetFavorites.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-        LineDataSet dataSetMention = new LineDataSet(followEntry, getString(R.string.mention));
-        dataSetMention.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetMention.setValueTextSize(12f);
-        dataSetMention.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetMention.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
+        LineDataSet dataSetMention = new LineDataSet(mentionEntry, getString(R.string.mention));
+        dataSetMention.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_mention));
+        dataSetMention.setValueTextSize(10f);
+        dataSetMention.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_mention));
+        dataSetMention.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_mention));
         dataSetMention.setDrawValues(false);
         dataSetMention.setDrawFilled(true);
         dataSetMention.setDrawCircles(false);
@@ -320,10 +320,10 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
 
         LineDataSet dataSetFollow = new LineDataSet(followEntry, getString(R.string.follow));
-        dataSetFollow.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetFollow.setValueTextSize(12f);
-        dataSetFollow.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetFollow.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
+        dataSetFollow.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_follow));
+        dataSetFollow.setValueTextSize(10f);
+        dataSetFollow.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_follow));
+        dataSetFollow.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_follow));
         dataSetFollow.setDrawValues(false);
         dataSetFollow.setDrawFilled(true);
         dataSetFollow.setDrawCircles(false);
@@ -333,17 +333,17 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
 
 
-        LineDataSet dataSetPolls = new LineDataSet(followEntry, getString(R.string.poll));
-        dataSetPolls.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetPolls.setValueTextSize(12f);
-        dataSetPolls.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
-        dataSetPolls.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_status));
+      /*  LineDataSet dataSetPolls = new LineDataSet(pollEntry, getString(R.string.poll));
+        dataSetPolls.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_poll));
+        dataSetPolls.setValueTextSize(10f);
+        dataSetPolls.setValueTextColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_poll));
+        dataSetPolls.setFillColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_poll));
         dataSetPolls.setDrawValues(false);
         dataSetPolls.setDrawFilled(true);
         dataSetPolls.setDrawCircles(false);
         dataSetPolls.setDrawCircleHole(false);
         dataSetPolls.setLineWidth(2f);
-        dataSetPolls.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSetPolls.setMode(LineDataSet.Mode.CUBIC_BEZIER);*/
 
 
         List<ILineDataSet> dataSets = new ArrayList<>();
@@ -353,7 +353,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSets.add(dateSetFavorites);
         dataSets.add(dataSetMention);
         dataSets.add(dataSetFollow);
-        dataSets.add(dataSetPolls);
+        //dataSets.add(dataSetPolls);
 
         //X axis
         XAxis xAxis = chart.getXAxis();
@@ -363,13 +363,12 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
         //Legend
         Legend legend = chart.getLegend();
-        legend.setTextSize(16f);
+        legend.setTextSize(12f);
         legend.setXEntrySpace(15f);
-
         //Left axis
         YAxis leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
         leftAxis.setTextSize(14f);
-        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMinimum(charts.getMinYVal());
         leftAxis.setDrawAxisLine(true);
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawLabels(true);
@@ -388,7 +387,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
                 dateSetFavorites.setValueTextColor(Color.BLACK);
                 dataSetFollow.setValueTextColor(Color.BLACK);
                 dataSetMention.setValueTextColor(Color.BLACK);
-                dataSetPolls.setValueTextColor(Color.BLACK);
+              //  dataSetPolls.setValueTextColor(Color.BLACK);
 
                 legend.setTextColor(Color.BLACK);
                 leftAxis.setTextColor(Color.BLACK);
@@ -401,7 +400,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
                 dateSetFavorites.setValueTextColor(color);
                 dataSetFollow.setValueTextColor(color);
                 dataSetMention.setValueTextColor(color);
-                dataSetPolls.setValueTextColor(color);
+              //  dataSetPolls.setValueTextColor(color);
                 legend.setTextColor(color);
                 leftAxis.setTextColor(color);
         }

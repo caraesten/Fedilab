@@ -53,7 +53,7 @@ public class RetrieveNotificationChartsAsyncTask extends AsyncTask<Void, Void, V
     protected Void doInBackground(Void... params) {
 
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        charts = new NotificationCacheDAO(contextReference.get(), db).getCharts(dateIni, dateEnd);
+        charts = new NotificationCacheDAO(contextReference.get(), db).getChartsEvolution(dateIni, dateEnd);
 
         return null;
     }

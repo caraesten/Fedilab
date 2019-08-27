@@ -158,6 +158,13 @@
     <color name="chart_reply">#388E3C</color>
     <color name="chart_status">#0288D1</color>
 
+
+    <color name="chart_notif_boost">#D32F2F</color>
+    <color name="chart_notif_fav">#388E3C</color>
+    <color name="chart_notif_mention">#0288D1</color>
+    <color name="chart_notif_follow">#512DA8</color>
+    <color name="chart_notif_poll">#FBC02D</color>
+
     <!-- TOASTY -->
     <color name="toasty_text">#2e2e2e</color>
     <color name="toasty_background">#c8c8c8</color>

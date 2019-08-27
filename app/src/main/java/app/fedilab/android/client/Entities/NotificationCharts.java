@@ -27,6 +27,7 @@ public class NotificationCharts {
     private LinkedHashMap<Long, Integer> mentions;
     private LinkedHashMap<Long, Integer> follows;
     private LinkedHashMap<Long, Integer> polls;
+    private int minYVal = 0;
 
     public List<String> getxLabels() {
         return xLabels;
@@ -82,5 +83,13 @@ public class NotificationCharts {
 
     public void setPolls(LinkedHashMap<Long, Integer> polls) {
         this.polls = polls;
+    }
+
+    public int getMinYVal() {
+        return minYVal;
+    }
+
+    public void setMinYVal(int minYVal) {
+        this.minYVal = minYVal;
     }
 }

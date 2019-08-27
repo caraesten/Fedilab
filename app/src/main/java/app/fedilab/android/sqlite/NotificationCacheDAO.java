@@ -560,6 +560,177 @@ public class NotificationCacheDAO {
     }
 
 
+    public NotificationCharts getChartsEvolution(Date dateIni, Date dateEnd){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        NotificationCharts charts = new NotificationCharts();
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(dateIni);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(dateEnd);
+        end.set(Calendar.HOUR_OF_DAY,23);
+        end.set(Calendar.MINUTE,59);
+        end.set(Calendar.SECOND,59);
+
+        long msDiff = end.getTimeInMillis() - start.getTimeInMillis();
+        long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
+        List<String> xLabel = new ArrayList<>();
+
+        charts.setFavourites(new LinkedHashMap<>());
+        charts.setFollows(new LinkedHashMap<>());
+        charts.setMentions(new LinkedHashMap<>());
+        charts.setPolls(new LinkedHashMap<>());
+        charts.setReblogs(new LinkedHashMap<>());
+        int reblogCount = 0;
+        int favCount = 0;
+       // int pollCount = 0;
+        int followCount = 0;
+        int mentionCount = 0;
+        Date smallestDate = getSmallerDate();
+        int minYVal = 0;
+        StringBuilder selection = new StringBuilder(Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(Helper.dateToString(smallestDate)).append("'");
+        selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(Helper.dateToString(start.getTime())).append("'");
+        try {
+            Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                            + " where " + selection.toString() + " AND "
+                            + Sqlite.COL_TYPE + " = 'reblog'"
+                    , null);
+            mCount.moveToFirst();
+            reblogCount = mCount.getInt(0);
+            mCount.close();
+            minYVal = reblogCount;
+
+            mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                            + " where " + selection.toString() + " AND "
+                            + Sqlite.COL_TYPE + " = 'favourite'"
+                    , null);
+            mCount.moveToFirst();
+            favCount = mCount.getInt(0);
+            mCount.close();
+            if( favCount < minYVal){
+                minYVal = favCount;
+            }
+
+            mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                            + " where " + selection.toString() + " AND "
+                            + Sqlite.COL_TYPE + " = 'mention'"
+                    , null);
+            mCount.moveToFirst();
+            mentionCount = mCount.getInt(0);
+            mCount.close();
+            if( mentionCount < minYVal){
+                minYVal = mentionCount;
+            }
+
+            mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                            + " where " + selection.toString() + " AND "
+                            + Sqlite.COL_TYPE + " = 'follow'"
+                    , null);
+            mCount.moveToFirst();
+            mCount.moveToFirst();
+            followCount = mCount.getInt(0);
+            mCount.close();
+            if( followCount < minYVal){
+                minYVal = followCount;
+            }
+
+         /*   mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                            + " where " + selection.toString() + " AND "
+                            + Sqlite.COL_TYPE + " = 'poll'"
+                    , null);
+            mCount.moveToFirst();
+            mCount.moveToFirst();
+            pollCount = mCount.getInt(0);
+            mCount.close();
+            if( pollCount < minYVal){
+                minYVal = pollCount;
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+            Calendar startTmp = Calendar.getInstance();
+            startTmp.setTime(date);
+            startTmp.set(Calendar.HOUR_OF_DAY,0);
+            startTmp.set(Calendar.MINUTE,0);
+            startTmp.set(Calendar.SECOND,0);
+
+            Calendar endTmp = Calendar.getInstance();
+            endTmp.setTime(date);
+            endTmp.set(Calendar.HOUR_OF_DAY,23);
+            endTmp.set(Calendar.MINUTE,59);
+            endTmp.set(Calendar.SECOND,59);
+
+
+            selection = new StringBuilder(Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(Helper.dateToString(startTmp.getTime())).append("'");
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(Helper.dateToString(endTmp.getTime())).append("'");
+            try {
+                Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                                + " where " + selection.toString() + " AND "
+                                + Sqlite.COL_TYPE + " = 'reblog'"
+                        , null);
+                mCount.moveToFirst();
+                reblogCount += mCount.getInt(0);
+                charts.getReblogs().put(date.getTime(), reblogCount);
+                mCount.close();
+
+
+                mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                                + " where " + selection.toString() + " AND "
+                                + Sqlite.COL_TYPE + " = 'favourite'"
+                        , null);
+                mCount.moveToFirst();
+                favCount += mCount.getInt(0);
+                charts.getFavourites().put(date.getTime(),favCount);
+                mCount.close();
+
+                mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                                + " where " + selection.toString() + " AND "
+                                + Sqlite.COL_TYPE + " = 'mention'"
+                        , null);
+                mCount.moveToFirst();
+                mentionCount += mCount.getInt(0);
+                charts.getMentions().put(date.getTime(), mentionCount);
+                mCount.close();
+
+
+                mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                                + " where " + selection.toString() + " AND "
+                                + Sqlite.COL_TYPE + " = 'follow'"
+                        , null);
+                mCount.moveToFirst();
+                followCount += mCount.getInt(0);
+                charts.getFollows().put(date.getTime(),followCount);
+                mCount.close();
+
+               /* mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
+                                + " where " + selection.toString() + " AND "
+                                + Sqlite.COL_TYPE + " = 'poll'"
+                        , null);
+                mCount.moveToFirst();
+                pollCount += mCount.getInt(0);
+                charts.getPolls().put(date.getTime(), pollCount);
+                mCount.close();*/
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        charts.setMinYVal(minYVal);
+        charts.setxLabels(xLabel);
+        return charts;
+    }
+
+
+
     /***
      * Method to hydrate notification from database
      * @param c Cursor
