@@ -404,6 +404,7 @@
     <string name="action_sync">Synkronisér</string>
     <string name="action_filter">Filtrér</string>
     <string name="owner_cached_toots">Dine toots</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">Offentlig</string>
     <string name="v_unlisted">Ikke listet</string>
     <string name="v_private">Privat</string>
@@ -413,7 +414,9 @@
     <string name="show_pinned">Vis fastgjorte</string>
     <string name="filter_no_result">Ingen matchende resultater!</string>
     <string name="data_backup_toots">Sikkerhedskopiér toots fra %1$s</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s nye toots er importeret</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>Nej</item>
         <item>Kun</item>
@@ -1022,6 +1025,10 @@
     <string name="action_stats">Statistikker</string>
     <string name="total_statuses">Samlet status</string>
     <string name="number_boosts">Antal boosts</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">Antal svar</string>
     <string name="number_statuses">Antal af statusser</string>
     <string name="statuses">Statusser</string>
@@ -1031,8 +1038,11 @@
     <string name="number_with_cw">Antal med CW</string>
     <string name="first_toot_date">Første statusdato</string>
     <string name="last_toot_date">Sidste statusdato</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">Frekvens</string>
     <string name="toot_per_day">%s statusser pr. dag</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Datointerval</string>
     <string name="action_groups">Grupper</string>
     <string name="no_messages">Ingen grupper!</string>
@@ -1043,6 +1053,8 @@
     <string name="set_backup">Sikkerhedskopi</string>
     <string name="set_auto_backup">Auto-sikkerhedskopiér statusser</string>
     <string name="set_auto_backup_indication">Denne er en pr. konto mulighed. Den starter en tjeneste, der automatisk gemmer dine statusser lokalt i databasen. Dette muliggør statistikker og diagrammer</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Rapportér konto</string>
     <string name="send_invitation">Send en invitation</string>
     <string name="registration_closed">Dit instans tillader ikke registrering af en ny konto!</string>
@@ -1076,4 +1088,5 @@
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>
