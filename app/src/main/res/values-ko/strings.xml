@@ -254,19 +254,19 @@
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_report">툿이 신고 되었습니다!</string>
+    <string name="toast_unstatus">툿이 삭제 되었습니다!</string>
+    <string name="toast_pin">툿이 고정 되었습니다!</string>
+    <string name="toast_unpin">툿이 고정 해제되었습니다!</string>
+    <string name="toast_error">이런! 문제가 발생했습니다!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">로그인 할 수 없습니다!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="nothing_to_do">아무 조치를 취할 수 없습니다</string>
+    <string name="toast_saved">미디어가 저장되었습니다!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">초안이 저장 되었습니다!</string>
@@ -305,7 +305,7 @@
     <string name="set_notify">일림?</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_night_mode">야간모드</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">NSFW 보는 시간(초, 0 = 비활성화)</string>
     <string name="settings_title_profile">프로필 수정</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -347,29 +347,29 @@
     </string-array>
     <string-array name="settings_resize_picture">
         <item>아니오</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>512 kB</item>
+        <item>1 MB</item>
+        <item>2 MB</item>
+        <item>4 MB</item>
+        <item>6 MB</item>
+        <item>8 MB</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">LED 색 설정</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>파란색</item>
+        <item>청록색</item>
+        <item>자홍색</item>
+        <item>초록색</item>
+        <item>빨간색</item>
+        <item>노란색</item>
+        <item>흰색</item>
     </string-array>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="set_notification_news">홈 타임라인의 새로운 글에 대한 알림</string>
+    <string name="action_follow">팔로우</string>
+    <string name="action_unfollow">언팔로우</string>
+    <string name="action_block">차단</string>
+    <string name="action_unblock">차단 해제</string>
+    <string name="action_mute">뮤트</string>
     <string name="action_no_action">동작 없음</string>
     <string name="action_unmute">뮤트 해제</string>
     <string name="request_sent">요청 보내짐</string>
@@ -392,17 +392,17 @@
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">제목</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="description_header_custom_sharing">설명</string>
+    <string name="description_hint_custom_sharing">설명&#8230;</string>
+    <string name="keywords_header_custom_sharing">키워드</string>
+    <string name="keywords_hint_custom_sharing">키워드&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
+    <string name="action_sync">동기화</string>
+    <string name="action_filter">필터</string>
+    <string name="owner_cached_toots">내 툿</string>
+    <string name="v_public">공개</string>
+    <string name="v_unlisted">공개 타임라인에 비표시</string>
+    <string name="v_private">비공개</string>
     <string name="v_direct">다이렉트</string>
     <string name="v_keywords">키워드…</string>
     <string name="show_media">미디어 보기</string>
@@ -437,7 +437,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">추적 및 라이브러리</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
@@ -1065,4 +1065,10 @@
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="all_accounts">For all accounts</string>
+    <string name="database_cache">Database cache</string>
+    <string name="cache_timeline_clear">Clear your home timeline cache</string>
+    <string name="cache_owntoots_clear">Clear your cached statuses</string>
+    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
+    <string name="file_cache">Files in cache</string>
 </resources>

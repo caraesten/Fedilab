@@ -142,8 +142,8 @@
     <string name="bookmark_add">Afegeix als marcadors</string>
     <string name="bookmark_remove">Suprimeix el marcador</string>
     <string name="bookmarks_empty">No hi ha cap marcador per a mostrar</string>
-    <string name="status_bookmarked">L\'estat s\'ha afegit als marcadors!</string>
-    <string name="status_unbookmarked">L\'estat s\'ha suprimit dels marcadors!</string>
+    <string name="status_bookmarked">S\'ha afegit el missatge als marcadors!</string>
+    <string name="status_unbookmarked">S\'ha suprimit el missatge dels marcadors!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -478,8 +478,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
     <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
     <string name="data_export_running">Segueix processant, espereu sisplau…</string>
-    <string name="data_export">Exporta els estatus</string>
-    <string name="data_export_toots">Exporta els estatus de %1$s</string>
+    <string name="data_export">Exporta missatges</string>
+    <string name="data_export_toots">Exporta els missatges de %1$s</string>
     <string name="data_export_success">S\'han exportat %1$s toots d\'un total de %2$s.</string>
     <string name="data_export_error">Ha fallat alguna cosa durant l\'exportació de dades de %1$s</string>
     <string name="data_export_error_simple">Ha fallat alguna cosa mentre s\'exportaven dades!</string>
@@ -1012,17 +1012,17 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_wysiwyg">Utilitza el wysiwyg (es-veu-com-ho-veus)</string>
     <string name="set_wysiwyg_indication">Quan està habilitat, es pot formatar el text fàcilment amb unes eines.</string>
     <string name="action_stats">Estadí­stiques</string>
-    <string name="total_statuses">Estats totals</string>
+    <string name="total_statuses">Missatges totals</string>
     <string name="number_boosts">Nombre de difusions</string>
     <string name="number_replies">Nombre de respostes</string>
     <string name="number_statuses">Nombre d\'estats</string>
-    <string name="statuses">Estats</string>
+    <string name="statuses">Missatges</string>
     <string name="visibility">Visibilitat</string>
     <string name="number_with_media">Nombre d\'ítems amb mèdia</string>
     <string name="number_with_sensitive_media">Nombre d\'ítems amb mèdia sensibles</string>
     <string name="number_with_cw">Nombre amb CW</string>
-    <string name="first_toot_date">Data del primer estat</string>
-    <string name="last_toot_date">Data del darrer estat</string>
+    <string name="first_toot_date">Data del primer missatge</string>
+    <string name="last_toot_date">Data del darrer missatge</string>
     <string name="frequency">Freqüència</string>
     <string name="toot_per_day">%s estats per dia</string>
     <string name="date_range">Interval de dates</string>
@@ -1062,4 +1062,10 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="join_instance">Per unir-te a la meva instància\"%1$s\", pots descarregar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nDesprés obres l\'enllaç de sota amb Fedilab i crees el teu compte :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Una enquesta no pot tenir opcions duplicades!</string>
+    <string name="all_accounts">Per a tots els comptes</string>
+    <string name="database_cache">Memòria cau de la base de dades</string>
+    <string name="cache_timeline_clear">Neteja la memòria cau de la pissarra personal</string>
+    <string name="cache_owntoots_clear">Neteja els missatges guardats a la cau</string>
+    <string name="cache_bookmarks_clear">Neteja els marcadors</string>
+    <string name="file_cache">Arxius de la cau</string>
 </resources>

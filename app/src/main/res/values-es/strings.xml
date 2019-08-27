@@ -1063,5 +1063,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     </string-array>
     <string name="join_instance">Para unirte a mi instancia \"%1$s\", puedes descargar Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nLuego abre el enlace siguiente con Fedilab y crea tu cuenta :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="poll_duplicated_entry">¡Tu encuesta no puede tener opciones duplicadas!</string>
+    <string name="all_accounts">Para todas las cuentas</string>
+    <string name="database_cache">Caché de la base de datos</string>
+    <string name="cache_timeline_clear">Limpia tu caché de la línea de tiempo de inicio</string>
+    <string name="cache_owntoots_clear">Limpia tus estados en caché</string>
+    <string name="cache_bookmarks_clear">Eliminar tus favoritos</string>
+    <string name="file_cache">Archivos en caché</string>
 </resources>

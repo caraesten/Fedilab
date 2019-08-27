@@ -878,7 +878,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_news">Actualité</string>
     <string name="set_display_news_from_fedilab">Afficher les nouvelles du compte de Fedilab</string>
     <string name="category_general">Général</string>
-    <string name="category_regional">Regional</string>
+    <string name="category_regional">Régional</string>
     <string name="category_art">Art</string>
     <string name="category_journalism">Journalisme</string>
     <string name="category_activism">Activisme</string>
@@ -974,20 +974,20 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_remember_position_indication">Si désactivé, l\'application chargera toujours les derniers statuts</string>
     <string name="set_blur_sensitive_indication">Si désactivé, les médias sensibles seront cachés avec un bouton</string>
     <string name="set_long_press_media_indication">Enregistre les médias en plein format lors d\'un appui long sur les prévisualisations</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
-    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
+    <string name="set_display_timeline_in_list_indication">Ajouter un bouton dans le coin supérieur droit pour lister tous les tags/instances/listes</string>
+    <string name="set_display_news_from_fedilab_indication">Afficher un élément dans le menu principal pour avoir un accès rapide à un fil sur le tag #Fedilab</string>
     <string name="live_notif_indication">Garde une connexion ouverte à l\'API de streaming pour les notifications en direct.</string>
-    <string name="set_keep_background_process_indication">Lorsque l\'application est en arrière-plan, elle gardera une connexion à l\'API de streaming. Désactivez-la si vous vous souciez de la votre batterie.</string>
-    <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
+    <string name="set_keep_background_process_indication">Lorsque l\'application est en arrière-plan, elle gardera une connexion à l\'API de streaming. Désactivez-la si vous vous souciez de votre batterie.</string>
+    <string name="set_enable_time_slot_indication">Pendant l\'intervalle de temps, l\'application enverra des notifications. Vous pouvez inverser (ie: silencer) cet intervalle avec l\'option à droite.</string>
     <string name="set_display_fedilab_features_button_indication">Affiche un bouton Fedilab. C\'est un raccourci pour accéder aux fonctionnalités de l\'application.</string>
     <string name="set_quick_reply_indication">Permet de répondre directement dans les fils, en bas des statuts</string>
     <string name="set_fit_preview_indication">Les aperçus ne seront pas rognés dans les fils</string>
     <string name="set_display_video_preview_indication">Autoriser à lire les vidéos intégrées directement dans les fils</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_content_after_fetch_more_indication">Permet d\'inverser la façon de lire les publications affichées après avoir cliqué sur le bouton pour retrouver plus de pouets</string>
     <string name="set_security_provider_indication">Cette option permet de prendre en charge les suites de chiffrement récentes. Elle est utile pour les anciens appareils Android ou si vous ne n\'arrivez pas vous connecter à votre instance.</string>
     <string name="set_video_mode_indication">Exclusivement pour les vidéos Peertube. Basculez vers ce mode si vous ne pouvez pas les lire.</string>
     <string name="featured_hashtags_indication">Ces tags permettent de filtrer les statuts dans les profils. Vous devrez utiliser le menu contextuel pour les voir.</string>
-    <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscules</string>
+    <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscule</string>
     <string name="settings_title_custom_sharing_indication">Permet aux créateurs de contenu de partager leurs statuts sur leurs flux RSS</string>
     <string name="timelines">Fils</string>
     <string name="u_interface">Interface</string>
@@ -1003,7 +1003,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="folder">Dossier</string>
     <string name="create_folder">Créer un dossier</string>
     <string name="custom_tabs_indication">Utilisez votre navigateur préféré intégré dans l\'application. En le désactivant, les liens seront ouverts via un navigateur externe</string>
-    <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
+    <string name="set_display_confirm">Afficher un message après qu\'une action soit terminée (partage, favori, etc.)</string>
     <string name="export_muted_instance">Exporter les instances mises en sourdine</string>
     <string name="muted_instance_exported">Les instances mises en sourdine ont été exportées !</string>
     <string name="add_instances">Ajouter une instance</string>
@@ -1015,11 +1015,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="crash_title">Fedilab s’est arrêté :(</string>
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="set_wysiwyg">Utiliser l\'éditeur visuel</string>
-    <string name="set_wysiwyg_indication">Lorsque cette option est activée, vous serez en mesure de mettre en forme votre texte facilement avec des outils.</string>
+    <string name="set_wysiwyg_indication">Lorsque cette option est activée, vous pouvez mettre en forme votre texte facilement via des outils.</string>
     <string name="action_stats">Statistiques</string>
     <string name="total_statuses">Total des publications</string>
-    <string name="number_boosts">Boosts</string>
-    <string name="number_replies">Réponses</string>
+    <string name="number_boosts">Nombre de partages</string>
+    <string name="number_replies">Nombre de réponses</string>
     <string name="number_statuses">Nombre de publications</string>
     <string name="statuses">Publications</string>
     <string name="visibility">Visibilité</string>
@@ -1027,9 +1027,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="number_with_sensitive_media">Contenant des médias sensibles</string>
     <string name="number_with_cw">Ayant avertissement de contenu</string>
     <string name="first_toot_date">Date de première publication</string>
-    <string name="last_toot_date">Dernière publication</string>
+    <string name="last_toot_date">Date de dernière publication</string>
     <string name="frequency">Fréquence</string>
-    <string name="toot_per_day">%s statuts par jour</string>
+    <string name="toot_per_day">%s publications par jour</string>
     <string name="date_range">Période</string>
     <string name="action_groups">Groupes</string>
     <string name="no_messages">Aucun groupe !</string>
@@ -1039,7 +1039,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="collecting_data_wait">L\'application collecte vos données locales, veuillez patienter …</string>
     <string name="set_backup">Sauvegarder</string>
     <string name="set_auto_backup">Sauvegarde automatique des publications</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui va automatiquement stocker vos publications localement dans une base de données. Cela permet d\'avoir des statistiques et des graphiques</string>
     <string name="report_account">Signaler le compte</string>
     <string name="send_invitation">Envoyer une invitation</string>
     <string name="registration_closed">Votre instance ne permet pas de créer de nouveaux comptes !</string>
@@ -1067,4 +1067,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="join_instance">Pour rejoindre mon instance « %1$s », vous pouvez télécharger Fedilab :\n\nF-Droid : %2$s\nGoogle : %3$s\n\nEnsuite ouvrez le lien ci-dessous avec Fedilab et créez votre compte :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Votre sondage ne peut contenir des options dupliquées !</string>
+    <string name="all_accounts">Pour tous les comptes</string>
+    <string name="database_cache">Cache de la base de données</string>
+    <string name="cache_timeline_clear">Effacer le cache de votre fil principal</string>
+    <string name="cache_owntoots_clear">Effacer vos publications mises en cache</string>
+    <string name="cache_bookmarks_clear">Effacer vos signets</string>
+    <string name="file_cache">Fichiers en cache</string>
 </resources>

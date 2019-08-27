@@ -470,8 +470,8 @@
     <string name="action_lists_title_placeholder">Titolo della nuova lista</string>
     <string name="action_lists_search_users">Cerca tra le persone che segui</string>
     <string name="action_lists_owner">Le tue liste</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">L\'account è stato aggiunto alla lista!</string>
+    <string name="action_lists_empty">Non hai ancora nessuna lista!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s è stato spostato su %2$s</string>
     <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
@@ -1044,8 +1044,8 @@
     <string name="set_auto_backup">Fai automaticamente il backup degli stati</string>
     <string name="set_auto_backup_indication">Questa azione è per account. Lancerà un servizio che automaticamente salva i tuoi stati localmente nel database. Questo consentirà di avere statistiche e grafici</string>
     <string name="report_account">Segnala account</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Invia un invito</string>
+    <string name="registration_closed">La tua istanza non consente di registrare un nuovo account!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
@@ -1067,7 +1067,13 @@
         <item>Webview</item>
         <item>Stream diretto</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Per unirti alla mia istanza \"%1$s\", è possibile scaricare Fedilab:\n\nF-Droid: %2$s\n: %3$s\n\nQuindi apri il link qui sotto con Fedilab e crea il tuo account :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="poll_duplicated_entry">Il tuo sondaggio non può avere opzioni duplicate!</string>
+    <string name="all_accounts">Per tutti gli account</string>
+    <string name="database_cache">Cache del database</string>
+    <string name="cache_timeline_clear">Cancella la cache della timeline home</string>
+    <string name="cache_owntoots_clear">Cancella i tuoi stati memorizzati nella cache</string>
+    <string name="cache_bookmarks_clear">Cancella i tuoi segnalibri</string>
+    <string name="file_cache">File nella cache</string>
 </resources>
