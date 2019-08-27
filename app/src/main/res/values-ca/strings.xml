@@ -403,6 +403,7 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="action_sync">Sincronitza</string>
     <string name="action_filter">Filtre</string>
     <string name="owner_cached_toots">Els teus toots</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">Públic</string>
     <string name="v_unlisted">No llistats</string>
     <string name="v_private">Privat</string>
@@ -412,7 +413,9 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="show_pinned">Mostra els fixats</string>
     <string name="filter_no_result">No s`han trobat textos coincidents!</string>
     <string name="data_backup_toots">Còpia de seguretat dels toots per %1$s</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">S\'han importat %1$s toots nous</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Només</item>
@@ -1014,6 +1017,10 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="action_stats">Estadí­stiques</string>
     <string name="total_statuses">Missatges totals</string>
     <string name="number_boosts">Nombre de difusions</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">Nombre de respostes</string>
     <string name="number_statuses">Nombre d\'estats</string>
     <string name="statuses">Missatges</string>
@@ -1023,8 +1030,11 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="number_with_cw">Nombre amb CW</string>
     <string name="first_toot_date">Data del primer missatge</string>
     <string name="last_toot_date">Data del darrer missatge</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">Freqüència</string>
     <string name="toot_per_day">%s estats per dia</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Interval de dates</string>
     <string name="action_groups">Grups</string>
     <string name="no_messages">No hi ha grups!</string>
@@ -1035,6 +1045,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_backup">Còpia de seguretat</string>
     <string name="set_auto_backup">Estatus de còpia de seguretat automàtica</string>
     <string name="set_auto_backup_indication">Aquesta opció s\'aplica a un sol compte. Posarà en marxa un servei que guardarà localment els teus estatus de forma automàtica a la base de dades. Això permet obtenir estadístiques i gràfiques</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Denuncia el compte</string>
     <string name="send_invitation">Envia una invitació</string>
     <string name="registration_closed">La teva instància no permet donar d\'alta un altre compte!</string>
@@ -1068,4 +1080,5 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="cache_owntoots_clear">Neteja els missatges guardats a la cau</string>
     <string name="cache_bookmarks_clear">Neteja els marcadors</string>
     <string name="file_cache">Arxius de la cau</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>

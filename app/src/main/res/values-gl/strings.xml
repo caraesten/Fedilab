@@ -404,6 +404,7 @@
     <string name="action_sync">Sincronizar</string>
     <string name="action_filter">Filtrar</string>
     <string name="owner_cached_toots">Os seus toots</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">Público</string>
     <string name="v_unlisted">Non listado</string>
     <string name="v_private">Privado</string>
@@ -413,7 +414,9 @@
     <string name="show_pinned">Mostrar fixados</string>
     <string name="filter_no_result">Non se atoparon resultados!</string>
     <string name="data_backup_toots">Respaldar toots para %1$s</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s novos toots foron importados</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>Non</item>
         <item>Só</item>
@@ -1023,6 +1026,10 @@
     <string name="action_stats">Estatísticas</string>
     <string name="total_statuses">Total de estados</string>
     <string name="number_boosts">Número de promocións</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">Número de respostas</string>
     <string name="number_statuses">Número de estados</string>
     <string name="statuses">Estados</string>
@@ -1032,8 +1039,11 @@
     <string name="number_with_cw">Número con CW</string>
     <string name="first_toot_date">Data do primeiro estado</string>
     <string name="last_toot_date">Data do último estado</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">Frecuencia</string>
     <string name="toot_per_day">%s de estados por día</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Rango de datas</string>
     <string name="action_groups">Grupos</string>
     <string name="no_messages">Sen grupos!</string>
@@ -1044,6 +1054,8 @@
     <string name="set_backup">Copia de respaldo</string>
     <string name="set_auto_backup">Estado do respaldo automático</string>
     <string name="set_auto_backup_indication">Actívase para cada conta. Lanzará un servizo que gardará de xeito automático os seus estados localmente na base de datos. Esto permítelle obter estatísticas e gráficas</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Informar sobre a conta</string>
     <string name="send_invitation">Envíar un convite</string>
     <string name="registration_closed">A súa instancia non permite o rexistro de novas contas!</string>
@@ -1077,4 +1089,5 @@
     <string name="cache_owntoots_clear">Eliminar os estados da caché</string>
     <string name="cache_bookmarks_clear">Eliminar marcadores</string>
     <string name="file_cache">Ficheiros na caché</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>
