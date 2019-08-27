@@ -315,6 +315,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_ACCOUNT + " TEXT NOT NULL, "
             + COL_TYPE + " TEXT NOT NULL, "
             + COL_STATUS_ID + " TEXT, "
+            + COL_IN_REPLY_TO_ID + " TEXT, "
             + COL_STATUS_ID_CACHE + " INTEGER, "
             + COL_CREATED_AT + " TEXT NOT NULL)";
 

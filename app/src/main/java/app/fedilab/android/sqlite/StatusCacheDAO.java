@@ -476,6 +476,21 @@ public class StatusCacheDAO {
     }
 
 
+    /**
+     * Returns a cached status by id in db
+     * @return stored status StoredStatus
+     */
+    public Status getStatus(String id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
+            return cursorToStoredStatus(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public Charts getCharts(Date dateIni, Date dateEnd){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

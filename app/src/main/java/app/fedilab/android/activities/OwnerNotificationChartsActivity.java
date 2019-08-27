@@ -67,12 +67,15 @@ import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveNotificationChartsAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.NotificationCharts;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveNotificationChartsInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusCacheDAO;
 
+import static app.fedilab.android.sqlite.StatusCacheDAO.NOTIFICATION_CACHE;
 
 
 /**
@@ -90,6 +93,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
     private int theme;
     private RelativeLayout loader;
     private ImageButton validate;
+    private String status_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,10 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             default:
                 setTheme(R.style.AppThemeDark);
         }
+        Bundle b = getIntent().getExtras();
+        status_id = null;
+        if(b != null)
+            status_id = b.getString("status_id");
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -156,10 +164,22 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         settings_time_to = findViewById(R.id.settings_time_to);
         loader =  findViewById(R.id.loader);
         validate = findViewById(R.id.validate);
-
+        LinearLayout date_container = findViewById(R.id.date_container);
         SQLiteDatabase db = Sqlite.getInstance(OwnerNotificationChartsActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        dateIni = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getSmallerDate();
-        dateEnd = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getGreaterDate();
+        if( status_id == null) {
+            dateIni = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getSmallerDate();
+            dateEnd = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getGreaterDate();
+        }else{
+            Status status = new StatusCacheDAO(getApplicationContext(), db).getStatus(status_id);
+            if( status == null){
+                finish();
+                return;
+            }else{
+                dateIni = status.getCreated_at();
+                dateEnd = dateIni;
+                date_container.setVisibility(View.GONE);
+            }
+        }
 
 
         int style;
@@ -171,7 +191,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             style = R.style.Dialog;
         }
         Calendar c = Calendar.getInstance();
-        c.setTime(dateIni);
+        if(dateIni != null) {
+            c.setTime(dateIni);
+        }
         int yearIni = c.get(Calendar.YEAR);
         int monthIni = c.get(Calendar.MONTH);
         int dayIni = c.get(Calendar.DAY_OF_MONTH);
@@ -185,51 +207,51 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             }
         });
 
+        if( dateIni != null) {
+            Calendar ce = Calendar.getInstance();
+            c.setTime(dateEnd);
+            int yearEnd = ce.get(Calendar.YEAR);
+            int monthEnd = ce.get(Calendar.MONTH);
+            int dayEnd = ce.get(Calendar.DAY_OF_MONTH);
+            final DatePickerDialog dateEndPickerDialog = new DatePickerDialog(
+                    OwnerNotificationChartsActivity.this, style, endDateSetListener, yearEnd, monthEnd, dayEnd);
+            settings_time_to.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dateEndPickerDialog.show();
+                }
+            });
 
-        Calendar ce = Calendar.getInstance();
-        c.setTime(dateEnd);
-        int yearEnd = ce.get(Calendar.YEAR);
-        int monthEnd = ce.get(Calendar.MONTH);
-        int dayEnd = ce.get(Calendar.DAY_OF_MONTH);
-        final DatePickerDialog dateEndPickerDialog = new DatePickerDialog(
-                OwnerNotificationChartsActivity.this, style, endDateSetListener, yearEnd, monthEnd, dayEnd);
-        settings_time_to.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dateEndPickerDialog.show();
+            dateIniPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
+            dateIniPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
+
+            dateEndPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
+            dateEndPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateEnd);
+            cal.add(Calendar.MONTH, -1);
+            Date result = cal.getTime();
+            if (result.after(dateIni))
+                dateIni = result;
+
+            if (dateIni == null) {
+                dateIni = new Date();
             }
-        });
-
-        dateIniPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
-        dateIniPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
-
-        dateEndPickerDialog.getDatePicker().setMinDate(dateIni.getTime());
-        dateEndPickerDialog.getDatePicker().setMaxDate(dateEnd.getTime());
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateEnd);
-        cal.add(Calendar.MONTH, -1);
-        Date result = cal.getTime();
-        if (result.after(dateIni))
-            dateIni = result;
-
-        if (dateIni == null) {
-            dateIni = new Date();
-        }
-        if (dateEnd == null) {
-            dateEnd = new Date();
-        }
+            if (dateEnd == null) {
+                dateEnd = new Date();
+            }
 
 
-        CustomMarkerView mv = new CustomMarkerView(getApplicationContext(), R.layout.markerview);
-        chart.setMarkerView(mv);
+            CustomMarkerView mv = new CustomMarkerView(getApplicationContext(), R.layout.markerview);
+            chart.setMarkerView(mv);
 
-        validate.setOnClickListener(v->{
+            validate.setOnClickListener(v -> {
+                loadGraph(dateIni, dateEnd);
+            });
+
             loadGraph(dateIni, dateEnd);
-        });
-
-        loadGraph(dateIni, dateEnd);
-
+        }
 
     }
 
@@ -272,13 +294,13 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             it.remove();
         }
 
-        List<Entry> pollEntry = new ArrayList<>();
+        /*List<Entry> pollEntry = new ArrayList<>();
         it = charts.getFollows().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             pollEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
             it.remove();
-        }
+        }*/
 
 
 
@@ -292,7 +314,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetBoosts.setDrawCircles(false);
         dataSetBoosts.setDrawCircleHole(false);
         dataSetBoosts.setLineWidth(2f);
-        dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        if( status_id == null) {
+            dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        }else{
+            dataSetBoosts.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        }
 
         LineDataSet dateSetFavorites = new LineDataSet(favEntry, getString(R.string.favourite));
         dateSetFavorites.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_fav));
@@ -304,7 +330,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dateSetFavorites.setDrawCircles(false);
         dateSetFavorites.setDrawCircleHole(false);
         dateSetFavorites.setLineWidth(2f);
-        dateSetFavorites.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        if( status_id == null) {
+            dateSetFavorites.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        }else{
+            dateSetFavorites.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        }
 
         LineDataSet dataSetMention = new LineDataSet(mentionEntry, getString(R.string.mention));
         dataSetMention.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_mention));
@@ -316,7 +346,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetMention.setDrawCircles(false);
         dataSetMention.setDrawCircleHole(false);
         dataSetMention.setLineWidth(2f);
-        dataSetMention.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        if( status_id == null) {
+            dataSetMention.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        }else{
+            dataSetMention.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        }
 
 
         LineDataSet dataSetFollow = new LineDataSet(followEntry, getString(R.string.follow));
@@ -329,7 +363,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetFollow.setDrawCircles(false);
         dataSetFollow.setDrawCircleHole(false);
         dataSetFollow.setLineWidth(2f);
-        dataSetFollow.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        if( status_id == null) {
+            dataSetFollow.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        }else{
+            dataSetFollow.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        }
 
 
 
@@ -343,7 +381,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetPolls.setDrawCircles(false);
         dataSetPolls.setDrawCircleHole(false);
         dataSetPolls.setLineWidth(2f);
-        dataSetPolls.setMode(LineDataSet.Mode.CUBIC_BEZIER);*/
+        if( status_id == null) {
+            dataSetPolls.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        }*/
 
 
         List<ILineDataSet> dataSets = new ArrayList<>();
@@ -494,7 +534,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         chart.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
         validate.setEnabled(false);
-        new RetrieveNotificationChartsAsyncTask(OwnerNotificationChartsActivity.this, null, dateIni, dateEnd, OwnerNotificationChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveNotificationChartsAsyncTask(OwnerNotificationChartsActivity.this, status_id, dateIni, dateEnd, OwnerNotificationChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -510,7 +550,11 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         private Date mDate;
 
         MyXAxisValueFormatter() {
-            this.mDataFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+            if( status_id == null) {
+                this.mDataFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+            }else{
+                this.mDataFormat = new SimpleDateFormat("hh'h'", Locale.getDefault());
+            }
             this.mDate = new Date();
         }
         @Override

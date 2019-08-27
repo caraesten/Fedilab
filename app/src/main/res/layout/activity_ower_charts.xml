@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:id="@+id/date_container"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
         <TextView

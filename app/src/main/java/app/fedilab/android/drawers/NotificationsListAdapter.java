@@ -72,6 +72,7 @@ import java.util.TimerTask;
 
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.OwnerNotificationChartsActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -890,7 +891,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(context, attached);
                 assert status != null;
-                final boolean isOwner = status.getAccount().getId().equals(userId);
+                final boolean isOwner = status.getReblog()!=null?status.getReblog().getAccount().getId().equals(userId):status.getAccount().getId().equals(userId);
                 popup.getMenuInflater()
                         .inflate(R.menu.option_toot, popup.getMenu());
                 if( notification.getType().equals("mention"))
@@ -910,7 +911,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                     popup.getMenu().findItem(R.id.action_report).setVisible(false);
                     stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                        popup.getMenu().findItem(R.id.action_stats).setVisible(false);
+                    }
                 }else {
+                    popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                     popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                     stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                 }
@@ -975,6 +980,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 Intent intent = new Intent(context, AccountReportActivity.class);
                                 Bundle b = new Bundle();
                                 b.putString("account_id", account_id);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                                return true;
+                            case R.id.action_stats:
+                                intent = new Intent(context, OwnerNotificationChartsActivity.class);
+                                b = new Bundle();
+                                b.putString("status_id", status.getReblog()!=null?status.getReblog().getId():status.getId());
                                 intent.putExtras(b);
                                 context.startActivity(intent);
                                 return true;

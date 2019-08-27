@@ -111,6 +111,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.OwnerNotificationChartsActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipQuickReplyAsyncTask;
 import app.fedilab.android.client.API;
@@ -2302,7 +2303,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.spark_button_reblog.setVisibility(View.GONE);
                     break;
                 case "private":
-                    boolean isOwner = status.getAccount().getId().equals(userId);
+                    final boolean isOwner = status.getReblog()!=null?status.getReblog().getAccount().getId().equals(userId):status.getAccount().getId().equals(userId);
                     if (isOwner) {
                         holder.status_reblog_count.setVisibility(View.VISIBLE);
                         holder.spark_button_reblog.setVisibility(View.VISIBLE);
@@ -2369,7 +2370,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
 
-            boolean isOwner = status.getAccount().getId().equals(userId);
+            final boolean isOwner = status.getReblog()!=null?status.getReblog().getAccount().getId().equals(userId):status.getAccount().getId().equals(userId);
 
             // Pinning toots is only available on Mastodon 1._6_.0 instances.
             if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
@@ -2986,7 +2987,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(context, attached);
-                    final boolean isOwner = status.getAccount().getId().equals(userId);
+                    final boolean isOwner = status.getReblog()!=null?status.getReblog().getAccount().getId().equals(userId):status.getAccount().getId().equals(userId);
                     popup.getMenuInflater()
                             .inflate(R.menu.option_toot, popup.getMenu());
                     if (status.getVisibility().equals("private") || status.getVisibility().equals("direct")) {
@@ -3012,7 +3013,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                        if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                            popup.getMenu().findItem(R.id.action_stats).setVisible(false);
+                        }
                     } else {
+                        popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                         //popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (isAdmin || isModerator)) {
@@ -3159,6 +3164,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             position++;
                                         }
                                     }
+                                    return true;
+                                case R.id.action_stats:
+                                    intent = new Intent(context, OwnerNotificationChartsActivity.class);
+                                    b = new Bundle();
+                                    b.putString("status_id", status.getReblog()!=null?status.getReblog().getId():status.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
                                     return true;
                                 case R.id.action_timed_mute:
                                     timedMuteAction(status);
