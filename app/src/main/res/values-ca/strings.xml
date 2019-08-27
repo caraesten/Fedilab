@@ -142,8 +142,8 @@
     <string name="bookmark_add">Afegeix als marcadors</string>
     <string name="bookmark_remove">Suprimeix el marcador</string>
     <string name="bookmarks_empty">No hi ha cap marcador per a mostrar</string>
-    <string name="status_bookmarked">L\'estat s\'ha afegit als marcadors!</string>
-    <string name="status_unbookmarked">L\'estat s\'ha suprimit dels marcadors!</string>
+    <string name="status_bookmarked">S\'ha afegit el missatge als marcadors!</string>
+    <string name="status_unbookmarked">S\'ha suprimit el missatge dels marcadors!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -478,8 +478,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
     <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
     <string name="data_export_running">Segueix processant, espereu sisplau…</string>
-    <string name="data_export">Exporta els estatus</string>
-    <string name="data_export_toots">Exporta els estatus de %1$s</string>
+    <string name="data_export">Exporta missatges</string>
+    <string name="data_export_toots">Exporta els missatges de %1$s</string>
     <string name="data_export_success">S\'han exportat %1$s toots d\'un total de %2$s.</string>
     <string name="data_export_error">Ha fallat alguna cosa durant l\'exportació de dades de %1$s</string>
     <string name="data_export_error_simple">Ha fallat alguna cosa mentre s\'exportaven dades!</string>
