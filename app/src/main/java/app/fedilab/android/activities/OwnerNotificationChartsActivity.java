@@ -494,7 +494,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         chart.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
         validate.setEnabled(false);
-        new RetrieveNotificationChartsAsyncTask(OwnerNotificationChartsActivity.this, dateIni, dateEnd, OwnerNotificationChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveNotificationChartsAsyncTask(OwnerNotificationChartsActivity.this, null, dateIni, dateEnd, OwnerNotificationChartsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 

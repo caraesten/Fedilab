@@ -40,12 +40,14 @@ public class RetrieveNotificationChartsAsyncTask extends AsyncTask<Void, Void, V
     private NotificationCharts charts;
     private Date dateIni;
     private Date dateEnd;
+    private String status_id;
 
-    public RetrieveNotificationChartsAsyncTask(Context context, Date dateIni, Date dateEnd, OnRetrieveNotificationChartsInterface onRetrieveNotificationChartsInterface){
+    public RetrieveNotificationChartsAsyncTask(Context context, String status_id, Date dateIni, Date dateEnd, OnRetrieveNotificationChartsInterface onRetrieveNotificationChartsInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveNotificationChartsInterface;
         this.dateIni = dateIni;
         this.dateEnd = dateEnd;
+        this.status_id = status_id;
     }
 
 
@@ -53,7 +55,7 @@ public class RetrieveNotificationChartsAsyncTask extends AsyncTask<Void, Void, V
     protected Void doInBackground(Void... params) {
 
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        charts = new NotificationCacheDAO(contextReference.get(), db).getChartsEvolution(dateIni, dateEnd);
+        charts = new NotificationCacheDAO(contextReference.get(), db).getChartsEvolution(status_id, dateIni, dateEnd);
 
         return null;
     }

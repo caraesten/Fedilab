@@ -560,23 +560,27 @@ public class NotificationCacheDAO {
     }
 
 
-    public NotificationCharts getChartsEvolution(Date dateIni, Date dateEnd){
+    public NotificationCharts getChartsEvolution(String status_id, Date dateIni, Date dateEnd){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         NotificationCharts charts = new NotificationCharts();
 
         Calendar start = Calendar.getInstance();
-        start.setTime(dateIni);
-        start.set(Calendar.HOUR_OF_DAY,0);
-        start.set(Calendar.MINUTE,0);
-        start.set(Calendar.SECOND,0);
-
         Calendar end = Calendar.getInstance();
-        end.setTime(dateEnd);
-        end.set(Calendar.HOUR_OF_DAY,23);
-        end.set(Calendar.MINUTE,59);
-        end.set(Calendar.SECOND,59);
+        if( status_id == null) {
+            start.setTime(dateIni);
+            start.set(Calendar.HOUR_OF_DAY,0);
+            start.set(Calendar.MINUTE,0);
+            start.set(Calendar.SECOND,0);
+
+            end.setTime(dateEnd);
+            end.set(Calendar.HOUR_OF_DAY, 23);
+            end.set(Calendar.MINUTE, 59);
+            end.set(Calendar.SECOND, 59);
+        }else{
+
+        }
 
         long msDiff = end.getTimeInMillis() - start.getTimeInMillis();
         long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
@@ -597,6 +601,9 @@ public class NotificationCacheDAO {
         StringBuilder selection = new StringBuilder(Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
         selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(Helper.dateToString(smallestDate)).append("'");
         selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(Helper.dateToString(start.getTime())).append("'");
+        if( status_id != null ){
+            selection.append(" AND " + Sqlite.COL_STATUS_ID + " = '").append(status_id).append("'");
+        }
         try {
             Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_NOTIFICATION_CACHE
                             + " where " + selection.toString() + " AND "
