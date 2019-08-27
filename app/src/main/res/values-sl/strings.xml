@@ -412,6 +412,7 @@
     <string name="action_sync">Sinhroniziraj</string>
     <string name="action_filter">Filtriraj</string>
     <string name="owner_cached_toots">Tvoje objave</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">Javno</string>
     <string name="v_unlisted">Ni na seznamu</string>
     <string name="v_private">Zasebno</string>
@@ -421,7 +422,9 @@
     <string name="show_pinned">Prikaži pripeto</string>
     <string name="filter_no_result">Ne najdem ujemanj.</string>
     <string name="data_backup_toots">Arhiviraj objave za %1$s</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">Uvoženih je %1$s novih objav Toot</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Samo</item>
@@ -1030,6 +1033,10 @@
     <string name="action_stats">Statistics</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">Number of replies</string>
     <string name="number_statuses">Number of statuses</string>
     <string name="statuses">Statuses</string>
@@ -1039,8 +1046,11 @@
     <string name="number_with_cw">Number with CW</string>
     <string name="first_toot_date">First status date</string>
     <string name="last_toot_date">Last status date</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Date range</string>
     <string name="action_groups">Groups</string>
     <string name="no_messages">No groups!</string>
@@ -1051,6 +1061,8 @@
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Report account</string>
     <string name="send_invitation">Send an invitation</string>
     <string name="registration_closed">Your instance does not allow to register a new account!</string>
@@ -1086,4 +1098,5 @@
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>

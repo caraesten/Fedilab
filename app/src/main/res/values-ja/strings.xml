@@ -399,6 +399,7 @@
     <string name="action_sync">同期</string>
     <string name="action_filter">フィルター</string>
     <string name="owner_cached_toots">あなたのトゥート</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">公開</string>
     <string name="v_unlisted">未収載</string>
     <string name="v_private">非公開</string>
@@ -408,7 +409,9 @@
     <string name="show_pinned">ピン留めトゥートを表示</string>
     <string name="filter_no_result">一致するものは見つかりませんでした！</string>
     <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s 件の新しいトゥートをインポートしました</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>しない</item>
         <item>のみ</item>
@@ -1010,6 +1013,10 @@
     <string name="action_stats">統計情報</string>
     <string name="total_statuses">合計投稿数</string>
     <string name="number_boosts">ブースト数</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">返信数</string>
     <string name="number_statuses">投稿数</string>
     <string name="statuses">投稿</string>
@@ -1019,8 +1026,11 @@
     <string name="number_with_cw">警告文付き投稿数</string>
     <string name="first_toot_date">最初の投稿日</string>
     <string name="last_toot_date">最後の投稿日</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">投稿頻度</string>
     <string name="toot_per_day">%s トゥート/日</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">対象期間</string>
     <string name="action_groups">グループ</string>
     <string name="no_messages">グループがありません</string>
@@ -1031,6 +1041,8 @@
     <string name="set_backup">バックアップ</string>
     <string name="set_auto_backup">トゥートを自動でバックアップ</string>
     <string name="set_auto_backup_indication">これはアカウントごとの設定です。あなたのトゥートをローカルのデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">アカウントを報告</string>
     <string name="send_invitation">招待を送信</string>
     <string name="registration_closed">このインスタンスは新規登録の受付を停止しています！</string>
@@ -1062,4 +1074,5 @@
     <string name="cache_owntoots_clear">キャッシュしたトゥートを削除</string>
     <string name="cache_bookmarks_clear">ブックマークを削除</string>
     <string name="file_cache">キャッシュ内のファイル</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>

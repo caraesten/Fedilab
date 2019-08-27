@@ -420,6 +420,7 @@
     <string name="action_sync">مزامنة</string>
     <string name="action_filter">عامل التصفية</string>
     <string name="owner_cached_toots">تبويقاتك</string>
+    <string name="owner_cached_notifications">Your notifications</string>
     <string name="v_public">العمومية</string>
     <string name="v_unlisted">غير المدرجة</string>
     <string name="v_private">الخاصة</string>
@@ -429,7 +430,9 @@
     <string name="show_pinned">إظهار المدبسة</string>
     <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث!</string>
     <string name="data_backup_toots">النسخ الاحتياطي لتبويقات حساب %1$s</string>
+    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
+    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
         <item>لا</item>
         <item>فقط</item>
@@ -1037,6 +1040,10 @@
     <string name="action_stats">إحصائيات</string>
     <string name="total_statuses">مجموع المنشورات</string>
     <string name="number_boosts">عدد التدعيمات</string>
+    <string name="number_favourites">Number of favourites</string>
+    <string name="number_mentions">Number of mentions</string>
+    <string name="number_follows">Number of follows</string>
+    <string name="number_polls">Number of polls</string>
     <string name="number_replies">عدد الردود</string>
     <string name="number_statuses">عدد المنشورات</string>
     <string name="statuses">منشورات</string>
@@ -1046,8 +1053,11 @@
     <string name="number_with_cw">عدد بتحذير المحتوى</string>
     <string name="first_toot_date">تاريخ أول منشور</string>
     <string name="last_toot_date">تاريخ آخر منشور</string>
+    <string name="first_notification_date">First notification date</string>
+    <string name="last_notification_date">Last notification date</string>
     <string name="frequency">التردد</string>
     <string name="toot_per_day">%s منشور في اليوم</string>
+    <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">النطاق الزمني</string>
     <string name="action_groups">المجموعات</string>
     <string name="no_messages">لا توجد أي مجموعة!</string>
@@ -1058,6 +1068,8 @@
     <string name="set_backup">نسخة احتياطية</string>
     <string name="set_auto_backup">النسخ الاحتياطي التلقائي المنشورات</string>
     <string name="set_auto_backup_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ منشوراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
+    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">التبغليع عن الحساب</string>
     <string name="send_invitation">ارسل دعوة</string>
     <string name="registration_closed">مثيل خادمك لا يسمح بإنشاء حسابات جديدة!</string>
@@ -1095,4 +1107,5 @@
     <string name="cache_owntoots_clear">امسح التخزين المؤقت للمنشورات المخزَّنة</string>
     <string name="cache_bookmarks_clear">امسح كافة فواصلك المرجعية</string>
     <string name="file_cache">الملفات في ذاكرة التخزين المؤقتة</string>
+    <string name="total_notifications">Total notifications</string>
 </resources>
