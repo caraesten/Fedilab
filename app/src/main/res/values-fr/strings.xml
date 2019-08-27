@@ -404,7 +404,7 @@
     <string name="action_sync">Synchroniser</string>
     <string name="action_filter">Filtrer</string>
     <string name="owner_cached_toots">Mes pouets</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Vos notifications</string>
     <string name="v_public">Public</string>
     <string name="v_unlisted">Non-listé</string>
     <string name="v_private">Privé</string>
@@ -414,9 +414,9 @@
     <string name="show_pinned">Pouets épinglés</string>
     <string name="filter_no_result">Aucun résultat avec ce filtre !</string>
     <string name="data_backup_toots">Sauvegarde des pouets pour %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Sauvegarde des notifications pour %1$s</string>
     <string name="data_backup_success">%1$s nouveaux pouets ont été importés</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s nouvelles notifications ont été importées</string>
     <string-array name="filter_select">
         <item>Non</item>
         <item>Seulement</item>
@@ -1022,10 +1022,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_stats">Statistiques</string>
     <string name="total_statuses">Total des publications</string>
     <string name="number_boosts">Nombre de partages</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">Nombre de favoris</string>
+    <string name="number_mentions">Nombre de mentions</string>
+    <string name="number_follows">Nombre d\'abonnements</string>
+    <string name="number_polls">Nombre de sondages</string>
     <string name="number_replies">Nombre de réponses</string>
     <string name="number_statuses">Nombre de publications</string>
     <string name="statuses">Publications</string>
@@ -1035,11 +1035,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="number_with_cw">Ayant avertissement de contenu</string>
     <string name="first_toot_date">Date de première publication</string>
     <string name="last_toot_date">Date de dernière publication</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Date de la première notification</string>
+    <string name="last_notification_date">Date de la dernière notification</string>
     <string name="frequency">Fréquence</string>
     <string name="toot_per_day">%s publications par jour</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">%s notifications par jour</string>
     <string name="date_range">Période</string>
     <string name="action_groups">Groupes</string>
     <string name="no_messages">Aucun groupe !</string>
@@ -1050,8 +1050,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_backup">Sauvegarder</string>
     <string name="set_auto_backup">Sauvegarde automatique des publications</string>
     <string name="set_auto_backup_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui va automatiquement stocker vos publications localement dans une base de données. Cela permet d\'avoir des statistiques et des graphiques</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">Sauvegarde automatique des notifications</string>
+    <string name="set_auto_backup_notifications_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui stockera automatiquement vos notifications dans une base de donnée locale. Cela permet d\'avoir les statistiques et les graphiques</string>
     <string name="report_account">Signaler le compte</string>
     <string name="send_invitation">Envoyer une invitation</string>
     <string name="registration_closed">Votre instance ne permet pas de créer de nouveaux comptes !</string>
@@ -1085,5 +1085,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="cache_owntoots_clear">Effacer vos publications mises en cache</string>
     <string name="cache_bookmarks_clear">Effacer vos signets</string>
     <string name="file_cache">Fichiers en cache</string>
-    <string name="total_notifications">Total notifications</string>
+    <string name="total_notifications">Notifications totales</string>
 </resources>
