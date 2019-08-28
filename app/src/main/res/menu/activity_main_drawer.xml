@@ -175,10 +175,6 @@
                         android:id="@+id/nav_blocked_domains"
                         android:icon="@drawable/ic_block"
                         android:title="@string/blocked_domains" />
-                    <item
-                        android:id="@+id/nav_language"
-                        android:icon="@drawable/ic_translate_menu"
-                        android:title="@string/languages" />
                 </group>
             </menu>
         </item>

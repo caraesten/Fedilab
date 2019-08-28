@@ -104,17 +104,19 @@ public class ViewAnimator<T extends Resourceble> {
             animatorListener.addViewToContainer(viewMenu);
             final double position = i;
             final double delay = 3 * ANIMATION_DURATION * (position / size);
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    if (position < viewList.size()) {
-                        animateView((int) position);
+            if( screenShotable != null) {
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (position < viewList.size()) {
+                            animateView((int) position);
+                        }
+                        if (position == viewList.size() - 1) {
+                            screenShotable.takeScreenShot();
+                            setViewsClickable(true);
+                        }
                     }
-                    if (position == viewList.size() - 1) {
-                        screenShotable.takeScreenShot();
-                        setViewsClickable(true);
-                    }
-                }
-            }, (long) delay);
+                }, (long) delay);
+            }
         }
 
     }

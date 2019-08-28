@@ -16,6 +16,7 @@ package app.fedilab.android.activities;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -64,7 +65,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
     public static int position = 1;
-
+    private ContentSettingsFragment.type previous;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,6 +183,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         SlideMenuItem menuItemInterface = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
         SlideMenuItem menuItemEdit = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
         SlideMenuItem menuItemBattery = new SlideMenuItem(ContentSettingsFragment.type.BATTERY, R.drawable.ic_battery_alert_menu);
+        SlideMenuItem menuLanguage = new SlideMenuItem(ContentSettingsFragment.type.LANGUAGE, R.drawable.ic_translate_menu);
 
         list.add(menuItemClose);
         list.add(menuItemTimeline);
@@ -192,6 +194,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             list.add(menuItemAdmin);
         }
+        list.add(menuLanguage);
     }
 
     @Override
@@ -231,9 +234,14 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, ContentSettingsFragment.type type, int topPosition) {
         this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
+        if( type == ContentSettingsFragment.type.LANGUAGE){
+            Intent intent = new Intent(getApplicationContext(), LanguageActivity.class);
+            startActivity(intent);
+            type = previous;
+        }
         View view = findViewById(R.id.content_frame);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
-        Animator animator = null;
+        Animator animator;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
             animator.setInterpolator(new AccelerateInterpolator());
@@ -243,12 +251,12 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         }
 
 
-
         ContentSettingsFragment contentSettingsFragment = ContentSettingsFragment.newInstance(this.res);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("type",type);
+        bundle.putSerializable("type", type);
         contentSettingsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentSettingsFragment).commit();
+        previous = type;
         return contentSettingsFragment;
     }
 

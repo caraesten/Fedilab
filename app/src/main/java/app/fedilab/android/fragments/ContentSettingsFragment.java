@@ -121,6 +121,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         INTERFACE,
         COMPOSE,
         BATTERY,
+        LANGUAGE,
+        MENU
     }
 
     private static final int ACTIVITY_CHOOSE_FILE = 411;
