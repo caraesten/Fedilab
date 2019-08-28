@@ -1081,4 +1081,5 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="cache_bookmarks_clear">Neteja els marcadors</string>
     <string name="file_cache">Arxius de la cau</string>
     <string name="total_notifications">Notificacions totals</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>
