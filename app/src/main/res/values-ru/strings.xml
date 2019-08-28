@@ -412,7 +412,7 @@
     <string name="action_sync">Синхронизировать</string>
     <string name="action_filter">Фильтр</string>
     <string name="owner_cached_toots">Ваши туты</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Ваши уведомления</string>
     <string name="v_public">Публично</string>
     <string name="v_unlisted">Не в списке</string>
     <string name="v_private">Приватно</string>
@@ -422,9 +422,9 @@
     <string name="show_pinned">Показать закрепленные</string>
     <string name="filter_no_result">Результатов не найдено!</string>
     <string name="data_backup_toots">Резервное копирование тутов для %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Резервное копирование уведомлений для %1$s</string>
     <string name="data_backup_success">было импортировано %1$s новых тутов</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">было импортировано %1$s новых уведомлений</string>
     <string-array name="filter_select">
         <item>Нет</item>
         <item>Только</item>
@@ -1033,10 +1033,10 @@
     <string name="action_stats">Статистика</string>
     <string name="total_statuses">Всего статусов</string>
     <string name="number_boosts">Количество продвижений</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">Количество избранных</string>
+    <string name="number_mentions">Количество упоминаний</string>
+    <string name="number_follows">Количество подписчиков</string>
+    <string name="number_polls">Количество опросов</string>
     <string name="number_replies">Количество ответов</string>
     <string name="number_statuses">Количество статусов</string>
     <string name="statuses">Статусы</string>
@@ -1046,11 +1046,11 @@
     <string name="number_with_cw">Количество с 18+</string>
     <string name="first_toot_date">Дата первого статуса</string>
     <string name="last_toot_date">Дата последнего статуса</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Дата первого уведомления</string>
+    <string name="last_notification_date">Дата последнего уведомления</string>
     <string name="frequency">Периодичность</string>
     <string name="toot_per_day">%s статусов в день</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">%s уведомлений в день</string>
     <string name="date_range">Диапазон дат</string>
     <string name="action_groups">Группы</string>
     <string name="no_messages">Нет групп!</string>
@@ -1060,9 +1060,9 @@
     <string name="collecting_data_wait">Приложение собирает ваши локальные данные, пожалуйста, подождите...</string>
     <string name="set_backup">Резервное копирование</string>
     <string name="set_auto_backup">Статус автоматического резервного копирования</string>
-    <string name="set_auto_backup_indication">Эта опция для каждого аккаунта. Он запустит службу, которая автоматически сохранит ваши статусы в локальной базе данных. Это позволит получать статистику и графики</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_indication">Эта опция для каждого аккаунта. Она запустит службу, которая автоматически сохранит ваши статусы в локальной базе данных. Это позволит получить статистику и графики</string>
+    <string name="set_auto_backup_notifications">Автоматическое резервное копирование уведомлений</string>
+    <string name="set_auto_backup_notifications_indication">Эта опция для каждого аккаунта. Она запустит службу, которая автоматически сохранит ваши уведомления в локальной базе данных. Это позволит получить статистику и графики</string>
     <string name="report_account">Сообщить об аккаунте</string>
     <string name="send_invitation">Отправить приглашение</string>
     <string name="registration_closed">Ваш инстанс не разрешает зарегистрировать новый аккаунт!</string>
@@ -1098,5 +1098,5 @@
     <string name="cache_owntoots_clear">Очистить кэш ваших статусов</string>
     <string name="cache_bookmarks_clear">Очистить ваши закладки</string>
     <string name="file_cache">Файлы в кэше</string>
-    <string name="total_notifications">Total notifications</string>
+    <string name="total_notifications">Всего уведомлений</string>
 </resources>

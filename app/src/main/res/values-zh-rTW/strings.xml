@@ -400,7 +400,7 @@
     <string name="action_sync">同步</string>
     <string name="action_filter">過濾</string>
     <string name="owner_cached_toots">您的嘟文</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">您的通知</string>
     <string name="v_public">公開</string>
     <string name="v_unlisted">不列出</string>
     <string name="v_private">私人</string>
@@ -410,9 +410,9 @@
     <string name="show_pinned">顯示已釘選的</string>
     <string name="filter_no_result">找不到符合的結果！</string>
     <string name="data_backup_toots">%1$s 的嘟文備份</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">備份 %1$s 的通知</string>
     <string name="data_backup_success">%1$s 的新嘟文已匯入</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">已匯入 %1$s 個新通知</string>
     <string-array name="filter_select">
         <item>否</item>
         <item>僅</item>
@@ -1021,10 +1021,10 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="action_stats">統計</string>
     <string name="total_statuses">總狀態數</string>
     <string name="number_boosts">轉嘟數</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">最愛的數量</string>
+    <string name="number_mentions">提及的數量</string>
+    <string name="number_follows">追蹤的數量</string>
+    <string name="number_polls">投票的數量</string>
     <string name="number_replies">回覆數</string>
     <string name="number_statuses">狀態數</string>
     <string name="statuses">狀態</string>
@@ -1034,11 +1034,11 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="number_with_cw">CW 數量</string>
     <string name="first_toot_date">第一個狀態的日期</string>
     <string name="last_toot_date">最後一個狀態的日期</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">第一個通知日期</string>
+    <string name="last_notification_date">最後通知日期</string>
     <string name="frequency">頻率</string>
     <string name="toot_per_day">每日狀態數</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">每天 %s 個通知</string>
     <string name="date_range">日期範圍</string>
     <string name="action_groups">群組</string>
     <string name="no_messages">沒有群組！</string>
@@ -1049,8 +1049,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_backup">備份</string>
     <string name="set_auto_backup">自動備份狀態</string>
     <string name="set_auto_backup_indication">此選項是每個帳號分開生效的。它將會啟動一個會自動將您的狀態儲存到本機資料庫的服務。這樣就可以取得統計資料與圖表</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">自動備份通知</string>
+    <string name="set_auto_backup_notifications_indication">此選項是每個帳號分開生效的。它會啟動一個會自動將您的通知儲存到本機資料庫的服務。讓您可以取得統計資料與圖表</string>
     <string name="report_account">回報帳號</string>
     <string name="send_invitation">傳送邀請</string>
     <string name="registration_closed">您的站臺不允許註冊新帳號！</string>
@@ -1082,5 +1082,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="cache_owntoots_clear">清除您已快取的狀態</string>
     <string name="cache_bookmarks_clear">清除您的書籤</string>
     <string name="file_cache">在快取中的檔案</string>
-    <string name="total_notifications">Total notifications</string>
+    <string name="total_notifications">總通知</string>
 </resources>
