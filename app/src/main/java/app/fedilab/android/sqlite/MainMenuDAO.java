@@ -62,7 +62,6 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
         values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
         values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_ADMINISTRATION, mainMenuItem.isNav_administration()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
@@ -94,7 +93,6 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
         values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
         values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_ADMINISTRATION, mainMenuItem.isNav_administration()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
@@ -125,7 +123,6 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
         values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
         values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_ADMINISTRATION, mainMenuItem.isNav_administration()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
@@ -157,7 +154,6 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
         values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
         values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_ADMINISTRATION, mainMenuItem.isNav_administration()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
@@ -221,7 +217,6 @@ public class MainMenuDAO {
             return null;
         }
         c.moveToFirst();
-        mainMenuItem.setNav_administration(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ADMINISTRATION)) == 1);
         mainMenuItem.setNav_archive(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ARCHIVE)) == 1);
         mainMenuItem.setNav_archive_notifications(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS)) == 1);
         mainMenuItem.setNav_blocked(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_BLOCKED)) == 1);

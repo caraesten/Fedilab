@@ -1568,9 +1568,6 @@ public class Helper {
                 if( !mainMenuItem.isNav_list()){
                     menu.findItem(R.id.nav_list).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_administration()){
-                    menu.findItem(R.id.nav_administration).setVisible(false);
-                }
                 if( !mainMenuItem.isNav_archive()){
                     menu.findItem(R.id.nav_archive).setVisible(false);
                 }

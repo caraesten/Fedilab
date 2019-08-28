@@ -25,7 +25,6 @@ public class MainMenuItem {
             nav_peertube = true,
             nav_filters = true,
             nav_how_to_follow = true,
-            nav_administration = true,
             nav_blocked = true,
             nav_muted = true,
             nav_blocked_domains = true,
@@ -93,14 +92,6 @@ public class MainMenuItem {
 
     public void setNav_how_to_follow(boolean nav_how_to_follow) {
         this.nav_how_to_follow = nav_how_to_follow;
-    }
-
-    public boolean isNav_administration() {
-        return nav_administration;
-    }
-
-    public void setNav_administration(boolean nav_administration) {
-        this.nav_administration = nav_administration;
     }
 
     public boolean isNav_blocked() {
