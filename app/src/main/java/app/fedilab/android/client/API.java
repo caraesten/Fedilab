@@ -1657,7 +1657,11 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 10, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatusesForCache(context, new JSONArray(response));
+            if( since_id == null) {
+                statuses = parseStatusesForCache(context, new JSONArray(response));
+            }else{
+                statuses = parseStatuses(context, new JSONArray(response));
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {

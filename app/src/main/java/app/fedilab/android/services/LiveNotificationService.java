@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -88,7 +89,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     protected Account account;
     boolean backgroundProcess;
     private static HashMap<String, Thread>  threads = new HashMap<>();
-    private static HashMap<String, Boolean>  canStartStream = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
     private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
@@ -99,64 +99,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
-    private void startStream(Account account){
+    private void startStream(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( liveNotifications ){
-            if( account == null){
-
-                Iterator it = threads.entrySet().iterator();
-                Thread thread;
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( pair.getValue() == null || !((Thread)pair.getValue()).isAlive()) {
-                        if ((pair.getValue()) != null)
-                            ((Thread) pair.getValue()).interrupt();
-                    }
+            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+            if (accountStreams != null) {
+                for (final Account accountStream : accountStreams) {
+                    startWork(accountStream);
                 }
-                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
-                if (accountStreams != null) {
-                    for (final Account accountStream : accountStreams) {
-                        if( accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
-                            thread = new Thread() {
-                                @Override
-                                public void run() {
-
-                                    taks(accountStream);
-                                }
-                            };
-                            thread.start();
-                            threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
-                        }
-
-                    }
-                }
-            }else {
-                String key = account.getAcct() + "@" + account.getInstance();
-                if(webSocketFutures.containsKey(key)){
-                    if (webSocketFutures.get(key) != null && Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
-                        try {
-                            Objects.requireNonNull(webSocketFutures.get(key)).close();
-
-                        }catch (Exception ignored){}
-                    }
-                }
-                if(threads.containsKey(key)){
-                    if (threads.get(key) != null && !Objects.requireNonNull(threads.get(key)).isAlive()) {
-                        Objects.requireNonNull(threads.get(key)).interrupt();
-                    }
-                }
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        taks(account);
-                    }
-                };
-                thread.start();
-                threads.put(account.getAcct()+"@"+account.getInstance(), thread);
-
             }
         }
     }
@@ -179,6 +132,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         unregisterReceiver(networkStateReceiver);
     }
 
+
+
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -187,22 +143,27 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void onTaskRemoved(Intent rootIntent){
+
+        super.onTaskRemoved(rootIntent);
         if(backgroundProcess){
             restart();
         }
-        super.onTaskRemoved(rootIntent);
     }
 
     private void restart(){
-        Intent restartServiceIntent = new Intent(LiveNotificationService.this, LiveNotificationService.class);
-        restartServiceIntent.setPackage(getPackageName());
-        PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-        AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        assert alarmService != null;
-        alarmService.set(
-                AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 1000,
-                restartServicePendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ContextCompat.startForegroundService(getApplicationContext(),new Intent(getApplicationContext(), LiveNotificationService.class));
+        } else {
+            Intent restartServiceIntent = new Intent(LiveNotificationService.this, LiveNotificationService.class);
+            restartServiceIntent.setPackage(getPackageName());
+            PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+            AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+            assert alarmService != null;
+            alarmService.set(
+                    AlarmManager.ELAPSED_REALTIME,
+                    SystemClock.elapsedRealtime() + 1000,
+                    restartServicePendingIntent);
+        }
     }
 
     private void taks(Account account) {
@@ -218,12 +179,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken();
             Uri url = Uri.parse(urlKey);
             AsyncHttpRequest.setDefaultHeaders(headers, url);
-            if( webSocketFutures.containsKey(urlKey)  ){
-                try {
-                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).isOpen())
-                        Objects.requireNonNull(webSocketFutures.get(urlKey)).close();
-                } catch (Exception ignored) {}
-            }
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(account.getInstance()).getSSLContext());
@@ -239,18 +194,13 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
-                        if( !canStartStream.containsKey(account.getAcct()+"@"+account.getInstance()) || canStartStream.get(account.getAcct()+"@"+account.getInstance())) {
-                            canStartStream.put(account.getAcct()+"@"+account.getInstance(),false);
-
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startStream(account);
-                                    canStartStream.put(account.getAcct()+"@"+account.getInstance(),true);
-                                }
-                            }, 60000 );
-                        }
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startWork(account);
+                            }
+                        }, 60000 );
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
@@ -265,19 +215,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     webSocket.setClosedCallback(new CompletedCallback() {
                         @Override
                         public void onCompleted(Exception ex) {
-                            try {
-                                if (ex != null) {
-                                    webSocket.close();
-                                }
-                            } finally {
-                                if( webSocketFutures != null && webSocketFutures.containsKey(urlKey))
-                                    webSocketFutures.remove(urlKey);
-                                taks(account);
-                                if( networkStateReceiver != null && networkStateReceiver.listeners.size() == 0){
-                                    networkStateReceiver.addListener(LiveNotificationService.this);
-                                    registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-                                }
-                            }
+                            startWork(account);
                         }
                     });
                     webSocket.setDataCallback(new DataCallback() {
@@ -293,6 +231,32 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         }
     }
 
+
+    private void startWork(Account accountStream){
+        String key = accountStream.getAcct() + "@" + accountStream.getInstance();
+        if(webSocketFutures.containsKey(key)){
+            if (webSocketFutures.get(key) != null && Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
+                try {
+                    Objects.requireNonNull(webSocketFutures.get(key)).close();
+
+                }catch (Exception ignored){}
+            }
+        }
+        if(threads.containsKey(key)){
+            if (threads.get(key) != null && !Objects.requireNonNull(threads.get(key)).isAlive()) {
+                Objects.requireNonNull(threads.get(key)).interrupt();
+            }
+        }
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+
+                taks(accountStream);
+            }
+        };
+        thread.start();
+        threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
+    }
 
     private void onRetrieveStreaming(Account account, JSONObject response) {
         if(  response == null )
@@ -464,7 +428,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkAvailable() {
-        startStream(null);
+        startStream();
     }
 
     @Override
