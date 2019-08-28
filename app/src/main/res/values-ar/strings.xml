@@ -1069,7 +1069,7 @@
     <string name="set_auto_backup">النسخ الاحتياطي التلقائي المنشورات</string>
     <string name="set_auto_backup_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ منشوراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
     <string name="set_auto_backup_notifications">نسخ احتياطي تلقائي للإشعارات</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ إشعاراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
     <string name="report_account">التبغليع عن الحساب</string>
     <string name="send_invitation">ارسل دعوة</string>
     <string name="registration_closed">مثيل خادمك لا يسمح بإنشاء حسابات جديدة!</string>
@@ -1108,4 +1108,5 @@
     <string name="cache_bookmarks_clear">امسح كافة فواصلك المرجعية</string>
     <string name="file_cache">الملفات في ذاكرة التخزين المؤقتة</string>
     <string name="total_notifications">إجمالي الإشعارات</string>
+    <string name="hide_menu_items">إخفاء عناصر القائمة</string>
 </resources>

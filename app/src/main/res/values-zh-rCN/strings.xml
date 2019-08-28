@@ -242,7 +242,7 @@
     <string name="pinned_toots">置顶</string>
     <!-- TOAST -->
     <string name="client_error">无法获取客户端 ID！</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">无法连接到实例的域！</string>
     <string name="no_internet">没有互联网连接！</string>
     <string name="toast_block">该帐号已被屏蔽！</string>
     <string name="toast_unblock">该帐号不再被屏蔽！</string>
@@ -350,7 +350,7 @@
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
-        <item>4 Mb</item>
+        <item>4Mb</item>
         <item>6 Mb</item>
         <item>8 Mb</item>
     </string-array>
@@ -400,7 +400,7 @@
     <string name="action_sync">同步</string>
     <string name="action_filter">筛选</string>
     <string name="owner_cached_toots">您的嘟文</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">您的通知</string>
     <string name="v_public">公开</string>
     <string name="v_unlisted">未列出</string>
     <string name="v_private">私密</string>
@@ -1085,4 +1085,5 @@
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
     <string name="total_notifications">Total notifications</string>
+    <string name="hide_menu_items">隐藏菜单项目</string>
 </resources>
