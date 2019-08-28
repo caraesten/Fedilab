@@ -49,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 33;
+    public static final int DB_VERSION = 34;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -101,6 +101,8 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table for notifications
     public static final String TABLE_NOTIFICATION_CACHE = "NOTIFICATION_CACHE";
 
+    //Table for main menu items
+    public static final String TABLE_MAIN_MENU_ITEMS = "MAIN_MENU_ITEMS";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -319,7 +321,37 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_STATUS_ID_CACHE + " INTEGER, "
             + COL_CREATED_AT + " TEXT NOT NULL)";
 
+    static final String COL_NAV_NEWS = "NAV_NEWS";
+    static final String COL_NAV_LIST = "NAV_LIST";
+    static final String COL_NAV_SCHEDULED = "NAV_SCHEDULED";
+    static final String COL_NAV_ARCHIVE = "NAV_ARCHIVE";
+    static final String COL_NAV_ARCHIVE_NOTIFICATIONS = "NAV_ARCHIVE_NOTIFICATIONS";
+    static final String COL_NAV_PEERTUBE = "NAV_PEERTUBE";
+    static final String COL_NAV_FILTERS = "NAV_FILTERS";
+    static final String COL_NAV_HOW_TO_FOLLOW = "NAV_HOW_TO_FOLLOW";
+    static final String COL_NAV_HOW_ADMINISTRATION = "NAV_HOW_ADMINISTRATION";
+    static final String COL_NAV_BLOCKED = "NAV_BLOCKED";
+    static final String COL_NAV_MUTED = "NAV_MUTED";
+    static final String COL_NAV_BLOCKED_DOMAINS = "NAV_BLOCKED_DOMAINS";
+    static final String COL_NAV_HOWTO = "NAV_HOWTO";
 
+    private static final String CREATE_TABLE_MAIN_MENU_ITEMS = "CREATE TABLE "
+            + TABLE_MAIN_MENU_ITEMS + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_NAV_NEWS + " INTEGER  DEFAULT 1, "
+            + COL_NAV_LIST + " INTEGER  DEFAULT 1, "
+            + COL_NAV_SCHEDULED + " INTEGER  DEFAULT 1, "
+            + COL_NAV_ARCHIVE + " INTEGER  DEFAULT 1, "
+            + COL_NAV_ARCHIVE_NOTIFICATIONS + " INTEGER  DEFAULT 1, "
+            + COL_NAV_PEERTUBE + " INTEGER  DEFAULT 1, "
+            + COL_NAV_FILTERS + " INTEGER  DEFAULT 1, "
+            + COL_NAV_HOW_TO_FOLLOW + " INTEGER  DEFAULT 1, "
+            + COL_NAV_HOW_ADMINISTRATION+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_BLOCKED+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_MUTED+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_BLOCKED_DOMAINS+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_HOWTO + " INTEGER  DEFAULT 1)";
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -352,6 +384,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TIMELINES);
         db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
         db.execSQL(CREATE_TABLE_NOTIFICATIONS);
+        db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
     }
 
     @Override
@@ -484,6 +517,8 @@ public class Sqlite extends SQLiteOpenHelper {
 
             case 32:
                 db.execSQL(CREATE_TABLE_NOTIFICATIONS);
+            case 33:
+                db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
             default:
                 break;
         }
