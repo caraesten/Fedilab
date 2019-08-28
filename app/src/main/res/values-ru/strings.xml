@@ -1099,5 +1099,5 @@
     <string name="cache_bookmarks_clear">Очистить ваши закладки</string>
     <string name="file_cache">Файлы в кэше</string>
     <string name="total_notifications">Всего уведомлений</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="hide_menu_items">Скрыть пункты меню</string>
 </resources>
