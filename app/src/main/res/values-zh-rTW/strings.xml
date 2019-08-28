@@ -1038,7 +1038,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="last_notification_date">最後通知日期</string>
     <string name="frequency">頻率</string>
     <string name="toot_per_day">每日狀態數</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">每天 %s 個通知</string>
     <string name="date_range">日期範圍</string>
     <string name="action_groups">群組</string>
     <string name="no_messages">沒有群組！</string>
@@ -1049,8 +1049,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_backup">備份</string>
     <string name="set_auto_backup">自動備份狀態</string>
     <string name="set_auto_backup_indication">此選項是每個帳號分開生效的。它將會啟動一個會自動將您的狀態儲存到本機資料庫的服務。這樣就可以取得統計資料與圖表</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">自動備份通知</string>
+    <string name="set_auto_backup_notifications_indication">此選項是每個帳號分開生效的。它會啟動一個會自動將您的通知儲存到本機資料庫的服務。讓您可以取得統計資料與圖表</string>
     <string name="report_account">回報帳號</string>
     <string name="send_invitation">傳送邀請</string>
     <string name="registration_closed">您的站臺不允許註冊新帳號！</string>
@@ -1082,5 +1082,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="cache_owntoots_clear">清除您已快取的狀態</string>
     <string name="cache_bookmarks_clear">清除您的書籤</string>
     <string name="file_cache">在快取中的檔案</string>
-    <string name="total_notifications">Total notifications</string>
+    <string name="total_notifications">總通知</string>
 </resources>
