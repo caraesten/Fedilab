@@ -761,30 +761,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_display_timeline_in_list_text.setOnClickListener(v -> set_display_timeline_in_list.performClick());
 
 
-        boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
-        final CheckBox set_display_news = rootView.findViewById(R.id.set_display_news);
-        set_display_news.setChecked(display_news);
-
-        set_display_news.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, set_display_news.isChecked());
-                editor.apply();
-                Bundle b = new Bundle();
-                if( set_display_news.isChecked()){
-                    b.putString("menu", "show_news");
-                }else{
-                    b.putString("menu", "hide_news");
-                }
-                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
-                intentBC.putExtras(b);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-            }
-        });
-        final LinearLayout set_display_news_text = rootView.findViewById(R.id.set_display_news_text);
-        set_display_news_text.setOnClickListener(v -> set_display_news.performClick());
-
 
         boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
         final CheckBox set_enable_crash_report = rootView.findViewById(R.id.set_enable_crash_report);

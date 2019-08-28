@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import app.fedilab.android.client.Entities.MainMenuItem;
 import app.fedilab.android.helper.Helper;
 
@@ -82,7 +83,6 @@ public class MainMenuDAO {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
-
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
@@ -146,6 +146,7 @@ public class MainMenuDAO {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
+
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news()?1:0);
@@ -184,7 +185,7 @@ public class MainMenuDAO {
             Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
-            return new MainMenuItem();
+            return null;
         }
     }
 
@@ -200,7 +201,8 @@ public class MainMenuDAO {
             Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
-            return new MainMenuItem();
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -209,17 +211,16 @@ public class MainMenuDAO {
     /***
      * Method to hydrate main menu items from database
      * @param c Cursor
-     * @return List<RemoteInstance>
+     * @return MainMenuItem
      */
     private MainMenuItem cursorToMainMenu(Cursor c){
         //No element found
         MainMenuItem mainMenuItem = new MainMenuItem();
         if (c.getCount() == 0) {
             c.close();
-            return mainMenuItem;
+            return null;
         }
         c.moveToFirst();
-
         mainMenuItem.setNav_administration(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ADMINISTRATION)) == 1);
         mainMenuItem.setNav_archive(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ARCHIVE)) == 1);
         mainMenuItem.setNav_archive_notifications(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS)) == 1);
@@ -233,7 +234,6 @@ public class MainMenuDAO {
         mainMenuItem.setNav_news(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_NEWS)) == 1);
         mainMenuItem.setNav_peertube(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_PEERTUBE)) == 1);
         mainMenuItem.setNav_scheduled(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_SCHEDULED)) == 1);
-
         //Close the cursor
         c.close();
         return mainMenuItem;

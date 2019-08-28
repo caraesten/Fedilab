@@ -361,7 +361,6 @@ public class Helper {
     public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
     public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
     public static final String SET_FEATURED_TAGS ="set_featured_tags";
-    public static final String SET_DISPLAY_NEWS_FROM_FEDILAB ="set_display_news_from_fedilab";
     public static final String SET_SEND_CRASH_REPORTS ="set_send_crash_reports";
     public static final String SET_FEATURED_TAG_ACTION ="set_featured_tag_action";
     public static final String SET_HIDE_DELETE_BUTTON_ON_TAB = "set_hide_delete_notification_on_tab";
@@ -1563,44 +1562,47 @@ public class Helper {
             }else{
                 SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 MainMenuItem mainMenuItem = new MainMenuDAO(activity, db).getMainMenu();
+                if (mainMenuItem == null){
+                    mainMenuItem = new MainMenuItem();
+                }
                 if( !mainMenuItem.isNav_list()){
-                    menu.getItem(R.id.nav_list).setVisible(false);
+                    menu.findItem(R.id.nav_list).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_administration()){
-                    menu.getItem(R.id.nav_administration).setVisible(false);
+                    menu.findItem(R.id.nav_administration).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_archive()){
-                    menu.getItem(R.id.nav_archive).setVisible(false);
+                    menu.findItem(R.id.nav_archive).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_archive_notifications()){
-                    menu.getItem(R.id.nav_archive_notifications).setVisible(false);
+                    menu.findItem(R.id.nav_archive_notifications).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_blocked()){
-                    menu.getItem(R.id.nav_blocked).setVisible(false);
+                    menu.findItem(R.id.nav_blocked).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_blocked_domains()){
-                    menu.getItem(R.id.nav_blocked_domains).setVisible(false);
+                    menu.findItem(R.id.nav_blocked_domains).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_filters()){
-                    menu.getItem(R.id.nav_filters).setVisible(false);
+                    menu.findItem(R.id.nav_filters).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_how_to_follow()){
-                    menu.getItem(R.id.nav_who_to_follow).setVisible(false);
+                    menu.findItem(R.id.nav_who_to_follow).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_howto()){
-                    menu.getItem(R.id.nav_how_to).setVisible(false);
+                    menu.findItem(R.id.nav_how_to).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_muted()){
-                    menu.getItem(R.id.nav_muted).setVisible(false);
+                    menu.findItem(R.id.nav_muted).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_news()){
-                    menu.getItem(R.id.nav_news).setVisible(false);
+                    menu.findItem(R.id.nav_news).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_peertube()){
-                    menu.getItem(R.id.nav_peertube).setVisible(false);
+                    menu.findItem(R.id.nav_peertube).setVisible(false);
                 }
                 if( !mainMenuItem.isNav_scheduled()){
-                    menu.getItem(R.id.nav_scheduled).setVisible(false);
+                    menu.findItem(R.id.nav_scheduled).setVisible(false);
                 }
             }
         }
@@ -3047,37 +3049,12 @@ public class Helper {
                 if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
             }
-            MenuItem news = navigationView.getMenu().findItem(R.id.nav_news);
-            if( news != null){
-                boolean display_news = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEWS_FROM_FEDILAB, true);
-                if( ! display_news ){
-                    news.setVisible(false);
-                }
-            }
+
             if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
                 MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
                 if( adminItem != null){
                     adminItem.setVisible(false);
                 }
-            }else{
-                boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userID + instance, false);
-                if( !display_admin_menu){
-                    MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
-                    if( adminItem != null){
-                        adminItem.setVisible(false);
-                    }
-                }
-            }
-
-        }
-        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userID + instance, null);
-        if (instanceVersion != null && navigationView.getMenu().findItem(R.id.nav_list) != null) {
-            Version currentVersion = new Version(instanceVersion);
-            Version minVersion = new Version("2.1");
-            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                navigationView.getMenu().findItem(R.id.nav_list).setVisible(true);
-            } else {
-                navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
             }
         }
         tableLayout.setVisibility(View.VISIBLE);

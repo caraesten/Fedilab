@@ -338,6 +338,7 @@ public class Sqlite extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_MAIN_MENU_ITEMS = "CREATE TABLE "
             + TABLE_MAIN_MENU_ITEMS + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_USER_ID + " TEXT NOT NULL, "
             + COL_INSTANCE + " TEXT NOT NULL, "
             + COL_NAV_NEWS + " INTEGER  DEFAULT 1, "
             + COL_NAV_LIST + " INTEGER  DEFAULT 1, "

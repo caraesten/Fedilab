@@ -91,7 +91,9 @@ public class HideItemActivity extends BaseActivity {
 
         SQLiteDatabase db = Sqlite.getInstance(HideItemActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         MainMenuItem mainMenu = new MainMenuDAO(getApplicationContext(), db).getMainMenu();
-
+        if( mainMenu == null){
+            mainMenu = new MainMenuItem();
+        }
         CheckBox nav_news = findViewById(R.id.nav_news);
         CheckBox nav_list = findViewById(R.id.nav_list);
         CheckBox nav_scheduled = findViewById(R.id.nav_scheduled);
@@ -100,12 +102,12 @@ public class HideItemActivity extends BaseActivity {
         CheckBox nav_peertube = findViewById(R.id.nav_peertube);
         CheckBox nav_filters = findViewById(R.id.nav_filters);
         CheckBox nav_who_to_follow = findViewById(R.id.nav_who_to_follow);
-        CheckBox nav_administration = findViewById(R.id.nav_administration);
         CheckBox nav_blocked = findViewById(R.id.nav_blocked);
         CheckBox nav_muted = findViewById(R.id.nav_muted);
         CheckBox nav_blocked_domains = findViewById(R.id.nav_blocked_domains);
         CheckBox nav_how_to = findViewById(R.id.nav_how_to);
         Button validate = findViewById(R.id.validate);
+
 
         nav_news.setChecked(mainMenu.isNav_news());
         nav_list.setChecked(mainMenu.isNav_list());
@@ -115,7 +117,6 @@ public class HideItemActivity extends BaseActivity {
         nav_peertube.setChecked(mainMenu.isNav_peertube());
         nav_filters.setChecked(mainMenu.isNav_filters());
         nav_who_to_follow.setChecked(mainMenu.isNav_how_to_follow());
-        nav_administration.setChecked(mainMenu.isNav_administration());
         nav_blocked.setChecked(mainMenu.isNav_blocked());
         nav_muted.setChecked(mainMenu.isNav_muted());
         nav_blocked_domains.setChecked(mainMenu.isNav_blocked_domains());
@@ -124,20 +125,20 @@ public class HideItemActivity extends BaseActivity {
 
         validate.setOnClickListener(view -> {
             MainMenuItem mainMenuItem = new MainMenuItem();
-            nav_news.setChecked(nav_news.isChecked());
-            nav_list.setChecked(nav_list.isChecked());
-            nav_scheduled.setChecked(nav_scheduled.isChecked());
-            nav_archive.setChecked(nav_archive.isChecked());
-            nav_archive_notifications.setChecked(nav_archive_notifications.isChecked());
-            nav_peertube.setChecked(nav_peertube.isChecked());
-            nav_filters.setChecked(nav_filters.isChecked());
-            nav_who_to_follow.setChecked(nav_who_to_follow.isChecked());
-            nav_administration.setChecked(nav_administration.isChecked());
-            nav_blocked.setChecked(nav_blocked.isChecked());
-            nav_muted.setChecked(nav_muted.isChecked());
-            nav_blocked_domains.setChecked(nav_blocked_domains.isChecked());
-            nav_how_to.setChecked(nav_how_to.isChecked());
+            mainMenuItem.setNav_news(nav_news.isChecked());
+            mainMenuItem.setNav_list(nav_list.isChecked());
+            mainMenuItem.setNav_scheduled(nav_scheduled.isChecked());
+            mainMenuItem.setNav_archive(nav_archive.isChecked());
+            mainMenuItem.setNav_archive_notifications(nav_archive_notifications.isChecked());
+            mainMenuItem.setNav_peertube(nav_peertube.isChecked());
+            mainMenuItem.setNav_filters(nav_filters.isChecked());
+            mainMenuItem.setNav_how_to_follow(nav_who_to_follow.isChecked());
+            mainMenuItem.setNav_blocked(nav_blocked.isChecked());
+            mainMenuItem.setNav_muted(nav_muted.isChecked());
+            mainMenuItem.setNav_blocked_domains(nav_blocked_domains.isChecked());
+            mainMenuItem.setNav_howto(nav_how_to.isChecked());
             MainMenuItem mainMenuItem1 = new MainMenuDAO(getApplicationContext(), db).getMainMenu();
+
             if( mainMenuItem1 != null){
                 new MainMenuDAO(getApplicationContext(), db).updateMenu(mainMenuItem);
             }else{

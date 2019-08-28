@@ -184,7 +184,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         SlideMenuItem menuItemEdit = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
         SlideMenuItem menuItemBattery = new SlideMenuItem(ContentSettingsFragment.type.BATTERY, R.drawable.ic_battery_alert_menu);
         SlideMenuItem menuLanguage = new SlideMenuItem(ContentSettingsFragment.type.LANGUAGE, R.drawable.ic_translate_menu);
-
+        SlideMenuItem menuMenu = new SlideMenuItem(ContentSettingsFragment.type.MENU, R.drawable.ic_menu_menu);
         list.add(menuItemClose);
         list.add(menuItemTimeline);
         list.add(menuItemNotification);
@@ -192,6 +192,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         list.add(menuItemBattery);
         list.add(menuItemEdit);
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            list.add(menuMenu);
             list.add(menuItemAdmin);
         }
         list.add(menuLanguage);
@@ -236,6 +237,10 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
         if( type == ContentSettingsFragment.type.LANGUAGE){
             Intent intent = new Intent(getApplicationContext(), LanguageActivity.class);
+            startActivity(intent);
+            type = previous;
+        }else if( type == ContentSettingsFragment.type.MENU){
+            Intent intent = new Intent(getApplicationContext(), HideItemActivity.class);
             startActivity(intent);
             type = previous;
         }
