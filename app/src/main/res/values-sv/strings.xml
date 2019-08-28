@@ -404,7 +404,7 @@
     <string name="action_sync">Synkronisera</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">Dina toots</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Dina meddelanden</string>
     <string name="v_public">Offentligt</string>
     <string name="v_unlisted">Ej listat</string>
     <string name="v_private">Privat</string>
@@ -414,7 +414,7 @@
     <string name="show_pinned">Visa fastnålade</string>
     <string name="filter_no_result">Inga matchande resultat hittades!</string>
     <string name="data_backup_toots">Säkerhetskopiering toots för %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Backupnotifikation för %1$s</string>
     <string name="data_backup_success">%1$s nya toots har importerats</string>
     <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_select">
