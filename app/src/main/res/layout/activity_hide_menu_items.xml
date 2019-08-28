@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Thomas Schneider
+
+    This file is a part of Fedilab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Fedilab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Fedilab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/communication_menu_title"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/nav_news"
+            android:layout_width="wrap_content"
+            android:text="@string/action_news"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_list"
+            android:layout_width="wrap_content"
+            android:text="@string/action_lists"
+            android:layout_height="wrap_content" />
+
+
+        <CheckBox
+            android:id="@+id/nav_scheduled"
+            android:layout_width="wrap_content"
+            android:text="@string/scheduled_toots"
+            android:layout_height="wrap_content" />
+
+
+        <CheckBox
+            android:id="@+id/nav_archive"
+            android:layout_width="wrap_content"
+            android:text="@string/owner_cached_toots"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_archive_notifications"
+            android:layout_width="wrap_content"
+            android:text="@string/owner_cached_notifications"
+            android:layout_height="wrap_content" />
+
+
+        <CheckBox
+            android:id="@+id/nav_peertube"
+            android:layout_width="wrap_content"
+            android:text="@string/peertube_favorites"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_filters"
+            android:layout_width="wrap_content"
+            android:text="@string/filters"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_who_to_follow"
+            android:layout_width="wrap_content"
+            android:text="@string/how_to_follow"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_administration"
+            android:layout_width="wrap_content"
+            android:text="@string/administration"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/neutral_menu_title"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
+
+
+        <CheckBox
+            android:id="@+id/nav_blocked"
+            android:layout_width="wrap_content"
+            android:text="@string/blocked_menu"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_muted"
+            android:layout_width="wrap_content"
+            android:text="@string/muted_menu"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/nav_blocked_domains"
+            android:layout_width="wrap_content"
+            android:text="@string/blocked_domains"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/neutral_menu_information"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/nav_how_to"
+            android:layout_width="wrap_content"
+            android:text="@string/how_to_videos"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:id="@+id/validate"
+            android:layout_gravity="center"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/validate"/>
+    </LinearLayout>
+</ScrollView>

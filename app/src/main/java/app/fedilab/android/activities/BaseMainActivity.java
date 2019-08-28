@@ -370,7 +370,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Helper.hideMenuItem(navigationView.getMenu());
+        Helper.hideMenuItem(BaseMainActivity.this, navigationView.getMenu());
 
 
         toot = findViewById(R.id.toot);
@@ -1431,6 +1431,8 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.BACKUP_NOTIFICATION_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerNotificationActivity.class);
                 startActivity(myIntent);
+            }else if( extras.getInt(Helper.INTENT_ACTION) == Helper.REDRAW_MENU){
+                Helper.hideMenuItem(BaseMainActivity.this, navigationView.getMenu());
             }
             else if( extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG){
                 new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1661,7 +1663,6 @@ public abstract class BaseMainActivity extends BaseActivity
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 
-
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -1722,16 +1723,6 @@ public abstract class BaseMainActivity extends BaseActivity
         } else if(id == R.id.nav_blocked_domains){
             Intent intent = new Intent(getApplicationContext(), MutedInstanceActivity.class);
             startActivity(intent);
-            return false;
-        } else if(id == R.id.nav_bug_report){
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("message/rfc822");
-            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"incoming+tom79/mastalab@incoming.gitlab.com"});
-            try {
-                startActivity(Intent.createChooser(i, getString(R.string.bug_report_mail)));
-            } catch (android.content.ActivityNotFoundException ex) {
-                Toasty.info(getApplicationContext(), getString(R.string.no_mail_client), Toast.LENGTH_SHORT).show();
-            }
             return false;
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);

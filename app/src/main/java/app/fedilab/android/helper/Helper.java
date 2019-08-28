@@ -193,6 +193,7 @@ import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Filters;
+import app.fedilab.android.client.Entities.MainMenuItem;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
@@ -200,6 +201,7 @@ import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
+import app.fedilab.android.sqlite.MainMenuDAO;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import es.dmoral.toasty.Toasty;
@@ -314,6 +316,7 @@ public class Helper {
     public static final int RELOAD_MYVIDEOS = 10;
     public static final int REFRESH_TIMELINE = 11;
     public static final int BACKUP_NOTIFICATION_INTENT = 12;
+    public static final int REDRAW_MENU = 13;
     //Settings
     public static final int TOOTS_PER_PAGE = 20;
     public static final int ACCOUNTS_PER_PAGE = 20;
@@ -1487,7 +1490,7 @@ public class Helper {
         }else{
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
-            hideMenuItem(navigationView.getMenu());
+            hideMenuItem(activity, navigationView.getMenu());
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
             switchLayout(activity);
         }
@@ -1495,7 +1498,7 @@ public class Helper {
 
     }
 
-    public static void hideMenuItem(Menu menu){
+    public static void hideMenuItem(Activity activity, Menu menu){
 
         if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             MenuItem itemCom = menu.findItem(R.id.nav_main_com);
@@ -1557,6 +1560,48 @@ public class Helper {
                         nav_group.setVisible(true);
                 }
 
+            }else{
+                SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                MainMenuItem mainMenuItem = new MainMenuDAO(activity, db).getMainMenu();
+                if( !mainMenuItem.isNav_list()){
+                    menu.getItem(R.id.nav_list).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_administration()){
+                    menu.getItem(R.id.nav_administration).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_archive()){
+                    menu.getItem(R.id.nav_archive).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_archive_notifications()){
+                    menu.getItem(R.id.nav_archive_notifications).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_blocked()){
+                    menu.getItem(R.id.nav_blocked).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_blocked_domains()){
+                    menu.getItem(R.id.nav_blocked_domains).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_filters()){
+                    menu.getItem(R.id.nav_filters).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_how_to_follow()){
+                    menu.getItem(R.id.nav_who_to_follow).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_howto()){
+                    menu.getItem(R.id.nav_how_to).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_muted()){
+                    menu.getItem(R.id.nav_muted).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_news()){
+                    menu.getItem(R.id.nav_news).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_peertube()){
+                    menu.getItem(R.id.nav_peertube).setVisible(false);
+                }
+                if( !mainMenuItem.isNav_scheduled()){
+                    menu.getItem(R.id.nav_scheduled).setVisible(false);
+                }
             }
         }
         if (!BuildConfig.DONATIONS) {
@@ -1571,6 +1616,7 @@ public class Helper {
         }
     }
 
+
     /**
      * Changes the user in shared preferences
      * @param activity Activity
@@ -1584,7 +1630,7 @@ public class Helper {
         MainActivity.lastNotificationId = null;
         MainActivity.lastHomeId = null;
         navigationView.inflateMenu(R.menu.activity_main_drawer);
-        hideMenuItem(navigationView.getMenu());
+        hideMenuItem(activity, navigationView.getMenu());
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getUniqAccount(userID, instance);

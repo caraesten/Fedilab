@@ -49,7 +49,7 @@ public class MainMenuDAO {
      * @param userId String
      * @param instance String
      */
-    public void insertInstance(MainMenuItem mainMenuItem, String userId, String instance) {
+    public void insertMenu(MainMenuItem mainMenuItem, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
@@ -78,7 +78,7 @@ public class MainMenuDAO {
      * Insert a menu configuration name in database
      * @param mainMenuItem MainMenuItem
      */
-    public void insertInstance(MainMenuItem mainMenuItem) {
+    public void insertMenu(MainMenuItem mainMenuItem) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
@@ -113,7 +113,7 @@ public class MainMenuDAO {
      * update menu items in database
      * @param mainMenuItem MainMenuItem
      */
-    public void updateInstance(MainMenuItem mainMenuItem, String userId, String instance) {
+    public void updateMenu(MainMenuItem mainMenuItem, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
@@ -141,7 +141,7 @@ public class MainMenuDAO {
      * update menu items in database
      * @param mainMenuItem MainMenuItem
      */
-    public void updateInstance(MainMenuItem mainMenuItem) {
+    public void updateMenu(MainMenuItem mainMenuItem) {
         ContentValues values = new ContentValues();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -184,7 +184,7 @@ public class MainMenuDAO {
             Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
-            return null;
+            return new MainMenuItem();
         }
     }
 
@@ -200,7 +200,7 @@ public class MainMenuDAO {
             Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
-            return null;
+            return new MainMenuItem();
         }
     }
 
