@@ -1075,4 +1075,5 @@
     <string name="cache_bookmarks_clear">ブックマークを削除</string>
     <string name="file_cache">キャッシュ内のファイル</string>
     <string name="total_notifications">Total notifications</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>
