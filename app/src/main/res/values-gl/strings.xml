@@ -1090,5 +1090,5 @@
     <string name="cache_bookmarks_clear">Eliminar marcadores</string>
     <string name="file_cache">Ficheiros na caché</string>
     <string name="total_notifications">Total de notificacións</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="hide_menu_items">Agochar elementos do menú</string>
 </resources>
