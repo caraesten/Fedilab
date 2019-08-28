@@ -1086,5 +1086,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="cache_bookmarks_clear">Effacer vos signets</string>
     <string name="file_cache">Fichiers en cache</string>
     <string name="total_notifications">Notifications totales</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="hide_menu_items">Cacher les éléments du menu</string>
 </resources>
