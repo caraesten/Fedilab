@@ -1108,4 +1108,5 @@
     <string name="cache_bookmarks_clear">امسح كافة فواصلك المرجعية</string>
     <string name="file_cache">الملفات في ذاكرة التخزين المؤقتة</string>
     <string name="total_notifications">إجمالي الإشعارات</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>
