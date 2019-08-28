@@ -329,7 +329,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_NAV_PEERTUBE = "NAV_PEERTUBE";
     static final String COL_NAV_FILTERS = "NAV_FILTERS";
     static final String COL_NAV_HOW_TO_FOLLOW = "NAV_HOW_TO_FOLLOW";
-    static final String COL_NAV_HOW_ADMINISTRATION = "NAV_HOW_ADMINISTRATION";
+    static final String COL_NAV_ADMINISTRATION = "NAV_ADMINISTRATION";
     static final String COL_NAV_BLOCKED = "NAV_BLOCKED";
     static final String COL_NAV_MUTED = "NAV_MUTED";
     static final String COL_NAV_BLOCKED_DOMAINS = "NAV_BLOCKED_DOMAINS";
@@ -347,7 +347,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NAV_PEERTUBE + " INTEGER  DEFAULT 1, "
             + COL_NAV_FILTERS + " INTEGER  DEFAULT 1, "
             + COL_NAV_HOW_TO_FOLLOW + " INTEGER  DEFAULT 1, "
-            + COL_NAV_HOW_ADMINISTRATION+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_ADMINISTRATION+ " INTEGER  DEFAULT 1, "
             + COL_NAV_BLOCKED+ " INTEGER  DEFAULT 1, "
             + COL_NAV_MUTED+ " INTEGER  DEFAULT 1, "
             + COL_NAV_BLOCKED_DOMAINS+ " INTEGER  DEFAULT 1, "
