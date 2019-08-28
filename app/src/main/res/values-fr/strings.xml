@@ -1051,7 +1051,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_auto_backup">Sauvegarde automatique des publications</string>
     <string name="set_auto_backup_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui va automatiquement stocker vos publications localement dans une base de données. Cela permet d\'avoir des statistiques et des graphiques</string>
     <string name="set_auto_backup_notifications">Sauvegarde automatique des notifications</string>
-    <string name="set_auto_backup_notifications_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui stockera automatiquement vos notifications dans une base de donnée locale. Cela permet d\'avoir les statistiques et les graphiques</string>
+    <string name="set_auto_backup_notifications_indication">Cette option est spécifique à chaque compte. Elle lancera un service qui enregistrera automatiquement vos notifications dans une base de données locale. Cela permet d\'avoir des statistiques et des graphiques</string>
     <string name="report_account">Signaler le compte</string>
     <string name="send_invitation">Envoyer une invitation</string>
     <string name="registration_closed">Votre instance ne permet pas de créer de nouveaux comptes !</string>
