@@ -1089,4 +1089,5 @@
     <string name="cache_bookmarks_clear">Rensa dina bokmärken</string>
     <string name="file_cache">Filer i cacheminnet</string>
     <string name="total_notifications">Totalt antal notifieringar</string>
+    <string name="hide_menu_items">Dölj menyobjekt</string>
 </resources>

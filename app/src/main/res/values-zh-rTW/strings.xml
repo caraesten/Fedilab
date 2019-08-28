@@ -1083,4 +1083,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="cache_bookmarks_clear">清除您的書籤</string>
     <string name="file_cache">在快取中的檔案</string>
     <string name="total_notifications">總通知</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>

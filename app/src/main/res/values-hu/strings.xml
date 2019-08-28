@@ -1087,4 +1087,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
     <string name="total_notifications">Total notifications</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>

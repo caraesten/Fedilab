@@ -1089,4 +1089,5 @@
     <string name="cache_bookmarks_clear">Cancella i tuoi segnalibri</string>
     <string name="file_cache">File nella cache</string>
     <string name="total_notifications">Total notifications</string>
+    <string name="hide_menu_items">Hide menu items</string>
 </resources>
