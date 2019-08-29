@@ -402,11 +402,11 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Predpomnilnik je izpraznjen. Sproščenih je: %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="title_header_custom_sharing">Naslov</string>
+    <string name="title_hint_custom_sharing">Naslov&#8230;</string>
+    <string name="description_header_custom_sharing">Opis</string>
+    <string name="description_hint_custom_sharing">Opis&#8230;</string>
+    <string name="keywords_header_custom_sharing">Ključne besede</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinhroniziraj</string>
@@ -1099,5 +1099,5 @@
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
     <string name="file_cache">Files in cache</string>
     <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="hide_menu_items">Skrij elemente menija</string>
 </resources>
