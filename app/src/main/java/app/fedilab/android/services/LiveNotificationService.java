@@ -15,6 +15,8 @@ package app.fedilab.android.services;
  * see <http://www.gnu.org/licenses>. */
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -35,7 +37,7 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -85,7 +87,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     static {
         Helper.installProvider();
     }
-
+    public  static String CHANNEL_ID = "live_notifications";
     protected Account account;
     boolean backgroundProcess;
     private static HashMap<String, Thread>  threads = new HashMap<>();
@@ -97,9 +99,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
     }
 
     private void startStream(){
+
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
@@ -119,10 +124,24 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stopSelf();
         }
-        if( backgroundProcess)
+        if( backgroundProcess) {
+            if (Build.VERSION.SDK_INT >= 26) {
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                        "Live notifications",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+
+                ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
+
+                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setContentTitle("")
+                        .setContentText("").build();
+
+                startForeground(1, notification);
+            }
             return START_STICKY;
-        else
+        }else {
             return START_NOT_STICKY;
+        }
     }
 
     @Override
@@ -151,9 +170,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     }
 
     private void restart(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ContextCompat.startForegroundService(getApplicationContext(),new Intent(getApplicationContext(), LiveNotificationService.class));
-        } else {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             Intent restartServiceIntent = new Intent(LiveNotificationService.this, LiveNotificationService.class);
             restartServiceIntent.setPackage(getPackageName());
             PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);

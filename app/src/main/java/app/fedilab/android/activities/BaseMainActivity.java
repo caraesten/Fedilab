@@ -112,6 +112,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationService;
+import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TempMuteDAO;
@@ -1646,7 +1647,7 @@ public abstract class BaseMainActivity extends BaseActivity
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         if(!backgroundProcess)
-            sendBroadcast(new Intent("StopLiveNotificationService"));
+            sendBroadcast(new Intent(getApplicationContext(), StopLiveNotificationReceiver.class));
         if( hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
         if( update_topbar != null)

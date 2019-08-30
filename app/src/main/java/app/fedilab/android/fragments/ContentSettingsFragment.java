@@ -17,6 +17,10 @@ package app.fedilab.android.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -76,6 +80,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import app.fedilab.android.R;
@@ -89,6 +94,8 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.services.LiveNotificationService;
+import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
@@ -96,6 +103,7 @@ import mabbas007.tagsedittext.TagsEditText;
 
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.BATTERY;
@@ -1050,10 +1058,17 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
                 if( set_live_notif.isChecked() ){
                     try {
-                        ((MainActivity) context).startSreaming();
+                        Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                        context.startService(streamingIntent);
                     }catch (Exception ignored){ignored.printStackTrace();}
                 }else{
-                    context.sendBroadcast(new Intent("StopLiveNotificationService"));
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+                        if( notif != null) {
+                            notif.deleteNotificationChannel(LiveNotificationService.CHANNEL_ID);
+                        }
+                    }
                 }
             }
         });
@@ -2053,7 +2068,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         }
         return null;
     }
-
 
     /**
      * @param uri The Uri to check.
