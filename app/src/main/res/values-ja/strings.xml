@@ -45,7 +45,7 @@
     <string name="speech_not_supported">お使いのデバイスは音声入力をサポートしておりません！</string>
     <string name="delete_all">すべて削除</string>
     <string name="translate_toot">このトゥートを翻訳します。</string>
-    <string name="schedule">スケジュール</string>
+    <string name="schedule">予約</string>
     <string name="text_size">テキストとアイコンのサイズ</string>
     <string name="text_size_change">現在のテキストサイズを変更する：</string>
     <string name="icon_size_change">現在のアイコンサイズを変更する：</string>
@@ -92,7 +92,7 @@
     <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
     <string name="click_to_change">パスをタップして変更する</string>
     <string name="failed">失敗！</string>
-    <string name="scheduled_toots">スケジュールトゥート</string>
+    <string name="scheduled_toots">トゥート予約</string>
     <string name="disclaimer_full">以下の情報は、ユーザーのプロフィールが完全には反映されていない場合があります。</string>
     <string name="insert_emoji">絵文字を挿入</string>
     <string name="no_emoji">アプリはしばらくの間カスタム絵文字を収集していません。</string>
@@ -196,7 +196,7 @@
     <!-- Conversation -->
     <string name="conversation">会話</string>
     <!-- Accounts -->
-    <string name="no_accounts">表示するアカウントがありません</string>
+    <string name="no_accounts">アカウントがありません</string>
     <string name="no_follow_request">フォローリクエストはありません</string>
     <string name="status_cnt">トゥート \n %1$s</string>
     <string name="following_cnt">フォロー中 \n %1$s</string>
@@ -205,12 +205,12 @@
     <string name="authorize">承認する</string>
     <string name="reject">拒否</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">スケジュールトゥートはありません！</string>
-    <string name="no_scheduled_toots_indications">トゥートを書き、トップメニューから <b>スケジュール</b> を選択します。</string>
-    <string name="remove_scheduled">スケジュールトゥートを削除しますか？</string>
+    <string name="no_scheduled_toots">予約したトゥートはありません！</string>
+    <string name="no_scheduled_toots_indications">トゥートを書き、トップメニューから <b>予約</b> を選択します。</string>
+    <string name="remove_scheduled">トゥートの予約を削除しますか？</string>
     <string name="media_count">メディア：%d</string>
     <string name="toot_scheduled">トゥートを予約しました！</string>
-    <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
+    <string name="toot_scheduled_date">予約日時は現在の時間より後である必要があります！</string>
     <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">ミュートする時間（1分超）です。</string>
@@ -399,7 +399,7 @@
     <string name="action_sync">同期</string>
     <string name="action_filter">フィルター</string>
     <string name="owner_cached_toots">あなたのトゥート</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">自分の通知</string>
     <string name="v_public">公開</string>
     <string name="v_unlisted">未収載</string>
     <string name="v_private">非公開</string>
@@ -409,9 +409,9 @@
     <string name="show_pinned">ピン留めトゥートを表示</string>
     <string name="filter_no_result">一致するものは見つかりませんでした！</string>
     <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">%1$sのバックアップ通知</string>
     <string name="data_backup_success">%1$s 件の新しいトゥートをインポートしました</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s件の新しい通知をインポートしました</string>
     <string-array name="filter_select">
         <item>しない</item>
         <item>のみ</item>
@@ -624,7 +624,7 @@
     <string name="set_display_art">アートタイムラインを表示</string>
     <string name="schedule_boost">ブースト予約</string>
     <string name="boost_scheduled">ブーストを予約しました！</string>
-    <string name="no_scheduled_boosts">表示できる予約済みブーストはありません！</string>
+    <string name="no_scheduled_boosts">予約済みブーストはありません！</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[トゥートのメニューを開いて、<b>ブースト予約</b>を選択してください。]]></string>
     <string name="art_menu">アートタイムライン</string>
     <string name="open_menu">メニューを開く</string>
@@ -717,15 +717,15 @@
     <string name="video_uploaded_action">タップして動画情報を編集します。</string>
     <string name="delete_video">動画を削除</string>
     <string name="delete_video_confirmation">この動画を本当に削除しますか？</string>
-    <string name="no_video_uploaded">動画がアップロードされていません。</string>
+    <string name="no_video_uploaded">動画がアップロードされていません！</string>
     <string name="display_nsfw_videos">NSFW動画を表示</string>
     <string name="default_channel_of">%s のデフォルトチャンネル</string>
-    <string name="no_video_to_display">表示できる動画がありません！</string>
+    <string name="no_video_to_display">動画がありません！</string>
     <string name="add_image_to_favorite">メディアをお気に入りに追加</string>
     <string name="leave_a_comment">コメントする</string>
     <string name="share">共有</string>
     <string name="my_pictures">自分の写真</string>
-    <string name="choose_schedule">スケジュールモードを選択</string>
+    <string name="choose_schedule">予約モードを選択</string>
     <string name="device_schedule">この端末から</string>
     <string name="server_schedule">サーバーから</string>
     <string name="toots_server">トゥート(サーバー)</string>
@@ -815,18 +815,18 @@
     <string name="visible_tabs_needed">最低でも2つタブを表示する必要があります！</string>
     <string name="action_reorder_timeline">タイムラインの並び替え</string>
     <string name="warning_list_deletion">このリストを削除するにはリストエントリーを使用してください！</string>
-    <string name="warning_main_timeline">メインタイムラインは表示できません！</string>
+    <string name="warning_main_timeline">メインタイムラインは非表示にしかできません！</string>
     <string name="action_bbcode">BBコード</string>
     <string name="add_timeline">タイムラインを追加</string>
     <string name="set_sensitive_content">メディアを常に閲覧注意に設定する</string>
     <string name="gnu_instance">GNUインスタンス</string>
     <string name="cached_status">キャッシュされたステータス</string>
     <string name="set_forward_tags">返信でタグを先頭に付加する</string>
-    <string name="set_long_press_media">長押しでメディアを保存</string>
+    <string name="set_long_press_media">長押しでメディアを保存する</string>
     <string name="set_blur_sensitive">閲覧注意のメディアをぼかす</string>
     <string name="set_display_timeline_in_list">リストにタイムラインを表示する</string>
     <string name="display_timeline">タイムラインを表示</string>
-    <string name="set_display_bot_icon">トゥート内でbotアカウントをマークする</string>
+    <string name="set_display_bot_icon">botアカウントのトゥートにバッジをつける</string>
     <string name="add_tags">タグ管理</string>
     <string name="set_remember_position">ホームタイムラインの位置を記憶する</string>
     <string name="history">履歴</string>
@@ -852,7 +852,7 @@
     <string name="confirm_exit_editing">画像を保存せずに閉じてよろしいですか？</string>
     <string name="discard">破棄</string>
     <string name="saving">保存中...</string>
-    <string name="image_saved">画像が正常に保存されました</string>
+    <string name="image_saved">画像が正常に保存されました！</string>
     <string name="save_image_failed">画像を保存できませんでした</string>
     <string name="opacity">透明度</string>
     <string name="label_crop">トリミング</string>
@@ -909,7 +909,7 @@
     <string name="save_draft">メッセージを下書きに保存しますか？</string>
     <string name="administration">管理</string>
     <string name="reports">報告</string>
-    <string name="no_reports">表示するレポートがありません！</string>
+    <string name="no_reports">通報はありません！</string>
     <string name="reconnect_account">アカウントに再接続</string>
     <string name="reconnect_account_message">管理者向け機能へのアクヘスに失敗しました。正常な動作のためにはアカウントに再接続する必要があります。</string>
     <string name="unresolved">未解決</string>
@@ -958,7 +958,7 @@
     <string name="unassign">担当を外す</string>
     <string name="mark_resolved">解決済みとしてマーク</string>
     <string name="mark_unresolved">未解決として再び開く</string>
-    <string name="toast_empty_content">空のコンテンツです！</string>
+    <string name="toast_empty_content">コンテンツが空です！</string>
     <string name="set_display_fedilab_features_button">Fedilab機能ボタンを表示する</string>
     <string name="audio">このアプリは音声の録音へのアクセス許可が必要です</string>
     <string name="toot_message_record_error">ボイスメッセージの録音中にエラーが発生しました！</string>
@@ -997,7 +997,7 @@
     <string name="folder">フォルダー</string>
     <string name="create_folder">フォルダーを作成</string>
     <string name="custom_tabs_indication">アプリ内でお気に入りのブラウザを使用します。無効にすると、リンクは外部アプリで開きます</string>
-    <string name="set_display_confirm">アクション(ブースト、お気に入りなど)が完了したらトースト通知を表示します。</string>
+    <string name="set_display_confirm">アクション(ブースト、お気に入りなど)が完了したらトースト通知を表示する</string>
     <string name="export_muted_instance">ミュートしたインスタンスをエクスポートします</string>
     <string name="muted_instance_exported">ミュートしたインスタンスをエクスポートしました！</string>
     <string name="add_instances">インスタンスを追加</string>
@@ -1013,10 +1013,10 @@
     <string name="action_stats">統計情報</string>
     <string name="total_statuses">合計投稿数</string>
     <string name="number_boosts">ブースト数</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">お気に入りの数</string>
+    <string name="number_mentions">メンションしたユーザーの数</string>
+    <string name="number_follows">フォローユーザーの数</string>
+    <string name="number_polls">アンケートの数</string>
     <string name="number_replies">返信数</string>
     <string name="number_statuses">投稿数</string>
     <string name="statuses">投稿</string>
@@ -1026,23 +1026,23 @@
     <string name="number_with_cw">警告文付き投稿数</string>
     <string name="first_toot_date">最初の投稿日</string>
     <string name="last_toot_date">最後の投稿日</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">最初の通知</string>
+    <string name="last_notification_date">前回の通知</string>
     <string name="frequency">投稿頻度</string>
     <string name="toot_per_day">%s トゥート/日</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">一日当たり%s件の通知</string>
     <string name="date_range">対象期間</string>
     <string name="action_groups">グループ</string>
-    <string name="no_messages">グループがありません</string>
+    <string name="no_messages">グループがありません！</string>
     <string name="set_disable_animated_emoji">動くカスタム絵文字を無効にする</string>
     <string name="owner_charts">グラフ</string>
     <string name="display_charts">グラフを表示する</string>
     <string name="collecting_data_wait">データを収集しています。しばらくお待ちください。</string>
     <string name="set_backup">バックアップ</string>
     <string name="set_auto_backup">トゥートを自動でバックアップ</string>
-    <string name="set_auto_backup_indication">これはアカウントごとの設定です。あなたのトゥートをローカルのデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_indication">これはアカウントごとの設定です。トゥートをこの端末のデータベースに自動的に保存するサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
+    <string name="set_auto_backup_notifications">自動バックアップの通知</string>
+    <string name="set_auto_backup_notifications_indication">これはアカウントごとの設定です。通知をこの端末のデータベースに自動的に保存するためのサービスを起動します。これを有効にすると、統計とグラフを取得できるようになります。</string>
     <string name="report_account">アカウントを報告</string>
     <string name="send_invitation">招待を送信</string>
     <string name="registration_closed">このインスタンスは新規登録の受付を停止しています！</string>
@@ -1074,6 +1074,6 @@
     <string name="cache_owntoots_clear">キャッシュしたトゥートを削除</string>
     <string name="cache_bookmarks_clear">ブックマークを削除</string>
     <string name="file_cache">キャッシュ内のファイル</string>
-    <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="total_notifications">全ての通知</string>
+    <string name="hide_menu_items">メニューの項目を非表示にする</string>
 </resources>
