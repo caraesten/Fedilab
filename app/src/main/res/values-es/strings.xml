@@ -1083,5 +1083,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="cache_bookmarks_clear">Eliminar tus favoritos</string>
     <string name="file_cache">Archivos en caché</string>
     <string name="total_notifications">Total de notificaciones</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="hide_menu_items">Ocultar elementos del menú</string>
 </resources>
