@@ -404,7 +404,7 @@
     <string name="action_sync">Synchronisieren</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">Deine Toots</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Deine Benachrichtigungen</string>
     <string name="v_public">Öffentlich</string>
     <string name="v_unlisted">Nicht gelistet</string>
     <string name="v_private">Privat</string>
@@ -414,9 +414,9 @@
     <string name="show_pinned">Angeheftet anzeigen</string>
     <string name="filter_no_result">Keine passenden Einträge gefunden!</string>
     <string name="data_backup_toots">Toots sichern fürn %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Benachrichtigungen für %1$s sichern</string>
     <string name="data_backup_success">%1$s neue Toots wurden importiert</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s neue Benachrichtigungen wurden importiert</string>
     <string-array name="filter_select">
         <item>Nein</item>
         <item>Nur</item>
@@ -467,8 +467,8 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="action_lists_title_placeholder">Neuer Listentitel</string>
     <string name="action_lists_search_users">Suche innerhalb von Leuten denen du folgst</string>
     <string name="action_lists_owner">Deine Listen</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Das Konto wurde zur Liste hinzugefügt!</string>
+    <string name="action_lists_empty">Du hast noch keine Listen!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s wurde verschoben nach %2$s</string>
     <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
@@ -1012,10 +1012,10 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="action_stats">Statistik</string>
     <string name="total_statuses">Gesamtstatus</string>
     <string name="number_boosts">Anzahl geteilter Beiträge</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
+    <string name="number_favourites">Anzahl der Favoriten</string>
+    <string name="number_mentions">Anzahl der Erwähnungen</string>
     <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_polls">Anzahl der Umfragen</string>
     <string name="number_replies">Anzahl der Antworten</string>
     <string name="number_statuses">Status-Anzahl</string>
     <string name="statuses">Status</string>
