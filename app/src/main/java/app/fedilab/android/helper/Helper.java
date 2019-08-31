@@ -1072,7 +1072,7 @@ public class Helper {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        String val;
+        /*String val;
         if( isNumeric(account.getId())){
             val = account.getId();
         }else{
@@ -1081,9 +1081,9 @@ public class Helper {
                 count += (int)account.getId().charAt(i);
             }
             val = String.valueOf(count);
-        }
+        }*/
 
-        int notificationId = Integer.parseInt(val);
+        int notificationId = (int)System.currentTimeMillis();
 
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
