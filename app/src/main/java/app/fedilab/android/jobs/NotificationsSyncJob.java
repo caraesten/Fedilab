@@ -158,7 +158,7 @@ public class NotificationsSyncJob extends Job {
         final  List<Notification> notifications = new ArrayList<>();
         int pos = 0;
         for(Notification notif: notificationsReceived){
-            if( max_id == null || Long.parseLong(notif.getId()) > Long.parseLong(max_id) ) {
+            if( max_id == null || notif.getId().compareTo(max_id) > 0 ) {
                 notifications.add(pos, notif);
                 pos++;
             }
@@ -290,7 +290,7 @@ public class NotificationsSyncJob extends Job {
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                        if( lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                             editor.apply();
@@ -303,7 +303,7 @@ public class NotificationsSyncJob extends Job {
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                         notify_user(getContext(), account, intent, resource, finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                        if( lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                             editor.apply();

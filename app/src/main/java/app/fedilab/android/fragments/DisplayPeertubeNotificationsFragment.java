@@ -244,7 +244,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
     private void updateNotificationLastId(String notificationId){
 
         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-        if( lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
+        if( lastNotif == null || notificationId.compareTo(lastNotif) > 0){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
             editor.apply();
@@ -292,7 +292,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
             }
             if( firstLoad) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
+                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0)
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                 updateNotificationLastId(notifications.get(0).getId());
             }

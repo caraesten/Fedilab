@@ -326,7 +326,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             for(Notification tmpNotification: notifications){
 
                 if(type == Type.ALL) {
-                    if (lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
+                    if (lastReadNotifications != null && tmpNotification.getId().compareTo(lastReadNotifications) > 0) {
                         countNewNotifications++;
                     }
                     try {
@@ -338,7 +338,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             if( firstLoad && type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId)) {
+                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
                 }
@@ -452,7 +452,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             int inserted = 0;
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications != null && this.notifications.size() == 0 ||
-                        notifications.get(i).getId().compareTo(this.notifications.get(0).getId()) >= 1) {
+                        notifications.get(i).getId().compareTo(this.notifications.get(0).getId()) > 0) {
                     countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
                     inserted++;
@@ -474,10 +474,26 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private void updateNotificationLastId(String notificationId){
         if( type == Type.ALL) {
             String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-            if (lastNotif == null || notificationId.compareTo(lastNotif) >= 1) {
+            if (lastNotif == null || notificationId.compareTo(lastNotif) >= 0) {
                 countNewNotifications = 0;
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
+                editor.apply();
+            }
+        }
+    }
+
+
+    /**
+     * Records the id of the notification only if its greater than the previous one.
+     */
+    public void updateNotificationRead(){
+        if( type == Type.ALL) {
+            String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
+            countNewNotifications = 0;
+            if( this.notifications != null && this.notifications.size() > 0 && this.notifications.get(0).getId().compareTo(lastNotif) > 0) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, this.notifications.get(0).getId());
                 editor.apply();
             }
         }

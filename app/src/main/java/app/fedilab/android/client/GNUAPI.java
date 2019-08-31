@@ -259,8 +259,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/statusnet/groups/list.json"), 60, params, prefKeyOauthTokenT);
             accounts = parseGroups(context, new JSONArray(response));
             if( accounts.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(accounts.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(accounts.get(accounts.size() - 1).getId())-1));
+                apiResponse.setSince_id(accounts.get(0).getId());
+                apiResponse.setMax_id(accounts.get(accounts.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -369,8 +369,8 @@ public class GNUAPI {
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -573,8 +573,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/user_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -836,8 +836,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -910,8 +910,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/home_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1004,8 +1004,8 @@ public class GNUAPI {
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1156,8 +1156,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1346,8 +1346,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/favorites.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1826,8 +1826,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteRemoteUrl(instance, "/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
             List<Status> statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
             apiResponse.setStatuses(statuses);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1904,8 +1904,8 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
             List<Status> statuses = parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
-                apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
             apiResponse.setStatuses(statuses);
         } catch (HttpsConnection.HttpsConnectionException e) {

@@ -2135,6 +2135,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         displayStatusFragment.updateLastReadToot();
                     } else if(tl.getType() == ManageTimelines.Type.NOTIFICATION) {
                         countNewNotifications = 0;
+
                         updateNotifCounter();
                     }else {
                         View tabCustom = tab.getCustomView();
@@ -2469,6 +2470,16 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             tabCounterNotif.setVisibility(View.GONE);
         }
+        try{
+            TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(position);
+            ViewPager notifViewPager = tabLayoutNotificationsFragment.getViewPager();
+
+            if( notifViewPager != null &&  notifViewPager.getAdapter() != null) {
+                DisplayNotificationsFragment displayNotificationsFragment = (DisplayNotificationsFragment) notifViewPager.getAdapter().instantiateItem(notifViewPager, 0);
+                displayNotificationsFragment.updateNotificationRead();
+            }
+        }catch (Exception ignored){}
+
     }
 
 

@@ -1615,8 +1615,8 @@ public class API {
             }else{
                 if( statuses.size() > 0) {
                     if( statuses.get(0).getId().matches("\\d+")){
-                        apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId())+1));
-                        apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId())-1));
+                        apiResponse.setSince_id(String.valueOf(statuses.get(0).getId()));
+                        apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                     }else{
                         apiResponse.setSince_id(statuses.get(0).getId());
                         apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
@@ -1697,8 +1697,8 @@ public class API {
             statuses = GNUAPI.parseStatuses(context, new JSONArray(response));
             if( statuses.size() > 0) {
                 if(statuses.get(0).getId() != null && statuses.get(0).getId().matches("-?\\d+(\\.\\d+)?")) {
-                    apiResponse.setSince_id(String.valueOf(Long.parseLong(statuses.get(0).getId()) + 1));
-                    apiResponse.setMax_id(String.valueOf(Long.parseLong(statuses.get(statuses.size() - 1).getId()) - 1));
+                    apiResponse.setSince_id(String.valueOf(statuses.get(0).getId()));
+                    apiResponse.setMax_id(String.valueOf(statuses.get(statuses.size() - 1).getId()));
                 }else{
                     apiResponse.setSince_id(statuses.get(0).getId());
                     apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
