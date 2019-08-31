@@ -1135,6 +1135,9 @@ public class Helper {
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
         if (notifType == MENTION) {
+            if(message.length() > 500){
+                message = message.substring(0, 499)+"…";
+            }
             notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
         }
         notificationBuilder.setGroup(account.getAcct()+"@"+account.getInstance())
