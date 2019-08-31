@@ -412,7 +412,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                         Helper.notify_user(getApplicationContext(),account, intent, BitmapFactory.decodeResource(getResources(),
-                                                                R.drawable.mastodonlogo), finalNotifType,  "@" + account.getAcct() + "@" + account.getInstance(), finalMessage);
+                                                                R.drawable.mastodonlogo), finalNotifType,  "@" + notification.getAccount().getAcct(), finalMessage);
                                                         return false;
                                                     }
                                                 })
@@ -420,7 +420,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
 
-                                                        Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, "@" + account.getAcct() + "@" + account.getInstance(), finalMessage);
+                                                        Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
                                                     }
                                                 });
                                     }
