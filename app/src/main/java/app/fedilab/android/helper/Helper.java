@@ -229,6 +229,7 @@ import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.activities.BaseMainActivity.regex_local;
 import static app.fedilab.android.activities.BaseMainActivity.regex_public;
+import static app.fedilab.android.helper.Helper.NotifType.MENTION;
 import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
 import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
@@ -1131,8 +1132,11 @@ public class Helper {
                 .setSmallIcon(R.drawable.fedilab_notification_icon)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setGroup(account.getAcct()+"@"+account.getInstance())
+                .setAutoCancel(true);
+        if (notifType == MENTION) {
+            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+        }
+        notificationBuilder.setGroup(account.getAcct()+"@"+account.getInstance())
                 .setContentIntent(pIntent)
                 .setContentText(message);
         int ledColour = Color.BLUE;

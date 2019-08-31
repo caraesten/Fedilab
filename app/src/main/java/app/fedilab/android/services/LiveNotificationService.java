@@ -34,6 +34,8 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.SpannableString;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +77,8 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
+
+import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
 
 /**
@@ -315,10 +319,18 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                         else
                                             message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_mention));
                                         if( notification.getStatus() != null) {
-                                            if( notification.getStatus().getSpoiler_text() != null) {
-                                                message += "\n" + notification.getStatus().getSpoiler_text();
+                                            if( notification.getStatus().getSpoiler_text() != null && notification.getStatus().getSpoiler_text().length() > 0 ) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                                    message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getSpoiler_text(), FROM_HTML_MODE_LEGACY));
+                                                else
+                                                    //noinspection deprecation
+                                                    message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getSpoiler_text()));
                                             }else{
-                                                message += "\n" + notification.getStatus().getContent();
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                                    message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getContent(), FROM_HTML_MODE_LEGACY));
+                                                else
+                                                    //noinspection deprecation
+                                                    message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getContent()));
                                             }
                                         }
                                     } else {
