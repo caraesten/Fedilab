@@ -834,18 +834,15 @@
     </LinearLayout>
     <Button
         android:id="@+id/fetch_more"
-        android:visibility="gone"
-        android:textAllCaps="false"
-        android:drawableLeft="@drawable/ic_fetch_more"
-        android:drawableStart="@drawable/ic_fetch_more"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:drawablePadding="5dp"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:maxLines="1"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?attr/borderless"
-        android:text="@string/fetch_more_toots" />
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="@string/fetch_more_toots"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 </LinearLayout>
