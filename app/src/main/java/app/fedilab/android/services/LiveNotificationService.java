@@ -304,16 +304,23 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
                         boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
                         boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share || notif_poll);
-                        String title = null;
+                        String message = null;
                         if (somethingToPush && notification != null) {
                             switch (notification.getType()) {
                                 case "mention":
                                     notifType = Helper.NotifType.MENTION;
                                     if (notif_mention) {
                                         if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_mention));
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_mention));
                                         else
-                                            title = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_mention));
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_mention));
+                                        if( notification.getStatus() != null) {
+                                            if( notification.getStatus().getSpoiler_text() != null) {
+                                                message += "\n" + notification.getStatus().getSpoiler_text();
+                                            }else{
+                                                message += "\n" + notification.getStatus().getContent();
+                                            }
+                                        }
                                     } else {
                                         canSendBroadCast = false;
                                     }
@@ -322,9 +329,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     notifType = Helper.NotifType.BOOST;
                                     if (notif_share) {
                                         if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_reblog));
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_reblog));
                                         else
-                                            title = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_reblog));
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_reblog));
                                     } else {
                                         canSendBroadCast = false;
                                     }
@@ -333,9 +340,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     notifType = Helper.NotifType.FAV;
                                     if (notif_add) {
                                         if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_favourite));
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_favourite));
                                         else
-                                            title = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_favourite));
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_favourite));
                                     } else {
                                         canSendBroadCast = false;
                                     }
@@ -344,9 +351,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     notifType = Helper.NotifType.FOLLLOW;
                                     if (notif_follow) {
                                         if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_follow));
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_follow));
                                         else
-                                            title = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow));
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow));
                                         targeted_account = notification.getAccount().getId();
                                     } else {
                                         canSendBroadCast = false;
@@ -356,9 +363,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     notifType = Helper.NotifType.POLL;
                                     if (notif_poll) {
                                         if (notification.getAccount().getId() != null && notification.getAccount().getId().equals(userId))
-                                            title = getString(R.string.notif_poll_self);
+                                            message = getString(R.string.notif_poll_self);
                                         else
-                                            title = getString(R.string.notif_poll);
+                                            message = getString(R.string.notif_poll);
                                     } else {
                                         canSendBroadCast = false;
                                     }
@@ -374,13 +381,13 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             if (targeted_account != null) {
                                 intent.putExtra(Helper.INTENT_TARGETED_ACCOUNT, targeted_account);
                             }
-                            final String finalTitle = title;
+                            final String finalMessage = message;
                             Handler mainHandler = new Handler(Looper.getMainLooper());
                             Helper.NotifType finalNotifType = notifType;
                             Runnable myRunnable = new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (finalTitle != null) {
+                                    if (finalMessage != null) {
                                         Glide.with(getApplicationContext())
                                                 .asBitmap()
                                                 .load(notification.getAccount().getAvatar())
@@ -393,7 +400,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                         Helper.notify_user(getApplicationContext(),account, intent, BitmapFactory.decodeResource(getResources(),
-                                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+                                                                R.drawable.mastodonlogo), finalNotifType,  "@" + account.getAcct() + "@" + account.getInstance(), finalMessage);
                                                         return false;
                                                     }
                                                 })
@@ -401,7 +408,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
 
-                                                        Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+                                                        Helper.notify_user(getApplicationContext(), account,intent, resource, finalNotifType, "@" + account.getAcct() + "@" + account.getInstance(), finalMessage);
                                                     }
                                                 });
                                     }
