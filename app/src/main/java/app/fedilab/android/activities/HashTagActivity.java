@@ -110,7 +110,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
-        tootsPerPage = Helper.TOOTS_PER_PAGE;
+        tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
         textviewNoAction = findViewById(R.id.no_action);

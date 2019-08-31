@@ -87,7 +87,7 @@ public class GNUAPI {
     public GNUAPI(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = Helper.TOOTS_PER_PAGE;
+        tootPerPage =sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
@@ -117,7 +117,7 @@ public class GNUAPI {
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = Helper.TOOTS_PER_PAGE;
+        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         if( instance != null)

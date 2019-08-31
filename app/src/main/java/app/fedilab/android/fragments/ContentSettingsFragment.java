@@ -1289,6 +1289,30 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
+        SeekBar toot_per_page = rootView.findViewById(R.id.set_toot_per_page);
+        final TextView set_toot_per_page_count = rootView.findViewById(R.id.set_toot_per_page_count);;
+        toot_per_page.setMax(20);
+        int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
+        toot_per_page.setProgress(tootperpage-Helper.TOOTS_PER_PAGE);
+        set_toot_per_page_count.setText(String.valueOf(tootperpage));
+
+        toot_per_page.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                int value = progress + 20;
+                set_toot_per_page_count.setText(String.valueOf(value));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_TOOT_PER_PAGE, value);
+                editor.apply();
+            }
+        });
+
 
         // NSFW Timeout
         SeekBar nsfwTimeoutSeekBar = rootView.findViewById(R.id.set_nsfw_timeout);

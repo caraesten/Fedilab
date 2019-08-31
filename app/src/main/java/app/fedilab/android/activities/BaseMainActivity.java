@@ -2391,6 +2391,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
     public void updateHomeCounter(){
         int i = 0;
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         if( timelines != null && timelines.size() > 0){
             for(ManageTimelines tl: timelines){
                 if( tl.getType() == ManageTimelines.Type.HOME){
@@ -2398,7 +2400,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         View tabHome = tabLayout.getTabAt(i).getCustomView();
                         if( tabHome != null){
                             TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
-                            if(countNewStatus == Helper.TOOTS_PER_PAGE){
+                            if(countNewStatus == tootperpage){
                                 tabCounterHome.setText(String.format(Locale.getDefault(), "%d+", countNewStatus));
                             }else{
                                 tabCounterHome.setText(String.valueOf(countNewStatus));

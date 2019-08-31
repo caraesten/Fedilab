@@ -112,7 +112,7 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         //lv_status.addItemDecoration(new DividerItemDecoration(GroupActivity.this, DividerItemDecoration.VERTICAL));
-        tootsPerPage = Helper.TOOTS_PER_PAGE;
+        tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
         textviewNoAction = findViewById(R.id.no_action);

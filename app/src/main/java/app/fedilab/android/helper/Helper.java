@@ -323,6 +323,7 @@ public class Helper {
     public static final int ACCOUNTS_PER_PAGE = 20;
     public static final int NOTIFICATIONS_PER_PAGE = 15;
     public static final String SET_ATTACHMENT_ACTION = "set_attachment_action";
+    public static final String SET_TOOT_PER_PAGE = "set_toot_per_page";
     public static final String SET_THEME = "set_theme";
     public static final String SET_TIME_FROM = "set_time_from";
     public static final String SET_TIME_TO = "set_time_to";
