@@ -1086,4 +1086,8 @@
     <string name="file_cache">Files in cache</string>
     <string name="total_notifications">Total notifications</string>
     <string name="hide_menu_items">隐藏菜单项目</string>
+    <string name="top_notification">Fedilab is running live notifications</string>
+    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
+    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
+    <string name="set_allow_live_notifications_indication">Live notifications will be only disabled for this account.</string>
 </resources>
