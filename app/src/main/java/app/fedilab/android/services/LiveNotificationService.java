@@ -95,6 +95,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     protected Account account;
     boolean backgroundProcess;
     private static HashMap<String, Thread>  threads = new HashMap<>();
+    private static HashMap<String, String>  lastNotification = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
     private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
@@ -292,7 +293,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     String targeted_account = null;
                     Helper.NotifType notifType = Helper.NotifType.MENTION;
                     boolean activityRunning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isMainActivityRunning", false);
+                    String key = account.getAcct() + "@" + account.getInstance();
+                    if( lastNotification.containsKey(key) && notification.getId().compareTo(Objects.requireNonNull(lastNotification.get(key))) <= 0){
+                        canNotify = false;
+                    }
                     if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
+                        lastNotification.put(key, notification.getId());
                         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
@@ -418,6 +424,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             mainHandler.post(myRunnable);
                         }
                     }
+
                     if( canSendBroadCast) {
                         b.putString("userIdService", account.getId());
                         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
