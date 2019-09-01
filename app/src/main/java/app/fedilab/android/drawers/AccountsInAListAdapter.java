@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
@@ -54,7 +56,7 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     private AccountsInAListAdapter accountsInAListAdapter;
     private type actionType;
     private String listId;
-
+    private List<Account> allAccount = new ArrayList<>();
 
     public enum type{
         CURRENT,
@@ -66,6 +68,14 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         this.accountsInAListAdapter = this;
         this.actionType = actionType;
         this.listId = listId;
+    }
+
+    public AccountsInAListAdapter(type actionType, String listId, List<Account> allAccount, List<Account> accountSearch){
+        this.accounts = accountSearch;
+        this.accountsInAListAdapter = this;
+        this.actionType = actionType;
+        this.listId = listId;
+        this.allAccount = allAccount;
     }
 
     @NotNull
@@ -96,21 +106,28 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         if( actionType == type.CURRENT){
             holder.account_action.setImageResource(R.drawable.ic_close);
             holder.account_action.setContentDescription(context.getString(R.string.remove_account));
-        }else if(actionType == type.SEARCH){
+        }else if(actionType == type.SEARCH && !isInList(account)){
             holder.account_action.setImageResource(R.drawable.ic_add);
             holder.account_action.setContentDescription(context.getString(R.string.add_account));
+        }else if (actionType == type.SEARCH){
+            holder.account_action.setImageResource(R.drawable.ic_close);
+            holder.account_action.setContentDescription(context.getString(R.string.remove_account));
         }
         holder.account_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if( actionType == type.CURRENT){
                     new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    accounts.remove(account);
+                    remove(account);
                     accountsInAListAdapter.notifyDataSetChanged();
-                }else if(actionType == type.SEARCH){
+                }else if(actionType == type.SEARCH && !isInList(account)){
                     new ManageListsAsyncTask(context, ManageListsAsyncTask.action.ADD_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     ((ManageAccountsInListActivity)context).addAccount(account);
 
+                }else if( actionType == type.SEARCH){
+                    new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    remove(account);
+                    accountsInAListAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -125,6 +142,28 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
 
             }
         });
+    }
+
+    private void remove(Account account){
+        int position = 0;
+        for(Account act: allAccount){
+            if( account.getId().equals(act.getId()) ){
+                allAccount.remove(position);
+                return;
+            }
+            position++;
+        }
+    }
+
+    private boolean isInList(Account account){
+        if( allAccount != null && allAccount.size() > 0) {
+            for (Account act : allAccount) {
+                if (act.getId().equals(account.getId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

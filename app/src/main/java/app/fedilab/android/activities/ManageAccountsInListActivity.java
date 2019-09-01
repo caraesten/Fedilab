@@ -196,7 +196,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
             if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
                 java.util.List<Account> accountsSearch = new ArrayList<>();
                 accountsSearch.addAll(apiResponse.getAccounts());
-                AccountsInAListAdapter accountsSearchInAListAdapter = new AccountsInAListAdapter(AccountsInAListAdapter.type.SEARCH, listId, accountsSearch);
+                AccountsInAListAdapter accountsSearchInAListAdapter = new AccountsInAListAdapter(AccountsInAListAdapter.type.SEARCH, listId, accounts, accountsSearch);
                 lv_accounts_search.setAdapter(accountsSearchInAListAdapter);
                 LinearLayoutManager mLayoutManager1 = new LinearLayoutManager(ManageAccountsInListActivity.this);
                 lv_accounts_search.setLayoutManager(mLayoutManager1);
