@@ -210,45 +210,39 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     e.printStackTrace();
                 }
             }
-            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
-                @Override
-                public void onCompleted(Exception ex, WebSocket webSocket) {
-                    webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
-                    if (ex != null) {
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.postDelayed(new Runnable() {
+            String key = account.getAcct() + "@" + account.getInstance();
+            if (webSocketFutures.get(key) == null || !Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
+                AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+                    @Override
+                    public void onCompleted(Exception ex, WebSocket webSocket) {
+                        webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
+                        if (ex != null) {
+                            return;
+                        }
+                        webSocket.setStringCallback(new WebSocket.StringCallback() {
+                            public void onStringAvailable(String s) {
+                                try {
+                                    JSONObject eventJson = new JSONObject(s);
+                                    onRetrieveStreaming(account, eventJson);
+                                } catch (JSONException ignored) {}
+                            }
+                        });
+
+                        webSocket.setClosedCallback(new CompletedCallback() {
                             @Override
-                            public void run() {
+                            public void onCompleted(Exception ex) {
                                 startWork(account);
                             }
-                        }, 60000 );
-                        return;
+                        });
+                        webSocket.setDataCallback(new DataCallback() {
+                            public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
+                                // note that this data has been read
+                                byteBufferList.recycle();
+                            }
+                        });
                     }
-                    webSocket.setStringCallback(new WebSocket.StringCallback() {
-                        public void onStringAvailable(String s) {
-                            try {
-                                JSONObject eventJson = new JSONObject(s);
-                                onRetrieveStreaming(account, eventJson);
-                            } catch (JSONException ignored) {}
-                        }
-                    });
-
-                    webSocket.setClosedCallback(new CompletedCallback() {
-                        @Override
-                        public void onCompleted(Exception ex) {
-                            startWork(account);
-                        }
-                    });
-                    webSocket.setDataCallback(new DataCallback() {
-                        public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
-                            // note that this data has been read
-                            byteBufferList.recycle();
-                        }
-                    });
-                }
-            });
-
-
+                });
+            }
         }
     }
 
@@ -271,7 +265,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         Thread thread = new Thread() {
             @Override
             public void run() {
-
                 taks(accountStream);
             }
         };
@@ -323,13 +316,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                                     message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getSpoiler_text(), FROM_HTML_MODE_LEGACY));
                                                 else
-                                                    //noinspection deprecation
                                                     message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getSpoiler_text()));
                                             }else{
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                                     message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getContent(), FROM_HTML_MODE_LEGACY));
                                                 else
-                                                    //noinspection deprecation
                                                     message = "\n" + new SpannableString(Html.fromHtml(notification.getStatus().getContent()));
                                             }
                                         }
@@ -430,13 +421,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         }
                     }
                     if( canSendBroadCast) {
-                        if (account != null)
-                            b.putString("userIdService", account.getId());
+                        b.putString("userIdService", account.getId());
                         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
                         intentBC.putExtra("eventStreaming", event);
                         intentBC.putExtras(b);
                         b.putParcelable("data", notification);
                         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
+                        if( notification != null) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                            editor.apply();
+                        }
                     }
                     break;
                 case "delete":
