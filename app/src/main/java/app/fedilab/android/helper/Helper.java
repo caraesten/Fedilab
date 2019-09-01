@@ -455,6 +455,7 @@ public class Helper {
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     public static final String SET_SECURITY_PROVIDER = "set_security_provider";
+    public static final String SET_ALLOW_STREAM = "set_allow_stream";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 

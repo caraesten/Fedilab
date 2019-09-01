@@ -64,6 +64,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -1432,6 +1433,32 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
+
+        boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM+userId+instance, true);
+        TextView set_allow_live_notifications_title = rootView.findViewById(R.id.set_allow_live_notifications_title);
+        set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@"+account.getInstance()));
+        final CheckBox set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
+        set_allow_live_notifications.setChecked(allow_live_notifications);
+        set_allow_live_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_ALLOW_STREAM+userId+instance, set_allow_live_notifications.isChecked());
+                editor.apply();
+                if( set_allow_live_notifications.isChecked()){
+                    LiveNotificationService.totalAccount++;
+                }else{
+                    LiveNotificationService.totalAccount--;
+                }
+                boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                if( liveNotifications) {
+                    Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
+                    try {
+                        context.startService(streamingServiceIntent);
+                    }catch (Exception ignored){}
+                }
+            }
+        });
 
         boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
         final CheckBox set_trans_forced = rootView.findViewById(R.id.set_trans_forced);
