@@ -1017,7 +1017,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_enable_crash_report_indication">Si activé, un rapport de plantage sera créé localement et vous pourrez le partager.</string>
     <string name="crash_title">Fedilab s’est arrêté :(</string>
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
-    <string name="set_wysiwyg">Utiliser l\'éditeur visuel</string>
+    <string name="set_wysiwyg">Utiliser l’éditeur visuel</string>
     <string name="set_wysiwyg_indication">Lorsque cette option est activée, vous pouvez mettre en forme votre texte facilement via des outils.</string>
     <string name="action_stats">Statistiques</string>
     <string name="total_statuses">Total des publications</string>
