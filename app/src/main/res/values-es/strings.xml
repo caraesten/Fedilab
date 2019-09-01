@@ -1084,4 +1084,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="file_cache">Archivos en caché</string>
     <string name="total_notifications">Total de notificaciones</string>
     <string name="hide_menu_items">Ocultar elementos del menú</string>
+    <string name="top_notification">Fedilab is running live notifications</string>
+    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
+    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
+    <string name="set_allow_live_notifications_indication">Live notifications will be only disabled for this account.</string>
 </resources>
