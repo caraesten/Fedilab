@@ -1087,8 +1087,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="file_cache">Fichiers en cache</string>
     <string name="total_notifications">Notifications totales</string>
     <string name="hide_menu_items">Cacher les éléments du menu</string>
-    <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
-    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be only disabled for this account.</string>
+    <string name="top_notification">Fedilab est en train de s\'exécuter pour les notifications en direct</string>
+    <string name="top_notification_message">Pour %1$s comptes avec %2$s événements</string>
+    <string name="set_allow_live_notifications">Notifications en direct pour %1$s</string>
+    <string name="set_allow_live_notifications_indication">Les notifications en direct seront désactivés pour ce compte seulement.</string>
 </resources>
