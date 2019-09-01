@@ -998,15 +998,15 @@
     <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثيلات</string>
     <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدفا #Fedilab الوسم</string>
     <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
-    <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بAPI البث. قم بتعطيل إذا كنت ترغب في الحفاظ على البطارية.</string>
+    <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بواجهة برمجة التطبيقات API. قم بتعطيله إذا كنت ترغب في الحفاظ على البطارية.</string>
     <string name="set_enable_time_slot_indication">خلال هذه الفتحة الزمنية سيقوم التطبيق بإرسال إخطارات. يمكنك عكس (أي تصميت) هذا الفتحة الزمنية باستخدام الزر الموافق.</string>
-    <string name="set_display_fedilab_features_button_indication">عرض زر فيديلاب تحت الصورة الشخصية على شكل اختصار لولوج خاصيات البرنامج.</string>
+    <string name="set_display_fedilab_features_button_indication">اعرض زر فيديلاب تحت الصورة الشخصية على شكل اختصار لولوج خاصيات البرنامج.</string>
     <string name="set_quick_reply_indication">إتاحة الرد مباشرة في الخط الزمني أدنى المنشورات</string>
     <string name="set_fit_preview_indication">لتعطيل اقتصاص المعاينات في الخطوط الزمنية</string>
     <string name="set_display_video_preview_indication">إتاحة تشغيل الفيديوهات المدمجة في الخط الزمني</string>
     <string name="set_display_content_after_fetch_more_indication">السماح بعكس طريقة قرأ المنشورات التي تظهر عند ضغط زر جَلب المزيد</string>
     <string name="set_security_provider_indication">تمكين دعم مجموعات الشفرات الحديثة. يصلح لأجهزة القديمة أو عند تَعَذُر الاتصال بالمثيل.</string>
-    <string name="set_video_mode_indication">خاص بPeertube. مكن الوضع أذا تعذر التشغيل الفيديوهات.</string>
+    <string name="set_video_mode_indication">خاص بـ Peertube. مكّن هذا الوضع إن تعذر تشغيل الفيديوهات.</string>
     <string name="featured_hashtags_indication">تمكن هذه الأوسمة من تصفية المنشورات من الحسابات. سيتوجب استخدام قائمة السياق لمعاينتهم.</string>
     <string name="set_capitalize_indication">إدراج سطر جديد تلقائيا بعد الذكر لتكبير الحرف الأول</string>
     <string name="settings_title_custom_sharing_indication">تمكين صناع المحتوى من مشاركة المنشورات في RSS الخاص بهم</string>
@@ -1070,7 +1070,7 @@
     <string name="set_auto_backup_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ منشوراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
     <string name="set_auto_backup_notifications">نسخ احتياطي تلقائي للإشعارات</string>
     <string name="set_auto_backup_notifications_indication">إختيار خاص بكل حساب على إنفراد. سوف يقوم بفتح خدمة تتكلف بحفظ إشعاراتك تلقائيا محليا في قاعدة البيانات. يُمَّكِنُ هذا من الحصول على إحصائيات و مبيانات</string>
-    <string name="report_account">التبغليع عن الحساب</string>
+    <string name="report_account">بلّغ عن الحساب</string>
     <string name="send_invitation">ارسل دعوة</string>
     <string name="registration_closed">مثيل خادمك لا يسمح بإنشاء حسابات جديدة!</string>
     <plurals name="number_of_vote">
@@ -1109,4 +1109,8 @@
     <string name="file_cache">الملفات في ذاكرة التخزين المؤقتة</string>
     <string name="total_notifications">إجمالي الإشعارات</string>
     <string name="hide_menu_items">إخفاء عناصر القائمة</string>
+    <string name="top_notification">Fedilab is running live notifications</string>
+    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
+    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
+    <string name="set_allow_live_notifications_indication">Live notifications will be only disabled for this account.</string>
 </resources>
