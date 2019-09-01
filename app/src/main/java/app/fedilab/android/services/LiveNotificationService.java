@@ -100,6 +100,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     public void onCreate() {
         super.onCreate();
+
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
@@ -125,6 +126,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stopSelf();
         }
@@ -166,7 +168,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void onTaskRemoved(Intent rootIntent){
-
         super.onTaskRemoved(rootIntent);
         if(backgroundProcess){
             restart();
@@ -188,6 +189,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     }
 
     private void taks(Account account) {
+
         if (account != null) {
             Headers headers = new Headers();
             headers.add("Authorization", "Bearer " + account.getToken());
@@ -231,7 +233,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         webSocket.setClosedCallback(new CompletedCallback() {
                             @Override
                             public void onCompleted(Exception ex) {
-                                startWork(account);
+                                if( networkStateReceiver.connected) {
+                                    startWork(account);
+                                }
                             }
                         });
                         webSocket.setDataCallback(new DataCallback() {
@@ -248,28 +252,19 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
 
     private void startWork(Account accountStream){
-        String key = accountStream.getAcct() + "@" + accountStream.getInstance();
-        if(webSocketFutures.containsKey(key)){
-            if (webSocketFutures.get(key) != null && Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
-                try {
-                    Objects.requireNonNull(webSocketFutures.get(key)).close();
 
-                }catch (Exception ignored){}
-            }
+        String key = accountStream.getAcct() + "@" + accountStream.getInstance();
+        if(!threads.containsKey(key) || !Objects.requireNonNull(threads.get(key)).isAlive()){
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    taks(accountStream);
+                }
+            };
+            thread.start();
+            threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
         }
-        if(threads.containsKey(key)){
-            if (threads.get(key) != null && !Objects.requireNonNull(threads.get(key)).isAlive()) {
-                Objects.requireNonNull(threads.get(key)).interrupt();
-            }
-        }
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                taks(accountStream);
-            }
-        };
-        thread.start();
-        threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
+
     }
 
     private void onRetrieveStreaming(Account account, JSONObject response) {
@@ -287,6 +282,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 case "notification":
                     event = Helper.EventStreaming.NOTIFICATION;
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
+                    if( notification == null){
+                        return;
+                    }
                     b.putParcelable("data", notification);
                     boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                     boolean canNotify = Helper.canNotify(getApplicationContext());
@@ -302,7 +300,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
                         boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share || notif_poll);
                         String message = null;
-                        if (somethingToPush && notification != null) {
+                        if (somethingToPush) {
                             switch (notification.getType()) {
                                 case "mention":
                                     notifType = Helper.NotifType.MENTION;
@@ -427,11 +425,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         intentBC.putExtras(b);
                         b.putParcelable("data", notification);
                         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
-                        if( notification != null) {
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
-                            editor.apply();
-                        }
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                        editor.apply();
                     }
                     break;
                 case "delete":
