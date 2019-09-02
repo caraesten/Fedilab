@@ -1086,4 +1086,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="top_notification_message">Per %1$s comptes amb %2$s esdeveniments</string>
     <string name="set_allow_live_notifications">Notificacions instantànies per %1$s</string>
     <string name="set_allow_live_notifications_indication">Es desactivaran les notificacions instantànies només d\'aquest compte.</string>
+    <string name="set_clear_cache_exit">Clear cache when leaving</string>
+    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
 </resources>
