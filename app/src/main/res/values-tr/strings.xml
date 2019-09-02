@@ -413,9 +413,9 @@
     <string name="show_pinned">Başa tutturulmuşu göster</string>
     <string name="filter_no_result">Sonuç bulunamadı!</string>
     <string name="data_backup_toots">%1$s için toot\'ları yedekle</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">%1$s için yedekleme bildirimleri</string>
     <string name="data_backup_success">%1$s yeni toot alındı</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s yeni bildirim alındı</string>
     <string-array name="filter_select">
         <item>Hayır</item>
         <item>Sadece</item>
@@ -467,8 +467,8 @@
     <string name="action_lists_title_placeholder">Yeni liste başlığı</string>
     <string name="action_lists_search_users">Takip ettiklerin arasında ara</string>
     <string name="action_lists_owner">Listelerin</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Hesap listeye eklendi!</string>
+    <string name="action_lists_empty">Henüz bir listeniz yok!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s, %2$s\'e taşındı</string>
     <string name="show_boost_count">Hızlandırmaları göster/Favori sayısı</string>
@@ -1018,10 +1018,10 @@
     <string name="action_stats">Statistics</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
+    <string name="number_favourites">Favori sayısı</string>
+    <string name="number_mentions">Bahsetme sayısı</string>
     <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_polls">Anket sayısı</string>
     <string name="number_replies">Number of replies</string>
     <string name="number_statuses">Number of statuses</string>
     <string name="statuses">Statuses</string>
@@ -1031,25 +1031,25 @@
     <string name="number_with_cw">Number with CW</string>
     <string name="first_toot_date">First status date</string>
     <string name="last_toot_date">Last status date</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">İlk bildirim tarihi</string>
+    <string name="last_notification_date">Son bildirim tarihi</string>
     <string name="frequency">Frequency</string>
     <string name="toot_per_day">%s statuses per day</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">günde %s bildirim</string>
     <string name="date_range">Date range</string>
-    <string name="action_groups">Groups</string>
-    <string name="no_messages">No groups!</string>
-    <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
-    <string name="owner_charts">Charts</string>
-    <string name="display_charts">Display charts</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
-    <string name="set_backup">Backup</string>
+    <string name="action_groups">Gruplar</string>
+    <string name="no_messages">Grup yok!</string>
+    <string name="set_disable_animated_emoji">Özel animasyonlu emojiyi devre dışı bırak</string>
+    <string name="owner_charts">Grafikler</string>
+    <string name="display_charts">Grafikleri görüntüle</string>
+    <string name="collecting_data_wait">Uygulama yerel verilerinizi toplar, lütfen bekleyin...</string>
+    <string name="set_backup">Yedekle</string>
     <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
-    <string name="send_invitation">Send an invitation</string>
+    <string name="set_auto_backup_indication">Bu seçenek hesap başına. Durumlarınızı otomatik yerel olarak veritabanında depolayacak bir hizmet başlatır. Bu istatistik ve çizelgeleri elde etmenizi sağlar</string>
+    <string name="set_auto_backup_notifications">Otomatik yedekleme bildirimleri</string>
+    <string name="set_auto_backup_notifications_indication">Bu seçenek hesap başına. Bildirimlerinizi otomatik veritabanında yerel olarak depolayacak bir hizmet başlatır. Bu istatistik ve çizelgeleri elde etmenizi sağlar</string>
+    <string name="report_account">Hesabı bildir</string>
+    <string name="send_invitation">Davetiye gönder</string>
     <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
@@ -1075,16 +1075,16 @@
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
-    <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="all_accounts">Tüm hesaplar için</string>
+    <string name="database_cache">Veritabanı ön belleği</string>
+    <string name="cache_timeline_clear">Ana zaman çizelgesi ön belleğini temizleyin</string>
+    <string name="cache_owntoots_clear">Ön belleğe alınmış durumlarınızı silin</string>
+    <string name="cache_bookmarks_clear">Yer işaretlerinizi temizleyin</string>
+    <string name="file_cache">Önbellekteki dosyalar</string>
+    <string name="total_notifications">Toplam bildirim</string>
+    <string name="hide_menu_items">Menü öğelerini gizle</string>
     <string name="top_notification">Fedilab is running live notifications</string>
     <string name="top_notification_message">For %1$s accounts with %2$s events</string>
     <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be only disabled for this account.</string>
+    <string name="set_allow_live_notifications_indication">Canlı bildirimler yalnızca bu hesap için devre dışı bırakılacak.</string>
 </resources>
