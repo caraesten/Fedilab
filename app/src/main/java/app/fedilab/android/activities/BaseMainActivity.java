@@ -145,6 +145,7 @@ import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_A
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
 import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
+import static app.fedilab.android.sqlite.StatusCacheDAO.NOTIFICATION_CACHE;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -1664,9 +1665,9 @@ public abstract class BaseMainActivity extends BaseActivity
                             Helper.deleteDir(dir);
                         }
                         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
                         new TimelineCacheDAO(contextReference.get(), db).removeAll();
-                        new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
+                       /* new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
+                        new StatusCacheDAO(contextReference.get(), db).removeAll(NOTIFICATION_CACHE);*/
                     } catch (Exception ignored) {
                     }
                 }

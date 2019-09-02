@@ -49,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 34;
+    public static final int DB_VERSION = 35;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -235,7 +235,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
 
     private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
-            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
+            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + "," +COL_CACHED_ACTION +")";
 
     static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
     static final String COL_FILTERED_WITH = "FILTERED_WITH";
@@ -386,6 +386,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
         db.execSQL(CREATE_TABLE_NOTIFICATIONS);
         db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
+
     }
 
     @Override
@@ -520,6 +521,11 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_NOTIFICATIONS);
             case 33:
                 db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
+            case 34:
+                db.execSQL("DROP INDEX IF EXISTS instance_statusid");
+                db.execSQL("DELETE FROM "+TABLE_STATUSES_CACHE);
+                db.execSQL("DELETE FROM "+TABLE_NOTIFICATION_CACHE);
+                db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             default:
                 break;
         }
