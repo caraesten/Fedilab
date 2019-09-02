@@ -1088,4 +1088,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="top_notification_message">Para %1$s cuentas con %2$s eventos</string>
     <string name="set_allow_live_notifications">Notificaciones en vivo para %1$s</string>
     <string name="set_allow_live_notifications_indication">Las notificaciones en vivo sólo estarán desactivadas para esta cuenta.</string>
+    <string name="set_clear_cache_exit">Clear cache when leaving</string>
+    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
 </resources>
