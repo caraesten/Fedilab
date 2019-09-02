@@ -1094,6 +1094,6 @@
     <string name="top_notification_message">För %1$s konton med %2$s händelser</string>
     <string name="set_allow_live_notifications">Live-notifieringar för %1$s</string>
     <string name="set_allow_live_notifications_indication">Live-notifieringar kommer att inaktiveras endast för detta konto.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
+    <string name="set_clear_cache_exit">Rensa cacheminnet när du lämnar</string>
     <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
 </resources>
