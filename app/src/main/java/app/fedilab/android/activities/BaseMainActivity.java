@@ -72,6 +72,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -115,6 +117,7 @@ import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TempMuteDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
@@ -140,6 +143,8 @@ import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
+import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -1646,6 +1651,27 @@ public abstract class BaseMainActivity extends BaseActivity
         super.onDestroy();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
+        boolean clearCacheExit = sharedpreferences.getBoolean(Helper.SET_CLEAR_CACHE_EXIT, false);
+        WeakReference<Context> contextReference = new WeakReference<>(getApplicationContext());
+        if( clearCacheExit){
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String path = contextReference.get().getCacheDir().getParentFile().getPath();
+                        File dir = new File(path);
+                        if (dir.isDirectory()) {
+                            Helper.deleteDir(dir);
+                        }
+                        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
+                        new TimelineCacheDAO(contextReference.get(), db).removeAll();
+                        new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
+                    } catch (Exception ignored) {
+                    }
+                }
+            });
+        }
         if(!backgroundProcess)
             sendBroadcast(new Intent(getApplicationContext(), StopLiveNotificationReceiver.class));
         if( hidde_menu != null)

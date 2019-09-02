@@ -323,6 +323,19 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
+
+        boolean clear_cache_exit = sharedpreferences.getBoolean(Helper.SET_CLEAR_CACHE_EXIT, false);
+        final CheckBox set_clear_cache_exit = rootView.findViewById(R.id.set_clear_cache_exit);
+        set_clear_cache_exit.setChecked(clear_cache_exit);
+        set_clear_cache_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_CLEAR_CACHE_EXIT, set_clear_cache_exit.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean auto_backup_notifications = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS+userId+instance, false);
         final CheckBox set_auto_backup_notifications = rootView.findViewById(R.id.set_auto_backup_notifications);
         set_auto_backup_notifications.setChecked(auto_backup_notifications);
