@@ -1091,4 +1091,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="top_notification_message">Pour %1$s comptes avec %2$s événements</string>
     <string name="set_allow_live_notifications">Notifications en direct pour %1$s</string>
     <string name="set_allow_live_notifications_indication">Les notifications en direct seront activées uniquement pour ce compte.</string>
+    <string name="set_clear_cache_exit">Effacer le cache en quittant</string>
+    <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l\'application.</string>
 </resources>
