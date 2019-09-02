@@ -410,9 +410,9 @@
     <string name="show_pinned">显示置顶</string>
     <string name="filter_no_result">未找到匹配的结果！</string>
     <string name="data_backup_toots">备份 %1$s 的嘟文</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">备份的通知 %1$s</string>
     <string name="data_backup_success">已导入 %1$s 的新嘟文</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s 新的通知已导入</string>
     <string-array name="filter_select">
         <item>否</item>
         <item>仅</item>
@@ -469,8 +469,8 @@
     <string name="action_lists_title_placeholder">新列表标题</string>
     <string name="action_lists_search_users">在您关注的人中搜索</string>
     <string name="action_lists_owner">您的列表</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">帐号已添加到列表!</string>
+    <string name="action_lists_empty">您暂时没有任何列表!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
     <string name="show_boost_count">显示转嘟/收藏数目</string>
@@ -867,26 +867,26 @@
     <string name="set_photo_editor">启用照片编辑器</string>
     <string name="add_poll_item">添加一个投票项目</string>
     <string name="remove_poll_item">删除上一个投票项</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="mute_conversation">静音对话</string>
+    <string name="unmute_conversation">取消静音对话</string>
+    <string name="toast_unmute_conversation">对话不再被静音！</string>
+    <string name="toast_mute_conversation">对话是静音的</string>
     <string name="app_features">打开应用程序功能</string>
     <string name="timed_mute">定时禁言</string>
     <string name="mention_account">提及帐户</string>
     <string name="refresh_cache">刷新缓存</string>
     <string name="see_boost_and_fav">看看是谁转嘟并添加到收藏夹</string>
     <string name="mention_status">提及状态</string>
-    <string name="action_news">News</string>
-    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
-    <string name="category_general">General</string>
-    <string name="category_regional">Regional</string>
-    <string name="category_art">Art</string>
-    <string name="category_journalism">Journalism</string>
-    <string name="category_activism">Activism</string>
-    <string name="category_games">Gaming</string>
-    <string name="category_tech">Technology</string>
-    <string name="category_adult">Adult content</string>
+    <string name="action_news">新闻</string>
+    <string name="set_display_news_from_fedilab">显示新闻从Fedilab的帐户</string>
+    <string name="category_general">常规​​​​​</string>
+    <string name="category_regional">区域</string>
+    <string name="category_art">艺术</string>
+    <string name="category_journalism">期刊</string>
+    <string name="category_activism">活动</string>
+    <string name="category_games">游戏</string>
+    <string name="category_tech">技术</string>
+    <string name="category_adult">成人内容</string>
     <string name="category_furry">Furry</string>
     <string name="category_food">Food</string>
     <string name="instance_logo">Logo of the instance</string>
@@ -1090,4 +1090,6 @@
     <string name="top_notification_message">For %1$s accounts with %2$s events</string>
     <string name="set_allow_live_notifications">Live notifications for %1$s</string>
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
+    <string name="set_clear_cache_exit">Clear cache when leaving</string>
+    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
 </resources>
