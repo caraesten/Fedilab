@@ -1078,21 +1078,20 @@
         <item>Webview</item>
         <item>Jario zuzena</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
-    </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="join_instance">\"%1$s\" nire instantziara elkartzeko, Fedilab deskargatu dezakezu:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nGero ireki beheko esteka Fedilab erabilita eta sortu zure kontua:)\n\n%4$s    </string>
+    <string name="poll_duplicated_entry">Zure inkestak ezin ditu bikoiztutako aukerak izan!</string>
     <string name="all_accounts">Kontu guztientzat</string>
     <string name="database_cache">Datu-basearen cachea</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
+    <string name="cache_timeline_clear">Garbitu zure hasiera denbora-lerroaren cachea</string>
+    <string name="cache_owntoots_clear">Garbitu cacheko mezuak</string>
     <string name="cache_bookmarks_clear">Garbitu gogokoak</string>
     <string name="file_cache">Fitxategiak cachean</string>
-    <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
+    <string name="total_notifications">Jakinarazpenak guztira</string>
+    <string name="hide_menu_items">Ezkutatu menuko elementuak</string>
     <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
+    <string name="top_notification_message">%2$s gertaera dituzten %1$s kontuentzat</string>
     <string name="set_allow_live_notifications">Live notifications for %1$s</string>
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
+    <string name="set_clear_cache_exit">Garbitu cachea irtetzean</string>
+    <string name="set_clear_cache_exit_indication">Cachea (multimedia, mezuak, barneko nabigatzailearen datuak) automatikoki ezabatuko da aplikaziotik irtetean.</string>
 </resources>
