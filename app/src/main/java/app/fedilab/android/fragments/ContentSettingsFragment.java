@@ -783,6 +783,19 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_display_timeline_in_list_text.setOnClickListener(v -> set_display_timeline_in_list.performClick());
 
 
+        boolean unfollow_validation = sharedpreferences.getBoolean(Helper.SET_UNFOLLOW_VALIDATION, true);
+        final CheckBox set_unfollow_validation = rootView.findViewById(R.id.set_unfollow_validation);
+        set_unfollow_validation.setChecked(unfollow_validation);
+
+        set_unfollow_validation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_UNFOLLOW_VALIDATION, set_unfollow_validation.isChecked());
+                editor.apply();
+            }
+        });
+
 
         boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
         final CheckBox set_enable_crash_report = rootView.findViewById(R.id.set_enable_crash_report);

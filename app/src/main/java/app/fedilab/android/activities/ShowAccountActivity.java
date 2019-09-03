@@ -332,6 +332,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC3);
         }
+
+        int style;
+        if (theme == Helper.THEME_LIGHT)
+            style = R.style.Dialog;
+        else if (theme == Helper.THEME_BLACK)
+            style = R.style.DialogBlack;
+        else
+            style = R.style.DialogDark;
+
         String accountIdRelation = accountId;
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             accountIdRelation = account.getAcct();
@@ -839,8 +848,31 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     account_follow.setEnabled(false);
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNFOLLOW){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    boolean confirm_unfollow = sharedpreferences.getBoolean(Helper.SET_UNFOLLOW_VALIDATION, true);
+                    if (confirm_unfollow) {
+                        AlertDialog.Builder unfollowConfirm = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        unfollowConfirm.setTitle(getString(R.string.unfollow_confirm));
+                        unfollowConfirm.setMessage(account.getAcct());
+                        unfollowConfirm.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        unfollowConfirm.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                account_follow.setEnabled(false);
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        });
+                        unfollowConfirm.show();
+                    } else {
+                        account_follow.setEnabled(false);
+                        new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+
                 }else if( doAction == action.UNBLOCK){
                     account_follow.setEnabled(false);
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

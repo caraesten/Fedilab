@@ -371,6 +371,7 @@ public class Helper {
     public static final String SET_BLUR_SENSITIVE = "set_blur_sensitive";
     public static final String SET_LONG_PRESS_MEDIA = "set_long_press_media";
     public static final String SET_DISPLAY_TIMELINE_IN_LIST = "set_display_timeline_in_list";
+    public static final String SET_UNFOLLOW_VALIDATION = "set_unfollow_validation";
     public static final String SET_ONION_SCHEME = "set_onion_scheme";
     public static final String SET_REMEMBER_POSITION_HOME = "set_remember_position";
     public static final String SET_DISPLAY_ADMIN_MENU = "set_display_admin_menu";
