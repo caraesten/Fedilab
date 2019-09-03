@@ -1088,6 +1088,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="top_notification_message">為 %1$s 帳號的 %2$s 事件</string>
     <string name="set_allow_live_notifications">%1$s 的即時通知</string>
     <string name="set_allow_live_notifications_indication">即時通知將只會為此帳號停用。</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
+    <string name="set_clear_cache_exit">離開時清除快取</string>
+    <string name="set_clear_cache_exit_indication">快取（媒體、已快取的訊息、從內建瀏覽器而來的資料）將會在離開應用程式時自動清除。</string>
 </resources>
