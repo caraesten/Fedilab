@@ -404,7 +404,7 @@
     <string name="action_sync">Sinkronizatu</string>
     <string name="action_filter">Iragazi</string>
     <string name="owner_cached_toots">Zure toot-ak</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Zure jakinarazpenak</string>
     <string name="v_public">Publikoa</string>
     <string name="v_unlisted">Zerrendatu gabea</string>
     <string name="v_private">Pribatua</string>
@@ -414,9 +414,9 @@
     <string name="show_pinned">Erakutsi finkatuta</string>
     <string name="filter_no_result">Ez da emaitzarik aurkitu!</string>
     <string name="data_backup_toots">Egin %1$s kontuko toot-en babes-kopia</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Egin %1$s(r)en jakinarazpenen babes-kopia</string>
     <string name="data_backup_success">%1$s toot inportatu dira</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s jakinarazpen berri inportatu dira</string>
     <string-array name="filter_select">
         <item>Ez</item>
         <item>Bakarrik</item>
@@ -473,8 +473,8 @@
     <string name="action_lists_title_placeholder">Zerrenda berriaren izena</string>
     <string name="action_lists_search_users">Bilatu jarraitzen duzun jendearen artean</string>
     <string name="action_lists_owner">Zure zerrendak</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Kontua zerrendara gehitu da!</string>
+    <string name="action_lists_empty">Ez duzu zerrendarik oraindik!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s %2$s(e)ra mugitu da</string>
     <string name="show_boost_count">Erakutsi bultzada/gogoko kopurua</string>
@@ -1024,10 +1024,10 @@
     <string name="action_stats">Estatistikak</string>
     <string name="total_statuses">Mezuak guztira</string>
     <string name="number_boosts">Bultzada kopurua</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">Gogoko kopurua</string>
+    <string name="number_mentions">Aipamen kopurua</string>
+    <string name="number_follows">Jarraitze kopurua</string>
+    <string name="number_polls">Inkesta kopurua</string>
     <string name="number_replies">Erantzun kopurua</string>
     <string name="number_statuses">Mezu kopurua</string>
     <string name="statuses">Mezuak</string>
@@ -1037,11 +1037,11 @@
     <string name="number_with_cw">CW duten kopurua</string>
     <string name="first_toot_date">Lehen mezuaren data</string>
     <string name="last_toot_date">Azken mezuaren data</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Lehen jakinarazpen data</string>
+    <string name="last_notification_date">Azken jakinarazpen data</string>
     <string name="frequency">Maiztasuna</string>
     <string name="toot_per_day">%s mezu eguneko</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">%s jakinarazpen eguneko</string>
     <string name="date_range">Data-barrutia</string>
     <string name="action_groups">Taldeak</string>
     <string name="no_messages">Talderik ez!</string>
@@ -1052,11 +1052,11 @@
     <string name="set_backup">Babes-kopia</string>
     <string name="set_auto_backup">Mezuen babes-kopia automatikoa</string>
     <string name="set_auto_backup_indication">Aukera hau kontu bakoitzeko da. Zure mezuak lokalki datu-basean gordeko dituen zerbitzu bat abiatuko du. Honek estatistikak eta diagramak ahalbidetzen ditu</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">Jakinarazpenen babes-kopia automatikoa</string>
+    <string name="set_auto_backup_notifications_indication">Aukera hau kontuko da. Automatikoki zure jakinarazpenak datu-base lokalean gordeko dituen zerbitzu bat abiatuko du. Honek estatistikak eta diagramak ahalbidetzen ditu</string>
     <string name="report_account">Salatu kontua</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Bidali gonbidapen bat</string>
+    <string name="registration_closed">Zure instantziak ez du kontu berri bat erregistratzea baimentzen!</string>
     <plurals name="number_of_vote">
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
@@ -1081,12 +1081,12 @@
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
+    <string name="all_accounts">Kontu guztientzat</string>
+    <string name="database_cache">Datu-basearen cachea</string>
     <string name="cache_timeline_clear">Clear your home timeline cache</string>
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
+    <string name="cache_bookmarks_clear">Garbitu gogokoak</string>
+    <string name="file_cache">Fitxategiak cachean</string>
     <string name="total_notifications">Total notifications</string>
     <string name="hide_menu_items">Hide menu items</string>
     <string name="top_notification">Fedilab is running live notifications</string>
