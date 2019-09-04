@@ -1104,4 +1104,8 @@
     <string name="top_notification_message">Для %1$s аккаунтов с %2$s событиями</string>
     <string name="set_allow_live_notifications">Живые уведомления для %1$s</string>
     <string name="set_allow_live_notifications_indication">Живые уведомления будут отключены только для этого аккаунта.</string>
+    <string name="set_clear_cache_exit">Очистить кеш при выходе</string>
+    <string name="set_clear_cache_exit_indication">Кэш (медиа, кэшированные сообщения, данные из встроенного браузера) будут автоматически очищаться при выходе из приложения.</string>
+    <string name="set_invidious">Заменить Youtube на Invidio.us</string>
+    <string name="set_invidious_indication">Invidious - это альтернативный интерфейс для YouTube</string>
 </resources>

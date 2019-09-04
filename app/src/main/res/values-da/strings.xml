@@ -1094,4 +1094,8 @@
     <string name="top_notification_message">For %1$s konti med %2$s begivenheder</string>
     <string name="set_allow_live_notifications">Live-notifikationer for %1$s</string>
     <string name="set_allow_live_notifications_indication">Live-notifikationer bliver kun deaktiveret for denne konto.</string>
+    <string name="set_clear_cache_exit">Ryd cache ved afslutning</string>
+    <string name="set_clear_cache_exit_indication">Cache (medier, cache-lagrede beskeder, data fra den indbyggede browser), vil automatisk blive ryddet, når appen forlader.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
