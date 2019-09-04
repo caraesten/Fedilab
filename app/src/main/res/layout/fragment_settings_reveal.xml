@@ -182,6 +182,11 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
+                <EditText
+                    android:hint="@string/set_invidious_host"
+                    android:id="@+id/set_invidious_host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
 
                 <LinearLayout

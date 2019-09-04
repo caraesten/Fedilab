@@ -743,6 +743,10 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
 
 
+
+        TextView set_invidious_host = rootView.findViewById(R.id.set_invidious_host);
+
+
         boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
         final CheckBox set_invidious = rootView.findViewById(R.id.set_invidious);
         set_invidious.setChecked(invidious);
@@ -752,6 +756,37 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_INVIDIOUS, set_invidious.isChecked());
+                editor.apply();
+                if( set_invidious.isChecked() ){
+                    set_invidious_host.setVisibility(View.VISIBLE);
+                }else{
+                    set_invidious_host.setVisibility(View.GONE);
+                }
+            }
+        });
+        if( invidious ){
+            set_invidious_host.setVisibility(View.VISIBLE);
+        }else{
+            set_invidious_host.setVisibility(View.GONE);
+        }
+
+        String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, null);
+        if( invidiousHost != null){
+            set_invidious_host.setText(invidiousHost);
+        }
+        set_invidious_host.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_INVIDIOUS_HOST, s.toString().trim());
                 editor.apply();
             }
         });

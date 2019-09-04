@@ -2587,7 +2587,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         if (invidious) {
                                             while (matcher.find()) {
                                                 final String youtubeId = matcher.group(2);
-                                                url = url.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement("invidio.us/embed/" + youtubeId+"?feature=oembed"));
+                                                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST);
+                                                url = url.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(invidiousHost+"/embed/" + youtubeId+"?feature=oembed"));
 
                                             }
                                         }

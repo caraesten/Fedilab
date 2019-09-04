@@ -648,7 +648,8 @@ public class Status implements Parcelable{
         if( invidious ) {
             while (matcher.find()) {
                 final String youtubeId = matcher.group(2);
-                content = content.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement("invidio.us/watch?v=" + youtubeId));
+                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST);
+                content = content.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(invidiousHost + "/watch?v=" + youtubeId));
 
             }
         }
