@@ -1094,4 +1094,6 @@
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
     <string name="set_clear_cache_exit">Garbitu cachea irtetzean</string>
     <string name="set_clear_cache_exit_indication">Cachea (multimedia, mezuak, barneko nabigatzailearen datuak) automatikoki ezabatuko da aplikaziotik irtetean.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
