@@ -1,0 +1,5 @@
+Added
+- Clear cache when leaving the app (default: disabled)
+- Ability to use an instance of Invidious to play Youtube videos (default: disabled, default instance: invidio.us)
+- Confirmation before unfollowing an account (can be disabled in settings)
+- Shortcut in settings for hiding the remaining notification in status bar.
