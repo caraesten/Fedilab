@@ -1099,8 +1099,8 @@
     <string name="unfollow_confirm">Do you want to unfollow this account?</string>
     <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
     <string name="set_invidious">Udskift Youtube med Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_invidious_indication">Invidious er en alternativ front-end til YouTube</string>
+    <string name="set_invidious_host">Angiv din tilpassede vært eller udfykd ikke for at benytte invidio.os</string>
+    <string name="set_hide_status_bar">Skjul Fedilab-notifikationsbjælke</string>
+    <string name="set_hide_status_bar_indication">For at skjule den resterende notifikation på statusbjælken, så klik på øjeikonknappen og fjern derefter markeringen: \"Vises på statusbjælke\"</string>
 </resources>
