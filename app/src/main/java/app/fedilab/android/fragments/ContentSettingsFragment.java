@@ -52,6 +52,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -1740,13 +1741,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final Button sound_poll = rootView.findViewById(R.id.sound_poll);
         final Button sound_backup = rootView.findViewById(R.id.sound_backup);
         final Button sound_media = rootView.findViewById(R.id.sound_media);
+        final ImageButton set_hide_status_bar = rootView.findViewById(R.id.set_hide_status_bar);
         Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);
-
+        final LinearLayout set_hide_status_bar_container = rootView.findViewById(R.id.set_hide_status_bar_container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             set_notif_sound.setVisibility(View.GONE);
             channels_container.setVisibility(View.VISIBLE);
+            set_hide_status_bar_container.setVisibility(View.VISIBLE);
+            set_hide_status_bar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, LiveNotificationService.CHANNEL_ID);
+                    startActivity(intent);
+                }
+            });
+
 
             sound_boost.setOnClickListener(new View.OnClickListener() {
                 @Override
