@@ -1108,4 +1108,5 @@
     <string name="set_clear_cache_exit_indication">Кэш (медиа, кэшированные сообщения, данные из встроенного браузера) будут автоматически очищаться при выходе из приложения.</string>
     <string name="set_invidious">Заменить Youtube на Invidio.us</string>
     <string name="set_invidious_indication">Invidious - это альтернативный интерфейс для YouTube</string>
+    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
 </resources>
