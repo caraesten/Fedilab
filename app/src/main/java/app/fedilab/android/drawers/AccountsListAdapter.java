@@ -15,7 +15,9 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -23,6 +25,8 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
@@ -212,8 +216,46 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             public void onClick(View v) {
                 if( action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
                     if (finalDoAction != null) {
-                        account.setMakingAction(true);
-                        new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if( finalDoAction != API.StatusAction.UNFOLLOW) {
+                            account.setMakingAction(true);
+                            new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{
+                            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                            boolean confirm_unfollow = sharedpreferences.getBoolean(Helper.SET_UNFOLLOW_VALIDATION, true);
+                            if (confirm_unfollow) {
+                                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                                int style;
+                                if (theme == Helper.THEME_DARK) {
+                                    style = R.style.DialogDark;
+                                } else if (theme == Helper.THEME_BLACK){
+                                    style = R.style.DialogBlack;
+                                }else {
+                                    style = R.style.Dialog;
+                                }
+                                AlertDialog.Builder unfollowConfirm = new AlertDialog.Builder(context, style);
+                                unfollowConfirm.setTitle(context.getString(R.string.unfollow_confirm));
+                                unfollowConfirm.setMessage(account.getAcct());
+                                unfollowConfirm.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                unfollowConfirm.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,int which) {
+                                        account.setMakingAction(true);
+                                        new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                unfollowConfirm.show();
+                            } else {
+                                account.setMakingAction(true);
+                                new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+
+                        }
                     }
                 }else {
                     CrossActions.followPeertubeChannel(context, account, AccountsListAdapter.this);
