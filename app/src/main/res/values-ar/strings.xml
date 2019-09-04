@@ -1115,6 +1115,8 @@
     <string name="set_allow_live_notifications_indication">لن يتم تعطيل الإشعارات الحية سوى لهذا الحساب.</string>
     <string name="set_clear_cache_exit">امسح ذاكرة التخزين المؤقت عند المغادرة</string>
     <string name="set_clear_cache_exit_indication">سيتم مسح ذاكرة التخزين المؤقت تلقائيا (الوسائط والرسائل المخزّنة وبيانات المتصفح المدمج) عند الخروج من التطبيق.</string>
+    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
+    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
     <string name="set_invidious">Replace Youtube with Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
