@@ -1093,4 +1093,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_allow_live_notifications_indication">Les notifications en direct seront activées uniquement pour ce compte.</string>
     <string name="set_clear_cache_exit">Vider le cache en quittant</string>
     <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l’application.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
