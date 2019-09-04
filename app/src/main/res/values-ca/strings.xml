@@ -1091,4 +1091,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_invidious">Substituir Youtube amb Invidio.us</string>
     <string name="set_invidious_indication">Invidious és una alternativa a YouTube en funcions de frontal</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
+    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
 </resources>
