@@ -742,6 +742,20 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final LinearLayout set_blur_sensitive_text = rootView.findViewById(R.id.set_blur_sensitive_text);
         set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
 
+
+        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+        final CheckBox set_invidious = rootView.findViewById(R.id.set_invidious);
+        set_invidious.setChecked(invidious);
+
+        set_invidious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_INVIDIOUS, set_invidious.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
         final CheckBox set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
         set_long_press_media.setChecked(long_press_media);

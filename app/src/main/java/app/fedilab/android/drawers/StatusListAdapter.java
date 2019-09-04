@@ -2580,7 +2580,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.webview_preview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    status.setWebviewURL(finalSrc);
+                                    String url = finalSrc;
+                                    if( url != null) {
+                                        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+                                        Matcher matcher = Helper.youtubeOembedPattern.matcher(url);
+                                        if (invidious) {
+                                            while (matcher.find()) {
+                                                final String youtubeId = matcher.group(2);
+                                                url = url.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement("invidio.us/embed/" + youtubeId+"?feature=oembed"));
+
+                                            }
+                                        }
+                                    }
+                                    status.setWebviewURL(url);
                                     notifyStatusChanged(status);
                                 }
                             });
