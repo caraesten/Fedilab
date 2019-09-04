@@ -1092,5 +1092,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_clear_cache_exit_indication">El caché (archivos multimedia, mensajes en caché, datos del navegador integrado) se borrará automáticamente al salir de la aplicación.</string>
     <string name="set_invidious">Reemplazar Youtuve con Invidio.us</string>
     <string name="set_invidious_indication">Invidious es una interfaz alternativa a YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
+    <string name="set_invidious_host">Introduce tu host personalizado o deja en blanco para usar invidio.us</string>
 </resources>
