@@ -61,7 +61,7 @@
     <string name="drafts">Brouillons</string>
     <string name="new_data">De nouvelles données sont disponibles ! Souhaitez-vous les afficher ?</string>
     <string name="favourite">Favoris</string>
-    <string name="follow">Nouveaux⋅elles abonn⋅é⋅s</string>
+    <string name="follow">Nouveaux⋅elles abonné⋅e⋅s</string>
     <string name="mention">Mentions</string>
     <string name="reblog">Partages</string>
     <string name="show_boosts">Afficher les partages</string>
@@ -1093,6 +1093,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_allow_live_notifications_indication">Les notifications en direct seront activées uniquement pour ce compte.</string>
     <string name="set_clear_cache_exit">Vider le cache en quittant</string>
     <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l’application.</string>
-    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
+    <string name="set_invidious">Remplacer YouTube par Invidio.us</string>
+    <string name="set_invidious_indication">Indivious est une alternative visuelle pour YouTube</string>
+    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
 </resources>
