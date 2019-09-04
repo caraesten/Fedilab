@@ -1097,6 +1097,7 @@
     <string name="set_allow_live_notifications_indication">Activaranse as notificacións ao vivo para esta conta.</string>
     <string name="set_clear_cache_exit">Limpar caché ao saír</string>
     <string name="set_clear_cache_exit_indication">A caché (medios, menxases almacenadas, datos do navegador incluído) borraranse automáticamente ao saír da aplicación.</string>
-    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious">Replace Youtube with Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
+    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
 </resources>
