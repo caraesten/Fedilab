@@ -251,6 +251,72 @@ public class LoginActivity extends BaseActivity {
             Helper.changeMaterialSpinnerColor(LoginActivity.this, set_instance_type);
             set_instance_type.setItems("Mastodon", "Pleroma", "Pixelfed", "Peertube", "GNU Social", "Friendica");
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+
+
+            if( getIntent() == null || !getIntent().getBooleanExtra("forcedInstance", false)) {
+                //Extrat for inditoot.com
+                login_instance.setText("inditoot.com");
+                //Hide items
+                step_instance.setVisibility(View.GONE);
+                if (login_instance.getText() == null || login_instance.getText().toString().length() == 0) {
+                    TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
+                    login_instance_layout.setError(getString(R.string.toast_error_instance));
+                    login_instance_layout.setErrorEnabled(true);
+                    return;
+                }
+                instance = login_instance.getText().toString().trim().toLowerCase();
+                connect_button.setEnabled(false);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                connect_button.setEnabled(true);
+                                if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
+                                    switch (instanceNodeInfo.getName()) {
+                                        case "MASTODON":
+                                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                                            break;
+                                        case "PIXELFED":
+                                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+                                            break;
+                                        case "PEERTUBE":
+                                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                                            break;
+                                        case "GNU":
+                                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                                            break;
+                                    }
+                                    if (instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
+                                        client_id_for_webview = true;
+                                        retrievesClientId();
+                                    } else {
+                                        if (instanceNodeInfo.getName().equals("PEERTUBE")) {
+                                            step_login_credential.setVisibility(View.VISIBLE);
+                                            step_instance.setVisibility(View.GONE);
+                                            instance_chosen.setText(instance);
+                                            retrievesClientId();
+                                        } else if (instanceNodeInfo.getName().equals("GNU")) {
+                                            step_login_credential.setVisibility(View.VISIBLE);
+                                            step_instance.setVisibility(View.GONE);
+                                            instance_chosen.setText(instance);
+                                        }
+                                    }
+                                } else if (instanceNodeInfo != null && instanceNodeInfo.isConnectionError()) {
+                                    Toasty.error(getApplicationContext(), getString(R.string.connect_error), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toasty.error(getApplicationContext(), getString(R.string.client_error), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+
+                    }
+                }).start();
+            }
+
             //Manage instances
             set_instance_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
                 @Override

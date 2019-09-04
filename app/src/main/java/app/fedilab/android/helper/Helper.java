@@ -1389,7 +1389,8 @@ public class Helper {
             changeDrawableColor(activity, R.drawable.ic_person,R.color.black);
             changeDrawableColor(activity, R.drawable.ic_cancel,R.color.black);
         }
-
+        menuAccountsOpened = true;
+        arrow.setVisibility(View.GONE);
         if( !menuAccountsOpened ){
             arrow.setImageResource(R.drawable.ic_arrow_drop_up);
             SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -2116,6 +2117,7 @@ public class Helper {
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
             ImageView owner_accounts = headerLayout.findViewById(R.id.owner_accounts);
+            owner_accounts.setVisibility(View.GONE);
             ImageView header_option_info = headerLayout.findViewById(R.id.header_option_info);
             ImageView header_option_menu = headerLayout.findViewById(R.id.header_option_menu);
             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
