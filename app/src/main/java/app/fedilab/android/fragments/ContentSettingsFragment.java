@@ -52,6 +52,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -741,6 +742,55 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
         final LinearLayout set_blur_sensitive_text = rootView.findViewById(R.id.set_blur_sensitive_text);
         set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
+
+
+
+        TextView set_invidious_host = rootView.findViewById(R.id.set_invidious_host);
+
+
+        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+        final CheckBox set_invidious = rootView.findViewById(R.id.set_invidious);
+        set_invidious.setChecked(invidious);
+
+        set_invidious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_INVIDIOUS, set_invidious.isChecked());
+                editor.apply();
+                if( set_invidious.isChecked() ){
+                    set_invidious_host.setVisibility(View.VISIBLE);
+                }else{
+                    set_invidious_host.setVisibility(View.GONE);
+                }
+            }
+        });
+        if( invidious ){
+            set_invidious_host.setVisibility(View.VISIBLE);
+        }else{
+            set_invidious_host.setVisibility(View.GONE);
+        }
+
+        String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, null);
+        if( invidiousHost != null){
+            set_invidious_host.setText(invidiousHost);
+        }
+        set_invidious_host.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_INVIDIOUS_HOST, s.toString().trim());
+                editor.apply();
+            }
+        });
 
         boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
         final CheckBox set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
@@ -1704,13 +1754,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         final Button sound_poll = rootView.findViewById(R.id.sound_poll);
         final Button sound_backup = rootView.findViewById(R.id.sound_backup);
         final Button sound_media = rootView.findViewById(R.id.sound_media);
+        final ImageButton set_hide_status_bar = rootView.findViewById(R.id.set_hide_status_bar);
         Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);
-
+        final LinearLayout set_hide_status_bar_container = rootView.findViewById(R.id.set_hide_status_bar_container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             set_notif_sound.setVisibility(View.GONE);
             channels_container.setVisibility(View.VISIBLE);
+            set_hide_status_bar_container.setVisibility(View.VISIBLE);
+            set_hide_status_bar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, LiveNotificationService.CHANNEL_ID);
+                    startActivity(intent);
+                }
+            });
+
 
             sound_boost.setOnClickListener(new View.OnClickListener() {
                 @Override

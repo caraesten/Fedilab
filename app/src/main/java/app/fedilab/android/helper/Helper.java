@@ -428,6 +428,9 @@ public class Helper {
     public static final String SET_FILTER_REGEX_LOCAL = "set_filter_regex_local";
     public static final String SET_FILTER_REGEX_PUBLIC = "set_filter_regex_public";
 
+    public static final String SET_INVIDIOUS = "set_invidious";
+    public static final String SET_INVIDIOUS_HOST = "set_invidious_host";
+    public static final String DEFAULT_INVIDIOUS_HOST = "invidio.us";
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
@@ -514,6 +517,8 @@ public class Helper {
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
     public static final Pattern groupPattern = Pattern.compile("(\\![\\w_]+(\\s|$))");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
+    public static final Pattern youtubePattern = Pattern.compile("(www\\.)?youtube\\.com\\/watch\\?v=(\\w+)");
+    public static final Pattern youtubeOembedPattern = Pattern.compile("(www\\.)?youtube\\.com\\/embed\\/(\\w+)\\?feature=oembed");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
     public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");

@@ -642,8 +642,19 @@ public class Status implements Parcelable{
                 content = content.replaceFirst(Pattern.quote(beforemodification), Matcher.quoteReplacement(urlText));
             }
         }
+        Matcher matcher = Helper.youtubePattern.matcher(content);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+        if( invidious ) {
+            while (matcher.find()) {
+                final String youtubeId = matcher.group(2);
+                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST);
+                content = content.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(invidiousHost + "/watch?v=" + youtubeId));
+
+            }
+        }
         Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
-        Matcher matcher = imgPattern.matcher(content);
+        matcher = imgPattern.matcher(content);
         List<String> imgs = new ArrayList<>();
         int i = 1;
         while (matcher.find()) {
