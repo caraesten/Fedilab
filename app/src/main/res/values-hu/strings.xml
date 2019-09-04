@@ -1094,4 +1094,6 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
     <string name="set_clear_cache_exit">Clear cache when leaving</string>
     <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
