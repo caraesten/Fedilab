@@ -1088,4 +1088,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_allow_live_notifications_indication">Es desactivaran les notificacions instantànies només d\'aquest compte.</string>
     <string name="set_clear_cache_exit">Esborra la memòria cau en sortir</string>
     <string name="set_clear_cache_exit_indication">La memòria cau (mèdia, missatges registrats, dades del navegador incorporat) s\'esborraran automàticament en sortir de l\'aplicació.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
