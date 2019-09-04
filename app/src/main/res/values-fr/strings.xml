@@ -1094,5 +1094,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_clear_cache_exit">Vider le cache en quittant</string>
     <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l’application.</string>
     <string name="set_invidious">Remplacer YouTube par Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
+    <string name="set_invidious_indication">Indivious est une alternative visuelle pour YouTube</string>
 </resources>
