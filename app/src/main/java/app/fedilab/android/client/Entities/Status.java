@@ -817,6 +817,32 @@ public class Status implements Parcelable{
             spannableStringT.removeSpan(span);
         }
 
+        matcher = Helper.twitterPattern.matcher(spannableStringT);
+        while (matcher.find()){
+            int matchStart = matcher.start(2);
+            int matchEnd = matcher.end();
+            final String twittername = matcher.group(2);
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View textView) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
         if( accountsMentionUnknown.size() > 0 ) {
 
             Iterator it = accountsMentionUnknown.entrySet().iterator();
