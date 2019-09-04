@@ -986,7 +986,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_quick_reply_indication">Permet de répondre directement dans les fils, en bas des statuts</string>
     <string name="set_fit_preview_indication">Les aperçus ne seront pas rognés dans les fils</string>
     <string name="set_display_video_preview_indication">Autoriser à lire les vidéos intégrées directement dans les fils</string>
-    <string name="set_display_content_after_fetch_more_indication">Permet d\'inverser la façon de lire les publications affichées après avoir cliqué sur le bouton pour retrouver plus de pouets</string>
+    <string name="set_display_content_after_fetch_more_indication">Permet d’inverser la façon de lire les publications affichées après avoir cliqué sur le bouton pour retrouver plus de pouets</string>
     <string name="set_security_provider_indication">Cette option permet de prendre en charge les suites de chiffrement récentes. Elle est utile pour les anciens appareils Android ou si vous ne n\'arrivez pas vous connecter à votre instance.</string>
     <string name="set_video_mode_indication">Exclusivement pour les vidéos Peertube. Basculez vers ce mode si vous ne pouvez pas les lire.</string>
     <string name="featured_hashtags_indication">Ces tags permettent de filtrer les statuts dans les profils. Vous devrez utiliser le menu contextuel pour les voir.</string>
@@ -1091,4 +1091,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="top_notification_message">Pour %1$s comptes avec %2$s événements</string>
     <string name="set_allow_live_notifications">Notifications en direct pour %1$s</string>
     <string name="set_allow_live_notifications_indication">Les notifications en direct seront activées uniquement pour ce compte.</string>
+    <string name="set_clear_cache_exit">Vider le cache en quittant</string>
+    <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l’application.</string>
+    <string name="set_invidious">Replace Youtuve with Invidio.us</string>
+    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
 </resources>
