@@ -414,9 +414,9 @@
     <string name="show_pinned">Mostra in evidenza</string>
     <string name="filter_no_result">Nessuna corrispondenza trovata!</string>
     <string name="data_backup_toots">Backup dei toot per %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Backup notifiche per %1$s</string>
     <string name="data_backup_success">%1$s nuovi toot sono stati importati</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s nuove notifiche sono state importate</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Solo</item>
@@ -1054,7 +1054,7 @@
     <string name="set_auto_backup">Fai automaticamente il backup degli stati</string>
     <string name="set_auto_backup_indication">Questa azione è per account. Lancerà un servizio che automaticamente salva i tuoi stati localmente nel database. Questo consentirà di avere statistiche e grafici</string>
     <string name="set_auto_backup_notifications">Fai automaticamente il backup delle notifiche</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications_indication">Questa opzione è per account. Verrà avviato un servizio che memorizza automaticamente le notifiche localmente nel database. Questo permette di ottenere statistiche e grafici</string>
     <string name="report_account">Segnala account</string>
     <string name="send_invitation">Invia un invito</string>
     <string name="registration_closed">La tua istanza non consente di registrare un nuovo account!</string>
@@ -1088,19 +1088,19 @@
     <string name="cache_owntoots_clear">Cancella i tuoi stati memorizzati nella cache</string>
     <string name="cache_bookmarks_clear">Cancella i tuoi segnalibri</string>
     <string name="file_cache">File nella cache</string>
-    <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
-    <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
-    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="total_notifications">Notifiche totali</string>
+    <string name="hide_menu_items">Nascondi voci di menu</string>
+    <string name="top_notification">Fedilab sta eseguendo notifiche in tempo reale</string>
+    <string name="top_notification_message">Per %1$s account con %2$s eventi</string>
+    <string name="set_allow_live_notifications">Notifiche in tempo reale per %1$s</string>
+    <string name="set_allow_live_notifications_indication">Le notifiche in tempo reale saranno abilitate per questo account.</string>
+    <string name="set_clear_cache_exit">Cancella cache quando esci</string>
+    <string name="set_clear_cache_exit_indication">La cache (media, messaggi memorizzati nella cache, dati del browser integrato) sarà automaticamente cancellata quando l\'applicazione verrà chiusa.</string>
+    <string name="unfollow_confirm">Vuoi smettere di seguire questo account?</string>
+    <string name="set_unfollow_validation">Mostra finestra di conferma prima di smettere di seguire</string>
+    <string name="set_invidious">Sostituisci Youtube con Invidio.us</string>
+    <string name="set_invidious_indication">Invidious è un\'interfaccia alternativa per YouTube</string>
+    <string name="set_invidious_host">Inserisci il tuo host personalizzato o lascia vuoto per usare invidio.us</string>
+    <string name="set_hide_status_bar">Nascondi barra di notifica di Fedilab</string>
+    <string name="set_hide_status_bar_indication">Per nascondere le notifiche rimanenti nella barra di stato, clicca sul pulsante con l\'icona di un occhio e deseleziona: \"Mostra nella barra di stato\"</string>
 </resources>
