@@ -1096,8 +1096,8 @@
     <string name="set_allow_live_notifications_indication">Live-notifikationer bliver kun deaktiveret for denne konto.</string>
     <string name="set_clear_cache_exit">Ryd cache ved afslutning</string>
     <string name="set_clear_cache_exit_indication">Cache (medier, cache-lagrede beskeder, data fra den indbyggede browser), vil automatisk blive ryddet, når appen forlader.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
+    <string name="unfollow_confirm">Stop med at følge denne konto?</string>
+    <string name="set_unfollow_validation">Vis bekræftelsesdialog inden Følg stoppes</string>
     <string name="set_invidious">Udskift Youtube med Invidio.us</string>
     <string name="set_invidious_indication">Invidious er en alternativ front-end til YouTube</string>
     <string name="set_invidious_host">Angiv din tilpassede vært eller udfykd ikke for at benytte invidio.os</string>
