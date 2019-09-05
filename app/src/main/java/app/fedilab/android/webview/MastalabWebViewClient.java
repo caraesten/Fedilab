@@ -14,7 +14,7 @@ package app.fedilab.android.webview;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.SslErrorHandler;
+import android.webkit.URLUtil;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -116,6 +117,17 @@ public class MastalabWebViewClient extends WebViewClient {
         }else{
             super.onReceivedSslError(view, handler, error);
         }
+    }
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if( URLUtil.isNetworkUrl(url) ) {
+            return false;
+        }else{
+            view.stopLoading();
+            view.goBack();
+        }
+        return false;
     }
 
     @Override
