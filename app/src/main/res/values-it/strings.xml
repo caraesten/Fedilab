@@ -404,7 +404,7 @@
     <string name="action_sync">Sincronizza</string>
     <string name="action_filter">Filtro</string>
     <string name="owner_cached_toots">I tuoi toot</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Le tue notifiche</string>
     <string name="v_public">Pubblico</string>
     <string name="v_unlisted">Non elencato</string>
     <string name="v_private">Privato</string>
@@ -1025,10 +1025,10 @@
     <string name="action_stats">Statistiche</string>
     <string name="total_statuses">Stati totali</string>
     <string name="number_boosts">Numero di boost</string>
-    <string name="number_favourites">Number of favourites</string>
-    <string name="number_mentions">Number of mentions</string>
-    <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
+    <string name="number_favourites">Numero di preferiti</string>
+    <string name="number_mentions">Numero di menzioni</string>
+    <string name="number_follows">Numero di seguiti</string>
+    <string name="number_polls">Numero di sondaggi</string>
     <string name="number_replies">Numero di risposte</string>
     <string name="number_statuses">Numero di stati</string>
     <string name="statuses">Stati</string>
@@ -1038,11 +1038,11 @@
     <string name="number_with_cw">Numero con CW</string>
     <string name="first_toot_date">Data primo stato</string>
     <string name="last_toot_date">Data ultimo stato</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Data della prima notifica</string>
+    <string name="last_notification_date">Ultima data di notifica</string>
     <string name="frequency">Frequenza</string>
     <string name="toot_per_day">%s stati al giorno</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">%s notifiche al giorno</string>
     <string name="date_range">Intervallo di tempo</string>
     <string name="action_groups">Gruppi</string>
     <string name="no_messages">Nessun gruppo!</string>
@@ -1053,7 +1053,7 @@
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Fai automaticamente il backup degli stati</string>
     <string name="set_auto_backup_indication">Questa azione è per account. Lancerà un servizio che automaticamente salva i tuoi stati localmente nel database. Questo consentirà di avere statistiche e grafici</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
+    <string name="set_auto_backup_notifications">Fai automaticamente il backup delle notifiche</string>
     <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
     <string name="report_account">Segnala account</string>
     <string name="send_invitation">Invia un invito</string>
