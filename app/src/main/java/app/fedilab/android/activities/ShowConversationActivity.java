@@ -324,6 +324,14 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (statusListAdapter != null) {
+            statusListAdapter.storeToot();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
