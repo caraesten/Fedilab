@@ -22,7 +22,6 @@ package app.fedilab.android.helper;
 public class FilterNotifications {
 
 
-
     private boolean favorite = true;
     private boolean boost = true;
     private boolean follow = true;

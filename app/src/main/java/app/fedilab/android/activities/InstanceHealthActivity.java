@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +29,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
@@ -77,7 +78,7 @@ public class InstanceHealthActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -93,10 +94,10 @@ public class InstanceHealthActivity extends BaseActivity {
         setContentView(R.layout.activity_instance_social);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Bundle b = getIntent().getExtras();
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
-        instance =  Helper.getLiveInstance(getApplicationContext());
-        if(b != null)
+        instance = Helper.getLiveInstance(getApplicationContext());
+        if (b != null)
             instance = b.getString("instance", Helper.getLiveInstance(getApplicationContext()));
 
         Button close = findViewById(R.id.close);
@@ -143,23 +144,23 @@ public class InstanceHealthActivity extends BaseActivity {
     }
 
 
-    private void checkInstance(){
+    private void checkInstance() {
 
-        if( instance == null)
+        if (instance == null)
             return;
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
-                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
-                    if( response != null)
+                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                    if (response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         public void run() {
-                            if( instanceSocial.getThumbnail() != null && !instanceSocial.getThumbnail().equals("null"))
+                            if (instanceSocial.getThumbnail() != null && !instanceSocial.getThumbnail().equals("null"))
                                 Glide.with(getApplicationContext())
                                         .asBitmap()
                                         .load(instanceSocial.getThumbnail())
@@ -176,21 +177,21 @@ public class InstanceHealthActivity extends BaseActivity {
                                                 BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                                     container.setBackground(background);
-                                                }else{
+                                                } else {
                                                     container.setBackgroundDrawable(background);
                                                 }
                                             }
                                         });
                             name.setText(instanceSocial.getName());
-                            if( instanceSocial.isUp()) {
+                            if (instanceSocial.isUp()) {
                                 up.setText("Is up!");
                                 up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                            }else {
+                            } else {
                                 up.setText("Is down!");
                                 up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                             }
-                            uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime()*100)));
-                            if( instanceSocial.getChecked_at() != null)
+                            uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime() * 100)));
+                            if (instanceSocial.getChecked_at() != null)
                                 checked_at.setText(String.format("Checked at: %s", Helper.dateToString(instanceSocial.getChecked_at())));
                             values.setText(String.format("version: %s \n %s users - %s statuses", instanceSocial.getVersion(), Helper.withSuffix(instanceSocial.getUsers()), Helper.withSuffix(instanceSocial.getStatuses())));
                             instance_container.setVisibility(View.VISIBLE);
@@ -198,11 +199,11 @@ public class InstanceHealthActivity extends BaseActivity {
                         }
                     });
 
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }).start();
     }
-
 
 
 }

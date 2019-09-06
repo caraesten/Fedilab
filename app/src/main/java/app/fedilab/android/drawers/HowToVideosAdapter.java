@@ -20,7 +20,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +58,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public HowToVideosAdapter(List<HowToVideo> howToVideos){
+    public HowToVideosAdapter(List<HowToVideo> howToVideos) {
         this.howToVideos = howToVideos;
     }
 
@@ -97,22 +99,22 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             holder.how_to_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-        }else if(theme == Helper.THEME_DARK){
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
+        } else if (theme == Helper.THEME_DARK) {
             holder.how_to_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-        }else if(theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
+        } else if (theme == Helper.THEME_BLACK) {
             holder.how_to_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.how_to_description.setText(howToVideo.getDescription());
         holder.how_to_title.setText(howToVideo.getName());
         assert next != null;
         final float scale = context.getResources().getDisplayMetrics().density;
-        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
+        next.setBounds(0, 0, (int) (30 * scale + 0.5f), (int) (30 * scale + 0.5f));
         holder.how_to_description.setCompoundDrawables(null, null, next, null);
         Glide.with(holder.how_to_image.getContext())
                 .load("https://peertube.fedilab.app" + howToVideo.getThumbnailPath())
@@ -127,7 +129,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
                 b.putBoolean("peertubeLink", true);
                 Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
                 Matcher matcherLink = link.matcher(finalUrl);
-                if( matcherLink.find()) {
+                if (matcherLink.find()) {
                     String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
                     b.putString("peertubeLinkToFetch", url);
                 }

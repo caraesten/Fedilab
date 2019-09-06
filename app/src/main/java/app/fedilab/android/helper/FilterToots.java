@@ -21,7 +21,7 @@ package app.fedilab.android.helper;
 
 public class FilterToots {
 
-    public enum typeFilter{
+    public enum typeFilter {
         NONE,
         ONLY,
         BOTH

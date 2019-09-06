@@ -17,8 +17,10 @@ package app.fedilab.android.drawers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +40,13 @@ import app.fedilab.android.R;
  * Created by Thomas on 01/12/2018.
  * Adapter for tags when editing
  */
-public class TagsEditAdapter extends RecyclerView.Adapter  {
+public class TagsEditAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<String> tags;
     private TagsEditAdapter tagsEditAdapter;
 
-    public TagsEditAdapter(List<String> tags){
+    public TagsEditAdapter(List<String> tags) {
         this.tags = tags;
 
         tagsEditAdapter = this;
@@ -68,10 +70,10 @@ public class TagsEditAdapter extends RecyclerView.Adapter  {
         holder.save_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( holder.tag_name.getText() != null && holder.tag_name.getText().toString().trim().replaceAll("\\#","").length() > 0) {
-                    String tagToInsert = holder.tag_name.getText().toString().trim().replaceAll("\\#","");
+                if (holder.tag_name.getText() != null && holder.tag_name.getText().toString().trim().replaceAll("\\#", "").length() > 0) {
+                    String tagToInsert = holder.tag_name.getText().toString().trim().replaceAll("\\#", "");
                     boolean isPresent = new TagsCacheDAO(context, db).isPresent(tagToInsert);
-                    if( isPresent)
+                    if (isPresent)
                         Toasty.warning(context, context.getString(R.string.tags_already_stored), Toast.LENGTH_LONG).show();
                     else {
                         new TagsCacheDAO(context, db).update(tag[0], tagToInsert);
@@ -105,7 +107,7 @@ public class TagsEditAdapter extends RecyclerView.Adapter  {
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView tag_name;
         ImageButton save_tag, delete_tag;
 

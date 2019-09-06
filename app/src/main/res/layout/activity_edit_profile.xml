@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,8 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeContainer"
     android:paddingLeft="@dimen/drawer_padding"
@@ -53,12 +51,14 @@
                 android:scaleType="fitXY"
                 android:layout_height="100dp"
                 android:contentDescription="@string/profile_picture" />
+
             <LinearLayout
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <EditText
                     android:layout_marginTop="10dp"
                     android:id="@+id/set_profile_name"
@@ -66,6 +66,7 @@
                     android:maxLines="1"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
+
                 <Button
                     android:layout_marginTop="5dp"
                     android:id="@+id/set_change_profile_picture"
@@ -86,13 +87,13 @@
             android:minLines="4"
             android:lines="4"
             android:maxLines="5"
-            android:hint="@string/set_profile_description"
-             />
+            android:hint="@string/set_profile_description" />
         <!-- Header picture -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:scaleType="fitXY"
                 android:id="@+id/set_header_picture"
@@ -100,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/profile_banner" />
+
             <TextView
                 android:visibility="gone"
                 android:id="@+id/set_header_picture_overlay"
@@ -109,7 +111,7 @@
                 android:textSize="16sp"
                 android:text="@string/set_header_picture_overlay"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
 
@@ -129,16 +131,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/cf_key_1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
+
                 <EditText
                     android:id="@+id/cf_val_1"
                     android:inputType="text"
@@ -146,16 +151,19 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/cf_key_2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
+
                 <EditText
                     android:id="@+id/cf_val_2"
                     android:inputType="text"
@@ -163,16 +171,19 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/cf_key_3"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
+
                 <EditText
                     android:id="@+id/cf_val_3"
                     android:inputType="text"
@@ -180,16 +191,19 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/cf_key_4"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
+
                 <EditText
                     android:id="@+id/cf_val_4"
                     android:inputType="text"

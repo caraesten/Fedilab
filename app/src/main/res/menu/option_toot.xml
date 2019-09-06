@@ -25,7 +25,7 @@
     <item
         android:id="@+id/action_open_browser"
         android:title="@string/action_open_in_web"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_share"
         android:title="@string/more_action_6"

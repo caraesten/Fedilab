@@ -22,11 +22,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AlertDialog;
+
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +51,7 @@ import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
 import net.gotev.uploadservice.UploadNotificationConfig;
 import net.gotev.uploadservice.UploadStatusDelegate;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,18 +116,19 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         playlists = new ArrayList<>();
         playlistAdapter = new PlaylistAdapter(context, playlists, textviewNoAction);
         lv_playlist.setAdapter(playlistAdapter);
-        asyncTask = new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.GET_PLAYLIST, null, null, null,DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.GET_PLAYLIST, null, null, null, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
 
         LinkedHashMap<String, String> translations = null;
-        if( peertubeInformation != null && peertubeInformation.getTranslations() != null)
+        if (peertubeInformation != null && peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
         LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
-        Map.Entry<Integer,String> entryInt = privaciesInit.entrySet().iterator().next();
+        Map.Entry<Integer, String> entryInt = privaciesInit.entrySet().iterator().next();
         privacyToSend = new HashMap<>();
         privacyToSend.put(entryInt.getKey(), entryInt.getValue());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -131,19 +137,17 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         Iterator it = privacies.entrySet().iterator();
         int i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                privaciesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] =  translations.get((String)pair.getValue());
+                privaciesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
 
 
-
-
-        if( add_new != null){
+        if (add_new != null) {
             add_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -152,14 +156,14 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     int style;
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                    LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.add_playlist,   new LinearLayout(context), false);
+                    LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.add_playlist, new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
                     EditText display_name = dialogView.findViewById(R.id.display_name);
                     EditText description = dialogView.findViewById(R.id.description);
@@ -178,27 +182,27 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
 
-                            if( display_name.getText() != null && display_name.getText().toString().trim().length() > 0 ) {
+                            if (display_name.getText() != null && display_name.getText().toString().trim().length() > 0) {
 
                                 Playlist playlist = new Playlist();
                                 playlist.setDisplayName(display_name.getText().toString().trim());
-                                if( description.getText() != null && description.getText().toString().trim().length() > 0  ){
+                                if (description.getText() != null && description.getText().toString().trim().length() > 0) {
                                     playlist.setDescription(description.getText().toString().trim());
                                 }
                                 String idChannel = null;
-                                if( channelToSend != null ) {
+                                if (channelToSend != null) {
                                     Map.Entry<String, String> channelM = channelToSend.entrySet().iterator().next();
                                     idChannel = channelM.getValue();
-                                    if( idChannel.length() > 0)
+                                    if (idChannel.length() > 0)
                                         playlist.setVideoChannelId(idChannel);
                                 }
-                                Map.Entry<Integer, String> privacyM =  privacyToSend.entrySet().iterator().next();
+                                Map.Entry<Integer, String> privacyM = privacyToSend.entrySet().iterator().next();
                                 String label = privacyM.getValue();
                                 String idPrivacy = String.valueOf(privacyM.getKey());
-                                if( label.equals("Public") && (playlist.getVideoChannelId() == null || playlist.getVideoChannelId().equals(""))){
-                                    Toasty.error(context, context.getString(R.string.error_channel_mandatory),Toast.LENGTH_LONG).show();
-                                }else{
-                                    if( privacyToSend != null){
+                                if (label.equals("Public") && (playlist.getVideoChannelId() == null || playlist.getVideoChannelId().equals(""))) {
+                                    Toasty.error(context, context.getString(R.string.error_channel_mandatory), Toast.LENGTH_LONG).show();
+                                } else {
+                                    if (privacyToSend != null) {
                                         playlist.setPrivacy(privacyToSend);
                                     }
                                     //new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.CREATE_PLAYLIST, playlist, null, null, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -210,7 +214,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                                                 //.addFileToUpload(uri.toString().replace("file://",""), "videofile")
                                                 .addHeader("Authorization", "Bearer " + token)
                                                 .setNotificationConfig(uploadConfig)
-                                               // .addParameter("name", filename)
+                                                // .addParameter("name", filename)
                                                 .addParameter("videoChannelId", idChannel)
                                                 .addParameter("privacy", idPrivacy)
                                                 .addParameter("displayName", playlist.getDisplayName())
@@ -232,11 +236,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                                                     @Override
                                                     public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
                                                         DisplayPlaylistsFragment displayPlaylistsFragment;
-                                                        if( getActivity() == null)
+                                                        if (getActivity() == null)
                                                             return;
                                                         displayPlaylistsFragment = (DisplayPlaylistsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PLAYLISTS");
                                                         final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                                                        if( displayPlaylistsFragment != null) {
+                                                        if (displayPlaylistsFragment != null) {
                                                             ft.detach(displayPlaylistsFragment);
                                                             ft.attach(displayPlaylistsFragment);
                                                             ft.commit();
@@ -256,8 +260,8 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                                     dialog.dismiss();
                                     add_new.setEnabled(false);
                                 }
-                            }else{
-                                Toasty.error(context, context.getString(R.string.error_display_name),Toast.LENGTH_LONG).show();
+                            } else {
+                                Toasty.error(context, context.getString(R.string.error_display_name), Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -281,7 +285,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                             imm.hideSoftInputFromWindow(display_name.getWindowToken(), 0);
                         }
                     });
-                    if( alertDialog.getWindow() != null )
+                    if (alertDialog.getWindow() != null)
                         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     alertDialog.show();
                 }
@@ -291,10 +295,8 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -307,23 +309,21 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
-
 
 
     @Override
     public void onActionDone(ManagePlaylistsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
 
-        if( actionType == ManagePlaylistsAsyncTask.action.GET_PLAYLIST) {
+        if (actionType == ManagePlaylistsAsyncTask.action.GET_PLAYLIST) {
             if (apiResponse.getPlaylists() != null && apiResponse.getPlaylists().size() > 0) {
                 this.playlists.addAll(apiResponse.getPlaylists());
                 playlistAdapter.notifyDataSetChanged();
@@ -331,7 +331,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
             } else {
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
-        }else if( actionType == ManagePlaylistsAsyncTask.action.CREATE_PLAYLIST){
+        } else if (actionType == ManagePlaylistsAsyncTask.action.CREATE_PLAYLIST) {
             if (apiResponse.getPlaylists() != null && apiResponse.getPlaylists().size() > 0) {
                 Intent intent = new Intent(context, PlaylistsActivity.class);
                 Bundle b = new Bundle();
@@ -341,11 +341,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                 this.playlists.add(0, apiResponse.getPlaylists().get(0));
                 playlistAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
-            }else{
-                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             }
-        }else if( actionType == ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST){
-            if( this.playlists.size() == 0)
+        } else if (actionType == ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST) {
+            if (this.playlists.size() == 0)
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
     }
@@ -373,14 +373,14 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
         //Populate channels
         List<Account> accounts = apiResponse.getAccounts();
-        String[] channelName = new String[accounts.size()+1];
-        String[] channelId= new String[accounts.size()+1];
+        String[] channelName = new String[accounts.size() + 1];
+        String[] channelId = new String[accounts.size() + 1];
         int i = 1;
         channelName[0] = "";
         channelId[0] = "";
         channels = new HashMap<>();
-        for(Account account: accounts){
-            channels.put(account.getUsername(),account.getId());
+        for (Account account : accounts) {
+            channels.put(account.getUsername(), account.getId());
             channelName[i] = account.getUsername();
             channelId[i] = account.getId();
             i++;
@@ -446,10 +446,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         channelToSend = new HashMap<>();
-                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        channelToSend.put((String) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();

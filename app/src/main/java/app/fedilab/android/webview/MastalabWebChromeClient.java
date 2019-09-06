@@ -13,12 +13,15 @@ package app.fedilab.android.webview;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -40,73 +43,74 @@ import app.fedilab.android.R;
 
 public class MastalabWebChromeClient extends WebChromeClient implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
-        private FrameLayout videoViewContainer;
-        private WebChromeClient.CustomViewCallback videoViewCallback;
+    private FrameLayout videoViewContainer;
+    private WebChromeClient.CustomViewCallback videoViewCallback;
 
-        private ToggledFullscreenCallback toggledFullscreenCallback;
+    private ToggledFullscreenCallback toggledFullscreenCallback;
 
-        private WebView webView;
-        private View activityNonVideoView;
-        private ViewGroup activityVideoView;
-        private ProgressBar pbar;
-        private boolean isVideoFullscreen;
-        private Activity activity;
+    private WebView webView;
+    private View activityNonVideoView;
+    private ViewGroup activityVideoView;
+    private ProgressBar pbar;
+    private boolean isVideoFullscreen;
+    private Activity activity;
 
 
-        public interface ToggledFullscreenCallback {
-            void toggledFullscreen(boolean fullscreen);
-        }
+    public interface ToggledFullscreenCallback {
+        void toggledFullscreen(boolean fullscreen);
+    }
 
-        public MastalabWebChromeClient(Activity activity, WebView webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView){
-            this.activity = activity;
-            this.isVideoFullscreen = false;
-            this.webView = webView;
-            this.pbar = activity.findViewById(R.id.progress_bar);
-            this.activityNonVideoView = activityNonVideoView;
-            this.activityVideoView = activityVideoView;
-        }
+    public MastalabWebChromeClient(Activity activity, WebView webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView) {
+        this.activity = activity;
+        this.isVideoFullscreen = false;
+        this.webView = webView;
+        this.pbar = activity.findViewById(R.id.progress_bar);
+        this.activityNonVideoView = activityNonVideoView;
+        this.activityVideoView = activityVideoView;
+    }
 
-        @Override
-        public void onProgressChanged(WebView view, int progress) {
-            if( pbar != null){
-                if (progress < 100 && pbar.getVisibility() == ProgressBar.GONE) {
-                    pbar.setVisibility(ProgressBar.VISIBLE);
-                }
-                pbar.setProgress(progress);
-                if (progress == 100) {
-                    pbar.setVisibility(ProgressBar.GONE);
-                }
+    @Override
+    public void onProgressChanged(WebView view, int progress) {
+        if (pbar != null) {
+            if (progress < 100 && pbar.getVisibility() == ProgressBar.GONE) {
+                pbar.setVisibility(ProgressBar.VISIBLE);
+            }
+            pbar.setProgress(progress);
+            if (progress == 100) {
+                pbar.setVisibility(ProgressBar.GONE);
             }
         }
+    }
 
 
-        @Override
-        public void onReceivedIcon(WebView view, Bitmap icon) {
-            super.onReceivedIcon(view, icon);
-            LayoutInflater mInflater = LayoutInflater.from(activity);
-            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
-            if( actionBar != null){
-                View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar,   new LinearLayout(activity), false);
-                TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
-                webview_title.setText(view.getTitle());
-                ImageView webview_favicon = webview_actionbar.findViewById(R.id.webview_favicon);
-                if( icon != null)
-                    webview_favicon.setImageBitmap(icon);
-                actionBar.setCustomView(webview_actionbar);
-                actionBar.setDisplayShowCustomEnabled(true);
-            }else {
-                activity.setTitle(view.getTitle());
-            }
-
+    @Override
+    public void onReceivedIcon(WebView view, Bitmap icon) {
+        super.onReceivedIcon(view, icon);
+        LayoutInflater mInflater = LayoutInflater.from(activity);
+        ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+        if (actionBar != null) {
+            View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, new LinearLayout(activity), false);
+            TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
+            webview_title.setText(view.getTitle());
+            ImageView webview_favicon = webview_actionbar.findViewById(R.id.webview_favicon);
+            if (icon != null)
+                webview_favicon.setImageBitmap(icon);
+            actionBar.setCustomView(webview_actionbar);
+            actionBar.setDisplayShowCustomEnabled(true);
+        } else {
+            activity.setTitle(view.getTitle());
         }
 
-        //FULLSCREEN VIDEO
-        //Code from https://stackoverflow.com/a/16179544/3197259
+    }
 
-        /**
-         * Set a callback that will be fired when the video starts or finishes displaying using a custom view (typically full-screen)
-         * @param callback A VideoEnabledWebChromeClient.ToggledFullscreenCallback callback
-         */
+    //FULLSCREEN VIDEO
+    //Code from https://stackoverflow.com/a/16179544/3197259
+
+    /**
+     * Set a callback that will be fired when the video starts or finishes displaying using a custom view (typically full-screen)
+     *
+     * @param callback A VideoEnabledWebChromeClient.ToggledFullscreenCallback callback
+     */
     public void setOnToggledFullscreen(ToggledFullscreenCallback callback) {
         this.toggledFullscreenCallback = callback;
     }
@@ -114,7 +118,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     @Override
     public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
         if (view instanceof FrameLayout) {
-            if( ((AppCompatActivity) activity).getSupportActionBar() != null)
+            if (((AppCompatActivity) activity).getSupportActionBar() != null)
                 //noinspection ConstantConditions
                 ((AppCompatActivity) activity).getSupportActionBar().hide();
             // A video wants to be shown
@@ -171,14 +175,15 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     }
 
     // Available in API level 14+, deprecated in API level 18+
-    @Override @SuppressWarnings("deprecation")
+    @Override
+    @SuppressWarnings("deprecation")
     public void onShowCustomView(View view, int requestedOrientation, WebChromeClient.CustomViewCallback callback) {
         onShowCustomView(view, callback);
     }
 
     @Override
     public void onHideCustomView() {
-        if( ((AppCompatActivity) activity).getSupportActionBar() != null)
+        if (((AppCompatActivity) activity).getSupportActionBar() != null)
             //noinspection ConstantConditions
             ((AppCompatActivity) activity).getSupportActionBar().show();
         // This method should be manually called on video end in all cases because it's not always called automatically.

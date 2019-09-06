@@ -48,20 +48,20 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
     private API.searchType type;
     private String max_id;
 
-    public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
+    public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface) {
         this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearchInterface;
     }
 
-    public RetrieveSearchAsyncTask(Context context, String query, boolean tagsOnly, OnRetrieveSearchInterface onRetrieveSearchInterface){
+    public RetrieveSearchAsyncTask(Context context, String query, boolean tagsOnly, OnRetrieveSearchInterface onRetrieveSearchInterface) {
         this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearchInterface;
         this.tagsOnly = tagsOnly;
     }
 
-    public RetrieveSearchAsyncTask(Context context, String query, API.searchType searchType, String max_id, OnRetrieveSearchInterface onRetrieveSearchInterface){
+    public RetrieveSearchAsyncTask(Context context, String query, API.searchType searchType, String max_id, OnRetrieveSearchInterface onRetrieveSearchInterface) {
         this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearchInterface;
@@ -76,39 +76,39 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 API api = new API(this.contextReference.get());
                 String[] split = query.trim().split("@");
-                if( split.length > 1 ){
+                if (split.length > 1) {
 
-                   String domain;
-                   String username;
-                   if( split.length == 2){
-                       username = split[0];
-                       domain = split[1];
-                   }else{
-                       username = split[1];
-                       domain = split[2];
-                   }
-                   if( domain != null && username != null){
-                       InstanceNodeInfo node = api.getNodeInfo(domain);
-                       String url = null;
-                       if( node != null && node.getName() != null){
-                           switch (node.getName().trim()){
-                               case "MASTODON":
-                                   url = "https://" + domain + "/@" + username;
-                                   break;
-                               case "PEERTUBE":
-                                   url = "https://" + domain + "/accounts/" + username;
-                                   break;
-                               case "PIXELFED":
-                                   url = "https://" + domain + "/" + username;
-                                   break;
-                               case "GNU":
-                                   url = "https://" + domain + "/profile/" + username;
-                                   break;
-                           }
-                       }
-                       if( url != null)
-                           query = url;
-                   }
+                    String domain;
+                    String username;
+                    if (split.length == 2) {
+                        username = split[0];
+                        domain = split[1];
+                    } else {
+                        username = split[1];
+                        domain = split[2];
+                    }
+                    if (domain != null && username != null) {
+                        InstanceNodeInfo node = api.getNodeInfo(domain);
+                        String url = null;
+                        if (node != null && node.getName() != null) {
+                            switch (node.getName().trim()) {
+                                case "MASTODON":
+                                    url = "https://" + domain + "/@" + username;
+                                    break;
+                                case "PEERTUBE":
+                                    url = "https://" + domain + "/accounts/" + username;
+                                    break;
+                                case "PIXELFED":
+                                    url = "https://" + domain + "/" + username;
+                                    break;
+                                case "GNU":
+                                    url = "https://" + domain + "/profile/" + username;
+                                    break;
+                            }
+                        }
+                        if (url != null)
+                            query = url;
+                    }
 
                 }
 
@@ -141,7 +141,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                 GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
                 apiResponse = gnuapi.search(query);
             }
-        }else{
+        } else {
             API api = new API(this.contextReference.get());
             apiResponse = api.search2(query, type, max_id);
         }

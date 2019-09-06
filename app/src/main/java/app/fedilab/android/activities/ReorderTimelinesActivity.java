@@ -23,12 +23,14 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -89,7 +91,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private RelativeLayout undo_container;
     private TextView undo_message;
     private TextView undo_action;
-    private  List<ManageTimelines> timelines;
+    private List<ManageTimelines> timelines;
     private ReorderTabAdapter adapter;
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
@@ -102,7 +104,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -120,20 +122,20 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar_add,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar_add, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -145,9 +147,9 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                     finish();
                 }
             });
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 add_remote_instance.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 add_remote_instance.setVisibility(View.GONE);
             }
             add_remote_instance.setOnClickListener(new View.OnClickListener() {
@@ -168,39 +170,39 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                         public void onClick(DialogInterface dialog, int id) {
                             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                             String instanceName = instance_list.getText().toString().trim();
-                            new Thread(new Runnable(){
+                            new Thread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
-                                        if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
+                                        if (radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
-                                        else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
+                                        else if (radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
-                                        else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
+                                        else if (radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
-                                        }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
+                                        } else if (radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
-                                        }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                        } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
 
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 dialog.dismiss();
-                                                if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance) {
+                                                if (radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MASTODON");
-                                                }else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance) {
+                                                } else if (radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "PEERTUBE");
-                                                } else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
+                                                } else if (radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "PIXELFED");
-                                                } else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
+                                                } else if (radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MISSKEY");
-                                                }else  if( radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
+                                                } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "GNU");
                                                 }
-                                                if( timelines != null && adapter != null) {
+                                                if (timelines != null && adapter != null) {
                                                     List<RemoteInstance> instance = new InstancesDAO(ReorderTimelinesActivity.this, db).getInstanceByName(instanceName);
-                                                    if( instance != null && instance.size() > 0 ) {
+                                                    if (instance != null && instance.size() > 0) {
                                                         ManageTimelines manageTimelines = new ManageTimelines();
                                                         manageTimelines.setRemoteInstance(instance.get(0));
                                                         manageTimelines.setPosition(timelines.size());
@@ -235,13 +237,13 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                             imm.hideSoftInputFromWindow(instance_list.getWindowToken(), 0);
                         }
                     });
-                    if( alertDialog.getWindow() != null )
+                    if (alertDialog.getWindow() != null)
                         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     alertDialog.show();
 
                     instance_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String oldSearch = parent.getItemAtPosition(position).toString().trim();
                         }
                     });
@@ -259,7 +261,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                         public void afterTextChanged(Editable s) {
                             Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
                             Matcher matcher = host.matcher(s.toString().trim());
-                            if( s.toString().trim().length() == 0 || !matcher.find()) {
+                            if (s.toString().trim().length() == 0 || !matcher.find()) {
                                 alertDialog.getButton(
                                         AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                             } else {
@@ -275,7 +277,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                 parameters.put("name", String.valueOf(true));
                                 isLoadingInstance = true;
 
-                                if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
+                                if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -291,13 +293,13 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                                             if (jsonArray != null) {
                                                                 int length = 0;
                                                                 for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
+                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
                                                                         length++;
                                                                 }
                                                                 instances = new String[length];
                                                                 int j = 0;
                                                                 for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
+                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
                                                                         instances[j] = jsonArray.getJSONObject(i).get("name").toString();
                                                                         j++;
                                                                     }
@@ -334,13 +336,12 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 }
             });
             toolbar_title.setText(R.string.action_reorder_timeline);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, ReorderTimelinesActivity.this);
             }
         }
         setContentView(R.layout.activity_reorder_tabs);
-
 
 
         updated = false;
@@ -373,7 +374,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         if (theme == Helper.THEME_LIGHT)
             undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
-        switch (manageTimelines.getType()){
+        switch (manageTimelines.getType()) {
             case TAG:
                 undo_message.setText(R.string.reorder_tag_removed);
                 break;
@@ -390,7 +391,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
             public void run() {
                 undo_container.setVisibility(View.GONE);
                 SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                switch (manageTimelines.getType()){
+                switch (manageTimelines.getType()) {
                     case TAG:
                         new SearchDAO(getApplicationContext(), db).remove(manageTimelines.getTagTimeline().getName());
                         new TimelinesDAO(getApplicationContext(), db).remove(manageTimelines);
@@ -401,7 +402,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                         break;
                     case LIST:
                         timeline = manageTimelines;
-                        new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST,null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST, null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         new TimelinesDAO(getApplicationContext(), db).remove(timeline);
                         break;
                 }
@@ -422,9 +423,9 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        if( updated ) {
+        if (updated) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.putExtra(Helper.INTENT_ACTION, Helper.REFRESH_TIMELINE);
             startActivity(intent);

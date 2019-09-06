@@ -20,12 +20,16 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +70,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
         context = getContext();
 
-         lv_status = rootView.findViewById(R.id.lv_status);
+        lv_status = rootView.findViewById(R.id.lv_status);
 
         mainLoader = rootView.findViewById(R.id.loader);
         textviewNoAction = rootView.findViewById(R.id.no_action);
@@ -78,8 +82,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
 
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -99,20 +102,21 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         FloatingActionButton delete_all = null;
         try {
             delete_all = ((MainActivity) context).findViewById(R.id.delete_all);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         final boolean isOnWifi = Helper.isOnWIFI(context);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         statuses = apiResponse.getStatuses();
-        if( statuses != null && statuses.size() > 0) {
+        if (statuses != null && statuses.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
             statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             lv_status.setLayoutManager(mLayoutManager);
-        }else {
+        } else {
             textviewNoAction.setVisibility(View.VISIBLE);
         }
 
-        if( delete_all != null)
+        if (delete_all != null)
             delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -121,9 +125,9 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
                     int style;
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(context, style);

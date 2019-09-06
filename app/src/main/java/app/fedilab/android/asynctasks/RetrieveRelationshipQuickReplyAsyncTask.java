@@ -39,7 +39,7 @@ public class RetrieveRelationshipQuickReplyAsyncTask extends AsyncTask<Void, Voi
     private Error error;
     private WeakReference<Context> contextReference;
 
-    public RetrieveRelationshipQuickReplyAsyncTask(Context context, app.fedilab.android.client.Entities.Status status, OnRetrieveRelationshipQuickReplyInterface onRetrieveRelationshipQuickReplyInterface){
+    public RetrieveRelationshipQuickReplyAsyncTask(Context context, app.fedilab.android.client.Entities.Status status, OnRetrieveRelationshipQuickReplyInterface onRetrieveRelationshipQuickReplyInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveRelationshipQuickReplyInterface;
         this.status = status;
@@ -50,7 +50,7 @@ public class RetrieveRelationshipQuickReplyAsyncTask extends AsyncTask<Void, Voi
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             API api = new API(this.contextReference.get());
-            relationship = api.getRelationship(status.getReblog()!=null?status.getReblog().getAccount().getId():status.getAccount().getId());
+            relationship = api.getRelationship(status.getReblog() != null ? status.getReblog().getAccount().getId() : status.getAccount().getId());
             error = api.getError();
         }
         return null;

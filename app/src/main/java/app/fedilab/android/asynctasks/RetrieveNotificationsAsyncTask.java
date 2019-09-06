@@ -29,7 +29,6 @@ import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 
 
-
 /**
  * Created by Thomas on 28/04/2017.
  * Retrieves notifications on the instance
@@ -47,7 +46,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private boolean display;
     private DisplayNotificationsFragment.Type type;
 
-    public RetrieveNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, boolean display, Account account, String max_id, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, boolean display, Account account, String max_id, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
@@ -60,7 +59,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             API api;
             if (account == null) {
                 api = new API(this.contextReference.get());
@@ -73,7 +72,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
                 api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
                 apiResponse = api.getNotificationsSince(type, max_id, display);
             }
-        }else{
+        } else {
             GNUAPI gnuapi;
             if (account == null) {
                 gnuapi = new GNUAPI(this.contextReference.get());

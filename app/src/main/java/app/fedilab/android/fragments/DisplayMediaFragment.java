@@ -20,10 +20,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +44,6 @@ import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
-
 
 
 /**
@@ -66,7 +67,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     private ImageAdapter gridAdaper;
     private RecyclerView gridview;
 
-    public DisplayMediaFragment(){
+    public DisplayMediaFragment() {
     }
 
     @Override
@@ -85,9 +86,9 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         firstLoad = true;
         assert context != null;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        mainLoader =  rootView.findViewById(R.id.loader);
+        mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
-        textviewNoAction =  rootView.findViewById(R.id.no_action);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         if (bundle != null) {
@@ -126,14 +127,14 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         });
 
 
-        if( context != null) {
-            asyncTask = new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.USER, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayMediaFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else {
+        if (context != null) {
+            asyncTask = new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.USER, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayMediaFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if( context != null){
-                        asyncTask = new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.USER, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayMediaFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    if (context != null) {
+                        asyncTask = new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.USER, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayMediaFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }
             }, 500);
@@ -144,16 +145,14 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
 
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
 
-
     @Override
     public void onDestroyView() {
-        if(gridview  != null) {
+        if (gridview != null) {
             gridview.setAdapter(null);
         }
         super.onDestroyView();
@@ -166,12 +165,11 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     }
 
     @Override
-    public void onDestroy (){
+    public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
 
 
     @Override
@@ -179,29 +177,29 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if(apiResponse == null || apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            if( apiResponse != null && apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse == null || apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+            if (apiResponse != null && apiResponse.getError() != null && apiResponse.getError().getError() != null)
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             flag_loading = false;
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
-        if( this.statuses == null)
+        if (this.statuses == null)
             this.statuses = new ArrayList<>();
         int previousPosition = this.statuses.size();
-        flag_loading = (max_id == null );
-        if( firstLoad && (statuses == null || statuses.size() == 0))
+        flag_loading = (max_id == null);
+        if (firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
         List<Status> convertedStatuses = new ArrayList<>();
-        if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
-            for( Status status: apiResponse.getStatuses()){
-                if( status.getMedia_attachments() != null ) {
+        if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0) {
+            for (Status status : apiResponse.getStatuses()) {
+                if (status.getMedia_attachments() != null) {
                     String statusSerialized = Helper.statusToStringStorage(status);
                     for (Attachment attachment : status.getMedia_attachments()) {
                         Status newStatus = Helper.restoreStatusFromString(statusSerialized);
@@ -213,7 +211,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
                 }
             }
         }
-        if(  convertedStatuses.size() > 0) {
+        if (convertedStatuses.size() > 0) {
             this.statuses.addAll(convertedStatuses);
             gridAdaper.notifyItemRangeInserted(previousPosition, this.statuses.size());
         }

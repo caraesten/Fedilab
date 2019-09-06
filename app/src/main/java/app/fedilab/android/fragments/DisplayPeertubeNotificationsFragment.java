@@ -20,12 +20,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +53,7 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeNotificationsInterface;
  * Created by Thomas on 24/01/2019.
  * Fragment to display peertube notifications
  */
-public class DisplayPeertubeNotificationsFragment extends Fragment implements  OnRetrievePeertubeNotificationsInterface {
-
+public class DisplayPeertubeNotificationsFragment extends Fragment implements OnRetrievePeertubeNotificationsInterface {
 
 
     private boolean flag_loading;
@@ -84,7 +85,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
     public static int NEW_FOLLOW = 10;
     public static int COMMENT_MENTION = 11;
 
-    public DisplayPeertubeNotificationsFragment(){
+    public DisplayPeertubeNotificationsFragment() {
     }
 
     @Override
@@ -110,22 +111,21 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
         boolean isOnWifi = Helper.isOnWIFI(context);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context != null ? Helper.getLiveInstance(context) : null);
         notificationsListAdapter = new PeertubeNotificationsListAdapter(this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
         lv_notifications.setLayoutManager(mLayoutManager);
         lv_notifications.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context,  null,  max_id,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null, max_id, DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -145,15 +145,16 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
                 swiped = true;
                 try {
                     ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
-                if( context != null) {
+                } catch (Exception ignored) {
+                }
+                if (context != null) {
                     asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null, max_id, DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -173,27 +174,24 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
                 swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
-        if( context != null)
-            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (context != null)
+            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null, max_id, DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if( context != null)
-                        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    if (context != null)
+                        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null, max_id, DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }, 500);
         return rootView;
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override
@@ -204,15 +202,14 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
 
     }
 
 
-
-    public void scrollToTop(){
-        if( lv_notifications != null)
+    public void scrollToTop() {
+        if (lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (this.notifications != null && this.notifications.size() > 0) {
@@ -220,31 +217,26 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
         }
     }
 
-    public void refreshAll(){
-        if( context == null)
+    public void refreshAll() {
+        if (context == null)
             return;
         max_id = null;
         firstLoad = true;
         flag_loading = true;
         swiped = true;
-        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  null,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null, null, DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
-
-
-
-
-
 
 
     /**
      * Records the id of the notification only if its greater than the previous one.
+     *
      * @param notificationId String current notification id to check
      */
-    private void updateNotificationLastId(String notificationId){
+    private void updateNotificationLastId(String notificationId) {
 
         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-        if( lastNotif == null || notificationId.compareTo(lastNotif) > 0){
+        if (lastNotif == null || notificationId.compareTo(lastNotif) > 0) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
             editor.apply();
@@ -256,8 +248,8 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
@@ -268,11 +260,11 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
         max_id = apiResponse.getMax_id();
         List<PeertubeNotification> notifications = apiResponse.getPeertubeNotifications();
 
-        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
+        if (!swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( swiped ){
+        if (swiped) {
             if (previousPosition > 0) {
                 for (int i = 0; i < previousPosition; i++) {
                     this.notifications.remove(0);
@@ -282,30 +274,31 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements  O
             swiped = false;
         }
 
-        if( notifications != null && notifications.size() > 0) {
-            for(PeertubeNotification tmpNotification: notifications){
+        if (notifications != null && notifications.size() > 0) {
+            for (PeertubeNotification tmpNotification : notifications) {
 
                 try {
                     ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
                 this.notifications.add(tmpNotification);
             }
-            if( firstLoad) {
+            if (firstLoad) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0)
+                if (MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0)
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                 updateNotificationLastId(notifications.get(0).getId());
             }
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
-        }else {
-            if( firstLoad)
+        } else {
+            if (firstLoad)
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
-        if( firstLoad )
-            ((MainActivity)context).updateNotifCounter();
+        if (firstLoad)
+            ((MainActivity) context).updateNotifCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
         //The initial call comes from a classic tab refresh
-        flag_loading = (max_id == null );
+        flag_loading = (max_id == null);
     }
 }

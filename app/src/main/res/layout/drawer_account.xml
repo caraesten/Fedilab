@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -23,12 +22,14 @@
     android:layout_marginBottom="5dp"
     android:id="@+id/main_container"
     android:orientation="horizontal">
+
     <ImageView
         android:layout_gravity="center_horizontal"
         android:id="@+id/account_pp"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:contentDescription="@string/profile_picture"/>
+        android:contentDescription="@string/profile_picture" />
+
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
@@ -37,10 +38,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/account_container"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/account_dn"
                 android:maxLines="1"
@@ -48,14 +51,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
             <TextView
                 android:id="@+id/account_un"
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:textSize="14sp"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
         <TextView
             android:layout_marginTop="10dp"
             android:visibility="gone"
@@ -64,6 +68,7 @@
             android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <LinearLayout
             android:id="@+id/account_info"
             android:layout_marginTop="10dp"
@@ -71,57 +76,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:baselineAligned="false">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:text="@string/toots"
                         android:maxLines="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/account_sc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:maxLines="1"
                         android:text="@string/following"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/account_fgc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:maxLines="1"
                         android:text="@string/followers"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/account_frc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:animateLayoutChanges="true"
                 android:id="@+id/account_ds"
@@ -131,6 +147,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/account_follow_request"
         android:textColor="?attr/colorAccent"
@@ -140,13 +157,14 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:layout_gravity="center"
-        android:gravity="center"
-        />
+        android:gravity="center" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_follow"
             android:visibility="gone"
@@ -157,8 +175,8 @@
             android:scaleType="fitXY"
             android:layout_gravity="center"
             android:gravity="center"
-            android:contentDescription="@string/action_follow"
-            />
+            android:contentDescription="@string/action_follow" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_mute_notification"
             android:visibility="gone"
@@ -169,8 +187,7 @@
             android:scaleType="fitXY"
             android:layout_gravity="center"
             android:gravity="center"
-            android:contentDescription="@string/action_mute"
-            />
+            android:contentDescription="@string/action_mute" />
     </LinearLayout>
 
 </LinearLayout>

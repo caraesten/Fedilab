@@ -45,7 +45,9 @@ public class InstanceNodeInfo {
         this.openRegistrations = openRegistrations;
     }
 
-    public boolean isConnectionError() { return connectionError; }
+    public boolean isConnectionError() {
+        return connectionError;
+    }
 
     public void setConnectionError(boolean connectionError) {
         this.connectionError = connectionError;

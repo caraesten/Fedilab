@@ -109,9 +109,8 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
         mLayoutManager = new LinearLayoutManager(context);
         lv_admin_accounts.setLayoutManager(mLayoutManager);
         lv_admin_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
@@ -157,7 +156,7 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -190,17 +189,15 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
     }
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     /**
      * Refresh accounts in list
      */
-    public void refreshFilter(){
+    public void refreshFilter() {
         accountsAdminListAdapter.notifyDataSetChanged();
     }
 
@@ -212,12 +209,12 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
-    public void scrollToTop(){
-        if( lv_admin_accounts != null)
+    public void scrollToTop() {
+        if (lv_admin_accounts != null)
             lv_admin_accounts.setAdapter(accountsAdminListAdapter);
     }
 
@@ -226,32 +223,32 @@ public class DisplayAdminAccountsFragment extends Fragment implements OnAdminAct
     public void onAdminAction(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
+        flag_loading = (apiResponse.getMax_id() == null);
         List<AccountAdmin> accountAdmins = apiResponse.getAccountAdmins();
 
-        if( !swiped && firstLoad && (accountAdmins == null || accountAdmins.size() == 0))
+        if (!swiped && firstLoad && (accountAdmins == null || accountAdmins.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
         max_id = apiResponse.getMax_id();
 
-        if( swiped ){
+        if (swiped) {
             accountsAdminListAdapter = new AccountsAdminListAdapter(this.accountAdmins);
             lv_admin_accounts.setAdapter(accountsAdminListAdapter);
             swiped = false;
         }
-        if( accountAdmins != null && accountAdmins.size() > 0) {
+        if (accountAdmins != null && accountAdmins.size() > 0) {
             int currentPosition = this.accountAdmins.size();
             this.accountAdmins.addAll(accountAdmins);
-            accountsAdminListAdapter.notifyItemRangeChanged(currentPosition,accountAdmins.size());
+            accountsAdminListAdapter.notifyItemRangeChanged(currentPosition, accountAdmins.size());
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;

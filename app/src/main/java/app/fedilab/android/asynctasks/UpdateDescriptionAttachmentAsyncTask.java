@@ -39,7 +39,7 @@ public class UpdateDescriptionAttachmentAsyncTask extends AsyncTask<Void, Void, 
     private API api;
     private WeakReference<Context> contextReference;
 
-    public UpdateDescriptionAttachmentAsyncTask(Context context, String mediaId, String description, Account account, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
+    public UpdateDescriptionAttachmentAsyncTask(Context context, String mediaId, String description, Account account, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveAttachmentInterface;
         this.description = description;
@@ -49,7 +49,7 @@ public class UpdateDescriptionAttachmentAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( account == null)
+        if (account == null)
             api = new API(this.contextReference.get());
         else
             api = new API(this.contextReference.get(), account.getInstance(), account.getToken());

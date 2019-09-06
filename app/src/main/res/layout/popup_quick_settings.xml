@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,8 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeContainer"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -60,12 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="horizontal">
+
         <TextView
             android:layout_gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="@string/settings_popup_notification"/>
+            android:text="@string/settings_popup_notification" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/set_push_notification"
             android:layout_gravity="start|center_vertical"
@@ -74,8 +74,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:checked="true"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
 

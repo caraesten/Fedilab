@@ -80,7 +80,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -96,7 +96,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
 
         setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -111,12 +111,12 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
                 }
             });
             toolbar_title.setText(R.string.sign_up);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, MastodonShareRegisterActivity.this);
             }
         }
-        if( this.getIntent() == null || this.getIntent().getData() == null){
+        if (this.getIntent() == null || this.getIntent().getData() == null) {
             Intent mainActivity = new Intent(MastodonShareRegisterActivity.this, MastodonRegisterActivity.class);
             startActivity(mainActivity);
             finish();
@@ -125,12 +125,12 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
 
         assert data != null;
         String[] splitURL = data.toString().split("registration_helper");
-        if( splitURL.length < 2 || splitURL[1] == null || splitURL[1].length() == 1){
+        if (splitURL.length < 2 || splitURL[1] == null || splitURL[1].length() == 1) {
             Intent mainActivity = new Intent(MastodonShareRegisterActivity.this, MastodonRegisterActivity.class);
             startActivity(mainActivity);
             finish();
         }
-        String instance = splitURL[1].replace("/","");
+        String instance = splitURL[1].replace("/", "");
         pickupInstance(instance);
 
 
@@ -148,26 +148,26 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         CheckBox agreement = findViewById(R.id.agreement);
         error_message = findViewById(R.id.error_message);
 
-        signup.setOnClickListener(view->{
+        signup.setOnClickListener(view -> {
             error_message.setVisibility(View.GONE);
-            if( username.getText().toString().trim().length() == 0 || email.getText().toString().trim().length() == 0 ||
-                    password.getText().toString().trim().length() == 0 ||  password_confirm.getText().toString().trim().length() == 0 || !agreement.isChecked()){
+            if (username.getText().toString().trim().length() == 0 || email.getText().toString().trim().length() == 0 ||
+                    password.getText().toString().trim().length() == 0 || password_confirm.getText().toString().trim().length() == 0 || !agreement.isChecked()) {
                 Toasty.error(getApplicationContext(), getString(R.string.all_field_filled)).show();
                 return;
             }
-            if(!password.getText().toString().trim().equals(password_confirm.getText().toString().trim())){
+            if (!password.getText().toString().trim().equals(password_confirm.getText().toString().trim())) {
                 Toasty.error(getApplicationContext(), getString(R.string.password_error)).show();
                 return;
             }
-            if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
                 Toasty.error(getApplicationContext(), getString(R.string.email_error)).show();
                 return;
             }
-            if(password.getText().toString().trim().length() < 8 ){
+            if (password.getText().toString().trim().length() < 8) {
                 Toasty.error(getApplicationContext(), getString(R.string.password_too_short)).show();
                 return;
             }
-            if(username.getText().toString().matches("[a-zA-Z0-9_]")){
+            if (username.getText().toString().matches("[a-zA-Z0-9_]")) {
                 Toasty.error(getApplicationContext(), getString(R.string.username_error)).show();
                 return;
             }
@@ -184,13 +184,13 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
     }
 
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
-        if( apiResponse.getError() != null ){
+        if (apiResponse.getError() != null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }
@@ -205,7 +205,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
 
     }
 
-    public void pickupInstance(String instance){
+    public void pickupInstance(String instance) {
 
         checkInstance(MastodonShareRegisterActivity.this, instance);
 
@@ -223,35 +223,35 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         String tos = getString(R.string.tos);
         String serverrules = getString(R.string.server_rules);
         String content_agreement = getString(R.string.agreement_check,
-                "<a href='https://" + instance + "/about/more' >"+serverrules +"</a>",
-                 "<a href='https://" + instance + "/terms' >"+tos +"</a>"
-                );
+                "<a href='https://" + instance + "/about/more' >" + serverrules + "</a>",
+                "<a href='https://" + instance + "/terms' >" + tos + "</a>"
+        );
         agreement_text.setMovementMethod(LinkMovementMethod.getInstance());
         agreement_text.setText(Html.fromHtml(content_agreement));
     }
 
 
-    private void checkInstance(Context context, String instance){
+    private void checkInstance(Context context, String instance) {
         new checkRegistration(context, instance).executeOnExecutor(THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
+        if (apiResponse.getError() != null) {
             String errorMessage;
-            if( apiResponse.getError().getError() != null){
-                try{
+            if (apiResponse.getError().getError() != null) {
+                try {
                     String[] resp = apiResponse.getError().getError().split(":");
-                    if( resp.length == 2)
+                    if (resp.length == 2)
                         errorMessage = apiResponse.getError().getError().split(":")[1];
-                    else if( resp.length == 3)
+                    else if (resp.length == 3)
                         errorMessage = apiResponse.getError().getError().split(":")[2];
                     else
                         errorMessage = getString(R.string.toast_error);
-                }catch (Exception e){
+                } catch (Exception e) {
                     errorMessage = getString(R.string.toast_error);
                 }
-            }else {
+            } else {
                 errorMessage = getString(R.string.toast_error);
             }
             error_message.setText(errorMessage);
@@ -264,16 +264,16 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MastodonShareRegisterActivity.this, style);
         dialogBuilder.setCancelable(false);
         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 finish();
             }
@@ -291,7 +291,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         private String instance;
         private WeakReference<Context> weakReference;
 
-        checkRegistration(Context context, String instance){
+        checkRegistration(Context context, String instance) {
             this.instance = instance;
             this.weakReference = new WeakReference<>(context);
         }
@@ -304,7 +304,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     java.util.Scanner s = new java.util.Scanner(connection.getInputStream()).useDelimiter("\\A");
-                    response =  s.hasNext() ? s.next() : "";
+                    response = s.hasNext() ? s.next() : "";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -316,9 +316,9 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         protected void onPostExecute(String result) {
 
 
-            if( result != null && result.contains("invite_request_attributes")){
-                TextView invitation = ((MastodonShareRegisterActivity)(weakReference.get())).findViewById(R.id.invitation);
-                if( invitation != null){
+            if (result != null && result.contains("invite_request_attributes")) {
+                TextView invitation = ((MastodonShareRegisterActivity) (weakReference.get())).findViewById(R.id.invitation);
+                if (invitation != null) {
                     invitation.setVisibility(View.VISIBLE);
                 }
             }

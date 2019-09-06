@@ -23,5 +23,6 @@ import app.fedilab.android.client.APIResponse;
  */
 public interface OnRetrieveSearcAccountshInterface {
     void onRetrieveSearchAccounts(APIResponse apiResponse);
+
     void onRetrieveContact(APIResponse apiResponse);
 }

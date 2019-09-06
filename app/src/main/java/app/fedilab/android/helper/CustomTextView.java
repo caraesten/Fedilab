@@ -14,14 +14,17 @@ package app.fedilab.android.helper;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+
 import androidx.annotation.DimenRes;
 import androidx.annotation.Px;
 import androidx.appcompat.widget.AppCompatTextView;
+
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 
@@ -39,6 +42,7 @@ public class CustomTextView extends AppCompatTextView {
 
     private float emojiSize;
     private boolean emoji;
+
     public CustomTextView(Context context) {
         super(context);
     }
@@ -67,25 +71,29 @@ public class CustomTextView extends AppCompatTextView {
 
     @Override
     public void setText(final CharSequence rawText, final BufferType type) {
-        if( emoji) {
+        if (emoji) {
             final CharSequence text = rawText == null ? "" : rawText;
             final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
             final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
             final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
             EmojiManager.getInstance().replaceWithImages(getContext(), spannableStringBuilder, emojiSize, defaultEmojiSize);
             super.setText(spannableStringBuilder, type);
-        }else {
+        } else {
             super.setText(rawText, type);
         }
 
     }
 
-    /** sets the emoji size in pixels and automatically invalidates the text and renders it with the new size */
+    /**
+     * sets the emoji size in pixels and automatically invalidates the text and renders it with the new size
+     */
     public final void setEmojiSize(@Px final int pixels) {
         setEmojiSize(pixels, true);
     }
 
-    /** sets the emoji size in pixels and automatically invalidates the text and renders it with the new size when {@code shouldInvalidate} is true */
+    /**
+     * sets the emoji size in pixels and automatically invalidates the text and renders it with the new size when {@code shouldInvalidate} is true
+     */
     public final void setEmojiSize(@Px final int pixels, final boolean shouldInvalidate) {
         emojiSize = pixels;
 
@@ -94,12 +102,16 @@ public class CustomTextView extends AppCompatTextView {
         }
     }
 
-    /** sets the emoji size in pixels with the provided resource and automatically invalidates the text and renders it with the new size */
+    /**
+     * sets the emoji size in pixels with the provided resource and automatically invalidates the text and renders it with the new size
+     */
     public final void setEmojiSizeRes(@DimenRes final int res) {
         setEmojiSizeRes(res, true);
     }
 
-    /** sets the emoji size in pixels with the provided resource and invalidates the text and renders it with the new size when {@code shouldInvalidate} is true */
+    /**
+     * sets the emoji size in pixels with the provided resource and invalidates the text and renders it with the new size when {@code shouldInvalidate} is true
+     */
     public final void setEmojiSizeRes(@DimenRes final int res, final boolean shouldInvalidate) {
         setEmojiSize(getResources().getDimensionPixelSize(res), shouldInvalidate);
     }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -20,6 +19,7 @@
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ScrollView
         android:id="@+id/stats_container"
         android:layout_width="match_parent"
@@ -33,16 +33,19 @@
             android:paddingEnd="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
                     android:text="@string/display_charts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <ImageButton
                     android:id="@+id/charts"
                     android:layout_marginStart="15dp"
@@ -59,6 +62,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
@@ -81,15 +85,18 @@
                     android:layout_weight="1"
                     android:background="?colorAccent" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/first_notification_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -97,15 +104,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/last_notification_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -113,15 +123,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/frequency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -135,6 +148,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
@@ -157,15 +171,18 @@
                     android:layout_weight="1"
                     android:background="?colorAccent" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/total_notifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -173,15 +190,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/number_boosts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -189,15 +209,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/number_favourites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -205,15 +228,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/number_mentions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -221,15 +247,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/number_follows"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -237,15 +266,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_weight="2"
                     android:text="@string/number_polls"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_weight="1"
                     android:id="@+id/number_polls"
@@ -261,8 +293,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

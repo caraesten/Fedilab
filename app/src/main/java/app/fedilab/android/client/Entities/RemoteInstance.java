@@ -34,7 +34,8 @@ public class RemoteInstance implements Parcelable {
     private List<String> tags;
     private String filteredWith;
 
-    public RemoteInstance(){}
+    public RemoteInstance() {
+    }
 
 
     public String getHost() {

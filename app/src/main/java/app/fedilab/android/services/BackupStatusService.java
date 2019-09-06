@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.Nullable;
 
 import android.os.SystemClock;
@@ -60,6 +61,7 @@ public class BackupStatusService extends IntentService {
 
 
     private static int instanceRunning = 0;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -69,11 +71,11 @@ public class BackupStatusService extends IntentService {
     public BackupStatusService(String name) {
         super(name);
     }
+
     @SuppressWarnings("unused")
     public BackupStatusService() {
         super("BackupStatusService");
     }
-
 
 
     public void onCreate() {
@@ -83,14 +85,14 @@ public class BackupStatusService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if( instanceRunning == 0 ){
+        if (instanceRunning == 0) {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
                     Toasty.info(getApplicationContext(), getString(R.string.data_export_start), Toast.LENGTH_LONG).show();
                 }
             });
-        }else {
+        } else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -120,11 +122,11 @@ public class BackupStatusService extends IntentService {
                 if (statuses.size() > 0)
                     backupStatus.addAll(statuses);
                 SystemClock.sleep(500);
-            }while (max_id != null);
+            } while (max_id != null);
 
-            String fileName = account.getAcct()+"@"+account.getInstance()+ Helper.dateFileToString(getApplicationContext(), new Date())+".csv";
+            String fileName = account.getAcct() + "@" + account.getInstance() + Helper.dateFileToString(getApplicationContext(), new Date()) + ".csv";
             String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-            fullPath = filePath+"/"+fileName;
+            fullPath = filePath + "/" + fileName;
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), "UTF-8"));
             StringBuilder builder = new StringBuilder();
             builder.append("id").append(',');
@@ -142,9 +144,9 @@ public class BackupStatusService extends IntentService {
             builder.append("visibility").append(',');
             builder.append("media_attachments");
             builder.append('\n');
-            for( Status status: backupStatus){
+            for (Status status : backupStatus) {
                 //excludes reblog
-                if( status.getReblog() != null){
+                if (status.getReblog() != null) {
                     statusToBackUp = statusToBackUp - 1;
                     continue;
                 }
@@ -160,20 +162,20 @@ public class BackupStatusService extends IntentService {
                 else
                     //noinspection deprecation
                     content = Html.fromHtml(status.getContent()).toString();
-                builder.append("\"").append(content.replace("\"", "'").replace("\n"," ")).append("\"").append(',');
+                builder.append("\"").append(content.replace("\"", "'").replace("\n", " ")).append("\"").append(',');
                 builder.append("\"").append(Helper.shortDateTime(getApplicationContext(), status.getCreated_at())).append("\"").append(',');
                 builder.append("\"").append(String.valueOf(status.getReblogs_count())).append("\"").append(',');
                 builder.append("\"").append(String.valueOf(status.getFavourites_count())).append("\"").append(',');
                 builder.append("\"").append(String.valueOf(status.isSensitive())).append("\"").append(',');
-                builder.append("\"").append(status.getSpoiler_text() !=null?status.getSpoiler_text():"").append("\"").append(',');
+                builder.append("\"").append(status.getSpoiler_text() != null ? status.getSpoiler_text() : "").append("\"").append(',');
                 builder.append("\"").append(status.getVisibility()).append("\"").append(',');
-                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
+                if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
                     builder.append("\"");
-                    for(Attachment attachment: status.getMedia_attachments()){
+                    for (Attachment attachment : status.getMedia_attachments()) {
                         builder.append(attachment.getUrl()).append(" ");
                     }
                     builder.append("\"");
-                }else {
+                } else {
                     builder.append("\"\"");
                 }
                 builder.append('\n');
@@ -187,7 +189,7 @@ public class BackupStatusService extends IntentService {
             intentOpen.setDataAndType(uri, "text/csv");
             String title = getString(R.string.data_export_toots, account.getAcct());
             Helper.notify_user(getApplicationContext(), account, intentOpen, BitmapFactory.decodeResource(getResources(),
-                    R.drawable.mastodonlogo),Helper.NotifType.BACKUP, title, message);
+                    R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
         } catch (Exception e) {
             e.printStackTrace();
             message = getString(R.string.data_export_error, account.getAcct());

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -23,6 +22,7 @@
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:orientation="vertical">
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/search_tabLayout"
         android:layout_width="match_parent"
@@ -30,12 +30,11 @@
         app:tabSelectedTextColor="?attr/colorAccent"
         app:tabTextColor="?attr/textColor"
         app:tabMode="fixed"
-        app:tabGravity="fill"
-        />
+        app:tabGravity="fill" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/search_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </LinearLayout>

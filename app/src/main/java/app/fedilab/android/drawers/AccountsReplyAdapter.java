@@ -16,7 +16,9 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,19 +42,19 @@ import app.fedilab.android.activities.TootActivity;
  * Created by Thomas on 25/10/2017.
  * Adapter for accounts when replying
  */
-public class AccountsReplyAdapter extends BaseAdapter{
+public class AccountsReplyAdapter extends BaseAdapter {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
     private boolean[] checked;
     private Context context;
 
-    public AccountsReplyAdapter(List<Account> accounts, boolean[] checked){
+    public AccountsReplyAdapter(List<Account> accounts, boolean[] checked) {
         this.accounts = accounts;
         this.checked = checked;
     }
 
-    public AccountsReplyAdapter(List<Account> accounts, List<Boolean> checked){
+    public AccountsReplyAdapter(List<Account> accounts, List<Boolean> checked) {
         this.accounts = accounts;
         this.checked = new boolean[checked.size()];
         int index = 0;
@@ -75,7 +77,6 @@ public class AccountsReplyAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
-
 
 
     @NonNull
@@ -101,9 +102,10 @@ public class AccountsReplyAdapter extends BaseAdapter{
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 try {
-                    ((TootActivity) context).changeAccountReply(isChecked, "@"+account.getAcct());
+                    ((TootActivity) context).changeAccountReply(isChecked, "@" + account.getAcct());
                     checked[position] = isChecked;
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         });
         holder.checkbox.setChecked(checked[position]);
@@ -120,8 +122,6 @@ public class AccountsReplyAdapter extends BaseAdapter{
                 .into(holder.account_pp);
         return convertView;
     }
-
-
 
 
     private class ViewHolder {

@@ -33,27 +33,24 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 public class PostPeertubeAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
-
     private APIResponse apiResponse;
     private OnRetrievePeertubeInterface listener;
     private WeakReference<Context> contextReference;
     private Peertube peertube;
 
 
-
-    public PostPeertubeAsyncTask(Context context, Peertube peertube, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+    public PostPeertubeAsyncTask(Context context, Peertube peertube, OnRetrievePeertubeInterface onRetrievePeertubeInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrievePeertubeInterface;
         this.peertube = peertube;
     }
 
 
-
     @Override
     protected Void doInBackground(Void... params) {
         PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
         apiResponse = peertubeAPI.updateVideo(peertube);
-        if( apiResponse != null && apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0)
+        if (apiResponse != null && apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0)
             apiResponse.getPeertubes().get(0).setUpdate(true);
         return null;
     }

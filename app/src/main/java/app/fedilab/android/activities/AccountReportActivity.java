@@ -86,7 +86,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         if (b != null) {
             account_id = b.getString("account_id", null);
             targeted_account = b.getParcelable("targeted_account");
-            report =  b.getParcelable("report");
+            report = b.getParcelable("report");
         }
 
         if (getSupportActionBar() != null)
@@ -136,22 +136,22 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         email_user = findViewById(R.id.email_user);
         comment = findViewById(R.id.comment);
 
-        if( account_id == null && report == null && targeted_account == null){
+        if (account_id == null && report == null && targeted_account == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
         assign.setVisibility(View.GONE);
         status.setVisibility(View.GONE);
-        if( account_id != null){
+        if (account_id != null) {
             new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ONE_ACCOUNT, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
         }
-        if( report != null) {
+        if (report != null) {
             targeted_account = report.getTarget_account();
             RecyclerView lv_statuses = findViewById(R.id.lv_statuses);
 
             ArrayList<String> contents = new ArrayList<>();
-            for(Status status: report.getStatuses()){
+            for (Status status : report.getStatuses()) {
                 contents.add(status.getContent());
             }
             lv_statuses.setLayoutManager(new LinearLayoutManager(this));
@@ -160,15 +160,15 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
             Group statuses_group = findViewById(R.id.statuses_group);
             statuses_group.setVisibility(View.VISIBLE);
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.GET_ONE_ACCOUNT, report.getTarget_account().getUsername(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
         }
-        if( targeted_account != null) {
+        if (targeted_account != null) {
             account_id = targeted_account.getId();
             fillReport(targeted_account);
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 account_id = targeted_account.getUsername();
             }
         }
@@ -178,37 +178,37 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
     @Override
     public void onAdminAction(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
-            if( apiResponse.getError().getStatusCode() == 403){
+        if (apiResponse.getError() != null) {
+            if (apiResponse.getError().getStatusCode() == 403) {
                 AlertDialog.Builder builderInner;
                 builderInner = new AlertDialog.Builder(AccountReportActivity.this, R.style.AdminDialog);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
                 builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(AccountReportActivity.this, LoginActivity.class);
                         intent.putExtra("admin", true);
                         startActivity(intent);
                     }
                 });
                 builderInner.show();
-            }else{
-                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             }
             return;
         }
-        if( apiResponse.getReports() != null && apiResponse.getReports().size() > 0){
+        if (apiResponse.getReports() != null && apiResponse.getReports().size() > 0) {
             report = apiResponse.getReports().get(0);
             fillReport(report.getTarget_account());
-        } else if( apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        } else if (apiResponse.getAccountAdmins() != null && apiResponse.getAccountAdmins().size() > 0) {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 account_id = apiResponse.getAccountAdmins().get(0).getUsername();
             }
             fillReport(apiResponse.getAccountAdmins().get(0));
@@ -216,29 +216,29 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
 
     }
 
-    private void fillReport(AccountAdmin accountAdmin){
+    private void fillReport(AccountAdmin accountAdmin) {
 
-        if( accountAdmin == null){
+        if (accountAdmin == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if(!accountAdmin.isApproved() && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null"))){
+        if (!accountAdmin.isApproved() && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null"))) {
             allow_reject_group.setVisibility(View.VISIBLE);
         }
 
-        reject.setOnClickListener(view->{
+        reject.setOnClickListener(view -> {
             AdminAction adminAction = new AdminAction();
             adminAction.setType(REJECT);
             new PostAdminActionAsyncTask(getApplicationContext(), REJECT, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
 
-        allow.setOnClickListener(view->{
+        allow.setOnClickListener(view -> {
             AdminAction adminAction = new AdminAction();
             adminAction.setType(APPROVE);
             new PostAdminActionAsyncTask(getApplicationContext(), APPROVE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
 
-        warn.setOnClickListener(view->{
+        warn.setOnClickListener(view -> {
             AdminAction adminAction = new AdminAction();
             adminAction.setType(NONE);
             adminAction.setSend_email_notification(email_user.isChecked());
@@ -247,58 +247,58 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         });
 
 
-        if( !accountAdmin.isSilenced() ) {
+        if (!accountAdmin.isSilenced()) {
             silence.setText(getString(R.string.silence));
-        }else{
+        } else {
             silence.setText(getString(R.string.unsilence));
         }
-        silence.setOnClickListener(view->{
-            if( !accountAdmin.isSilenced() ) {
+        silence.setOnClickListener(view -> {
+            if (!accountAdmin.isSilenced()) {
                 AdminAction adminAction = new AdminAction();
                 adminAction.setType(SILENCE);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
                 new PostAdminActionAsyncTask(getApplicationContext(), SILENCE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else{
+            } else {
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSILENCE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
-        if( !accountAdmin.isDisabled() ) {
+        if (!accountAdmin.isDisabled()) {
             disable.setText(getString(R.string.disable));
-        }else{
+        } else {
             disable.setText(getString(R.string.undisable));
         }
-        disable.setOnClickListener(view->{
-            if( !accountAdmin.isDisabled()) {
+        disable.setOnClickListener(view -> {
+            if (!accountAdmin.isDisabled()) {
                 AdminAction adminAction = new AdminAction();
                 adminAction.setType(DISABLE);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
                 new PostAdminActionAsyncTask(getApplicationContext(), DISABLE, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else{
+            } else {
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.ENABLE, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        if( !accountAdmin.isSuspended() ) {
+        if (!accountAdmin.isSuspended()) {
             suspend.setText(getString(R.string.suspend));
-        }else{
+        } else {
             suspend.setText(getString(R.string.unsuspend));
         }
-        suspend.setOnClickListener(view->{
-            if( !accountAdmin.isSuspended() ){
+        suspend.setOnClickListener(view -> {
+            if (!accountAdmin.isSuspended()) {
                 AdminAction adminAction = new AdminAction();
                 adminAction.setType(SUSPEND);
                 adminAction.setSend_email_notification(email_user.isChecked());
                 adminAction.setText(comment.getText().toString().trim());
                 new PostAdminActionAsyncTask(getApplicationContext(), SUSPEND, account_id, adminAction, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else{
+            } else {
                 new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNSUSPEND, account_id, null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
 
-        if( accountAdmin.getAction() != null) {
+        if (accountAdmin.getAction() != null) {
             String message = null;
             switch (accountAdmin.getAction()) {
                 case SILENCE:
@@ -331,7 +331,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     message = getString(R.string.account_rejected);
                     break;
             }
-            if( message != null){
+            if (message != null) {
                 Toasty.success(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
             comment.setText("");
@@ -340,35 +340,32 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         }
 
 
-
-
-
         username.setText(String.format("@%s", accountAdmin.getAccount().getAcct()));
 
         email.setText(accountAdmin.getEmail());
 
-        if( accountAdmin.getEmail() == null || accountAdmin.getEmail().trim().equals("")){
+        if (accountAdmin.getEmail() == null || accountAdmin.getEmail().trim().equals("")) {
             email.setVisibility(View.GONE);
             email_label.setVisibility(View.GONE);
         }
-        if( accountAdmin.getIp() == null || accountAdmin.getIp().trim().equals("")){
+        if (accountAdmin.getIp() == null || accountAdmin.getIp().trim().equals("")) {
             recent_ip.setVisibility(View.GONE);
             recent_ip_label.setVisibility(View.GONE);
         }
-        if( accountAdmin.getCreated_at() == null ){
+        if (accountAdmin.getCreated_at() == null) {
             joined.setVisibility(View.GONE);
             joined_label.setVisibility(View.GONE);
         }
-        if( accountAdmin.isDisabled()){
+        if (accountAdmin.isDisabled()) {
             login_status.setText(getString(R.string.disabled));
-        }else if( accountAdmin.isSilenced()){
+        } else if (accountAdmin.isSilenced()) {
             login_status.setText(getString(R.string.silenced));
-        }else if( accountAdmin.isSuspended()){
+        } else if (accountAdmin.isSuspended()) {
             login_status.setText(getString(R.string.suspended));
-        }else{
+        } else {
             login_status.setText(getString(R.string.active));
         }
-        if( accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")){
+        if (accountAdmin.getDomain() == null || accountAdmin.getDomain().equals("null")) {
             warn.setVisibility(View.VISIBLE);
             email_user.setVisibility(View.VISIBLE);
             comment_label.setVisibility(View.VISIBLE);
@@ -376,7 +373,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             recent_ip.setText(accountAdmin.getIp());
             disable.setVisibility(View.VISIBLE);
             suspend.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             warn.setVisibility(View.GONE);
             email_user.setVisibility(View.GONE);
             email_user.setChecked(false);
@@ -389,7 +386,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
             comment_label.setVisibility(View.GONE);
         }
 
-        if( accountAdmin.getRole() != null) {
+        if (accountAdmin.getRole() != null) {
             switch (accountAdmin.getRole()) {
                 case "user":
                     permissions.setText(getString(R.string.user));
@@ -401,7 +398,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                     permissions.setText(getString(R.string.administrator));
                     break;
             }
-            if( accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("moderator")){
+            if (accountAdmin.getRole().equals("admin") || accountAdmin.getRole().equals("moderator")) {
                 warn.setVisibility(View.GONE);
                 suspend.setVisibility(View.GONE);
                 silence.setVisibility(View.GONE);
@@ -411,44 +408,44 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 comment.setVisibility(View.GONE);
                 comment_label.setVisibility(View.GONE);
             }
-            email_status.setText(accountAdmin.isConfirmed()?getString(R.string.confirmed):getString(R.string.unconfirmed));
+            email_status.setText(accountAdmin.isConfirmed() ? getString(R.string.confirmed) : getString(R.string.unconfirmed));
         }
 
 
         joined.setText(Helper.dateToString(accountAdmin.getCreated_at()));
-        if(  report != null){
+        if (report != null) {
             assign.setVisibility(View.VISIBLE);
             status.setVisibility(View.VISIBLE);
-            if( report.getAssigned_account() == null){
+            if (report.getAssigned_account() == null) {
                 assign.setText(getString(R.string.assign_to_me));
-            }else{
+            } else {
                 assign.setText(getString(R.string.unassign));
             }
-            assign.setOnClickListener(view ->{
-                if( report.getAssigned_account() == null){
+            assign.setOnClickListener(view -> {
+                if (report.getAssigned_account() == null) {
                     new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.ASSIGN_TO_SELF, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
+                } else {
                     new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.UNASSIGN, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-            if( report.isAction_taken()){
+            if (report.isAction_taken()) {
                 status.setText(getString(R.string.mark_unresolved));
-            }else{
+            } else {
                 status.setText(getString(R.string.mark_resolved));
             }
-            status.setOnClickListener(view ->{
-                if( report.isAction_taken() ){
+            status.setOnClickListener(view -> {
+                if (report.isAction_taken()) {
                     new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.REOPEN, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
+                } else {
                     new PostAdminActionAsyncTask(getApplicationContext(), API.adminAction.RESOLVE, report.getId(), null, AccountReportActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
 
-        }else{
+        } else {
             assign.setVisibility(View.GONE);
             status.setVisibility(View.GONE);
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             email_user.setVisibility(View.GONE);
             email_user.setChecked(false);
             comment.setVisibility(View.INVISIBLE);

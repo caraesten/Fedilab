@@ -18,8 +18,10 @@ package app.fedilab.android.webview;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -50,10 +52,12 @@ public class MastalabWebViewClient extends WebViewClient {
     private Activity activity;
     private int count = 0;
 
-    public MastalabWebViewClient(Activity activity){
+    public MastalabWebViewClient(Activity activity) {
         this.activity = activity;
     }
+
     public List<String> domains = new ArrayList<>();
+
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
@@ -61,22 +65,22 @@ public class MastalabWebViewClient extends WebViewClient {
 
 
     @Override
-    public WebResourceResponse shouldInterceptRequest (final WebView view, String url) {
-        if( WebviewActivity.trackingDomains != null){
+    public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+        if (WebviewActivity.trackingDomains != null) {
             URI uri;
             try {
                 uri = new URI(url);
                 String domain = uri.getHost();
-                if( domain != null) {
+                if (domain != null) {
                     domain = domain.startsWith("www.") ? domain.substring(4) : domain;
                 }
                 if (domain != null && WebviewActivity.trackingDomains.contains(domain)) {
-                    if( activity instanceof WebviewActivity){
+                    if (activity instanceof WebviewActivity) {
                         count++;
                         domains.add(url);
-                        ((WebviewActivity)activity).setCount(activity, String.valueOf(count));
+                        ((WebviewActivity) activity).setCount(activity, String.valueOf(count));
                     }
-                    ByteArrayInputStream nothing = new    ByteArrayInputStream("".getBytes());
+                    ByteArrayInputStream nothing = new ByteArrayInputStream("".getBytes());
                     return new WebResourceResponse("text/plain", "utf-8", nothing);
                 }
             } catch (URISyntaxException e) {
@@ -105,25 +109,25 @@ public class MastalabWebViewClient extends WebViewClient {
         return super.shouldInterceptRequest(view, url);
     }
 
-    public List<String> getDomains(){
+    public List<String> getDomains() {
         return this.domains;
     }
 
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         String instance = Helper.getLiveInstance(activity);
-        if( instance != null && instance.endsWith(".onion")) {
+        if (instance != null && instance.endsWith(".onion")) {
             handler.proceed();
-        }else{
+        } else {
             super.onReceivedSslError(view, handler, error);
         }
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if( URLUtil.isNetworkUrl(url) ) {
+        if (URLUtil.isNetworkUrl(url)) {
             return false;
-        }else{
+        } else {
             view.stopLoading();
             view.goBack();
         }
@@ -131,27 +135,28 @@ public class MastalabWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onPageStarted (WebView view, String url, Bitmap favicon) {
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         count = 0;
         domains = new ArrayList<>();
         domains.clear();
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(activity);
-        if( actionBar != null){
-            View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar,   new LinearLayout(activity), false);
+        if (actionBar != null) {
+            View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, new LinearLayout(activity), false);
             TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
             webview_title.setText(url);
             actionBar.setCustomView(webview_actionbar);
             actionBar.setDisplayShowCustomEnabled(true);
-        }else {
+        } else {
             activity.setTitle(url);
         }
         //Changes the url in webview activity so that it can be opened with an external app
-        try{
-            if( activity instanceof WebviewActivity)
-                ((WebviewActivity)activity).setUrl(url);
-        }catch (Exception ignore){}
+        try {
+            if (activity instanceof WebviewActivity)
+                ((WebviewActivity) activity).setUrl(url);
+        } catch (Exception ignore) {
+        }
 
     }
 

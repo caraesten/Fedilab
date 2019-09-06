@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <AutoCompleteTextView
         android:id="@+id/search_instance"
         android:inputType="textWebEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/instance"
-        android:maxLines="1"
-        />
+        android:maxLines="1" />
+
     <RadioGroup
         android:id="@+id/set_attachment_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <RadioButton android:id="@+id/mastodon_instance"
+
+        <RadioButton
+            android:id="@+id/mastodon_instance"
             android:layout_width="wrap_content"
             android:checked="true"
             android:layout_height="wrap_content"
-            android:text="@string/mastodon_instance"
-            />
-        <RadioButton android:id="@+id/peertube_instance"
+            android:text="@string/mastodon_instance" />
+
+        <RadioButton
+            android:id="@+id/peertube_instance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/peertube_instance"
-            />
-        <RadioButton android:id="@+id/pixelfed_instance"
+            android:text="@string/peertube_instance" />
+
+        <RadioButton
+            android:id="@+id/pixelfed_instance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pixelfed_instance"
-            />
-        <RadioButton android:id="@+id/misskey_instance"
+            android:text="@string/pixelfed_instance" />
+
+        <RadioButton
+            android:id="@+id/misskey_instance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/misskey_instance"
-            />
-        <RadioButton android:id="@+id/gnu_instance"
+            android:text="@string/misskey_instance" />
+
+        <RadioButton
+            android:id="@+id/gnu_instance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gnu_instance"
-            />
+            android:text="@string/gnu_instance" />
     </RadioGroup>
 </LinearLayout>

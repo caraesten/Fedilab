@@ -28,7 +28,8 @@ public class Application implements Parcelable {
     private String name;
     private String website;
 
-    public Application(){}
+    public Application() {
+    }
 
     protected Application(Parcel in) {
         name = in.readString();

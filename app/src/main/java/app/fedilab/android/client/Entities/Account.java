@@ -25,9 +25,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -135,7 +137,6 @@ public class Account implements Parcelable {
     private String created_by_application_id;
     private String invited_by_account_id;
     private boolean emojiFound = false;
-
 
 
     @Override
@@ -249,7 +250,7 @@ public class Account implements Parcelable {
         this.isModerator = in.readByte() != 0;
         this.isAdmin = in.readByte() != 0;
         this.privacy = in.readString();
-        this.sensitive =in.readByte() != 0;
+        this.sensitive = in.readByte() != 0;
         this.locale = in.readString();
         this.invite_request = in.readString();
         this.created_by_application_id = in.readString();
@@ -470,7 +471,7 @@ public class Account implements Parcelable {
     }
 
 
-    public enum followAction{
+    public enum followAction {
         FOLLOW,
         NOT_FOLLOW,
         BLOCK,
@@ -675,62 +676,64 @@ public class Account implements Parcelable {
 
     /**
      * Makes the move to account clickable
+     *
      * @param context Context
      * @return SpannableString
      */
-    public SpannableString moveToText(final android.content.Context context){
+    public SpannableString moveToText(final android.content.Context context) {
         SpannableString spannableString = null;
-        if( this.getMoved_to_account() != null) {
-            spannableString = new SpannableString(context.getString(R.string.account_moved_to, this.getAcct(), "@"+this.getMoved_to_account().getAcct()));
-            int startPositionTar = spannableString.toString().indexOf("@"+this.getMoved_to_account().getAcct());
-            int endPositionTar = startPositionTar + ("@"+this.getMoved_to_account().getAcct()).length();
+        if (this.getMoved_to_account() != null) {
+            spannableString = new SpannableString(context.getString(R.string.account_moved_to, this.getAcct(), "@" + this.getMoved_to_account().getAcct()));
+            int startPositionTar = spannableString.toString().indexOf("@" + this.getMoved_to_account().getAcct());
+            int endPositionTar = startPositionTar + ("@" + this.getMoved_to_account().getAcct()).length();
             final Account idTar = this.getMoved_to_account();
-            if( endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
+            if (endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
                 spannableString.setSpan(new ClickableSpan() {
-                            @Override
-                            public void onClick(@NonNull View textView) {
-                                Intent intent = new Intent(context, ShowAccountActivity.class);
-                                Bundle b = new Bundle();
-                                b.putParcelable("account", idTar);
-                                intent.putExtras(b);
-                                context.startActivity(intent);
-                            }
-                            @Override
-                            public void updateDrawState(@NonNull TextPaint ds) {
-                                super.updateDrawState(ds);
-                            }
-                        },
+                                            @Override
+                                            public void onClick(@NonNull View textView) {
+                                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                Bundle b = new Bundle();
+                                                b.putParcelable("account", idTar);
+                                                intent.putExtras(b);
+                                                context.startActivity(intent);
+                                            }
+
+                                            @Override
+                                            public void updateDrawState(@NonNull TextPaint ds) {
+                                                super.updateDrawState(ds);
+                                            }
+                                        },
                         startPositionTar, endPositionTar,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
     }
 
-    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
-        if( ((Activity)context).isFinishing() )
+    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account) {
+        if (((Activity) context).isFinishing())
             return;
-        if( fields == null)
+        if (fields == null)
             fields = new LinkedHashMap<>();
-        if( fieldsSpan == null)
+        if (fieldsSpan == null)
             fieldsSpan = new LinkedHashMap<>();
-        if( account.getDisplay_name() != null)
+        if (account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
         ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
-        if( account.getFields() != null && account.getFields().size() > 0) {
+        if (account.getFields() != null && account.getFields().size() > 0) {
             Iterator it = account.getFields().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 SpannableString fieldSpan;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue(), FROM_HTML_MODE_LEGACY));
+                    fieldSpan = new SpannableString(Html.fromHtml((String) pair.getValue(), FROM_HTML_MODE_LEGACY));
                 else
                     //noinspection deprecation
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
-                fieldsSpan.put(new SpannableString((String)pair.getKey()), fieldSpan);
+                    fieldSpan = new SpannableString(Html.fromHtml((String) pair.getValue()));
+                fieldsSpan.put(new SpannableString((String) pair.getKey()), fieldSpan);
                 Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
-                Matcher matcherALink = aLink.matcher((String)pair.getValue());
-                while (matcherALink.find()){
-                    String acct = matcherALink.group(3).replace("@","");
+                Matcher matcherALink = aLink.matcher((String) pair.getValue());
+                while (matcherALink.find()) {
+                    String acct = matcherALink.group(3).replace("@", "");
                     String instance = matcherALink.group(2);
                     Account accountMention = new Account();
                     accountMention.setAcct(acct);
@@ -752,24 +755,25 @@ public class Account implements Parcelable {
             Matcher matcher = Helper.xmppPattern.matcher(fieldSpan);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            while (matcher.find()){
+            while (matcher.find()) {
                 URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     fieldSpan.removeSpan(span);
                 int matchStart = matcher.start(0);
                 int matchEnd = matcher.end();
                 final String url = fieldSpan.toString().substring(matchStart, matchEnd);
-                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                if (matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View textView) {
                             try {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                 context.startActivity(intent);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
                             }
                         }
+
                         @Override
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
@@ -787,14 +791,14 @@ public class Account implements Parcelable {
 
             }
             matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(fieldSpan);
-            while (matcher.find()){
+            while (matcher.find()) {
                 URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     fieldSpan.removeSpan(span);
                 int matchStart = matcher.start(0);
                 int matchEnd = matcher.end();
                 final String email = fieldSpan.toString().substring(matchStart, matchEnd);
-                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                if (matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View textView) {
@@ -803,10 +807,11 @@ public class Account implements Parcelable {
                                 emailIntent.setType("plain/text");
                                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
                                 context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
                             }
                         }
+
                         @Override
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
@@ -824,14 +829,14 @@ public class Account implements Parcelable {
 
             }
             matcher = hashtagPattern.matcher(fieldSpan);
-            while (matcher.find()){
+            while (matcher.find()) {
                 URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     fieldSpan.removeSpan(span);
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
                 final String tag = fieldSpan.toString().substring(matchStart, matchEnd);
-                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart)
+                if (matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart)
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View textView) {
@@ -841,6 +846,7 @@ public class Account implements Parcelable {
                             intent.putExtras(b);
                             context.startActivity(intent);
                         }
+
                         @Override
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
@@ -854,36 +860,37 @@ public class Account implements Parcelable {
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
-            if( accountsMentionUnknown.size() > 0 ) {
-                for(Account accountMention: accountsMentionUnknown){
+            if (accountsMentionUnknown.size() > 0) {
+                for (Account accountMention : accountsMentionUnknown) {
                     String targetedAccount = "@" + accountMention.getAcct();
                     if (fieldSpan.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
                         //Accounts can be mentioned several times so we have to loop
-                        for(int startPosition = -1 ; (startPosition = fieldSpan.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                        for (int startPosition = -1; (startPosition = fieldSpan.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1; startPosition++) {
                             URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
-                            for(URLSpan span : urls)
+                            for (URLSpan span : urls)
                                 fieldSpan.removeSpan(span);
                             int endPosition = startPosition + targetedAccount.length();
-                            if( endPosition <= fieldSpan.toString().length() && endPosition >= startPosition)
+                            if (endPosition <= fieldSpan.toString().length() && endPosition >= startPosition)
                                 fieldSpan.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(@NonNull View textView) {
-                                    CrossActions.doCrossProfile(context,accountMention);
-                                }
-                                @Override
-                                public void updateDrawState(@NonNull TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                    ds.setUnderlineText(false);
-                                    if (theme == THEME_DARK)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                    else if (theme == THEME_BLACK)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                    else if (theme == THEME_LIGHT)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                                }
-                            },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                      @Override
+                                                      public void onClick(@NonNull View textView) {
+                                                          CrossActions.doCrossProfile(context, accountMention);
+                                                      }
+
+                                                      @Override
+                                                      public void updateDrawState(@NonNull TextPaint ds) {
+                                                          super.updateDrawState(ds);
+                                                          ds.setUnderlineText(false);
+                                                          if (theme == THEME_DARK)
+                                                              ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                          else if (theme == THEME_BLACK)
+                                                              ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                          else if (theme == THEME_LIGHT)
+                                                              ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                      }
+                                                  },
+                                        startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                         }
                     }
                 }
@@ -903,20 +910,21 @@ public class Account implements Parcelable {
                 matcher = Patterns.WEB_URL.matcher(fieldSpan);
             else
                 matcher = Helper.urlPattern.matcher(fieldSpan);
-            while (matcher.find()){
+            while (matcher.find()) {
                 URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     fieldSpan.removeSpan(span);
                 int matchStart = matcher.start(0);
                 int matchEnd = matcher.end();
                 final String url = fieldSpan.toString().substring(matchStart, matchEnd);
-                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                if (matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
                     int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View textView) {
                             Helper.openBrowser(context, url);
                         }
+
                         @Override
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
@@ -938,11 +946,10 @@ public class Account implements Parcelable {
         }
 
 
-
         final List<Emojis> emojis = account.getEmojis();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( emojis != null && emojis.size() > 0 ) {
+        if (emojis != null && emojis.size() > 0) {
 
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
@@ -962,7 +969,7 @@ public class Account implements Parcelable {
                                     } else {
                                         resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
                                     }
-                                    if( resource == null){
+                                    if (resource == null) {
                                         return;
                                     }
                                     final String targetedEmoji = ":" + emoji.getShortcode() + ":";
@@ -971,13 +978,13 @@ public class Account implements Parcelable {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = noteSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= noteSpan.toString().length() && endPosition >= startPosition){
+                                            if (endPosition <= noteSpan.toString().length() && endPosition >= startPosition) {
                                                 ImageSpan imageSpan;
-                                                if( !disableAnimatedEmoji) {
+                                                if (!disableAnimatedEmoji) {
                                                     resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                     resource.setVisible(true, true);
                                                     imageSpan = new ImageSpan(resource);
-                                                }else{
+                                                } else {
                                                     resource.setVisible(true, true);
                                                     Bitmap bitmap = drawableToBitmap(resource.getCurrent());
                                                     imageSpan = new ImageSpan(context,
@@ -994,13 +1001,13 @@ public class Account implements Parcelable {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition){
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
                                                 ImageSpan imageSpan;
-                                                if( !disableAnimatedEmoji) {
+                                                if (!disableAnimatedEmoji) {
                                                     resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                     resource.setVisible(true, true);
                                                     imageSpan = new ImageSpan(resource);
-                                                }else{
+                                                } else {
                                                     resource.setVisible(true, true);
                                                     Bitmap bitmap = drawableToBitmap(resource.getCurrent());
                                                     imageSpan = new ImageSpan(context,
@@ -1022,13 +1029,13 @@ public class Account implements Parcelable {
                                             //emojis can be used several times so we have to loop
                                             for (int startPosition = -1; (startPosition = fieldSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                                 final int endPosition = startPosition + targetedEmoji.length();
-                                                if (endPosition <= fieldSpan.toString().length() && endPosition >= startPosition){
+                                                if (endPosition <= fieldSpan.toString().length() && endPosition >= startPosition) {
                                                     ImageSpan imageSpan;
-                                                    if( !disableAnimatedEmoji) {
+                                                    if (!disableAnimatedEmoji) {
                                                         resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                         resource.setVisible(true, true);
                                                         imageSpan = new ImageSpan(resource);
-                                                    }else{
+                                                    } else {
                                                         resource.setVisible(true, true);
                                                         Bitmap bitmap = drawableToBitmap(resource.getCurrent());
                                                         imageSpan = new ImageSpan(context,
@@ -1041,7 +1048,7 @@ public class Account implements Parcelable {
                                                 }
                                             }
                                             fieldsSpan.put((SpannableString) pair.getKey(), fieldSpan);
-                                        }else
+                                        } else
                                             fieldsSpan.put(keySpan, fieldSpan);
                                     }
 
@@ -1056,10 +1063,11 @@ public class Account implements Parcelable {
                                 }
 
                             });
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
 
             }
-        }else {
+        } else {
             if (listener != null)
                 listener.onRetrieveEmojiAccount(account);
         }
@@ -1067,18 +1075,18 @@ public class Account implements Parcelable {
     }
 
 
-    public static void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
-        if( ((Activity)context).isFinishing() )
+    public static void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account) {
+        if (((Activity) context).isFinishing())
             return;
 
         account.setdisplayNameSpan(new SpannableString(account.getDisplay_name()));
         SpannableString displayNameSpan = account.getdisplayNameSpan();
-        if( displayNameSpan == null)
+        if (displayNameSpan == null)
             return;
         final List<Emojis> emojis = account.getEmojis();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if( emojis != null && emojis.size() > 0 ) {
+        if (emojis != null && emojis.size() > 0) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 try {
@@ -1093,13 +1101,13 @@ public class Account implements Parcelable {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                             final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition){
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
                                                 ImageSpan imageSpan;
-                                                if( !disableAnimatedEmoji) {
+                                                if (!disableAnimatedEmoji) {
                                                     resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                     resource.setVisible(true, true);
                                                     imageSpan = new ImageSpan(resource);
-                                                }else{
+                                                } else {
                                                     Bitmap bitmap = drawableToBitmap(resource.getCurrent());
                                                     imageSpan = new ImageSpan(context,
                                                             Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
@@ -1121,15 +1129,16 @@ public class Account implements Parcelable {
 
 
                             });
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
 
             }
         }
     }
 
     @NotNull
-    public String toString(){
-        return this.getAcct()+ " - " + this.getUrl();
+    public String toString() {
+        return this.getAcct() + " - " + this.getUrl();
     }
 
 

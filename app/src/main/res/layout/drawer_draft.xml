@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -21,18 +20,21 @@
     android:id="@+id/drafts_container"
     android:layout_marginTop="10dp"
     android:orientation="horizontal">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/draft_title"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/draft_date"
             android:textSize="12sp"
@@ -44,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <ImageView
         android:id="@+id/draft_delete"
         android:src="@drawable/ic_cancel"

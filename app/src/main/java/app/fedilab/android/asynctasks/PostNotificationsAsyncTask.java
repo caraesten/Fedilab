@@ -36,7 +36,7 @@ public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedId;
     private WeakReference<Context> contextReference;
 
-    public PostNotificationsAsyncTask(Context context, String targetedId, OnPostNotificationsActionInterface onPostNotificationsActionInterface){
+    public PostNotificationsAsyncTask(Context context, String targetedId, OnPostNotificationsActionInterface onPostNotificationsActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostNotificationsActionInterface;
         this.targetedId = targetedId;
@@ -44,7 +44,7 @@ public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( targetedId  != null)
+        if (targetedId != null)
             apiResponse = new API(this.contextReference.get()).postNoticationAction(targetedId);
         else //Delete all notifications
             apiResponse = new API(this.contextReference.get()).postNoticationAction(null);

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,6 +27,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,7 +79,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -90,13 +92,13 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -108,24 +110,24 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 }
             });
             toolbar_title.setText(R.string.upload_video);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PlaylistsActivity.this);
             }
         }
         setContentView(R.layout.activity_playlists);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.black));
         setSupportActionBar(toolbar);
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         peertubes = new ArrayList<>();
 
         RecyclerView lv_playlist = findViewById(R.id.lv_playlist);
-        mainLoader =  findViewById(R.id.loader);
+        mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
-        textviewNoAction =  findViewById(R.id.no_action);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         max_id = null;
@@ -145,29 +147,28 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         lv_playlist.setLayoutManager(mLayoutManager);
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             playlist = b.getParcelable("playlist");
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
             return;
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle(playlist.getDisplayName());
 
 
         lv_playlist.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                if(dy > 0){
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                        if(!flag_loading ) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
                             flag_loading = true;
-                            new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, max_id , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new ManagePlaylistsAsyncTask(PlaylistsActivity.this, GET_LIST_VIDEOS, playlist, null, max_id, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -186,11 +187,11 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewStatus = 0;
-                new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, null , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new ManagePlaylistsAsyncTask(PlaylistsActivity.this, GET_LIST_VIDEOS, playlist, null, null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -211,9 +212,8 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 break;
         }
 
-        new ManagePlaylistsAsyncTask(PlaylistsActivity.this,GET_LIST_VIDEOS, playlist, null, null , PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ManagePlaylistsAsyncTask(PlaylistsActivity.this, GET_LIST_VIDEOS, playlist, null, null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
 
 
     @Override
@@ -235,14 +235,14 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
-            if ( !apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -"))
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        if( actionType == GET_LIST_VIDEOS) {
+        if (actionType == GET_LIST_VIDEOS) {
 
             int previousPosition = this.peertubes.size();
             List<Peertube> videos = apiResponse.getPeertubes();

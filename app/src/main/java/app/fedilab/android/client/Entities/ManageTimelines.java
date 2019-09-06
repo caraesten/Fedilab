@@ -23,11 +23,14 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -150,7 +153,7 @@ public class ManageTimelines {
         this.listTimeline = listTimeline;
     }
 
-    public enum Type{
+    public enum Type {
         HOME,
         DIRECT,
         NOTIFICATION,
@@ -164,8 +167,8 @@ public class ManageTimelines {
     }
 
 
-    public static Type typeFromDb(String value){
-        switch (value){
+    public static Type typeFromDb(String value) {
+        switch (value) {
             case "HOME":
                 return Type.HOME;
             case "DIRECT":
@@ -190,8 +193,8 @@ public class ManageTimelines {
         return null;
     }
 
-    public static String typeToDb(Type type){
-        switch (type){
+    public static String typeToDb(Type type) {
+        switch (type) {
             case HOME:
                 return "HOME";
             case DIRECT:
@@ -217,11 +220,11 @@ public class ManageTimelines {
     }
 
 
-    public static RetrieveFeedsAsyncTask.Type transform(Context context, Type type){
+    public static RetrieveFeedsAsyncTask.Type transform(Context context, Type type) {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
-            switch (type){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            switch (type) {
                 case HOME:
                     return RetrieveFeedsAsyncTask.Type.HOME;
                 case DIRECT:
@@ -257,7 +260,7 @@ public class ManageTimelines {
                     return RetrieveFeedsAsyncTask.Type.LIST;
             }
             return null;
-        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             switch (type) {
                 case HOME:
                     return RetrieveFeedsAsyncTask.Type.GNU_HOME;
@@ -269,7 +272,7 @@ public class ManageTimelines {
                     return RetrieveFeedsAsyncTask.Type.GNU_LOCAL;
             }
             return null;
-        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             switch (type) {
                 case HOME:
                     return RetrieveFeedsAsyncTask.Type.GNU_HOME;
@@ -290,24 +293,24 @@ public class ManageTimelines {
     }
 
 
-    public TabLayout createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines){
+    public TabLayout createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines) {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         tabLayout.removeAllTabs();
         int position = 0;
-        for(ManageTimelines tl: manageTimelines){
+        for (ManageTimelines tl : manageTimelines) {
             TabLayout.Tab tb = tabLayout.newTab();
             ImageView icon = null;
-            if( tl.getType() != Type.TAG && tl.getType() != Type.INSTANCE && tl.getType() != Type.LIST) {
+            if (tl.getType() != Type.TAG && tl.getType() != Type.INSTANCE && tl.getType() != Type.LIST) {
                 tb.setCustomView(R.layout.tab_badge);
-                if( tb.getCustomView() != null)
+                if (tb.getCustomView() != null)
                     icon = tb.getCustomView().findViewById(R.id.tab_icon);
             }
-            if( icon != null){
-                if( tl.getPosition() == 0)
+            if (icon != null) {
+                if (tl.getPosition() == 0)
                     icon.setColorFilter(ContextCompat.getColor(context, R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-                switch (tl.getType()){
+                switch (tl.getType()) {
                     case HOME:
                         icon.setImageResource(R.drawable.ic_home);
                         icon.setContentDescription(context.getString(R.string.home_menu));
@@ -343,36 +346,36 @@ public class ManageTimelines {
                     icon.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 }
                 tabLayout.addTab(tb);
-            }else{
+            } else {
                 String name = "";
-                if( tl.getType() == Type.TAG){
-                    if( tl.getTagTimeline().getDisplayname() != null) {
+                if (tl.getType() == Type.TAG) {
+                    if (tl.getTagTimeline().getDisplayname() != null) {
                         name = tl.getTagTimeline().getDisplayname();
-                    }else {
+                    } else {
                         name = tl.getTagTimeline().getName();
                     }
-                }else if( tl.getType() == Type.INSTANCE ){
+                } else if (tl.getType() == Type.INSTANCE) {
                     name = tl.getRemoteInstance().getHost();
-                }else if( tl.getType() == Type.LIST){
+                } else if (tl.getType() == Type.LIST) {
                     name = tl.getListTimeline().getTitle();
                 }
-                TextView tv=(TextView)LayoutInflater.from(context).inflate(R.layout.custom_tab_instance,null);
+                TextView tv = (TextView) LayoutInflater.from(context).inflate(R.layout.custom_tab_instance, null);
                 tv.setText(name);
                 if (theme == THEME_LIGHT) {
                     tv.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
                 }
                 tb.setCustomView(tv);
-                if( tl.getPosition() == 0){
+                if (tl.getPosition() == 0) {
                     tv.setTextColor(ContextCompat.getColor(context, R.color.mastodonC4));
                 }
                 tabLayout.addTab(tb);
             }
 
             final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-            if( tl.getType() == Type.NOTIFICATION){
+            if (tl.getType() == Type.NOTIFICATION) {
                 notificationClik(context, tl, tabLayout);
-            }else if( tl.getType() == Type.PUBLIC || tl.getType() == Type.LOCAL || tl.getType() == Type.ART  || tl.getType() == Type.HOME) {
-                if( tabStrip != null && tabStrip.getChildCount() > position) {
+            } else if (tl.getType() == Type.PUBLIC || tl.getType() == Type.LOCAL || tl.getType() == Type.ART || tl.getType() == Type.HOME) {
+                if (tabStrip != null && tabStrip.getChildCount() > position) {
                     int finalPosition1 = position;
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -382,8 +385,8 @@ public class ManageTimelines {
                         }
                     });
                 }
-            }else if( tl.getType() == Type.TAG) {
-                if( tabStrip != null && tabStrip.getChildCount() > position) {
+            } else if (tl.getType() == Type.TAG) {
+                if (tabStrip != null && tabStrip.getChildCount() > position) {
                     int finalPosition = position;
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -393,8 +396,8 @@ public class ManageTimelines {
                         }
                     });
                 }
-            }else if( tl.getType() == Type.INSTANCE && (tl.getRemoteInstance().getType().equals("MASTODON") || tl.getRemoteInstance().getType().equals("PEERTUBE") || tl.getRemoteInstance().getType().equals("PLEROMA")|| tl.getRemoteInstance().getType().equals("GNU"))) {
-                if( tabStrip != null && tabStrip.getChildCount() > position) {
+            } else if (tl.getType() == Type.INSTANCE && (tl.getRemoteInstance().getType().equals("MASTODON") || tl.getRemoteInstance().getType().equals("PEERTUBE") || tl.getRemoteInstance().getType().equals("PLEROMA") || tl.getRemoteInstance().getType().equals("GNU"))) {
+                if (tabStrip != null && tabStrip.getChildCount() > position) {
                     int finalPosition = position;
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -404,8 +407,8 @@ public class ManageTimelines {
                         }
                     });
                 }
-            }else if (tl.getType() == Type.LIST){
-                if( tabStrip != null && tabStrip.getChildCount() > position) {
+            } else if (tl.getType() == Type.LIST) {
+                if (tabStrip != null && tabStrip.getChildCount() > position) {
                     tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -426,13 +429,11 @@ public class ManageTimelines {
     }
 
 
-
-
-    private void notificationClik(Context context, ManageTimelines tl,  TabLayout tabLayout){
+    private void notificationClik(Context context, ManageTimelines tl, TabLayout tabLayout) {
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA )
-            if( tabStrip != null && tabStrip.getChildCount() > tl.getPosition()){
-                tabStrip.getChildAt( tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+            if (tabStrip != null && tabStrip.getChildCount() > tl.getPosition()) {
+                tabStrip.getChildAt(tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         //Only shown if the tab has focus
@@ -463,7 +464,7 @@ public class ManageTimelines {
                         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                             @Override
                             public void onDismiss(PopupMenu menu) {
-                                if( mPageReferenceMap != null) {
+                                if (mPageReferenceMap != null) {
                                     TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(tl.getPosition());
                                     assert tabLayoutNotificationsFragment != null;
                                     tabLayoutNotificationsFragment.refreshAll();
@@ -534,13 +535,11 @@ public class ManageTimelines {
     }
 
 
-
-
-    private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
+    private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Only shown if the tab has focus
         PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
-        if( tl.getType() == Type.ART){
+        if (tl.getType() == Type.ART) {
             popup.getMenuInflater()
                     .inflate(R.menu.option_tag_timeline, popup.getMenu());
             Menu menu = popup.getMenu();
@@ -559,14 +558,14 @@ public class ManageTimelines {
             itemNone.setVisible(false);
             action_displayname.setVisible(false);
             itemMedia.setVisible(false);
-           // itemDelete.setVisible(false);
+            // itemDelete.setVisible(false);
             itemShowNSFW.setChecked(show_nsfw[0]);
             final boolean[] changes = {false};
             popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu menu) {
-                    if(changes[0]) {
-                        if( mPageReferenceMap != null) {
+                    if (changes[0]) {
+                        if (mPageReferenceMap != null) {
                             FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
                             DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                             assert displayStatusFragment != null;
@@ -605,22 +604,22 @@ public class ManageTimelines {
                 }
             });
             popup.show();
-        }else{
+        } else {
             popup.getMenuInflater()
                     .inflate(R.menu.option_filter_toots, popup.getMenu());
             Menu menu = popup.getMenu();
             final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
             final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
             final MenuItem itemFilter = menu.findItem(R.id.action_filter);
-            if( mPageReferenceMap == null) {
+            if (mPageReferenceMap == null) {
                 return;
             }
             DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-            if(tl.getType() != Type.HOME){
+            if (tl.getType() != Type.HOME) {
                 itemShowBoosts.setVisible(false);
                 itemShowReplies.setVisible(false);
                 itemFilter.setVisible(true);
-            }else {
+            } else {
                 itemShowBoosts.setVisible(true);
                 itemShowReplies.setVisible(true);
                 itemFilter.setVisible(true);
@@ -629,23 +628,23 @@ public class ManageTimelines {
             final boolean[] show_replies = {sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)};
 
             String show_filtered = null;
-            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
+            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
+            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
-            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint()  && tl.getType() == Type.PUBLIC)
+            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
 
             itemShowBoosts.setChecked(show_boosts[0]);
             itemShowReplies.setChecked(show_replies[0]);
-            if( show_filtered != null && show_filtered.length() > 0){
+            if (show_filtered != null && show_filtered.length() > 0) {
                 itemFilter.setTitle(show_filtered);
             }
 
             popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu menu) {
-                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint())
+                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint())
                         displayStatusFragment.refreshFilter();
                 }
             });
@@ -653,9 +652,9 @@ public class ManageTimelines {
             int style;
             if (theme == Helper.THEME_DARK) {
                 style = R.style.DialogDark;
-            } else if (theme == Helper.THEME_BLACK){
+            } else if (theme == Helper.THEME_BLACK) {
                 style = R.style.DialogBlack;
-            }else {
+            } else {
                 style = R.style.Dialog;
             }
             String finalShow_filtered = show_filtered;
@@ -692,8 +691,8 @@ public class ManageTimelines {
                             break;
                         case R.id.action_filter:
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                            LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
-                            View dialogView = inflater.inflate(R.layout.filter_regex,  new LinearLayout(context), false);
+                            LayoutInflater inflater = ((MainActivity) context).getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.filter_regex, new LinearLayout(context), false);
                             dialogBuilder.setView(dialogView);
                             final EditText editText = dialogView.findViewById(R.id.filter_regex);
                             Toast alertRegex = Toasty.warning(context, context.getString(R.string.alert_regex), Toast.LENGTH_LONG);
@@ -701,22 +700,24 @@ public class ManageTimelines {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                                 }
+
                                 @Override
                                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                                 }
+
                                 @Override
                                 public void afterTextChanged(Editable s) {
                                     try {
                                         Pattern.compile("(" + s.toString() + ")", Pattern.CASE_INSENSITIVE);
-                                    }catch (Exception e){
-                                        if( !alertRegex.getView().isShown()){
+                                    } catch (Exception e) {
+                                        if (!alertRegex.getView().isShown()) {
                                             alertRegex.show();
                                         }
                                     }
 
                                 }
                             });
-                            if( finalShow_filtered != null) {
+                            if (finalShow_filtered != null) {
                                 editText.setText(finalShow_filtered);
                                 editText.setSelection(editText.getText().toString().length());
                             }
@@ -724,15 +725,15 @@ public class ManageTimelines {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     itemFilter.setTitle(editText.getText().toString().trim());
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME) {
+                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME) {
                                         editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
                                         MainActivity.regex_home = editText.getText().toString().trim();
                                     }
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL) {
+                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL) {
                                         editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
                                         MainActivity.regex_local = editText.getText().toString().trim();
                                     }
-                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC) {
+                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC) {
                                         editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
                                         MainActivity.regex_public = editText.getText().toString().trim();
                                     }
@@ -751,27 +752,27 @@ public class ManageTimelines {
     }
 
 
-    private void tagClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
+    private void tagClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
 
 
         PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
-        TabLayout tabLayout = ((MainActivity)context).findViewById(R.id.tabLayout);
+        TabLayout tabLayout = ((MainActivity) context).findViewById(R.id.tabLayout);
         SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         String tag;
         tagTimeline = tl.getTagTimeline();
-        if( tagTimeline == null)
+        if (tagTimeline == null)
             return;
-        if( tagTimeline.getDisplayname() != null)
+        if (tagTimeline.getDisplayname() != null)
             tag = tagTimeline.getDisplayname();
         else
             tag = tagTimeline.getName();
@@ -794,22 +795,22 @@ public class ManageTimelines {
         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu menu) {
-                if(changes[0]) {
-                    if( mPageReferenceMap == null)
+                if (changes[0]) {
+                    if (mPageReferenceMap == null)
                         return;
-                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                    if( displayStatusFragment == null)
+                    if (displayStatusFragment == null)
                         return;
                     fragTransaction.detach(displayStatusFragment);
                     Bundle bundle = new Bundle();
                     bundle.putString("tag", tl.getTagTimeline().getName());
                     bundle.putInt("timelineId", tl.getId());
-                    bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
-                    if( mediaOnly[0])
-                        bundle.putString("instanceType","ART");
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
+                    if (mediaOnly[0])
+                        bundle.putString("instanceType", "ART");
                     else
-                        bundle.putString("instanceType","MASTODON");
+                        bundle.putString("instanceType", "MASTODON");
                     displayStatusFragment.setArguments(bundle);
                     fragTransaction.attach(displayStatusFragment);
                     fragTransaction.commit();
@@ -836,7 +837,7 @@ public class ManageTimelines {
                 changes[0] = true;
                 switch (item.getItemId()) {
                     case R.id.action_show_media_only:
-                        mediaOnly[0] =!mediaOnly[0];
+                        mediaOnly[0] = !mediaOnly[0];
                         tagTimeline.setART(mediaOnly[0]);
                         new SearchDAO(context, db).updateSearch(tagTimeline);
                         tl.setTagTimeline(tagTimeline);
@@ -853,14 +854,14 @@ public class ManageTimelines {
                         break;
                     case R.id.action_any:
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                        LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.tags_any,   new LinearLayout(context), false);
+                        LayoutInflater inflater = ((MainActivity) context).getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.tags_any, new LinearLayout(context), false);
                         dialogBuilder.setView(dialogView);
                         final EditText editText = dialogView.findViewById(R.id.filter_any);
-                        if(tagTimeline.getAny() != null) {
+                        if (tagTimeline.getAny() != null) {
                             String valuesTag = "";
-                            for(String val: tagTimeline.getAny())
-                                valuesTag += val+" ";
+                            for (String val : tagTimeline.getAny())
+                                valuesTag += val + " ";
                             editText.setText(valuesTag);
                             editText.setSelection(editText.getText().toString().length());
                         }
@@ -881,14 +882,14 @@ public class ManageTimelines {
                         break;
                     case R.id.action_all:
                         dialogBuilder = new AlertDialog.Builder(context, style);
-                        inflater =  ((MainActivity)context).getLayoutInflater();
+                        inflater = ((MainActivity) context).getLayoutInflater();
                         dialogView = inflater.inflate(R.layout.tags_all, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextAll = dialogView.findViewById(R.id.filter_all);
-                        if( tagTimeline.getAll() != null) {
+                        if (tagTimeline.getAll() != null) {
                             String valuesTag = "";
-                            for(String val: tagTimeline.getAll())
-                                valuesTag += val+" ";
+                            for (String val : tagTimeline.getAll())
+                                valuesTag += val + " ";
                             editTextAll.setText(valuesTag);
                             editTextAll.setSelection(editTextAll.getText().toString().length());
                         }
@@ -909,14 +910,14 @@ public class ManageTimelines {
                         break;
                     case R.id.action_none:
                         dialogBuilder = new AlertDialog.Builder(context, style);
-                        inflater = ((MainActivity)context). getLayoutInflater();
+                        inflater = ((MainActivity) context).getLayoutInflater();
                         dialogView = inflater.inflate(R.layout.tags_all, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextNone = dialogView.findViewById(R.id.filter_all);
-                        if( tagTimeline.getNone() != null) {
+                        if (tagTimeline.getNone() != null) {
                             String valuesTag = "";
-                            for(String val: tagTimeline.getNone())
-                                valuesTag += val+" ";
+                            for (String val : tagTimeline.getNone())
+                                valuesTag += val + " ";
                             editTextNone.setText(valuesTag);
                             editTextNone.setSelection(editTextNone.getText().toString().length());
                         }
@@ -937,11 +938,11 @@ public class ManageTimelines {
                         break;
                     case R.id.action_displayname:
                         dialogBuilder = new AlertDialog.Builder(context, style);
-                        inflater =  ((MainActivity)context).getLayoutInflater();
+                        inflater = ((MainActivity) context).getLayoutInflater();
                         dialogView = inflater.inflate(R.layout.tags_name, null);
                         dialogBuilder.setView(dialogView);
                         final EditText editTextName = dialogView.findViewById(R.id.column_name);
-                        if( tagTimeline.getDisplayname() != null) {
+                        if (tagTimeline.getDisplayname() != null) {
                             editTextName.setText(tagTimeline.getDisplayname());
                             editTextName.setSelection(editTextName.getText().toString().length());
                         }
@@ -949,9 +950,9 @@ public class ManageTimelines {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 String values = editTextName.getText().toString();
-                                if( values.trim().length() == 0)
+                                if (values.trim().length() == 0)
                                     values = tag;
-                                if( tabLayout.getTabAt(position) != null)
+                                if (tabLayout.getTabAt(position) != null)
                                     tabLayout.getTabAt(position).setText(values);
                                 tagTimeline.setDisplayname(values);
                                 new SearchDAO(context, db).updateSearch(tagTimeline);
@@ -971,8 +972,7 @@ public class ManageTimelines {
     }
 
 
-
-    private void instanceClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
+    private void instanceClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
 
 
         PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
@@ -982,22 +982,22 @@ public class ManageTimelines {
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         remoteInstance = tl.getRemoteInstance();
-        if( remoteInstance == null)
+        if (remoteInstance == null)
             return;
         currentFilter = remoteInstance.getFilteredWith();
 
         final boolean[] changes = {false};
 
         String title;
-        if( currentFilter == null) {
+        if (currentFilter == null) {
             title = "✔ " + context.getString(R.string.all);
-        }else{
+        } else {
             title = context.getString(R.string.all);
         }
 
@@ -1020,11 +1020,11 @@ public class ManageTimelines {
                     }
                 });
                 changes[0] = true;
-                FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
-                if( mPageReferenceMap == null)
+                FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
+                if (mPageReferenceMap == null)
                     return true;
                 DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                if( displayStatusFragment == null)
+                if (displayStatusFragment == null)
                     return false;
                 tl.getRemoteInstance().setFilteredWith(null);
                 remoteInstance.setFilteredWith(null);
@@ -1034,10 +1034,10 @@ public class ManageTimelines {
                 new TimelinesDAO(context, db).updateRemoteInstance(tl);
                 fragTransaction.detach(displayStatusFragment);
                 Bundle bundle = new Bundle();
-                bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                bundle.putString("remote_instance", tl.getRemoteInstance().getHost() != null ? tl.getRemoteInstance().getHost() : "");
                 bundle.putString("instanceType", tl.getRemoteInstance().getType());
                 bundle.putInt("timelineId", tl.getId());
-                bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                 displayStatusFragment.setArguments(bundle);
                 fragTransaction.attach(displayStatusFragment);
                 fragTransaction.commit();
@@ -1048,25 +1048,25 @@ public class ManageTimelines {
 
 
         java.util.List<String> tags = remoteInstance.getTags();
-        if( tags != null && tags.size() > 0){
+        if (tags != null && tags.size() > 0) {
             java.util.Collections.sort(tags);
-            for(String tag: tags){
-                if( tag == null || tag.length() == 0 )
+            for (String tag : tags) {
+                if (tag == null || tag.length() == 0)
                     continue;
-                if( currentFilter != null && currentFilter.equals(tag)) {
+                if (currentFilter != null && currentFilter.equals(tag)) {
                     title = "✔ " + tag;
-                }else{
+                } else {
                     title = tag;
                 }
                 MenuItem item = popup.getMenu().add(0, 0, Menu.NONE, title);
                 item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
-                        if( mPageReferenceMap == null)
+                        FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
+                        if (mPageReferenceMap == null)
                             return true;
                         DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                        if( displayStatusFragment == null)
+                        if (displayStatusFragment == null)
                             return false;
                         tl.getRemoteInstance().setFilteredWith(tag);
                         remoteInstance.setFilteredWith(tag);
@@ -1076,11 +1076,11 @@ public class ManageTimelines {
                         currentFilter = tl.getRemoteInstance().getFilteredWith();
                         fragTransaction.detach(displayStatusFragment);
                         Bundle bundle = new Bundle();
-                        bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                        bundle.putString("remote_instance", tl.getRemoteInstance().getHost() != null ? tl.getRemoteInstance().getHost() : "");
                         bundle.putString("instanceType", tl.getRemoteInstance().getType());
                         bundle.putInt("timelineId", tl.getId());
                         bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
-                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
                         displayStatusFragment.setArguments(bundle);
                         fragTransaction.attach(displayStatusFragment);
                         fragTransaction.commit();
@@ -1110,14 +1110,14 @@ public class ManageTimelines {
                 });
                 changes[0] = true;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater =  ((MainActivity)context).getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.tags_instance,   new LinearLayout(context), false);
+                LayoutInflater inflater = ((MainActivity) context).getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.tags_instance, new LinearLayout(context), false);
                 dialogBuilder.setView(dialogView);
                 final EditText editText = dialogView.findViewById(R.id.filter_words);
-                if(remoteInstance.getTags() != null) {
+                if (remoteInstance.getTags() != null) {
                     String valuesTag = "";
-                    for(String val: remoteInstance.getTags())
-                        valuesTag += val+" ";
+                    for (String val : remoteInstance.getTags())
+                        valuesTag += val + " ";
                     editText.setText(valuesTag);
                     editText.setSelection(editText.getText().toString().length());
                 }
@@ -1145,23 +1145,23 @@ public class ManageTimelines {
         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu menu) {
-                if(changes[0]) {
-                    FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
-                    if( mPageReferenceMap == null)
+                if (changes[0]) {
+                    FragmentTransaction fragTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
+                    if (mPageReferenceMap == null)
                         return;
                     DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
-                    if( displayStatusFragment == null)
+                    if (displayStatusFragment == null)
                         return;
                     fragTransaction.detach(displayStatusFragment);
                     Bundle bundle = new Bundle();
-                    bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                    bundle.putString("remote_instance", tl.getRemoteInstance().getHost() != null ? tl.getRemoteInstance().getHost() : "");
                     bundle.putString("instanceType", tl.getRemoteInstance().getType());
                     bundle.putInt("timelineId", tl.getId());
-                    if( currentFilter == null){
-                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                    }else{
+                    if (currentFilter == null) {
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    } else {
                         bundle.putString("currentfilter", tl.getRemoteInstance().getFilteredWith());
-                        bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED);
                     }
                     displayStatusFragment.setArguments(bundle);
                     fragTransaction.attach(displayStatusFragment);

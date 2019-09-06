@@ -41,7 +41,7 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
     private Error error;
     private WeakReference<Context> contextReference;
 
-    public RetrieveRelationshipAsyncTask(Context context, String accountId, OnRetrieveRelationshipInterface onRetrieveRelationshipInterface){
+    public RetrieveRelationshipAsyncTask(Context context, String accountId, OnRetrieveRelationshipInterface onRetrieveRelationshipInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveRelationshipInterface;
         this.accountId = accountId;
@@ -54,11 +54,11 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
             API api = new API(this.contextReference.get());
             relationship = api.getRelationship(accountId);
             error = api.getError();
-        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             relationship = gnuapi.getRelationship(accountId);
             error = gnuapi.getError();
-        }else {
+        } else {
             PeertubeAPI api = new PeertubeAPI(this.contextReference.get());
             relationship = new Relationship();
             relationship.setFollowing(api.isFollowing(accountId));

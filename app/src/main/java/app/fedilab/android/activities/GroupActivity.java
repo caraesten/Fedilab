@@ -75,7 +75,7 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar);
                 break;
@@ -91,16 +91,16 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         setContentView(R.layout.activity_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if( theme == THEME_BLACK)
+        if (theme == THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(GroupActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
-        if(b != null)
+        if (b != null)
             groupname = b.getString("groupname", null);
-        if( groupname == null)
+        if (groupname == null)
             finish();
         statuses = new ArrayList<>();
         max_id = null;
@@ -128,23 +128,22 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
                 statuses = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
-                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname,null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname, null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0){
+            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                        if(!flag_loading ) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
                             flag_loading = true;
-                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname,null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname, null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
@@ -154,15 +153,16 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
                 }
             }
         });
-        new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname,null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.GNU_GROUP_TIMELINE, groupname, null, max_id, GroupActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == THEME_LIGHT)
+        if (theme == THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -183,24 +183,24 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse == null || apiResponse.getError() != null){
-            if( apiResponse != null) {
+        if (apiResponse == null || apiResponse.getError() != null) {
+            if (apiResponse != null) {
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
+            } else {
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        if( firstLoad && (statuses == null || statuses.size() == 0))
+        if (firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( statuses != null && statuses.size() > 1)
-            max_id =statuses.get(statuses.size()-1).getId();
+        if (statuses != null && statuses.size() > 1)
+            max_id = statuses.get(statuses.size() - 1).getId();
         else
             max_id = null;
-        if( statuses != null) {
+        if (statuses != null) {
             this.statuses.addAll(statuses);
             statusListAdapter.notifyDataSetChanged();
         }

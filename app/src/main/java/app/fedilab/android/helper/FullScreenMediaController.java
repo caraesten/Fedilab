@@ -41,10 +41,11 @@ public class FullScreenMediaController extends MediaController {
     private Peertube peertube;
     private String resolutionVal;
 
-    public enum fullscreen{
+    public enum fullscreen {
         OFF,
         ON
     }
+
     public FullScreenMediaController(Context context) {
         super(context);
         this.context = context;
@@ -71,13 +72,13 @@ public class FullScreenMediaController extends MediaController {
         params.topMargin = 22;
         addView(fullScreen, params);
 
-        if( resolutionVal == null)
-            resolutionVal = peertube.getResolution().get(0) +"p";
+        if (resolutionVal == null)
+            resolutionVal = peertube.getResolution().get(0) + "p";
         resolution = new Button(context);
         resolution.setAllCaps(false);
         resolution.setBackgroundColor(Color.TRANSPARENT);
         resolution.setText(resolutionVal);
-        resolution.setPadding(0,0,0,0);
+        resolution.setPadding(0, 0, 0, 0);
         LayoutParams paramsButton =
                 new LayoutParams(LayoutParams.WRAP_CONTENT,
                         LayoutParams.WRAP_CONTENT);
@@ -87,15 +88,15 @@ public class FullScreenMediaController extends MediaController {
         resolution.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((PeertubeActivity)getContext()).displayResolution();
+                ((PeertubeActivity) getContext()).displayResolution();
             }
         });
         addView(resolution, paramsButton);
 
-        if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
+        if (((PeertubeActivity) getContext()).getFullscreen() == fullscreen.ON) {
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen_exit));
-        }else{
+        } else {
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen));
         }
@@ -105,29 +106,29 @@ public class FullScreenMediaController extends MediaController {
             @Override
             public void onClick(View v) {
 
-                if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
-                    ((PeertubeActivity)getContext()).setFullscreen(fullscreen.OFF);
-                }else{
-                    ((PeertubeActivity)getContext()).setFullscreen(fullscreen.ON);
+                if (((PeertubeActivity) getContext()).getFullscreen() == fullscreen.ON) {
+                    ((PeertubeActivity) getContext()).setFullscreen(fullscreen.OFF);
+                } else {
+                    ((PeertubeActivity) getContext()).setFullscreen(fullscreen.ON);
                 }
-                ((PeertubeActivity)getContext()).change();
+                ((PeertubeActivity) getContext()).change();
                 changeIcon();
             }
         });
     }
 
-    public void setResolutionVal(String resolutionVal){
+    public void setResolutionVal(String resolutionVal) {
         this.resolutionVal = resolutionVal;
-        if( resolution != null)
-            resolution.setText(String.format("%sp",resolutionVal));
+        if (resolution != null)
+            resolution.setText(String.format("%sp", resolutionVal));
     }
 
-    public void changeIcon(){
+    public void changeIcon() {
         //fullscreen indicator from intent
-        if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
+        if (((PeertubeActivity) getContext()).getFullscreen() == fullscreen.ON) {
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen_exit));
-        }else{
+        } else {
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen));
         }

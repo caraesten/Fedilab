@@ -18,9 +18,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,7 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
     private DomainsListAdapter domainsListAdapter;
     private RelativeLayout textviewNoAction;
 
-    public DomainsListAdapter(List<String> domains, RelativeLayout textviewNoAction){
+    public DomainsListAdapter(List<String> domains, RelativeLayout textviewNoAction) {
         this.domains = domains;
         this.domainsListAdapter = this;
         this.textviewNoAction = textviewNoAction;
@@ -73,9 +75,9 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
         final String domain = domains.get(position);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             Helper.changeDrawableColor(context, holder.domain_delete, R.color.dark_text);
-        }else{
+        } else {
             Helper.changeDrawableColor(context, holder.domain_delete, R.color.black);
         }
         holder.domain_name.setText(domain);
@@ -87,9 +89,9 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
@@ -102,7 +104,7 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
                                 domains.remove(domain);
                                 domainsListAdapter.notifyItemRemoved(holder.getAdapterPosition());
                                 new DeleteDomainsAsyncTask(context, domain, DomainsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                if( domains.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                if (domains.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }
@@ -131,7 +133,6 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
     }
 
 
-
     @Override
     public void onRetrieveDomains(APIResponse apiResponse) {
 
@@ -140,17 +141,17 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
     @Override
     public void onRetrieveDomainsDeleted(int response) {
         String message;
-        if( response == 200){
+        if (response == 200) {
             message = context.getString(R.string.toast_unblock_domain);
             Toasty.success(context, message, Toast.LENGTH_LONG).show();
-        }else{
+        } else {
             message = context.getString(R.string.toast_error);
             Toasty.error(context, message, Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         TextView domain_name;
         ImageView domain_delete;
 

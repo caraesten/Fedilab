@@ -114,7 +114,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -136,12 +136,12 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ){
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -157,16 +157,16 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerNotificationActivity.this);
             }
             toolbarTitle.setText(getString(R.string.owner_cached_notifications));
         }
         notifications = new ArrayList<>();
         RecyclerView lv_notifications = findViewById(R.id.lv_notifications);
-        mainLoader =  findViewById(R.id.loader);
+        mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
-        textviewNoAction =  findViewById(R.id.no_action);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         max_id = null;
@@ -177,28 +177,28 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        notificationsListAdapter = new NotificationsListAdapter(isOnWifi, behaviorWithAttachments,this.notifications);
+        notificationsListAdapter = new NotificationsListAdapter(isOnWifi, behaviorWithAttachments, this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         mLayoutManager = new LinearLayoutManager(OwnerNotificationActivity.this);
         lv_notifications.setLayoutManager(mLayoutManager);
 
 
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        }else  if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerNotificationActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(OwnerNotificationActivity.this,db).getUniqAccount(userId, instance);
+        Account account = new AccountDAO(OwnerNotificationActivity.this, db).getUniqAccount(userId, instance);
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -230,14 +230,13 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         });
 
         lv_notifications.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                if(dy > 0){
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                        if(!flag_loading ) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
                             flag_loading = true;
                             new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, max_id, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
@@ -257,7 +256,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT)
+        if (theme == Helper.THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
@@ -287,6 +286,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 }
 
             };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -303,9 +303,9 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerNotificationActivity.this, style);
@@ -321,9 +321,9 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                             }
                         });
                 dialogBuilder.create().show();
-                if( statistics == null) {
-                    new RetrieveNotificationStatsAsyncTask(getApplicationContext(),  OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
+                if (statistics == null) {
+                    new RetrieveNotificationStatsAsyncTask(getApplicationContext(), OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
                     displayStats();
                 }
                 return true;
@@ -332,9 +332,9 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 dialogBuilder = new AlertDialog.Builder(OwnerNotificationActivity.this, style);
@@ -344,11 +344,11 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
 
 
                 SQLiteDatabase db = Sqlite.getInstance(OwnerNotificationActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                if( dateIni == null)
+                if (dateIni == null)
                     dateIni = new NotificationCacheDAO(OwnerNotificationActivity.this, db).getSmallerDate();
-                if( dateEnd == null)
+                if (dateEnd == null)
                     dateEnd = new NotificationCacheDAO(OwnerNotificationActivity.this, db).getGreaterDate();
-                if( dateIni == null || dateEnd == null)
+                if (dateIni == null || dateEnd == null)
                     return true;
                 String dateInitString = Helper.shortDateToString(dateIni);
                 String dateEndString = Helper.shortDateToString(dateEnd);
@@ -372,7 +372,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 filter_mention.setChecked(filterNotifications.isMention());
                 filter_follow.setChecked(filterNotifications.isFollow());
                 filter_poll.setChecked(filterNotifications.isPoll());
-
 
 
                 Calendar c = Calendar.getInstance();
@@ -440,7 +439,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
     }
 
 
-
     private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -459,8 +457,8 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 .unregisterReceiver(backupFinishedReceiver);
     }
 
-    private void displayStats(){
-        if( statsDialogView != null){
+    private void displayStats() {
+        if (statsDialogView != null) {
             ScrollView stats_container = statsDialogView.findViewById(R.id.stats_container);
             RelativeLayout loader = statsDialogView.findViewById(R.id.loader);
 
@@ -478,7 +476,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
 
 
             ImageButton charts = statsDialogView.findViewById(R.id.charts);
-            charts.setOnClickListener(w ->{
+            charts.setOnClickListener(w -> {
                 Intent intent = new Intent(OwnerNotificationActivity.this, OwnerNotificationChartsActivity.class);
                 startActivity(intent);
             });
@@ -500,8 +498,8 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             stats_container.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);
 
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_SHORT).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -510,8 +508,8 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -520,13 +518,13 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         int previousPosition = this.notifications.size();
         List<Notification> notifications = apiResponse.getNotifications();
         max_id = apiResponse.getMax_id();
-        flag_loading = (max_id == null );
-        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
+        flag_loading = (max_id == null);
+        if (!swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
-        if( swiped ){
+        if (swiped) {
             if (previousPosition > 0) {
                 for (int i = 0; i < previousPosition; i++) {
                     this.notifications.remove(0);
@@ -535,11 +533,11 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             }
             swiped = false;
         }
-        if( notifications != null && notifications.size() > 0) {
+        if (notifications != null && notifications.size() > 0) {
             this.notifications.addAll(notifications);
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
-        }else {
-            if( textviewNoAction.getVisibility() != View.VISIBLE && firstLoad) {
+        } else {
+            if (textviewNoAction.getVisibility() != View.VISIBLE && firstLoad) {
                 RelativeLayout no_result = findViewById(R.id.no_result);
                 no_result.setVisibility(View.VISIBLE);
             }

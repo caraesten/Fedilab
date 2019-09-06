@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -57,6 +58,7 @@ public class StreamingLocalTimelineService extends IntentService {
     static {
         Helper.installProvider();
     }
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -66,6 +68,7 @@ public class StreamingLocalTimelineService extends IntentService {
     public StreamingLocalTimelineService(String name) {
         super(name);
     }
+
     @SuppressWarnings("unused")
     public StreamingLocalTimelineService() {
         super("StreamingLocalTimelineService");
@@ -78,7 +81,7 @@ public class StreamingLocalTimelineService extends IntentService {
         super.onCreate();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
-        if( !display_local){
+        if (!display_local) {
             stopSelf();
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -95,21 +98,21 @@ public class StreamingLocalTimelineService extends IntentService {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account accountStream = null;
-        if( userId != null) {
+        if (userId != null) {
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             accountStream = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         }
 
-        if( accountStream != null) {
+        if (accountStream != null) {
             Headers headers = new Headers();
             headers.add("Authorization", "Bearer " + accountStream.getToken());
             headers.add("Connection", "Keep-Alive");
             headers.add("method", "GET");
             headers.add("scheme", "https");
-            Uri url = Uri.parse("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token="+ accountStream.getToken());
+            Uri url = Uri.parse("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token=" + accountStream.getToken());
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             Account finalAccountStream = accountStream;
-            if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(accountStream.getInstance()).getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
@@ -119,7 +122,7 @@ public class StreamingLocalTimelineService extends IntentService {
                     e.printStackTrace();
                 }
             }
-            AsyncHttpClient.getDefaultInstance().websocket("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token="+ accountStream.getToken(),"wss", new AsyncHttpClient.WebSocketConnectCallback() {
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + accountStream.getInstance() + "/api/v1/streaming/?stream=public:local&access_token=" + accountStream.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     if (ex != null) {
@@ -135,7 +138,8 @@ public class StreamingLocalTimelineService extends IntentService {
                             try {
                                 JSONObject eventJson = new JSONObject(s);
                                 onRetrieveStreaming(finalAccountStream, eventJson);
-                            } catch (JSONException ignored) {}
+                            } catch (JSONException ignored) {
+                            }
                         }
                     });
                 }
@@ -144,17 +148,17 @@ public class StreamingLocalTimelineService extends IntentService {
     }
 
     public void onRetrieveStreaming(Account account, JSONObject response) {
-        if(  response == null )
+        if (response == null)
             return;
-        Status status ;
+        Status status;
         Bundle b = new Bundle();
         try {
-            if( response.get("event").toString().equals("update")){
+            if (response.get("event").toString().equals("update")) {
                 status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                 status.setNew(true);
                 b.putParcelable("data", status);
-                if( account != null)
-                    b.putString("userIdService",account.getId());
+                if (account != null)
+                    b.putString("userIdService", account.getId());
                 Intent intentBC = new Intent(Helper.RECEIVE_LOCAL_DATA);
                 intentBC.putExtras(b);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);

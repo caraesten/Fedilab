@@ -23,8 +23,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.widget.Toast;
 
@@ -66,10 +68,11 @@ public class CrossActions {
 
     /**
      * Returns the list of connected accounts when cross actions are allowed otherwise, returns the current account
+     *
      * @param context Context
      * @return List<Account>
      */
-    private static List<Account> connectedAccounts(Context context, Status status, boolean limitedToOwner){
+    private static List<Account> connectedAccounts(Context context, Status status, boolean limitedToOwner) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountstmp = new AccountDAO(context, db).getAllAccountCrossAction();
@@ -77,46 +80,46 @@ public class CrossActions {
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
         List<Account> accounts = new ArrayList<>();
-        if( accountstmp != null && !limitedToOwner && accountstmp.size() > 1 ){
+        if (accountstmp != null && !limitedToOwner && accountstmp.size() > 1) {
             //It's for a reply
-            if( status != null){
+            if (status != null) {
                 //Status is private or direct
-                if( status.getVisibility().equals("private") || status.getVisibility().equals("direct") ){
+                if (status.getVisibility().equals("private") || status.getVisibility().equals("direct")) {
                     //Retrieves mentioned accounts and compares them to the list of accounts in the device.
                     List<Mention> mentions = status.getMentions();
                     List<String> addedAccount = new ArrayList<>();
                     //Adds the owner
                     accounts.add(currentAccount);
                     addedAccount.add(currentAccount.getId() + "|" + currentAccount.getAcct());
-                    for(Mention mention: mentions){
-                        for(Account account: accountstmp){
-                            String mentionAcct = (mention.getAcct().contains("@"))?mention.getAcct():mention.getAcct()+"@"+currentAccount.getInstance();
-                            if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                                if( account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
+                    for (Mention mention : mentions) {
+                        for (Account account : accountstmp) {
+                            String mentionAcct = (mention.getAcct().contains("@")) ? mention.getAcct() : mention.getAcct() + "@" + currentAccount.getInstance();
+                            if ((account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
+                                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
                                     accounts.add(account);
                             }
                         }
                     }
-                    for(Account account: accountstmp){
+                    for (Account account : accountstmp) {
                         Account tootOwner = status.getAccount();
-                        String mentionAcct = (tootOwner.getAcct().contains("@"))?tootOwner.getAcct():tootOwner.getAcct()+"@"+currentAccount.getInstance();
-                        if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                            if( account.getSocial() == null || account.getSocial().equals("MASTODON")|| account.getSocial().equals("PLEROMA"))
+                        String mentionAcct = (tootOwner.getAcct().contains("@")) ? tootOwner.getAcct() : tootOwner.getAcct() + "@" + currentAccount.getInstance();
+                        if ((account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
+                            if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
                                 accounts.add(account);
                         }
                     }
-                }else {
+                } else {
                     accounts = accountstmp;
                 }
-            }else {
+            } else {
                 accounts = accountstmp;
             }
             return accounts;
-        }else {
+        } else {
             List<Account> oneAccount = new ArrayList<>();
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             oneAccount.add(account);
-            return  oneAccount;
+            return oneAccount;
         }
     }
 
@@ -130,9 +133,9 @@ public class CrossActions {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         boolean confirmation = false;
@@ -140,7 +143,7 @@ public class CrossActions {
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
         else if (doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG)
             confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-        if((type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS) && limitedToOwner){
+        if ((type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS) && limitedToOwner) {
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -149,29 +152,29 @@ public class CrossActions {
                 displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface, baseAdapter);
             else {
                 new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE){
+                if (doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE) {
                     if (doAction == API.StatusAction.FAVOURITE) {
                         status.setFavourited(true);
                         status.setFavAnimated(true);
-                    }else{
+                    } else {
                         status.setFavourited(false);
                         status.setFavAnimated(false);
                     }
-                    if(baseAdapter instanceof PixelfedListAdapter)
+                    if (baseAdapter instanceof PixelfedListAdapter)
                         ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                    else if(baseAdapter instanceof StatusListAdapter)
+                    else if (baseAdapter instanceof StatusListAdapter)
                         ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
-                }else if(doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG){
+                } else if (doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG) {
                     if (doAction == API.StatusAction.REBLOG) {
                         status.setReblogged(true);
                         status.setBoostAnimated(true);
-                    }else{
+                    } else {
                         status.setReblogged(false);
                         status.setBoostAnimated(false);
                     }
-                    if(baseAdapter instanceof PixelfedListAdapter)
+                    if (baseAdapter instanceof PixelfedListAdapter)
                         ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                    else if(baseAdapter instanceof StatusListAdapter)
+                    else if (baseAdapter instanceof StatusListAdapter)
                         ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
                 }
             }
@@ -186,29 +189,29 @@ public class CrossActions {
                 else if (doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
                     pinAction(context, status, baseAdapter, onPostActionInterface);
 
-                if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE){
+                if (doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE) {
                     if (doAction == API.StatusAction.FAVOURITE) {
                         status.setFavourited(true);
                         status.setFavAnimated(true);
-                    }else{
+                    } else {
                         status.setFavourited(false);
                         status.setFavAnimated(false);
                     }
-                    if(baseAdapter instanceof PixelfedListAdapter)
+                    if (baseAdapter instanceof PixelfedListAdapter)
                         ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                    else if(baseAdapter instanceof StatusListAdapter)
+                    else if (baseAdapter instanceof StatusListAdapter)
                         ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
-                }else if(doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG){
+                } else if (doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG) {
                     if (doAction == API.StatusAction.REBLOG) {
                         status.setReblogged(true);
                         status.setBoostAnimated(true);
-                    }else{
+                    } else {
                         status.setReblogged(false);
                         status.setBoostAnimated(false);
                     }
-                    if(baseAdapter instanceof PixelfedListAdapter)
+                    if (baseAdapter instanceof PixelfedListAdapter)
                         ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                    else if(baseAdapter instanceof StatusListAdapter)
+                    else if (baseAdapter instanceof StatusListAdapter)
                         ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
                 }
             }
@@ -219,7 +222,7 @@ public class CrossActions {
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
             int i = 0;
-            for(Account account: accounts){
+            for (Account account : accounts) {
                 accountArray[i] = account;
                 i++;
             }
@@ -237,34 +240,34 @@ public class CrossActions {
                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Account loggedAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                    if( targetedAccount == null){
-                        if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
+                    if (targetedAccount == null) {
+                        if (loggedAccount.getInstance().equals(selectedAccount.getInstance())) {
                             new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }else{ //Account is from another instance
+                        } else { //Account is from another instance
                             new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
-                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                        if (selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
                             if (doAction == API.StatusAction.REBLOG) {
                                 status.setReblogged(true);
-                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS)
+                                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS)
                                     status.setBoostAnimated(true);
                             } else if (doAction == API.StatusAction.FAVOURITE) {
                                 status.setFavourited(true);
-                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE|| type == RetrieveFeedsAsyncTask.Type.NEWS)
+                                if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.NEWS)
                                     status.setFavAnimated(true);
                             } else if (doAction == API.StatusAction.PIN) {
                                 status.setPinned(true);
                             }
-                            if( baseAdapter != null)
+                            if (baseAdapter != null)
                                 baseAdapter.notifyDataSetChanged();
                         }
-                    }else{
+                    } else {
                         new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                        if (selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
                             if (doAction == API.StatusAction.FOLLOW) {
                                 targetedAccount.setFollowing(true);
                             }
-                            if( baseAdapter != null)
+                            if (baseAdapter != null)
                                 baseAdapter.notifyDataSetChanged();
                         }
                     }
@@ -276,7 +279,7 @@ public class CrossActions {
     }
 
 
-    public static void followPeertubeChannel(final Context context, Account remoteAccount, OnPostActionInterface onPostActionInterface){
+    public static void followPeertubeChannel(final Context context, Account remoteAccount, OnPostActionInterface onPostActionInterface) {
         new AsyncTask<Void, Void, Void>() {
             private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
@@ -295,20 +298,21 @@ public class CrossActions {
                 response = apiResponse.getResults();
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void result) {
-                if( response == null){
+                if (response == null) {
                     return;
                 }
                 List<Account> remoteAccounts = response.getAccounts();
-                if( remoteAccounts != null && remoteAccounts.size() > 0) {
+                if (remoteAccounts != null && remoteAccounts.size() > 0) {
                     new PostActionAsyncTask(context, null, remoteAccounts.get(0), API.StatusAction.FOLLOW, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void doCrossProfile(final Context context, Account remoteAccount){
+    public static void doCrossProfile(final Context context, Account remoteAccount) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
@@ -328,7 +332,7 @@ public class CrossActions {
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
                 String url = remoteAccount.getUrl();
-                if( url == null) {
+                if (url == null) {
                     if (remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1) //Peertube compatibility
                         url = "https://" + remoteAccount.getHost() + "/accounts/" + remoteAccount.getAcct().split("@")[0];
                     else
@@ -338,23 +342,24 @@ public class CrossActions {
                 response = apiResponse.getResults();
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void result) {
-                if( response == null){
+                if (response == null) {
                     return;
                 }
                 List<Account> remoteAccounts = response.getAccounts();
-                if( remoteAccounts != null && remoteAccounts.size() > 0) {
+                if (remoteAccounts != null && remoteAccounts.size() > 0) {
 
                     Account fetchedAccount = null;
-                    if( remoteAccounts.size() == 1){
+                    if (remoteAccounts.size() == 1) {
                         Account acc = remoteAccounts.get(0);
                         if (remoteAccount.getUsername() == null || acc.getUsername().equals(remoteAccount.getUsername())) {
                             fetchedAccount = acc;
                         }
-                    }else {
+                    } else {
                         remoteAccounts.size();
-                        for(Account acc: remoteAccounts){
+                        for (Account acc : remoteAccounts) {
 
                             String instance = null;
                             try {
@@ -363,12 +368,12 @@ public class CrossActions {
                             } catch (URISyntaxException e) {
                                 e.printStackTrace();
                             }
-                            if( instance != null ) {
+                            if (instance != null) {
                                 if ((acc.getUsername()).equals(remoteAccount.getAcct())) {
                                     fetchedAccount = acc;
                                     break;
                                 }
-                            }else{
+                            } else {
                                 if (acc.getAcct().equals(remoteAccount.getAcct())) {
                                     fetchedAccount = acc;
                                     break;
@@ -376,11 +381,11 @@ public class CrossActions {
                             }
                         }
                     }
-                    if(fetchedAccount != null){
+                    if (fetchedAccount != null) {
                         Intent intent = new Intent(context, ShowAccountActivity.class);
                         Bundle b = new Bundle();
                         //Flag it has a peertube account
-                        if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
+                        if (remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
                             b.putBoolean("peertubeaccount", true);
                         b.putParcelable("account", fetchedAccount);
                         intent.putExtras(b);
@@ -389,10 +394,10 @@ public class CrossActions {
 
                 }
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void doCrossConversation(final Context context, Status remoteStatus){
+    public static void doCrossConversation(final Context context, Status remoteStatus) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
@@ -415,13 +420,14 @@ public class CrossActions {
                 response = apiResponse.getResults();
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void result) {
-                if( response == null){
+                if (response == null) {
                     return;
                 }
                 List<app.fedilab.android.client.Entities.Status> statuses = response.getStatuses();
-                if( statuses != null && statuses.size() > 0) {
+                if (statuses != null && statuses.size() > 0) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
                     b.putParcelable("status", statuses.get(0));
@@ -429,11 +435,11 @@ public class CrossActions {
                     context.startActivity(intent);
                 }
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
-    public static void doCrossConversation(final Context context, String url){
+    public static void doCrossConversation(final Context context, String url) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
@@ -453,16 +459,17 @@ public class CrossActions {
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
                 APIResponse apiResponse = api.search(url);
-                response =  apiResponse.getResults();
+                response = apiResponse.getResults();
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void result) {
-                if( response == null){
+                if (response == null) {
                     return;
                 }
                 List<app.fedilab.android.client.Entities.Status> statuses = response.getStatuses();
-                if( statuses != null && statuses.size() > 0) {
+                if (statuses != null && statuses.size() > 0) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
                     b.putParcelable("status", statuses.get(0));
@@ -470,13 +477,13 @@ public class CrossActions {
                     context.startActivity(intent);
                 }
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter ){
+    public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter) {
         List<Account> accounts = connectedAccounts(context, status, false);
 
-        if( accounts.size() == 1) {
+        if (accounts.size() == 1) {
             status.setBookmarked(!status.isBookmarked());
             try {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -488,17 +495,17 @@ public class CrossActions {
                     Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                 }
                 statusListAdapter.notifyStatusChanged(status);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
             int i = 0;
-            for(Account account: accounts){
+            for (Account account : accounts) {
                 accountArray[i] = account;
                 i++;
             }
@@ -528,14 +535,15 @@ public class CrossActions {
                             response = apiResponse.getResults();
                             return null;
                         }
+
                         @Override
                         protected void onPostExecute(Void result) {
-                            if( response == null){
-                                Toasty.error(contextReference.get(),context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                            if (response == null) {
+                                Toasty.error(contextReference.get(), context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                                 return;
                             }
                             List<app.fedilab.android.client.Entities.Status> statuses = response.getStatuses();
-                            if( statuses != null && statuses.size() > 0) {
+                            if (statuses != null && statuses.size() > 0) {
                                 final SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                 app.fedilab.android.client.Entities.Status statusBookmarked = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0).getId(), account.getId(), account.getInstance());
                                 if (statusBookmarked == null) {
@@ -548,7 +556,7 @@ public class CrossActions {
                                 statusListAdapter.notifyStatusChanged(statuses.get(0));
                             }
                         }
-                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 }
             });
@@ -557,34 +565,34 @@ public class CrossActions {
     }
 
 
-
-    public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
+    public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner) {
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
 
-        if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
+        if (accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
             Intent intent = new Intent(context, TootActivity.class);
             Bundle b = new Bundle();
-            if( status != null && status.getReblog() != null )
+            if (status != null && status.getReblog() != null)
                 b.putParcelable("tootReply", status.getReblog());
             else
                 b.putParcelable("tootReply", status);
             intent.putExtras(b); //Put your id to your next Intent
             context.startActivity(intent);
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
                 try {
                     //Avoid to open multi activities when replying in a conversation
-                    ((ShowConversationActivity)context).finish();
-                }catch (Exception ignored){}
+                    ((ShowConversationActivity) context).finish();
+                } catch (Exception ignored) {
+                }
 
             }
-        }else {
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS){
+        } else {
+            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
                 builderSingle.setTitle(context.getString(R.string.choose_accounts));
                 final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
                 final Account[] accountArray = new Account[accounts.size()];
                 int i = 0;
-                for(Account account: accounts){
+                for (Account account : accounts) {
                     accountArray[i] = account;
                     i++;
                 }
@@ -598,7 +606,7 @@ public class CrossActions {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
                         final Account account = accountArray[which];
-                        if(status != null) {
+                        if (status != null) {
                             new AsyncTask<Void, Void, Void>() {
                                 private List<app.fedilab.android.client.Entities.Status> remoteStatuses;
                                 private WeakReference<Context> contextReference = new WeakReference<>(context);
@@ -644,7 +652,7 @@ public class CrossActions {
                                         b.putParcelable("tootReply", remoteStatuses.get(0));
                                         b.putParcelable("idRedirect", status);
                                     }
-                                    b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
+                                    b.putString("accountReplyToken", account.getId() + "|" + account.getInstance());
                                     intent.putExtras(b); //Put your id to your next Intent
                                     contextReference.get().startActivity(intent);
                                     if (type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
@@ -658,10 +666,10 @@ public class CrossActions {
                                     dialog.dismiss();
                                 }
                             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }else{
+                        } else {
                             Intent intent = new Intent(context, TootActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
+                            b.putString("accountReplyToken", account.getId() + "|" + account.getInstance());
                             intent.putExtras(b); //Put your id to your next Intent
                             context.startActivity(intent);
                         }
@@ -669,7 +677,7 @@ public class CrossActions {
                     }
                 });
                 builderSingle.show();
-            }else{
+            } else {
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
@@ -685,19 +693,19 @@ public class CrossActions {
 
                         API api = new API(contextReference.get(), account.getInstance(), account.getToken());
                         String uri;
-                        if(status.getReblog() != null ){
-                            if( status.getReblog().getUri().startsWith("http"))
+                        if (status.getReblog() != null) {
+                            if (status.getReblog().getUri().startsWith("http"))
                                 uri = status.getReblog().getUri();
                             else
                                 uri = status.getReblog().getUrl();
-                        }else {
-                            if( status.getUri().startsWith("http"))
+                        } else {
+                            if (status.getUri().startsWith("http"))
                                 uri = status.getUri();
                             else
                                 uri = status.getUrl();
                         }
                         APIResponse search = api.search(uri);
-                        if( search != null && search.getResults() != null){
+                        if (search != null && search.getResults() != null) {
                             remoteStatuses = search.getResults().getStatuses();
                         }
                         return null;
@@ -707,41 +715,41 @@ public class CrossActions {
                     protected void onPostExecute(Void result) {
                         Intent intent = new Intent(contextReference.get(), TootActivity.class);
                         Bundle b = new Bundle();
-                        if( remoteStatuses == null || remoteStatuses.size() == 0){
+                        if (remoteStatuses == null || remoteStatuses.size() == 0) {
                             return;
                         }
-                        if( remoteStatuses.get(0).getReblog() != null ) {
+                        if (remoteStatuses.get(0).getReblog() != null) {
                             b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
                             b.putParcelable("idRedirect", remoteStatuses.get(0).getReblog());
-                        }else {
+                        } else {
                             b.putParcelable("tootReply", remoteStatuses.get(0));
                             b.putParcelable("idRedirect", remoteStatuses.get(0));
                         }
-                        b.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
+                        b.putString("accountReplyToken", account.getId() + "|" + account.getInstance());
                         intent.putExtras(b); //Put your id to your next Intent
                         contextReference.get().startActivity(intent);
                     }
-                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
 
 
-    public static void doCrossShare(final Context context, final Bundle bundle){
+    public static void doCrossShare(final Context context, final Bundle bundle) {
         List<Account> accounts = connectedAccounts(context, null, false);
 
-        if( accounts.size() == 1) {
+        if (accounts.size() == 1) {
             Intent intentToot = new Intent(context, TootActivity.class);
             intentToot.putExtras(bundle);
             context.startActivity(intentToot);
-            ((BaseActivity)context).finish();
-        }else {
+            ((BaseActivity) context).finish();
+        } else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
             int i = 0;
-            for(Account account: accounts){
+            for (Account account : accounts) {
                 accountArray[i] = account;
                 i++;
             }
@@ -756,10 +764,10 @@ public class CrossActions {
                 public void onClick(final DialogInterface dialog, int which) {
                     final Account account = accountArray[which];
                     Intent intentToot = new Intent(context, TootActivity.class);
-                    bundle.putString("accountReplyToken", account.getId()+"|"+account.getInstance());
+                    bundle.putString("accountReplyToken", account.getId() + "|" + account.getInstance());
                     intentToot.putExtras(bundle);
                     context.startActivity(intentToot);
-                    ((BaseActivity)context).finish();
+                    ((BaseActivity) context).finish();
                     dialog.dismiss();
                 }
             });
@@ -769,23 +777,24 @@ public class CrossActions {
 
     /**
      * Display a validation message
+     *
      * @param action int
      * @param status Status
      */
-    private static void displayConfirmationDialog(final Context context, final API.StatusAction action, final Status status, final RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface){
+    private static void displayConfirmationDialog(final Context context, final API.StatusAction action, final Status status, final RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface) {
 
         String title = null;
-        if( action == API.StatusAction.FAVOURITE){
+        if (action == API.StatusAction.FAVOURITE) {
             title = context.getString(R.string.favourite_add);
-        }else if( action == API.StatusAction.UNFAVOURITE){
+        } else if (action == API.StatusAction.UNFAVOURITE) {
             title = context.getString(R.string.favourite_remove);
-        }else if( action == API.StatusAction.REBLOG){
+        } else if (action == API.StatusAction.REBLOG) {
             title = context.getString(R.string.reblog_add);
-        }else if(action == API.StatusAction.UNREBLOG){
+        } else if (action == API.StatusAction.UNREBLOG) {
             title = context.getString(R.string.reblog_remove);
-        }else if ( action == API.StatusAction.PIN) {
+        } else if (action == API.StatusAction.PIN) {
             title = context.getString(R.string.pin_add);
-        }else if (action == API.StatusAction.UNPIN) {
+        } else if (action == API.StatusAction.UNPIN) {
             title = context.getString(R.string.pin_remove);
         }
 
@@ -801,36 +810,36 @@ public class CrossActions {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if( action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG)
+                        if (action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG)
                             reblogAction(context, status, onPostActionInterface);
-                        else if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE)
+                        else if (action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE)
                             favouriteAction(context, status, onPostActionInterface);
-                        else if ( action == API.StatusAction.PIN || action == API.StatusAction.UNPIN)
+                        else if (action == API.StatusAction.PIN || action == API.StatusAction.UNPIN)
                             pinAction(context, status, baseAdapter, onPostActionInterface);
 
-                        if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE){
+                        if (action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE) {
                             if (action == API.StatusAction.FAVOURITE) {
                                 status.setFavourited(true);
                                 status.setFavAnimated(true);
-                            }else{
+                            } else {
                                 status.setFavourited(false);
                                 status.setFavAnimated(false);
                             }
-                            if(baseAdapter instanceof PixelfedListAdapter)
+                            if (baseAdapter instanceof PixelfedListAdapter)
                                 ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                            else if(baseAdapter instanceof StatusListAdapter)
+                            else if (baseAdapter instanceof StatusListAdapter)
                                 ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
-                        }else if(action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG){
+                        } else if (action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG) {
                             if (action == API.StatusAction.REBLOG) {
                                 status.setReblogged(true);
                                 status.setBoostAnimated(true);
-                            }else{
+                            } else {
                                 status.setReblogged(false);
                                 status.setBoostAnimated(false);
                             }
-                            if(baseAdapter instanceof PixelfedListAdapter)
+                            if (baseAdapter instanceof PixelfedListAdapter)
                                 ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                            else if(baseAdapter instanceof StatusListAdapter)
+                            else if (baseAdapter instanceof StatusListAdapter)
                                 ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
                         }
                         dialog.dismiss();
@@ -847,26 +856,26 @@ public class CrossActions {
     }
 
 
-
     /**
      * Display a validation message
+     *
      * @param action int
      * @param status Status
      */
-    private static void displayConfirmationDialogCrossAction(final Context context,Account currentAccount, final API.StatusAction action, final Status status, final OnPostActionInterface onPostActionInterface, final RecyclerView.Adapter baseAdapter){
+    private static void displayConfirmationDialogCrossAction(final Context context, Account currentAccount, final API.StatusAction action, final Status status, final OnPostActionInterface onPostActionInterface, final RecyclerView.Adapter baseAdapter) {
 
         String title = null;
-        if( action == API.StatusAction.FAVOURITE){
+        if (action == API.StatusAction.FAVOURITE) {
             title = context.getString(R.string.favourite_add);
-        }else if( action == API.StatusAction.UNFAVOURITE){
+        } else if (action == API.StatusAction.UNFAVOURITE) {
             title = context.getString(R.string.favourite_remove);
-        }else if( action == API.StatusAction.REBLOG){
+        } else if (action == API.StatusAction.REBLOG) {
             title = context.getString(R.string.reblog_add);
-        }else if(action == API.StatusAction.UNREBLOG){
+        } else if (action == API.StatusAction.UNREBLOG) {
             title = context.getString(R.string.reblog_remove);
-        }else if ( action == API.StatusAction.PIN) {
+        } else if (action == API.StatusAction.PIN) {
             title = context.getString(R.string.pin_add);
-        }else if (action == API.StatusAction.UNPIN) {
+        } else if (action == API.StatusAction.UNPIN) {
             title = context.getString(R.string.pin_remove);
         }
 
@@ -882,29 +891,29 @@ public class CrossActions {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE){
+                        if (action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE) {
                             if (action == API.StatusAction.FAVOURITE) {
                                 status.setFavourited(true);
                                 status.setFavAnimated(true);
-                            }else{
+                            } else {
                                 status.setFavourited(false);
                                 status.setFavAnimated(false);
                             }
-                            if(baseAdapter instanceof PixelfedListAdapter)
+                            if (baseAdapter instanceof PixelfedListAdapter)
                                 ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                            else if(baseAdapter instanceof StatusListAdapter)
+                            else if (baseAdapter instanceof StatusListAdapter)
                                 ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
-                        }else if(action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG){
+                        } else if (action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG) {
                             if (action == API.StatusAction.REBLOG) {
                                 status.setReblogged(true);
                                 status.setBoostAnimated(true);
-                            }else{
+                            } else {
                                 status.setReblogged(false);
                                 status.setBoostAnimated(false);
                             }
-                            if(baseAdapter instanceof PixelfedListAdapter)
+                            if (baseAdapter instanceof PixelfedListAdapter)
                                 ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
-                            else if(baseAdapter instanceof StatusListAdapter)
+                            else if (baseAdapter instanceof StatusListAdapter)
                                 ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
                         }
                         new PostActionAsyncTask(context, currentAccount, status, action, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -923,13 +932,14 @@ public class CrossActions {
 
     /**
      * Follow/Unfollow an account
+     *
      * @param account Account
      */
-    private static void followAction(Context context, Account account, RecyclerView.Adapter baseAdapter, OnPostActionInterface onPostActionInterface){
-        if( account.isFollowing()){
+    private static void followAction(Context context, Account account, RecyclerView.Adapter baseAdapter, OnPostActionInterface onPostActionInterface) {
+        if (account.isFollowing()) {
             new PostActionAsyncTask(context, API.StatusAction.UNFOLLOW, account.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             account.setFollowing(false);
-        }else{
+        } else {
             new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             account.setFollowing(true);
         }
@@ -938,14 +948,15 @@ public class CrossActions {
 
     /**
      * Favourites/Unfavourites a status
+     *
      * @param status Status
      */
-    private static void favouriteAction(Context context, Status status,OnPostActionInterface onPostActionInterface){
+    private static void favouriteAction(Context context, Status status, OnPostActionInterface onPostActionInterface) {
 
-        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())){
+        if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
             new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setFavourited(false);
-        }else{
+        } else {
             new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setFavourited(true);
         }
@@ -953,14 +964,15 @@ public class CrossActions {
 
     /**
      * Reblog/Unreblog a status
+     *
      * @param status Status
      */
-    private static void reblogAction(Context context, Status status,  OnPostActionInterface onPostActionInterface){
-        if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-            String statusId = status.getReblog()!=null?status.getReblog().getId():status.getId();
+    private static void reblogAction(Context context, Status status, OnPostActionInterface onPostActionInterface) {
+        if (status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged())) {
+            String statusId = status.getReblog() != null ? status.getReblog().getId() : status.getId();
             new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, statusId, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setReblogged(false);
-        }else{
+        } else {
             new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setReblogged(true);
         }
@@ -968,6 +980,7 @@ public class CrossActions {
 
     /**
      * Pin or unpin a status
+     *
      * @param status Status
      */
     private static void pinAction(Context context, Status status, RecyclerView.Adapter baseAdapter, OnPostActionInterface onPostActionInterface) {
@@ -981,8 +994,6 @@ public class CrossActions {
         }
         baseAdapter.notifyDataSetChanged();
     }
-
-
 
 
 }

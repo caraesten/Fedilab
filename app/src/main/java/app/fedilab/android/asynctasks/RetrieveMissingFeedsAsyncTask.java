@@ -51,14 +51,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String remoteInstance;
     private int timelineId;
 
-    public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+    public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
         this.type = type;
     }
 
-    public RetrieveMissingFeedsAsyncTask(Context context, String remoteInstance, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+    public RetrieveMissingFeedsAsyncTask(Context context, String remoteInstance, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
@@ -66,7 +66,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.remoteInstance = remoteInstance;
     }
 
-    public RetrieveMissingFeedsAsyncTask(Context context, int timelineId, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+    public RetrieveMissingFeedsAsyncTask(Context context, int timelineId, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
@@ -77,9 +77,9 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( this.contextReference.get() == null)
+        if (this.contextReference.get() == null)
             return null;
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             API api = new API(this.contextReference.get());
             List<app.fedilab.android.client.Entities.Status> tempStatus = null;
             APIResponse apiResponse = null;
@@ -98,7 +98,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             else if (type == RetrieveFeedsAsyncTask.Type.TAG) {
                 SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 ManageTimelines manageTimelines = new TimelinesDAO(contextReference.get(), db).getById(timelineId);
-                if( manageTimelines != null && manageTimelines.getTagTimeline() != null){
+                if (manageTimelines != null && manageTimelines.getTagTimeline() != null) {
                     TagTimeline tagTimeline = manageTimelines.getTagTimeline();
                     boolean isArt = tagTimeline.isART();
                     if (isArt)
@@ -117,7 +117,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     if (conversations != null && conversations.size() > 0) {
                         for (Conversation conversation : conversations) {
                             app.fedilab.android.client.Entities.Status status = conversation.getLast_status();
-                            if( status != null) {
+                            if (status != null) {
                                 List<String> ppConversation = new ArrayList<>();
                                 for (Account account : conversation.getAccounts())
                                     ppConversation.add(account.getAvatar());
@@ -135,13 +135,13 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
                 MainActivity.lastHomeId = statuses.get(0).getId();
             }
-        }else{
+        } else {
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             List<app.fedilab.android.client.Entities.Status> tempStatus = null;
             APIResponse apiResponse = null;
             if (type == RetrieveFeedsAsyncTask.Type.GNU_HOME) {
                 apiResponse = gnuapi.getHomeTimelineSinceId(since_id);
-            }else if (type == RetrieveFeedsAsyncTask.Type.GNU_LOCAL)
+            } else if (type == RetrieveFeedsAsyncTask.Type.GNU_LOCAL)
                 apiResponse = gnuapi.getPublicTimelineSinceId(true, since_id);
             else if (type == RetrieveFeedsAsyncTask.Type.GNU_WHOLE)
                 apiResponse = gnuapi.getPublicTimelineSinceId(false, since_id);

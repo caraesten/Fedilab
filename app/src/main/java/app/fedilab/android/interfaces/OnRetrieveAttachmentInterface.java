@@ -23,5 +23,6 @@ import app.fedilab.android.client.Entities.Error;
  */
 public interface OnRetrieveAttachmentInterface {
     void onRetrieveAttachment(Attachment attachment, String fileName, Error error);
+
     void onUpdateProgress(int progress);
 }

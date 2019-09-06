@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,10 +14,10 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -27,6 +26,7 @@
         android:paddingEnd="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:layout_height="wrap_content">
+
         <LinearLayout
             style="?attr/shapeBorder"
             android:layout_width="match_parent"
@@ -35,10 +35,12 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:orientation="horizontal">
+
             <TextView
                 android:text="@string/settings_time_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <Button
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
@@ -47,12 +49,14 @@
                 style="?attr/borderlessColored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:text="@string/settings_time_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <Button
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
@@ -97,11 +101,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_boosts"/>
+                android:text="@string/show_boosts" />
+
             <Spinner
                 android:id="@+id/filter_boost"
                 android:entries="@array/filter_select"
@@ -115,11 +121,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_replies"/>
+                android:text="@string/show_replies" />
+
             <Spinner
                 android:id="@+id/filter_replies"
                 android:entries="@array/filter_select"
@@ -133,11 +141,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_media"/>
+                android:text="@string/show_media" />
+
             <Spinner
                 android:id="@+id/filter_media"
                 android:entries="@array/filter_select"
@@ -152,11 +162,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_pinned"/>
+                android:text="@string/show_pinned" />
+
             <Spinner
                 android:id="@+id/filter_pinned"
                 android:entries="@array/filter_select"

@@ -42,33 +42,37 @@ public class TagsCacheDAO {
 
     /**
      * Insert a tag in database
+     *
      * @param tag String
      */
     public void insert(String tag) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_TAGS, tag);
-        try{
+        try {
             db.insert(Sqlite.TABLE_CACHE_TAGS, null, values);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     /**
      * update a tag in database
+     *
      * @param oldTag String
      * @param newTag String
      */
     public void update(String oldTag, String newTag) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_TAGS, newTag);
-        try{
-            db.update(Sqlite.TABLE_CACHE_TAGS, values, Sqlite.COL_TAGS + " = ?",new String[]{ oldTag});
-        }catch (Exception ignored) {}
+        try {
+            db.update(Sqlite.TABLE_CACHE_TAGS, values, Sqlite.COL_TAGS + " = ?", new String[]{oldTag});
+        } catch (Exception ignored) {
+        }
     }
 
     /***
      * Remove all tags
      */
-    public void removeAll(){
+    public void removeAll() {
         db.delete(Sqlite.TABLE_CACHE_TAGS, null, null);
     }
 
@@ -79,11 +83,12 @@ public class TagsCacheDAO {
 
     /**
      * Returns all tags in db
+     *
      * @return string tags List<String>
      */
-    public List<String> getAll(){
+    public List<String> getAll() {
         try {
-            Cursor c = db.query(Sqlite.TABLE_CACHE_TAGS, null, null, null, null, null, Sqlite.COL_TAGS+ " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_CACHE_TAGS, null, null, null, null, null, Sqlite.COL_TAGS + " ASC", null);
             return cursorToTag(c);
         } catch (Exception e) {
             return null;
@@ -92,11 +97,12 @@ public class TagsCacheDAO {
 
     /**
      * Returns tags starting by "search"
+     *
      * @return boolean present
      */
-    public boolean isPresent(String search){
+    public boolean isPresent(String search) {
         Cursor c = db.query(Sqlite.TABLE_CACHE_TAGS, null, Sqlite.COL_TAGS + " = \"" + search + "\"", null, null, null, null, null);
-        boolean isPresent = (c!= null && c.getCount() > 0);
+        boolean isPresent = (c != null && c.getCount() > 0);
         assert c != null;
         c.close();
         return isPresent;
@@ -104,9 +110,10 @@ public class TagsCacheDAO {
 
     /**
      * Returns tags starting by "search"
+     *
      * @return tags List<String>
      */
-    public List<String> getBy(String search){
+    public List<String> getBy(String search) {
         Cursor c = db.query(Sqlite.TABLE_CACHE_TAGS, null, Sqlite.COL_TAGS + " LIKE \"%" + search + "%\"", null, null, null, null, null);
         return cursorToTag(c);
     }
@@ -116,14 +123,14 @@ public class TagsCacheDAO {
      * @param c Cursor
      * @return List<String>
      */
-    private List<String> cursorToTag(Cursor c){
+    private List<String> cursorToTag(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
             return null;
         }
         List<String> tags = new ArrayList<>();
-        while (c.moveToNext() ) {
+        while (c.moveToNext()) {
             tags.add(c.getString(c.getColumnIndex(Sqlite.COL_TAGS)));
         }
         //Close the cursor

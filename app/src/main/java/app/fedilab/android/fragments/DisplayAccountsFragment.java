@@ -243,10 +243,10 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             this.accounts.addAll(accounts);
             accountsListAdapter.notifyItemRangeChanged(currentPosition, accounts.size());
         }
-        if( context instanceof TootInfoActivity && this.accounts != null){
-            if( type ==  RetrieveAccountsAsyncTask.Type.REBLOGGED) {
+        if (context instanceof TootInfoActivity && this.accounts != null) {
+            if (type == RetrieveAccountsAsyncTask.Type.REBLOGGED) {
                 ((TootInfoActivity) context).updateBoostCount(this.accounts.size());
-            }else  if( type ==  RetrieveAccountsAsyncTask.Type.FAVOURITED) {
+            } else if (type == RetrieveAccountsAsyncTask.Type.FAVOURITED) {
                 ((TootInfoActivity) context).updateFavCount(this.accounts.size());
             }
         }
@@ -292,7 +292,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
     }
 
-    public void pullToRefresh(){
+    public void pullToRefresh() {
         max_id = null;
         accounts = new ArrayList<>();
         firstLoad = true;

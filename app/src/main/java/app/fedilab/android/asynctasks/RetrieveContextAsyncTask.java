@@ -42,7 +42,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     private boolean directtimeline;
 
 
-    public RetrieveContextAsyncTask(Context context, boolean expanded,  boolean directtimeline, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
+    public RetrieveContextAsyncTask(Context context, boolean expanded, boolean directtimeline, String statusId, OnRetrieveContextInterface onRetrieveContextInterface) {
         this.contextReference = new WeakReference<>(context);
         this.statusId = statusId;
         this.listener = onRetrieveContextInterface;
@@ -52,7 +52,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             API api = new API(this.contextReference.get());
             statusContext = api.getStatusContext(statusId);
             //Retrieves the first toot
@@ -60,7 +60,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
                 statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
             }
             error = api.getError();
-        }else{
+        } else {
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             statusContext = gnuapi.getStatusContext(statusId, directtimeline);
             //Retrieves the first toot

@@ -5,14 +5,13 @@
         <!-- MASTODON MENU -->
         <item
             android:title="@string/communication_menu_title"
-            android:id="@+id/nav_main_com"
-            >
+            android:id="@+id/nav_main_com">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
                         android:id="@+id/menu_none"
                         android:title=""
-                        android:visible="false"/>
+                        android:visible="false" />
                     <item
                         android:id="@+id/nav_news"
                         android:icon="@drawable/ic_new_releases_black"
@@ -77,8 +76,7 @@
         <!-- PEERTUBE MENU -->
         <item
             android:title="@string/communication_menu_title"
-            android:id="@+id/nav_peertube_comm"
-            >
+            android:id="@+id/nav_peertube_comm">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -113,8 +111,7 @@
         <!-- PIXELFED MENU -->
         <item
             android:title="@string/communication_menu_title"
-            android:id="@+id/nav_pixelfed_comm"
-            >
+            android:id="@+id/nav_pixelfed_comm">
             <menu>
                 <group android:checkableBehavior="single">
                     <!--

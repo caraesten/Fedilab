@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -27,14 +26,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="?attr/actionBarSize"
         android:scrollbars="none"
-        android:divider="@null"
-        >
-    </ListView>
+        android:divider="@null"></ListView>
+
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/no_action_text"
             android:padding="10dp"
@@ -54,8 +53,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -17,8 +17,10 @@ package app.fedilab.android.fragments;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,18 +64,15 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
         mainLoader.setVisibility(View.VISIBLE);
 
 
-
-        asyncTask = new RetrieveHowToAsyncTask(context,  DisplayHowToFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveHowToAsyncTask(context, DisplayHowToFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
         return rootView;
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -86,22 +85,21 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
 
 
     @Override
     public void onRetrieveHowTo(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
         List<HowToVideo> howToVideos = apiResponse.getHowToVideos();
-        if( howToVideos == null || howToVideos.size() == 0 ){
-            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (howToVideos == null || howToVideos.size() == 0) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         HowToVideosAdapter howToVideosAdapter = new HowToVideosAdapter(howToVideos);

@@ -13,6 +13,7 @@ package app.fedilab.android.client.Entities;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.os.Parcel;
 import android.os.Parcelable;
 

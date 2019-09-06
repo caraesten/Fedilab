@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -69,7 +70,6 @@ import app.fedilab.android.sqlite.Sqlite;
 public class PeertubeAPI {
 
 
-
     private Account account;
     private Context context;
     private Results results;
@@ -92,14 +92,14 @@ public class PeertubeAPI {
         tootPerPage = Helper.TOOTS_PER_PAGE;
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
-        if( Helper.getLiveInstance(context) != null)
+        if (Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-            if( account == null) {
+            if (account == null) {
                 apiResponse = new APIResponse();
                 APIError = new Error();
                 return;
@@ -113,7 +113,7 @@ public class PeertubeAPI {
 
     public PeertubeAPI(Context context, String instance, String token) {
         this.context = context;
-        if( context == null) {
+        if (context == null) {
             apiResponse = new APIResponse();
             APIError = new Error();
             return;
@@ -122,12 +122,12 @@ public class PeertubeAPI {
         tootPerPage = Helper.TOOTS_PER_PAGE;
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
-        if( instance != null)
+        if (instance != null)
             this.instance = instance;
         else
             this.instance = Helper.getLiveInstance(context);
 
-        if( token != null)
+        if (token != null)
             this.prefKeyOauthTokenT = token;
         else
             this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -160,11 +160,10 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Update video meta data *synchronously*
      *
-     * @param peertube       Peertube
+     * @param peertube Peertube
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -174,42 +173,42 @@ public class PeertubeAPI {
 
         params.put("name", peertube.getName());
         //Category
-        Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
+        Map.Entry<Integer, String> categoryM = peertube.getCategory().entrySet().iterator().next();
         Integer idCategory = categoryM.getKey();
         params.put("category", String.valueOf(idCategory));
         //License
-        Map.Entry<Integer,String> licenseM = peertube.getLicense().entrySet().iterator().next();
-        Integer idLicense= licenseM.getKey();
+        Map.Entry<Integer, String> licenseM = peertube.getLicense().entrySet().iterator().next();
+        Integer idLicense = licenseM.getKey();
         params.put("licence", String.valueOf(idLicense));
         //language
-        Map.Entry<String,String> languagesM = peertube.getLanguage().entrySet().iterator().next();
+        Map.Entry<String, String> languagesM = peertube.getLanguage().entrySet().iterator().next();
         String iDlanguage = languagesM.getKey();
         params.put("language", iDlanguage);
         params.put("support", "null");
         params.put("description", peertube.getDescription());
         //Channel
-        Map.Entry<String,String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
+        Map.Entry<String, String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
         String iDChannel = channelsM.getValue();
         params.put("channelId", iDChannel);
         //Privacy
-        Map.Entry<Integer,String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
+        Map.Entry<Integer, String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
         Integer idPrivacy = privacyM.getKey();
         params.put("privacy", String.valueOf(idPrivacy));
-        if( peertube.getTags() != null && peertube.getTags().size() > 0){
+        if (peertube.getTags() != null && peertube.getTags().size() > 0) {
             StringBuilder parameters = new StringBuilder();
             parameters.append("[]&");
-            for(String tag: peertube.getTags())
+            for (String tag : peertube.getTags())
                 parameters.append("tags=").append(tag).append("&");
             String strParam = parameters.toString();
             strParam = strParam.substring(0, strParam.length() - 1);
             params.put("tags[]", strParam);
-        }else {
+        } else {
             params.put("tags", "null");
         }
         params.put("nsfw", String.valueOf(peertube.isSensitive()));
         params.put("waitTranscoding", "true");
         params.put("commentsEnabled", String.valueOf(peertube.isCommentsEnabled()));
-        params.put("scheduleUpdate","null");
+        params.put("scheduleUpdate", "null");
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -241,7 +240,7 @@ public class PeertubeAPI {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/categories"), 60, null, null);
             JSONObject categories = new JSONObject(response);
             LinkedHashMap<Integer, String> _pcategories = new LinkedHashMap<>();
-            for( int i = 1 ; i <= categories.length() ; i++){
+            for (int i = 1; i <= categories.length(); i++) {
                 _pcategories.put(i, categories.getString(String.valueOf(i)));
 
             }
@@ -255,14 +254,15 @@ public class PeertubeAPI {
                 String key = iter.next();
                 try {
                     _languages.put(key, (String) languages.get(key));
-                } catch (JSONException ignored) {}
+                } catch (JSONException ignored) {
+                }
             }
             peertubeInformation.setLanguages(_languages);
 
             response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/privacies"), 60, null, null);
             JSONObject privacies = new JSONObject(response);
             LinkedHashMap<Integer, String> _pprivacies = new LinkedHashMap<>();
-            for( int i = 1 ; i <= privacies.length() ; i++){
+            for (int i = 1; i <= privacies.length(); i++) {
                 _pprivacies.put(i, privacies.getString(String.valueOf(i)));
 
             }
@@ -272,7 +272,7 @@ public class PeertubeAPI {
             response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/video-playlists/privacies"), 60, null, null);
             JSONObject plprivacies = new JSONObject(response);
             LinkedHashMap<Integer, String> _plprivacies = new LinkedHashMap<>();
-            for( int i = 1 ; i <= plprivacies.length() ; i++){
+            for (int i = 1; i <= plprivacies.length(); i++) {
                 _plprivacies.put(i, plprivacies.getString(String.valueOf(i)));
 
             }
@@ -281,7 +281,7 @@ public class PeertubeAPI {
             response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
             JSONObject licences = new JSONObject(response);
             LinkedHashMap<Integer, String> _plicences = new LinkedHashMap<>();
-            for( int i = 1 ; i <= licences.length() ; i++){
+            for (int i = 1; i <= licences.length(); i++) {
                 _plicences.put(i, licences.getString(String.valueOf(i)));
 
             }
@@ -290,10 +290,10 @@ public class PeertubeAPI {
 
             String instance = Helper.getLiveInstance(context);
             String lang = null;
-            if(PeertubeInformation.langueMapped.containsKey( Locale.getDefault().getLanguage()))
+            if (PeertubeInformation.langueMapped.containsKey(Locale.getDefault().getLanguage()))
                 lang = PeertubeInformation.langueMapped.get(Locale.getDefault().getLanguage());
 
-            if( lang != null && !lang.startsWith("en")) {
+            if (lang != null && !lang.startsWith("en")) {
                 response = new HttpsConnection(context, this.instance).get(String.format("https://" + instance + "/client/locales/%s/server.json", lang), 60, null, null);
                 JSONObject translations = new JSONObject(response);
                 LinkedHashMap<String, String> _translations = new LinkedHashMap<>();
@@ -324,7 +324,7 @@ public class PeertubeAPI {
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
-    public Account verifyCredentials()  {
+    public Account verifyCredentials() {
         account = new Account();
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
@@ -338,22 +338,23 @@ public class PeertubeAPI {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
-        }catch (HttpsConnection.HttpsConnectionException e) {
-            if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            if (e.getStatusCode() == 401 || e.getStatusCode() == 403) {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
                 HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
-                if( values.containsKey("access_token") && values.get("access_token") != null) {
+                if (values.containsKey("access_token") && values.get("access_token") != null) {
                     targetedAccount.setToken(values.get("access_token"));
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     //This account is currently logged in, the token is updated
-                    if( prefKeyOauthTokenT.equals(token)){
+                    if (prefKeyOauthTokenT.equals(token)) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
                         editor.apply();
                     }
-                }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                }
+                if (values.containsKey("refresh_token") && values.get("refresh_token") != null)
                     targetedAccount.setRefresh_token(values.get("refresh_token"));
                 new AccountDAO(context, db).updateAccount(targetedAccount);
 
@@ -384,7 +385,7 @@ public class PeertubeAPI {
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
-    private HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
+    private HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token) {
         account = new Account();
         HashMap<String, String> params = new HashMap<>();
         HashMap<String, String> newValues = new HashMap<>();
@@ -396,10 +397,10 @@ public class PeertubeAPI {
             String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/users/token"), 60, params, null);
             JSONObject resobj = new JSONObject(response);
             String token = resobj.get("access_token").toString();
-            if( resobj.has("refresh_token"))
+            if (resobj.has("refresh_token"))
                 refresh_token = resobj.get("refresh_token").toString();
-            newValues.put("access_token",token);
-            newValues.put("refresh_token",refresh_token);
+            newValues.put("access_token", token);
+            newValues.put("refresh_token", refresh_token);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -417,6 +418,7 @@ public class PeertubeAPI {
 
     /**
      * Returns an account
+     *
      * @param accountId String account fetched
      * @return Account entity
      */
@@ -424,7 +426,7 @@ public class PeertubeAPI {
 
         account = new Account();
         try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s", accountId)), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponsePeertube(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
@@ -442,9 +444,9 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Returns a relationship between the authenticated account and an account
+     *
      * @param uri String accounts fetched
      * @return Relationship entity
      */
@@ -475,8 +477,8 @@ public class PeertubeAPI {
     /**
      * Retrieves videos for the account *synchronously*
      *
-     * @param acct String Id of the account
-     * @param max_id    String id max
+     * @param acct   String Id of the account
+     * @param max_id String id max
      * @return APIResponse
      */
     public APIResponse getVideos(String acct, String max_id) {
@@ -486,7 +488,7 @@ public class PeertubeAPI {
     /**
      * Retrieves history for videos for the account *synchronously*
      *
-     * @param max_id    String id max
+     * @param max_id String id max
      * @return APIResponse
      */
     public APIResponse getMyHistory(String max_id) {
@@ -494,12 +496,11 @@ public class PeertubeAPI {
     }
 
 
-
     /**
-     *  Retrieves history for videos for the account *synchronously*
+     * Retrieves history for videos for the account *synchronously*
      *
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param max_id   String id max
+     * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -539,7 +540,7 @@ public class PeertubeAPI {
     /**
      * Retrieves videos for the account *synchronously*
      *
-     * @param max_id    String id max
+     * @param max_id String id max
      * @return APIResponse
      */
     public APIResponse getMyVideos(String max_id) {
@@ -547,12 +548,11 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Retrieves status for the account *synchronously*
      *
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param max_id   String id max
+     * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -593,9 +593,9 @@ public class PeertubeAPI {
     /**
      * Retrieves status for the account *synchronously*
      *
-     * @param acct       String Id of the account
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param acct     String Id of the account
+     * @param max_id   String id max
+     * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -633,28 +633,28 @@ public class PeertubeAPI {
     /**
      * Retrieves Peertube notifications for the account *synchronously*
      *
-     * @param max_id          String id max
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getNotifications(String max_id){
+    public APIResponse getNotifications(String max_id) {
         return getNotifications(max_id, null);
     }
 
     /**
      * Retrieves Peertube notifications since id for the account *synchronously*
      *
-     * @param since_id          String id since
+     * @param since_id String id since
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(String since_id){
+    public APIResponse getNotificationsSince(String since_id) {
         return getNotifications(null, since_id);
     }
 
     /**
      * Retrieves Peertube notifications for the account *synchronously*
      *
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param max_id   String id max
+     * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -692,8 +692,8 @@ public class PeertubeAPI {
     /**
      * Retrieves videos channel for the account *synchronously*
      *
-     * @param acct String Id of the account
-     * @param max_id    String id max
+     * @param acct   String Id of the account
+     * @param max_id String id max
      * @return APIResponse
      */
     public APIResponse getVideosChannel(String acct, String max_id) {
@@ -703,9 +703,9 @@ public class PeertubeAPI {
     /**
      * Retrieves status for the account *synchronously*
      *
-     * @param acct       String Id of the account
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param acct     String Id of the account
+     * @param max_id   String id max
+     * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -743,18 +743,17 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
      * Retrieves subscription videos *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getSubscriptionsTL( String max_id) {
+    public APIResponse getSubscriptionsTL(String max_id) {
         try {
-            return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+            return getTL("/users/me/subscriptions/videos", "-publishedAt", null, max_id, null, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
-            if( e.getStatusCode() == 401 || e.getStatusCode() == 403) {
+            if (e.getStatusCode() == 401 || e.getStatusCode() == 403) {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
                 HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
@@ -772,7 +771,7 @@ public class PeertubeAPI {
                     targetedAccount.setRefresh_token(values.get("refresh_token"));
                 new AccountDAO(context, db).updateAccount(targetedAccount);
                 try {
-                    return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null);
+                    return getTL("/users/me/subscriptions/videos", "-publishedAt", null, max_id, null, null);
                 } catch (HttpsConnection.HttpsConnectionException e1) {
                     setError(e.getStatusCode(), e);
                     return apiResponse;
@@ -785,12 +784,13 @@ public class PeertubeAPI {
 
     /**
      * Retrieves overview videos *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getOverviewTL( String max_id) {
+    public APIResponse getOverviewTL(String max_id) {
         try {
-            return getTL("/overviews/videos",null,null, max_id, null, null);
+            return getTL("/overviews/videos", null, null, max_id, null, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -799,12 +799,13 @@ public class PeertubeAPI {
 
     /**
      * Retrieves trending videos *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getTrendingTL( String max_id) {
+    public APIResponse getTrendingTL(String max_id) {
         try {
-            return getTL("/videos/","-trending", null,max_id, null, null);
+            return getTL("/videos/", "-trending", null, max_id, null, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -813,12 +814,13 @@ public class PeertubeAPI {
 
     /**
      * Retrieves trending videos *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getRecentlyAddedTL( String max_id) {
+    public APIResponse getRecentlyAddedTL(String max_id) {
         try {
-            return getTL("/videos/","-publishedAt",null,max_id, null, null);
+            return getTL("/videos/", "-publishedAt", null, max_id, null, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -827,12 +829,13 @@ public class PeertubeAPI {
 
     /**
      * Retrieves trending videos *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getLocalTL( String max_id) {
+    public APIResponse getLocalTL(String max_id) {
         try {
-            return getTL("/videos/","-publishedAt", "local",max_id, null, null);
+            return getTL("/videos/", "-publishedAt", "local", max_id, null, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -841,11 +844,12 @@ public class PeertubeAPI {
 
     /**
      * Retrieves home timeline for the account since an Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLSinceId(String since_id) {
         try {
-            return getTL("/users/me/subscriptions/videos",null,null,null, since_id, null);
+            return getTL("/users/me/subscriptions/videos", null, null, null, since_id, null);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -854,11 +858,12 @@ public class PeertubeAPI {
 
     /**
      * Retrieves home timeline for the account from a min Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTLMinId(String min_id) {
         try {
-            return getTL("/users/me/subscriptions/videos",null, null,null, null, min_id);
+            return getTL("/users/me/subscriptions/videos", null, null, null, null, min_id);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             return apiResponse;
@@ -868,6 +873,7 @@ public class PeertubeAPI {
 
     /**
      * Retrieves home timeline for the account *synchronously*
+     *
      * @param max_id   String id max
      * @param since_id String since the id
      * @return APIResponse
@@ -881,13 +887,13 @@ public class PeertubeAPI {
             params.put("since_id", since_id);
         if (min_id != null)
             params.put("min_id", min_id);
-        params.put("count",String.valueOf(tootPerPage));
-        if( sort != null)
-            params.put("sort",sort);
+        params.put("count", String.valueOf(tootPerPage));
+        if (sort != null)
+            params.put("sort", sort);
         else
-            params.put("sort","publishedAt");
-        if( filter != null)
-            params.put("filter",filter);
+            params.put("sort", "publishedAt");
+        if (filter != null)
+            params.put("filter", filter);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean nsfw = sharedpreferences.getBoolean(Helper.SET_VIDEO_NSFW, false);
         params.put("nsfw", String.valueOf(nsfw));
@@ -895,21 +901,21 @@ public class PeertubeAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-            if( !action.equals("/overviews/videos")) {
+            if (!action.equals("/overviews/videos")) {
                 JSONArray values = new JSONObject(response).getJSONArray("data");
                 peertubes = parsePeertube(values);
-            }else {
+            } else {
                 JSONArray videoA = new JSONObject(response).getJSONArray("categories");
                 JSONArray values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes1 = parsePeertube(values);
-                if( peertubes1 != null && peertubes1.size() > 0) {
+                if (peertubes1 != null && peertubes1.size() > 0) {
                     peertubes1.get(0).setHeaderType("categories");
                     peertubes1.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("category").getString("label"));
                     peertubes.addAll(peertubes1);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes2 = parsePeertube(values);
-                if( peertubes2 != null && peertubes2.size() > 0) {
+                if (peertubes2 != null && peertubes2.size() > 0) {
                     peertubes2.get(0).setHeaderType("categories");
                     peertubes2.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("category").getString("label"));
                     peertubes.addAll(peertubes2);
@@ -918,14 +924,14 @@ public class PeertubeAPI {
                 videoA = new JSONObject(response).getJSONArray("tags");
                 values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes5 = parsePeertube(values);
-                if( peertubes5 != null && peertubes5.size() > 0) {
+                if (peertubes5 != null && peertubes5.size() > 0) {
                     peertubes5.get(0).setHeaderType("tags");
                     peertubes5.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getString("tag"));
                     peertubes.addAll(peertubes5);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes6 = parsePeertube(values);
-                if( peertubes6 != null && peertubes6.size() > 0) {
+                if (peertubes6 != null && peertubes6.size() > 0) {
                     peertubes6.get(0).setHeaderType("tags");
                     peertubes6.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getString("tag"));
                     peertubes.addAll(peertubes6);
@@ -934,14 +940,14 @@ public class PeertubeAPI {
                 videoA = new JSONObject(response).getJSONArray("channels");
                 values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes3 = parsePeertube(values);
-                if( peertubes3 != null && peertubes3.size() > 0) {
+                if (peertubes3 != null && peertubes3.size() > 0) {
                     peertubes3.get(0).setHeaderType("channels");
                     peertubes3.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes3);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes4 = parsePeertube(values);
-                if( peertubes4 != null && peertubes4.size() > 0) {
+                if (peertubes4 != null && peertubes4.size() > 0) {
                     peertubes4.get(0).setHeaderType("channels");
                     peertubes4.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes4);
@@ -961,11 +967,10 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
      * Retrieves Peertube channel from an account *synchronously*
      * Peertube channels are dealt like accounts
+     *
      * @return APIResponse
      */
     public APIResponse getPeertubeChannel(String name) {
@@ -994,6 +999,7 @@ public class PeertubeAPI {
 
     /**
      * Retrieves Peertube videos from an instance *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getPeertubeChannelVideos(String instance, String name) {
@@ -1001,7 +1007,7 @@ public class PeertubeAPI {
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/video-channels/%s/videos", name), 60, null, null);
+            String response = httpsConnection.get(String.format("https://" + instance + "/api/v1/video-channels/%s/videos", name), 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1021,18 +1027,19 @@ public class PeertubeAPI {
 
     /**
      * Retrieves Peertube videos from an instance *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getPeertube(String instance, String max_id) {
 
         List<Peertube> peertubes = new ArrayList<>();
         HashMap<String, String> params = new HashMap<>();
-        if( max_id == null)
+        if (max_id == null)
             max_id = "0";
         params.put("start", String.valueOf(tootPerPage));
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
+            String response = httpsConnection.get("https://" + instance + "/api/v1/videos", 60, params, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1052,6 +1059,7 @@ public class PeertubeAPI {
 
     /**
      * Retrieves Peertube videos from an instance *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getSinglePeertube(String instance, String videoId, String token) {
@@ -1059,7 +1067,7 @@ public class PeertubeAPI {
         Peertube peertube = null;
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, token);
+            String response = httpsConnection.get(String.format("https://" + instance + "/api/v1/videos/%s", videoId), 60, null, token);
             JSONObject jsonObject = new JSONObject(response);
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1082,7 +1090,7 @@ public class PeertubeAPI {
     /**
      * Retrieves peertube search *synchronously*
      *
-     * @param query  String search
+     * @param query String search
      * @return APIResponse
      */
     public APIResponse searchPeertube(String instance, String query) {
@@ -1096,7 +1104,7 @@ public class PeertubeAPI {
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://"+instance+"/api/v1/search/videos", 60, params, null);
+            String response = httpsConnection.get("https://" + instance + "/api/v1/search/videos", 60, params, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1114,15 +1122,17 @@ public class PeertubeAPI {
         apiResponse.setPeertubes(peertubes);
         return apiResponse;
     }
+
     /**
      * Retrieves Peertube videos from an instance *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getSinglePeertubeComments(String instance, String videoId) {
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s/comment-threads", videoId), 60, null, null);
+            String response = httpsConnection.get(String.format("https://" + instance + "/api/v1/videos/%s/comment-threads", videoId), 60, null, null);
             JSONObject jsonObject = new JSONObject(response);
             statuses = parseSinglePeertubeComments(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1141,19 +1151,17 @@ public class PeertubeAPI {
     }
 
 
-
-
-
     /**
      * Retrieves rating of user on a video  *synchronously*
+     *
      * @param id String id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public String getRating(String id){
+    public String getRating(String id) {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/users/me/videos/%s/rating",id)), 60, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/users/me/videos/%s/rating", id)), 60, null, prefKeyOauthTokenT);
             return new JSONObject(response).get("rating").toString();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1172,48 +1180,51 @@ public class PeertubeAPI {
 
     /**
      * Makes the post action for a status
+     *
      * @param statusAction Enum
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
+     * @param targetedId   String id of the targeted Id *can be this of a status or an account*
      * @return in status code - Should be equal to 200 when action is done
      */
-    public int postAction(API.StatusAction statusAction, String targetedId){
+    public int postAction(API.StatusAction statusAction, String targetedId) {
         return postAction(statusAction, targetedId, null, null);
     }
 
 
-    public int postRating(String targetedId, String actionMore){
+    public int postRating(String targetedId, String actionMore) {
         return postAction(API.StatusAction.RATEVIDEO, targetedId, actionMore, null);
     }
 
-    public int postComment(String targetedId, String actionMore){
+    public int postComment(String targetedId, String actionMore) {
         return postAction(API.StatusAction.PEERTUBECOMMENT, targetedId, actionMore, null);
     }
 
-    public int postReply(String targetedId, String actionMore, String targetedComment){
+    public int postReply(String targetedId, String actionMore, String targetedComment) {
         return postAction(API.StatusAction.PEERTUBEREPLY, targetedId, actionMore, targetedComment);
     }
 
-    public int deleteComment(String targetedId, String targetedComment){
+    public int deleteComment(String targetedId, String targetedComment) {
         return postAction(API.StatusAction.PEERTUBEDELETECOMMENT, targetedId, null, targetedComment);
     }
 
-    public int deleteVideo(String targetedId){
+    public int deleteVideo(String targetedId) {
         return postAction(API.StatusAction.PEERTUBEDELETEVIDEO, targetedId, null, null);
     }
+
     /**
      * Makes the post action
-     * @param statusAction Enum
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
-     * @param actionMore String another action
+     *
+     * @param statusAction    Enum
+     * @param targetedId      String id of the targeted Id *can be this of a status or an account*
+     * @param actionMore      String another action
      * @param targetedComment String another action
      * @return in status code - Should be equal to 200 when action is done
      */
-    private int postAction(API.StatusAction statusAction, String targetedId, String actionMore, String targetedComment){
+    private int postAction(API.StatusAction statusAction, String targetedId, String actionMore, String targetedComment) {
 
         String action;
         String actionCall = "POST";
         HashMap<String, String> params = null;
-        switch (statusAction){
+        switch (statusAction) {
             case FOLLOW:
                 action = "/users/me/subscriptions";
                 params = new HashMap<>();
@@ -1252,11 +1263,11 @@ public class PeertubeAPI {
         }
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            if( actionCall.equals("POST"))
+            if (actionCall.equals("POST"))
                 httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-            else if( actionCall.equals("DELETE"))
+            else if (actionCall.equals("DELETE"))
                 httpsConnection.delete(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-            else if( actionCall.equals("PUT"))
+            else if (actionCall.equals("PUT"))
                 httpsConnection.put(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1272,15 +1283,14 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
      * Changes media description
-     * @param mediaId String
-     *  @param description String
+     *
+     * @param mediaId     String
+     * @param description String
      * @return Attachment
      */
-    public Attachment updateDescription(String mediaId, String description){
+    public Attachment updateDescription(String mediaId, String description) {
 
         HashMap<String, String> params = new HashMap<>();
         try {
@@ -1309,12 +1319,13 @@ public class PeertubeAPI {
 
     /**
      * Video is in play lists
+     *
      * @return APIResponse
      */
-    public APIResponse getPlaylistForVideo(String videoId){
+    public APIResponse getPlaylistForVideo(String videoId) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("videoIds",videoId);
+        params.put("videoIds", videoId);
         List<String> ids = new ArrayList<>();
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me/video-playlists/videos-exist"), 60, params, prefKeyOauthTokenT);
@@ -1322,7 +1333,7 @@ public class PeertubeAPI {
             JSONArray jsonArray = new JSONObject(response).getJSONArray(videoId);
             try {
                 int i = 0;
-                while (i < jsonArray.length() ) {
+                while (i < jsonArray.length()) {
                     JSONObject resobj = jsonArray.getJSONObject(i);
                     String playlistId = resobj.getString("playlistId");
                     ids.add(playlistId);
@@ -1351,14 +1362,15 @@ public class PeertubeAPI {
 
     /**
      * Get lists for the user
+     *
      * @return APIResponse
      */
-    public APIResponse getPlayists(String username){
+    public APIResponse getPlayists(String username) {
 
         List<Playlist> playlists = new ArrayList<>();
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s/video-playlists", username)), 60, null, prefKeyOauthTokenT);
-            playlists = parsePlaylists(context,  new JSONObject(response).getJSONArray("data"));
+            playlists = parsePlaylists(context, new JSONObject(response).getJSONArray("data"));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1375,14 +1387,13 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
      * Delete a Playlist
+     *
      * @param playlistId String, the playlist id
      * @return int
      */
-    public int deletePlaylist(String playlistId){
+    public int deletePlaylist(String playlistId) {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s", playlistId)), 60, null, prefKeyOauthTokenT);
@@ -1402,11 +1413,12 @@ public class PeertubeAPI {
 
     /**
      * Delete video in a Playlist
+     *
      * @param playlistId String, the playlist id
-     * @param videoId String, the video id
+     * @param videoId    String, the video id
      * @return int
      */
-    public int deleteVideoPlaylist(String playlistId, String videoId){
+    public int deleteVideoPlaylist(String playlistId, String videoId) {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             httpsConnection.delete(getAbsoluteUrl(String.format("/video-playlists/%s/videos/%s", playlistId, videoId)), 60, null, prefKeyOauthTokenT);
@@ -1425,11 +1437,12 @@ public class PeertubeAPI {
 
     /**
      * Add video in a Playlist
+     *
      * @param playlistId String, the playlist id
-     * @param videoId String, the video id
+     * @param videoId    String, the video id
      * @return int
      */
-    public int addVideoPlaylist(String playlistId, String videoId){
+    public int addVideoPlaylist(String playlistId, String videoId) {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             HashMap<String, String> params = new HashMap<>();
@@ -1450,13 +1463,12 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Retrieves status for the account *synchronously*
      *
-     * @param playlistid       String Id of the playlist
-     * @param max_id          String id max
-     * @param since_id        String since the id
+     * @param playlistid String Id of the playlist
+     * @param max_id     String id max
+     * @param since_id   String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -1468,7 +1480,7 @@ public class PeertubeAPI {
         if (since_id != null)
             params.put("since_id", since_id);
         params.put("count", String.valueOf(tootPerPage));
-        params.put("sort","-updatedAt");
+        params.put("sort", "-updatedAt");
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -1495,15 +1507,16 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for several howto
+     *
      * @param jsonArray JSONArray
      * @return List<HowToVideo>
      */
-    private List<HowToVideo> parseHowTos(JSONArray jsonArray){
+    private List<HowToVideo> parseHowTos(JSONArray jsonArray) {
 
         List<HowToVideo> howToVideos = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 HowToVideo howToVideo = parseHowTo(context, resobj);
@@ -1519,14 +1532,15 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for peertube notifications
+     *
      * @param jsonArray JSONArray
      * @return List<PeertubeNotification>
      */
-    private List<PeertubeNotification> parsePeertubeNotifications(JSONArray jsonArray){
+    private List<PeertubeNotification> parsePeertubeNotifications(JSONArray jsonArray) {
         List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 PeertubeNotification peertubeNotification = parsePeertubeNotifications(context, resobj);
                 i++;
@@ -1540,10 +1554,11 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for unique how to
+     *
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static PeertubeNotification parsePeertubeNotifications(Context context,JSONObject resobj){
+    private static PeertubeNotification parsePeertubeNotifications(Context context, JSONObject resobj) {
         PeertubeNotification peertubeNotification = new PeertubeNotification();
         try {
             peertubeNotification.setId(resobj.get("id").toString());
@@ -1552,22 +1567,22 @@ public class PeertubeAPI {
             peertubeNotification.setCreatedAt(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             peertubeNotification.setRead(resobj.getBoolean("read"));
 
-            if( resobj.has("comment")){
+            if (resobj.has("comment")) {
                 PeertubeComment peertubeComment = new PeertubeComment();
                 JSONObject comment = resobj.getJSONObject("comment");
-                if( comment.has("account")){
+                if (comment.has("account")) {
                     JSONObject account = comment.getJSONObject("account");
                     PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
                     peertubeAccountNotification.setDisplayName(account.get("displayName").toString());
                     peertubeAccountNotification.setName(account.get("name").toString());
                     peertubeAccountNotification.setId(account.get("id").toString());
-                    if( account.has("host")) {
+                    if (account.has("host")) {
                         peertubeAccountNotification.setHost(account.get("host").toString());
                     }
                     peertubeAccountNotification.setAvatar(account.getJSONObject("avatar").get("path").toString());
                     peertubeComment.setPeertubeAccountNotification(peertubeAccountNotification);
                 }
-                if( comment.has("video")){
+                if (comment.has("video")) {
                     JSONObject video = comment.getJSONObject("video");
                     PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
                     peertubeVideoNotification.setUuid(video.get("uuid").toString());
@@ -1580,19 +1595,19 @@ public class PeertubeAPI {
                 peertubeNotification.setPeertubeComment(peertubeComment);
             }
 
-            if( resobj.has("video")){
+            if (resobj.has("video")) {
                 PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
                 JSONObject video = resobj.getJSONObject("video");
                 peertubeVideoNotification.setUuid(video.get("uuid").toString());
                 peertubeVideoNotification.setName(video.get("name").toString());
                 peertubeVideoNotification.setId(video.get("id").toString());
-                if( video.has("channel")){
+                if (video.has("channel")) {
                     PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
                     JSONObject channel = video.getJSONObject("channel");
                     peertubeAccountNotification.setDisplayName(channel.get("displayName").toString());
                     peertubeAccountNotification.setName(channel.get("name").toString());
                     peertubeAccountNotification.setId(channel.get("id").toString());
-                    if( channel.has("avatar")){
+                    if (channel.has("avatar")) {
                         peertubeAccountNotification.setAvatar(channel.getJSONObject("avatar").get("path").toString());
                     }
                     peertubeVideoNotification.setPeertubeAccountNotification(peertubeAccountNotification);
@@ -1600,7 +1615,7 @@ public class PeertubeAPI {
                 peertubeNotification.setPeertubeVideoNotification(peertubeVideoNotification);
             }
 
-            if( resobj.has("actorFollow")){
+            if (resobj.has("actorFollow")) {
                 PeertubeActorFollow peertubeActorFollow = new PeertubeActorFollow();
                 JSONObject actorFollow = resobj.getJSONObject("actorFollow");
 
@@ -1611,10 +1626,10 @@ public class PeertubeAPI {
                 peertubeAccountNotification.setDisplayName(follower.get("displayName").toString());
                 peertubeAccountNotification.setName(follower.get("name").toString());
                 peertubeAccountNotification.setId(follower.get("id").toString());
-                if( follower.has("host")) {
+                if (follower.has("host")) {
                     peertubeAccountNotification.setHost(follower.get("host").toString());
                 }
-                if( follower.has("avatar")){
+                if (follower.has("avatar")) {
                     peertubeAccountNotification.setAvatar(follower.getJSONObject("avatar").get("path").toString());
                 }
                 peertubeActorFollow.setFollower(peertubeAccountNotification);
@@ -1624,8 +1639,9 @@ public class PeertubeAPI {
                 peertubeAccounFollowingNotification.setName(following.get("name").toString());
                 try {
                     peertubeAccounFollowingNotification.setId(following.get("id").toString());
-                }catch (Exception ignored){}
-                if( following.has("avatar")){
+                } catch (Exception ignored) {
+                }
+                if (following.has("avatar")) {
                     peertubeAccounFollowingNotification.setAvatar(following.getJSONObject("avatar").get("path").toString());
                 }
                 peertubeActorFollow.setFollowing(peertubeAccounFollowingNotification);
@@ -1644,18 +1660,18 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Parse json response for several howto
+     *
      * @param jsonArray JSONArray
      * @return List<Peertube>
      */
-    private List<Peertube> parsePeertube(JSONArray jsonArray){
+    private List<Peertube> parsePeertube(JSONArray jsonArray) {
 
         List<Peertube> peertubes = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Peertube peertube = parsePeertube(context, resobj);
                 i++;
@@ -1669,13 +1685,13 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Parse json response for unique how to
+     *
      * @param resobj JSONObject
      * @return Peertube
      */
-    public static Peertube parsePeertube(Context context,JSONObject resobj){
+    public static Peertube parsePeertube(Context context, JSONObject resobj) {
         Peertube peertube = new Peertube();
         try {
             peertube.setId(resobj.get("id").toString());
@@ -1689,7 +1705,8 @@ public class PeertubeAPI {
             peertube.setAccount(parseAccountResponsePeertube(context, resobj.getJSONObject("account")));
             try {
                 peertube.setChannel(parseAccountResponsePeertube(context, resobj.getJSONObject("channel")));
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
             peertube.setView(Integer.parseInt(resobj.get("views").toString()));
             peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
@@ -1697,7 +1714,8 @@ public class PeertubeAPI {
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
             try {
                 peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
 
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
@@ -1719,7 +1737,8 @@ public class PeertubeAPI {
                 peertube.setLicense(license);
                 peertube.setLanguage(langue);
                 peertube.setPrivacy(privacy);
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1729,10 +1748,11 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for unique how to
+     *
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static Peertube parseSinglePeertube(Context context, String instance, JSONObject resobj){
+    private static Peertube parseSinglePeertube(Context context, String instance, JSONObject resobj) {
         Peertube peertube = new Peertube();
         try {
             peertube.setId(resobj.get("id").toString());
@@ -1754,15 +1774,17 @@ public class PeertubeAPI {
             List<String> tags = new ArrayList<>();
             try {
                 JSONArray tagsA = resobj.getJSONArray("tags");
-                for(int i = 0 ; i < tagsA.length() ; i++){
+                for (int i = 0; i < tagsA.length(); i++) {
                     String value = tagsA.getString(i);
                     tags.add(value);
                 }
                 peertube.setTags(tags);
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
             try {
                 peertube.setChannel(parseAccountResponsePeertube(context, resobj.getJSONObject("channel")));
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
@@ -1777,7 +1799,7 @@ public class PeertubeAPI {
             }
             JSONArray files = resobj.getJSONArray("files");
             ArrayList<String> resolutions = new ArrayList<>();
-            for(int j = 0 ; j < files.length() ; j++){
+            for (int j = 0; j < files.length(); j++) {
                 JSONObject attObj = files.getJSONObject(j);
                 resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
             }
@@ -1795,7 +1817,8 @@ public class PeertubeAPI {
                 peertube.setLicense(license);
                 peertube.setLanguage(langue);
                 peertube.setPrivacy(privacy);
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
             peertube.setResolution(resolutions);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1806,33 +1829,34 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for peertube comments
+     *
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj){
+    private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj) {
         List<Status> statuses = new ArrayList<>();
         try {
             JSONArray jsonArray = resobj.getJSONArray("data");
-                int i = 0;
-                while (i < jsonArray.length() ){
-                    Status status = new Status();
-                    JSONObject comment = jsonArray.getJSONObject(i);
-                    status.setId(comment.get("id").toString());
-                    status.setUri(comment.get("url").toString());
-                    status.setUrl(comment.get("url").toString());
-                    status.setSensitive(false);
-                    status.setSpoiler_text("");
-                    status.setContent(comment.get("text").toString());
-                    status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
-                    status.setAccount(parseAccountResponsePeertube(context, comment.getJSONObject("account")));
-                    status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
-                    status.setMentions(new ArrayList<>());
-                    status.setEmojis(new ArrayList<>());
-                    status.setMedia_attachments(new ArrayList<>());
-                    status.setVisibility("public");
-                    i++;
-                    statuses.add(status);
-                }
+            int i = 0;
+            while (i < jsonArray.length()) {
+                Status status = new Status();
+                JSONObject comment = jsonArray.getJSONObject(i);
+                status.setId(comment.get("id").toString());
+                status.setUri(comment.get("url").toString());
+                status.setUrl(comment.get("url").toString());
+                status.setSensitive(false);
+                status.setSpoiler_text("");
+                status.setContent(comment.get("text").toString());
+                status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
+                status.setAccount(parseAccountResponsePeertube(context, comment.getJSONObject("account")));
+                status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
+                status.setMentions(new ArrayList<>());
+                status.setEmojis(new ArrayList<>());
+                status.setMedia_attachments(new ArrayList<>());
+                status.setVisibility("public");
+                i++;
+                statuses.add(status);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -1843,10 +1867,11 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for unique how to
+     *
      * @param resobj JSONObject
      * @return HowToVideo
      */
-    private static HowToVideo parseHowTo(Context context, JSONObject resobj){
+    private static HowToVideo parseHowTo(Context context, JSONObject resobj) {
         HowToVideo howToVideo = new HowToVideo();
         try {
             howToVideo.setId(resobj.get("id").toString());
@@ -1864,14 +1889,13 @@ public class PeertubeAPI {
     }
 
 
-
-
     /**
      * Parse json response an unique instance
+     *
      * @param resobj JSONObject
      * @return Instance
      */
-    private Instance parseInstance(JSONObject resobj){
+    private Instance parseInstance(JSONObject resobj) {
 
         Instance instance = new Instance();
         try {
@@ -1887,17 +1911,17 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Parse emojis
+     *
      * @param jsonArray JSONArray
      * @return List<Emojis> of emojis
      */
-    private List<Emojis> parseEmojis(JSONArray jsonArray){
+    private List<Emojis> parseEmojis(JSONArray jsonArray) {
         List<Emojis> emojis = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Emojis emojis1 = parseEmojis(resobj);
                 emojis.add(emojis1);
@@ -1912,30 +1936,33 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for emoji
+     *
      * @param resobj JSONObject
      * @return Emojis
      */
-    private static Emojis parseEmojis(JSONObject resobj){
+    private static Emojis parseEmojis(JSONObject resobj) {
         Emojis emojis = new Emojis();
         try {
             emojis.setShortcode(resobj.get("shortcode").toString());
             emojis.setStatic_url(resobj.get("static_url").toString());
             emojis.setUrl(resobj.get("url").toString());
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         return emojis;
     }
 
 
     /**
      * Parse emojis
+     *
      * @param jsonArray JSONArray
      * @return List<Emojis> of emojis
      */
-    private List<Emojis> parseMisskeyEmojis(JSONArray jsonArray){
+    private List<Emojis> parseMisskeyEmojis(JSONArray jsonArray) {
         List<Emojis> emojis = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Emojis emojis1 = parseMisskeyEmojis(resobj);
                 emojis.add(emojis1);
@@ -1950,33 +1977,36 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for emoji
+     *
      * @param resobj JSONObject
      * @return Emojis
      */
-    private static Emojis parseMisskeyEmojis(JSONObject resobj){
+    private static Emojis parseMisskeyEmojis(JSONObject resobj) {
         Emojis emojis = new Emojis();
         try {
             emojis.setShortcode(resobj.get("name").toString());
             emojis.setStatic_url(resobj.get("url").toString());
             emojis.setUrl(resobj.get("url").toString());
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         return emojis;
     }
 
 
     /**
      * Parse Filters
+     *
      * @param jsonArray JSONArray
      * @return List<Filters> of filters
      */
-    private List<Filters> parseFilters(JSONArray jsonArray){
+    private List<Filters> parseFilters(JSONArray jsonArray) {
         List<Filters> filters = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Filters filter = parseFilter(resobj);
-                if( filter != null)
+                if (filter != null)
                     filters.add(filter);
                 i++;
             }
@@ -1988,50 +2018,54 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for filter
+     *
      * @param resobj JSONObject
      * @return Filter
      */
-    private Filters parseFilter(JSONObject resobj){
+    private Filters parseFilter(JSONObject resobj) {
         Filters filter = new Filters();
         try {
 
             filter.setId(resobj.get("id").toString());
-            if( resobj.get("phrase").toString() == null)
+            if (resobj.get("phrase").toString() == null)
                 return null;
             filter.setPhrase(resobj.get("phrase").toString());
-            if( resobj.get("expires_at") != null &&  !resobj.get("expires_at").toString().equals("null"))
+            if (resobj.get("expires_at") != null && !resobj.get("expires_at").toString().equals("null"))
                 filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
             filter.setWhole_word(Boolean.parseBoolean(resobj.get("whole_word").toString()));
             filter.setIrreversible(Boolean.parseBoolean(resobj.get("irreversible").toString()));
             String contextString = resobj.get("context").toString();
-            contextString = contextString.replaceAll("\\[","");
-            contextString = contextString.replaceAll("]","");
-            contextString = contextString.replaceAll("\"","");
-            if( contextString != null) {
+            contextString = contextString.replaceAll("\\[", "");
+            contextString = contextString.replaceAll("]", "");
+            contextString = contextString.replaceAll("\"", "");
+            if (contextString != null) {
                 String[] context = contextString.split(",");
-                if( contextString.length() > 0 ){
+                if (contextString.length() > 0) {
                     ArrayList<String> finalContext = new ArrayList<>();
-                    for(String c: context)
+                    for (String c : context)
                         finalContext.add(c.trim());
                     filter.setContext(finalContext);
                 }
             }
             return filter;
-        }catch (Exception ignored){ return null;}
+        } catch (Exception ignored) {
+            return null;
+        }
 
     }
 
 
     /**
      * Parse Playlists
+     *
      * @param jsonArray JSONArray
      * @return List<Playlist> of lists
      */
-    private List<Playlist> parsePlaylists(Context context, JSONArray jsonArray){
+    private List<Playlist> parsePlaylists(Context context, JSONArray jsonArray) {
         List<Playlist> playlists = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Playlist playlist = parsePlaylist(context, resobj);
                 playlists.add(playlist);
@@ -2046,10 +2080,11 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for emoji
+     *
      * @param resobj JSONObject
      * @return Emojis
      */
-    private static Playlist parsePlaylist(Context context, JSONObject resobj){
+    private static Playlist parsePlaylist(Context context, JSONObject resobj) {
         Playlist playlist = new Playlist();
         try {
             playlist.setId(resobj.getString("id"));
@@ -2069,21 +2104,27 @@ public class PeertubeAPI {
                 type.put(resobj.getJSONObject("type").getInt("id"), resobj.getJSONObject("type").get("label").toString());
                 playlist.setType(type);
                 playlist.setPrivacy(privacy);
-            }catch (Exception ignored){ignored.printStackTrace();}
+            } catch (Exception ignored) {
+                ignored.printStackTrace();
+            }
 
 
-            try{
+            try {
                 playlist.setUpdatedAt(Helper.stringToDate(context, resobj.getString("updatedAt")));
-            }catch (Exception ignored){ignored.printStackTrace();}
-        }catch (Exception ignored){ignored.printStackTrace();}
+            } catch (Exception ignored) {
+                ignored.printStackTrace();
+            }
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
         return playlist;
     }
 
-    private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray){
+    private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray) {
         List<Account> accounts = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Account account = parseAccountResponsePeertube(context, resobj);
                 accounts.add(account);
@@ -2097,62 +2138,63 @@ public class PeertubeAPI {
 
     /**
      * Parse json response an unique peertube account
+     *
      * @param accountObject JSONObject
      * @return Account
      */
-    private static Account parseAccountResponsePeertube(Context context, JSONObject accountObject){
+    private static Account parseAccountResponsePeertube(Context context, JSONObject accountObject) {
         Account account = new Account();
         try {
             account.setId(accountObject.get("id").toString());
             account.setUuid(accountObject.get("uuid").toString());
             account.setUsername(accountObject.get("name").toString());
-            account.setAcct(accountObject.get("name").toString()+"@" + accountObject.get("host"));
+            account.setAcct(accountObject.get("name").toString() + "@" + accountObject.get("host"));
             account.setDisplay_name(accountObject.get("name").toString());
             account.setHost(accountObject.get("host").toString());
             account.setSocial("PEERTUBE");
 
-            if( accountObject.has("createdAt") )
+            if (accountObject.has("createdAt"))
                 account.setCreated_at(Helper.mstStringToDate(context, accountObject.get("createdAt").toString()));
             else
                 account.setCreated_at(new Date());
-            if( accountObject.has("followersCount") )
+            if (accountObject.has("followersCount"))
                 account.setFollowers_count(Integer.valueOf(accountObject.get("followersCount").toString()));
             else
                 account.setFollowers_count(0);
-            if( accountObject.has("followingCount"))
+            if (accountObject.has("followingCount"))
                 account.setFollowing_count(Integer.valueOf(accountObject.get("followingCount").toString()));
             else
                 account.setFollowing_count(0);
             account.setStatuses_count(0);
-            if( accountObject.has("description") )
+            if (accountObject.has("description"))
                 account.setNote(accountObject.get("description").toString());
             else
                 account.setNote("");
 
             account.setUrl(accountObject.get("url").toString());
-            if( accountObject.has("avatar") && !accountObject.isNull("avatar")){
+            if (accountObject.has("avatar") && !accountObject.isNull("avatar")) {
                 account.setAvatar(accountObject.getJSONObject("avatar").get("path").toString());
-            }else
+            } else
                 account.setAvatar("null");
             account.setHeader("null");
             account.setHeader_static("null");
             account.setAvatar_static(accountObject.get("avatar").toString());
-        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return account;
     }
 
 
-
-
-
     /**
      * Parse json response an unique relationship
+     *
      * @param resobj JSONObject
      * @return Relationship
      */
-    private Relationship parseRelationshipResponse(JSONObject resobj){
+    private Relationship parseRelationshipResponse(JSONObject resobj) {
 
         Relationship relationship = new Relationship();
         try {
@@ -2163,17 +2205,17 @@ public class PeertubeAPI {
             relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
             try {
                 relationship.setMuting_notifications(Boolean.valueOf(resobj.get("muting_notifications").toString()));
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 relationship.setMuting_notifications(true);
             }
             try {
                 relationship.setEndorsed(Boolean.valueOf(resobj.get("endorsed").toString()));
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 relationship.setMuting_notifications(false);
             }
             try {
                 relationship.setShowing_reblogs(Boolean.valueOf(resobj.get("showing_reblogs").toString()));
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 relationship.setMuting_notifications(false);
             }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
@@ -2186,15 +2228,16 @@ public class PeertubeAPI {
 
     /**
      * Parse json response for list of relationship
+     *
      * @param jsonArray JSONArray
      * @return List<Relationship>
      */
-    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray){
+    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray) {
 
         List<Relationship> relationships = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Relationship relationship = parseRelationshipResponse(resobj);
                 relationships.add(relationship);
@@ -2207,13 +2250,13 @@ public class PeertubeAPI {
     }
 
 
-
     /**
      * Parse json response an unique attachment
+     *
      * @param resobj JSONObject
      * @return Relationship
      */
-    static Attachment parseAttachmentResponse(JSONObject resobj){
+    static Attachment parseAttachmentResponse(JSONObject resobj) {
 
         Attachment attachment = new Attachment();
         try {
@@ -2222,35 +2265,38 @@ public class PeertubeAPI {
             attachment.setUrl(resobj.get("url").toString());
             try {
                 attachment.setDescription(resobj.get("description").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setRemote_url(resobj.get("remote_url").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setPreview_url(resobj.get("preview_url").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setMeta(resobj.get("meta").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setText_url(resobj.get("text_url").toString());
-            }catch (JSONException ignore){}
+            } catch (JSONException ignore) {
+            }
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
         return attachment;
     }
 
 
-
-
-
-
     /**
      * Set the error message
+     *
      * @param statusCode int code
-     * @param error Throwable error
+     * @param error      Throwable error
      */
-    private void setError(int statusCode, Throwable error){
+    private void setError(int statusCode, Throwable error) {
         APIError = new Error();
         APIError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
@@ -2259,7 +2305,7 @@ public class PeertubeAPI {
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
-            if(error.getMessage().split(".").length > 0) {
+            if (error.getMessage().split(".").length > 0) {
                 String errorM = error.getMessage().split(".")[0];
                 message = "Error " + statusCode + " : " + errorM;
             }
@@ -2268,11 +2314,11 @@ public class PeertubeAPI {
         apiResponse.setError(APIError);
     }
 
-    private void setDefaultError(Exception e){
+    private void setDefaultError(Exception e) {
         APIError = new Error();
-        if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+        if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
             APIError.setError(e.getLocalizedMessage());
-        else if( e.getMessage() != null && e.getMessage().trim().length() > 0)
+        else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
             APIError.setError(e.getMessage());
         else
             APIError.setError(context.getString(R.string.toast_error));
@@ -2280,7 +2326,7 @@ public class PeertubeAPI {
     }
 
 
-    public Error getError(){
+    public Error getError() {
         return APIError;
     }
 
@@ -2288,6 +2334,7 @@ public class PeertubeAPI {
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v1" + action;
     }
+
     private String getAbsoluteUrlRemote(String remote, String action) {
         return "https://" + remote + "/api/v1" + action;
     }
@@ -2297,7 +2344,7 @@ public class PeertubeAPI {
     }
 
     private String getAbsoluteUrlCommunitywiki(String action) {
-        return "https://communitywiki.org/trunk/api/v1"  + action;
+        return "https://communitywiki.org/trunk/api/v1" + action;
     }
 
 }

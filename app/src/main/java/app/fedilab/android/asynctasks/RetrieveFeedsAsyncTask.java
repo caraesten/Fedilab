@@ -64,13 +64,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private boolean showReply = false;
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
-    private String instanceName,remoteInstance, name;
+    private String instanceName, remoteInstance, name;
     private boolean cached = false;
     private int timelineId;
     private String currentfilter;
     private String social;
 
-    public enum Type{
+    public enum Type {
         HOME,
         LOCAL,
         DIRECT,
@@ -125,7 +125,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    public RetrieveFeedsAsyncTask(Context context, FilterToots filterToots, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, FilterToots filterToots, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = Type.CACHE_STATUS;
         this.max_id = max_id;
@@ -134,14 +134,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
@@ -149,7 +149,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.instanceName = instanceName;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, int timelineId, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, int timelineId, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
@@ -157,7 +157,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.timelineId = timelineId;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
@@ -166,7 +166,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
     }
-    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, boolean showReply, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, boolean showReply, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
@@ -176,7 +177,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showPinned = showPinned;
         this.showReply = showReply;
     }
-    public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
@@ -185,7 +187,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.tag = tag;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, String  remoteInstance, String name, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, String remoteInstance, String name, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.remoteInstance = remoteInstance;
         this.max_id = max_id;
@@ -194,7 +196,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = Type.REMOTE_INSTANCE;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, RetrieveFeedsParam retrieveFeedsParam, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, RetrieveFeedsParam retrieveFeedsParam, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveFeedsInterface;
         this.action = retrieveFeedsParam.getAction();
@@ -216,9 +218,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( action == null )
+        if (action == null)
             return null;
-        switch (action){
+        switch (action) {
             case HOME:
                 apiResponse = api.getHomeTimelineCache(max_id);
                 break;
@@ -241,70 +243,70 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getConversationTimeline(max_id);
                 break;
             case REMOTE_INSTANCE_FILTERED:
-                if( this.social != null && this.social.equals("MASTODON")) {
-                    apiResponse = api.getPublicTimelineTag(this.currentfilter, true, max_id,this.remoteInstance);
-                    if( apiResponse != null){
+                if (this.social != null && this.social.equals("MASTODON")) {
+                    apiResponse = api.getPublicTimelineTag(this.currentfilter, true, max_id, this.remoteInstance);
+                    if (apiResponse != null) {
                         List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                        if( statusesTemp != null){
-                            for(app.fedilab.android.client.Entities.Status status: statusesTemp){
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
                                 status.setType(action);
                             }
                         }
                     }
-                } else if(this.social != null && this.social.equals("GNU") ) {
+                } else if (this.social != null && this.social.equals("GNU")) {
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-                    apiResponse = gnuapi.searchRemote(this.remoteInstance,currentfilter,max_id);
-                }else {
+                    apiResponse = gnuapi.searchRemote(this.remoteInstance, currentfilter, max_id);
+                } else {
                     apiResponse = api.searchPeertube(this.remoteInstance, currentfilter);
                 }
                 break;
             case REMOTE_INSTANCE:
-                if( this.name != null && this.remoteInstance != null){ //For Peertube channels
+                if (this.name != null && this.remoteInstance != null) { //For Peertube channels
                     apiResponse = api.getPeertubeChannelVideos(this.remoteInstance, this.name);
-                }else{ //For other remote instance
+                } else { //For other remote instance
                     List<RemoteInstance> remoteInstanceObj = new InstancesDAO(this.contextReference.get(), db).getInstanceByName(this.instanceName);
-                    if( remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
+                    if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
                         apiResponse = api.getPublicTimeline(this.instanceName, true, max_id);
                         List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                        if( statusesTemp != null){
-                            for(app.fedilab.android.client.Entities.Status status: statusesTemp){
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
                                 status.setType(action);
                             }
                         }
-                    }else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MISSKEY")){
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MISSKEY")) {
                         apiResponse = api.getMisskey(this.instanceName, max_id);
                         List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                        if( statusesTemp != null){
-                            for(app.fedilab.android.client.Entities.Status status: statusesTemp){
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
                                 status.setType(action);
                             }
                         }
-                    } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED") ) {
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
                         apiResponse = api.getPixelfedTimeline(instanceName, max_id);
-                    } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU") ) {
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU")) {
                         apiResponse = api.getGNUTimeline(instanceName, max_id);
-                    }else {
+                    } else {
                         apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
                 }
                 break;
             case FAVOURITES:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     apiResponse = api.getFavourites(max_id);
-                }else{
+                } else {
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
                     apiResponse = gnuapi.getFavourites(max_id);
                 }
                 break;
             case USER:
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     if (showMediaOnly)
                         apiResponse = api.getStatusWithMedia(targetedID, max_id);
                     else if (showPinned)
                         apiResponse = api.getPinnedStatuses(targetedID, max_id);
                     else
                         apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
                     if (showMediaOnly)
                         apiResponse = gnuapi.getStatusWithMedia(targetedID, max_id);
@@ -312,7 +314,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                         apiResponse = gnuapi.getPinnedStatuses(targetedID, max_id);
                     else
                         apiResponse = gnuapi.getAccountTLStatuses(targetedID, max_id, !showReply);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
                     apiResponse = peertubeAPI.getVideos(targetedID, max_id);
                 }
@@ -334,20 +336,20 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case SEARCH:
 
-                if( !tag.contains("_cache_")) {
+                if (!tag.contains("_cache_")) {
                     apiResponse = api.search2(tag, API.searchType.STATUSES, max_id);
-                }else{
-                    tag = tag.replace("_cache_","");
+                } else {
+                    tag = tag.replace("_cache_", "");
                     apiResponse = new APIResponse();
                     Results results = new Results();
                     List<app.fedilab.android.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).search(tag, max_id);
-                    if( statuses != null && statuses.size() > 0 ) {
+                    if (statuses != null && statuses.size() > 0) {
                         apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                     }
                     List<app.fedilab.android.client.Entities.Status> statusesNew = null;
-                    if( statuses != null){
+                    if (statuses != null) {
                         statusesNew = new ArrayList<>();
-                        for(app.fedilab.android.client.Entities.Status status: statuses){
+                        for (app.fedilab.android.client.Entities.Status status : statuses) {
                             if (tag != null && !tag.contains("\"")) {
                                 String[] searches = tag.split(" ");
                                 for (String search : searches) {
@@ -355,7 +357,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                         statusesNew.add(status);
                                     }
                                 }
-                            }else{
+                            } else {
                                 statusesNew.addAll(statuses);
                             }
                         }
@@ -366,20 +368,20 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case TAG:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     ManageTimelines manageTimelines = new TimelinesDAO(contextReference.get(), db).getById(timelineId);
-                    if( manageTimelines != null && manageTimelines.getTagTimeline() != null){
+                    if (manageTimelines != null && manageTimelines.getTagTimeline() != null) {
                         boolean isArt = manageTimelines.getTagTimeline().isART();
                         if (isArt)
-                            apiResponse = api.getCustomArtTimeline(false,  manageTimelines.getTagTimeline().getName(), max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
+                            apiResponse = api.getCustomArtTimeline(false, manageTimelines.getTagTimeline().getName(), max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
                         else
                             apiResponse = api.getPublicTimelineTag(manageTimelines.getTagTimeline().getName(), false, max_id, manageTimelines.getTagTimeline().getAny(), manageTimelines.getTagTimeline().getAll(), manageTimelines.getTagTimeline().getNone());
-                    }else{
+                    } else {
                         apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
                     }
-                }else{
+                } else {
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-                    apiResponse = gnuapi.search(tag,max_id);
+                    apiResponse = gnuapi.search(tag, max_id);
                 }
 
                 break;
@@ -402,11 +404,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = new APIResponse();
                 db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 statuses = new StatusCacheDAO(contextReference.get(), db).getStatusFromID(StatusCacheDAO.ARCHIVE_CACHE, filterToots, max_id);
-                if( statuses != null && statuses.size() > 0) {
+                if (statuses != null && statuses.size() > 0) {
                     apiResponse.setStatuses(statuses);
                     apiResponse.setSince_id(statuses.get(0).getId());
                     apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
-                }else{
+                } else {
                     apiResponse.setStatuses(null);
                     apiResponse.setMax_id(null);
                     apiResponse.setSince_id(null);
@@ -443,10 +445,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case PF_LOCAL:
                 api = new API(this.contextReference.get());
-                apiResponse = api.getPublicTimeline(true,max_id);
+                apiResponse = api.getPublicTimeline(true, max_id);
             case PF_DISCOVER:
                 api = new API(this.contextReference.get());
-                apiResponse = api.getDiscoverTimeline(true,max_id);
+                apiResponse = api.getDiscoverTimeline(true, max_id);
                 break;
             case HASHTAG:
                 break;
@@ -457,11 +459,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case GNU_LOCAL:
                 gnuAPI = new GNUAPI(this.contextReference.get());
-                apiResponse = gnuAPI.getPublicTimeline(true,max_id);
+                apiResponse = gnuAPI.getPublicTimeline(true, max_id);
                 break;
             case GNU_WHOLE:
                 gnuAPI = new GNUAPI(this.contextReference.get());
-                apiResponse = gnuAPI.getPublicTimeline(false,max_id);
+                apiResponse = gnuAPI.getPublicTimeline(false, max_id);
                 break;
             case GNU_DM:
                 gnuAPI = new GNUAPI(this.contextReference.get());
@@ -472,7 +474,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = gnuAPI.getGroupTimeline(tag.trim(), max_id);
                 break;
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
             if (apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0) {
                 List<app.fedilab.android.client.Entities.Status> statuses = apiResponse.getStatuses();

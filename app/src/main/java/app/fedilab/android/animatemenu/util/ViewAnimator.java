@@ -36,7 +36,7 @@ public class ViewAnimator<T extends Resourceble> {
     public static final int CIRCULAR_REVEAL_ANIMATION_DURATION = 500;
 
     private AppCompatActivity appCompatActivity;
-  
+
     private List<T> list;
 
     private List<View> viewList = new ArrayList<>();
@@ -59,7 +59,6 @@ public class ViewAnimator<T extends Resourceble> {
     }
 
 
-
     public void showMenuContent() {
         setViewsClickable(false);
         viewList.clear();
@@ -67,20 +66,20 @@ public class ViewAnimator<T extends Resourceble> {
         for (int i = 0; i < size; i++) {
             @SuppressLint("InflateParams") View viewMenu = appCompatActivity.getLayoutInflater().inflate(R.layout.menu_list_item, null);
 
-            if( i == SettingsActivity.position){
+            if (i == SettingsActivity.position) {
                 viewMenu.setBackgroundColor(ContextCompat.getColor(appCompatActivity, R.color.mastodonC2));
-            }else {
+            } else {
                 SharedPreferences sharedpreferences = appCompatActivity.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
                 if (theme == Helper.THEME_DARK) {
                     viewMenu.setBackgroundResource(R.drawable.menu_item_selector);
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     viewMenu.setBackgroundResource(R.drawable.menu_item_selector_black);
-                }else {
+                } else {
                     viewMenu.setBackgroundResource(R.drawable.menu_item_selector_light);
                     ImageView imageView = viewMenu.findViewById(R.id.menu_item_image);
-                    if( imageView != null){
+                    if (imageView != null) {
                         changeDrawableColor(appCompatActivity, imageView, R.color.black);
                     }
                 }
@@ -104,7 +103,7 @@ public class ViewAnimator<T extends Resourceble> {
             animatorListener.addViewToContainer(viewMenu);
             final double position = i;
             final double delay = 3 * ANIMATION_DURATION * (position / size);
-            if( screenShotable != null) {
+            if (screenShotable != null) {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         if (position < viewList.size()) {

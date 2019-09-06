@@ -48,7 +48,7 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
 
-    public PostStatusAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Account account, app.fedilab.android.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
+    public PostStatusAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Account account, app.fedilab.android.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.status = status;
@@ -59,28 +59,28 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
-            if( isconnected) {
+            if (isconnected) {
                 if (account == null) {
                     apiResponse = new API(this.contextReference.get()).postStatusAction(status);
                 } else
                     apiResponse = new API(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
-            }else {
+            } else {
                 apiResponse = new APIResponse();
                 Error error = new Error();
                 error.setError(contextReference.get().getString(R.string.no_internet));
                 error.setStatusCode(-33);
                 apiResponse.setError(error);
             }
-        }else {
+        } else {
             boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
-            if( isconnected) {
+            if (isconnected) {
                 if (account == null) {
                     apiResponse = new GNUAPI(this.contextReference.get()).postStatusAction(status);
                 } else
                     apiResponse = new GNUAPI(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
-            }else {
+            } else {
                 apiResponse = new APIResponse();
                 Error error = new Error();
                 error.setError(contextReference.get().getString(R.string.no_internet));
@@ -88,7 +88,6 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse.setError(error);
             }
         }
-
 
 
         return null;
@@ -102,21 +101,21 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
             @Override
             public void run() {
                 String content = status.getContent();
-                if( content != null && content.length() > 0){
+                if (content != null && content.length() > 0) {
                     SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Matcher matcher = Helper.hashtagPattern.matcher(content);
-                    while (matcher.find()){
+                    while (matcher.find()) {
                         int matchStart = matcher.start(1);
                         int matchEnd = matcher.end();
                         //Get cached tags
                         List<String> cachedTag = new TagsCacheDAO(contextReference.get(), db).getAll();
                         String tag = content.substring(matchStart, matchEnd);
-                        tag = tag.replace("#","");
-                        if( cachedTag == null){
+                        tag = tag.replace("#", "");
+                        if (cachedTag == null) {
                             new TagsCacheDAO(contextReference.get(), db).insert(tag);
-                        }else {
+                        } else {
                             //If cache doesn't contain the tag and the tag has upper case
-                            if(!cachedTag.contains(tag) && !tag.toLowerCase().equals(tag)){
+                            if (!cachedTag.contains(tag) && !tag.toLowerCase().equals(tag)) {
                                 new TagsCacheDAO(contextReference.get(), db).insert(tag);
                             }
                         }

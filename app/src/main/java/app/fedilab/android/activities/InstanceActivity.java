@@ -23,9 +23,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -64,7 +67,7 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -78,10 +81,10 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -96,13 +99,13 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
                 }
             });
             toolbar_title.setText(R.string.action_about_instance);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, InstanceActivity.this);
             }
         }
         setContentView(R.layout.activity_instance);
-        Helper.changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.white);
+        Helper.changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline, R.color.white);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
         instance_container.setVisibility(View.GONE);
@@ -128,12 +131,12 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
     public void onRetrieveInstance(APIResponse apiResponse) {
         instance_container.setVisibility(View.VISIBLE);
         loader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
+        if (apiResponse.getError() != null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         final Instance instance = apiResponse.getInstance();
-        if( instance == null){
+        if (instance == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
@@ -149,18 +152,18 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
         else
             //noinspection deprecation
             instance_description.setText(Html.fromHtml(instance.getDescription()));
-        if( instance.getDescription() == null || instance.getDescription().trim().length() == 0 )
+        if (instance.getDescription() == null || instance.getDescription().trim().length() == 0)
             instance_description.setText(getString(R.string.instance_no_description));
         instance_version.setText(instance.getVersion());
         instance_uri.setText(instance.getUri());
-        if( instance.getEmail() == null){
+        if (instance.getEmail() == null) {
             instance_contact.hide();
         }
 
         instance_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",instance.getEmail(), null));
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", instance.getEmail(), null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Mastodon] - " + instance.getUri());
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
             }

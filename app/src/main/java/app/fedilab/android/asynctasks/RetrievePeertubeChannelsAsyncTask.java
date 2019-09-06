@@ -38,15 +38,12 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 public class RetrievePeertubeChannelsAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
-
     private APIResponse apiResponse;
     private OnRetrievePeertubeInterface listener;
     private WeakReference<Context> contextReference;
 
 
-
-
-    public RetrievePeertubeChannelsAsyncTask(Context context, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+    public RetrievePeertubeChannelsAsyncTask(Context context, OnRetrievePeertubeInterface onRetrievePeertubeInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrievePeertubeInterface;
     }

@@ -74,6 +74,7 @@ import static app.fedilab.android.helper.Helper.notify_user;
 public class BackupStatusesSyncJob extends Job {
 
     static final String BACKUP_SYNC = "job_backup";
+
     static {
         Helper.installProvider();
     }
@@ -104,7 +105,8 @@ public class BackupStatusesSyncJob extends Job {
                     .setRequirementsEnforced(false)
                     .build()
                     .schedule();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         return jobRequestschedule;
     }
@@ -117,15 +119,16 @@ public class BackupStatusesSyncJob extends Job {
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final List<Account> accounts = new AccountDAO(getContext(), db).getAllAccount();
         SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        for(Account account: accounts) {
-            boolean autobackup =  sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + account.getId() + account.getInstance(), false);
-            if( autobackup) {
+        for (Account account : accounts) {
+            boolean autobackup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + account.getId() + account.getInstance(), false);
+            if (autobackup) {
                 try {
                     Intent backupIntent = new Intent(getContext(), BackupStatusInDataBaseService.class);
                     backupIntent.putExtra("userid", account.getId());
                     backupIntent.putExtra("instance", account.getInstance());
                     getContext().startService(backupIntent);
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         }
     }

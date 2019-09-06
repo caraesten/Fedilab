@@ -17,9 +17,11 @@ package app.fedilab.android.activities;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -45,7 +47,6 @@ import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.interfaces.OnListActionInterface;
 
 
-
 /**
  * Created by Thomas on 15/12/2017.
  * Manage accounts in Lists
@@ -68,7 +69,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.mastodonC3__));
@@ -87,15 +88,15 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         }
         setContentView(R.layout.activity_manage_accounts_list);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             title = b.getString("title");
             listId = b.getString("id");
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
         }
 
         main_account_container = findViewById(R.id.main_account_container);
@@ -113,7 +114,6 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         lv_accounts_current.setLayoutManager(mLayoutManager);
 
 
-
         list_title.setText(title);
         loader.setVisibility(View.VISIBLE);
         new ManageListsAsyncTask(ManageAccountsInListActivity.this, ManageListsAsyncTask.action.GET_LIST_ACCOUNT, null, null, listId, null, ManageAccountsInListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -121,20 +121,23 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
 
         search_account.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count > 0) {
                     search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
-                }else{
+                } else {
                     search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if( s != null && s.length() > 0){
-                    new ManageListsAsyncTask(ManageAccountsInListActivity.this, s.toString(),  ManageAccountsInListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
+                if (s != null && s.length() > 0) {
+                    new ManageListsAsyncTask(ManageAccountsInListActivity.this, s.toString(), ManageAccountsInListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
                     lv_accounts_search.setVisibility(View.GONE);
                     lv_accounts_current.setVisibility(View.VISIBLE);
                 }
@@ -156,9 +159,9 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         });
     }
 
-    public void addAccount(Account account){
+    public void addAccount(Account account) {
         search_account.setText("");
-        accounts.add(0,account);
+        accounts.add(0, account);
         accountsInAListAdapter.notifyItemInserted(0);
     }
 
@@ -175,16 +178,15 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
     }
 
 
-
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         loader.setVisibility(View.GONE);
         main_account_container.setVisibility(View.VISIBLE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
-        if( actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT){
+        if (actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT) {
             if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
                 this.accounts.addAll(apiResponse.getAccounts());
                 accountsInAListAdapter.notifyDataSetChanged();
@@ -192,7 +194,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
                 lv_accounts_current.setVisibility(View.VISIBLE);
 
             }
-        }else if( actionType == ManageListsAsyncTask.action.SEARCH_USER){
+        } else if (actionType == ManageListsAsyncTask.action.SEARCH_USER) {
             if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
                 java.util.List<Account> accountsSearch = new ArrayList<>();
                 accountsSearch.addAll(apiResponse.getAccounts());

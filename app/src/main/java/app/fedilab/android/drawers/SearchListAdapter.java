@@ -20,7 +20,9 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -62,19 +64,19 @@ public class SearchListAdapter extends BaseAdapter {
     private static final int TAG_TYPE = 2;
     private LayoutInflater layoutInflater;
 
-    public SearchListAdapter(Context context, List<Status> statuses, List<Account> accounts, List<String> tags){
+    public SearchListAdapter(Context context, List<Status> statuses, List<Account> accounts, List<String> tags) {
         this.context = context;
-        this.statuses = ( statuses != null)?statuses:new ArrayList<Status>();
-        this.accounts = ( accounts != null)?accounts:new ArrayList<Account>();
-        this.tags = ( tags != null)?tags:new ArrayList<String>();
+        this.statuses = (statuses != null) ? statuses : new ArrayList<Status>();
+        this.accounts = (accounts != null) ? accounts : new ArrayList<Account>();
+        this.tags = (tags != null) ? tags : new ArrayList<String>();
         layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getItemViewType(int position){
-        if( position < statuses.size())
+    public int getItemViewType(int position) {
+        if (position < statuses.size())
             return STATUS_TYPE;
-        else if( position < statuses.size() + accounts.size() )
+        else if (position < statuses.size() + accounts.size())
             return ACCOUNT_TYPE;
         else
             return TAG_TYPE;
@@ -87,9 +89,9 @@ public class SearchListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if( position < statuses.size())
+        if (position < statuses.size())
             return statuses.get(position);
-        else if( position < statuses.size() + accounts.size() )
+        else if (position < statuses.size() + accounts.size())
             return accounts.get(position - statuses.size());
         else
             return tags.get(position - (statuses.size() + accounts.size()));
@@ -101,7 +103,7 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getViewTypeCount(){
+    public int getViewTypeCount() {
         return 3;
     }
 
@@ -109,7 +111,7 @@ public class SearchListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         int type = getItemViewType(position);
-        if( type == STATUS_TYPE){
+        if (type == STATUS_TYPE) {
             View v = convertView;
             final Status status = (Status) getItem(position);
             final ViewHolderStatus holder;
@@ -128,23 +130,23 @@ public class SearchListAdapter extends BaseAdapter {
             } else {
                 holder = (ViewHolderStatus) v.getTag();
             }
-            if( isFirstTypeItem(type, position) )
+            if (isFirstTypeItem(type, position))
                 holder.status_search_title.setVisibility(View.VISIBLE);
             else
                 holder.status_search_title.setVisibility(View.GONE);
             final float scale = context.getResources().getDisplayMetrics().density;
-            if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
+            if (!status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null")) {
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
                 assert img != null;
-                img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-            }else if( status.getReblog() != null){
+                img.setBounds(0, 0, (int) (20 * scale + 0.5f), (int) (15 * scale + 0.5f));
+                holder.status_account_displayname.setCompoundDrawables(img, null, null, null);
+            } else if (status.getReblog() != null) {
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 assert img != null;
-                img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-            }else{
-                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
+                img.setBounds(0, 0, (int) (20 * scale + 0.5f), (int) (15 * scale + 0.5f));
+                holder.status_account_displayname.setCompoundDrawables(img, null, null, null);
+            } else {
+                holder.status_account_displayname.setCompoundDrawables(null, null, null, null);
             }
             //Click on a conversation
             holder.status_content.setOnClickListener(new View.OnClickListener() {
@@ -159,23 +161,23 @@ public class SearchListAdapter extends BaseAdapter {
             });
 
             final String content, displayName, username, ppurl;
-            if( status.getReblog() != null){
+            if (status.getReblog() != null) {
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
-                holder.status_reblog_user.setText(String.format("%s @%s",displayName, username));
+                holder.status_reblog_user.setText(String.format("%s @%s", displayName, username));
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_reblog_user.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getAcct()));
-                holder.status_account_username.setText( "");
-            }else {
+                holder.status_account_username.setText("");
+            } else {
                 ppurl = status.getAccount().getAvatar();
                 content = status.getContent();
                 displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
                 username = status.getAccount().getUsername();
                 holder.status_reblog_user.setVisibility(View.GONE);
                 holder.status_account_displayname.setText(displayName);
-                holder.status_account_username.setText( String.format("@%s",username));
+                holder.status_account_username.setText(String.format("@%s", username));
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -197,7 +199,7 @@ public class SearchListAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    if( status.getReblog() == null)
+                    if (status.getReblog() == null)
                         b.putParcelable("account", status.getAccount());
                     else
                         b.putParcelable("account", status.getReblog().getAccount());
@@ -206,7 +208,7 @@ public class SearchListAdapter extends BaseAdapter {
                 }
             });
             return v;
-        }else if( type == ACCOUNT_TYPE ){
+        } else if (type == ACCOUNT_TYPE) {
             View v = convertView;
             final Account account = (Account) getItem(position);
             final ViewHolderAccounts holder;
@@ -228,15 +230,15 @@ public class SearchListAdapter extends BaseAdapter {
                 holder = (ViewHolderAccounts) v.getTag();
             }
 
-            if( isFirstTypeItem(type, position) )
+            if (isFirstTypeItem(type, position))
                 holder.account_search_title.setVisibility(View.VISIBLE);
             else
                 holder.account_search_title.setVisibility(View.GONE);
 
             holder.account_dn.setText(account.getDisplay_name());
-            holder.account_un.setText(String.format("@%s",account.getUsername()));
+            holder.account_un.setText(String.format("@%s", account.getUsername()));
             holder.account_ac.setText(account.getAcct());
-            if( account.getDisplay_name().equals(account.getAcct()))
+            if (account.getDisplay_name().equals(account.getAcct()))
                 holder.account_ac.setVisibility(View.GONE);
             else
                 holder.account_ac.setVisibility(View.VISIBLE);
@@ -259,7 +261,7 @@ public class SearchListAdapter extends BaseAdapter {
                 }
             });
             return v;
-        }else{
+        } else {
             final String tag = (String) getItem(position);
             final ViewHolderTag holder;
             View v = convertView;
@@ -272,11 +274,11 @@ public class SearchListAdapter extends BaseAdapter {
             } else {
                 holder = (ViewHolderTag) v.getTag();
             }
-            if( isFirstTypeItem(type, position) )
+            if (isFirstTypeItem(type, position))
                 holder.tag_search_title.setVisibility(View.VISIBLE);
             else
                 holder.tag_search_title.setVisibility(View.GONE);
-            holder.tag_name.setText(String.format("#%s",tag));
+            holder.tag_name.setText(String.format("#%s", tag));
             holder.tag_name.setPaintFlags(holder.tag_name.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             holder.tag_name.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -292,12 +294,12 @@ public class SearchListAdapter extends BaseAdapter {
         }
     }
 
-    private boolean isFirstTypeItem(int type, int position){
-        if( position == 0 && type == STATUS_TYPE)
+    private boolean isFirstTypeItem(int type, int position) {
+        if (position == 0 && type == STATUS_TYPE)
             return true;
-        else if( position == statuses.size() && type == ACCOUNT_TYPE )
+        else if (position == statuses.size() && type == ACCOUNT_TYPE)
             return true;
-        else if( position ==  (statuses.size() + accounts.size()) && type == TAG_TYPE )
+        else if (position == (statuses.size() + accounts.size()) && type == TAG_TYPE)
             return true;
         return false;
     }

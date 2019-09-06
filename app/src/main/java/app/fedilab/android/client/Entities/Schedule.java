@@ -33,7 +33,8 @@ public class Schedule implements Parcelable {
     private Status status;
     private List<Attachment> attachmentList;
 
-    public Schedule(){}
+    public Schedule() {
+    }
 
 
     public String getId() {

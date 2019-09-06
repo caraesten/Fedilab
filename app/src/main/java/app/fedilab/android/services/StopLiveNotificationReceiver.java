@@ -13,6 +13,7 @@ package app.fedilab.android.services;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -30,10 +31,11 @@ public class StopLiveNotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
-        streamingServiceIntent.putExtra("stop",true);
+        streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
 }

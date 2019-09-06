@@ -14,8 +14,11 @@ package app.fedilab.android.helper;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
+
 import androidx.viewpager.widget.ViewPager;
+
 import android.util.AttributeSet;
 
 
@@ -45,7 +48,6 @@ public class SwipeControledViewPager extends ViewPager {
             return false;
         }
     }
-
 
 
     public void setEnableSwipe(boolean enableSwipe) {

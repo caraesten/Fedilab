@@ -51,7 +51,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private List<ManageTimelines> manageTimelines;
 
-    public SyncTimelinesAsyncTask(Context context, int position, OnSyncTimelineInterface onSyncTimelineInterface){
+    public SyncTimelinesAsyncTask(Context context, int position, OnSyncTimelineInterface onSyncTimelineInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onSyncTimelineInterface;
         this.position = position;
@@ -65,7 +65,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
         manageTimelines = new TimelinesDAO(contextReference.get(), db).getAllTimelines();
         //First time that the timeline is created
         int i = 0;
-        if( manageTimelines == null || manageTimelines.size() == 0){
+        if (manageTimelines == null || manageTimelines.size() == 0) {
             manageTimelines = new ArrayList<>();
             //Add home TL
             ManageTimelines manageHome = new ManageTimelines();
@@ -99,7 +99,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             i++;
             manageTimelines.add(manageLocal);
             new TimelinesDAO(contextReference.get(), db).insert(manageLocal);
-            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 //Add Public TL
                 ManageTimelines managePublic = new ManageTimelines();
                 managePublic.setDisplayed(true);
@@ -109,7 +109,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 manageTimelines.add(managePublic);
                 new TimelinesDAO(contextReference.get(), db).insert(managePublic);
             }
-            if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 //Add Public ART
                 ManageTimelines manageArt = new ManageTimelines();
                 manageArt.setDisplayed(true);
@@ -129,8 +129,8 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             }
 
             List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getAll();
-            if( tagTimelines != null && tagTimelines.size() > 0 ){
-                for(TagTimeline ttl: tagTimelines){
+            if (tagTimelines != null && tagTimelines.size() > 0) {
+                for (TagTimeline ttl : tagTimelines) {
                     //Add tag timelines
                     ManageTimelines manageTagTimeline = new ManageTimelines();
                     manageTagTimeline.setDisplayed(true);
@@ -143,8 +143,8 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             }
             List<RemoteInstance> instances = new InstancesDAO(contextReference.get(), db).getAllInstances();
-            if( instances != null && instances.size() > 0 ){
-                for(RemoteInstance ritl: instances){
+            if (instances != null && instances.size() > 0) {
+                for (RemoteInstance ritl : instances) {
                     //Add remote instances
                     ManageTimelines manageRemoteTimline = new ManageTimelines();
                     manageRemoteTimline.setDisplayed(true);
@@ -161,7 +161,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
         List<TagTimeline> tagsInDb = new SearchDAO(contextReference.get(), db).getAll();
         List<RemoteInstance> instancesInDb = new InstancesDAO(contextReference.get(), db).getAllInstances();
 
-        if( tagsInDb != null) {
+        if (tagsInDb != null) {
             for (TagTimeline tag : tagsInDb) {
                 boolean isInDb = false;
                 ManageTimelines timelines_tmp = null;
@@ -188,36 +188,36 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             }
 
-            for(ManageTimelines manageTimelines: manageTimelines){
-                if( manageTimelines.getTagTimeline() == null )
+            for (ManageTimelines manageTimelines : manageTimelines) {
+                if (manageTimelines.getTagTimeline() == null)
                     continue;
                 boolean shouldBeRemoved = true;
-                for(TagTimeline tag: tagsInDb){
-                    if( tag.getId() == manageTimelines.getTagTimeline().getId()){
+                for (TagTimeline tag : tagsInDb) {
+                    if (tag.getId() == manageTimelines.getTagTimeline().getId()) {
                         shouldBeRemoved = false;
                     }
                 }
-                if( shouldBeRemoved){
+                if (shouldBeRemoved) {
                     new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                 }
             }
         }
 
-        if( instancesInDb != null){
-            for(RemoteInstance instance: instancesInDb){
+        if (instancesInDb != null) {
+            for (RemoteInstance instance : instancesInDb) {
                 boolean isInDb = false;
                 ManageTimelines timelines_tmp = null;
-                for(ManageTimelines manageTimeline: manageTimelines){
-                    if( manageTimeline.getRemoteInstance() == null )
+                for (ManageTimelines manageTimeline : manageTimelines) {
+                    if (manageTimeline.getRemoteInstance() == null)
                         continue;
 
-                    if(manageTimeline.getRemoteInstance().getHost().trim().equals(instance.getHost().trim())){
+                    if (manageTimeline.getRemoteInstance().getHost().trim().equals(instance.getHost().trim())) {
                         isInDb = true;
                         timelines_tmp = manageTimeline;
                         break;
                     }
                 }
-                if( !isInDb){
+                if (!isInDb) {
                     ManageTimelines manageTL = new ManageTimelines();
                     manageTL.setRemoteInstance(instance);
                     manageTL.setDisplayed(true);
@@ -225,41 +225,41 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     manageTL.setPosition(manageTimelines.size());
                     new TimelinesDAO(contextReference.get(), db).insert(manageTL);
                     manageTimelines.add(manageTL);
-                }else{
+                } else {
                     //Update list
                     timelines_tmp.setRemoteInstance(instance);
                     new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                 }
             }
-            for(ManageTimelines manageTimelines: manageTimelines){
-                if( manageTimelines.getRemoteInstance() == null )
+            for (ManageTimelines manageTimelines : manageTimelines) {
+                if (manageTimelines.getRemoteInstance() == null)
                     continue;
                 boolean shouldBeRemoved = true;
-                for(RemoteInstance instance: instancesInDb){
-                    if( instance.getHost().trim().equals(manageTimelines.getRemoteInstance().getHost().trim())){
+                for (RemoteInstance instance : instancesInDb) {
+                    if (instance.getHost().trim().equals(manageTimelines.getRemoteInstance().getHost().trim())) {
                         shouldBeRemoved = false;
                     }
                 }
-                if( shouldBeRemoved){
+                if (shouldBeRemoved) {
                     new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                 }
             }
         }
         APIResponse apiResponse;
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             List<app.fedilab.android.client.Entities.List> listsAPI = null;
             try {
                 apiResponse = new API(contextReference.get()).getLists();
                 listsAPI = apiResponse.getLists();
                 //Check potential duplicated lists in db
-                List<ManageTimelines>  duplicated_id = new ArrayList<>();
+                List<ManageTimelines> duplicated_id = new ArrayList<>();
                 List<String> present_id = new ArrayList<>();
                 for (ManageTimelines manageTimeline : manageTimelines) {
                     if (manageTimeline.getListTimeline() == null)
                         continue;
-                    if( !present_id.contains(manageTimeline.getListTimeline().getId())) {
+                    if (!present_id.contains(manageTimeline.getListTimeline().getId())) {
                         present_id.add(manageTimeline.getListTimeline().getId());
-                    }else{
+                    } else {
                         duplicated_id.add(manageTimeline);
                         new TimelinesDAO(contextReference.get(), db).remove(manageTimeline);
                     }
@@ -309,19 +309,19 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                             manageTimelinesToRemove.add(dbtTimelines);
                         }
                     }
-                    if( manageTimelinesToRemove.size() > 0 ){
+                    if (manageTimelinesToRemove.size() > 0) {
                         manageTimelines.removeAll(manageTimelinesToRemove);
                     }
                 } else { //No lists, all are removed if exist in db
                     ArrayList<ManageTimelines> manageTimelinesToRemove = new ArrayList<>();
-                    if( apiResponse.getError() == null) { //Only done if there is no errors when fetching lists
+                    if (apiResponse.getError() == null) { //Only done if there is no errors when fetching lists
                         for (ManageTimelines manageTimelines : manageTimelines) {
                             if (manageTimelines.getListTimeline() == null)
                                 continue;
                             new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                             manageTimelinesToRemove.add(manageTimelines);
                         }
-                        if( manageTimelinesToRemove.size() > 0 ){
+                        if (manageTimelinesToRemove.size() > 0) {
                             manageTimelines.removeAll(manageTimelinesToRemove);
                         }
                     }
@@ -329,7 +329,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             } catch (Exception ignored) {
             }
         }
-        for (Iterator<ManageTimelines> it = manageTimelines.iterator(); it.hasNext();) {
+        for (Iterator<ManageTimelines> it = manageTimelines.iterator(); it.hasNext(); ) {
             if (!it.next().isDisplayed()) {
                 it.remove();
             }

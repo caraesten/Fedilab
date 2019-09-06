@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,8 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tab_counter_news"
     android:visibility="gone"
     android:paddingLeft="2dp"
@@ -25,5 +23,4 @@
     android:textColor="@color/mastodonC1"
     android:background="@drawable/shape_counter"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    />
+    android:layout_height="wrap_content" />

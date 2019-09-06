@@ -6,9 +6,11 @@
     android:layout_height="wrap_content"
     android:background="@android:color/black"
     android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvColors"
             android:layout_width="0dp"

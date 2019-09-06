@@ -18,7 +18,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -58,19 +60,19 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     private String listId;
     private List<Account> allAccount = new ArrayList<>();
 
-    public enum type{
+    public enum type {
         CURRENT,
         SEARCH
     }
 
-    public AccountsInAListAdapter(type actionType, String listId, List<Account> accounts){
+    public AccountsInAListAdapter(type actionType, String listId, List<Account> accounts) {
         this.accounts = accounts;
         this.accountsInAListAdapter = this;
         this.actionType = actionType;
         this.listId = listId;
     }
 
-    public AccountsInAListAdapter(type actionType, String listId, List<Account> allAccount, List<Account> accountSearch){
+    public AccountsInAListAdapter(type actionType, String listId, List<Account> allAccount, List<Account> accountSearch) {
         this.accounts = accountSearch;
         this.accountsInAListAdapter = this;
         this.actionType = actionType;
@@ -93,38 +95,37 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         final Account account = accounts.get(position);
 
 
-
         holder.account_un.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_ac.setText(account.getAcct());
-        if( account.getDisplay_name().equals(account.getAcct()))
+        if (account.getDisplay_name().equals(account.getAcct()))
             holder.account_ac.setVisibility(View.GONE);
         else
             holder.account_ac.setVisibility(View.VISIBLE);
         //Profile picture
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
 
-        if( actionType == type.CURRENT){
+        if (actionType == type.CURRENT) {
             holder.account_action.setImageResource(R.drawable.ic_close);
             holder.account_action.setContentDescription(context.getString(R.string.remove_account));
-        }else if(actionType == type.SEARCH && !isInList(account)){
+        } else if (actionType == type.SEARCH && !isInList(account)) {
             holder.account_action.setImageResource(R.drawable.ic_add);
             holder.account_action.setContentDescription(context.getString(R.string.add_account));
-        }else if (actionType == type.SEARCH){
+        } else if (actionType == type.SEARCH) {
             holder.account_action.setImageResource(R.drawable.ic_close);
             holder.account_action.setContentDescription(context.getString(R.string.remove_account));
         }
         holder.account_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( actionType == type.CURRENT){
+                if (actionType == type.CURRENT) {
                     new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     remove(account);
                     accountsInAListAdapter.notifyDataSetChanged();
-                }else if(actionType == type.SEARCH && !isInList(account)){
+                } else if (actionType == type.SEARCH && !isInList(account)) {
                     new ManageListsAsyncTask(context, ManageListsAsyncTask.action.ADD_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    ((ManageAccountsInListActivity)context).addAccount(account);
+                    ((ManageAccountsInListActivity) context).addAccount(account);
 
-                }else if( actionType == type.SEARCH){
+                } else if (actionType == type.SEARCH) {
                     new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     remove(account);
                     accountsInAListAdapter.notifyDataSetChanged();
@@ -144,10 +145,10 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         });
     }
 
-    private void remove(Account account){
+    private void remove(Account account) {
         int position = 0;
-        for(Account act: allAccount){
-            if( account.getId().equals(act.getId()) ){
+        for (Account act : allAccount) {
+            if (account.getId().equals(act.getId())) {
                 allAccount.remove(position);
                 return;
             }
@@ -155,8 +156,8 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         }
     }
 
-    private boolean isInList(Account account){
-        if( allAccount != null && allAccount.size() > 0) {
+    private boolean isInList(Account account) {
+        if (allAccount != null && allAccount.size() > 0) {
             for (Account act : allAccount) {
                 if (act.getId().equals(account.getId())) {
                     return true;
@@ -169,9 +170,9 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
 
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-       if( actionType == ManageListsAsyncTask.action.DELETE_USERS && statusCode != 200){
-           Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-       }
+        if (actionType == ManageListsAsyncTask.action.DELETE_USERS && statusCode != 200) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -185,14 +186,13 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     }
 
 
-
-
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp;
         TextView account_ac;
         TextView account_un;
-        FloatingActionButton  account_action;
+        FloatingActionButton account_action;
         LinearLayout account_container;
+
         ViewHolder(View itemView) {
             super(itemView);
             account_container = itemView.findViewById(R.id.account_container);

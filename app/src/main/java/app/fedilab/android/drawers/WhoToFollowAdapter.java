@@ -20,13 +20,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import java.util.List;
 
 import app.fedilab.android.helper.Helper;
@@ -46,7 +49,7 @@ public class WhoToFollowAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public WhoToFollowAdapter(List<String> lists){
+    public WhoToFollowAdapter(List<String> lists) {
         this.lists = lists;
     }
 
@@ -85,21 +88,21 @@ public class WhoToFollowAdapter extends BaseAdapter {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-        }else if(theme == Helper.THEME_DARK){
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
+        } else if (theme == Helper.THEME_DARK) {
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-        }else if(theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
+        } else if (theme == Helper.THEME_BLACK) {
             holder.search_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(item);
         assert next != null;
         final float scale = context.getResources().getDisplayMetrics().density;
-        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
+        next.setBounds(0, 0, (int) (30 * scale + 0.5f), (int) (30 * scale + 0.5f));
         holder.search_title.setCompoundDrawables(null, null, next, null);
 
         holder.search_container.setOnClickListener(new View.OnClickListener() {

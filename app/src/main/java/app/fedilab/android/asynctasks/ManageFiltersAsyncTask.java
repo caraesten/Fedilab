@@ -32,7 +32,7 @@ import app.fedilab.android.interfaces.OnFilterActionInterface;
 
 public class ManageFiltersAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action{
+    public enum action {
         GET_FILTER,
         GET_ALL_FILTER,
         CREATE_FILTER,
@@ -47,7 +47,7 @@ public class ManageFiltersAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private Filters filter;
 
-    public ManageFiltersAsyncTask(Context context, action apiAction, Filters filter, OnFilterActionInterface onFilterActionInterface){
+    public ManageFiltersAsyncTask(Context context, action apiAction, Filters filter, OnFilterActionInterface onFilterActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onFilterActionInterface;
         this.filter = filter;
@@ -59,13 +59,13 @@ public class ManageFiltersAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         if (apiAction == action.GET_ALL_FILTER) {
             apiResponse = new API(contextReference.get()).getFilters();
-        }else if(apiAction == action.GET_FILTER){
+        } else if (apiAction == action.GET_FILTER) {
             apiResponse = new API(contextReference.get()).getFilters(filter.getId());
-        }else if(apiAction == action.CREATE_FILTER){
+        } else if (apiAction == action.CREATE_FILTER) {
             apiResponse = new API(contextReference.get()).addFilters(filter);
-        }else if( apiAction == action.UPDATE_FILTER){
+        } else if (apiAction == action.UPDATE_FILTER) {
             apiResponse = new API(contextReference.get()).updateFilters(filter);
-        }else if(apiAction == action.DELETE_FILTER){
+        } else if (apiAction == action.DELETE_FILTER) {
             statusCode = new API(contextReference.get()).deleteFilters(filter);
         }
         return null;

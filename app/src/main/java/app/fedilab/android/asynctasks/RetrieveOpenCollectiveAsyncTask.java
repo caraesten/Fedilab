@@ -38,12 +38,12 @@ public class RetrieveOpenCollectiveAsyncTask extends AsyncTask<Void, Void, Void>
     private WeakReference<Context> contextReference;
     private Type type;
 
-    public enum Type{
+    public enum Type {
         BACKERS,
         SPONSORS
     }
 
-    public RetrieveOpenCollectiveAsyncTask(Context context, Type type, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+    public RetrieveOpenCollectiveAsyncTask(Context context, Type type, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface) {
         this.type = type;
         this.listener = onRetrieveRemoteAccountInterface;
         this.contextReference = new WeakReference<>(context);

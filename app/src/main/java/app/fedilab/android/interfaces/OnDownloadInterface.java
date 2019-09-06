@@ -22,5 +22,6 @@ import app.fedilab.android.client.Entities.Error;
  */
 public interface OnDownloadInterface {
     void onDownloaded(String saveFilePath, String downloadUrl, Error error);
+
     void onUpdateProgress(int progress);
 }

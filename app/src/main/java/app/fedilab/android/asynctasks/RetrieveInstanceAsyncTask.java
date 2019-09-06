@@ -35,7 +35,7 @@ public class RetrieveInstanceAsyncTask extends AsyncTask<Void, Void, Void> {
     private APIResponse apiResponse;
     private WeakReference<Context> contextReference;
 
-    public RetrieveInstanceAsyncTask(Context context, OnRetrieveInstanceInterface onRetrieveInstanceInterface){
+    public RetrieveInstanceAsyncTask(Context context, OnRetrieveInstanceInterface onRetrieveInstanceInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveInstanceInterface;
     }

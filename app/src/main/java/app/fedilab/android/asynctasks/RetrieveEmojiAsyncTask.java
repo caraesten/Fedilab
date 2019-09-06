@@ -39,7 +39,7 @@ public class RetrieveEmojiAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveEmojiInterface listener;
     private WeakReference<Context> contextReference;
 
-    public RetrieveEmojiAsyncTask(Context context, String shortcode, OnRetrieveEmojiInterface onRetrieveEmojiInterface){
+    public RetrieveEmojiAsyncTask(Context context, String shortcode, OnRetrieveEmojiInterface onRetrieveEmojiInterface) {
         this.contextReference = new WeakReference<>(context);
         this.shortcode = shortcode;
         this.listener = onRetrieveEmojiInterface;

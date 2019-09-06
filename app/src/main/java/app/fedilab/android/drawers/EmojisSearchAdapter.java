@@ -16,7 +16,9 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +44,10 @@ import app.fedilab.android.R;
  */
 public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filterable {
 
-    private List<Emojis> emojis, tempEmojis, suggestions ;
+    private List<Emojis> emojis, tempEmojis, suggestions;
     private LayoutInflater layoutInflater;
 
-    public EmojisSearchAdapter(Context context, List<Emojis> emojis){
+    public EmojisSearchAdapter(Context context, List<Emojis> emojis) {
         super(context, android.R.layout.simple_list_item_1, emojis);
         this.emojis = emojis;
         this.tempEmojis = new ArrayList<>(emojis);
@@ -85,7 +87,7 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if( emoji != null) {
+        if (emoji != null) {
             holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
             //Profile picture
             Glide.with(holder.emoji_icon.getContext())
@@ -125,17 +127,18 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            try{
+            try {
                 ArrayList<Emojis> c = (ArrayList<Emojis>) results.values;
                 if (results.count > 0) {
                     clear();
                     addAll(c);
                     notifyDataSetChanged();
-                } else{
+                } else {
                     clear();
                     notifyDataSetChanged();
                 }
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
 
         }
     };

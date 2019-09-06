@@ -21,10 +21,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,20 +77,21 @@ public class DisplaySearchFragment extends Fragment {
         mainLoader.setVisibility(View.VISIBLE);
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         searches = new SearchDAO(context, db).getAllSearch();
-        if( searches == null)
+        if (searches == null)
             searches = new ArrayList<>();
         searchTootsListAdapter = new SearchTootsListAdapter(context, searches, textviewNoAction);
         lv_search_toots.setAdapter(searchTootsListAdapter);
         searchTootsListAdapter.notifyDataSetChanged();
-        if( searches.size() == 0) {
+        if (searches.size() == 0) {
             textviewNoAction.setVisibility(View.VISIBLE);
         }
         mainLoader.setVisibility(View.GONE);
         FloatingActionButton add_new = null;
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
-        }catch (Exception ignored){}
-        if( add_new != null)
+        } catch (Exception ignored) {
+        }
+        if (add_new != null)
             add_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -95,14 +100,14 @@ public class DisplaySearchFragment extends Fragment {
                     int style;
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                     LayoutInflater inflater = getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.search_toot,   new LinearLayout(context), false);
+                    View dialogView = inflater.inflate(R.layout.search_toot, new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
                     final EditText editText = dialogView.findViewById(R.id.search_toot);
                     editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
@@ -110,19 +115,19 @@ public class DisplaySearchFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             String keyword = editText.getText().toString().trim();
-                            keyword= keyword.replaceAll("^#+", "");
+                            keyword = keyword.replaceAll("^#+", "");
                             //Empty
-                            if( keyword.length() == 0)
+                            if (keyword.length() == 0)
                                 return;
                             //Already in db
                             List<String> s_ = new SearchDAO(context, db).getSearchByKeyword(keyword);
-                            if( s_ == null)
+                            if (s_ == null)
                                 s_ = new ArrayList<>();
-                            if( s_.size() > 0){
+                            if (s_.size() > 0) {
                                 return;
                             }
                             new SearchDAO(context, db).insertSearch(keyword);
-                            if( getActivity() != null)
+                            if (getActivity() != null)
                                 getActivity().recreate();
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra(Helper.INTENT_ACTION, Helper.SEARCH_TAG);
@@ -140,7 +145,7 @@ public class DisplaySearchFragment extends Fragment {
                             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                         }
                     });
-                    if( alertDialog.getWindow() != null )
+                    if (alertDialog.getWindow() != null)
                         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     alertDialog.show();
                 }
@@ -150,8 +155,7 @@ public class DisplaySearchFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 

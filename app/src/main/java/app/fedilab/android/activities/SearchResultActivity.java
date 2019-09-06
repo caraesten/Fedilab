@@ -18,8 +18,10 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +66,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -84,22 +86,22 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
         lv_search = findViewById(R.id.lv_search);
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             search = b.getString("search");
-            if( search != null)
+            if (search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
-                Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -111,7 +113,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                 }
             });
             toolbar_title.setText(search);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, SearchResultActivity.this);
             }
@@ -138,22 +140,22 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
         loader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            if( apiResponse.getError().getError() != null)
-                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            if (apiResponse.getError().getError() != null)
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if( apiResponse.getResults() == null || ( apiResponse.getResults().getAccounts().size() == 0 &&  apiResponse.getResults().getStatuses().size() == 0 &&  apiResponse.getResults().getHashtags().size() == 0)){
+        if (apiResponse.getResults() == null || (apiResponse.getResults().getAccounts().size() == 0 && apiResponse.getResults().getStatuses().size() == 0 && apiResponse.getResults().getHashtags().size() == 0)) {
             RelativeLayout no_result = findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);
             return;
         }
         lv_search.setVisibility(View.VISIBLE);
-        List<String> tags =  apiResponse.getResults().getHashtags();
-        List<Account> accounts =  apiResponse.getResults().getAccounts();
-        List<Status> statuses =  apiResponse.getResults().getStatuses();
+        List<String> tags = apiResponse.getResults().getHashtags();
+        List<Account> accounts = apiResponse.getResults().getAccounts();
+        List<Status> statuses = apiResponse.getResults().getStatuses();
 
         SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
         lv_search.setAdapter(searchListAdapter);
@@ -165,8 +167,8 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     @Override
     public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
         loader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         lv_search.setVisibility(View.VISIBLE);

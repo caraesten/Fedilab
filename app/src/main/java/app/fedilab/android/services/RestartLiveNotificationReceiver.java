@@ -13,6 +13,7 @@ package app.fedilab.android.services;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,11 +35,12 @@ public class RestartLiveNotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if( liveNotifications) {
+        if (liveNotifications) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
             try {
                 context.startService(streamingServiceIntent);
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
     }
 

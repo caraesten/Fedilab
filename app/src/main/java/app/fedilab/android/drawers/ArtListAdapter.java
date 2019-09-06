@@ -20,8 +20,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +71,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     private static final int DISPLAYED_STATUS = 1;
 
 
-    public ArtListAdapter(List<Status> statuses){
+    public ArtListAdapter(List<Status> statuses) {
 
         this.statuses = statuses;
         statusListAdapter = this;
@@ -85,8 +87,8 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         return statuses.size();
     }
 
-    private Status getItemAt(int position){
-        if( statuses.size() > position)
+    private Status getItemAt(int position) {
+        if (statuses.size() > position)
             return statuses.get(position);
         else
             return null;
@@ -94,7 +96,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
 
     @Override
     public void onRetrieveReplies(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
+        if (apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0) {
             return;
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
@@ -102,7 +104,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     }
 
 
-    private class ViewHolderEmpty extends RecyclerView.ViewHolder{
+    private class ViewHolderEmpty extends RecyclerView.ViewHolder {
         ViewHolderEmpty(View itemView) {
             super(itemView);
         }
@@ -114,12 +116,13 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     }
 
 
-    private class ViewHolderArt extends RecyclerView.ViewHolder{
+    private class ViewHolderArt extends RecyclerView.ViewHolder {
         ImageView art_media, art_pp;
         TextView art_username, art_acct;
         LinearLayout art_author;
         RelativeLayout status_show_more;
         ImageView show_more_button_art;
+
         ViewHolderArt(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -133,10 +136,8 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     }
 
 
-
-
-    public Status getItem(int position){
-        if( statuses.size() > position && position >= 0)
+    public Status getItem(int position) {
+        if (statuses.size() > position && position >= 0)
             return statuses.get(position);
         else return null;
     }
@@ -145,11 +146,11 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     public int getItemViewType(int position) {
         boolean show_boosts = false;
         boolean show_replies = false;
-        if( context instanceof ShowAccountActivity){
+        if (context instanceof ShowAccountActivity) {
             show_boosts = ((ShowAccountActivity) context).showBoosts();
             show_replies = ((ShowAccountActivity) context).showReplies();
         }
-        if( !Helper.filterToots(statuses.get(position), null,context instanceof ShowAccountActivity,show_boosts, show_replies))
+        if (!Helper.filterToots(statuses.get(position), null, context instanceof ShowAccountActivity, show_boosts, show_replies))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;
@@ -161,12 +162,11 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
 
         this.context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(this.context);
-        if( viewType != HIDDEN_STATUS)
+        if (viewType != HIDDEN_STATUS)
             return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
-
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -174,7 +174,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
+        if (viewHolder.getItemViewType() != HIDDEN_STATUS) {
             final ViewHolderArt holder = (ViewHolderArt) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
             if (!status.isClickable())
@@ -238,48 +238,43 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     }
 
 
-
-
-
-
-
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When muting or blocking an account, its status are removed from the list
         List<Status> statusesToRemove = new ArrayList<>();
-        if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
-            for(Status status: statuses){
-                if( status.getAccount().getId().equals(targetedId))
+        if (statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK) {
+            for (Status status : statuses) {
+                if (status.getAccount().getId().equals(targetedId))
                     statusesToRemove.add(status);
             }
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
-        }else  if( statusAction == API.StatusAction.UNSTATUS ){
+        } else if (statusAction == API.StatusAction.UNSTATUS) {
             int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
+            for (Status status : statuses) {
+                if (status.getId().equals(targetedId)) {
                     statuses.remove(status);
                     statusListAdapter.notifyItemRemoved(position);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     //Remove the status from cache also
                     try {
-                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
-                    }catch (Exception ignored){}
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE, status);
+                    } catch (Exception ignored) {
+                    }
                     break;
                 }
                 position++;
             }
-        }
-        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+        } else if (statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN) {
             int position = 0;
-            for (Status status: statuses) {
+            for (Status status : statuses) {
                 if (status.getId().equals(targetedId)) {
                     if (statusAction == API.StatusAction.PIN)
                         status.setPinned(true);
@@ -291,10 +286,10 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                 position++;
             }
         }
-        if( statusAction == API.StatusAction.PEERTUBEDELETECOMMENT){
+        if (statusAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
             int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
+            for (Status status : statuses) {
+                if (status.getId().equals(targetedId)) {
                     statuses.remove(status);
                     statusListAdapter.notifyItemRemoved(position);
                     break;
@@ -304,7 +299,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         }
     }
 
-    public void notifyStatusChanged(Status status){
+    public void notifyStatusChanged(Status status) {
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
@@ -316,7 +311,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status){
+    public void notifyStatusWithActionChanged(Status status) {
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
@@ -332,11 +327,11 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-        if( status != null) {
-            if( !fromTranslation) {
-               status.setEmojiFound(true);
-            }else {
-              status.setEmojiTranslateFound(true);
+        if (status != null) {
+            if (!fromTranslation) {
+                status.setEmojiFound(true);
+            } else {
+                status.setEmojiTranslateFound(true);
             }
             notifyStatusChanged(status);
         }

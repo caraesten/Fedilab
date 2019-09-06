@@ -17,8 +17,10 @@ package app.fedilab.android.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,13 +63,13 @@ public class SettingsPeertubeFragment extends Fragment {
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
             videoMode = Helper.VIDEO_MODE_DIRECT;
         int positionVideoMode = 0;
-        if( videoMode == Helper.VIDEO_MODE_DIRECT)
+        if (videoMode == Helper.VIDEO_MODE_DIRECT)
             positionVideoMode = 1;
         video_mode_spinner.setSelection(positionVideoMode);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count1 > 0 ) {
+                if (count1 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         /*case 0:
@@ -86,6 +88,7 @@ public class SettingsPeertubeFragment extends Fragment {
                 }
                 count1++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -109,12 +112,10 @@ public class SettingsPeertubeFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override

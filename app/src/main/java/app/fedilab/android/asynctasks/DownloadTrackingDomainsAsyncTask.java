@@ -93,7 +93,7 @@ public class DownloadTrackingDomainsAsyncTask extends AsyncTask<Void, Void, Bool
             mainHandler.post(() -> Toasty.success(context.get(), context.get().getString(R.string.tracking_db_updated), Toast.LENGTH_LONG).show());
         else
             mainHandler.post(() -> Toasty.error(context.get(), context.get().getString(R.string.toast_error), Toast.LENGTH_LONG).show());
-        if( update_tracking_domains != null && update_tracking_domains.get() != null) {
+        if (update_tracking_domains != null && update_tracking_domains.get() != null) {
             update_tracking_domains.get().setEnabled(true);
         }
     }

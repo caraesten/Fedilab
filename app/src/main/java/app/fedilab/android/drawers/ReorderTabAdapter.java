@@ -19,8 +19,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -52,7 +55,7 @@ import app.fedilab.android.activities.ReorderTimelinesActivity;
  *
  * @author Paul Burke (ipaulpro)
  */
-public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.ItemViewHolder>  implements ItemTouchHelperAdapter {
+public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
     private List<ManageTimelines> mItems;
 
@@ -63,7 +66,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     private SharedPreferences sharedpreferences;
 
     public ReorderTabAdapter(List<ManageTimelines> manageTimelines, OnStartDragListener dragStartListener, OnUndoListener undoListener) {
-        this. mDragStartListener = dragStartListener;
+        this.mDragStartListener = dragStartListener;
         this.mUndoListener = undoListener;
         this.mItems = manageTimelines;
     }
@@ -83,7 +86,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         ManageTimelines tl = mItems.get(position);
-        switch (tl.getType()){
+        switch (tl.getType()) {
             case HOME:
                 holder.iconView.setImageResource(R.drawable.ic_home);
                 holder.textView.setText(context.getString(R.string.home_menu));
@@ -113,7 +116,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                 holder.textView.setText(context.getString(R.string.peertube_menu));
                 break;
             case INSTANCE:
-                switch ( tl.getRemoteInstance().getType()){
+                switch (tl.getRemoteInstance().getType()) {
                     case "PEERTUBE":
                         holder.iconView.setImageResource(R.drawable.peertube_icon);
                         break;
@@ -130,27 +133,27 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                         holder.iconView.setImageResource(R.drawable.ic_gnu_social);
                         break;
                 }
-                holder.textView.setText( tl.getRemoteInstance().getHost());
+                holder.textView.setText(tl.getRemoteInstance().getHost());
                 break;
             case TAG:
                 holder.iconView.setImageResource(R.drawable.ic_tag_timeline);
-                if(  tl.getTagTimeline().getDisplayname() != null)
-                    holder.textView.setText( tl.getTagTimeline().getDisplayname());
+                if (tl.getTagTimeline().getDisplayname() != null)
+                    holder.textView.setText(tl.getTagTimeline().getDisplayname());
                 else
-                    holder.textView.setText( tl.getTagTimeline().getName());
+                    holder.textView.setText(tl.getTagTimeline().getName());
                 break;
             case LIST:
                 holder.iconView.setImageResource(R.drawable.ic_list);
-                holder.textView.setText( tl.getListTimeline().getTitle());
+                holder.textView.setText(tl.getListTimeline().getTitle());
                 break;
         }
-        if( tl.getType() != ManageTimelines.Type.INSTANCE){
+        if (tl.getType() != ManageTimelines.Type.INSTANCE) {
             if (theme == Helper.THEME_LIGHT) {
                 holder.iconView.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             } else {
                 holder.iconView.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
-        }else{
+        } else {
             holder.iconView.setColorFilter(null);
         }
 
@@ -162,9 +165,9 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
             holder.hideView.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
-        if(tl.isDisplayed()){
+        if (tl.isDisplayed()) {
             holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
-        }else{
+        } else {
             holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
         }
 
@@ -173,7 +176,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
             public void onClick(View v) {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 int count = new TimelinesDAO(context, db).countVisibleTimelines();
-                if( count > 2 || !tl.isDisplayed()) {
+                if (count > 2 || !tl.isDisplayed()) {
                     tl.setDisplayed(!tl.isDisplayed());
                     if (tl.isDisplayed()) {
                         holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
@@ -182,7 +185,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                     }
                     ReorderTimelinesActivity.updated = true;
                     new TimelinesDAO(context, db).update(tl);
-                }else{
+                } else {
                     Toasty.info(context, context.getString(R.string.visible_tabs_needed), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -205,11 +208,11 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
     @Override
     public void onItemDismiss(int position) {
         ManageTimelines item = mItems.get(position);
-        if( item.getType() == ManageTimelines.Type.TAG || item.getType() == ManageTimelines.Type.INSTANCE || item.getType() == ManageTimelines.Type.LIST) {
+        if (item.getType() == ManageTimelines.Type.TAG || item.getType() == ManageTimelines.Type.INSTANCE || item.getType() == ManageTimelines.Type.LIST) {
             mUndoListener.onUndo(item, position);
             mItems.remove(position);
             notifyItemRemoved(position);
-        }else{
+        } else {
             notifyItemChanged(position);
             Toasty.info(context, context.getString(R.string.warning_main_timeline), Toast.LENGTH_SHORT).show();
         }
@@ -221,13 +224,13 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
         notifyItemMoved(fromPosition, toPosition);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         int i = 0;
-        for(ManageTimelines timelines: mItems){
-           timelines.setPosition(i);
-           new TimelinesDAO(context, db).update(timelines);
-           i++;
+        for (ManageTimelines timelines : mItems) {
+            timelines.setPosition(i);
+            new TimelinesDAO(context, db).update(timelines);
+            i++;
         }
         ReorderTimelinesActivity.updated = true;
-       return true;
+        return true;
     }
 
     @Override

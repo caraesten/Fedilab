@@ -66,12 +66,13 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     private List<SlideMenuItem> list = new ArrayList<>();
     public static int position = 1;
     private ContentSettingsFragment.type previous;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -85,13 +86,13 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
         position = 1;
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -103,7 +104,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
                 }
             });
             toolbar_title.setText(R.string.action_about);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, SettingsActivity.this);
             }
@@ -170,7 +171,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
     }
 
@@ -191,7 +192,7 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         list.add(menuItemInterface);
         list.add(menuItemBattery);
         list.add(menuItemEdit);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             list.add(menuMenu);
             list.add(menuItemAdmin);
         }
@@ -211,9 +212,6 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -224,10 +222,8 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
     }
 
 
-
-
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
     }
@@ -235,11 +231,11 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, ContentSettingsFragment.type type, int topPosition) {
         this.res = this.res == R.drawable.ic_timeline_menu_s ? R.drawable.ic_notifications_menu : R.drawable.ic_timeline_menu_s;
-        if( type == ContentSettingsFragment.type.LANGUAGE){
+        if (type == ContentSettingsFragment.type.LANGUAGE) {
             Intent intent = new Intent(getApplicationContext(), LanguageActivity.class);
             startActivity(intent);
             type = previous;
-        }else if( type == ContentSettingsFragment.type.MENU){
+        } else if (type == ContentSettingsFragment.type.MENU) {
             Intent intent = new Intent(getApplicationContext(), HideItemActivity.class);
             startActivity(intent);
             type = previous;

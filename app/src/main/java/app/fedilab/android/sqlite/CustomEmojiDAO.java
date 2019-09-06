@@ -18,6 +18,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,7 @@ public class CustomEmojiDAO {
 
     /**
      * Insert an emoji in database
+     *
      * @param emoji Emoji
      */
     public void insertEmoji(Emojis emoji) {
@@ -60,18 +62,20 @@ public class CustomEmojiDAO {
         values.put(Sqlite.COL_URL_STATIC, emoji.getStatic_url());
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts emoji
-        try{
+        try {
             db.insert(Sqlite.TABLE_CUSTOM_EMOJI, null, values);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     //------- UPDATES  -------
 
     /**
      * Update an emoji in database
+     *
      * @param emoji Emojis
      */
-    public void updateEmoji(Emojis emoji ) {
+    public void updateEmoji(Emojis emoji) {
         ContentValues values = new ContentValues();
         String instance = Helper.getLiveInstance(context);
         values.put(Sqlite.COL_URL, emoji.getUrl());
@@ -88,15 +92,15 @@ public class CustomEmojiDAO {
      * Remove emoji by id
      * @return int
      */
-    public int remove(Emojis emoji){
+    public int remove(Emojis emoji) {
         String instance = Helper.getLiveInstance(context);
-        return db.delete(Sqlite.TABLE_CUSTOM_EMOJI,  Sqlite.COL_SHORTCODE + " = \"" + emoji.getShortcode() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null);
+        return db.delete(Sqlite.TABLE_CUSTOM_EMOJI, Sqlite.COL_SHORTCODE + " = \"" + emoji.getShortcode() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
     }
 
     /***
      * Remove emoji by id
      */
-    public void removeAll(){
+    public void removeAll() {
         String instance = Helper.getLiveInstance(context);
         db.delete(Sqlite.TABLE_CUSTOM_EMOJI, Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
     }
@@ -105,12 +109,13 @@ public class CustomEmojiDAO {
 
     /**
      * Returns all emojis in db for an instance
+     *
      * @return emojis List<Emojis>
      */
-    public List<Emojis> getAllEmojis(){
+    public List<Emojis> getAllEmojis() {
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, Sqlite.COL_SHORTCODE , null, Sqlite.COL_SHORTCODE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance + "'", null, Sqlite.COL_SHORTCODE, null, Sqlite.COL_SHORTCODE + " ASC", null);
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;
@@ -119,11 +124,12 @@ public class CustomEmojiDAO {
 
     /**
      * Returns all emojis in db for an instance
+     *
      * @return emojis List<Emojis>
      */
-    public List<Emojis> getAllEmojis(String instance){
+    public List<Emojis> getAllEmojis(String instance) {
         try {
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, Sqlite.COL_SHORTCODE , null, Sqlite.COL_SHORTCODE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance + "'", null, Sqlite.COL_SHORTCODE, null, Sqlite.COL_SHORTCODE + " ASC", null);
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;
@@ -132,12 +138,13 @@ public class CustomEmojiDAO {
 
     /**
      * Returns an emoji by its shortcode in db
+     *
      * @return emoji Emojis
      */
-    public Emojis getEmoji(String shortCode){
+    public Emojis getEmoji(String shortCode) {
         try {
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " = \"" + shortCode + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " = \"" + shortCode + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, null, null, null, null);
             return cursorToEmoji(c);
         } catch (Exception e) {
             return null;
@@ -147,12 +154,13 @@ public class CustomEmojiDAO {
 
     /**
      * Returns an emoji by its shortcode in db
+     *
      * @return emoji Emojis
      */
-    public List<Emojis> getEmojiStartingBy(String shortCode){
+    public List<Emojis> getEmojiStartingBy(String shortCode) {
         try {
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null, Sqlite.COL_SHORTCODE , null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, Sqlite.COL_SHORTCODE, null, null, null);
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;
@@ -164,7 +172,7 @@ public class CustomEmojiDAO {
      * @param c Cursor
      * @return Emojis
      */
-    private Emojis cursorToEmoji(Cursor c){
+    private Emojis cursorToEmoji(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
@@ -188,14 +196,14 @@ public class CustomEmojiDAO {
      * @param c Cursor
      * @return List<Emojis>
      */
-    private List<Emojis> cursorToListEmojis(Cursor c){
+    private List<Emojis> cursorToListEmojis(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
             return null;
         }
         List<Emojis> emojis = new ArrayList<>();
-        while (c.moveToNext() ) {
+        while (c.moveToNext()) {
             //Restore the emojis
             Emojis emoji = new Emojis();
             emoji.setShortcode(c.getString(c.getColumnIndex(Sqlite.COL_SHORTCODE)));

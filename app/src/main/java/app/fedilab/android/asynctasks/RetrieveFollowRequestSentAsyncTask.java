@@ -37,7 +37,7 @@ public class RetrieveFollowRequestSentAsyncTask extends AsyncTask<Void, Void, Vo
     private OnRetrieveAccountsInterface listener;
     private WeakReference<Context> contextReference;
 
-    public RetrieveFollowRequestSentAsyncTask(Context context, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
+    public RetrieveFollowRequestSentAsyncTask(Context context, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveAccountsInterface;

@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
+
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 import androidx.core.content.ContextCompat;
@@ -56,7 +57,7 @@ import static app.fedilab.android.helper.Helper.initNetCipher;
  */
 
 @AcraNotification(
-         resIcon = R.mipmap.ic_launcher, resTitle = R.string.crash_title, resChannelName = R.string.set_crash_reports, resText = R.string.crash_message)
+        resIcon = R.mipmap.ic_launcher, resTitle = R.string.crash_title, resChannelName = R.string.set_crash_reports, resText = R.string.crash_message)
 
 public class MainApplication extends MultiDexApplication {
 
@@ -79,24 +80,25 @@ public class MainApplication extends MultiDexApplication {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
 
             String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, null);
-            if( defaultLocaleString != null){
+            if (defaultLocaleString != null) {
                 Locale defaultLocale;
-                if( defaultLocaleString.equals("zh-CN"))
+                if (defaultLocaleString.equals("zh-CN"))
                     defaultLocale = Locale.SIMPLIFIED_CHINESE;
-                else if( defaultLocaleString.equals("zh-TW"))
+                else if (defaultLocaleString.equals("zh-TW"))
                     defaultLocale = Locale.TRADITIONAL_CHINESE;
                 else
                     defaultLocale = new Locale(defaultLocaleString);
                 SUPPORTED_LOCALES.add(defaultLocale);
-            }else {
+            } else {
                 SUPPORTED_LOCALES.add(Locale.getDefault());
             }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
 
         boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
-        if( send_crash_reports) {
+        if (send_crash_reports) {
             CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
             ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
             String version = "";
@@ -117,19 +119,17 @@ public class MainApplication extends MultiDexApplication {
         Toasty.Config.getInstance()
                 .allowQueue(false)
                 .apply();
-                    Toasty.Config.getInstance().apply();
-        }
-
+        Toasty.Config.getInstance().apply();
+    }
 
 
     @Override
-    protected void attachBaseContext(Context base)
-    {
+    protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(MainApplication.this);
     }
 
-    public static MainApplication getApp(){
+    public static MainApplication getApp() {
         return app;
     }
 }

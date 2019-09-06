@@ -17,7 +17,9 @@ package app.fedilab.android.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -25,6 +27,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +54,7 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
  * Show search results within tabs
  */
 
-public class SearchResultTabActivity extends BaseActivity  {
+public class SearchResultTabActivity extends BaseActivity {
 
 
     private String search;
@@ -64,7 +67,7 @@ public class SearchResultTabActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -82,27 +85,27 @@ public class SearchResultTabActivity extends BaseActivity  {
 
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             search = b.getString("search");
-            if( search == null)
-                Toasty.error(getApplicationContext(),getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+            if (search == null)
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }
-        if( search == null)
+        if (search == null)
             finish();
 
         tabLayout = findViewById(R.id.search_tabLayout);
         search_viewpager = findViewById(R.id.search_viewpager);
 
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -114,7 +117,7 @@ public class SearchResultTabActivity extends BaseActivity  {
                 }
             });
             toolbar_title.setText(search);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, SearchResultTabActivity.this);
             }
@@ -137,7 +140,7 @@ public class SearchResultTabActivity extends BaseActivity  {
             @Override
             public void onPageSelected(int position) {
                 TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
+                if (tab != null)
                     tab.select();
             }
 
@@ -161,7 +164,7 @@ public class SearchResultTabActivity extends BaseActivity  {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 Fragment fragment;
-                if( search_viewpager.getAdapter() != null) {
+                if (search_viewpager.getAdapter() != null) {
                     fragment = (Fragment) search_viewpager.getAdapter().instantiateItem(search_viewpager, tab.getPosition());
                     if (fragment instanceof DisplayAccountsFragment) {
                         DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
@@ -202,7 +205,7 @@ public class SearchResultTabActivity extends BaseActivity  {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            switch (position){
+            switch (position) {
                 case 0:
                     DisplaySearchTagsFragment displaySearchTagsFragment = new DisplaySearchTagsFragment();
                     displaySearchTagsFragment.setArguments(bundle);

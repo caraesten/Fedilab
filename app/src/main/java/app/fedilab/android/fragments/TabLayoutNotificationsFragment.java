@@ -19,13 +19,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +61,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
 
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)));
 
         TabLayout.Tab tabMention = tabLayout.newTab();
@@ -67,15 +71,13 @@ public class TabLayoutNotificationsFragment extends Fragment {
         TabLayout.Tab tabFollow = tabLayout.newTab();
 
         tabMention.setCustomView(R.layout.tab_badge);
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabFav.setCustomView(R.layout.tab_badge);
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabBoost.setCustomView(R.layout.tab_badge);
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             tabPoll.setCustomView(R.layout.tab_badge);
         tabFollow.setCustomView(R.layout.tab_badge);
-
-
 
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -86,20 +88,20 @@ public class TabLayoutNotificationsFragment extends Fragment {
         iconMention.setImageResource(R.drawable.ic_mention_notif_tab);
 
 
-        ImageView iconFav =null;
-        if( tabFav.getCustomView() != null) {
+        ImageView iconFav = null;
+        if (tabFav.getCustomView() != null) {
             iconFav = tabFav.getCustomView().findViewById(R.id.tab_icon);
             iconFav.setImageResource(R.drawable.ic_star_notif_tab);
         }
 
-        ImageView iconBoost =null;
-        if( tabBoost.getCustomView() != null) {
+        ImageView iconBoost = null;
+        if (tabBoost.getCustomView() != null) {
             iconBoost = tabBoost.getCustomView().findViewById(R.id.tab_icon);
             iconBoost.setImageResource(R.drawable.ic_repeat_notif_tab);
         }
 
-        ImageView iconPoll =null;
-        if( tabPoll.getCustomView() != null) {
+        ImageView iconPoll = null;
+        if (tabPoll.getCustomView() != null) {
             iconPoll = tabPoll.getCustomView().findViewById(R.id.tab_icon);
             iconPoll.setImageResource(R.drawable.ic_view_list_poll_notif);
         }
@@ -109,13 +111,12 @@ public class TabLayoutNotificationsFragment extends Fragment {
         iconFollow.setImageResource(R.drawable.ic_follow_notif_tab);
 
 
-
         tabLayout.addTab(tabMention);
-        if( tabFav.getCustomView() != null)
+        if (tabFav.getCustomView() != null)
             tabLayout.addTab(tabFav);
-        if( tabBoost.getCustomView() != null)
+        if (tabBoost.getCustomView() != null)
             tabLayout.addTab(tabBoost);
-        if( tabPoll.getCustomView() != null)
+        if (tabPoll.getCustomView() != null)
             tabLayout.addTab(tabPoll);
         tabLayout.addTab(tabFollow);
 
@@ -126,20 +127,20 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
         if (theme == Helper.THEME_LIGHT) {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            if( iconFav != null)
+            if (iconFav != null)
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            if( iconBoost != null)
+            if (iconBoost != null)
                 iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            if( iconPoll != null)
+            if (iconPoll != null)
                 iconPoll.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         } else {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            if( iconFav != null)
+            if (iconFav != null)
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            if( iconBoost != null)
+            if (iconBoost != null)
                 iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            if( iconPoll != null)
+            if (iconPoll != null)
                 iconPoll.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
@@ -150,7 +151,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
         viewPager.setAdapter(new PagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -163,7 +164,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if( viewPager.getAdapter() != null) {
+                if (viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                     DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                     displayNotificationsFragment.scrollToTop();
@@ -174,7 +175,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
         return inflatedView;
     }
 
-    public ViewPager getViewPager(){
+    public ViewPager getViewPager() {
         return viewPager;
     }
 
@@ -202,21 +203,21 @@ public class TabLayoutNotificationsFragment extends Fragment {
             String tag = "";
             switch (position) {
                 case 0:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU  && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         type = DisplayNotificationsFragment.Type.ALL;
-                    }else
+                    } else
                         type = DisplayNotificationsFragment.Type.MENTION;
                     break;
                 case 1:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU  && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                         type = DisplayNotificationsFragment.Type.MENTION;
-                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                         type = DisplayNotificationsFragment.Type.BOOST;
-                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                    else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                         type = DisplayNotificationsFragment.Type.FOLLOW;
                     break;
                 case 2:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                         type = DisplayNotificationsFragment.Type.FAVORITE;
                     else
                         type = DisplayNotificationsFragment.Type.FOLLOW;
@@ -250,19 +251,19 @@ public class TabLayoutNotificationsFragment extends Fragment {
         }
     }
 
-    public void refreshAll(){
-        if( viewPager == null)
+    public void refreshAll() {
+        if (viewPager == null)
             return;
         FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
-        if( a != null) {
+        if (a != null) {
             DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
             notifAll.refreshAll();
         }
     }
 
-    public void retrieveMissingNotifications(String sinceId){
+    public void retrieveMissingNotifications(String sinceId) {
         FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
-        if( a != null) {
+        if (a != null) {
             DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
             notifAll.retrieveMissingNotifications(sinceId);
         }

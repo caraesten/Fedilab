@@ -23,12 +23,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -73,14 +76,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
     private AccountsListAdapter accountsListAdapter;
     private String targetedId;
 
-    public AccountsListAdapter(RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
+    public AccountsListAdapter(RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts) {
         this.accounts = accounts;
         this.action = action;
         this.accountsListAdapter = this;
         this.targetedId = targetedId;
     }
-
-
 
 
     @NonNull
@@ -98,7 +99,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
         API.StatusAction doAction = null;
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             holder.account_mute_notification.hide();
             if (action == RetrieveAccountsAsyncTask.Type.BLOCKED)
                 account.setFollowType(Account.followAction.BLOCK);
@@ -107,7 +108,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
             if (action == RetrieveAccountsAsyncTask.Type.CHANNELS)
                 account.setFollowType(Account.followAction.NOT_FOLLOW);
-            holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.mastodonC4)));
+            holder.account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.mastodonC4)));
             if (account.getFollowType() == Account.followAction.NOTHING) {
                 holder.account_follow.hide();
                 holder.account_follow_request.setVisibility(View.GONE);
@@ -117,7 +118,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.account_follow_request.setVisibility(View.VISIBLE);
                 doAction = null;
             } else if (account.getFollowType() == Account.followAction.FOLLOW) {
-                holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.unfollow)));
+                holder.account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.unfollow)));
                 holder.account_follow.setImageResource(R.drawable.ic_user_times);
                 doAction = API.StatusAction.UNFOLLOW;
                 holder.account_follow.show();
@@ -174,22 +175,22 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                     }
                 });
             }
-        }else {
+        } else {
             holder.account_follow.hide();
         }
-        if( !account.isEmojiFound()) {
+        if (!account.isEmojiFound()) {
             Account.makeAccountNameEmoji(context, AccountsListAdapter.this, account);
         }
-        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
+        if (account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
+            if (account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else
-                holder.account_dn.setText(account.getUsername().replace("@",""));
-        }else
-            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        holder.account_un.setText(String.format("@%s",account.getUsername()));
+                holder.account_dn.setText(account.getUsername().replace("@", ""));
+        } else
+            holder.account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        holder.account_un.setText(String.format("@%s", account.getUsername()));
         holder.account_ac.setText(account.getAcct());
-        if( account.getUsername().equals(account.getAcct()))
+        if (account.getUsername().equals(account.getAcct()))
             holder.account_ac.setVisibility(View.GONE);
         else
             holder.account_ac.setVisibility(View.VISIBLE);
@@ -204,9 +205,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_frc.setText(Helper.withSuffix(account.getFollowers_count()));
         //Profile picture
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
-        if( account.isMakingAction()){
+        if (account.isMakingAction()) {
             holder.account_follow.setEnabled(false);
-        }else {
+        } else {
             holder.account_follow.setEnabled(true);
         }
         //Follow button
@@ -214,12 +215,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                if (action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
                     if (finalDoAction != null) {
-                        if( finalDoAction != API.StatusAction.UNFOLLOW) {
+                        if (finalDoAction != API.StatusAction.UNFOLLOW) {
                             account.setMakingAction(true);
                             new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }else{
+                        } else {
                             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                             boolean confirm_unfollow = sharedpreferences.getBoolean(Helper.SET_UNFOLLOW_VALIDATION, true);
                             if (confirm_unfollow) {
@@ -227,9 +228,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                                 int style;
                                 if (theme == Helper.THEME_DARK) {
                                     style = R.style.DialogDark;
-                                } else if (theme == Helper.THEME_BLACK){
+                                } else if (theme == Helper.THEME_BLACK) {
                                     style = R.style.DialogBlack;
-                                }else {
+                                } else {
                                     style = R.style.Dialog;
                                 }
                                 AlertDialog.Builder unfollowConfirm = new AlertDialog.Builder(context, style);
@@ -237,13 +238,13 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                                 unfollowConfirm.setMessage(account.getAcct());
                                 unfollowConfirm.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog,int which) {
+                                    public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
                                 });
                                 unfollowConfirm.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog,int which) {
+                                    public void onClick(DialogInterface dialog, int which) {
                                         account.setMakingAction(true);
                                         new PostActionAsyncTask(context, finalDoAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                         dialog.dismiss();
@@ -257,12 +258,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
                         }
                     }
-                }else {
+                } else {
                     CrossActions.followPeertubeChannel(context, account, AccountsListAdapter.this);
                 }
             }
         });
-        if( action != RetrieveAccountsAsyncTask.Type.GROUPS ) {
+        if (action != RetrieveAccountsAsyncTask.Type.GROUPS) {
             holder.account_pp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -286,7 +287,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
                 }
             });
-        }else{
+        } else {
             holder.account_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -310,8 +311,8 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         return accounts.size();
     }
 
-    private Account getItemAt(int position){
-        if( accounts.size() > position)
+    private Account getItemAt(int position) {
+        if (accounts.size() > position)
             return accounts.get(position);
         else
             return null;
@@ -319,28 +320,28 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When unmuting or unblocking an account, it is removed from the list
         List<Account> accountsToRemove = new ArrayList<>();
-        if( statusAction == API.StatusAction.UNMUTE || statusAction == API.StatusAction.UNBLOCK){
-            for(Account account: accounts){
-                if( account.getId().equals(targetedId))
+        if (statusAction == API.StatusAction.UNMUTE || statusAction == API.StatusAction.UNBLOCK) {
+            for (Account account : accounts) {
+                if (account.getId().equals(targetedId))
                     accountsToRemove.add(account);
             }
             accounts.removeAll(accountsToRemove);
             accountsListAdapter.notifyDataSetChanged();
         }
-        if( statusAction == API.StatusAction.FOLLOW){
-            if( action == RetrieveAccountsAsyncTask.Type.CHANNELS){
+        if (statusAction == API.StatusAction.FOLLOW) {
+            if (action == RetrieveAccountsAsyncTask.Type.CHANNELS) {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(context, db).insertInstance(accounts.get(0).getAcct().split("@")[1], accounts.get(0).getAcct().split("@")[0], "PEERTUBE_CHANNEL");
-            }else{
-                for(Account account: accounts){
-                    if( account.getId().equals(targetedId)) {
+            } else {
+                for (Account account : accounts) {
+                    if (account.getId().equals(targetedId)) {
                         account.setFollowType(Account.followAction.FOLLOW);
                         account.setMakingAction(false);
                     }
@@ -348,9 +349,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 accountsListAdapter.notifyDataSetChanged();
             }
         }
-        if( statusAction == API.StatusAction.UNFOLLOW){
-            for(Account account: accounts){
-                if( account.getId().equals(targetedId)) {
+        if (statusAction == API.StatusAction.UNFOLLOW) {
+            for (Account account : accounts) {
+                if (account.getId().equals(targetedId)) {
                     account.setFollowType(Account.followAction.NOT_FOLLOW);
                     account.setMakingAction(false);
                 }
@@ -359,7 +360,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
-    public void notifyAccountChanged(Account account){
+    public void notifyAccountChanged(Account account) {
         for (int i = 0; i < accountsListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (accountsListAdapter.getItemAt(i) != null && accountsListAdapter.getItemAt(i).getId().equals(account.getId())) {
@@ -378,7 +379,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp;
         TextView account_ac;
         TextView account_dn;

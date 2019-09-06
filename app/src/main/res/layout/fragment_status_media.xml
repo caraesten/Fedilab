@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -17,27 +16,25 @@
 -->
 
 
-
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:paddingLeft="@dimen/fab_margin"
-android:paddingRight="@dimen/fab_margin"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <!-- GridView media -->
-    <androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview_media"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:padding="@dimen/item_offset"
-        />
+        android:padding="@dimen/item_offset" />
+
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:padding="10dp"
             android:gravity="center"
@@ -55,8 +52,8 @@ android:layout_height="match_parent">
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,6 +68,7 @@ android:layout_height="match_parent">
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="bottom|center_horizontal"
         android:layout_height="20dp">
+
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="match_parent"

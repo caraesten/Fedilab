@@ -19,7 +19,6 @@ import app.fedilab.android.client.API;
 public class AdminAction {
 
 
-
     private API.adminAction type;
     private boolean send_email_notification;
     private String text;
@@ -82,7 +81,6 @@ public class AdminAction {
     public void setSuspended(boolean suspended) {
         this.suspended = suspended;
     }
-
 
 
     public boolean isUnresolved() {

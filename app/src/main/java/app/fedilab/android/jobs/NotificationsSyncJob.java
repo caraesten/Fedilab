@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -70,6 +71,7 @@ import static app.fedilab.android.helper.Helper.notify_user;
 public class NotificationsSyncJob extends Job {
 
     static final String NOTIFICATION_REFRESH = "job_notification";
+
     static {
         Helper.installProvider();
     }
@@ -99,7 +101,8 @@ public class NotificationsSyncJob extends Job {
                     .setRequirementsEnforced(false)
                     .build()
                     .schedule();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         return jobRequestschedule;
     }
@@ -109,7 +112,7 @@ public class NotificationsSyncJob extends Job {
      * Task in background starts here.
      */
     private void callAsynchronousTask() {
-        if( !canNotify(getContext()))
+        if (!canNotify(getContext()))
             return;
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
@@ -121,20 +124,20 @@ public class NotificationsSyncJob extends Job {
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
         //User disagree with all notifications
-        if( !notif_follow && !notif_add && !notif_mention && !notif_share && !notif_poll)
+        if (!notif_follow && !notif_add && !notif_mention && !notif_share && !notif_poll)
             return; //Nothing is done
         //No account connected, the service is stopped
-        if(!Helper.isLoggedIn(getContext()))
+        if (!Helper.isLoggedIn(getContext()))
             return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
-        if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getContext())) {
-            List<Account> accounts = new AccountDAO(getContext(),db).getAllAccountCrossAction();
+        if (!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getContext())) {
+            List<Account> accounts = new AccountDAO(getContext(), db).getAllAccountCrossAction();
             //It means there is no user in DB.
-            if( accounts == null )
+            if (accounts == null)
                 return;
             //Retrieve users in db that owner has.
-            for (Account account: accounts) {
-                if( account.getSocial() == null || account.getSocial().equals("MASTODON")|| account.getSocial().equals("PLEROMA")) {
+            for (Account account : accounts) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
                     API api = new API(getContext(), account.getInstance(), account.getToken());
                     APIResponse apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
                     onRetrieveNotifications(apiResponse, account);
@@ -146,7 +149,7 @@ public class NotificationsSyncJob extends Job {
 
     private void onRetrieveNotifications(APIResponse apiResponse, final Account account) {
         List<Notification> notificationsReceived = apiResponse.getNotifications();
-        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0 || account == null)
+        if (apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0 || account == null)
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -155,15 +158,15 @@ public class NotificationsSyncJob extends Job {
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-        final  List<Notification> notifications = new ArrayList<>();
+        final List<Notification> notifications = new ArrayList<>();
         int pos = 0;
-        for(Notification notif: notificationsReceived){
-            if( max_id == null || notif.getId().compareTo(max_id) > 0 ) {
+        for (Notification notif : notificationsReceived) {
+            if (max_id == null || notif.getId().compareTo(max_id) > 0) {
                 notifications.add(pos, notif);
                 pos++;
             }
         }
-        if( notifications.size() == 0 )
+        if (notifications.size() == 0)
             return;
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
@@ -177,67 +180,67 @@ public class NotificationsSyncJob extends Job {
         String targeted_account = null;
         Helper.NotifType notifType = Helper.NotifType.MENTION;
 
-        for(Notification notification: notifications){
-            switch (notification.getType()){
+        for (Notification notification : notifications) {
+            switch (notification.getType()) {
                 case "mention":
                     notifType = Helper.NotifType.MENTION;
-                    if(notif_mention){
+                    if (notif_mention) {
                         newMentions++;
-                        if( notificationUrl == null){
+                        if (notificationUrl == null) {
                             notificationUrl = notification.getAccount().getAvatar();
-                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_mention));
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_mention));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_mention));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_mention));
                         }
                     }
                     break;
                 case "reblog":
                     notifType = Helper.NotifType.BOOST;
-                    if(notif_share){
+                    if (notif_share) {
                         newShare++;
-                        if( notificationUrl == null){
+                        if (notificationUrl == null) {
                             notificationUrl = notification.getAccount().getAvatar();
-                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_reblog));
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_reblog));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_reblog));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_reblog));
 
                         }
                     }
                     break;
                 case "favourite":
                     notifType = Helper.NotifType.FAV;
-                    if(notif_add){
+                    if (notif_add) {
                         newAdds++;
-                        if( notificationUrl == null){
+                        if (notificationUrl == null) {
                             notificationUrl = notification.getAccount().getAvatar();
-                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_favourite));
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_favourite));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_favourite));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_favourite));
                         }
                     }
                     break;
                 case "follow":
                     notifType = Helper.NotifType.FOLLLOW;
-                    if(notif_follow){
+                    if (notif_follow) {
                         newFollows++;
-                        if( notificationUrl == null){
+                        if (notificationUrl == null) {
                             notificationUrl = notification.getAccount().getAvatar();
-                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_follow));
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_follow));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_follow));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_follow));
                             targeted_account = notification.getAccount().getId();
                         }
                     }
                     break;
                 case "poll":
                     notifType = Helper.NotifType.POLL;
-                    if(notif_poll){
+                    if (notif_poll) {
                         newPolls++;
-                        if( notificationUrl == null){
+                        if (notificationUrl == null) {
                             notificationUrl = notification.getAccount().getAvatar();
                             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                             if (notification.getAccount().getId() != null && notification.getAccount().getId().equals(userId))
@@ -252,21 +255,21 @@ public class NotificationsSyncJob extends Job {
         }
 
         int allNotifCount = newFollows + newAdds + newMentions + newShare + newPolls;
-        if( allNotifCount > 0){
+        if (allNotifCount > 0) {
             //Some others notification
-            int other = allNotifCount -1;
-            if(other > 0 )
+            int other = allNotifCount - 1;
+            if (other > 0)
                 message = getContext().getResources().getQuantityString(R.plurals.other_notifications, other, other);
             else
                 message = "";
             final Intent intent = new Intent(getContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, account.getId());
-            if( targeted_account != null && notifType == Helper.NotifType.FOLLLOW)
+            if (targeted_account != null && notifType == Helper.NotifType.FOLLLOW)
                 intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
             intent.putExtra(PREF_INSTANCE, account.getInstance());
-            if( notificationUrl != null ){
+            if (notificationUrl != null) {
                 final String finalTitle = title;
                 Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -290,7 +293,7 @@ public class NotificationsSyncJob extends Job {
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
                                                 R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                        if( lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0){
+                                        if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                             editor.apply();
@@ -303,7 +306,7 @@ public class NotificationsSyncJob extends Job {
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                         notify_user(getContext(), account, intent, resource, finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                        if( lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0){
+                                        if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                             editor.apply();

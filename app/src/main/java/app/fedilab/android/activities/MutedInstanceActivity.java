@@ -97,13 +97,14 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     private boolean swiped;
     private RecyclerView lv_domains;
     private final int PICK_IMPORT_INSTANCE = 5326;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -116,13 +117,13 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
             default:
                 setTheme(R.style.AppThemeDark);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar_muted_instance, new LinearLayout(getApplicationContext()),false);
+            View view = inflater.inflate(R.layout.simple_bar_muted_instance, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -142,9 +143,9 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                 int style;
                                 if (theme1 == Helper.THEME_DARK) {
                                     style = R.style.DialogDark;
-                                } else if (theme1 == Helper.THEME_BLACK){
+                                } else if (theme1 == Helper.THEME_BLACK) {
                                     style = R.style.DialogBlack;
-                                }else {
+                                } else {
                                     style = R.style.Dialog;
                                 }
                                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MutedInstanceActivity.this, style);
@@ -156,10 +157,10 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
-                                        if(add_domain.getText() != null && add_domain.getText().toString().trim().matches("^[\\da-zA-Z.-]+\\.[a-zA-Z.]{2,10}$")){
+                                        if (add_domain.getText() != null && add_domain.getText().toString().trim().matches("^[\\da-zA-Z.-]+\\.[a-zA-Z.]{2,10}$")) {
                                             new PostActionAsyncTask(MutedInstanceActivity.this, API.StatusAction.BLOCK_DOMAIN, add_domain.getText().toString().trim(), MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                             dialog.dismiss();
-                                        }else{
+                                        } else {
                                             Toasty.error(getApplicationContext(), getString(R.string.toast_empty_content)).show();
                                         }
                                     }
@@ -172,7 +173,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                 });
                                 AlertDialog alertDialog = dialogBuilder.create();
                                 alertDialog.setTitle(getString(R.string.block_domain));
-                                if( alertDialog.getWindow() != null )
+                                if (alertDialog.getWindow() != null)
                                     alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                                 alertDialog.show();
                                 break;
@@ -181,7 +182,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
                                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                 Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
-                                Helper.exportInstanceBlock(MutedInstanceActivity.this,account.getAcct()+"_"+account.getInstance());
+                                Helper.exportInstanceBlock(MutedInstanceActivity.this, account.getAcct() + "_" + account.getInstance());
                                 break;
                             case R.id.action_import_instances:
                                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -200,21 +201,22 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                                     String[] mimetypes = {"*/*"};
                                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                                     startActivityForResult(intent, PICK_IMPORT_INSTANCE);
-                                }else {
+                                } else {
                                     intent.setType("*/*");
                                     Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
-                                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
                                     startActivityForResult(chooserIntent, PICK_IMPORT_INSTANCE);
                                 }
                                 break;
                         }
                         return true;
-                    }});
+                    }
+                });
                 popup.show();
             });
             toolbar_title.setText(R.string.blocked_domains);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, MutedInstanceActivity.this);
             }
@@ -242,16 +244,16 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         mLayoutManager = new LinearLayoutManager(MutedInstanceActivity.this);
         lv_domains.setLayoutManager(mLayoutManager);
         lv_domains.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveDomainsAsyncTask(MutedInstanceActivity.this, max_id, MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);                            nextElementLoader.setVisibility(View.VISIBLE);
+                            asyncTask = new RetrieveDomainsAsyncTask(MutedInstanceActivity.this, max_id, MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
                         nextElementLoader.setVisibility(View.GONE);
@@ -267,9 +269,10 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                asyncTask = new RetrieveDomainsAsyncTask(MutedInstanceActivity.this, max_id, MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);            }
+                asyncTask = new RetrieveDomainsAsyncTask(MutedInstanceActivity.this, max_id, MutedInstanceActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         });
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -298,7 +301,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
@@ -315,26 +318,26 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     public void onRetrieveDomains(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
+        flag_loading = (apiResponse.getMax_id() == null);
         List<String> domains = apiResponse.getDomains();
-        if( !swiped && firstLoad && (domains == null || domains.size() == 0))
+        if (!swiped && firstLoad && (domains == null || domains.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
-        if( swiped ){
+        if (swiped) {
             domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
             lv_domains.setAdapter(domainsListAdapter);
             swiped = false;
         }
-        if( domains != null && domains.size() > 0) {
+        if (domains != null && domains.size() > 0) {
             this.domains.addAll(domains);
             domainsListAdapter.notifyDataSetChanged();
         }
@@ -354,25 +357,25 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMPORT_INSTANCE && resultCode == RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toot_select_file_error), Toast.LENGTH_LONG).show();
                 return;
             }
             try {
-                InputStream is =  getContentResolver().openInputStream(data.getData());
+                InputStream is = getContentResolver().openInputStream(data.getData());
                 HashMap<String, String> resultList = new HashMap<>();
-                BufferedReader reader = new BufferedReader(new InputStreamReader( is));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 String csvLine;
                 while ((csvLine = reader.readLine()) != null) {
                     String[] row = csvLine.split(",");
-                    if( row.length > 1) {
-                        if( !row[0].equals("INSTANCE"))
+                    if (row.length > 1) {
+                        if (!row[0].equals("INSTANCE"))
                             resultList.put(row[0], row[1]);
-                    }else if(row.length == 1){
-                        if( !row[0].equals("INSTANCE"))
+                    } else if (row.length == 1) {
+                        if (!row[0].equals("INSTANCE"))
                             resultList.put(row[0], "");
                     }
                 }
-                Helper.importInstanceBlock(MutedInstanceActivity.this,resultList);
+                Helper.importInstanceBlock(MutedInstanceActivity.this, resultList);
             } catch (Exception e) {
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             }
@@ -383,14 +386,14 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(MutedInstanceActivity.this, statusCode, statusAction);
-        this.domains.add(0,userId);
+        this.domains.add(0, userId);
         domainsListAdapter.notifyItemInserted(0);
-        if( this.domains.size() > 0){
+        if (this.domains.size() > 0) {
             textviewNoAction.setVisibility(View.GONE);
         }
     }

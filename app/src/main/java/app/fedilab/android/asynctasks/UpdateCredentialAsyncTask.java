@@ -42,7 +42,7 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private HashMap<String, String> customFields;
 
-    public UpdateCredentialAsyncTask(Context context, HashMap<String, String> customFields, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, boolean senstive, OnUpdateCredentialInterface onUpdateCredentialInterface){
+    public UpdateCredentialAsyncTask(Context context, HashMap<String, String> customFields, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, boolean senstive, OnUpdateCredentialInterface onUpdateCredentialInterface) {
         this.contextReference = new WeakReference<>(context);
         this.display_name = display_name;
         this.note = note;

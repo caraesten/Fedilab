@@ -23,9 +23,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +71,7 @@ public class WebviewConnectActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -85,19 +87,19 @@ public class WebviewConnectActivity extends BaseActivity {
 
         setContentView(R.layout.activity_webview_connect);
         Bundle b = getIntent().getExtras();
-        if(b != null) {
+        if (b != null) {
             instance = b.getString("instance");
             social = (UpdateAccountInfoAsyncTask.SOCIAL) b.getSerializable("social");
         }
-        if( instance == null)
+        if (instance == null)
             finish();
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -109,7 +111,7 @@ public class WebviewConnectActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.add_account);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, WebviewConnectActivity.this);
             }
@@ -139,20 +141,20 @@ public class WebviewConnectActivity extends BaseActivity {
         });
 
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        if( proxyEnabled ){
+        if (proxyEnabled) {
             String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
             int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            ProxyHelper.setProxy(getApplicationContext(), webView,host, port,WebviewConnectActivity.class.getName());
+            ProxyHelper.setProxy(getApplicationContext(), webView, host, port, WebviewConnectActivity.class.getName());
         }
 
         webView.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
-                super.shouldOverrideUrlLoading(view,url);
-                if( url.contains(Helper.REDIRECT_CONTENT_WEB)){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                super.shouldOverrideUrlLoading(view, url);
+                if (url.contains(Helper.REDIRECT_CONTENT_WEB)) {
                     String val[] = url.split("code=");
-                    if (val.length< 2){
+                    if (val.length < 2) {
                         Toasty.error(getApplicationContext(), getString(R.string.toast_code_error), Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(WebviewConnectActivity.this, LoginActivity.class);
                         startActivity(myIntent);
@@ -164,10 +166,10 @@ public class WebviewConnectActivity extends BaseActivity {
                     final HashMap<String, String> parameters = new HashMap<>();
                     parameters.put(Helper.CLIENT_ID, clientId);
                     parameters.put(Helper.CLIENT_SECRET, clientSecret);
-                    parameters.put(Helper.REDIRECT_URI,Helper.REDIRECT_CONTENT_WEB);
+                    parameters.put(Helper.REDIRECT_URI, Helper.REDIRECT_CONTENT_WEB);
                     parameters.put("grant_type", "authorization_code");
-                    parameters.put("code",code);
-                    new Thread(new Runnable(){
+                    parameters.put("code", code);
+                    new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -177,7 +179,7 @@ public class WebviewConnectActivity extends BaseActivity {
                                     resobj = new JSONObject(response);
                                     String token = resobj.get("access_token").toString();
                                     String refresh_token = null;
-                                    if( resobj.has("refresh_token"))
+                                    if (resobj.has("refresh_token"))
                                         refresh_token = resobj.get("refresh_token").toString();
                                     SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -185,9 +187,12 @@ public class WebviewConnectActivity extends BaseActivity {
                                     editor.apply();
                                     //Update the account with the token;
                                     new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, clientId, clientSecret, refresh_token, instance, social).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                } catch (JSONException ignored) {}
-                            } catch (Exception ignored) {}
-                        }}).start();
+                                } catch (JSONException ignored) {
+                                }
+                            } catch (Exception ignored) {
+                            }
+                        }
+                    }).start();
                     return true;
                 }
                 return false;
@@ -208,8 +213,6 @@ public class WebviewConnectActivity extends BaseActivity {
     }
 
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -220,16 +223,15 @@ public class WebviewConnectActivity extends BaseActivity {
     }
 
     @SuppressWarnings("deprecation")
-    public static void clearCookies(Context context)
-    {
+    public static void clearCookies(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             CookieManager.getInstance().removeAllCookies(null);
             CookieManager.getInstance().flush();
         } else {
-            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
             cookieSyncMngr.startSync();
-            CookieManager cookieManager=CookieManager.getInstance();
+            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
             cookieManager.removeSessionCookie();
             cookieSyncMngr.stopSync();

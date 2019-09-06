@@ -53,6 +53,7 @@ public class BackupNotificationInDataBaseService extends IntentService {
 
 
     private static int instanceRunning = 0;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -62,11 +63,11 @@ public class BackupNotificationInDataBaseService extends IntentService {
     public BackupNotificationInDataBaseService(String name) {
         super(name);
     }
+
     @SuppressWarnings("unused")
     public BackupNotificationInDataBaseService() {
         super("BackupNotificationInDataBaseService");
     }
-
 
 
     public void onCreate() {
@@ -80,31 +81,31 @@ public class BackupNotificationInDataBaseService extends IntentService {
         String userId = null;
         String instance = null;
 
-        if( intent != null && intent.hasExtra("userid") && intent.hasExtra("instance")){
+        if (intent != null && intent.hasExtra("userid") && intent.hasExtra("instance")) {
             userId = intent.getStringExtra("userid");
             instance = intent.getStringExtra("instance");
             toastMessage = false;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null || instance == null) {
+        if (userId == null || instance == null) {
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         }
         boolean finalToastMessage = toastMessage;
-        if( instanceRunning == 0 ){
+        if (instanceRunning == 0) {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if(finalToastMessage) {
+                    if (finalToastMessage) {
                         Toasty.info(getApplicationContext(), getString(R.string.data_export_start), Toast.LENGTH_LONG).show();
                     }
                 }
             });
-        }else {
+        } else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if(finalToastMessage) {
+                    if (finalToastMessage) {
                         Toasty.info(getApplicationContext(), getString(R.string.data_export_running), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -127,8 +128,8 @@ public class BackupNotificationInDataBaseService extends IntentService {
 
                 max_id = apiResponse.getMax_id();
                 List<Notification> notifications = apiResponse.getNotifications();
-                for(Notification tmpNotification : notifications) {
-                    if(lastId != null && tmpNotification.getId().compareTo(lastId) <= 0){
+                for (Notification tmpNotification : notifications) {
+                    if (lastId != null && tmpNotification.getId().compareTo(lastId) <= 0) {
                         canContinue = false;
                         break;
                     }
@@ -137,9 +138,9 @@ public class BackupNotificationInDataBaseService extends IntentService {
                     backupNotifications.add(tmpNotification);
                 }
                 SystemClock.sleep(500);
-            }while (max_id != null && canContinue);
+            } while (max_id != null && canContinue);
 
-            if(backupNotifications.size() > 0){
+            if (backupNotifications.size() > 0) {
                 Intent backupIntent = new Intent(Helper.INTENT_BACKUP_FINISH);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(backupIntent);
             }
@@ -147,7 +148,7 @@ public class BackupNotificationInDataBaseService extends IntentService {
             Intent mainActivity = new Intent(BackupNotificationInDataBaseService.this, MainActivity.class);
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_NOTIFICATION_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());
-            if(finalToastMessage) {
+            if (finalToastMessage) {
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
                         R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
             }
@@ -158,7 +159,7 @@ public class BackupNotificationInDataBaseService extends IntentService {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if(finalToastMessage) {
+                    if (finalToastMessage) {
                         Toasty.error(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
                     }
                 }

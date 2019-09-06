@@ -23,8 +23,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -73,7 +75,10 @@ public class Notification implements Parcelable {
         status = in.readParcelable(Status.class.getClassLoader());
     }
 
-    public Notification(){};
+    public Notification() {
+    }
+
+    ;
 
     public static final Creator<Notification> CREATOR = new Creator<Notification>() {
         @Override
@@ -146,101 +151,103 @@ public class Notification implements Parcelable {
     }
 
 
-    public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Notification notification){
+    public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Notification notification) {
 
-        if( ((Activity)context).isFinishing() )
+        if (((Activity) context).isFinishing())
             return;
         Status status = notification.getStatus();
 
         java.util.List<Emojis> emojis = null;
-        if (status != null){
+        if (status != null) {
             emojis = status.getEmojis();
         }
         List<Emojis> emojisAccounts = notification.getAccount().getEmojis();
 
         String typeString = "";
-        switch (notification.getType()){
+        switch (notification.getType()) {
             case "mention":
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_mention));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_mention));
                 break;
             case "poll":
-                typeString = context.getString(R.string.notif_poll);;
+                typeString = context.getString(R.string.notif_poll);
+                ;
                 break;
             case "reblog":
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_reblog));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_reblog));
                 break;
             case "favourite":
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_favourite));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_favourite));
                 break;
             case "follow":
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow));
                 break;
         }
         SpannableString displayNameSpan = new SpannableString(typeString);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
 
-        if( emojisAccounts != null && emojisAccounts.size() > 0 ) {
+        if (emojisAccounts != null && emojisAccounts.size() > 0) {
             final int[] j = {0};
             for (final Emojis emoji : emojisAccounts) {
                 Glide.with(context)
-                    .asDrawable()
-                    .load(emoji.getUrl())
-                    .listener(new RequestListener<Drawable>()  {
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                            j[0]++;
-                            if( j[0] ==  (emojisAccounts.size())) {
-                                listener.onRetrieveEmoji(notification);
+                        .asDrawable()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
                             }
-                            return false;
-                        }
-                    })
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                            if (displayNameSpan.toString().contains(targetedEmoji)) {
-                                //emojis can be used several times so we have to loop
-                                for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                    final int endPosition = startPosition + targetedEmoji.length();
-                                    if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
-                                        resource.setBounds(0,0,(int) Helper.convertDpToPixel(20, context),(int) Helper.convertDpToPixel(20, context));
-                                        resource.setVisible(true, true);
-                                        ImageSpan imageSpan = new ImageSpan(resource);
-                                        displayNameSpan.setSpan(
-                                                imageSpan, startPosition,
-                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                j[0]++;
+                                if (j[0] == (emojisAccounts.size())) {
+                                    listener.onRetrieveEmoji(notification);
+                                }
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (displayNameSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
+                                            resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                            resource.setVisible(true, true);
+                                            ImageSpan imageSpan = new ImageSpan(resource);
+                                            displayNameSpan.setSpan(
+                                                    imageSpan, startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
                                     }
                                 }
+                                j[0]++;
+                                if (j[0] == (emojisAccounts.size())) {
+                                    notification.getAccount().setdisplayNameSpan(displayNameSpan);
+                                    listener.onRetrieveEmoji(notification);
+                                }
                             }
-                            j[0]++;
-                            if( j[0] ==  (emojisAccounts.size())) {
-                                notification.getAccount().setdisplayNameSpan(displayNameSpan);
-                                listener.onRetrieveEmoji(notification);
-                            }
-                        }
-                    });
+                        });
             }
         }
 
-        if( status != null && emojis != null && emojis.size() > 0 ) {
+        if (status != null && emojis != null && emojis.size() > 0) {
             SpannableString contentSpan = status.getContentSpan();
             SpannableString contentSpanCW = status.getContentSpanCW();
             final int[] i = {0};
@@ -249,16 +256,17 @@ public class Notification implements Parcelable {
                 Glide.with(context)
                         .asFile()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener<File>()  {
+                        .listener(new RequestListener<File>() {
                             @Override
                             public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
+
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 i[0]++;
-                                if( i[0] ==  (finalEmojis.size())) {
-                                    listener.onRetrieveEmoji(status,false);
+                                if (i[0] == (finalEmojis.size())) {
+                                    listener.onRetrieveEmoji(status, false);
                                 }
                                 return false;
                             }
@@ -274,7 +282,7 @@ public class Notification implements Parcelable {
                                 } else {
                                     resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
                                 }
-                                if( resource == null){
+                                if (resource == null) {
                                     return;
                                 }
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
@@ -282,13 +290,13 @@ public class Notification implements Parcelable {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
+                                        if (endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
                                             ImageSpan imageSpan;
-                                            if( !disableAnimatedEmoji) {
+                                            if (!disableAnimatedEmoji) {
                                                 resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                 resource.setVisible(true, true);
                                                 imageSpan = new ImageSpan(resource);
-                                            }else{
+                                            } else {
                                                 Bitmap bitmap = drawableToBitmap(resource);
                                                 imageSpan = new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
@@ -304,13 +312,13 @@ public class Notification implements Parcelable {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( endPosition <= contentSpanCW.toString().length() && endPosition >= startPosition) {
+                                        if (endPosition <= contentSpanCW.toString().length() && endPosition >= startPosition) {
                                             ImageSpan imageSpan;
-                                            if( !disableAnimatedEmoji) {
+                                            if (!disableAnimatedEmoji) {
                                                 resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
                                                 resource.setVisible(true, true);
                                                 imageSpan = new ImageSpan(resource);
-                                            }else {
+                                            } else {
                                                 resource.setVisible(true, true);
                                                 Bitmap bitmap = drawableToBitmap(resource);
                                                 imageSpan = new ImageSpan(context,
@@ -324,7 +332,7 @@ public class Notification implements Parcelable {
                                     }
                                 }
                                 i[0]++;
-                                if( i[0] ==  (finalEmojis.size())) {
+                                if (i[0] == (finalEmojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
                                     status.setEmojiFound(true);

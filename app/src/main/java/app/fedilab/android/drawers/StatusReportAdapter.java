@@ -30,7 +30,7 @@ import java.util.List;
 
 import app.fedilab.android.R;
 
-public class StatusReportAdapter  extends RecyclerView.Adapter<StatusReportAdapter.ViewHolder> {
+public class StatusReportAdapter extends RecyclerView.Adapter<StatusReportAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
@@ -68,7 +68,6 @@ public class StatusReportAdapter  extends RecyclerView.Adapter<StatusReportAdapt
     public int getItemCount() {
         return mData.size();
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

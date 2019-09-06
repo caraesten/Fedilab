@@ -39,7 +39,7 @@ public class RetrieveFeedsAfterBookmarkAsyncTask extends AsyncTask<Void, Void, V
     private String max_id;
     private boolean fetchMore;
 
-    public RetrieveFeedsAfterBookmarkAsyncTask(Context context, String max_id, boolean fetchMore, OnRetrieveFeedsAfterBookmarkInterface onRetrieveFeedsAfterBookmarkInterface){
+    public RetrieveFeedsAfterBookmarkAsyncTask(Context context, String max_id, boolean fetchMore, OnRetrieveFeedsAfterBookmarkInterface onRetrieveFeedsAfterBookmarkInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveFeedsAfterBookmarkInterface;
         this.max_id = max_id;

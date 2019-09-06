@@ -27,7 +27,8 @@ public class Tag implements Parcelable {
     private String name;
     private String url;
 
-    public Tag(){}
+    public Tag() {
+    }
 
     protected Tag(Parcel in) {
         name = in.readString();

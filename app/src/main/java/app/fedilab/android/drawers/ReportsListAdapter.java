@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.util.List;
+
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.client.Entities.Account;
@@ -47,12 +48,10 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     private Context context;
     private ReportsListAdapter reportsListAdapter;
 
-    public ReportsListAdapter(List<Report> reports){
+    public ReportsListAdapter(List<Report> reports) {
         this.reports = reports;
         this.reportsListAdapter = this;
     }
-
-
 
 
     @NonNull
@@ -71,46 +70,46 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         Account target_account = report.getTarget_account().getAccount();
         Account.makeAccountNameEmoji(context, ReportsListAdapter.this, account);
         Account.makeAccountNameEmoji(context, ReportsListAdapter.this, target_account);
-        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
+        if (account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
+            if (account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn_reporter.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else
-                holder.account_dn_reporter.setText(account.getUsername().replace("@",""));
-        }else
-            holder.account_dn_reporter.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+                holder.account_dn_reporter.setText(account.getUsername().replace("@", ""));
+        } else
+            holder.account_dn_reporter.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
-        if( target_account.getdisplayNameSpan() == null || target_account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( target_account.getDisplay_name() != null && !target_account.getDisplay_name().trim().equals(""))
+        if (target_account.getdisplayNameSpan() == null || target_account.getdisplayNameSpan().toString().trim().equals("")) {
+            if (target_account.getDisplay_name() != null && !target_account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(target_account.getDisplay_name(), true));
             else {
-                if( target_account.getUsername() != null) {
+                if (target_account.getUsername() != null) {
                     holder.account_dn.setText(target_account.getUsername().replace("@", ""));
                 }
             }
-        }else {
-            if( target_account.getdisplayNameSpan() != null) {
+        } else {
+            if (target_account.getdisplayNameSpan() != null) {
                 holder.account_dn.setText(target_account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             }
         }
 
 
-        if( target_account.getAvatar() != null) {
+        if (target_account.getAvatar() != null) {
             Helper.loadGiF(context, target_account.getAvatar(), holder.account_pp);
         }
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp_reporter);
-        if( target_account.getAcct() != null) {
+        if (target_account.getAcct() != null) {
             holder.account_ac.setText(target_account.getAcct());
         }
 
         holder.report_comment.setText(report.getComment());
 
-        if( report.getStatuses() != null){
+        if (report.getStatuses() != null) {
             holder.report_number_status.setText(String.valueOf(report.getStatuses().size()));
-        }else{
+        } else {
             holder.report_number_status.setText("0");
         }
 
-        holder.main_container.setOnClickListener(view ->{
+        holder.main_container.setOnClickListener(view -> {
             Intent intent = new Intent(context, AccountReportActivity.class);
             Bundle b = new Bundle();
             b.putParcelable("report", report);
@@ -130,8 +129,8 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         return reports.size();
     }
 
-    private Report getItemAt(int position){
-        if( reports.size() > position)
+    private Report getItemAt(int position) {
+        if (reports.size() > position)
             return reports.get(position);
         else
             return null;
@@ -142,7 +141,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
         notifyAccountChanged(account);
     }
 
-    private void notifyAccountChanged(Account account){
+    private void notifyAccountChanged(Account account) {
         for (int i = 0; i < reportsListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (reportsListAdapter.getItemAt(i) != null && reportsListAdapter.getItemAt(i).getStatuses().size() > 0 && reportsListAdapter.getItemAt(i).getStatuses().get(0).getAccount().getId().equals(account.getId())) {
@@ -155,7 +154,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter implements OnRetrie
     }
 
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp, account_pp_reporter;
         TextView account_ac;
         TextView account_dn, account_dn_reporter;

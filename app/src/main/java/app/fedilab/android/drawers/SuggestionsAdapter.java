@@ -20,9 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
+
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Suggestion;
 import app.fedilab.android.helper.Helper;
@@ -37,14 +40,14 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Suggestion> suggestions;
 
-    public SuggestionsAdapter(List<Suggestion> suggestions){
+    public SuggestionsAdapter(List<Suggestion> suggestions) {
         this.suggestions = suggestions;
 
     }
 
 
     public Suggestion getItem(int position) {
-       return suggestions.get(position);
+        return suggestions.get(position);
     }
 
     @NonNull
@@ -55,9 +58,10 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_suggestions, parent, false));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView suggestion_content;
         private ImageView suggestion_image;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             suggestion_content = itemView.findViewById(R.id.suggestion_content);
@@ -70,10 +74,10 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
         final ViewHolder holder = (ViewHolder) viewHolder;
         final Suggestion suggestion = getItem(i);
 
-        if( suggestion.getType() == Suggestion.suggestionType.TAG) {
+        if (suggestion.getType() == Suggestion.suggestionType.TAG) {
             holder.suggestion_content.setText(String.format("#%s", suggestion.getContent()));
             holder.suggestion_image.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.suggestion_content.setText(suggestion.getContent());
             Helper.loadGiF(context, suggestion.getImageUrl(), holder.suggestion_image);
         }
@@ -88,7 +92,6 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return suggestions.size();
     }
-
 
 
 }

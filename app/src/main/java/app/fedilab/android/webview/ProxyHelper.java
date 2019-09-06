@@ -13,6 +13,7 @@ package app.fedilab.android.webview;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -30,23 +31,21 @@ import java.lang.reflect.Method;
 public class ProxyHelper {
 
 
-
     public static void setProxy(Context context, WebView webview, String host, int port, String applicationClassName) {
 
         if (Build.VERSION.SDK_INT <= 18) {
-             setProxyJB(webview, host, port);
+            setProxyJB(webview, host, port);
         }
         // 4.4 (KK) & 5.0 (Lollipop)
         else {
-             setProxyKKPlus(context, webview, host, port, applicationClassName);
+            setProxyKKPlus(context, webview, host, port, applicationClassName);
         }
     }
 
 
     @SuppressWarnings("all")
     private static boolean setProxyICS(WebView webview, String host, int port) {
-        try
-        {
+        try {
             Class jwcjb = Class.forName("android.webkit.JWebCoreJavaBridge");
             Class params[] = new Class[1];
             params[0] = Class.forName("android.net.ProxyProperties");
@@ -73,8 +72,7 @@ public class ProxyHelper {
 
             updateProxyInstance.invoke(sJavaBridge, ppcont.newInstance(host, port, null));
             return true;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return false;
         }
     }

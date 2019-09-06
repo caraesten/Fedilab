@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -19,13 +18,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
         <!-- About app name -->
         <TextView
             android:layout_marginTop="20dp"
@@ -67,7 +65,8 @@
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
             android:divider="@null"
-            android:scrollbars="none"/>
+            android:scrollbars="none" />
+
         <TextView
             android:id="@+id/txt_developers"
             android:visibility="gone"
@@ -78,6 +77,7 @@
             android:layout_marginRight="150dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/about_support"
             android:layout_gravity="center"
@@ -85,8 +85,8 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="@string/support_the_app_on_liberapay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/about_support_paypal"
             android:layout_gravity="center"
@@ -94,8 +94,7 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="PayPal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/about_wiki"
@@ -143,6 +142,7 @@
             android:layout_marginRight="150dp"
             android:divider="@null"
             android:scrollbars="none" />
+
         <TextView
             android:id="@+id/txt_ux"
             android:visibility="gone"
@@ -152,6 +152,7 @@
             android:layout_marginRight="150dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/txt_support"
             android:visibility="gone"
@@ -181,7 +182,7 @@
             android:padding="5dp"
             android:text="@string/thanks_text_logo"
             android:textColor="?colorAccent"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_designers"
@@ -191,16 +192,17 @@
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
             android:divider="@null"
-            android:scrollbars="none"/>
-            <TextView
-                android:id="@+id/txt_designers"
-                android:visibility="gone"
-                android:textSize="16sp"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginLeft="150dp"
-                android:layout_marginRight="150dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/txt_designers"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="150dp"
+            android:layout_marginRight="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- About contributors -->
 
         <TextView
@@ -213,7 +215,7 @@
             android:padding="5dp"
             android:text="@string/thanks_text_dev"
             android:textColor="?colorAccent"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_contributors"
@@ -223,7 +225,8 @@
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
             android:divider="@null"
-            android:scrollbars="none"/>
+            android:scrollbars="none" />
+
         <TextView
             android:id="@+id/txt_thankyou1"
             android:visibility="gone"
@@ -233,6 +236,7 @@
             android:layout_marginRight="150dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/txt_thankyou2"
             android:visibility="gone"
@@ -250,6 +254,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:text="@string/about_license"
                 android:textSize="18sp"
@@ -263,7 +268,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about_license_action"/>
+                android:text="@string/about_license_action" />
         </LinearLayout>
 
         <!-- About license -->
@@ -273,6 +278,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:text="@string/about_code"
                 android:textSize="16sp"
@@ -286,9 +292,8 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about_code_action"/>
+                android:text="@string/about_code_action" />
         </LinearLayout>
-
 
 
         <!-- About The Kinrar\'s API -->
@@ -298,6 +303,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:textSize="18sp"
                 android:layout_gravity="center"
@@ -313,7 +319,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about_thekinrar_action"/>
+                android:text="@string/about_thekinrar_action" />
         </LinearLayout>
 
         <!-- About Trunk\'s API -->
@@ -323,6 +329,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:textSize="18sp"
                 android:layout_gravity="center"
@@ -338,7 +345,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about_trunk_action"/>
+                android:text="@string/about_trunk_action" />
         </LinearLayout>
 
         <!-- About translation -->
@@ -348,6 +355,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:text="@string/about_yandex"
                 android:textSize="16sp"
@@ -361,7 +369,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about_yandex_action"/>
+                android:text="@string/about_yandex_action" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

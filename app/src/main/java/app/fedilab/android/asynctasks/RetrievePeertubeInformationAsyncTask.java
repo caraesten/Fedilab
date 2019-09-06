@@ -32,13 +32,11 @@ import app.fedilab.android.client.PeertubeAPI;
 public class RetrievePeertubeInformationAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
-
     private WeakReference<Context> contextReference;
     public static PeertubeInformation peertubeInformation;
 
 
-
-    public RetrievePeertubeInformationAsyncTask(Context context){
+    public RetrievePeertubeInformationAsyncTask(Context context) {
         this.contextReference = new WeakReference<>(context);
     }
 

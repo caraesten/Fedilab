@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
@@ -65,7 +66,6 @@ import static app.fedilab.android.activities.BaseMainActivity.countNewNotificati
 public class DisplayNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface, OnRetrieveMissingNotificationsInterface {
 
 
-
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -83,10 +83,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private BroadcastReceiver receive_action;
     private BroadcastReceiver receive_data;
 
-    public DisplayNotificationsFragment(){
+    public DisplayNotificationsFragment() {
     }
 
-    public enum Type{
+    public enum Type {
         ALL,
         MENTION,
         FAVORITE,
@@ -123,22 +123,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         boolean isOnWifi = Helper.isOnWIFI(context);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
-        notificationsListAdapter = new NotificationsListAdapter(isOnWifi, behaviorWithAttachments,this.notifications);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context != null ? Helper.getLiveInstance(context) : null);
+        notificationsListAdapter = new NotificationsListAdapter(isOnWifi, behaviorWithAttachments, this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
         lv_notifications.setLayoutManager(mLayoutManager);
         lv_notifications.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -149,40 +148,40 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         });
 
 
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
-                if (receive_action != null)
-                    LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
-                receive_action = new BroadcastReceiver() {
+            if (receive_action != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    if (notificationsListAdapter != null && status != null)
+                        notificationsListAdapter.notifyNotificationWithActionChanged(status);
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+            if (type == Type.ALL) {
+                if (receive_data != null)
+                    LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+                receive_data = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         Bundle b = intent.getExtras();
                         assert b != null;
-                        Status status = b.getParcelable("status");
-                        if( notificationsListAdapter != null && status != null)
-                            notificationsListAdapter.notifyNotificationWithActionChanged(status);
+                        String userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Notification notification = b.getParcelable("data");
+                            refresh(notification);
+                            if (context instanceof MainActivity && type == Type.ALL)
+                                ((MainActivity) context).updateNotifCounter();
+                        }
                     }
                 };
-                LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
-                if( type == Type.ALL) {
-                    if (receive_data != null)
-                        LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
-                    receive_data = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                            Bundle b = intent.getExtras();
-                            assert b != null;
-                            String userIdService = b.getString("userIdService", null);
-                            if (userIdService != null && userIdService.equals(userId)) {
-                                Notification notification = b.getParcelable("data");
-                                refresh(notification);
-                                if (context instanceof MainActivity && type == Type.ALL )
-                                    ((MainActivity) context).updateNotifCounter();
-                            }
-                        }
-                    };
-                    LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
-                }
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+            }
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -190,7 +189,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             public void onRefresh() {
                 flag_loading = true;
                 swiped = true;
-                if(type == Type.ALL) {
+                if (type == Type.ALL) {
                     countNewNotifications = 0;
                     try {
                         ((MainActivity) context).updateNotifCounter();
@@ -198,15 +197,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     }
                 }
                 String sinceId = null;
-                if( notifications != null && notifications.size() > 0 )
+                if (notifications != null && notifications.size() > 0)
                     sinceId = notifications.get(0).getId();
-                if( context != null)
+                if (context != null)
                     asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -226,27 +225,24 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
-        if( context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (context != null)
+            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if( context != null)
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    if (context != null)
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }, 500);
         return rootView;
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override
@@ -258,18 +254,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
-        if( receive_action != null)
+        if (receive_action != null)
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
-        if( receive_data != null)
+        if (receive_data != null)
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
 
     }
 
     @Override
     public void onDestroyView() {
-        if( lv_notifications != null) {
+        if (lv_notifications != null) {
             lv_notifications.setAdapter(null);
         }
         super.onDestroyView();
@@ -284,7 +280,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onPause() {
         super.onPause();
-        if (swipeRefreshLayout!=null) {
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setEnabled(false);
             swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.clearAnimation();
@@ -296,9 +292,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-        if( apiResponse.getError() != null){
+        if (apiResponse.getError() != null) {
 
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
@@ -309,11 +305,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
 
-        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
+        if (!swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( swiped ){
+        if (swiped) {
             if (previousPosition > 0) {
                 for (int i = 0; i < previousPosition; i++) {
                     this.notifications.remove(0);
@@ -322,10 +318,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             swiped = false;
         }
-        if( notifications != null && notifications.size() > 0) {
-            for(Notification tmpNotification: notifications){
+        if (notifications != null && notifications.size() > 0) {
+            for (Notification tmpNotification : notifications) {
 
-                if(type == Type.ALL) {
+                if (type == Type.ALL) {
                     if (lastReadNotifications != null && tmpNotification.getId().compareTo(lastReadNotifications) > 0) {
                         countNewNotifications++;
                     }
@@ -336,38 +332,39 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
                 this.notifications.add(tmpNotification);
             }
-            if( firstLoad && type == Type.ALL) {
+            if (firstLoad && type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0) {
+                if (MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
                 }
             }
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
-        }else {
-            if( firstLoad)
+        } else {
+            if (firstLoad)
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
-        if( firstLoad && type == Type.ALL)
-            ((MainActivity)context).updateNotifCounter();
+        if (firstLoad && type == Type.ALL)
+            ((MainActivity) context).updateNotifCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
         //The initial call comes from a classic tab refresh
-        flag_loading = (max_id == null );
+        flag_loading = (max_id == null);
     }
 
     /**
      * Called from main activity in onResume to retrieve missing notifications
+     *
      * @param sinceId String
      */
-    void retrieveMissingNotifications(String sinceId){
+    void retrieveMissingNotifications(String sinceId) {
         asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void setMenuVisibility(final boolean visible) {
         super.setMenuVisibility(visible);
-        if( context == null)
+        if (context == null)
             return;
         //Store last notification id to avoid to notify for those that have been already seen
         if (visible && notifications != null && notifications.size() > 0) {
@@ -376,8 +373,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-    public void scrollToTop(){
-        if( lv_notifications != null)
+    public void scrollToTop() {
+        if (lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (this.notifications != null && this.notifications.size() > 0) {
@@ -385,30 +382,30 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-    public void refreshAll(){
-        if( context == null)
+    public void refreshAll() {
+        if (context == null)
             return;
         max_id = null;
         firstLoad = true;
         flag_loading = true;
         swiped = true;
-        if(type == Type.ALL) {
+        if (type == Type.ALL) {
             countNewNotifications = 0;
         }
-        asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
-    public void refresh(Notification notification){
-        if( context == null)
+    public void refresh(Notification notification) {
+        if (context == null)
             return;
-        if( notification != null){
+        if (notification != null) {
             //Makes sure the notifications is not already displayed
-            if( !this.notifications.contains(notification)) {
+            if (!this.notifications.contains(notification)) {
                 //Update the id of the last notification retrieved
 
                 notifications.add(0, notification);
-                if( type == Type.ALL) {
+                if (type == Type.ALL) {
                     MainActivity.lastNotificationId = notification.getId();
                     countNewNotifications++;
                     try {
@@ -428,29 +425,28 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
 
-
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         flag_loading = false;
         swipeRefreshLayout.setRefreshing(false);
-        if( this.notifications != null && this.notifications.size() > 0 && swiped){
+        if (this.notifications != null && this.notifications.size() > 0 && swiped) {
             swiped = false;
-            notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
+            notificationsListAdapter.notifyItemRangeChanged(0, this.notifications.size());
         }
-        if( notifications != null && notifications.size() > 0) {
-            if( type == Type.ALL) {
+        if (notifications != null && notifications.size() > 0) {
+            if (type == Type.ALL) {
                 //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) >= 0 ) {
+                if (MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) >= 0) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
                 }
             }
-            if( textviewNoAction.getVisibility() == View.VISIBLE){
+            if (textviewNoAction.getVisibility() == View.VISIBLE) {
                 textviewNoAction.setVisibility(View.GONE);
                 lv_notifications.setVisibility(View.VISIBLE);
             }
             int inserted = 0;
-            for (int i = notifications.size()-1 ; i >= 0 ; i--) {
+            for (int i = notifications.size() - 1; i >= 0; i--) {
                 if (this.notifications != null && this.notifications.size() == 0 ||
                         notifications.get(i).getId().compareTo(this.notifications.get(0).getId()) > 0) {
                     countNewNotifications++;
@@ -458,21 +454,22 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     inserted++;
                 }
             }
-            notificationsListAdapter.notifyItemRangeInserted(0,inserted);
+            notificationsListAdapter.notifyItemRangeInserted(0, inserted);
             try {
                 ((MainActivity) context).updateNotifCounter();
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
     }
 
 
-
     /**
      * Records the id of the notification only if its greater than the previous one.
+     *
      * @param notificationId String current notification id to check
      */
-    private void updateNotificationLastId(String notificationId){
-        if( type == Type.ALL) {
+    private void updateNotificationLastId(String notificationId) {
+        if (type == Type.ALL) {
             String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
             if (lastNotif == null || notificationId.compareTo(lastNotif) >= 0) {
                 countNewNotifications = 0;
@@ -487,11 +484,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     /**
      * Records the id of the notification only if its greater than the previous one.
      */
-    public void updateNotificationRead(){
-        if( type == Type.ALL) {
+    public void updateNotificationRead() {
+        if (type == Type.ALL) {
             String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
             countNewNotifications = 0;
-            if( this.notifications != null && this.notifications.size() > 0 && this.notifications.get(0).getId().compareTo(lastNotif) > 0) {
+            if (this.notifications != null && this.notifications.size() > 0 && this.notifications.get(0).getId().compareTo(lastNotif) > 0) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, this.notifications.get(0).getId());
                 editor.apply();

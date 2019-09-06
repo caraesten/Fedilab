@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.json.JSONArray;
@@ -66,7 +67,6 @@ import static app.fedilab.android.helper.Helper.PREF_KEY_OAUTH_TOKEN;
 public class GNUAPI {
 
 
-
     private Account account;
     private Context context;
     private Attachment attachment;
@@ -84,21 +84,22 @@ public class GNUAPI {
         PUBLIC,
         LOCKED
     }
+
     public GNUAPI(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage =sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
+        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( Helper.getLiveInstance(context) != null)
+        if (Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-            if( account == null) {
+            if (account == null) {
                 APIError = new Error();
                 APIError.setError(context.getString(R.string.toast_error));
                 return;
@@ -111,7 +112,7 @@ public class GNUAPI {
 
     public GNUAPI(Context context, String instance, String token) {
         this.context = context;
-        if( context == null) {
+        if (context == null) {
             apiResponse = new APIResponse();
             APIError = new Error();
             return;
@@ -120,20 +121,18 @@ public class GNUAPI {
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
-        if( instance != null)
+        if (instance != null)
             this.instance = instance;
         else
             this.instance = Helper.getLiveInstance(context);
 
-        if( token != null)
+        if (token != null)
             this.prefKeyOauthTokenT = token;
         else
             this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         apiResponse = new APIResponse();
         APIError = null;
     }
-
-
 
 
     /***
@@ -143,24 +142,24 @@ public class GNUAPI {
     public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
 
         HashMap<String, String> requestParams = new HashMap<>();
-        if( display_name != null)
+        if (display_name != null)
             try {
-                requestParams.put("name",URLEncoder.encode(display_name, "UTF-8"));
+                requestParams.put("name", URLEncoder.encode(display_name, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                requestParams.put("name",display_name);
+                requestParams.put("name", display_name);
             }
-        if( note != null)
+        if (note != null)
             try {
-                requestParams.put("description",URLEncoder.encode(note, "UTF-8"));
+                requestParams.put("description", URLEncoder.encode(note, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                requestParams.put("description",note);
+                requestParams.put("description", note);
             }
-        if( privacy != null)
-            requestParams.put("locked",privacy== accountPrivacy.LOCKED?"true":"false");
+        if (privacy != null)
+            requestParams.put("locked", privacy == accountPrivacy.LOCKED ? "true" : "false");
         try {
-            if( requestParams.size() > 0)
-            new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
-            if( avatar!= null && avatarName != null)
+            if (requestParams.size() > 0)
+                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
+            if (avatar != null && avatarName != null)
                 new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -202,6 +201,7 @@ public class GNUAPI {
 
     /**
      * Returns an account
+     *
      * @param accountId String account fetched
      * @return Account entity
      */
@@ -209,7 +209,7 @@ public class GNUAPI {
 
         account = new Account();
         HashMap<String, String> params = new HashMap<>();
-        params.put("user_id",accountId);
+        params.put("user_id", accountId);
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
@@ -231,34 +231,36 @@ public class GNUAPI {
 
     /**
      * Retrieves group *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getGroups(String max_id){
+    public APIResponse getGroups(String max_id) {
         return getGroups(max_id, null);
     }
 
     /**
      * Retrieves group *synchronously*
-     * @param max_id String id max
+     *
+     * @param max_id   String id max
      * @param since_id String since the id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getGroups(String max_id, String since_id){
+    private APIResponse getGroups(String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
         accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statusnet/groups/list.json"), 60, params, prefKeyOauthTokenT);
             accounts = parseGroups(context, new JSONArray(response));
-            if( accounts.size() > 0) {
+            if (accounts.size() > 0) {
                 apiResponse.setSince_id(accounts.get(0).getId());
                 apiResponse.setMax_id(accounts.get(accounts.size() - 1).getId());
             }
@@ -279,15 +281,16 @@ public class GNUAPI {
 
     /**
      * Parse json response for several groups
+     *
      * @param jsonArray JSONArray
      * @return List<Account>
      */
-    private static List<Account> parseGroups(Context context, JSONArray jsonArray){
+    private static List<Account> parseGroups(Context context, JSONArray jsonArray) {
 
         List<Account> groups = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Account group = parseGroups(context, resobj);
@@ -303,10 +306,11 @@ public class GNUAPI {
 
     /**
      * Parse json response for unique group
+     *
      * @param resobj JSONObject
      * @return Account
      */
-    private static Account parseGroups(Context context, JSONObject resobj){
+    private static Account parseGroups(Context context, JSONObject resobj) {
         Account group = new Account();
         try {
             group.setId(resobj.get("id").toString());
@@ -324,11 +328,13 @@ public class GNUAPI {
             group.setFollowers_count(resobj.getInt("member_count"));
             //group.setMini_logo(resobj.getString("mini_logo"));
             //group.setModified(Helper.mstStringToDate(context, resobj.getString("modified")));
-            group.setAcct("!"+resobj.getString("nickname"));
+            group.setAcct("!" + resobj.getString("nickname"));
             group.setAvatar_static(resobj.getString("original_logo"));
             group.setHeader(resobj.getString("stream_logo"));
             group.setUrl(resobj.getString("url"));
-        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
 
         }
@@ -338,28 +344,30 @@ public class GNUAPI {
 
     /**
      * Retrieves group timeline  *synchronously*
+     *
      * @param groupName String id group
-     * @param max_id String id max
+     * @param max_id    String id max
      * @return APIResponse
      */
-    public APIResponse getGroupTimeline(String groupName, String max_id){
+    public APIResponse getGroupTimeline(String groupName, String max_id) {
         return getGroupTimeline(groupName, max_id, null);
     }
 
     /**
      * Retrieves group timeline  *synchronously*
+     *
      * @param groupName String id group
-     * @param max_id String id max
-     * @param since_id String since the id
+     * @param max_id    String id max
+     * @param since_id  String since the id
      * @return APIResponse
      */
-    private APIResponse getGroupTimeline(String groupName, String max_id, String since_id){
+    private APIResponse getGroupTimeline(String groupName, String max_id, String since_id) {
 
         HashMap<String, String> params = new HashMap<>();
 
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
         statuses = new ArrayList<>();
         try {
@@ -368,7 +376,7 @@ public class GNUAPI {
             url = getAbsoluteUrl(String.format("/statusnet/groups/timeline/%s.json", groupName));
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -388,9 +396,9 @@ public class GNUAPI {
     }
 
 
-
     /**
      * Returns a relationship between the authenticated account and an account
+     *
      * @param accountId String account fetched
      * @return Relationship entity
      */
@@ -402,12 +410,12 @@ public class GNUAPI {
 
         try {
             String response;
-            if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
-                params.put("target_id",accountId);
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                params.put("target_id", accountId);
                 response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
                 relationship = parseRelationshipResponse(new JSONObject(response));
-            }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                params.put("user_id",accountId);
+            } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                params.put("user_id", accountId);
                 response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
                 JSONObject resobj = new JSONObject(response);
                 try {
@@ -418,12 +426,12 @@ public class GNUAPI {
                     relationship.setBlocking(Boolean.valueOf(resobj.get("statusnet_blocking").toString()));
                     try {
                         relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
-                    }catch (Exception ignored){
+                    } catch (Exception ignored) {
                         relationship.setMuting(false);
                     }
                     try {
                         relationship.setMuting_notifications(!Boolean.valueOf(resobj.get("notifications_enabled").toString()));
-                    }catch (Exception ignored){
+                    } catch (Exception ignored) {
                         relationship.setMuting_notifications(false);
                     }
                     relationship.setEndorsed(false);
@@ -450,18 +458,17 @@ public class GNUAPI {
     }
 
 
-
-
     /**
      * Returns a relationship between the authenticated account and an account
+     *
      * @param accounts ArrayList<Account> accounts fetched
      * @return Relationship entity
      */
     public APIResponse getRelationship(List<Account> accounts) {
         HashMap<String, String> params = new HashMap<>();
-        if( accounts != null && accounts.size() > 0 ) {
+        if (accounts != null && accounts.size() > 0) {
             StringBuilder parameters = new StringBuilder();
-            for(Account account: accounts)
+            for (Account account : accounts)
                 parameters.append("target_id[]=").append(account.getId()).append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
             params.put("target_id[]", parameters.toString());
@@ -555,7 +562,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getStatus(String accountId,boolean exclude_replies, String max_id, String since_id, int limit) {
+    private APIResponse getStatus(String accountId, boolean exclude_replies, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
@@ -572,7 +579,7 @@ public class GNUAPI {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/user_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -593,12 +600,11 @@ public class GNUAPI {
     }
 
 
-
     /**
      * Retrieves accounts that reblogged the status *synchronously*
      *
-     * @param statusId       String Id of the status
-     * @param max_id          String id max
+     * @param statusId String Id of the status
+     * @param max_id   String id max
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -635,8 +641,8 @@ public class GNUAPI {
     /**
      * Retrieves accounts that favourited the status *synchronously*
      *
-     * @param statusId       String Id of the status
-     * @param max_id          String id max
+     * @param statusId String Id of the status
+     * @param max_id   String id max
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -673,7 +679,7 @@ public class GNUAPI {
     /**
      * Retrieves one status *synchronously*
      *
-     * @param statusId  String Id of the status
+     * @param statusId String Id of the status
      * @return APIResponse
      */
     public APIResponse getStatusbyId(String statusId) {
@@ -702,7 +708,7 @@ public class GNUAPI {
     /**
      * Retrieves the context of status with replies *synchronously*
      *
-     * @param statusId  Id of the status
+     * @param statusId Id of the status
      * @return List<Status>
      */
     public app.fedilab.android.client.Entities.Context getStatusContext(String statusId, boolean directtimeline) {
@@ -710,7 +716,7 @@ public class GNUAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response;
-            if( !directtimeline)
+            if (!directtimeline)
                 response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
             else {
                 HashMap<String, String> params = new HashMap<>();
@@ -718,14 +724,14 @@ public class GNUAPI {
                 response = httpsConnection.get(getAbsoluteUrl("/direct_messages/conversation.json"), 60, params, prefKeyOauthTokenT);
             }
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses != null && statuses.size() > 0){
+            if (statuses != null && statuses.size() > 0) {
                 ArrayList<Status> descendants = new ArrayList<>();
                 statusContext.setAncestors(statuses);
                 statusContext.setDescendants(descendants);
             }
 
         } catch (HttpsConnection.HttpsConnectionException e) {
-            if(e.getStatusCode() != 404)
+            if (e.getStatusCode() != 404)
                 setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -742,24 +748,27 @@ public class GNUAPI {
 
     /**
      * Retrieves direct timeline for the account *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getDirectTimeline( String max_id) {
+    public APIResponse getDirectTimeline(String max_id) {
         return getDirectTimeline(max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves conversation timeline for the account *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getConversationTimeline( String max_id) {
+    public APIResponse getConversationTimeline(String max_id) {
         return getConversationTimeline(max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves direct timeline for the account since an Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getConversationTimelineSinceId(String since_id) {
@@ -768,6 +777,7 @@ public class GNUAPI {
 
     /**
      * Retrieves conversation timeline for the account *synchronously*
+     *
      * @param max_id   String id max
      * @param since_id String since the id
      * @param limit    int limit  - max value 40
@@ -782,7 +792,7 @@ public class GNUAPI {
             params.put("since_id", since_id);
         if (0 > limit || limit > 80)
             limit = 80;
-        params.put("limit",String.valueOf(limit));
+        params.put("limit", String.valueOf(limit));
         List<Conversation> conversations = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -807,6 +817,7 @@ public class GNUAPI {
 
     /**
      * Retrieves direct timeline for the account since an Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getDirectTimelineSinceId(String since_id) {
@@ -815,6 +826,7 @@ public class GNUAPI {
 
     /**
      * Retrieves direct timeline for the account *synchronously*
+     *
      * @param max_id   String id max
      * @param since_id String since the id
      * @param limit    int limit  - max value 40
@@ -829,13 +841,13 @@ public class GNUAPI {
             params.put("since_id", since_id);
         if (0 > limit || limit > 80)
             limit = 80;
-        params.put("count",String.valueOf(limit));
+        params.put("count", String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -858,16 +870,18 @@ public class GNUAPI {
 
     /**
      * Retrieves home timeline for the account *synchronously*
-     * @param max_id   String id max
+     *
+     * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getHomeTimeline( String max_id) {
+    public APIResponse getHomeTimeline(String max_id) {
         return getHomeTimeline(max_id, null, null, tootPerPage);
     }
 
 
     /**
      * Retrieves home timeline for the account since an Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getHomeTimelineSinceId(String since_id) {
@@ -876,6 +890,7 @@ public class GNUAPI {
 
     /**
      * Retrieves home timeline for the account from a min Id value *synchronously*
+     *
      * @return APIResponse
      */
     public APIResponse getHomeTimelineMinId(String min_id) {
@@ -885,6 +900,7 @@ public class GNUAPI {
 
     /**
      * Retrieves home timeline for the account *synchronously*
+     *
      * @param max_id   String id max
      * @param since_id String since the id
      * @param limit    int limit  - max value 40
@@ -909,7 +925,7 @@ public class GNUAPI {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/home_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -930,32 +946,32 @@ public class GNUAPI {
     }
 
 
-
-
-
     /**
      * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
+     *
+     * @param local  boolean only local timeline
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getPublicTimeline(String instanceName, boolean local, String max_id){
+    public APIResponse getPublicTimeline(String instanceName, boolean local, String max_id) {
         return getPublicTimeline(local, instanceName, max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
+     *
+     * @param local  boolean only local timeline
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getPublicTimeline(boolean local, String max_id){
+    public APIResponse getPublicTimeline(boolean local, String max_id) {
         return getPublicTimeline(local, null, max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves public timeline for the account since an Id value *synchronously*
-     * @param local boolean only local timeline
+     *
+     * @param local    boolean only local timeline
      * @param since_id String id since
      * @return APIResponse
      */
@@ -965,8 +981,9 @@ public class GNUAPI {
 
     /**
      * Retrieves instance timeline since an Id value *synchronously*
+     *
      * @param instanceName String instance name
-     * @param since_id String id since
+     * @param since_id     String id since
      * @return APIResponse
      */
     public APIResponse getInstanceTimelineSinceId(String instanceName, String since_id) {
@@ -975,35 +992,36 @@ public class GNUAPI {
 
     /**
      * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
+     *
+     * @param local    boolean only local timeline
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getPublicTimeline(boolean local, String instanceName, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimeline(boolean local, String instanceName, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( local)
+        if (local)
             params.put("local", Boolean.toString(true));
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
+        if (0 > limit || limit > 40)
             limit = 40;
-        params.put("count",String.valueOf(limit));
+        params.put("count", String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String url;
-            if(local)
+            if (local)
                 url = getAbsoluteUrl("/statuses/public_timeline.json");
             else
                 url = getAbsoluteUrl("/statuses/public_and_external_timeline.json");
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -1023,42 +1041,41 @@ public class GNUAPI {
     }
 
 
-
-
-
-    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, tag, max_id, null, any, all, none);
     }
 
-    public APIResponse getArtTimeline(boolean local, String max_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getArtTimeline(boolean local, String max_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, null, max_id, null, any, all, none);
     }
 
-    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, tag, null, since_id, any, all, none);
     }
 
-    public APIResponse getArtTimelineSinceId(boolean local, String since_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getArtTimelineSinceId(boolean local, String since_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, null, null, since_id, any, all, none);
     }
+
     /**
      * Retrieves art timeline
-     * @param local boolean only local timeline
+     *
+     * @param local  boolean only local timeline
      * @param max_id String id max
      * @return APIResponse
      */
-    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id, List<String> any, List<String> all, List<String> none){
-        if( tag == null)
+    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id, List<String> any, List<String> all, List<String> none) {
+        if (tag == null)
             tag = "mastoart";
         APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage, any, all, none);
         APIResponse apiResponseReply = new APIResponse();
-        if( apiResponse != null){
+        if (apiResponse != null) {
             apiResponseReply.setMax_id(apiResponse.getMax_id());
             apiResponseReply.setSince_id(apiResponse.getSince_id());
             apiResponseReply.setStatuses(new ArrayList<>());
-            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
-                for( Status status: apiResponse.getStatuses()){
-                    if( status.getMedia_attachments() != null ) {
+            if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0) {
+                for (Status status : apiResponse.getStatuses()) {
+                    if (status.getMedia_attachments() != null) {
                         String statusSerialized = Helper.statusToStringStorage(status);
                         for (Attachment attachment : status.getMedia_attachments()) {
                             Status newStatus = Helper.restoreStatusFromString(statusSerialized);
@@ -1076,86 +1093,91 @@ public class GNUAPI {
 
     /**
      * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
+     *
+     * @param tag    String
+     * @param local  boolean only local timeline
      * @param max_id String id max
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, List<String> any, List<String> all, List<String> none) {
         return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, any, all, none);
     }
 
     /**
      * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
+     *
+     * @param tag      String
+     * @param local    boolean only local timeline
      * @param since_id String since id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id, List<String> any, List<String> all, List<String> none){
+    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id, List<String> any, List<String> all, List<String> none) {
         return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage, any, all, none);
     }
+
     /**
      * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
-     * @param max_id String id max
+     *
+     * @param tag      String
+     * @param local    boolean only local timeline
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none){
+    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( local)
+        if (local)
             params.put("local", Boolean.toString(true));
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
+        if (0 > limit || limit > 40)
             limit = 40;
-        if( onlymedia)
+        if (onlymedia)
             params.put("only_media", Boolean.toString(true));
 
-        if( any != null && any.size() > 0) {
+        if (any != null && any.size() > 0) {
             StringBuilder parameters = new StringBuilder();
             for (String a : any)
                 parameters.append("any[]=").append(a).append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
             params.put("any[]", parameters.toString());
         }
-        if( all != null && all.size() > 0) {
+        if (all != null && all.size() > 0) {
             StringBuilder parameters = new StringBuilder();
             for (String a : all)
                 parameters.append("all[]=").append(a).append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
             params.put("all[]", parameters.toString());
         }
-        if( none != null && none.size() > 0) {
+        if (none != null && none.size() > 0) {
             StringBuilder parameters = new StringBuilder();
             for (String a : none)
                 parameters.append("none[]=").append(a).append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(7));
             params.put("none[]", parameters.toString());
         }
-        params.put("limit",String.valueOf(limit));
+        params.put("limit", String.valueOf(limit));
         statuses = new ArrayList<>();
-        if( tag == null)
+        if (tag == null)
             return null;
         try {
             String query = tag.trim();
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                 try {
                     query = URLEncoder.encode(query, "UTF-8");
-                } catch (UnsupportedEncodingException ignored) {}
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
+                } catch (UnsupportedEncodingException ignored) {
+                }
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s", query)), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -1177,63 +1199,68 @@ public class GNUAPI {
 
     /**
      * Retrieves muted users by the authenticated account *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getMuted(String max_id){
-        return getAccounts("/mutes/users/list.json",null, max_id, null, accountPerPage);
+    public APIResponse getMuted(String max_id) {
+        return getAccounts("/mutes/users/list.json", null, max_id, null, accountPerPage);
     }
 
     /**
      * Retrieves blocked users by the authenticated account *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getBlocks(String max_id){
-        return getAccounts("/blocks/list.json",null,  max_id, null, accountPerPage);
+    public APIResponse getBlocks(String max_id) {
+        return getAccounts("/blocks/list.json", null, max_id, null, accountPerPage);
     }
 
 
     /**
      * Retrieves following for the account specified by targetedId  *synchronously*
+     *
      * @param targetedId String targetedId
-     * @param max_id String id max
+     * @param max_id     String id max
      * @return APIResponse
      */
-    public APIResponse getFollowing(String targetedId, String max_id){
-        return getAccounts("/statuses/friends.json",targetedId, max_id, null, accountPerPage);
+    public APIResponse getFollowing(String targetedId, String max_id) {
+        return getAccounts("/statuses/friends.json", targetedId, max_id, null, accountPerPage);
     }
 
     /**
      * Retrieves followers for the account specified by targetedId  *synchronously*
+     *
      * @param targetedId String targetedId
-     * @param max_id String id max
+     * @param max_id     String id max
      * @return APIResponse
      */
-    public APIResponse getFollowers(String targetedId, String max_id){
-        return getAccounts("/statuses/followers.json",targetedId, max_id, null, accountPerPage);
+    public APIResponse getFollowers(String targetedId, String max_id) {
+        return getAccounts("/statuses/followers.json", targetedId, max_id, null, accountPerPage);
     }
 
     /**
      * Retrieves blocked users by the authenticated account *synchronously*
-     * @param max_id String id max
+     *
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getAccounts(String action, String targetedId, String max_id, String since_id, int limit){
+    private APIResponse getAccounts(String action, String targetedId, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
+        if (0 > limit || limit > 40)
             limit = 40;
-        params.put("limit",String.valueOf(limit));
-        if( targetedId != null)
-            params.put("user_id",targetedId);
+        params.put("limit", String.valueOf(limit));
+        if (targetedId != null)
+            params.put("user_id", targetedId);
         accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -1241,8 +1268,8 @@ public class GNUAPI {
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             accounts = parseAccountResponse(new JSONArray(response));
-            if( accounts != null && accounts.size() == 1 ){
-                if(accounts.get(0).getAcct() == null){
+            if (accounts != null && accounts.size() == 1) {
+                if (accounts.get(0).getAcct() == null) {
                     Throwable error = new Throwable(context.getString(R.string.toast_error));
                     setError(500, error);
                 }
@@ -1263,34 +1290,35 @@ public class GNUAPI {
     }
 
 
-
-
     /**
      * Retrieves follow requests for the authenticated account *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getFollowRequest(String max_id){
+    public APIResponse getFollowRequest(String max_id) {
         return getFollowRequest(max_id, null, accountPerPage);
     }
+
     /**
      * Retrieves follow requests for the authenticated account *synchronously*
-     * @param max_id String id max
+     *
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getFollowRequest(String max_id, String since_id, int limit){
+    private APIResponse getFollowRequest(String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
+        if (0 > limit || limit > 40)
             limit = 40;
-        params.put("limit",String.valueOf(limit));
+        params.put("limit", String.valueOf(limit));
         accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -1316,36 +1344,39 @@ public class GNUAPI {
 
     /**
      * Retrieves favourited status for the authenticated account *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getFavourites(String max_id){
+    public APIResponse getFavourites(String max_id) {
         return getFavourites(max_id, null, tootPerPage);
     }
+
     /**
      * Retrieves favourited status for the authenticated account *synchronously*
-     * @param max_id String id max
+     *
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getFavourites(String max_id, String since_id, int limit){
+    private APIResponse getFavourites(String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
+        if (0 > limit || limit > 40)
             limit = 40;
-        params.put("count",String.valueOf(limit));
+        params.put("count", String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/favorites.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -1367,21 +1398,23 @@ public class GNUAPI {
 
     /**
      * Makes the post action for a status
+     *
      * @param statusAction Enum
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
+     * @param targetedId   String id of the targeted Id *can be this of a status or an account*
      * @return in status code - Should be equal to 200 when action is done
      */
-    public int postAction(API.StatusAction statusAction, String targetedId){
+    public int postAction(API.StatusAction statusAction, String targetedId) {
         return postAction(statusAction, targetedId, null, null);
     }
 
     /**
      * Makes the post action for a status
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
+     *
+     * @param targetedId        String id of the targeted Id *can be this of a status or an account*
      * @param muteNotifications - boolean - notifications should be also muted
      * @return in status code - Should be equal to 200 when action is done
      */
-    public int muteNotifications(String targetedId, boolean muteNotifications){
+    public int muteNotifications(String targetedId, boolean muteNotifications) {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("notifications", Boolean.toString(muteNotifications));
@@ -1404,48 +1437,50 @@ public class GNUAPI {
 
     /**
      * Makes the post action
-     * @param status Status object related to the status
+     *
+     * @param status  Status object related to the status
      * @param comment String comment for the report
      * @return in status code - Should be equal to 200 when action is done
      */
-    public int reportAction(Status status, String comment){
+    public int reportAction(Status status, String comment) {
         return postAction(API.StatusAction.REPORT, null, status, comment);
     }
 
-    public int statusAction(Status status){
+    public int statusAction(Status status) {
         return postAction(API.StatusAction.CREATESTATUS, null, status, null);
     }
 
     /**
      * Makes the post action
+     *
      * @param statusAction Enum
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
-     * @param status Status object related to the status
-     * @param comment String comment for the report
+     * @param targetedId   String id of the targeted Id *can be this of a status or an account*
+     * @param status       Status object related to the status
+     * @param comment      String comment for the report
      * @return in status code - Should be equal to 200 when action is done
      */
-    private int postAction(API.StatusAction statusAction, String targetedId, Status status, String comment ){
+    private int postAction(API.StatusAction statusAction, String targetedId, Status status, String comment) {
 
         String action;
         HashMap<String, String> params = null;
-        switch (statusAction){
+        switch (statusAction) {
             case FAVOURITE:
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                     action = "/favorites/create.json";
                     params = new HashMap<>();
                     params.put("id", targetedId);
-                }else {
+                } else {
                     action = "/friendica/activity/like.json";
                     params = new HashMap<>();
                     params.put("id", targetedId);
                 }
                 break;
             case UNFAVOURITE:
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                     action = "/favorites/destroy.json";
                     params = new HashMap<>();
                     params.put("id", targetedId);
-                }else {
+                } else {
                     action = "/friendica/activity/unlike.json";
                     params = new HashMap<>();
                     params.put("id", targetedId);
@@ -1478,7 +1513,7 @@ public class GNUAPI {
                 params.put("user_id", targetedId);
                 break;
             case UNBLOCK:
-                action ="/blocks/destroy.json";
+                action = "/blocks/destroy.json";
                 params = new HashMap<>();
                 params.put("user_id", targetedId);
                 break;
@@ -1493,7 +1528,7 @@ public class GNUAPI {
                 params.put("user_id", targetedId);
                 break;
             case UNSTATUS:
-                if( !status.getVisibility().equals("direct"))
+                if (!status.getVisibility().equals("direct"))
                     action = String.format("/statuses/destroy/%s.json", targetedId);
                 else {
                     action = "/direct_messages/destroy.json";
@@ -1503,41 +1538,41 @@ public class GNUAPI {
                 break;
             case CREATESTATUS:
                 params = new HashMap<>();
-                if(! status.getVisibility().equals("direct"))
+                if (!status.getVisibility().equals("direct"))
                     action = "/statuses/update.json";
                 else
                     action = "/direct_messages/new.json";
-                if( !status.getVisibility().equals("direct")) {
+                if (!status.getVisibility().equals("direct")) {
                     try {
                         params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         params.put("status", status.getContent());
                     }
-                }else{
+                } else {
                     try {
                         params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         params.put("text", status.getContent());
                     }
                 }
-                if( status.getContentType() != null)
+                if (status.getContentType() != null)
                     params.put("content_type", status.getContentType());
-                if( status.getIn_reply_to_id() != null) {
-                    if( !status.getVisibility().equals("direct"))
+                if (status.getIn_reply_to_id() != null) {
+                    if (!status.getVisibility().equals("direct"))
                         params.put("in_reply_to_status_id", status.getIn_reply_to_id());
                     else
                         params.put("replyto", status.getConversationId());
                 }
-                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
+                if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
                     StringBuilder parameters = new StringBuilder();
-                    for(Attachment attachment: status.getMedia_attachments())
+                    for (Attachment attachment : status.getMedia_attachments())
                         parameters.append(attachment.getId()).append(",");
                     parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1));
                     params.put("media_ids", parameters.toString());
                 }
-                if( status.isSensitive())
+                if (status.isSensitive())
                     params.put("possibly_sensitive", Boolean.toString(status.isSensitive()));
-            break;
+                break;
             default:
                 return -1;
         }
@@ -1546,19 +1581,20 @@ public class GNUAPI {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String resp = httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
-            if( statusAction == API.StatusAction.REBLOG || statusAction == API.StatusAction.UNREBLOG || statusAction == API.StatusAction.FAVOURITE || statusAction == API.StatusAction.UNFAVOURITE) {
+            if (statusAction == API.StatusAction.REBLOG || statusAction == API.StatusAction.UNREBLOG || statusAction == API.StatusAction.FAVOURITE || statusAction == API.StatusAction.UNFAVOURITE) {
                 Bundle b = new Bundle();
                 try {
                     Status status1 = parseStatuses(context, new JSONObject(resp));
                     b.putParcelable("status", status1);
-                } catch (JSONException ignored) {}
+                } catch (JSONException ignored) {
+                }
                 Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                 intentBC.putExtras(b);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
                 new TimelineCacheDAO(context, db).update(targetedId, resp, account.getId(), account.getToken());
-            }else if( statusAction == API.StatusAction.UNSTATUS){
+            } else if (statusAction == API.StatusAction.UNSTATUS) {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new TimelineCacheDAO(context, db).remove(targetedId);
             }
@@ -1576,25 +1612,24 @@ public class GNUAPI {
     }
 
 
-
-
     /**
      * Posts a status
+     *
      * @param status Status object related to the status
      * @return APIResponse
      */
-    public APIResponse postStatusAction(Status status){
+    public APIResponse postStatusAction(Status status) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( status.getContentType() != null)
+        if (status.getContentType() != null)
             params.put("content_type", status.getContentType());
-        if( !status.getVisibility().equals("direct")) {
+        if (!status.getVisibility().equals("direct")) {
             try {
                 params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 params.put("status", status.getContent());
             }
-        }else{
+        } else {
             try {
                 params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
@@ -1609,25 +1644,25 @@ public class GNUAPI {
             params.put("screen_name", currentAccount.getAcct());
 
         }
-        if( status.getIn_reply_to_id() != null)
-            if( !status.getVisibility().equals("direct"))
+        if (status.getIn_reply_to_id() != null)
+            if (!status.getVisibility().equals("direct"))
                 params.put("in_reply_to_status_id", status.getIn_reply_to_id());
             else
                 params.put("replyto", status.getIn_reply_to_id());
-        if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
+        if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
             StringBuilder parameters = new StringBuilder();
-            for(Attachment attachment: status.getMedia_attachments())
+            for (Attachment attachment : status.getMedia_attachments())
                 parameters.append(attachment.getId()).append(",");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1));
             params.put("media_ids", parameters.toString());
         }
-        if( status.isSensitive())
+        if (status.isSensitive())
             params.put("possibly_sensitive", Boolean.toString(status.isSensitive()));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response;
-            if( !status.getVisibility().equals("direct"))
+            if (!status.getVisibility().equals("direct"))
                 response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
             else
                 response = httpsConnection.post(getAbsoluteUrl("/direct_messages/new.json"), 60, params, prefKeyOauthTokenT);
@@ -1652,54 +1687,57 @@ public class GNUAPI {
     }
 
 
-
     /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
+     *
      * @param since_id String since max
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, boolean display){
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, boolean display) {
         return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
+     *
      * @param since_id String since max
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, int notificationPerPage, boolean display){
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, int notificationPerPage, boolean display) {
         return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
      * Retrieves notifications for the authenticated account *synchronously*
+     *
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display){
+    public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display) {
         return getNotifications(type, max_id, null, notificationPerPage, display);
     }
 
 
     /**
      * Retrieves notifications for the authenticated account *synchronously*
-     * @param max_id String id max
+     *
+     * @param max_id   String id max
      * @param since_id String since the id
-     * @param limit int limit  - max value 40
+     * @param limit    int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, String since_id, int limit, boolean display){
+    private APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, String since_id, int limit, boolean display) {
 
         HashMap<String, String> params = new HashMap<>();
         String stringType = null;
-        if( max_id != null )
+        if (max_id != null)
             params.put("max_id", max_id);
-        if( since_id != null )
+        if (since_id != null)
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 30)
+        if (0 > limit || limit > 30)
             limit = 30;
-        params.put("count",String.valueOf(limit));
+        params.put("count", String.valueOf(limit));
         List<Notification> notifications = new ArrayList<>();
         String url = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1708,18 +1746,18 @@ public class GNUAPI {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-        if(type == DisplayNotificationsFragment.Type.MENTION){
-            params.put("name",account.getAcct());
+        if (type == DisplayNotificationsFragment.Type.MENTION) {
+            params.put("name", account.getAcct());
             url = getAbsoluteUrl("/statuses/mentions_timeline.json");
             stringType = "mention";
-        }else if(type == DisplayNotificationsFragment.Type.BOOST){
+        } else if (type == DisplayNotificationsFragment.Type.BOOST) {
             url = getAbsoluteUrl("/statuses/retweets_of_me.json");
             stringType = "reblog";
-        }else if(type == DisplayNotificationsFragment.Type.FOLLOW){
+        } else if (type == DisplayNotificationsFragment.Type.FOLLOW) {
             url = getAbsoluteUrl("/statuses/followers.json");
             stringType = "follow";
         }
-        if( url == null){
+        if (url == null) {
             Error error = new Error();
             error.setStatusCode(500);
             error.setError(context.getString(R.string.toast_error));
@@ -1731,29 +1769,29 @@ public class GNUAPI {
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-           if(type == DisplayNotificationsFragment.Type.FOLLOW){
-               List<Account> accounts = parseAccountResponse(new JSONArray(response));
-               if( accounts != null)
-                   for(Account st: accounts ){
-                       Notification notification = new Notification();
-                       notification.setType(stringType);
-                       notification.setId(st.getId());
-                       notification.setStatus(null);
-                       notification.setAccount(account);
-                       notifications.add(notification);
-                   }
-            }else {
-               List<Status> statuses = parseStatuses(context, new JSONArray(response));
-               if( statuses != null)
-                   for(Status st: statuses ){
-                       Notification notification = new Notification();
-                       notification.setType(stringType);
-                       notification.setId(st.getId());
-                       notification.setStatus(st);
-                       notification.setAccount(st.getAccount());
-                       notifications.add(notification);
-                   }
-           }
+            if (type == DisplayNotificationsFragment.Type.FOLLOW) {
+                List<Account> accounts = parseAccountResponse(new JSONArray(response));
+                if (accounts != null)
+                    for (Account st : accounts) {
+                        Notification notification = new Notification();
+                        notification.setType(stringType);
+                        notification.setId(st.getId());
+                        notification.setStatus(null);
+                        notification.setAccount(account);
+                        notifications.add(notification);
+                    }
+            } else {
+                List<Status> statuses = parseStatuses(context, new JSONArray(response));
+                if (statuses != null)
+                    for (Status st : statuses) {
+                        Notification notification = new Notification();
+                        notification.setType(stringType);
+                        notification.setId(st.getId());
+                        notification.setStatus(st);
+                        notification.setAccount(st.getAccount());
+                        notifications.add(notification);
+                    }
+            }
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1772,16 +1810,14 @@ public class GNUAPI {
     }
 
 
-
-
-
     /**
      * Changes media description
-     * @param mediaId String
-     *  @param description String
+     *
+     * @param mediaId     String
+     * @param description String
      * @return Attachment
      */
-    public Attachment updateDescription(String mediaId, String description){
+    public Attachment updateDescription(String mediaId, String description) {
 
         HashMap<String, String> params = new HashMap<>();
         try {
@@ -1811,21 +1847,22 @@ public class GNUAPI {
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
      *
-     * @param query  String search
+     * @param query String search
      * @return Results
      */
     public APIResponse searchRemote(String instance, String query, String max_id) {
         HashMap<String, String> params = new HashMap<>();
         try {
             query = URLEncoder.encode(query, "UTF-8");
-        } catch (UnsupportedEncodingException ignored) {}
+        } catch (UnsupportedEncodingException ignored) {
+        }
         if (max_id != null)
             params.put("max_id", max_id);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteRemoteUrl(instance, "/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
+            String response = httpsConnection.get(getAbsoluteRemoteUrl(instance, "/statusnet/tags/timeline/" + query.trim().toLowerCase().replaceAll("\\#", "") + ".json"), 60, params, null);
             List<Status> statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -1849,14 +1886,14 @@ public class GNUAPI {
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
      *
-     * @param query  String search
+     * @param query String search
      * @return Results
      */
     public APIResponse search(String query) {
         Results results = new Results();
         HashMap<String, String> params = new HashMap<>();
         apiResponse = new APIResponse();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             params.put("q", query);
         else
             try {
@@ -1888,7 +1925,7 @@ public class GNUAPI {
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
      *
-     * @param query  String search
+     * @param query String search
      * @return Results
      */
     public APIResponse search(String query, String max_id) {
@@ -1896,14 +1933,15 @@ public class GNUAPI {
         HashMap<String, String> params = new HashMap<>();
         try {
             query = URLEncoder.encode(query, "UTF-8");
-        } catch (UnsupportedEncodingException ignored) {}
+        } catch (UnsupportedEncodingException ignored) {
+        }
         if (max_id != null)
             params.put("max_id", max_id);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
+            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/tags/timeline/" + query.trim().toLowerCase().replaceAll("\\#", "") + ".json"), 60, params, null);
             List<Status> statuses = parseStatuses(context, new JSONArray(response));
-            if( statuses.size() > 0) {
+            if (statuses.size() > 0) {
                 apiResponse.setSince_id(statuses.get(0).getId());
                 apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
             }
@@ -1927,7 +1965,8 @@ public class GNUAPI {
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      * Not limited to following
-     * @param query  String search
+     *
+     * @param query String search
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
@@ -1937,20 +1976,21 @@ public class GNUAPI {
 
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
-     * @param query  String search
-     * @param count  int limit
-     * @param following  boolean following only
+     *
+     * @param query     String search
+     * @param count     int limit
+     * @param following boolean following only
      * @return APIResponse
      */
     public APIResponse searchAccounts(String query, int count, boolean following) {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("q", query);
-        if( count < 5)
+        if (count < 5)
             count = 5;
-        if( count > 40 )
+        if (count > 40)
             count = 40;
-        if( following)
+        if (following)
             params.put("following", Boolean.toString(true));
         params.put("limit", String.valueOf(count));
 
@@ -1977,21 +2017,18 @@ public class GNUAPI {
     }
 
 
-
-
-
-
     /**
      * Parse json response for several conversations
+     *
      * @param jsonArray JSONArray
      * @return List<Conversation>
      */
-    private List<Conversation> parseConversations(JSONArray jsonArray){
+    private List<Conversation> parseConversations(JSONArray jsonArray) {
 
         List<Conversation> conversations = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Conversation conversation = parseConversation(context, resobj);
@@ -2007,6 +2044,7 @@ public class GNUAPI {
 
     /**
      * Parse json response for unique conversation
+     *
      * @param resobj JSONObject
      * @return Conversation
      */
@@ -2018,23 +2056,24 @@ public class GNUAPI {
             conversation.setUnread(Boolean.parseBoolean(resobj.get("unread").toString()));
             conversation.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
             conversation.setLast_status(parseStatuses(context, resobj.getJSONObject("last_status")));
-        }catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
         return conversation;
     }
 
 
-
     /**
      * Parse json response for several status
+     *
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    public static List<Status> parseStatuses(Context context, JSONArray jsonArray){
+    public static List<Status> parseStatuses(Context context, JSONArray jsonArray) {
 
         List<Status> statuses = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ){
+            while (i < jsonArray.length()) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
@@ -2050,53 +2089,56 @@ public class GNUAPI {
 
     /**
      * Parse json response for unique status
+     *
      * @param resobj JSONObject
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    private static Status parseStatuses(Context context, JSONObject resobj){
+    private static Status parseStatuses(Context context, JSONObject resobj) {
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
             try {
                 status.setUri(resobj.get("uri").toString());
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 status.setUri(resobj.get("id").toString());
             }
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            if( resobj.has("in_reply_to_status_id"))
-             status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
-            if( resobj.has("in_reply_to_user_id"))
+            if (resobj.has("in_reply_to_status_id"))
+                status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
+            if (resobj.has("in_reply_to_user_id"))
                 status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
             status.setSensitive(false);
             status.setSpoiler_text(null);
-            if( !resobj.has("sender"))
+            if (!resobj.has("sender"))
                 status.setVisibility("public");
             else
                 status.setVisibility("direct");
-            if( resobj.has("geo"))
-                status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
-            if( resobj.has("external_url"))
+            if (resobj.has("geo"))
+                status.setLanguage(resobj.isNull("geo") ? null : resobj.getString("geo"));
+            if (resobj.has("external_url"))
                 status.setUrl(resobj.get("external_url").toString());
             //Retrieves attachments
             try {
                 JSONArray arrayAttachement = resobj.getJSONArray("attachments");
                 ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));
                 status.setMedia_attachments(attachments);
-            }catch (Exception ignored){ status.setMedia_attachments(new ArrayList<>());}
+            } catch (Exception ignored) {
+                status.setMedia_attachments(new ArrayList<>());
+            }
 
             status.setCard(null);
             try {
                 status.setConversationId(resobj.get("statusnet_conversation_id").toString());
-            }catch (Exception ignored){
-                if( resobj.has("friendica_parent_uri"))
+            } catch (Exception ignored) {
+                if (resobj.has("friendica_parent_uri"))
                     status.setConversationId(resobj.get("friendica_parent_uri").toString());
                 else
                     status.setConversationId(resobj.get("id").toString());
             }
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
-            if( resobj.has("attentions")) {
+            if (resobj.has("attentions")) {
                 JSONArray arrayMention = resobj.getJSONArray("attentions");
                 if (arrayMention != null) {
                     for (int j = 0; j < arrayMention.length(); j++) {
@@ -2110,7 +2152,7 @@ public class GNUAPI {
                     }
                 }
                 status.setMentions(mentions);
-            }else{
+            } else {
                 status.setMentions(new ArrayList<>());
             }
 
@@ -2121,49 +2163,49 @@ public class GNUAPI {
             //Retrieve Application
             Application application = new Application();
             try {
-                if(resobj.getJSONObject("source") != null){
+                if (resobj.getJSONObject("source") != null) {
                     application.setName(resobj.getJSONObject("source").toString());
                     application.setWebsite(resobj.getJSONObject("source_link").toString());
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 application = new Application();
             }
             status.setApplication(application);
-            if( resobj.has("user"))
+            if (resobj.has("user"))
                 status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
-            else if( resobj.has("sender"))
+            else if (resobj.has("sender"))
                 status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
-            if( resobj.has("statusnet_html"))
+            if (resobj.has("statusnet_html"))
                 status.setContent(resobj.get("statusnet_html").toString());
-            else if( resobj.has("text"))
+            else if (resobj.has("text"))
                 status.setContent(resobj.get("text").toString());
-            if(resobj.has("fave_num"))
+            if (resobj.has("fave_num"))
                 status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
             else
                 status.setFavourites_count(0);
-            if(resobj.has("repeat_num"))
+            if (resobj.has("repeat_num"))
                 status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
             else
                 status.setReblogs_count(0);
             status.setReplies_count(0);
             try {
                 status.setReblogged(Boolean.valueOf(resobj.get("repeated").toString()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 status.setReblogged(false);
             }
             try {
                 status.setFavourited(Boolean.valueOf(resobj.get("favorited").toString()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 status.setFavourited(false);
             }
-            if( resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")){
+            if (resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")) {
                 status.setFavourited(false);
                 JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject like = jsonArray.getJSONObject(i);
-                    if( like.getString("id").equals(userId)) {
+                    if (like.getString("id").equals(userId)) {
                         status.setFavourited(true);
                         break;
                     }
@@ -2172,12 +2214,16 @@ public class GNUAPI {
             }
             status.setMuted(false);
             status.setPinned(false);
-            try{
+            try {
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
-            }catch (Exception ignored){ status.setReblog(null);}
-            if( status.getContent().contains(status.getUri()))
+            } catch (Exception ignored) {
+                status.setReblog(null);
+            }
+            if (status.getContent().contains(status.getUri()))
                 status.setNotice(true);
-        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
 
         }
@@ -2188,11 +2234,12 @@ public class GNUAPI {
 
     /**
      * Parse json response for unique schedule
+     *
      * @param resobj JSONObject
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    private static Status parseSchedule(Context context, JSONObject resobj){
+    private static Status parseSchedule(Context context, JSONObject resobj) {
         Status status = new Status();
         try {
             status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
@@ -2200,26 +2247,28 @@ public class GNUAPI {
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             try {
                 status.setVisibility(resobj.get("visibility").toString());
-            }catch (Exception e){status.setVisibility("public");}
+            } catch (Exception e) {
+                status.setVisibility("public");
+            }
             status.setContent(resobj.get("text").toString());
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
         return status;
     }
 
 
-
-
     /**
      * Parse json response for list of accounts
+     *
      * @param jsonArray JSONArray
      * @return List<Account>
      */
-    private List<Account> parseAccountResponse(JSONArray jsonArray){
+    private List<Account> parseAccountResponse(JSONArray jsonArray) {
 
         List<Account> accounts = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Account account = parseAccountResponse(context, resobj);
                 accounts.add(account);
@@ -2233,16 +2282,17 @@ public class GNUAPI {
 
     /**
      * Parse json response an unique account
+     *
      * @param resobj JSONObject
      * @return Account
      */
     @SuppressWarnings("InfiniteRecursion")
-    public static Account parseAccountResponse(Context context, JSONObject resobj){
+    public static Account parseAccountResponse(Context context, JSONObject resobj) {
 
         Account account = new Account();
         try {
             account.setId(resobj.get("id").toString());
-            if( resobj.has("ostatus_uri"))
+            if (resobj.has("ostatus_uri"))
                 account.setUuid(resobj.get("ostatus_uri").toString());
             else
                 account.setUuid(resobj.get("id").toString());
@@ -2260,20 +2310,21 @@ public class GNUAPI {
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("profile_image_url_https").toString());
             account.setAvatar_static(resobj.get("profile_image_url_https").toString());
-            if( !resobj.isNull("background_image")) {
+            if (!resobj.isNull("background_image")) {
                 account.setHeader(resobj.get("background_image").toString());
                 account.setHeader_static(resobj.get("background_image").toString());
-            }else{
+            } else {
                 account.setHeader("null");
                 account.setHeader_static("null");
             }
 
-            if( resobj.has("cid"))
+            if (resobj.has("cid"))
                 account.setSocial("FRIENDICA");
             else
                 account.setSocial("GNU");
             account.setEmojis(new ArrayList<>());
-        } catch (JSONException ignored) {} catch (ParseException e) {
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return account;
@@ -2282,10 +2333,11 @@ public class GNUAPI {
 
     /**
      * Parse json response an unique relationship
+     *
      * @param resobjIni JSONObject
      * @return Relationship
      */
-    private Relationship parseRelationshipResponse(JSONObject resobjIni){
+    private Relationship parseRelationshipResponse(JSONObject resobjIni) {
 
 
         Relationship relationship = new Relationship();
@@ -2297,12 +2349,12 @@ public class GNUAPI {
             relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
             try {
                 relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
-            }catch (Exception ignored){
-                    relationship.setMuting(false);
-                }
+            } catch (Exception ignored) {
+                relationship.setMuting(false);
+            }
             try {
                 relationship.setMuting_notifications(!Boolean.valueOf(resobj.get("notifications_enabled").toString()));
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 relationship.setMuting_notifications(false);
             }
             relationship.setEndorsed(false);
@@ -2317,15 +2369,16 @@ public class GNUAPI {
 
     /**
      * Parse json response for list of relationship
+     *
      * @param jsonArray JSONArray
      * @return List<Relationship>
      */
-    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray){
+    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray) {
 
         List<Relationship> relationships = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Relationship relationship = parseRelationshipResponse(resobj);
                 relationships.add(relationship);
@@ -2339,10 +2392,11 @@ public class GNUAPI {
 
     /**
      * Parse json response for the context
+     *
      * @param jsonObject JSONObject
      * @return Context
      */
-    private app.fedilab.android.client.Entities.Context parseContext(JSONObject jsonObject){
+    private app.fedilab.android.client.Entities.Context parseContext(JSONObject jsonObject) {
 
         app.fedilab.android.client.Entities.Context context = new app.fedilab.android.client.Entities.Context();
         try {
@@ -2355,126 +2409,144 @@ public class GNUAPI {
     }
 
 
-
     /**
      * Parse json response for list of relationship
+     *
      * @param jsonArray JSONArray
      * @return List<Relationship>
      */
-    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray){
+    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray) {
 
         List<Attachment> attachments = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Attachment attachment = parseAttachmentResponse(resobj);
                 attachments.add(attachment);
                 i++;
             }
-        } catch (JSONException ignored) { }
+        } catch (JSONException ignored) {
+        }
         return attachments;
     }
+
     /**
      * Parse json response an unique attachment
+     *
      * @param resobj JSONObject
      * @return Relationship
      */
-    static Attachment parseAttachmentResponse(JSONObject resobj){
+    static Attachment parseAttachmentResponse(JSONObject resobj) {
 
         Attachment attachment = new Attachment();
         try {
-            if(resobj.has("id") )
+            if (resobj.has("id"))
                 attachment.setId(resobj.get("id").toString());
-            if( resobj.has("url") ){
+            if (resobj.has("url")) {
                 attachment.setUrl(resobj.getString("url"));
                 attachment.setPreview_url(resobj.getString("url"));
                 attachment.setRemote_url(resobj.getString("url"));
             }
 
-            if( attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")){
+            if (attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")) {
                 attachment.setType("image");
-            }else if( attachment.getUrl().endsWith("gif") ||  attachment.getUrl().endsWith("apng") ){
+            } else if (attachment.getUrl().endsWith("gif") || attachment.getUrl().endsWith("apng")) {
                 attachment.setType("gifv");
-            }else if( attachment.getUrl().endsWith("mp4") ){
+            } else if (attachment.getUrl().endsWith("mp4")) {
                 attachment.setType("video");
-            }else{
+            } else {
                 attachment.setType("web");
             }
 
             try {
                 attachment.setDescription(resobj.get("description").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setRemote_url(resobj.get("url").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setPreview_url(resobj.get("thumb_url").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setMeta(resobj.get("meta").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setText_url(resobj.get("text_url").toString());
-            }catch (JSONException ignore){}
+            } catch (JSONException ignore) {
+            }
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
         return attachment;
     }
 
     /**
      * Parse json response an unique attachment
+     *
      * @param resobj JSONObject
      * @return Relationship
      */
-    public static Attachment parseUploadedAttachmentResponse(JSONObject resobj){
+    public static Attachment parseUploadedAttachmentResponse(JSONObject resobj) {
 
         Attachment attachment = new Attachment();
         try {
-            if(resobj.has("media_id") )
+            if (resobj.has("media_id"))
                 attachment.setId(resobj.get("media_id").toString());
-            if( resobj.has("image") && resobj.getJSONObject("image").has("image_type"))
+            if (resobj.has("image") && resobj.getJSONObject("image").has("image_type"))
                 attachment.setType("Image");
-            else if(resobj.has("image") && resobj.getJSONObject("gif").has("image_type"))
+            else if (resobj.has("image") && resobj.getJSONObject("gif").has("image_type"))
                 attachment.setType("GifV");
             else
                 attachment.setType("video");
 
-            try{
+            try {
                 attachment.setRemote_url(resobj.get("url").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setPreview_url(resobj.get("thumb_url").toString());
-            }catch (JSONException ignore){}
+            } catch (JSONException ignore) {
+            }
 
-            if( resobj.has("image") && resobj.getJSONObject("image").has("friendica_preview_url")){
+            if (resobj.has("image") && resobj.getJSONObject("image").has("friendica_preview_url")) {
                 attachment.setUrl(resobj.getJSONObject("image").getString("friendica_preview_url"));
                 attachment.setPreview_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
                 attachment.setRemote_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
             }
-            if( resobj.has("media_url"))
+            if (resobj.has("media_url"))
                 attachment.setUrl(resobj.get("media_url").toString());
             try {
                 attachment.setDescription(resobj.get("description").toString());
-            }catch (JSONException ignore){}
+            } catch (JSONException ignore) {
+            }
 
-            try{
+            try {
                 attachment.setMeta(resobj.get("meta").toString());
-            }catch (JSONException ignore){}
-            try{
+            } catch (JSONException ignore) {
+            }
+            try {
                 attachment.setText_url(resobj.get("text_url").toString());
-            }catch (JSONException ignore){}
+            } catch (JSONException ignore) {
+            }
 
-        } catch (JSONException ignored) {ignored.printStackTrace();}
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        }
         return attachment;
     }
 
     /**
      * Parse json response an unique notification
+     *
      * @param resobj JSONObject
      * @return Account
      */
-    private Notification parseNotificationResponse(Context context, JSONObject resobj){
+    private Notification parseNotificationResponse(Context context, JSONObject resobj) {
 
         Notification notification = new Notification();
         try {
@@ -2482,11 +2554,13 @@ public class GNUAPI {
             notification.setType(resobj.get("ntype").toString());
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("from_profile")));
-            try{
+            try {
                 notification.setStatus(parseStatuses(context, resobj.getJSONObject("notice")));
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-        } catch (JSONException ignored) {} catch (ParseException e) {
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return notification;
@@ -2494,15 +2568,16 @@ public class GNUAPI {
 
     /**
      * Parse json response for list of notifications
+     *
      * @param jsonArray JSONArray
      * @return List<Notification>
      */
-    private List<Notification> parseNotificationResponse(JSONArray jsonArray){
+    private List<Notification> parseNotificationResponse(JSONArray jsonArray) {
 
         List<Notification> notifications = new ArrayList<>();
         try {
             int i = 0;
-            while (i < jsonArray.length() ) {
+            while (i < jsonArray.length()) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Notification notification = parseNotificationResponse(context, resobj);
@@ -2516,13 +2591,13 @@ public class GNUAPI {
     }
 
 
-
     /**
      * Set the error message
+     *
      * @param statusCode int code
-     * @param error Throwable error
+     * @param error      Throwable error
      */
-    private void setError(int statusCode, Throwable error){
+    private void setError(int statusCode, Throwable error) {
         APIError = new Error();
         APIError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
@@ -2531,7 +2606,7 @@ public class GNUAPI {
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
-            if(error.getMessage().split(".").length > 0) {
+            if (error.getMessage().split(".").length > 0) {
                 String errorM = error.getMessage().split(".")[0];
                 message = "Error " + statusCode + " : " + errorM;
             }
@@ -2540,11 +2615,11 @@ public class GNUAPI {
         apiResponse.setError(APIError);
     }
 
-    private void setDefaultError(Exception e){
+    private void setDefaultError(Exception e) {
         APIError = new Error();
-        if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+        if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
             APIError.setError(e.getLocalizedMessage());
-        else if( e.getMessage() != null && e.getMessage().trim().length() > 0)
+        else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
             APIError.setError(e.getMessage());
         else
             APIError.setError(context.getString(R.string.toast_error));
@@ -2552,7 +2627,7 @@ public class GNUAPI {
     }
 
 
-    public Error getError(){
+    public Error getError() {
         return APIError;
     }
 
@@ -2560,8 +2635,9 @@ public class GNUAPI {
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
     }
+
     private String getAbsoluteRemoteUrl(String instance, String action) {
-        return Helper.instanceWithProtocol(this.context,instance) + "/api" + action;
+        return Helper.instanceWithProtocol(this.context, instance) + "/api" + action;
     }
 
 }

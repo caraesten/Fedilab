@@ -22,7 +22,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 15/07/2017.
  * Adapter for toot drafts
  */
-public class DraftsListAdapter extends BaseAdapter  {
+public class DraftsListAdapter extends BaseAdapter {
 
     private List<StoredStatus> storedStatuses;
     private Context context;
@@ -56,13 +58,13 @@ public class DraftsListAdapter extends BaseAdapter  {
     private boolean clickable;
     private RelativeLayout textviewNoAction;
 
-    public DraftsListAdapter(List<StoredStatus> storedStatuses){
+    public DraftsListAdapter(List<StoredStatus> storedStatuses) {
         this.storedStatuses = storedStatuses;
         draftsListAdapter = this;
         this.clickable = false;
     }
 
-    public DraftsListAdapter(List<StoredStatus> storedStatuses, boolean clickable, RelativeLayout textviewNoAction){
+    public DraftsListAdapter(List<StoredStatus> storedStatuses, boolean clickable, RelativeLayout textviewNoAction) {
         this.storedStatuses = storedStatuses;
         draftsListAdapter = this;
         this.clickable = clickable;
@@ -106,13 +108,13 @@ public class DraftsListAdapter extends BaseAdapter  {
 
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        if( this.clickable ){
+        if (this.clickable) {
             if (draft.getStatus().getContent().length() > 300)
-                holder.draft_title.setText(String.format("%s…",draft.getStatus().getContent().substring(0, 299)));
+                holder.draft_title.setText(String.format("%s…", draft.getStatus().getContent().substring(0, 299)));
             else
                 holder.draft_title.setText(draft.getStatus().getContent());
-        }else {
-            if(draft.getStatus() != null && draft.getStatus().getContent() != null ) {
+        } else {
+            if (draft.getStatus() != null && draft.getStatus().getContent() != null) {
                 if (draft.getStatus().getContent().length() > 20)
                     holder.draft_title.setText(draft.getStatus().getContent().substring(0, 20));
                 else
@@ -124,9 +126,9 @@ public class DraftsListAdapter extends BaseAdapter  {
         //Manages theme for icon colors
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
+        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
             Helper.changeDrawableColor(context, holder.draft_delete, R.color.dark_text);
-        }else{
+        } else {
             Helper.changeDrawableColor(context, holder.draft_delete, R.color.black);
         }
         holder.draft_date.setText(Helper.dateToString(draft.getCreation_date()));
@@ -138,9 +140,9 @@ public class DraftsListAdapter extends BaseAdapter  {
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
@@ -153,7 +155,7 @@ public class DraftsListAdapter extends BaseAdapter  {
                                 new StatusStoredDAO(context, db).remove(draft.getId());
                                 storedStatuses.remove(draft);
                                 draftsListAdapter.notifyDataSetChanged();
-                                if( storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                if (storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }
@@ -167,7 +169,7 @@ public class DraftsListAdapter extends BaseAdapter  {
                         .show();
             }
         });
-        if( clickable){
+        if (clickable) {
             holder.drafts_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

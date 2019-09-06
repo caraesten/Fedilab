@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -34,6 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,7 +113,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -133,12 +135,12 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ){
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -154,16 +156,16 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerStatusActivity.this);
             }
             toolbarTitle.setText(getString(R.string.owner_cached_toots));
         }
         statuses = new ArrayList<>();
         RecyclerView lv_status = findViewById(R.id.lv_status);
-        mainLoader =  findViewById(R.id.loader);
+        mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
-        textviewNoAction =  findViewById(R.id.no_action);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         max_id = null;
@@ -179,22 +181,22 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         lv_status.setLayoutManager(mLayoutManager);
 
 
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        }else  if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(OwnerStatusActivity.this,db).getUniqAccount(userId, instance);
+        Account account = new AccountDAO(OwnerStatusActivity.this, db).getUniqAccount(userId, instance);
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -226,14 +228,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         });
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                if(dy > 0){
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                        if(!flag_loading ) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
                             flag_loading = true;
                             new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, max_id, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
@@ -253,7 +254,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT)
+        if (theme == Helper.THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
@@ -283,6 +284,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 }
 
             };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -299,9 +301,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
@@ -317,9 +319,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                             }
                         });
                 dialogBuilder.create().show();
-                if( statistics == null) {
+                if (statistics == null) {
                     new RetrieveStatsAsyncTask(getApplicationContext(), OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
+                } else {
                     displayStats();
                 }
                 return true;
@@ -328,9 +330,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
@@ -340,11 +342,11 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
 
                 SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                if( dateIni == null)
+                if (dateIni == null)
                     dateIni = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
-                if( dateEnd == null)
+                if (dateEnd == null)
                     dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
-                if( dateIni == null || dateEnd == null)
+                if (dateIni == null || dateEnd == null)
                     return true;
                 String dateInitString = Helper.shortDateToString(dateIni);
                 String dateEndString = Helper.shortDateToString(dateEnd);
@@ -378,7 +380,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 settings_time_from.setText(dateInitString);
                 settings_time_to.setText(dateEndString);
 
-                if( filterToots.getFilter() != null)
+                if (filterToots.getFilter() != null)
                     filter_keywords.setText(filterToots.getFilter());
 
                 Calendar c = Calendar.getInstance();
@@ -429,7 +431,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 filterToots.setDateIni(Helper.dateToString(dateIni));
                                 filterToots.setDateEnd(Helper.dateToString(dateEnd));
 
-                                if( filter_keywords.getText() != null && filter_keywords.getText().toString().trim().length() > 0)
+                                if (filter_keywords.getText() != null && filter_keywords.getText().toString().trim().length() > 0)
                                     filterToots.setFilter(filter_keywords.getText().toString());
                                 else
                                     filterToots.setFilter(null);
@@ -460,8 +462,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -470,13 +472,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
-        flag_loading = (max_id == null );
-        if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
+        flag_loading = (max_id == null);
+        if (!swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
-        if( swiped ){
+        if (swiped) {
             if (previousPosition > 0) {
                 for (int i = 0; i < previousPosition; i++) {
                     this.statuses.remove(0);
@@ -485,11 +487,11 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             }
             swiped = false;
         }
-        if( statuses != null && statuses.size() > 0) {
+        if (statuses != null && statuses.size() > 0) {
             this.statuses.addAll(statuses);
             statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-        }else {
-            if( textviewNoAction.getVisibility() != View.VISIBLE && firstLoad) {
+        } else {
+            if (textviewNoAction.getVisibility() != View.VISIBLE && firstLoad) {
                 RelativeLayout no_result = findViewById(R.id.no_result);
                 no_result.setVisibility(View.VISIBLE);
             }
@@ -524,8 +526,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         displayStats();
     }
 
-    private void displayStats(){
-        if( statsDialogView != null){
+    private void displayStats() {
+        if (statsDialogView != null) {
             ScrollView stats_container = statsDialogView.findViewById(R.id.stats_container);
             RelativeLayout loader = statsDialogView.findViewById(R.id.loader);
 
@@ -547,7 +549,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             TextView tags = statsDialogView.findViewById(R.id.tags);
 
             ImageButton charts = statsDialogView.findViewById(R.id.charts);
-            charts.setOnClickListener(w ->{
+            charts.setOnClickListener(w -> {
                 Intent intent = new Intent(OwnerStatusActivity.this, OwnerChartsActivity.class);
                 startActivity(intent);
             });
@@ -570,26 +572,26 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             DecimalFormat df = new DecimalFormat("#.##");
             frequency.setText(getString(R.string.toot_per_day, df.format(statistics.getFrequency())));
 
-            if( statistics.getTagsTrend() != null && statistics.getTagsTrend().size() > 0 ){
-                Iterator it = statistics.getTagsTrend() .entrySet().iterator();
+            if (statistics.getTagsTrend() != null && statistics.getTagsTrend().size() > 0) {
+                Iterator it = statistics.getTagsTrend().entrySet().iterator();
                 StringBuilder text = new StringBuilder();
                 int i = 1;
                 while (it.hasNext() && i <= 10) {
-                    Map.Entry pair = (Map.Entry)it.next();
+                    Map.Entry pair = (Map.Entry) it.next();
                     System.out.println(pair.getKey() + " = " + pair.getValue());
                     text.append(i).append(" - ").append(pair.getKey()).append(" → ").append(pair.getValue()).append("\r\n");
                     i++;
                 }
                 tags.setText(text.toString());
-            }else{
+            } else {
                 tags.setText(getString(R.string.no_tags));
             }
 
             stats_container.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);
 
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_SHORT).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
         }
     }
 }

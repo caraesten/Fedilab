@@ -36,7 +36,7 @@ public class RetrieveInstanceRegAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private String category;
 
-    public RetrieveInstanceRegAsyncTask(Context context, String category, OnRetrieveInstanceInterface onRetrieveInstanceInterface){
+    public RetrieveInstanceRegAsyncTask(Context context, String category, OnRetrieveInstanceInterface onRetrieveInstanceInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveInstanceInterface;
         this.category = category;

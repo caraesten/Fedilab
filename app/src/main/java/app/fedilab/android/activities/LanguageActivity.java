@@ -22,8 +22,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,7 +75,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -87,10 +89,10 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -105,7 +107,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                 }
             });
             toolbar_title.setText(R.string.languages);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, LanguageActivity.this);
             }
@@ -113,16 +115,15 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
         setContentView(R.layout.activity_language);
 
 
-
         Button about_translation = findViewById(R.id.about_translation);
 
 
         about_translation.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/mastalab"));
-               startActivity(browserIntent);
-           }
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/mastalab"));
+                startActivity(browserIntent);
+            }
         });
 
         ExpandableHeightListView lv_translator_manager = findViewById(R.id.lv_translator_manager);
@@ -135,7 +136,6 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
 
 
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "ButterflyOfFire", "mstdn.fr", LanguageActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
 
 
         String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
@@ -151,7 +151,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
         set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0 ) {
+                if (count2 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
@@ -179,7 +179,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                             editor.commit();
                             break;
                         case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW,"zh-TW");
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-TW");
                             editor.commit();
                             break;
                         case 7:
@@ -250,6 +250,7 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                 }
                 count2++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -274,13 +275,13 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
     @Override
     public void onRetrieveRemoteAccount(Results results) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        if( results == null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (results == null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();
         Account account;
-        if( accounts != null && accounts.size() > 0){
+        if (accounts != null && accounts.size() > 0) {
             account = accounts.get(0);
             account.setFollowing(true);
             switch (account.getUsername()) {
@@ -289,17 +290,17 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
                     translatorManager.notifyDataSetChanged();
                     break;
             }
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),LanguageActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), LanguageActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( translators != null){
-            for(Account account: translators){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),LanguageActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (translators != null) {
+            for (Account account : translators) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), LanguageActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
 
@@ -309,11 +310,11 @@ public class LanguageActivity extends BaseActivity implements OnRetrieveRemoteAc
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
-        if( error != null){
+        if (error != null) {
             return;
         }
-        for( int i = 0 ; i < translators.size() ; i++){
-            if( translators.get(i).getId() != null && translators.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < translators.size(); i++) {
+            if (translators.get(i).getId() != null && translators.get(i).getId().equals(relationship.getId())) {
                 translators.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 translatorManager.notifyDataSetChanged();
                 break;

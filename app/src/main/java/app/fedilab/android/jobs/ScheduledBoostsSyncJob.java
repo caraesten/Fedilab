@@ -16,6 +16,7 @@ package app.fedilab.android.jobs;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
 import androidx.annotation.NonNull;
 
 import com.evernote.android.job.Job;
@@ -42,6 +43,7 @@ import app.fedilab.android.sqlite.Sqlite;
 public class ScheduledBoostsSyncJob extends Job {
 
     public static final String SCHEDULED_BOOST = "job_scheduled_boost";
+
     static {
         Helper.installProvider();
     }
@@ -54,19 +56,19 @@ public class ScheduledBoostsSyncJob extends Job {
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //Retrieves the stored status
         StoredStatus storedStatus = new BoostScheduleDAO(getContext(), db).getStatusScheduled(jobId);
-        if( storedStatus != null){
+        if (storedStatus != null) {
             String userId = storedStatus.getUserId();
             String instance = storedStatus.getInstance();
-            if( instance != null && userId != null){
+            if (instance != null && userId != null) {
                 Account account = new AccountDAO(getContext(), db).getUniqAccount(userId, instance);
-                if( account != null){
+                if (account != null) {
                     //Retrieves the linked status to toot
                     Status status = storedStatus.getStatus();
-                    if( status != null){
-                        int statusCode = new API(getContext(), account.getInstance(), account.getToken()).postAction( API.StatusAction.REBLOG, status.getId());
+                    if (status != null) {
+                        int statusCode = new API(getContext(), account.getInstance(), account.getToken()).postAction(API.StatusAction.REBLOG, status.getId());
 
                         //Toot was sent
-                        if( statusCode == 200){
+                        if (statusCode == 200) {
                             new BoostScheduleDAO(getContext(), db).updateScheduledDone(jobId, new Date());
                         }
                     }
@@ -77,13 +79,13 @@ public class ScheduledBoostsSyncJob extends Job {
     }
 
 
-    public static int schedule(Context context, Status status, long timestampScheduling){
+    public static int schedule(Context context, Status status, long timestampScheduling) {
 
-        long startMs = (timestampScheduling -  new Date().getTime());
+        long startMs = (timestampScheduling - new Date().getTime());
         long endMs = startMs + TimeUnit.MINUTES.toMillis(5);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        int jobId = new  JobRequest.Builder(ScheduledBoostsSyncJob.SCHEDULED_BOOST)
+        int jobId = new JobRequest.Builder(ScheduledBoostsSyncJob.SCHEDULED_BOOST)
                 .setExecutionWindow(startMs, endMs)
                 .setUpdateCurrent(false)
                 .setRequiredNetworkType(JobRequest.NetworkType.METERED)
@@ -95,13 +97,13 @@ public class ScheduledBoostsSyncJob extends Job {
     }
 
 
-    public static int scheduleUpdate(Context context, int tootStoredId, long timestampScheduling){
+    public static int scheduleUpdate(Context context, int tootStoredId, long timestampScheduling) {
 
-        long startMs = (timestampScheduling -  new Date().getTime());
+        long startMs = (timestampScheduling - new Date().getTime());
         long endMs = startMs + TimeUnit.MINUTES.toMillis(5);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        int jobId = new  JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
+        int jobId = new JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
                 .setExecutionWindow(startMs, endMs)
                 .setUpdateCurrent(false)
                 .setRequiredNetworkType(JobRequest.NetworkType.METERED)

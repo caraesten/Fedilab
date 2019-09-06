@@ -36,7 +36,7 @@ public class CustomSharingAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnCustomSharingInterface listener;
     private WeakReference<Context> contextReference;
 
-    public CustomSharingAsyncTask(Context context, String encodedCustomSharingURL, OnCustomSharingInterface onCustomSharingInterface){
+    public CustomSharingAsyncTask(Context context, String encodedCustomSharingURL, OnCustomSharingInterface onCustomSharingInterface) {
         this.contextReference = new WeakReference<>(context);
         this.encodedCustomSharingURL = encodedCustomSharingURL;
         this.listener = onCustomSharingInterface;

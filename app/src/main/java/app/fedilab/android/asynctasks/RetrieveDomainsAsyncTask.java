@@ -37,7 +37,7 @@ public class RetrieveDomainsAsyncTask extends AsyncTask<Void, Void, Void> {
     private APIResponse apiResponse;
     private String max_id;
 
-    public RetrieveDomainsAsyncTask(Context context, String max_id, OnRetrieveDomainsInterface onRetrieveDomainsInterface){
+    public RetrieveDomainsAsyncTask(Context context, String max_id, OnRetrieveDomainsInterface onRetrieveDomainsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveDomainsInterface;
         this.max_id = max_id;

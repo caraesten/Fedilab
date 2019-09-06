@@ -23,6 +23,7 @@ public class Error {
 
     private String error = null;
     private int statusCode = -1;
+
     public String getError() {
         return error;
     }

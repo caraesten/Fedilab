@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     tools:context="app.fedilab.android.activities.ManageAccountsInListActivity"
@@ -28,30 +27,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />
+
     <RelativeLayout
         android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true" />
     </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv_accounts_current"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:divider="@null"
-        />
+        android:divider="@null" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:visibility="gone"
         android:id="@+id/lv_accounts_search"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scrollbars="none"
-        android:divider="@null"
-        />
+        android:divider="@null" />
 </LinearLayout>

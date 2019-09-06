@@ -21,11 +21,13 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +89,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private static final int DISPLAYED_STATUS = 1;
     private RetrieveFeedsAsyncTask.Type type;
 
-    public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
+    public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses) {
         super();
         this.statuses = statuses;
         this.type = type;
@@ -106,8 +108,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         return statuses.size();
     }
 
-    private Status getItemAt(int position){
-        if( statuses.size() > position)
+    private Status getItemAt(int position) {
+        if (statuses.size() > position)
             return statuses.get(position);
         else
             return null;
@@ -115,7 +117,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     @Override
     public void onRetrieveReplies(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
+        if (apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0) {
             return;
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
@@ -123,7 +125,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-    private class ViewHolderEmpty extends RecyclerView.ViewHolder{
+    private class ViewHolderEmpty extends RecyclerView.ViewHolder {
         ViewHolderEmpty(View itemView) {
             super(itemView);
         }
@@ -135,12 +137,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-    private class ViewHolderPixelfed extends RecyclerView.ViewHolder{
+    private class ViewHolderPixelfed extends RecyclerView.ViewHolder {
         ImageView art_media, pf_pp, pf_comment;
         SparkButton pf_fav, pf_share;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
         LinearLayout pf_bottom_container;
+
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -158,10 +161,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-
-
-    public Status getItem(int position){
-        if( statuses.size() > position && position >= 0)
+    public Status getItem(int position) {
+        if (statuses.size() > position && position >= 0)
             return statuses.get(position);
         else return null;
     }
@@ -170,11 +171,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     public int getItemViewType(int position) {
         boolean show_boosts = false;
         boolean show_replies = false;
-        if( context instanceof ShowAccountActivity){
+        if (context instanceof ShowAccountActivity) {
             show_boosts = ((ShowAccountActivity) context).showBoosts();
             show_replies = ((ShowAccountActivity) context).showReplies();
         }
-        if( !Helper.filterToots(statuses.get(position), null, context instanceof ShowAccountActivity,show_boosts, show_replies))
+        if (!Helper.filterToots(statuses.get(position), null, context instanceof ShowAccountActivity, show_boosts, show_replies))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;
@@ -185,12 +186,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(this.context);
-        if( viewType == DISPLAYED_STATUS)
+        if (viewType == DISPLAYED_STATUS)
             return new ViewHolderPixelfed(layoutInflater.inflate(R.layout.drawer_pixelfed, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
-
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -198,7 +198,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
+        if (viewHolder.getItemViewType() != HIDDEN_STATUS) {
             final ViewHolderPixelfed holder = (ViewHolderPixelfed) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
             if (!status.isClickable())
@@ -282,13 +282,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             });
 
 
-
             if (status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
                 holder.pf_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             else
                 holder.pf_username.setText(status.getAccount().getUsername());
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
 
 
             if (theme == Helper.THEME_BLACK) {
@@ -382,48 +380,43 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-
-
-
-
-
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When muting or blocking an account, its status are removed from the list
         List<Status> statusesToRemove = new ArrayList<>();
-        if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
-            for(Status status: statuses){
-                if( status.getAccount().getId().equals(targetedId))
+        if (statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK) {
+            for (Status status : statuses) {
+                if (status.getAccount().getId().equals(targetedId))
                     statusesToRemove.add(status);
             }
             statuses.removeAll(statusesToRemove);
             pixelfedListAdapter.notifyDataSetChanged();
-        }else  if( statusAction == API.StatusAction.UNSTATUS ){
+        } else if (statusAction == API.StatusAction.UNSTATUS) {
             int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
+            for (Status status : statuses) {
+                if (status.getId().equals(targetedId)) {
                     statuses.remove(status);
                     pixelfedListAdapter.notifyItemRemoved(position);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     //Remove the status from cache also
                     try {
-                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
-                    }catch (Exception ignored){}
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE, status);
+                    } catch (Exception ignored) {
+                    }
                     break;
                 }
                 position++;
             }
-        }
-        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+        } else if (statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN) {
             int position = 0;
-            for (Status status: statuses) {
+            for (Status status : statuses) {
                 if (status.getId().equals(targetedId)) {
                     if (statusAction == API.StatusAction.PIN)
                         status.setPinned(true);
@@ -435,10 +428,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 position++;
             }
         }
-        if( statusAction == API.StatusAction.PEERTUBEDELETECOMMENT){
+        if (statusAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
             int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
+            for (Status status : statuses) {
+                if (status.getId().equals(targetedId)) {
                     statuses.remove(status);
                     pixelfedListAdapter.notifyItemRemoved(position);
                     break;
@@ -448,7 +441,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
-    public void notifyStatusChanged(Status status){
+    public void notifyStatusChanged(Status status) {
         for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
@@ -460,7 +453,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status){
+    public void notifyStatusWithActionChanged(Status status) {
         for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
@@ -476,11 +469,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-        if( status != null) {
-            if( !fromTranslation) {
-               status.setEmojiFound(true);
-            }else {
-              status.setEmojiTranslateFound(true);
+        if (status != null) {
+            if (!fromTranslation) {
+                status.setEmojiFound(true);
+            } else {
+                status.setEmojiTranslateFound(true);
             }
             notifyStatusChanged(status);
         }

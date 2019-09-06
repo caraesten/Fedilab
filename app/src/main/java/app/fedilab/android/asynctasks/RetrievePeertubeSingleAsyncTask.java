@@ -36,7 +36,6 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
-
     private APIResponse apiResponse;
     private String videoId;
     private OnRetrievePeertubeInterface listener;
@@ -44,8 +43,7 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
     private String instanceName;
 
 
-
-    public RetrievePeertubeSingleAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+    public RetrievePeertubeSingleAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface) {
         this.contextReference = new WeakReference<>(context);
         this.videoId = videoId;
         this.listener = onRetrievePeertubeInterface;
@@ -53,20 +51,19 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
     }
 
 
-
     @Override
     protected Void doInBackground(Void... params) {
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             API api = new API(this.contextReference.get());
             apiResponse = api.getSinglePeertube(this.instanceName, videoId);
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
             SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId, token);
-            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0 &&  apiResponse.getPeertubes().get(0) != null) {
+            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0 && apiResponse.getPeertubes().get(0) != null) {
                 String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
-                if( rate != null)
+                if (rate != null)
                     apiResponse.getPeertubes().get(0).setMyRating(rate);
             }
         }

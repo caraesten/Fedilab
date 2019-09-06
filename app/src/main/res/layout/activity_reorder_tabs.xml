@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -18,13 +17,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv_reorder_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/undo_container"
@@ -34,6 +32,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp">
+
         <TextView
             android:id="@+id/undo_message"
             android:paddingLeft="20dp"
@@ -49,6 +48,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_alignParentLeft="true" />
+
         <TextView
             android:id="@+id/undo_action"
             android:paddingLeft="20dp"

@@ -16,6 +16,7 @@ package app.fedilab.android.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
@@ -36,8 +37,7 @@ public class RetrieveHowToAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
 
 
-
-    public RetrieveHowToAsyncTask(Context context, OnRetrieveHowToInterface onRetrieveHowToInterface){
+    public RetrieveHowToAsyncTask(Context context, OnRetrieveHowToInterface onRetrieveHowToInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveHowToInterface;
     }

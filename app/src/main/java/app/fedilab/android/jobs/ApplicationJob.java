@@ -13,6 +13,7 @@ package app.fedilab.android.jobs;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import androidx.annotation.NonNull;
 
 import com.evernote.android.job.Job;
@@ -44,7 +45,7 @@ public class ApplicationJob implements JobCreator {
     }
 
     @SuppressWarnings("unused")
-    public static void cancelAllJob(String TAG){
+    public static void cancelAllJob(String TAG) {
         JobManager.instance().cancelAllForTag(TAG);
     }
 

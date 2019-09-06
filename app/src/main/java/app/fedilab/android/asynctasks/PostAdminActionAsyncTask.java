@@ -18,12 +18,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
-
 
 
 /**
@@ -41,8 +41,7 @@ public class PostAdminActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private AdminAction adminAction;
 
 
-
-    public PostAdminActionAsyncTask(Context context, API.adminAction action, String id, AdminAction adminAction, OnAdminActionInterface onAdminActionInterface){
+    public PostAdminActionAsyncTask(Context context, API.adminAction action, String id, AdminAction adminAction, OnAdminActionInterface onAdminActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onAdminActionInterface;
         this.action = action;
@@ -53,7 +52,7 @@ public class PostAdminActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        switch (action){
+        switch (action) {
             case GET_ACCOUNTS:
             case GET_ONE_ACCOUNT:
             case GET_REPORTS:

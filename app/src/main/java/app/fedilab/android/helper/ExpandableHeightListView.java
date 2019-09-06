@@ -11,37 +11,30 @@ import android.widget.ListView;
  * Expanded listview
  */
 
-public class ExpandableHeightListView extends ListView
-    {
+public class ExpandableHeightListView extends ListView {
 
-        boolean expanded = false;
+    boolean expanded = false;
 
-        public ExpandableHeightListView(Context context)
-        {
-            super(context);
-        }
+    public ExpandableHeightListView(Context context) {
+        super(context);
+    }
 
-        public ExpandableHeightListView(Context context, AttributeSet attrs)
-        {
-            super(context, attrs);
-        }
+    public ExpandableHeightListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-        public ExpandableHeightListView(Context context, AttributeSet attrs,int defStyle)
-        {
-            super(context, attrs, defStyle);
-        }
+    public ExpandableHeightListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-    public boolean isExpanded()
-    {
+    public boolean isExpanded() {
         return expanded;
     }
 
     @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // HACK! TAKE THAT ANDROID!
-        if (isExpanded())
-        {
+        if (isExpanded()) {
             // Calculate entire height by providing a very large height hint.
             // But do not use the highest 2 bits of this integer; those are
             // reserved for the MeasureSpec mode.
@@ -50,15 +43,12 @@ public class ExpandableHeightListView extends ListView
 
             ViewGroup.LayoutParams params = getLayoutParams();
             params.height = getMeasuredHeight();
-        }
-        else
-        {
+        } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
-    public void setExpanded(@SuppressWarnings("SameParameterValue") boolean expanded)
-    {
+    public void setExpanded(@SuppressWarnings("SameParameterValue") boolean expanded) {
         this.expanded = expanded;
     }
 }

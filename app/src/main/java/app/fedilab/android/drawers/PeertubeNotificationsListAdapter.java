@@ -19,9 +19,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +56,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
     private List<PeertubeNotification> notifications;
     private PeertubeNotificationsListAdapter peertubeNotificationsListAdapter;
 
-    public PeertubeNotificationsListAdapter( List<PeertubeNotification> notifications){
+    public PeertubeNotificationsListAdapter(List<PeertubeNotification> notifications) {
         this.notifications = notifications;
         peertubeNotificationsListAdapter = this;
 
@@ -76,28 +78,28 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         PeertubeNotification notification = notifications.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK ){
+        if (theme == Helper.THEME_DARK) {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
             holder.main_container_trans.setAlpha(.5f);
-        }else if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
             holder.main_container_trans.setAlpha(.5f);
-        }else{
+        } else {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
             holder.main_container_trans.setAlpha(.5f);
         }
         //Follow Notification
         PeertubeAccountNotification accountAction = null;
         PeertubeVideoNotification videoAction;
-        if( notification.getPeertubeActorFollow() != null){
+        if (notification.getPeertubeActorFollow() != null) {
             String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeActorFollow().getFollower().getAvatar();
-            Helper.loadGiF(context,profileUrl, holder.peertube_notif_pp);
-            accountAction =notification.getPeertubeActorFollow().getFollower();
+            Helper.loadGiF(context, profileUrl, holder.peertube_notif_pp);
+            accountAction = notification.getPeertubeActorFollow().getFollower();
             String type = notification.getPeertubeActorFollow().getFollowing().getType();
             String message;
-            if( type != null && type.equals("account")){
+            if (type != null && type.equals("account")) {
                 message = context.getString(R.string.peertube_follow_channel, notification.getPeertubeActorFollow().getFollower().getDisplayName(), notification.getPeertubeActorFollow().getFollowing().getDisplayName());
-            }else{
+            } else {
                 message = context.getString(R.string.peertube_follow_account, accountAction.getDisplayName());
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -113,12 +115,12 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
                 intent.putExtras(b);
                 context.startActivity(intent);
             });
-        }else if( notification.getPeertubeComment() != null){ //Comment Notification
+        } else if (notification.getPeertubeComment() != null) { //Comment Notification
             String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeComment().getPeertubeAccountNotification().getAvatar();
             Helper.loadGiF(context, profileUrl, holder.peertube_notif_pp);
             accountAction = notification.getPeertubeComment().getPeertubeAccountNotification();
-            videoAction  = notification.getPeertubeComment().getPeertubeVideoNotification();
-            String message = context.getString(R.string.peertube_comment_on_video,accountAction.getDisplayName(), videoAction.getName());
+            videoAction = notification.getPeertubeComment().getPeertubeVideoNotification();
+            String message = context.getString(R.string.peertube_comment_on_video, accountAction.getDisplayName(), videoAction.getName());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 holder.peertube_notif_message.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
@@ -133,24 +135,24 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
                 intent.putExtras(b);
                 context.startActivity(intent);
             });
-        }else {//Other Notifications
-            if (notification.getPeertubeVideoNotification() != null && notification.getPeertubeVideoNotification().getPeertubeAccountNotification() != null){
+        } else {//Other Notifications
+            if (notification.getPeertubeVideoNotification() != null && notification.getPeertubeVideoNotification().getPeertubeAccountNotification() != null) {
                 String profileUrl = Helper.getLiveInstanceWithProtocol(context) + notification.getPeertubeVideoNotification().getPeertubeAccountNotification().getAvatar();
                 Helper.loadGiF(context, profileUrl, holder.peertube_notif_pp);
                 accountAction = notification.getPeertubeVideoNotification().getPeertubeAccountNotification();
-                videoAction  = notification.getPeertubeVideoNotification();
+                videoAction = notification.getPeertubeVideoNotification();
                 String message = "";
-                if (notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_PUBLISHED){
+                if (notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_PUBLISHED) {
                     message = context.getString(R.string.peertube_video_published, videoAction.getName());
-                }else if(notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_IMPORT_ERROR){
+                } else if (notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_IMPORT_ERROR) {
                     message = context.getString(R.string.peertube_video_import_error, videoAction.getName());
-                }else if(notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_IMPORT_SUCCESS){
+                } else if (notification.getType() == DisplayPeertubeNotificationsFragment.MY_VIDEO_IMPORT_SUCCESS) {
                     message = context.getString(R.string.peertube_video_import_success, videoAction.getName());
-                }else if(notification.getType() == DisplayPeertubeNotificationsFragment.NEW_VIDEO_FROM_SUBSCRIPTION){
+                } else if (notification.getType() == DisplayPeertubeNotificationsFragment.NEW_VIDEO_FROM_SUBSCRIPTION) {
                     message = context.getString(R.string.peertube_video_from_subscription, accountAction.getDisplayName(), videoAction.getName());
-                }else if(notification.getType() == DisplayPeertubeNotificationsFragment.BLACKLIST_ON_MY_VIDEO){
+                } else if (notification.getType() == DisplayPeertubeNotificationsFragment.BLACKLIST_ON_MY_VIDEO) {
                     message = context.getString(R.string.peertube_video_blacklist, videoAction.getName());
-                }else if(notification.getType() == DisplayPeertubeNotificationsFragment.UNBLACKLIST_ON_MY_VIDEO){
+                } else if (notification.getType() == DisplayPeertubeNotificationsFragment.UNBLACKLIST_ON_MY_VIDEO) {
                     message = context.getString(R.string.peertube_video_unblacklist, videoAction.getName());
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -171,7 +173,7 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         holder.peertube_notif_date.setText(Helper.dateDiff(context, notification.getCreatedAt()));
         PeertubeAccountNotification finalAccountAction = accountAction;
         holder.peertube_notif_pp.setOnClickListener(v -> {
-            if( finalAccountAction != null){
+            if (finalAccountAction != null) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
                 b.putBoolean("peertubeaccount", true);
@@ -182,16 +184,16 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         });
     }
 
-    private void notifyNotificationChanged(Notification notification){
+    private void notifyNotificationChanged(Notification notification) {
         for (int i = 0; i < peertubeNotificationsListAdapter.getItemCount(); i++) {
             if (peertubeNotificationsListAdapter.getItemAt(i) != null && peertubeNotificationsListAdapter.getItemAt(i).getId().equals(notification.getId())) {
                 try {
                     peertubeNotificationsListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) { }
+                } catch (Exception ignored) {
+                }
             }
         }
     }
-
 
 
     @Override
@@ -205,8 +207,8 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
     }
 
 
-    private PeertubeNotification getItemAt(int position){
-        if( notifications.size() > position)
+    private PeertubeNotification getItemAt(int position) {
+        if (notifications.size() > position)
             return notifications.get(position);
         else
             return null;
@@ -218,7 +220,8 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         ImageView peertube_notif_pp;
         TextView peertube_notif_message, peertube_notif_date;
         RelativeLayout main_container_trans;
-        public View getView(){
+
+        public View getView() {
             return itemView;
         }
 

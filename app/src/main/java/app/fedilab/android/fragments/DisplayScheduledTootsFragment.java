@@ -26,8 +26,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -76,7 +78,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     private boolean firstCall;
     private ScheduledTootsListAdapter scheduledTootsListAdapter;
 
-    public enum typeOfSchedule{
+    public enum typeOfSchedule {
         TOOT,
         BOOST,
         SERVER
@@ -90,7 +92,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         Bundle bundle = this.getArguments();
         assert bundle != null;
         type = (typeOfSchedule) bundle.get("type");
-        if( type == null)
+        if (type == null)
             type = typeOfSchedule.TOOT;
         lv_scheduled_toots = rootView.findViewById(R.id.lv_scheduled_toots);
         firstCall = true;
@@ -101,11 +103,11 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         storedStatuses = new ArrayList<>();
         //Removes all scheduled toots that have sent
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( type == typeOfSchedule.TOOT)
+        if (type == typeOfSchedule.TOOT)
             new StatusStoredDAO(context, db).removeAllSent();
-        else if( type == typeOfSchedule.BOOST)
+        else if (type == typeOfSchedule.BOOST)
             new BoostScheduleDAO(context, db).removeAllSent();
-        else if( type == typeOfSchedule.SERVER)
+        else if (type == typeOfSchedule.SERVER)
             asyncTask = new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.SCHEDULED_TOOTS, null, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, type, storedStatuses, textviewNoAction);
@@ -115,17 +117,17 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-        if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
+        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
             Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
         mainLoader.setVisibility(View.GONE);
-        if(apiResponse.getStoredStatuses() != null && apiResponse.getStoredStatuses().size() > 0 ){
+        if (apiResponse.getStoredStatuses() != null && apiResponse.getStoredStatuses().size() > 0) {
             storedStatuses.addAll(apiResponse.getStoredStatuses());
             textviewNoAction.setVisibility(View.GONE);
             lv_scheduled_toots.setVisibility(View.VISIBLE);
             scheduledTootsListAdapter.notifyDataSetChanged();
-        }else if( firstCall){
+        } else if (firstCall) {
             textviewNoAction.setVisibility(View.VISIBLE);
             lv_scheduled_toots.setVisibility(View.GONE);
         }
@@ -133,9 +135,9 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( type != null && type != typeOfSchedule.SERVER) {
+        if (type != null && type != typeOfSchedule.SERVER) {
             //Retrieves scheduled toots
             asyncTask = new RetrieveScheduledTootsAsyncTask(context, type, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -192,8 +194,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     }
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -206,7 +207,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
@@ -215,13 +216,13 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     public void onRetrieveScheduledToots(List<StoredStatus> storedStatuses) {
 
         mainLoader.setVisibility(View.GONE);
-        if( storedStatuses != null && storedStatuses.size() > 0 ){
+        if (storedStatuses != null && storedStatuses.size() > 0) {
             scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, type, storedStatuses, textviewNoAction);
             lv_scheduled_toots.setAdapter(scheduledTootsListAdapter);
             textviewNoAction.setVisibility(View.GONE);
-        }else {
+        } else {
             textviewNoAction.setVisibility(View.VISIBLE);
-            if( type == typeOfSchedule.BOOST) {
+            if (type == typeOfSchedule.BOOST) {
                 TextView no_action_text = textviewNoAction.findViewById(R.id.no_action_text);
                 TextView no_action_text_subtitle = textviewNoAction.findViewById(R.id.no_action_text_subtitle);
                 no_action_text.setText(context.getString(R.string.no_scheduled_boosts));

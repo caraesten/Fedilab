@@ -36,7 +36,7 @@ public class RetrievePeertubeSearchAsyncTask extends AsyncTask<Void, Void, Void>
     private OnRetrieveFeedsInterface listener;
     private WeakReference<Context> contextReference;
 
-    public RetrievePeertubeSearchAsyncTask(Context context, String instance, String query, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrievePeertubeSearchAsyncTask(Context context, String instance, String query, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveFeedsInterface;

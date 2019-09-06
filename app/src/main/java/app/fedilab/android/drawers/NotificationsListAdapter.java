@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -36,6 +37,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -136,7 +138,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         @Override
         public void run() {
             synchronized (lock) {
-                if( mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
+                if (mRecyclerView != null && (mRecyclerView.getLayoutManager()) != null) {
                     int firstPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int lastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
@@ -146,7 +148,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             holder.updateAnimatedEmoji();
                         }
                     }
-                }else{
+                } else {
                     for (NotificationsListAdapter.ViewHolder holder : lstHolders) {
                         holder.updateAnimatedEmoji();
                     }
@@ -157,7 +159,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private Handler mHandler = new Handler();
 
 
-    public NotificationsListAdapter(boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
+    public NotificationsListAdapter(boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications) {
         this.notifications = notifications;
         notificationsListAdapter = this;
         this.isOnWifi = isOnWifi;
@@ -174,7 +176,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
     @Override
-    public void onDetachedFromRecyclerView (@NotNull RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NotNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         mRecyclerView = null;
     }
@@ -205,7 +207,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
 
 
-
         final float scale = context.getResources().getDisplayMetrics().density;
         String type = notification.getType();
         String typeString = "";
@@ -215,47 +216,47 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         boolean hide_notification_delete = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
 
-        if (theme == Helper.THEME_DARK ){
+        if (theme == Helper.THEME_DARK) {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
             holder.main_container_trans.setAlpha(.5f);
-        }else if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
             holder.main_container_trans.setAlpha(.5f);
-        }else{
+        } else {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
             holder.main_container_trans.setAlpha(.5f);
         }
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
-        if(hide_notification_delete)
+        if (hide_notification_delete)
             holder.notification_delete.setVisibility(View.GONE);
         Drawable imgH = null;
         holder.status_date.setVisibility(View.VISIBLE);
-        switch (type){
+        switch (type) {
             case "mention":
                 holder.status_action_container.setVisibility(View.VISIBLE);
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_mention));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
-                if( theme == Helper.THEME_DARK){
-                    if( notification.getStatus().getVisibility().equals("direct"))
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_mention));
+                if (theme == Helper.THEME_DARK) {
+                    if (notification.getStatus().getVisibility().equals("direct"))
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_private));
                     else
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                }else if( theme == Helper.THEME_BLACK){
-                    if( notification.getStatus().getVisibility().equals("direct"))
+                } else if (theme == Helper.THEME_BLACK) {
+                    if (notification.getStatus().getVisibility().equals("direct"))
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_private));
                     else
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                }else {
-                    if( notification.getStatus().getVisibility().equals("direct"))
+                } else {
+                    if (notification.getStatus().getVisibility().equals("direct"))
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_private));
                     else
                         holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
@@ -266,12 +267,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
             case "poll":
                 holder.status_action_container.setVisibility(View.GONE);
-                typeString = context.getString(R.string.notif_poll);;
-                if( theme == Helper.THEME_DARK){
+                typeString = context.getString(R.string.notif_poll);
+                ;
+                if (theme == Helper.THEME_DARK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                }else if( theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                }else {
+                } else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_view_list_poll_notif);
@@ -280,15 +282,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_reblog));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
-                if( theme == Helper.THEME_DARK){
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_reblog));
+                if (theme == Helper.THEME_DARK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                }else if( theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                }else {
+                } else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head);
@@ -297,15 +299,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_favourite));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
-                if( theme == Helper.THEME_DARK){
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_favourite));
+                if (theme == Helper.THEME_DARK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                }else if( theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                }else {
+                } else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_star_border_header);
@@ -315,15 +317,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
                 holder.status_date.setVisibility(View.GONE);
-                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
-                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
-                if( theme == Helper.THEME_DARK){
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow));
+                if (theme == Helper.THEME_DARK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                }else if( theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                }else {
+                } else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
@@ -331,73 +333,73 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
         }
 
-        if( theme == Helper.THEME_BLACK){
+        if (theme == Helper.THEME_BLACK) {
             Helper.changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.dark_icon);
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.dark_icon);
-            Helper.changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.dark_icon);
-            Helper.changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.dark_icon);
-            Helper.changeDrawableColor(context, R.drawable.ic_view_list_poll_notif,R.color.dark_icon);
-        }else {
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head, R.color.dark_icon);
+            Helper.changeDrawableColor(context, R.drawable.ic_star_border_header, R.color.dark_icon);
+            Helper.changeDrawableColor(context, R.drawable.ic_follow_notif_header, R.color.dark_icon);
+            Helper.changeDrawableColor(context, R.drawable.ic_view_list_poll_notif, R.color.dark_icon);
+        } else {
             Helper.changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
-            Helper.changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
-            Helper.changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
-            Helper.changeDrawableColor(context, R.drawable.ic_view_list_poll_notif,R.color.mastodonC4);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head, R.color.mastodonC4);
+            Helper.changeDrawableColor(context, R.drawable.ic_star_border_header, R.color.mastodonC4);
+            Helper.changeDrawableColor(context, R.drawable.ic_follow_notif_header, R.color.mastodonC4);
+            Helper.changeDrawableColor(context, R.drawable.ic_view_list_poll_notif, R.color.mastodonC4);
         }
 
 
-        if( notification.getAccount().getdisplayNameSpan() == null) {
+        if (notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
             notification.getAccount().setStored_displayname(notification.getAccount().getDisplay_name());
-           // notification.getAccount().setDisplay_name(typeString);
-        }else
+            // notification.getAccount().setDisplay_name(typeString);
+        } else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
-        if( imgH != null) {
-            holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
+        if (imgH != null) {
+            holder.notification_type.setCompoundDrawablePadding((int) Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
         }
-        holder.notification_type.setCompoundDrawables( imgH, null, null, null);
+        holder.notification_type.setCompoundDrawables(imgH, null, null, null);
 
-        holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+        holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+        holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+        holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
+        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
 
-        holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+        holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+        holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+        holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
 
 
         //Manages theme for icon colors
-        if( theme == Helper.THEME_BLACK){
-            Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_black);
+        if (theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
             Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
             Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
-            Helper.changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
-        }else if( theme == Helper.THEME_DARK ){
-            Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_star_border, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
+            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.dark_text);
+            Helper.changeDrawableColor(context, holder.notification_delete, R.color.dark_text);
+        } else if (theme == Helper.THEME_DARK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_dark);
             Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
             Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
-            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
-            Helper.changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
-        }else {
-            Helper.changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_star_border, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
+            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
+            Helper.changeDrawableColor(context, holder.notification_delete, R.color.dark_text);
+        } else {
+            Helper.changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
             Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
             Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
-            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
-            Helper.changeDrawableColor(context, holder.notification_delete,R.color.black);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_star_border, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.black);
+            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.black);
+            Helper.changeDrawableColor(context, holder.notification_delete, R.color.black);
         }
         holder.spark_button_fav.pressOnTouch(false);
         holder.spark_button_reblog.pressOnTouch(false);
@@ -405,40 +407,40 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
         holder.spark_button_fav.setDisableCircle(true);
         holder.spark_button_reblog.setDisableCircle(true);
-        if( theme == Helper.THEME_DARK) {
+        if (theme == Helper.THEME_DARK) {
             holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
             holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
-        }else if(theme == Helper.THEME_BLACK) {
+        } else if (theme == Helper.THEME_BLACK) {
             holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
             holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
-        }else {
+        } else {
             holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
             holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
         }
         holder.spark_button_fav.setColors(R.color.marked_icon, R.color.marked_icon);
-        holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
-        holder.spark_button_fav.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+        holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent / 100 * scale + 0.5f));
+        holder.spark_button_fav.setMinimumWidth((int) Helper.convertDpToPixel((20 * iconSizePercent / 100 * scale + 0.5f), context));
 
         holder.spark_button_reblog.setColors(R.color.boost_icon, R.color.boost_icon);
-        holder.spark_button_reblog.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
-        holder.spark_button_reblog.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+        holder.spark_button_reblog.setImageSize((int) (20 * iconSizePercent / 100 * scale + 0.5f));
+        holder.spark_button_reblog.setMinimumWidth((int) Helper.convertDpToPixel((20 * iconSizePercent / 100 * scale + 0.5f), context));
 
         final Status status = notification.getStatus();
-        if( status != null ){
-            if( status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
+        if (status != null) {
+            if (status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            if( !status.isClickable()) {
+            if (!status.isClickable()) {
                 status.setClickable(true);
                 Status.transform(context, status);
             }
-            if( !notification.isEmojiFound()) {
+            if (!notification.isEmojiFound()) {
                 notification.setEmojiFound(true);
                 Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
             }
-            if( !status.isImageFound()) {
+            if (!status.isImageFound()) {
                 status.setImageFound(true);
                 Status.makeImage(context, NotificationsListAdapter.this, status);
             }
@@ -462,7 +464,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
 
-            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
+            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Adds attachment -> disabled, to enable them uncomment the line below
@@ -491,25 +493,25 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-            if( !status.isFavAnimated() ) {
+            if (!status.isFavAnimated()) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     holder.spark_button_fav.setChecked(true);
                 } else {
                     holder.spark_button_fav.setChecked(false);
                 }
-            }else {
+            } else {
                 status.setFavAnimated(false);
                 holder.spark_button_fav.setChecked(true);
                 holder.spark_button_fav.setAnimationSpeed(1.0f);
                 holder.spark_button_fav.playAnimation();
             }
-            if( !status.isBoostAnimated()){
-                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+            if (!status.isBoostAnimated()) {
+                if (status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged())) {
                     holder.spark_button_reblog.setChecked(true);
-                }else {
+                } else {
                     holder.spark_button_reblog.setChecked(false);
                 }
-            }else {
+            } else {
                 status.setBoostAnimated(false);
                 holder.spark_button_reblog.setChecked(true);
                 holder.spark_button_reblog.setAnimationSpeed(1.0f);
@@ -518,22 +520,21 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
 
 
-
-            if( theme == Helper.THEME_DARK)
-                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_dark);
-            else if(theme == Helper.THEME_BLACK)
-                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_black);
+            if (theme == Helper.THEME_DARK)
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_dark);
+            else if (theme == Helper.THEME_BLACK)
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_black);
             else
-                Helper.changeDrawableColor(context, holder.status_reply,R.color.action_light);
+                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_light);
 
-            if( status.getReblog() == null) {
-                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
+            if (status.getReblog() == null) {
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown() && !expand_cw) {
+                    if (!status.isSpoilerShown() && !expand_cw) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                    }else {
+                    } else {
                         holder.notification_status_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
@@ -544,14 +545,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.notification_status_container.setVisibility(View.VISIBLE);
                 }
 
-            }else {
+            } else {
                 if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown() && !expand_cw) {
+                    if (!status.isSpoilerShown() && !expand_cw) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                    }else {
+                    } else {
                         holder.notification_status_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
@@ -564,24 +565,23 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
 
 
-
-            if( theme == Helper.THEME_DARK ){
+            if (theme == Helper.THEME_DARK) {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-            }else if(theme == Helper.THEME_BLACK){
+            } else if (theme == Helper.THEME_BLACK) {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-            }else {
+            } else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
             }
-            if( type.equals("favourite") || type.equals("reblog")){
+            if (type.equals("favourite") || type.equals("reblog")) {
                 holder.status_document_container.setVisibility(View.GONE);
                 holder.status_show_more.setVisibility(View.GONE);
-            }else {
+            } else {
                 if (status.getReblog() == null) {
                     if (status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
@@ -614,26 +614,26 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
                 holder.submit_vote.setVisibility(View.GONE);
-                if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
+                if (status.getPoll() != null && status.getPoll().getOptionsList() != null) {
                     Poll poll = status.getPoll();
-                    if( poll.isVoted() || poll.isExpired()){
+                    if (poll.isVoted() || poll.isExpired()) {
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
                         int greaterValue = 0;
-                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
-                            if( pollOption.getVotes_count() > greaterValue)
+                        for (PollOptions pollOption : status.getPoll().getOptionsList()) {
+                            if (pollOption.getVotes_count() > greaterValue)
                                 greaterValue = pollOption.getVotes_count();
                         }
-                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
-                            double value = ((double)(pollOption.getVotes_count()* 100) / (double)poll.getVotes_count()) ;
-                            if( pollOption.getVotes_count() == greaterValue) {
+                        for (PollOptions pollOption : status.getPoll().getOptionsList()) {
+                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVotes_count());
+                            if (pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
                                 bar.setRounded(true);
                                 bar.setHeight1(30);
                                 items.add(bar);
-                            }else {
+                            } else {
                                 BarItem bar;
-                                if( theme == Helper.THEME_LIGHT)
+                                if (theme == Helper.THEME_LIGHT)
                                     bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.BLACK);
                                 else
                                     bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
@@ -646,20 +646,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         HorizontalBar horizontalBar = new HorizontalBar(context);
                         horizontalBar.hasAnimation(true).addAll(items).build();
                         holder.rated.addView(horizontalBar);
-                    }else {
-                        if( poll.isMultiple()){
-                            if((holder.multiple_choice).getChildCount() > 0)
+                    } else {
+                        if (poll.isMultiple()) {
+                            if ((holder.multiple_choice).getChildCount() > 0)
                                 (holder.multiple_choice).removeAllViews();
-                            for(PollOptions pollOption: poll.getOptionsList()){
+                            for (PollOptions pollOption : poll.getOptionsList()) {
                                 CheckBox cb = new CheckBox(context);
                                 cb.setText(pollOption.getTitle());
                                 holder.multiple_choice.addView(cb);
                             }
                             holder.multiple_choice.setVisibility(View.VISIBLE);
-                        }else {
-                            if((holder.radio_group).getChildCount() > 0)
+                        } else {
+                            if ((holder.radio_group).getChildCount() > 0)
                                 (holder.radio_group).removeAllViews();
-                            for(PollOptions pollOption: poll.getOptionsList()){
+                            for (PollOptions pollOption : poll.getOptionsList()) {
                                 RadioButton rb = new RadioButton(context);
                                 rb.setText(pollOption.getTitle());
                                 holder.radio_group.addView(rb);
@@ -670,13 +670,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         holder.submit_vote.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int [] choice;
-                                if( poll.isMultiple()){
+                                int[] choice;
+                                if (poll.isMultiple()) {
                                     ArrayList<Integer> choices = new ArrayList<>();
                                     int choicesCount = holder.multiple_choice.getChildCount();
-                                    for( int i = 0 ; i < choicesCount ; i++){
-                                        if( holder.multiple_choice.getChildAt(i) != null && holder.multiple_choice.getChildAt(i) instanceof CheckBox){
-                                            if(((CheckBox) holder.multiple_choice.getChildAt(i)).isChecked()){
+                                    for (int i = 0; i < choicesCount; i++) {
+                                        if (holder.multiple_choice.getChildAt(i) != null && holder.multiple_choice.getChildAt(i) instanceof CheckBox) {
+                                            if (((CheckBox) holder.multiple_choice.getChildAt(i)).isChecked()) {
                                                 choices.add(i);
                                             }
                                         }
@@ -686,20 +686,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                     for (int i = 0; i < choice.length; i++) {
                                         choice[i] = iterator.next().intValue();
                                     }
-                                    if( choice.length == 0)
+                                    if (choice.length == 0)
                                         return;
-                                }else{
+                                } else {
                                     choice = new int[1];
                                     choice[0] = -1;
                                     int choicesCount = holder.radio_group.getChildCount();
-                                    for( int i = 0 ; i < choicesCount ; i++){
-                                        if( holder.radio_group.getChildAt(i) != null && holder.radio_group.getChildAt(i) instanceof RadioButton){
-                                            if(((RadioButton) holder.radio_group.getChildAt(i)).isChecked()){
+                                    for (int i = 0; i < choicesCount; i++) {
+                                        if (holder.radio_group.getChildAt(i) != null && holder.radio_group.getChildAt(i) instanceof RadioButton) {
+                                            if (((RadioButton) holder.radio_group.getChildAt(i)).isChecked()) {
                                                 choice[0] = i;
                                             }
                                         }
                                     }
-                                    if( choice[0] == -1)
+                                    if (choice[0] == -1)
                                         return;
                                 }
                                 new ManagePollAsyncTask(context, ManagePollAsyncTask.type_s.SUBMIT, status, choice, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -714,9 +714,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote, status.getPoll().getVotes_count(), status.getPoll().getVotes_count()));
                     holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
-                }else {
+                } else {
                     holder.poll_container.setVisibility(View.GONE);
                 }
             }
@@ -725,25 +725,25 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 @Override
                 public void onClick(View v) {
 
-                    if( !status.isFavourited() && confirmFav)
+                    if (!status.isFavourited() && confirmFav)
                         status.setFavAnimated(true);
-                    if( !status.isFavourited() && !confirmFav) {
+                    if (!status.isFavourited() && !confirmFav) {
                         status.setFavAnimated(true);
                         notifyNotificationChanged(notification);
                     }
-                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited() ? API.StatusAction.UNFAVOURITE : API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
                 }
             });
             holder.spark_button_reblog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( !status.isReblogged() && confirmBoost)
+                    if (!status.isReblogged() && confirmBoost)
                         status.setBoostAnimated(true);
-                    if( !status.isReblogged() && !confirmBoost) {
+                    if (!status.isReblogged() && !confirmBoost) {
                         status.setBoostAnimated(true);
                         notifyNotificationChanged(notification);
                     }
-                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged() ? API.StatusAction.UNREBLOG : API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
                 }
             });
 
@@ -757,7 +757,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             });
 
 
-            switch (status.getVisibility()){
+            switch (status.getVisibility()) {
                 case "public":
                     holder.status_privacy.setImageResource(R.drawable.ic_public);
                     break;
@@ -771,7 +771,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
                     break;
             }
-            switch (status.getVisibility()){
+            switch (status.getVisibility()) {
                 case "direct":
                 case "private":
                     holder.status_reblog_count.setVisibility(View.GONE);
@@ -786,7 +786,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
                     holder.spark_button_reblog.setVisibility(View.VISIBLE);
             }
-
 
 
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
@@ -820,7 +819,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             });
 
 
-
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -828,38 +826,37 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             });
 
-            if( !status.getVisibility().equals("direct"))
-            holder.spark_button_fav.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
-                    return true;
-                }
-            });
-            if( !status.getVisibility().equals("direct"))
-            holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, false);
-                    return true;
-                }
-            });
-            if( !status.getVisibility().equals("direct"))
-            holder.spark_button_reblog.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
-                    return true;
-                }
-            });
-        }else {
+            if (!status.getVisibility().equals("direct"))
+                holder.spark_button_fav.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        CrossActions.doCrossAction(context, null, status, null, status.isFavourited() ? API.StatusAction.UNFAVOURITE : API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
+                        return true;
+                    }
+                });
+            if (!status.getVisibility().equals("direct"))
+                holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, false);
+                        return true;
+                    }
+                });
+            if (!status.getVisibility().equals("direct"))
+                holder.spark_button_reblog.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        CrossActions.doCrossAction(context, null, status, null, status.isReblogged() ? API.StatusAction.UNREBLOG : API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
+                        return true;
+                    }
+                });
+        } else {
             holder.notification_status_container.setVisibility(View.GONE);
             holder.status_spoiler_container.setVisibility(View.GONE);
             holder.status_spoiler_mention_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
             holder.poll_container.setVisibility(View.GONE);
         }
-
 
 
         holder.notification_account_profile.setOnClickListener(new View.OnClickListener() {
@@ -873,7 +870,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 context.startActivity(intent);
             }
         });
-
 
 
         holder.notification_delete.setOnClickListener(new View.OnClickListener() {
@@ -891,49 +887,49 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(context, attached);
                 assert status != null;
-                final boolean isOwner = status.getReblog()!=null?status.getReblog().getAccount().getId().equals(userId):status.getAccount().getId().equals(userId);
+                final boolean isOwner = status.getReblog() != null ? status.getReblog().getAccount().getId().equals(userId) : status.getAccount().getId().equals(userId);
                 popup.getMenuInflater()
                         .inflate(R.menu.option_toot, popup.getMenu());
-                if( notification.getType().equals("mention"))
+                if (notification.getType().equals("mention"))
                     popup.getMenu().findItem(R.id.action_timed_mute).setVisible(true);
                 else
                     popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
-                if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                if (status.getVisibility().equals("private") || status.getVisibility().equals("direct")) {
                     popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                 }
-                if( popup.getMenu().findItem(R.id.action_redraft) != null)
+                if (popup.getMenu().findItem(R.id.action_redraft) != null)
                     popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                if( popup.getMenu().findItem(R.id.action_translate) != null)
+                if (popup.getMenu().findItem(R.id.action_translate) != null)
                     popup.getMenu().findItem(R.id.action_translate).setVisible(false);
                 final String[] stringArrayConf;
-                if( isOwner) {
+                if (isOwner) {
                     popup.getMenu().findItem(R.id.action_block).setVisible(false);
                     popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                     popup.getMenu().findItem(R.id.action_report).setVisible(false);
-                    stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
-                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                    stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                    if (social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                         popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                     }
-                }else {
+                } else {
                     popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                     popup.getMenu().findItem(R.id.action_remove).setVisible(false);
-                    stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
+                    stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
                 }
                 if (status.getAccount().getAcct().split("@").length < 2)
                     popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
 
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     popup.getMenu().findItem(R.id.action_info).setVisible(false);
                     popup.getMenu().findItem(R.id.action_report).setVisible(false);
                     popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                     popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
 
                 }
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     popup.getMenu().findItem(R.id.action_admin).setVisible(false);
-                }else{
+                } else {
                     boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + Helper.getLiveInstance(context), false);
-                    if( !display_admin_statuses){
+                    if (!display_admin_statuses) {
                         popup.getMenu().findItem(R.id.action_admin).setVisible(false);
                     }
                 }
@@ -942,7 +938,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.mute_conversation);
                 boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
-                if( custom_sharing && status.getVisibility().equals("public"))
+                if (custom_sharing && status.getVisibility().equals("public"))
                     popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -966,7 +962,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 doAction = API.StatusAction.MUTE;
                                 break;
                             case R.id.action_mute_conversation:
-                                if( status.isMuted())
+                                if (status.isMuted())
                                     doAction = API.StatusAction.UNMUTE_CONVERSATION;
                                 else
                                     doAction = API.StatusAction.MUTE_CONVERSATION;
@@ -986,7 +982,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             case R.id.action_stats:
                                 intent = new Intent(context, OwnerNotificationChartsActivity.class);
                                 b = new Bundle();
-                                b.putString("status_id", status.getReblog()!=null?status.getReblog().getId():status.getId());
+                                b.putString("status_id", status.getReblog() != null ? status.getReblog().getId() : status.getId());
                                 intent.putExtras(b);
                                 context.startActivity(intent);
                                 return true;
@@ -1038,12 +1034,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
                                 assert clipboard != null;
                                 clipboard.setPrimaryClip(clip);
-                                Toasty.info(context,context.getString(R.string.clipboard),Toast.LENGTH_LONG).show();
+                                Toasty.info(context, context.getString(R.string.clipboard), Toast.LENGTH_LONG).show();
                                 return true;
                             case R.id.action_copy_link:
                                 clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-                                clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getReblog()!=null?status.getReblog().getUrl():status.getUrl());
+                                clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getReblog() != null ? status.getReblog().getUrl() : status.getUrl());
                                 if (clipboard != null) {
                                     clipboard.setPrimaryClip(clip);
                                     Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
@@ -1073,26 +1069,27 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                                        if( name.split("@", -1).length - 1 == 1)
+                                        String name = "@" + (status.getReblog() != null ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct());
+                                        if (name.split("@", -1).length - 1 == 1)
                                             name = name + "@" + Helper.getLiveInstance(context);
                                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.notification_status_content);
                                         Intent intent = new Intent(context, TootActivity.class);
                                         Bundle b = new Bundle();
-                                        String fname = "tootmention_" + status.getId() +".jpg";
-                                        File file = new File (context.getCacheDir() + "/", fname);
-                                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                                            file.delete ();
+                                        String fname = "tootmention_" + status.getId() + ".jpg";
+                                        File file = new File(context.getCacheDir() + "/", fname);
+                                        if (file.exists()) //noinspection ResultOfMethodCallIgnored
+                                            file.delete();
                                         try {
                                             FileOutputStream out = new FileOutputStream(file);
                                             assert bitmap != null;
                                             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                             out.flush();
                                             out.close();
-                                        } catch (Exception ignored) {}
+                                        } catch (Exception ignored) {
+                                        }
                                         b.putString("fileMention", fname);
-                                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                        b.putString("tootMention", (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct());
+                                        b.putString("urlMention", (status.getReblog() != null) ? status.getReblog().getUrl() : status.getUrl());
                                         intent.putExtras(b);
                                         context.startActivity(intent);
                                     }
@@ -1105,7 +1102,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
                         //Text for report
                         EditText input = null;
-                        if( doAction == API.StatusAction.REPORT){
+                        if (doAction == API.StatusAction.REPORT) {
                             input = new EditText(context);
                             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -1115,23 +1112,23 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                         builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,int which) {
+                            public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         });
                         final EditText finalInput = input;
                         builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,int which) {
-                                if(doAction ==  API.StatusAction.UNSTATUS ){
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (doAction == API.StatusAction.UNSTATUS) {
                                     String targetedId = status.getId();
                                     new PostActionAsyncTask(context, doAction, targetedId, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }else if(doAction ==  API.StatusAction.REPORT ){
+                                } else if (doAction == API.StatusAction.REPORT) {
                                     String comment = null;
-                                    if( finalInput.getText() != null)
+                                    if (finalInput.getText() != null)
                                         comment = finalInput.getText().toString();
                                     new PostActionAsyncTask(context, doAction, status.getId(), status, comment, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }else{
+                                } else {
                                     String targetedId = status.getAccount().getId();
                                     new PostActionAsyncTask(context, doAction, targetedId, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 }
@@ -1150,12 +1147,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP && !view.hasFocus()) {
-                    try{view.requestFocus();}catch (Exception ignored){}
+                    try {
+                        view.requestFocus();
+                    } catch (Exception ignored) {
+                    }
                 }
                 return false;
             }
         });
-        if( theme == Helper.THEME_LIGHT) {
+        if (theme == Helper.THEME_LIGHT) {
             holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
 
@@ -1164,12 +1164,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     }
 
-    private void notifyNotificationChanged(Notification notification){
+    private void notifyNotificationChanged(Notification notification) {
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
 
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().trim().compareTo(notification.getId().trim()) == 0) {
                 try {
-                    if( mRecyclerView != null) {
+                    if (mRecyclerView != null) {
                         int finalI = i;
                         mRecyclerView.post(new Runnable() {
                             @Override
@@ -1179,20 +1179,21 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         });
                     }
                     break;
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }
     }
 
 
-    public void notifyNotificationWithActionChanged(Status status){
+    public void notifyNotificationWithActionChanged(Status status) {
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                 try {
-                    if( notifications.get(i).getStatus() != null){
+                    if (notifications.get(i).getStatus() != null) {
                         notifications.get(i).setStatus(status);
                         notifyItemChanged(i);
-                        if( mRecyclerView != null) {
+                        if (mRecyclerView != null) {
                             int finalI = i;
                             mRecyclerView.post(new Runnable() {
                                 @Override
@@ -1203,7 +1204,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                         break;
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }
     }
@@ -1219,8 +1221,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
 
-    private Notification getItemAt(int position){
-        if( notifications.size() > position)
+    private Notification getItemAt(int position) {
+        if (notifications.size() > position)
             return notifications.get(position);
         else
             return null;
@@ -1228,9 +1230,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     /**
      * Display a validation message for notification deletion
+     *
      * @param notification Notification
      */
-    private void displayConfirmationNotificationDialog(final Notification notification){
+    private void displayConfirmationNotificationDialog(final Notification notification) {
         final ArrayList seletedItems = new ArrayList();
 
         AlertDialog dialog = new AlertDialog.Builder(context, style)
@@ -1241,7 +1244,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         if (isChecked) {
                             //noinspection unchecked
                             seletedItems.add(indexSelected);
-                        } else  {
+                        } else {
                             if (seletedItems.contains(indexSelected))
                                 seletedItems.remove(Integer.valueOf(indexSelected));
                         }
@@ -1267,16 +1270,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When muting or blocking an account, its status are removed from the list
         List<Notification> notificationsToRemove = new ArrayList<>();
-        if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
-            for(Notification notification: notifications){
-                if( notification.getType().toLowerCase().equals("mention") && notification.getAccount().getId().equals(targetedId))
+        if (statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK) {
+            for (Notification notification : notifications) {
+                if (notification.getType().toLowerCase().equals("mention") && notification.getAccount().getId().equals(targetedId))
                     notificationsToRemove.add(notification);
             }
             notifications.removeAll(notificationsToRemove);
@@ -1286,11 +1289,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onPostNotificationsAction(APIResponse apiResponse, String targetedId) {
-        if(apiResponse.getError() != null){
-            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if( targetedId != null){
+        if (targetedId != null) {
             int position = 0;
             for (Notification notif : notifications) {
                 if (notif.getId().equals(targetedId)) {
@@ -1300,76 +1303,76 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 position++;
             }
-            Toasty.success(context,context.getString(R.string.delete_notification),Toast.LENGTH_LONG).show();
-        }else{
+            Toasty.success(context, context.getString(R.string.delete_notification), Toast.LENGTH_LONG).show();
+        } else {
             int size = notifications.size();
             notifications.clear();
             notificationsListAdapter.notifyItemRangeRemoved(0, size);
-            Toasty.success(context,context.getString(R.string.delete_notification_all),Toast.LENGTH_LONG).show();
+            Toasty.success(context, context.getString(R.string.delete_notification_all), Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private void loadAttachments(final Notification notification, ViewHolder holder){
+    private void loadAttachments(final Notification notification, ViewHolder holder) {
         List<Attachment> attachments = notification.getStatus().getMedia_attachments();
-        if( attachments != null && attachments.size() > 0){
+        if (attachments != null && attachments.size() > 0) {
             int i = 0;
             holder.status_document_container.setVisibility(View.VISIBLE);
-            if( attachments.size() == 1){
+            if (attachments.size() == 1) {
                 holder.status_container2.setVisibility(View.GONE);
-                if( attachments.get(0).getUrl().trim().contains("missing.png"))
+                if (attachments.get(0).getUrl().trim().contains("missing.png"))
                     holder.status_document_container.setVisibility(View.GONE);
-            }else if(attachments.size() == 2){
+            } else if (attachments.size() == 2) {
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.GONE);
                 holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(1).getUrl().trim().contains("missing.png"))
+                if (attachments.get(1).getUrl().trim().contains("missing.png"))
                     holder.status_container2.setVisibility(View.GONE);
-            }else if( attachments.size() == 3){
+            } else if (attachments.size() == 3) {
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.VISIBLE);
                 holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                if (attachments.get(2).getUrl().trim().contains("missing.png"))
                     holder.status_container3.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.VISIBLE);
                 holder.status_prev4_container.setVisibility(View.VISIBLE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                if (attachments.get(2).getUrl().trim().contains("missing.png"))
                     holder.status_prev4_container.setVisibility(View.GONE);
             }
             int position = 1;
-            for(final Attachment attachment: attachments){
+            for (final Attachment attachment : attachments) {
                 ImageView imageView;
-                if( i == 0) {
+                if (i == 0) {
                     imageView = holder.status_prev1;
-                    if( attachment.getType().toLowerCase().equals("image"))
+                    if (attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev1_play.setVisibility(View.GONE);
                     else
                         holder.status_prev1_play.setVisibility(View.VISIBLE);
-                }else if( i == 1) {
+                } else if (i == 1) {
                     imageView = holder.status_prev2;
-                    if( attachment.getType().toLowerCase().equals("image"))
+                    if (attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev2_play.setVisibility(View.GONE);
                     else
                         holder.status_prev2_play.setVisibility(View.VISIBLE);
-                }else if(i == 2) {
+                } else if (i == 2) {
                     imageView = holder.status_prev3;
-                    if( attachment.getType().toLowerCase().equals("image"))
+                    if (attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev3_play.setVisibility(View.GONE);
                     else
                         holder.status_prev3_play.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     imageView = holder.status_prev4;
-                    if( attachment.getType().toLowerCase().equals("image"))
+                    if (attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev4_play.setVisibility(View.GONE);
                     else
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
+                if (url == null || url.trim().equals(""))
                     url = attachment.getUrl();
-                if( !url.trim().contains("missing.png"))
+                if (!url.trim().contains("missing.png"))
                     Glide.with(imageView.getContext())
                             .load(url)
                             .into(imageView);
@@ -1388,7 +1391,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 i++;
                 position++;
             }
-        }else{
+        } else {
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
@@ -1402,7 +1405,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmoji(Notification notification) {
-        if( notification != null && notification.getStatus() != null) {
+        if (notification != null && notification.getStatus() != null) {
             notifyNotificationChanged(notification);
         }
     }
@@ -1426,8 +1429,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmojiAccount(Account account) {
-        for( Notification notification: notifications){
-            if( notification.getAccount().equals(account)){
+        for (Notification notification : notifications) {
+            if (notification.getAccount().equals(account)) {
                 notifyNotificationChanged(notification);
             }
         }
@@ -1441,7 +1444,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveImage(Status status, boolean fromTranslation) {
-        if( status != null ) {
+        if (status != null) {
             status.setEmojiFound(true);
             notifyNotificationWithActionChanged(status);
         }
@@ -1491,7 +1494,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
 
-        public View getView(){
+        public View getView() {
             return itemView;
         }
 
@@ -1531,8 +1534,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
             status_reply = itemView.findViewById(R.id.status_reply);
-            spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
-            spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
+            spark_button_fav = itemView.findViewById(R.id.spark_button_fav);
+            spark_button_reblog = itemView.findViewById(R.id.spark_button_reblog);
 
 
             poll_container = itemView.findViewById(R.id.poll_container);
@@ -1556,8 +1559,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-            if( !disableAnimatedEmoji ){
-                if( BaseMainActivity.timer == null){
+            if (!disableAnimatedEmoji) {
+                if (BaseMainActivity.timer == null) {
                     BaseMainActivity.timer = new Timer();
                 }
                 BaseMainActivity.timer.schedule(new TimerTask() {

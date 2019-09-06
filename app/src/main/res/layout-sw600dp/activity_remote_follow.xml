@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -22,26 +21,28 @@
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <AutoCompleteTextView
             android:id="@+id/rf_instance"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:inputType="textWebEmailAddress"
-            android:hint="@string/instance_example"
-            />
+            android:hint="@string/instance_example" />
+
         <LinearLayout
             android:layout_width="400dp"
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
@@ -50,8 +51,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/username"
-                />
+                android:hint="@string/username" />
+
             <Button
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
@@ -78,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"
-            />
+            android:divider="@null" />
+
         <TextView
             android:visibility="gone"
             android:layout_marginTop="30dp"
@@ -100,8 +101,8 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            >
+            android:gravity="center">
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

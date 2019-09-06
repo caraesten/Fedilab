@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -21,6 +20,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
+
     <ImageView
         android:visibility="gone"
         android:id="@+id/pp_actionBar"
@@ -31,6 +31,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:contentDescription="@string/profile_picture" />
+
     <TextView
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
@@ -40,6 +41,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="?attr/actionBarTextColor"
-         />
+        android:textColor="?attr/actionBarTextColor" />
 </LinearLayout>

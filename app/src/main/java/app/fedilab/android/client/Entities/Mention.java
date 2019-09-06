@@ -36,7 +36,8 @@ public class Mention implements Parcelable {
         id = in.readString();
     }
 
-    public Mention(){}
+    public Mention() {
+    }
 
     public static final Creator<Mention> CREATOR = new Creator<Mention>() {
         @Override

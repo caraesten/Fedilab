@@ -18,17 +18,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +43,6 @@ import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
-
 
 
 /**
@@ -94,7 +96,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         lv_search_tags.setLayoutManager(mLayoutManager);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -122,41 +124,40 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
                 tags = new ArrayList<>();
                 max_id = "0";
                 searchTagsAdapter.notifyItemRangeRemoved(0, size);
-                if( search != null) {
-                    new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if (search != null) {
+                    new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
         lv_search_tags.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
-            {
-            int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-            if(dy > 0){
-                int visibleItemCount = mLayoutManager.getChildCount();
-                int totalItemCount = mLayoutManager.getItemCount();
-                if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
-                    if(!flag_loading ) {
-                        flag_loading = true;
-                        if( search != null) {
-                            new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, max_id, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if (dy > 0) {
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
+                        if (!flag_loading) {
+                            flag_loading = true;
+                            if (search != null) {
+                                new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, max_id, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                            loading_next_tags.setVisibility(View.VISIBLE);
                         }
-                        loading_next_tags.setVisibility(View.VISIBLE);
+                    } else {
+                        loading_next_tags.setVisibility(View.GONE);
                     }
-                } else {
-                    loading_next_tags.setVisibility(View.GONE);
                 }
             }
-            }
         });
-        if( search != null) {
+        if (search != null) {
             new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         return rootView;
     }
 
 
-    public void scrollToTop(){
-        if( lv_search_tags != null && searchTagsAdapter != null) {
+    public void scrollToTop() {
+        if (lv_search_tags != null && searchTagsAdapter != null) {
             lv_search_tags.setAdapter(searchTagsAdapter);
         }
     }
@@ -169,7 +170,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
 
     @Override
     public void onDestroyView() {
-        if( lv_search_tags != null) {
+        if (lv_search_tags != null) {
             lv_search_tags.setAdapter(null);
         }
         super.onDestroyView();
@@ -189,25 +190,25 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         loader.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(false);
         if (apiResponse.getError() != null) {
-            if( apiResponse.getError().getError() != null)
+            if (apiResponse.getError().getError() != null)
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if(max_id == null)
+        if (max_id == null)
             max_id = "0";
         max_id = String.valueOf(Integer.valueOf(max_id) + 20);
         lv_search_tags.setVisibility(View.VISIBLE);
         List<String> newTags = new ArrayList<>();
-        if(  apiResponse.getResults() != null) {
+        if (apiResponse.getResults() != null) {
             newTags = apiResponse.getResults().getHashtags();
         }
         tags.addAll(newTags);
         SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(tags);
         lv_search_tags.setAdapter(searchTagsAdapter);
         searchTagsAdapter.notifyDataSetChanged();
-        if( newTags.size() == 0 && tags.size() == 0 )
+        if (newTags.size() == 0 && tags.size() == 0)
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -27,12 +26,13 @@
     android:layout_marginBottom="10dp"
     android:id="@+id/main_container"
     android:orientation="horizontal">
+
     <ImageView
         android:layout_gravity="center_horizontal"
         android:id="@+id/account_pp"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:contentDescription="@string/profile_picture"/>
+        android:contentDescription="@string/profile_picture" />
 
     <LinearLayout
         android:id="@+id/account_container"
@@ -54,15 +54,14 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/account_un"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
@@ -72,7 +71,8 @@
             android:layout_marginTop="10dp"
             android:maxLines="1"
             android:textSize="16sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/account_info"
             android:layout_marginTop="10dp"
@@ -80,66 +80,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="@string/toots"/>
+                        android:text="@string/toots" />
+
                     <TextView
                         android:id="@+id/account_sc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="@string/following"/>
+                        android:text="@string/following" />
+
                     <TextView
                         android:id="@+id/account_fgc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="@string/followers"/>
+                        android:text="@string/followers" />
+
                     <TextView
                         android:id="@+id/account_frc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/account_ds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
-                android:autoLink="web"
-                />
-            </LinearLayout>
+                android:autoLink="web" />
+        </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:id="@+id/account_follow_request"
         android:textColor="?attr/colorAccent"
@@ -149,12 +160,13 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:layout_gravity="center"
-        android:gravity="center"
-        />
+        android:gravity="center" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_follow"
             android:visibility="gone"
@@ -164,8 +176,8 @@
             android:layout_margin="5dp"
             android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:gravity="center"
-            />
+            android:gravity="center" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_mute_notification"
             android:visibility="gone"
@@ -175,7 +187,6 @@
             android:layout_margin="5dp"
             android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:gravity="center"
-            />
+            android:gravity="center" />
     </LinearLayout>
 </LinearLayout>

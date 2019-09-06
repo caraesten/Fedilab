@@ -42,7 +42,7 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
     private Error error;
     private WeakReference<Context> contextReference;
 
-    public RetrieveAccountAsyncTask(Context context, String targetedId, OnRetrieveAccountInterface onRetrieveAccountInterface){
+    public RetrieveAccountAsyncTask(Context context, String targetedId, OnRetrieveAccountInterface onRetrieveAccountInterface) {
         this.contextReference = new WeakReference<>(context);
         this.targetedId = targetedId;
         this.listener = onRetrieveAccountInterface;
@@ -50,15 +50,15 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             API api = new API(this.contextReference.get());
             account = api.getAccount(targetedId);
             error = api.getError();
-        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
             account = peertubeAPI.getAccount(targetedId);
             error = peertubeAPI.getError();
-        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             account = gnuapi.getAccount(targetedId);
             error = gnuapi.getError();

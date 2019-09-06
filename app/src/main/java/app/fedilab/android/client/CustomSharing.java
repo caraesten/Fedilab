@@ -41,7 +41,7 @@ public class CustomSharing {
 
     public CustomSharing(Context context) {
         this.context = context;
-        if( context == null) {
+        if (context == null) {
             CustomSharingError = new Error();
             return;
         }
@@ -71,17 +71,18 @@ public class CustomSharing {
         return customSharingResponse;
     }
 
-    public Error getError(){
+    public Error getError() {
         return CustomSharingError;
     }
 
 
     /**
      * Set the error message
+     *
      * @param statusCode int code
-     * @param error Throwable error
+     * @param error      Throwable error
      */
-    private void setError(int statusCode, Throwable error){
+    private void setError(int statusCode, Throwable error) {
         CustomSharingError = new Error();
         CustomSharingError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
@@ -90,7 +91,7 @@ public class CustomSharing {
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
-            if(error.getMessage().split(".").length > 0) {
+            if (error.getMessage().split(".").length > 0) {
                 String errorM = error.getMessage().split(".")[0];
                 message = "Error " + statusCode + " : " + errorM;
             }

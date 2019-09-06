@@ -189,7 +189,7 @@ class FileListerAdapter extends RecyclerView.Adapter<FileListerAdapter.FileListH
     public FileListHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 return new FileListHolder(View.inflate(getContext(), R.layout.item_file_lister_light, null));
             case Helper.THEME_DARK:

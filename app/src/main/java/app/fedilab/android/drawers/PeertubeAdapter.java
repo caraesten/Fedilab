@@ -19,8 +19,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +51,6 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnListActionInterface;
 
 
-
 /**
  * Created by Thomas on 06/10/2018.
  * Adapter for peertube
@@ -62,14 +63,14 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     private String instance;
     private boolean ownVideos;
 
-    public PeertubeAdapter(String instance, List<Peertube> peertubes){
+    public PeertubeAdapter(String instance, List<Peertube> peertubes) {
         this.peertubes = peertubes;
         this.instance = instance;
         this.ownVideos = false;
 
     }
 
-    public PeertubeAdapter(String instance, boolean ownVideos, List<Peertube> peertubes){
+    public PeertubeAdapter(String instance, boolean ownVideos, List<Peertube> peertubes) {
         this.peertubes = peertubes;
         this.instance = instance;
         this.ownVideos = ownVideos;
@@ -90,15 +91,15 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
         final PeertubeAdapter.ViewHolder holder = (PeertubeAdapter.ViewHolder) viewHolder;
         final Peertube peertube = peertubes.get(position);
-        if( peertube.getInstance() == null)
+        if (peertube.getInstance() == null)
             peertube.setInstance(Helper.getLiveInstance(context));
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-        }else if (theme == Helper.THEME_DARK){
+        } else if (theme == Helper.THEME_DARK) {
             holder.main_container.setBackgroundResource(R.color.mastodonC1_);
-        }else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             holder.main_container.setBackgroundResource(R.color.black);
         }
         Account account = peertube.getAccount();
@@ -118,9 +119,9 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
 
 
-        if( peertube.getHeaderType() != null && peertube.getHeaderTypeValue() != null) {
+        if (peertube.getHeaderType() != null && peertube.getHeaderTypeValue() != null) {
             String type = peertube.getHeaderType();
-            switch (type){
+            switch (type) {
                 case "tags":
                     holder.header_title.setText(String.format("#%s", peertube.getHeaderTypeValue()));
                     break;
@@ -129,11 +130,11 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                     break;
             }
             holder.header_title.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.header_title.setVisibility(View.GONE);
         }
 
-        if( !this.ownVideos) {
+        if (!this.ownVideos) {
             holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -171,13 +172,13 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                     context.startActivity(intent);
                 }
             });
-        }else{
+        } else {
             holder.main_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("video_id",peertube.getUuid());
+                    b.putString("video_id", peertube.getUuid());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -202,7 +203,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout main_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
@@ -221,8 +222,6 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             header_title = itemView.findViewById(R.id.header_title);
         }
     }
-
-
 
 
 }

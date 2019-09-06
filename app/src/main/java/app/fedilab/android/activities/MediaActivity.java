@@ -25,6 +25,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -97,7 +98,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
 
     private RelativeLayout loader;
-    private ArrayList<Attachment>  attachments;
+    private ArrayList<Attachment> attachments;
     private PhotoView imageView;
     private SimpleExoPlayerView videoView;
     private float downX;
@@ -126,13 +127,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     private ImageButton playView;
     private GLAudioVisualizationView visualizerView;
 
-    private enum actionSwipe{
+    private enum actionSwipe {
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
         POP
     }
+
     private WebView webview_video;
-    private ImageButton media_save,media_share, media_close;
+    private ImageButton media_save, media_share, media_close;
     private boolean scheduleHidden, scheduleHiddenDescription;
     private SimpleExoPlayer player;
     private boolean isSHaring;
@@ -148,7 +150,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
         hideSystemUI();
@@ -161,12 +163,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
             public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
-                canSwipe = swipeBackFraction<0.1;
+                canSwipe = swipeBackFraction < 0.1;
             }
 
             @Override
             public void onViewSwipeFinished(View mView, boolean isEnd) {
-                if(!isEnd)
+                if (!isEnd)
                     canSwipe = true;
                 else {
                     finish();
@@ -178,17 +180,17 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         instance = Helper.getLiveInstance(MediaActivity.this);
         mSwipeBackLayout.attachToActivity(this);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
-        if( getIntent().getExtras() != null)
+        if (getIntent().getExtras() != null)
             mediaPosition = getIntent().getExtras().getInt("position", 1);
-        if( attachments == null || attachments.size() == 0)
+        if (attachments == null || attachments.size() == 0)
             finish();
 
         RelativeLayout main_container_media = findViewById(R.id.main_container_media);
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             main_container_media.setBackgroundResource(R.color.mastodonC2);
-        }else if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             main_container_media.setBackgroundResource(R.color.black);
-        }else if( theme == Helper.THEME_DARK){
+        } else if (theme == Helper.THEME_DARK) {
             main_container_media.setBackgroundResource(R.color.mastodonC1_);
         }
         media_description = findViewById(R.id.media_description);
@@ -203,13 +205,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
             @Override
             public void onClick(View view) {
                 isSHaring = false;
-                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio")  || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
-                    if( attachment != null ) {
+                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
+                    if (attachment != null) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
                         new HttpsConnection(MediaActivity.this, instance).download(attachment.getUrl(), MediaActivity.this);
                     }
-                }else {
+                } else {
                     if (Build.VERSION.SDK_INT >= 23) {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
@@ -226,13 +228,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
             @Override
             public void onClick(View view) {
                 isSHaring = true;
-                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") ||attachment.getType().toLowerCase().equals("gifv")) {
-                    if( attachment != null ) {
+                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
+                    if (attachment != null) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
                         new HttpsConnection(MediaActivity.this, instance).download(attachment.getUrl(), MediaActivity.this);
                     }
-                }else {
+                } else {
                     if (Build.VERSION.SDK_INT >= 23) {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
@@ -257,13 +259,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         videoView = findViewById(R.id.media_video);
         prev = findViewById(R.id.media_prev);
         next = findViewById(R.id.media_next);
-        if( theme == Helper.THEME_BLACK){
+        if (theme == Helper.THEME_BLACK) {
             changeDrawableColor(getApplicationContext(), prev, R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), next, R.color.dark_icon);
-        }else if(theme == Helper.THEME_LIGHT) {
+        } else if (theme == Helper.THEME_LIGHT) {
             changeDrawableColor(getApplicationContext(), prev, R.color.mastodonC4);
             changeDrawableColor(getApplicationContext(), next, R.color.mastodonC4);
-        }else{
+        } else {
             changeDrawableColor(getApplicationContext(), prev, R.color.white);
             changeDrawableColor(getApplicationContext(), next, R.color.white);
         }
@@ -287,11 +289,11 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
             @Override
             public void onMatrixChanged(RectF rect) {
                 imageScale = imageView.getScale();
-                canSwipe = (imageView.getScale() == 1 );
-                mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
+                canSwipe = (imageView.getScale() == 1);
+                mSwipeBackLayout.isDisabled(imageView.getScale() != 1);
             }
         });
-        if( attachments != null && attachments.size() > 1){
+        if (attachments != null && attachments.size() > 1) {
             prev.setVisibility(View.VISIBLE);
             next.setVisibility(View.VISIBLE);
         }
@@ -313,25 +315,27 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     public void onCompletion(MediaPlayer mp) {
         stopPlaying();
     }
+
     /**
      * Manage touch event
      * Allows to swipe from timelines
+     *
      * @param event MotionEvent
      * @return boolean
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         Boolean thisControllShown = isControlElementShown;
-        switch(event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
                 downY = event.getY();
                 //Displays navigation left/right buttons
-                if( attachments != null && attachments.size() > 1){
-                    if(thisControllShown){
+                if (attachments != null && attachments.size() > 1) {
+                    if (thisControllShown) {
                         prev.setVisibility(View.GONE);
                         next.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         prev.setVisibility(View.VISIBLE);
                         next.setVisibility(View.VISIBLE);
                     }
@@ -344,19 +348,31 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 float upY = event.getY();
                 float deltaY = downY - upY;
                 // swipe horizontal
-                if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE ) ){
-                    if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+                if (downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE)) {
+                    if (!canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
                         return super.dispatchTouchEvent(event);
-                    if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
-                    if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
-                }else if(downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE ) ){
-                    if(deltaY > 0 && canSwipe) { finish(); return true; }
-                    if(deltaY < 0 && canSwipe) { finish(); return true; }
+                    if (deltaX < 0) {
+                        switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT);
+                        return true;
+                    }
+                    if (deltaX > 0) {
+                        switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT);
+                        return true;
+                    }
+                } else if (downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE)) {
+                    if (deltaY > 0 && canSwipe) {
+                        finish();
+                        return true;
+                    }
+                    if (deltaY < 0 && canSwipe) {
+                        finish();
+                        return true;
+                    }
                 } else {
                     currentAction = MediaActivity.actionSwipe.POP;
                     isControlElementShown = !isControlElementShown;
                     if (thisControllShown) {
-                        if(event.getY() > action_bar_container.getHeight()) {
+                        if (event.getY() > action_bar_container.getHeight()) {
                             hideSystemUI();
                             action_bar_container.setVisibility(View.GONE);
                             if (media_description.getVisibility() == View.VISIBLE) {
@@ -389,19 +405,19 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     }
 
 
-    private void switchOnSwipe(actionSwipe action){
+    private void switchOnSwipe(actionSwipe action) {
         loader.setVisibility(View.VISIBLE);
-        mediaPosition = (action == actionSwipe.LEFT_TO_RIGHT)?mediaPosition-1:mediaPosition+1;
+        mediaPosition = (action == actionSwipe.LEFT_TO_RIGHT) ? mediaPosition - 1 : mediaPosition + 1;
         displayMediaAtPosition(action);
     }
 
-    private void displayMediaAtPosition(actionSwipe action){
-        if( mediaPosition > attachments.size() )
+    private void displayMediaAtPosition(actionSwipe action) {
+        if (mediaPosition > attachments.size())
             mediaPosition = 1;
-        if( mediaPosition < 1)
+        if (mediaPosition < 1)
             mediaPosition = attachments.size();
         currentAction = action;
-        attachment = attachments.get(mediaPosition-1);
+        attachment = attachments.get(mediaPosition - 1);
         String type = attachment.getType();
         String url = attachment.getUrl();
         finalUrlDownload = url;
@@ -409,26 +425,26 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
         imageView.setVisibility(View.GONE);
 
-        if( attachment.getDescription() != null && !attachment.getDescription().equals("null")){
+        if (attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
             media_description.setText(attachment.getDescription());
             media_description.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             media_description.setText("");
             media_description.setVisibility(View.GONE);
         }
         preview_url = attachment.getPreview_url();
-        if( type.equals("unknown")){
+        if (type.equals("unknown")) {
             preview_url = attachment.getRemote_url();
-            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg") ||  preview_url.endsWith(".gif")) {
+            if (preview_url.endsWith(".png") || preview_url.endsWith(".jpg") || preview_url.endsWith(".jpeg") || preview_url.endsWith(".gif")) {
                 type = "image";
-            }else if( preview_url.endsWith(".mp4") || preview_url.endsWith(".mp3") ) {
+            } else if (preview_url.endsWith(".mp4") || preview_url.endsWith(".mp3")) {
                 type = "video";
             }
             url = attachment.getRemote_url();
             attachment.setType(type);
         }
         final String finalUrl = url;
-        switch (type.toLowerCase()){
+        switch (type.toLowerCase()) {
             case "image":
                 pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);
@@ -436,7 +452,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
                 fileVideo = null;
-                if( !finalUrl.endsWith(".gif")) {
+                if (!finalUrl.endsWith(".gif")) {
                     Glide.with(getApplicationContext())
                             .asBitmap()
                             .load(preview_url).into(
@@ -473,7 +489,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                                 }
                             }
                     );
-                }else {
+                } else {
                     loader.setVisibility(View.GONE);
                     Glide.with(getApplicationContext())
                             .load(finalUrl).into(imageView);
@@ -497,7 +513,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                 ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                         .createMediaSource(uri);
                 player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
-                if( type.toLowerCase().equals("gifv"))
+                if (type.toLowerCase().equals("gifv"))
                     player.setRepeatMode(Player.REPEAT_MODE_ONE);
                 videoView.setPlayer(player);
                 loader.setVisibility(View.GONE);
@@ -559,9 +575,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                         .setLayerColors(new int[]{color})
                         .build();
 
-                statusView =  findViewById(R.id.status);
-                timerView =  findViewById(R.id.timer);
-                playView =  findViewById(R.id.play);
+                statusView = findViewById(R.id.status);
+                timerView = findViewById(R.id.timer);
+                playView = findViewById(R.id.play);
                 content_audio.setBackgroundColor(getDarkerColor(color));
                 content_audio.addView(visualizerView, 0);
                 playView.setVisibility(View.INVISIBLE);
@@ -573,12 +589,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     }
 
 
-    public void togglePlaying(View v){
+    public void togglePlaying(View v) {
 
         HANDLER.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(isPlaying()){
+                if (isPlaying()) {
                     stopPlaying();
                 } else {
                     startPlaying();
@@ -587,7 +603,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         }, 100);
     }
 
-    private void startPlaying(){
+    private void startPlaying() {
         try {
 
             playeraudio = new MediaPlayer();
@@ -617,31 +633,33 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
             playerSecondsElapsed = 0;
             startTimer();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    private void stopPlaying(){
+    private void stopPlaying() {
         statusView.setText("");
         statusView.setVisibility(View.INVISIBLE);
         playView.setImageResource(R.drawable.aar_ic_play);
 
         visualizerView.release();
-        if(visualizerHandler != null) {
+        if (visualizerHandler != null) {
             visualizerHandler.stop();
         }
 
-        if(playeraudio != null){
+        if (playeraudio != null) {
             try {
                 playeraudio.pause();
-            } catch (Exception ignored){ }
+            } catch (Exception ignored) {
+            }
         }
 
         stopTimer();
     }
-    private void startTimer(){
+
+    private void startTimer() {
         stopTimer();
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -662,7 +680,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         });
     }
 
-    private void stopTimer(){
+    private void stopTimer() {
         if (timer != null) {
             timer.cancel();
             timer.purge();
@@ -670,10 +688,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         }
     }
 
-    private boolean isPlaying(){
+    private boolean isPlaying() {
         try {
             return playeraudio != null && playeraudio.isPlaying();
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -682,7 +700,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     @Override
     public void onDownloaded(String path, String originUrl, Error error) {
 
-        if( path != null) {
+        if (path != null) {
             File response = new File(path);
             File dir = getCacheDir();
             File from = new File(dir, response.getName());
@@ -702,54 +720,57 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
         } else {
             Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, isSHaring);
         }
-        if( progress != null)
+        if (progress != null)
             progress.setVisibility(View.GONE);
-        if( loader != null)
+        if (loader != null)
             loader.setVisibility(View.GONE);
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if( player != null) {
+        if (player != null) {
             player.setPlayWhenReady(false);
         }
-        if( playeraudio != null) {
+        if (playeraudio != null) {
             playeraudio.pause();
         }
         try {
             visualizerView.onPause();
-        } catch (Exception ignored){ }
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
     public void onDestroy() {
         try {
-            if( visualizerView != null) {
+            if (visualizerView != null) {
                 visualizerView.release();
             }
-            if( player != null) {
+            if (player != null) {
                 player.release();
             }
-            if( playeraudio != null) {
+            if (playeraudio != null) {
                 playeraudio.release();
             }
-        } catch (Exception ignored){ }
+        } catch (Exception ignored) {
+        }
         super.onDestroy();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( player != null) {
+        if (player != null) {
             player.setPlayWhenReady(true);
         }
-        if( playeraudio != null) {
+        if (playeraudio != null) {
             playeraudio.start();
         }
         try {
             visualizerView.onResume();
-        } catch (Exception e){ }
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -759,16 +780,16 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
     }
 
     public void FullScreencall(Boolean shouldFullscreen) {
-        if(Build.VERSION.SDK_INT < 19) {
+        if (Build.VERSION.SDK_INT < 19) {
             View v = this.getWindow().getDecorView();
-            if(shouldFullscreen){
+            if (shouldFullscreen) {
                 v.setSystemUiVisibility(View.GONE);
-            }else {
+            } else {
                 v.setSystemUiVisibility(View.VISIBLE);
             }
         } else {
             View decorView = getWindow().getDecorView();
-            if(shouldFullscreen){
+            if (shouldFullscreen) {
                 decorView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_IMMERSIVE
                                 // Set the content to appear under the system bars so that the
@@ -780,7 +801,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
                                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-            }else{
+            } else {
                 decorView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -791,7 +812,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface, 
 
     @Override
     public void onUpdateProgress(int progressPercentage) {
-        progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
+        progress.setText(String.format("%s%%", String.valueOf(progressPercentage)));
         pbar_inf.setProgress(progressPercentage);
     }
 

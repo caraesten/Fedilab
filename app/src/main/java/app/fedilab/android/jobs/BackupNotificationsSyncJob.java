@@ -44,6 +44,7 @@ import app.fedilab.android.sqlite.Sqlite;
 public class BackupNotificationsSyncJob extends Job {
 
     static final String BACKUP_NOTIFICATIONS_SYNC = "job_backup_notification";
+
     static {
         Helper.installProvider();
     }
@@ -74,7 +75,8 @@ public class BackupNotificationsSyncJob extends Job {
                     .setRequirementsEnforced(false)
                     .build()
                     .schedule();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         return jobRequestschedule;
     }
@@ -87,15 +89,16 @@ public class BackupNotificationsSyncJob extends Job {
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final List<Account> accounts = new AccountDAO(getContext(), db).getAllAccount();
         SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        for(Account account: accounts) {
-            boolean autobackup =  sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS + account.getId() + account.getInstance(), false);
-            if( autobackup) {
+        for (Account account : accounts) {
+            boolean autobackup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS + account.getId() + account.getInstance(), false);
+            if (autobackup) {
                 try {
                     Intent backupIntent = new Intent(getContext(), BackupNotificationInDataBaseService.class);
                     backupIntent.putExtra("userid", account.getId());
                     backupIntent.putExtra("instance", account.getInstance());
                     getContext().startService(backupIntent);
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         }
     }

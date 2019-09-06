@@ -46,49 +46,49 @@ public class AccountDAO {
 
     /**
      * Insert an Account in database
+     *
      * @param account Account
      * @return boolean
      */
-    public boolean insertAccount(Account account)
-    {
+    public boolean insertAccount(Account account) {
         ContentValues values = new ContentValues();
-        if( account.getCreated_at() == null)
+        if (account.getCreated_at() == null)
             account.setCreated_at(new Date());
-        if( account.getNote() == null)
+        if (account.getNote() == null)
             account.setNote("");
         values.put(Sqlite.COL_USER_ID, account.getId());
         values.put(Sqlite.COL_USERNAME, account.getUsername());
         values.put(Sqlite.COL_ACCT, account.getAcct());
         values.put(Sqlite.COL_DISPLAYED_NAME, account.getDisplay_name());
-        values.put(Sqlite.COL_LOCKED,account.isLocked());
-        values.put(Sqlite.COL_FOLLOWERS_COUNT,account.getFollowers_count());
-        values.put(Sqlite.COL_FOLLOWING_COUNT,account.getFollowing_count());
-        values.put(Sqlite.COL_STATUSES_COUNT,account.getStatuses_count());
-        values.put(Sqlite.COL_NOTE,account.getNote());
-        values.put(Sqlite.COL_URL,account.getUrl());
-        values.put(Sqlite.COL_AVATAR,account.getAvatar());
-        values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
-        values.put(Sqlite.COL_HEADER,account.getHeader());
-        values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
+        values.put(Sqlite.COL_LOCKED, account.isLocked());
+        values.put(Sqlite.COL_FOLLOWERS_COUNT, account.getFollowers_count());
+        values.put(Sqlite.COL_FOLLOWING_COUNT, account.getFollowing_count());
+        values.put(Sqlite.COL_STATUSES_COUNT, account.getStatuses_count());
+        values.put(Sqlite.COL_NOTE, account.getNote());
+        values.put(Sqlite.COL_URL, account.getUrl());
+        values.put(Sqlite.COL_AVATAR, account.getAvatar());
+        values.put(Sqlite.COL_AVATAR_STATIC, account.getAvatar_static());
+        values.put(Sqlite.COL_HEADER, account.getHeader());
+        values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         values.put(Sqlite.COL_SOCIAL, account.getSocial());
-        if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
+        if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
             values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
             values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());
             values.put(Sqlite.COL_REFRESH_TOKEN, account.getRefresh_token());
         }
-        if( account.getToken() != null)
+        if (account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
 
         values.put(Sqlite.COL_SENSITIVE, account.isSensitive());
         values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
         //Inserts account
-        try{
+        try {
             db.insertOrThrow(Sqlite.TABLE_USER_ACCOUNT, null, values);
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -97,37 +97,37 @@ public class AccountDAO {
 
     /**
      * Update an Account in database
+     *
      * @param account Account
      * @return boolean
      */
-    public int updateAccount(Account account)
-    {
+    public int updateAccount(Account account) {
         ContentValues values = new ContentValues();
-        if( account.getNote() == null)
+        if (account.getNote() == null)
             account.setNote("");
-        if( account.getCreated_at() == null)
+        if (account.getCreated_at() == null)
             account.setCreated_at(new Date());
         values.put(Sqlite.COL_ACCT, account.getAcct());
         values.put(Sqlite.COL_DISPLAYED_NAME, account.getDisplay_name());
-        values.put(Sqlite.COL_LOCKED,account.isLocked());
-        values.put(Sqlite.COL_FOLLOWERS_COUNT,account.getFollowers_count());
-        values.put(Sqlite.COL_FOLLOWING_COUNT,account.getFollowing_count());
-        values.put(Sqlite.COL_STATUSES_COUNT,account.getStatuses_count());
-        values.put(Sqlite.COL_NOTE,account.getNote());
-        values.put(Sqlite.COL_URL,account.getUrl());
-        values.put(Sqlite.COL_AVATAR,account.getAvatar());
-        values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
-        values.put(Sqlite.COL_HEADER,account.getHeader());
-        values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
+        values.put(Sqlite.COL_LOCKED, account.isLocked());
+        values.put(Sqlite.COL_FOLLOWERS_COUNT, account.getFollowers_count());
+        values.put(Sqlite.COL_FOLLOWING_COUNT, account.getFollowing_count());
+        values.put(Sqlite.COL_STATUSES_COUNT, account.getStatuses_count());
+        values.put(Sqlite.COL_NOTE, account.getNote());
+        values.put(Sqlite.COL_URL, account.getUrl());
+        values.put(Sqlite.COL_AVATAR, account.getAvatar());
+        values.put(Sqlite.COL_AVATAR_STATIC, account.getAvatar_static());
+        values.put(Sqlite.COL_HEADER, account.getHeader());
+        values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         values.put(Sqlite.COL_SOCIAL, account.getSocial());
-        if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
+        if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
             values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
             values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());
             values.put(Sqlite.COL_REFRESH_TOKEN, account.getRefresh_token());
         }
-        if( account.getToken() != null)
+        if (account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
         return db.update(Sqlite.TABLE_USER_ACCOUNT,
                 values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =?",
@@ -137,37 +137,37 @@ public class AccountDAO {
 
     /**
      * Update an Account in database
+     *
      * @param account Account
      * @return boolean
      */
-    public int updateAccountCredential(Account account)
-    {
+    public int updateAccountCredential(Account account) {
         ContentValues values = new ContentValues();
-        if( account.getNote() == null)
+        if (account.getNote() == null)
             account.setNote("");
-        if( account.getCreated_at() == null)
+        if (account.getCreated_at() == null)
             account.setCreated_at(new Date());
         values.put(Sqlite.COL_ACCT, account.getAcct());
         values.put(Sqlite.COL_DISPLAYED_NAME, account.getDisplay_name());
-        values.put(Sqlite.COL_LOCKED,account.isLocked());
-        values.put(Sqlite.COL_FOLLOWERS_COUNT,account.getFollowers_count());
-        values.put(Sqlite.COL_FOLLOWING_COUNT,account.getFollowing_count());
-        values.put(Sqlite.COL_STATUSES_COUNT,account.getStatuses_count());
-        values.put(Sqlite.COL_NOTE,account.getNote());
-        values.put(Sqlite.COL_URL,account.getUrl());
-        values.put(Sqlite.COL_AVATAR,account.getAvatar());
-        values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
-        values.put(Sqlite.COL_HEADER,account.getHeader());
-        values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
+        values.put(Sqlite.COL_LOCKED, account.isLocked());
+        values.put(Sqlite.COL_FOLLOWERS_COUNT, account.getFollowers_count());
+        values.put(Sqlite.COL_FOLLOWING_COUNT, account.getFollowing_count());
+        values.put(Sqlite.COL_STATUSES_COUNT, account.getStatuses_count());
+        values.put(Sqlite.COL_NOTE, account.getNote());
+        values.put(Sqlite.COL_URL, account.getUrl());
+        values.put(Sqlite.COL_AVATAR, account.getAvatar());
+        values.put(Sqlite.COL_AVATAR_STATIC, account.getAvatar_static());
+        values.put(Sqlite.COL_HEADER, account.getHeader());
+        values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         values.put(Sqlite.COL_SOCIAL, account.getSocial());
-        if( account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
+        if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
             values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
             values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());
             values.put(Sqlite.COL_REFRESH_TOKEN, account.getRefresh_token());
         }
-        if( account.getToken() != null)
+        if (account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
         values.put(Sqlite.COL_SENSITIVE, account.isSensitive());
         values.put(Sqlite.COL_PRIVACY, account.getPrivacy());
@@ -177,17 +177,18 @@ public class AccountDAO {
     }
 
 
-    public int removeUser(Account account){
-        return db.delete(Sqlite.TABLE_USER_ACCOUNT,  Sqlite.COL_USER_ID + " = '" +account.getId() +
-                "' AND " + Sqlite.COL_INSTANCE + " = '" +  account.getInstance()+ "'", null);
+    public int removeUser(Account account) {
+        return db.delete(Sqlite.TABLE_USER_ACCOUNT, Sqlite.COL_USER_ID + " = '" + account.getId() +
+                "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
     }
 
 
     /**
      * Returns last used account
+     *
      * @return Account
      */
-    public Account getLastUsedAccount(){
+    public Account getLastUsedAccount() {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_UPDATED_AT + " DESC", "1");
@@ -199,11 +200,12 @@ public class AccountDAO {
 
     /**
      * Returns an Account by its id and acct
-     * @param accountId String
+     *
+     * @param accountId   String
      * @param accountAcct String
      * @return Account
      */
-    public Account getAccountByIDAcct(String accountId, String accountAcct){
+    public Account getAccountByIDAcct(String accountId, String accountAcct) {
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "' AND " + Sqlite.COL_ACCT + " = '" + accountAcct + "'", null, null, null, null, "1");
             return cursorToUser(c);
@@ -213,12 +215,12 @@ public class AccountDAO {
     }
 
 
-
     /**
      * Returns all Account in db
+     *
      * @return Account List<Account>
      */
-    public List<Account> getAllAccount(){
+    public List<Account> getAllAccount() {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, null, null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
@@ -230,12 +232,13 @@ public class AccountDAO {
 
     /**
      * Returns all Account in db
+     *
      * @return Account List<Account>
      */
-    public List<Account> getAllAccountActivated(){
+    public List<Account> getAllAccountActivated() {
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null,  Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListUser(c);
         } catch (Exception e) {
             return null;
@@ -244,9 +247,10 @@ public class AccountDAO {
 
     /**
      * Returns all Account in db
+     *
      * @return Account List<Account>
      */
-    public List<Account> getAllAccountCrossAction(){
+    public List<Account> getAllAccountCrossAction() {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " + Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
@@ -259,10 +263,11 @@ public class AccountDAO {
 
     /**
      * Returns an Account by token
+     *
      * @param token String
      * @return Account
      */
-    public Account getAccountByToken(String token){
+    public Account getAccountByToken(String token) {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_OAUTHTOKEN + " = \"" + token + "\"", null, null, null, null, "1");
@@ -271,13 +276,15 @@ public class AccountDAO {
             return null;
         }
     }
+
     /**
      * Returns an Account by token
-     * @param userId String
+     *
+     * @param userId   String
      * @param instance String
      * @return Account
      */
-    public Account getUniqAccount(String userId, String instance){
+    public Account getUniqAccount(String userId, String instance) {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, null, null, null, "1");
@@ -290,13 +297,13 @@ public class AccountDAO {
 
     /**
      * Test if the current user is already stored in data base
+     *
      * @param account Account
      * @return boolean
      */
-    public boolean userExist(Account account)
-    {
-        Cursor mCount= db.rawQuery("select count(*) from " + Sqlite.TABLE_USER_ACCOUNT
-                + " where " + Sqlite.COL_ACCT + " = '" + account.getAcct() + "' AND " + Sqlite.COL_INSTANCE + " = '" +  account.getInstance()+ "'", null);
+    public boolean userExist(Account account) {
+        Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_USER_ACCOUNT
+                + " where " + Sqlite.COL_ACCT + " = '" + account.getAcct() + "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();
@@ -309,7 +316,7 @@ public class AccountDAO {
      * @param c Cursor
      * @return Account
      */
-    private Account cursorToUser(Cursor c){
+    private Account cursorToUser(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
@@ -339,7 +346,7 @@ public class AccountDAO {
         account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
         account.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
         account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));
-        account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL))!=null?c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)):"MASTODON");
+        account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)) != null ? c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)) : "MASTODON");
         account.setClient_id(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_ID)));
         account.setClient_secret(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_SECRET)));
         account.setRefresh_token(c.getString(c.getColumnIndex(Sqlite.COL_REFRESH_TOKEN)));
@@ -357,14 +364,14 @@ public class AccountDAO {
      * @param c Cursor
      * @return List<Account>
      */
-    private List<Account> cursorToListUser(Cursor c){
+    private List<Account> cursorToListUser(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
             return null;
         }
         List<Account> accounts = new ArrayList<>();
-        while (c.moveToNext() ) {
+        while (c.moveToNext()) {
             //New user
             Account account = new Account();
 
@@ -386,7 +393,7 @@ public class AccountDAO {
             account.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
             account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
             account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));
-            account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL))!=null?c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)):"MASTODON");
+            account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)) != null ? c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)) : "MASTODON");
             account.setClient_id(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_ID)));
             account.setClient_secret(c.getString(c.getColumnIndex(Sqlite.COL_CLIENT_SECRET)));
             account.setRefresh_token(c.getString(c.getColumnIndex(Sqlite.COL_REFRESH_TOKEN)));

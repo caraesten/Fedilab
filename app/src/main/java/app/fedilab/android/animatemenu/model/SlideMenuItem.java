@@ -24,7 +24,7 @@ public class SlideMenuItem implements Resourceble {
 
     @Override
     public ContentSettingsFragment.type getType() {
-        return  this.type;
+        return this.type;
     }
 
     public void setImageRes(int imageRes) {

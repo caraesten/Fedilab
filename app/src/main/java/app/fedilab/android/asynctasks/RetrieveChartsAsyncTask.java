@@ -41,7 +41,7 @@ public class RetrieveChartsAsyncTask extends AsyncTask<Void, Void, Void> {
     private Date dateIni;
     private Date dateEnd;
 
-    public RetrieveChartsAsyncTask(Context context, Date dateIni, Date dateEnd, OnRetrieveChartsInterface onRetrieveChartsInterface){
+    public RetrieveChartsAsyncTask(Context context, Date dateIni, Date dateEnd, OnRetrieveChartsInterface onRetrieveChartsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveChartsInterface;
         this.dateIni = dateIni;

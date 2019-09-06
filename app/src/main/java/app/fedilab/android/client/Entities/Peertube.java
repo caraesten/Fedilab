@@ -47,8 +47,8 @@ public class Peertube {
     private boolean commentsEnabled;
     private boolean sensitive;
     private HashMap<Integer, String> category;
-    private HashMap<Integer, String>  license;
-    private HashMap<String, String>  language;
+    private HashMap<Integer, String> license;
+    private HashMap<String, String> language;
     private HashMap<Integer, String> privacy;
     private HashMap<String, String> channelForUpdate;
     private String myRating = "none";
@@ -175,37 +175,38 @@ public class Peertube {
     }
 
     public String getFileUrl(String resolution) {
-        if( resolution == null)
+        if (resolution == null)
             resolution = this.getResolution().get(0);
-        if(resolution == null)
+        if (resolution == null)
             return null;
-        return "https://" + this.host + "/static/webseed/" + getUuid()+ "-" + resolution + ".mp4";
+        return "https://" + this.host + "/static/webseed/" + getUuid() + "-" + resolution + ".mp4";
     }
 
 
     public String getTorrentUrl(String resolution) {
-        if( resolution == null)
+        if (resolution == null)
             resolution = this.getResolution().get(0);
-        if(resolution == null)
+        if (resolution == null)
             return null;
-        return "https://" + this.host + "/static/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+        return "https://" + this.host + "/static/torrents/" + getUuid() + "-" + resolution + ".torrent";
 
     }
 
     public String getTorrentDownloadUrl(String resolution) {
-        if( resolution == null)
+        if (resolution == null)
             resolution = this.getResolution().get(0);
-        if(resolution == null)
+        if (resolution == null)
             return null;
-        return "https://" + this.host + "/download/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+        return "https://" + this.host + "/download/torrents/" + getUuid() + "-" + resolution + ".torrent";
 
     }
+
     public String getFileDownloadUrl(String resolution) {
-        if( resolution == null)
+        if (resolution == null)
             resolution = this.getResolution().get(0);
-        if(resolution == null)
+        if (resolution == null)
             return null;
-        return "https://" + this.host + "/download/videos/" + getUuid()+ "-" + resolution + ".mp4";
+        return "https://" + this.host + "/download/videos/" + getUuid() + "-" + resolution + ".mp4";
     }
 
     public List<String> getResolution() {
@@ -247,8 +248,6 @@ public class Peertube {
     public void setSensitive(boolean sensitive) {
         this.sensitive = sensitive;
     }
-
-
 
 
     public String getMyRating() {

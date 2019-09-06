@@ -13,10 +13,10 @@ package app.fedilab.android.services;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -58,13 +58,13 @@ public class PeertubeUploadReceiver extends UploadServiceBroadcastReceiver {
         try {
             JSONObject response = new JSONObject(serverResponse.getBodyAsString());
 
-            if( !response.has("video")){ //IT's not from Peertube
+            if (!response.has("video")) { //IT's not from Peertube
                 ArrayList<String> file = uploadInfo.getSuccessfullyUploadedFiles();
                 Intent addMedia = new Intent(Helper.INTENT_ADD_UPLOADED_MEDIA);
                 addMedia.putExtra("response", serverResponse.getBodyAsString());
                 addMedia.putStringArrayListExtra("uploadInfo", file);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(addMedia);
-            }else{
+            } else {
                 String videoID = response.getJSONObject("video").get("id").toString();
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();

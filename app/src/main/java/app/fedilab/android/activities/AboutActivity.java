@@ -22,8 +22,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -78,7 +80,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -92,10 +94,10 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -110,7 +112,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 }
             });
             toolbar_title.setText(R.string.action_about);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, AboutActivity.this);
             }
@@ -121,7 +123,8 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
-        } catch (PackageManager.NameNotFoundException ignored) {}
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
 
         ExpandableHeightListView lv_developers = findViewById(R.id.lv_developers);
         ExpandableHeightListView lv_designers = findViewById(R.id.lv_designers);
@@ -143,11 +146,11 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
 
 
         about_code.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://framagit.org/tom79/fedilab"));
-               startActivity(browserIntent);
-           }
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://framagit.org/tom79/fedilab"));
+                startActivity(browserIntent);
+            }
         });
 
         about_thekinrar.setOnClickListener(new View.OnClickListener() {
@@ -203,9 +206,9 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
-        if(BuildConfig.DONATIONS){
+        if (BuildConfig.DONATIONS) {
             about_support.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             about_support.setVisibility(View.GONE);
         }
 
@@ -218,12 +221,11 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             }
         });
 
-        if(BuildConfig.DONATIONS){
+        if (BuildConfig.DONATIONS) {
             paypal.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             paypal.setVisibility(View.GONE);
         }
-
 
 
         TextView about_website = findViewById(R.id.about_website);
@@ -234,9 +236,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
-
-
-
 
 
         setTitle(R.string.action_about);
@@ -254,14 +253,14 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         accountSearchWebAdapterUxUiDesigners = new AccountSearchDevAdapter(uxuidesigners);
         lv_ux.setAdapter(accountSearchWebAdapterUxUiDesigners);
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "framapiaf.org", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else{
+        } else {
             SpannableString name = new SpannableString("@fedilab@framapiaf.org");
             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
             txt_developers.setText(name);
@@ -321,13 +320,13 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
     @Override
     public void onRetrieveRemoteAccount(Results results) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        if( results == null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (results == null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();
         Account account;
-        if( accounts != null && accounts.size() > 0){
+        if (accounts != null && accounts.size() > 0) {
             account = accounts.get(0);
             account.setFollowing(true);
             switch (account.getUsername()) {
@@ -348,32 +347,32 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                     accountSearchWebAdapterContributors.notifyDataSetChanged();
                     break;
             }
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( developers != null){
-            for(Account account: developers){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (developers != null) {
+            for (Account account : developers) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-        if( designers != null){
-            for(Account account: designers){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (designers != null) {
+            for (Account account : designers) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-        if( contributors != null){
-            for(Account account: contributors){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (contributors != null) {
+            for (Account account : contributors) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-        if( uxuidesigners != null){
-            for(Account account: uxuidesigners){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (uxuidesigners != null) {
+            for (Account account : uxuidesigners) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -382,32 +381,32 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
-        if( error != null){
+        if (error != null) {
             return;
         }
-        for( int i = 0 ; i < developers.size() ; i++){
-            if( developers.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < developers.size(); i++) {
+            if (developers.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())) {
                 developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                 break;
             }
         }
-        for( int i = 0 ; i < designers.size() ; i++){
-            if( designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < designers.size(); i++) {
+            if (designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())) {
                 designers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDesigner.notifyDataSetChanged();
                 break;
             }
         }
-        for( int i = 0 ; i < contributors.size() ; i++){
-            if( contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < contributors.size(); i++) {
+            if (contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())) {
                 contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterContributors.notifyDataSetChanged();
                 break;
             }
         }
-        for( int i = 0 ; i < uxuidesigners.size() ; i++){
-            if( uxuidesigners.get(i).getId() != null && uxuidesigners.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < uxuidesigners.size(); i++) {
+            if (uxuidesigners.get(i).getId() != null && uxuidesigners.get(i).getId().equals(relationship.getId())) {
                 uxuidesigners.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterUxUiDesigners.notifyDataSetChanged();
                 break;

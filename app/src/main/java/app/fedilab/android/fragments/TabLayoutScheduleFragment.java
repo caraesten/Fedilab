@@ -15,12 +15,16 @@ package app.fedilab.android.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,14 +42,13 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 public class TabLayoutScheduleFragment extends Fragment {
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.tablayout_toots, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_server)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_client)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog)));
@@ -54,7 +57,7 @@ public class TabLayoutScheduleFragment extends Fragment {
                 (getChildFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -91,13 +94,13 @@ public class TabLayoutScheduleFragment extends Fragment {
                 case 0:
                     DisplayScheduledTootsFragment displayScheduledTootsFragment;
                     Bundle bundle;
-                    if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.SERVER);
                         displayScheduledTootsFragment.setArguments(bundle);
                         return displayScheduledTootsFragment;
-                    }else {
+                    } else {
                         displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
@@ -105,13 +108,13 @@ public class TabLayoutScheduleFragment extends Fragment {
                         return displayScheduledTootsFragment;
                     }
                 case 1:
-                    if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
                         displayScheduledTootsFragment.setArguments(bundle);
                         return displayScheduledTootsFragment;
-                    }else {
+                    } else {
                         displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.BOOST);

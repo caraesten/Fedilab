@@ -9,7 +9,6 @@ import android.text.style.LineBackgroundSpan;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *
  * Original work from @heath-borders: https://stackoverflow.com/a/29114976/3197259
  */
 public class CustomQuoteSpan implements LeadingMarginSpan, LineBackgroundSpan {

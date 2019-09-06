@@ -31,7 +31,7 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 
 public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action{
+    public enum action {
         GET_LIST,
         GET_LIST_TIMELINE,
         GET_LIST_ACCOUNT,
@@ -56,7 +56,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     private int limit;
     private String search;
 
-    public ManageListsAsyncTask(Context context, action apiAction, String[] accountsId, String targetedId, String listId, String title, OnListActionInterface onListActionInterface){
+    public ManageListsAsyncTask(Context context, action apiAction, String[] accountsId, String targetedId, String listId, String title, OnListActionInterface onListActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onListActionInterface;
         this.listId = listId;
@@ -66,7 +66,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedId = targetedId;
     }
 
-    public ManageListsAsyncTask(Context context, String listId, String max_id, String since_id, OnListActionInterface onListActionInterface){
+    public ManageListsAsyncTask(Context context, String listId, String max_id, String since_id, OnListActionInterface onListActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onListActionInterface;
         this.listId = listId;
@@ -76,7 +76,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.apiAction = action.GET_LIST_TIMELINE;
     }
 
-    public ManageListsAsyncTask(Context context, String search, OnListActionInterface onListActionInterface){
+    public ManageListsAsyncTask(Context context, String search, OnListActionInterface onListActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onListActionInterface;
         this.search = search;
@@ -87,21 +87,21 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         if (apiAction == action.GET_LIST) {
             apiResponse = new API(contextReference.get()).getLists();
-        }else if(apiAction == action.GET_LIST_TIMELINE){
+        } else if (apiAction == action.GET_LIST_TIMELINE) {
             apiResponse = new API(contextReference.get()).getListTimeline(this.listId, this.max_id, this.since_id, this.limit);
-        }else if(apiAction == action.GET_LIST_ACCOUNT){
-            apiResponse = new API(contextReference.get()).getAccountsInList(this.listId,0);
-        }else if( apiAction == action.CREATE_LIST){
+        } else if (apiAction == action.GET_LIST_ACCOUNT) {
+            apiResponse = new API(contextReference.get()).getAccountsInList(this.listId, 0);
+        } else if (apiAction == action.CREATE_LIST) {
             apiResponse = new API(contextReference.get()).createList(this.title);
-        }else if(apiAction == action.DELETE_LIST){
+        } else if (apiAction == action.DELETE_LIST) {
             statusCode = new API(contextReference.get()).deleteList(this.listId);
-        }else if(apiAction == action.UPDATE_LIST){
+        } else if (apiAction == action.UPDATE_LIST) {
             apiResponse = new API(contextReference.get()).updateList(this.listId, this.title);
-        }else if(apiAction == action.ADD_USERS){
+        } else if (apiAction == action.ADD_USERS) {
             apiResponse = new API(contextReference.get()).addAccountToList(this.listId, this.accountsId);
-        }else if(apiAction == action.DELETE_USERS){
+        } else if (apiAction == action.DELETE_USERS) {
             statusCode = new API(contextReference.get()).deleteAccountFromList(this.listId, this.accountsId);
-        }else if( apiAction == action.SEARCH_USER){
+        } else if (apiAction == action.SEARCH_USER) {
             apiResponse = new API(contextReference.get()).searchAccounts(this.search, 20, true);
         }
         return null;

@@ -44,7 +44,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     private DisplayNotificationsFragment.Type type;
     private Error error;
 
-    public RetrieveMissingNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications){
+    public RetrieveMissingNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications) {
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingNotifications;
@@ -59,7 +59,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
         error = apiResponse.getError();
         since_id = apiResponse.getSince_id();
         notifications = apiResponse.getNotifications();
-        if( notifications != null && notifications.size() > 0) {
+        if (notifications != null && notifications.size() > 0) {
             MainActivity.lastNotificationId = notifications.get(0).getId();
         }
         return null;
@@ -67,7 +67,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
 
     @Override
     protected void onPostExecute(Void result) {
-        if( error == null)
+        if (error == null)
             listener.onRetrieveMissingNotifications(notifications);
     }
 }

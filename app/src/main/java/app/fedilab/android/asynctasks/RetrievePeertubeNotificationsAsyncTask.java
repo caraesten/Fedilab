@@ -40,7 +40,7 @@ public class RetrievePeertubeNotificationsAsyncTask extends AsyncTask<Void, Void
     private OnRetrievePeertubeNotificationsInterface listener;
     private WeakReference<Context> contextReference;
 
-    public RetrievePeertubeNotificationsAsyncTask(Context context, Account account, String max_id, OnRetrievePeertubeNotificationsInterface onRetrievePeertubeNotificationsInterface){
+    public RetrievePeertubeNotificationsAsyncTask(Context context, Account account, String max_id, OnRetrievePeertubeNotificationsInterface onRetrievePeertubeNotificationsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrievePeertubeNotificationsInterface;
@@ -51,11 +51,11 @@ public class RetrievePeertubeNotificationsAsyncTask extends AsyncTask<Void, Void
     @Override
     protected Void doInBackground(Void... params) {
         PeertubeAPI api;
-        if( account == null) {
+        if (account == null) {
             api = new PeertubeAPI(this.contextReference.get());
             apiResponse = api.getNotifications(max_id);
-        }else {
-            if( this.contextReference.get() == null) {
+        } else {
+            if (this.contextReference.get() == null) {
                 apiResponse.setError(new Error());
                 return null;
             }

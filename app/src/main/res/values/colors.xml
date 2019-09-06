@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources tools:ignore="PrivateResource" xmlns:tools="http://schemas.android.com/tools">
-    
+
 
     <!-- Header Profile-->
     <color name="header1">#0288D1</color>
@@ -99,10 +99,6 @@
     <color name="black_link_toot">#27a7fc</color>
     <color name="dark_link_toot">#27a7fc</color>
     <color name="light_link_toot">#27a7fc</color>
-
-
-
-
 
 
     <color name="neutral_thumbs">#606984</color>

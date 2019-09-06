@@ -13,6 +13,7 @@ package app.fedilab.android.services;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,6 @@ import java.util.Set;
 
 /**
  * Original work from https://stackoverflow.com/a/25873554
- *
  */
 public class NetworkStateReceiver extends BroadcastReceiver {
 
@@ -39,16 +39,16 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent == null || intent.getExtras() == null)
+        if (intent == null || intent.getExtras() == null)
             return;
 
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert manager != null;
         NetworkInfo ni = manager.getActiveNetworkInfo();
 
-        if(ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+        if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
             connected = true;
-        } else if(intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY,Boolean.FALSE)) {
+        } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
             connected = false;
         }
 
@@ -57,15 +57,15 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
 
     private void notifyStateToAll() {
-        for(NetworkStateReceiverListener listener : listeners)
+        for (NetworkStateReceiverListener listener : listeners)
             notifyState(listener);
     }
 
     private void notifyState(NetworkStateReceiverListener listener) {
-        if(connected == null || listener == null)
+        if (connected == null || listener == null)
             return;
 
-        if(connected)
+        if (connected)
             listener.networkAvailable();
         else
             listener.networkUnavailable();
@@ -82,6 +82,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
     public interface NetworkStateReceiverListener {
         void networkAvailable();
+
         void networkUnavailable();
     }
 }

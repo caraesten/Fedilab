@@ -29,10 +29,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +97,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -108,13 +110,13 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             default:
                 setTheme(R.style.AppThemeDark);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -126,7 +128,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 }
             });
             toolbar_title.setText(R.string.upload_video);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeUploadActivity.this);
             }
@@ -151,13 +153,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IVDEO && resultCode == Activity.RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;
             }
             set_upload_submit.setEnabled(true);
@@ -180,7 +181,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             } else if (uriString.startsWith("file://")) {
                 filename = myFile.getName();
             }
-            if( filename != null) {
+            if (filename != null) {
                 set_upload_file_name.setVisibility(View.VISIBLE);
                 set_upload_file_name.setText(filename);
             }
@@ -206,8 +207,8 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
 
     @Override
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
-            if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
+        if (apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0) {
+            if (apiResponse.getError() != null && apiResponse.getError().getError() != null)
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -217,10 +218,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         //Populate channels
         List<Account> accounts = apiResponse.getAccounts();
         String[] channelName = new String[accounts.size()];
-        String[] channelId= new String[accounts.size()];
+        String[] channelId = new String[accounts.size()];
         int i = 0;
-        for(Account account: accounts){
-            channels.put(account.getUsername(),account.getId());
+        for (Account account : accounts) {
+            channels.put(account.getUsername(), account.getId());
             channelName[i] = account.getUsername();
             channelId[i] = account.getId();
             i++;
@@ -233,11 +234,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_channel.setAdapter(adapterChannel);
 
         LinkedHashMap<String, String> translations = null;
-        if( peertubeInformation.getTranslations() != null)
+        if (peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
         LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
-        Map.Entry<Integer,String> entryInt = privaciesInit.entrySet().iterator().next();
+        Map.Entry<Integer, String> entryInt = privaciesInit.entrySet().iterator().next();
         privacyToSend = new HashMap<>();
         privacyToSend.put(entryInt.getKey(), entryInt.getValue());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -246,11 +247,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         Iterator it = privacies.entrySet().iterator();
         i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                privaciesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] =  translations.get((String)pair.getValue());
+                privaciesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
@@ -267,10 +268,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         privacyToSend = new HashMap<>();
-                        privacyToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        privacyToSend.put((Integer) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();
@@ -300,11 +301,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                     String[] mimetypes = {"video/*"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IVDEO);
-                }else {
+                } else {
                     intent.setType("video/*");
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
                     startActivityForResult(chooserIntent, PICK_IVDEO);
                 }
 
@@ -319,10 +320,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         channelToSend = new HashMap<>();
-                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        channelToSend.put((String) pair.getKey(), (String) pair.getValue());
 
                         break;
                     }
@@ -334,7 +335,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( uri != null) {
+                if (uri != null) {
                     Map.Entry<String, String> channelM = channelToSend.entrySet().iterator().next();
                     String idChannel = channelM.getValue();
                     Map.Entry<Integer, String> privacyM = privacyToSend.entrySet().iterator().next();
@@ -344,7 +345,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                         String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                         UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
-                        Intent in = new Intent(getApplicationContext(), PeertubeEditUploadActivity.class );
+                        Intent in = new Intent(getApplicationContext(), PeertubeEditUploadActivity.class);
                         PendingIntent clickIntent = PendingIntent.getActivity(getApplicationContext(), 1, in, PendingIntent.FLAG_UPDATE_CURRENT);
                         uploadConfig
                                 .setClearOnActionForAllStatuses(true);
@@ -359,7 +360,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         String uploadId = UUID.randomUUID().toString();
                         uploadReceiver.setUploadID(uploadId);
                         new MultipartUploadRequest(PeertubeUploadActivity.this, uploadId, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
-                                .addFileToUpload(uri.toString().replace("file://",""), "videofile")
+                                .addFileToUpload(uri.toString().replace("file://", ""), "videofile")
                                 .addHeader("Authorization", "Bearer " + token)
                                 .setNotificationConfig(uploadConfig)
                                 .addParameter("name", filename)
@@ -370,7 +371,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                                 .addParameter("waitTranscoding", "true")
                                 .setMaxRetries(2)
                                 .startUpload();
-                                finish();
+                        finish();
                     } catch (Exception exc) {
                         exc.printStackTrace();
                     }
@@ -378,7 +379,6 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             }
         });
     }
-
 
 
     @Override

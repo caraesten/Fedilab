@@ -57,12 +57,14 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.exifinterface.media.ExifInterface;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -72,6 +74,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -246,7 +249,7 @@ import static app.fedilab.android.activities.BaseMainActivity.filters;
 public class Helper {
 
 
-    public static  final String TAG = "mastodon_etalab";
+    public static final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String OAUTH_SCOPES_ADMIN = "read write follow admin:read admin:write admin";
@@ -359,13 +362,13 @@ public class Helper {
     public static final String SET_CLEAR_CACHE_EXIT = "set_clear_cache_exit";
     public static final String SET_DISPLAY_EMOJI = "set_display_emoji";
     public static final String SET_DISPLAY_CARD = "set_display_card";
-    public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
+    public static final String SET_DISPLAY_VIDEO_PREVIEWS = "set_display_video_previews";
     public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
     public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
     public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
-    public static final String SET_FEATURED_TAGS ="set_featured_tags";
-    public static final String SET_SEND_CRASH_REPORTS ="set_send_crash_reports";
-    public static final String SET_FEATURED_TAG_ACTION ="set_featured_tag_action";
+    public static final String SET_FEATURED_TAGS = "set_featured_tags";
+    public static final String SET_SEND_CRASH_REPORTS = "set_send_crash_reports";
+    public static final String SET_FEATURED_TAG_ACTION = "set_featured_tag_action";
     public static final String SET_HIDE_DELETE_BUTTON_ON_TAB = "set_hide_delete_notification_on_tab";
     public static final String SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL = "set_retrieve_metadata_share_from_extras";
     public static final String SET_BLUR_SENSITIVE = "set_blur_sensitive";
@@ -465,7 +468,6 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
-
     //Proxy
     public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
     public static final String SET_PROXY_TYPE = "set_proxy_type";
@@ -522,15 +524,16 @@ public class Helper {
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
     public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
+
     //Event Type
-    public enum EventStreaming{
+    public enum EventStreaming {
         UPDATE,
         NOTIFICATION,
         DELETE,
         NONE
     }
 
-    public enum NotifType{
+    public enum NotifType {
         FOLLLOW,
         MENTION,
         BOOST,
@@ -542,10 +545,10 @@ public class Helper {
     }
 
 
-
     /**
      * Converts emojis in input to unicode
-     * @param input String
+     *
+     * @param input               String
      * @param removeIfUnsupported boolean
      * @return String
      */
@@ -572,6 +575,7 @@ public class Helper {
         }
         return input;
     }
+
     //Emoji manager
     private static Map<String, String> emoji = new HashMap<>();
 
@@ -579,22 +583,23 @@ public class Helper {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("emoji.csv")));
             String line;
-            while( (line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String str[] = line.split(",");
                 String unicode = null;
-                if(str.length == 2)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16)}, 0, 1);
-                else if(str.length == 3)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16)}, 0, 2);
-                else if(str.length == 4)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16)}, 0, 3);
-                else if(str.length == 5)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16), Integer.parseInt(str[4].replace("0x","").trim(), 16)}, 0, 4);
-                if( unicode != null)
-                    emoji.put(str[0],unicode);
+                if (str.length == 2)
+                    unicode = new String(new int[]{Integer.parseInt(str[1].replace("0x", "").trim(), 16)}, 0, 1);
+                else if (str.length == 3)
+                    unicode = new String(new int[]{Integer.parseInt(str[1].replace("0x", "").trim(), 16), Integer.parseInt(str[2].replace("0x", "").trim(), 16)}, 0, 2);
+                else if (str.length == 4)
+                    unicode = new String(new int[]{Integer.parseInt(str[1].replace("0x", "").trim(), 16), Integer.parseInt(str[2].replace("0x", "").trim(), 16), Integer.parseInt(str[3].replace("0x", "").trim(), 16)}, 0, 3);
+                else if (str.length == 5)
+                    unicode = new String(new int[]{Integer.parseInt(str[1].replace("0x", "").trim(), 16), Integer.parseInt(str[2].replace("0x", "").trim(), 16), Integer.parseInt(str[3].replace("0x", "").trim(), 16), Integer.parseInt(str[4].replace("0x", "").trim(), 16)}, 0, 4);
+                if (unicode != null)
+                    emoji.put(str[0], unicode);
             }
             br.close();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     /***
@@ -603,10 +608,10 @@ public class Helper {
      */
     public static boolean isConnectedToInternet(Context context, String instance) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if( cm == null)
+        if (cm == null)
             return true;
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        if ( ni != null && ni.isConnected()) {
+        if (ni != null && ni.isConnected()) {
             try {
                 InetAddress ipAddr = InetAddress.getByName(instance);
                 return !ipAddr.toString().equals("");
@@ -620,17 +625,19 @@ public class Helper {
 
     /**
      * Returns boolean depending if the user is authenticated
+     *
      * @param context Context
      * @return boolean
      */
     public static boolean isLoggedIn(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
-        return ( prefKeyOauthTokenT != null);
+        return (prefKeyOauthTokenT != null);
     }
 
     /**
      * Log out the authenticated user by removing its token
+     *
      * @param context Context
      */
     public static void logout(Context context) {
@@ -649,6 +656,7 @@ public class Helper {
 
     /**
      * Log out the authenticated user by removing its token
+     *
      * @param activity Activity
      */
     public static void logoutCurrentUser(Activity activity) {
@@ -659,13 +667,13 @@ public class Helper {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(activity));
         Account account = new AccountDAO(activity, db).getUniqAccount(userId, instance);
-        if( account != null) {
+        if (account != null) {
             account.setToken("null");
             new AccountDAO(activity, db).updateAccount(account);
         }
         Account newAccount = new AccountDAO(activity, db).getLastUsedAccount();
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        if( newAccount == null){
+        if (newAccount == null) {
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             editor.putString(Helper.CLIENT_ID, null);
             editor.putString(Helper.CLIENT_SECRET, null);
@@ -675,7 +683,7 @@ public class Helper {
             editor.putString(Helper.PREF_INSTANCE, null);
             editor.putString(Helper.ID, null);
             editor.apply();
-        }else{
+        } else {
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, newAccount.getToken());
             editor.putString(Helper.PREF_KEY_ID, newAccount.getId());
             editor.putString(Helper.PREF_INSTANCE, newAccount.getInstance().trim());
@@ -694,8 +702,9 @@ public class Helper {
 
     /**
      * Convert String date from Mastodon
+     *
      * @param context Context
-     * @param date String
+     * @param date    String
      * @return Date
      */
     public static Date mstStringToDate(Context context, String date) throws ParseException {
@@ -706,7 +715,7 @@ public class Helper {
         Locale local = Locale.getDefault();
         if (!date.contains("+")) {
             STRING_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        } else{ //GNU date format
+        } else { //GNU date format
             STRING_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             local = Locale.ENGLISH;
         }
@@ -715,7 +724,7 @@ public class Helper {
         simpleDateFormat.setLenient(true);
         try {
             return simpleDateFormat.parse(date);
-        }catch (Exception e){
+        } catch (Exception e) {
             String newdate = date.split("\\+")[0].trim();
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", local);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
@@ -726,13 +735,14 @@ public class Helper {
 
     /**
      * Convert String date from Mastodon
+     *
      * @param context Context
-     * @param date String
+     * @param date    String
      * @return Date
      */
     public static Date opencollectivetStringToDate(Context context, String date) throws ParseException {
         Locale userLocale;
-        if (date == null )
+        if (date == null)
             return null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             userLocale = context.getResources().getConfiguration().getLocales().get(0);
@@ -750,30 +760,33 @@ public class Helper {
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     *
      * @param date Date
      * @return String
      */
     public static String dateToString(Date date) {
-        if( date == null)
+        if (date == null)
             return null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return dateFormat.format(date);
     }
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     *
      * @param date Date
      * @return String
      */
     public static String dateToStringPoll(Date date) {
-        if( date == null)
+        if (date == null)
             return null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm",Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
         return dateFormat.format(date);
     }
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     *
      * @param date Date
      * @return String
      */
@@ -784,8 +797,9 @@ public class Helper {
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     *
      * @param context Context
-     * @param date Date
+     * @param date    Date
      * @return String
      */
     public static String dateFileToString(Context context, Date date) {
@@ -796,17 +810,18 @@ public class Helper {
             //noinspection deprecation
             userLocale = context.getResources().getConfiguration().locale;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss",userLocale);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", userLocale);
         return dateFormat.format(date);
     }
 
     /**
      * Convert String date from db to Date Object
+     *
      * @param stringDate date to convert
      * @return Date
      */
     public static Date stringToDate(Context context, String stringDate) {
-        if( stringDate == null)
+        if (stringDate == null)
             return null;
         Locale userLocale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -815,7 +830,7 @@ public class Helper {
             //noinspection deprecation
             userLocale = context.getResources().getConfiguration().locale;
         }
-        SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",userLocale);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", userLocale);
         Date date = null;
         try {
             date = dateFormat.parse(stringDate);
@@ -827,8 +842,9 @@ public class Helper {
 
     /**
      * Converts a Date date into a date-time string (SHORT format for both)
+     *
      * @param context Context
-     * @param date to be converted
+     * @param date    to be converted
      * @return String
      */
 
@@ -849,10 +865,11 @@ public class Helper {
 
     /**
      * Makes the tvDate TextView field clickable, and displays the absolute date & time of a toot
-     *  for 5 seconds.
+     * for 5 seconds.
+     *
      * @param context Context
-     * @param tvDate TextView
-     * @param date Date
+     * @param tvDate  TextView
+     * @param date    Date
      */
 
     public static void absoluteDateTimeReveal(final Context context, final TextView tvDate, final Date date) {
@@ -877,6 +894,7 @@ public class Helper {
 
     /**
      * Check if WIFI is opened
+     *
      * @param context Context
      * @return boolean
      */
@@ -888,11 +906,11 @@ public class Helper {
     }
 
 
-    public static String dateDiffFull(Date dateToot){
+    public static String dateDiffFull(Date dateToot) {
         SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, Locale.getDefault());
         try {
             return df.format(dateToot);
-        }catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
     }
@@ -903,7 +921,7 @@ public class Helper {
      * @param dateToot Date
      * @return String
      */
-    public static String dateDiff(Context context, Date dateToot){
+    public static String dateDiff(Context context, Date dateToot) {
         Date now = new Date();
         long diff = now.getTime() - dateToot.getTime();
         long seconds = diff / 1000;
@@ -914,19 +932,19 @@ public class Helper {
         long years = days / 365;
 
         String format = DateFormat.getDateInstance(DateFormat.SHORT).format(dateToot);
-        if( years > 0 ) {
+        if (years > 0) {
             return format;
-        } else if( months > 0 || days > 7) {
+        } else if (months > 0 || days > 7) {
             //Removes the year depending of the locale from DateFormat.SHORT format
             SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
             df.applyPattern(df.toPattern().replaceAll("[^\\p{Alpha}]*y+[^\\p{Alpha}]*", ""));
             return df.format(dateToot);
-        }else if( days > 0 )
+        } else if (days > 0)
             return context.getString(R.string.date_day, days);
-        else if(hours > 0)
-            return context.getResources().getString(R.string.date_hours, (int)hours);
-        else if(minutes > 0)
-            return context.getResources().getString(R.string.date_minutes, (int)minutes);
+        else if (hours > 0)
+            return context.getResources().getString(R.string.date_hours, (int) hours);
+        else if (minutes > 0)
+            return context.getResources().getString(R.string.date_minutes, (int) minutes);
         else {
             if (seconds < 0)
                 seconds = 0;
@@ -940,92 +958,89 @@ public class Helper {
      * @param statusCode int the status code
      * @param statusAction API.StatusAction the initial action
      */
-    public static void manageMessageStatusCode(Context context, int statusCode, API.StatusAction statusAction){
+    public static void manageMessageStatusCode(Context context, int statusCode, API.StatusAction statusAction) {
         String message = "";
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
-        if( !display_confirm){
+        if (!display_confirm) {
             return;
         }
-        if( statusCode >= 200 && statusCode < 400 ){
-            if( statusAction == API.StatusAction.BLOCK){
+        if (statusCode >= 200 && statusCode < 400) {
+            if (statusAction == API.StatusAction.BLOCK) {
                 message = context.getString(R.string.toast_block);
-            }else if(statusAction == API.StatusAction.UNBLOCK){
+            } else if (statusAction == API.StatusAction.UNBLOCK) {
                 message = context.getString(R.string.toast_unblock);
-            }else if(statusAction == API.StatusAction.REBLOG){
+            } else if (statusAction == API.StatusAction.REBLOG) {
                 message = context.getString(R.string.toast_reblog);
-            }else if(statusAction == API.StatusAction.UNREBLOG){
+            } else if (statusAction == API.StatusAction.UNREBLOG) {
                 message = context.getString(R.string.toast_unreblog);
-            }else if(statusAction == API.StatusAction.MUTE){
+            } else if (statusAction == API.StatusAction.MUTE) {
                 message = context.getString(R.string.toast_mute);
-            }else if(statusAction == API.StatusAction.UNMUTE){
+            } else if (statusAction == API.StatusAction.UNMUTE) {
                 message = context.getString(R.string.toast_unmute);
-            }else if(statusAction == API.StatusAction.MUTE_CONVERSATION){
+            } else if (statusAction == API.StatusAction.MUTE_CONVERSATION) {
                 message = context.getString(R.string.toast_mute_conversation);
-            }else if(statusAction == API.StatusAction.UNMUTE_CONVERSATION){
+            } else if (statusAction == API.StatusAction.UNMUTE_CONVERSATION) {
                 message = context.getString(R.string.toast_unmute_conversation);
-            }else if(statusAction == API.StatusAction.FOLLOW){
+            } else if (statusAction == API.StatusAction.FOLLOW) {
                 message = context.getString(R.string.toast_follow);
-            }else if(statusAction == API.StatusAction.UNFOLLOW){
+            } else if (statusAction == API.StatusAction.UNFOLLOW) {
                 message = context.getString(R.string.toast_unfollow);
-            }else if(statusAction == API.StatusAction.FAVOURITE){
+            } else if (statusAction == API.StatusAction.FAVOURITE) {
                 message = context.getString(R.string.toast_favourite);
-            }else if(statusAction == API.StatusAction.UNFAVOURITE){
+            } else if (statusAction == API.StatusAction.UNFAVOURITE) {
                 message = context.getString(R.string.toast_unfavourite);
-            }else if(statusAction == API.StatusAction.PIN){
+            } else if (statusAction == API.StatusAction.PIN) {
                 message = context.getString(R.string.toast_pin);
-            }else if (statusAction == API.StatusAction.UNPIN){
+            } else if (statusAction == API.StatusAction.UNPIN) {
                 message = context.getString(R.string.toast_unpin);
-            }else if(statusAction == API.StatusAction.REPORT){
+            } else if (statusAction == API.StatusAction.REPORT) {
                 message = context.getString(R.string.toast_report);
-            }else if(statusAction == API.StatusAction.UNSTATUS){
+            } else if (statusAction == API.StatusAction.UNSTATUS) {
                 message = context.getString(R.string.toast_unstatus);
-            }else if(statusAction == API.StatusAction.UNENDORSE){
+            } else if (statusAction == API.StatusAction.UNENDORSE) {
                 message = context.getString(R.string.toast_unendorse);
-            }else if(statusAction == API.StatusAction.ENDORSE){
+            } else if (statusAction == API.StatusAction.ENDORSE) {
                 message = context.getString(R.string.toast_endorse);
-            }else if(statusAction == API.StatusAction.SHOW_BOOST){
+            } else if (statusAction == API.StatusAction.SHOW_BOOST) {
                 message = context.getString(R.string.toast_show_boost);
-            }else if(statusAction == API.StatusAction.HIDE_BOOST){
+            } else if (statusAction == API.StatusAction.HIDE_BOOST) {
                 message = context.getString(R.string.toast_hide_boost);
-            }else if(statusAction == API.StatusAction.BLOCK_DOMAIN){
+            } else if (statusAction == API.StatusAction.BLOCK_DOMAIN) {
                 message = context.getString(R.string.toast_block_domain);
             }
 
-        }else {
+        } else {
             message = context.getString(R.string.toast_error);
         }
-        if( !message.trim().equals(""))
+        if (!message.trim().equals(""))
             Toasty.success(context, message, Toast.LENGTH_LONG).show();
     }
 
 
-
-
-
-
     /**
      * Manage downloads with URLs
+     *
      * @param context Context
-     * @param url String download url
+     * @param url     String download url
      */
-    public static void manageDownloads(final Context context, final String url){
+    public static void manageDownloads(final Context context, final String url) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
         final DownloadManager.Request request;
         try {
             request = new DownloadManager.Request(Uri.parse(url.trim()));
-        }catch (Exception e){
-            Toasty.error(context,context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         final String fileName = URLUtil.guessFileName(url, null, null);
@@ -1049,7 +1064,7 @@ public class Helper {
                     }
                 });
         AlertDialog alert = builder.create();
-        if( alert.getWindow() != null )
+        if (alert.getWindow() != null)
             alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         alert.show();
     }
@@ -1070,13 +1085,14 @@ public class Helper {
 
     /**
      * Sends notification with intent
+     *
      * @param context Context
-     * @param intent Intent associated to the notifcation
-     * @param icon Bitmap profile picture
-     * @param title String title of the notification
+     * @param intent  Intent associated to the notifcation
+     * @param icon    Bitmap profile picture
+     * @param title   String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, Account account, Intent intent, Bitmap icon, NotifType notifType, String title, String message ) {
+    public static void notify_user(Context context, Account account, Intent intent, Bitmap icon, NotifType notifType, String title, String message) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -1091,7 +1107,7 @@ public class Helper {
             val = String.valueOf(count);
         }*/
 
-        int notificationId = (int)System.currentTimeMillis();
+        int notificationId = (int) System.currentTimeMillis();
 
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1100,9 +1116,9 @@ public class Helper {
         String channelId;
         String channelTitle;
 
-        switch(notifType){
+        switch (notifType) {
             case BOOST:
-                channelId = "channel_boost"+account.getAcct()+"@"+account.getInstance();
+                channelId = "channel_boost" + account.getAcct() + "@" + account.getInstance();
                 channelTitle = context.getString(R.string.channel_notif_boost);
                 break;
             case FAV:
@@ -1143,12 +1159,12 @@ public class Helper {
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
         if (notifType == MENTION) {
-            if(message.length() > 500){
-                message = message.substring(0, 499)+"…";
+            if (message.length() > 500) {
+                message = message.substring(0, 499) + "…";
             }
             notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
         }
-        notificationBuilder.setGroup(account.getAcct()+"@"+account.getInstance())
+        notificationBuilder.setGroup(account.getAcct() + "@" + account.getInstance())
                 .setContentIntent(pIntent)
                 .setContentText(message);
         int ledColour = Color.BLUE;
@@ -1180,15 +1196,15 @@ public class Helper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel;
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
+            if (sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false)) {
                 channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_LOW);
                 channel.setSound(null, null);
-                channel.setVibrationPattern(new long[] { 500, 500, 500});
+                channel.setVibrationPattern(new long[]{500, 500, 500});
                 channel.enableVibration(true);
                 channel.setLightColor(ledColour);
-            }else {
+            } else {
                 channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
-                String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+                String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.boop);
                 AudioAttributes audioAttributes = new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION)
@@ -1197,11 +1213,11 @@ public class Helper {
             }
             assert mNotificationManager != null;
             mNotificationManager.createNotificationChannel(channel);
-        }else{
-            if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-                notificationBuilder.setVibrate(new long[] { 500, 500, 500});
-            }else {
-                String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+        } else {
+            if (sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false)) {
+                notificationBuilder.setVibrate(new long[]{500, 500, 500});
+            } else {
+                String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.boop);
                 notificationBuilder.setSound(Uri.parse(soundUri));
             }
             notificationBuilder.setLights(ledColour, 500, 1000);
@@ -1214,10 +1230,11 @@ public class Helper {
 
     /**
      * Manage downloads with URLs
+     *
      * @param context Context
-     * @param url String download url
+     * @param url     String download url
      */
-    public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo, boolean isSharing){
+    public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo, boolean isSharing) {
 
         final String fileName = URLUtil.guessFileName(url, null, null);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1225,13 +1242,13 @@ public class Helper {
         String mime = getMimeType(url);
         try {
             File file;
-            if( bitmap != null) {
+            if (bitmap != null) {
                 file = new File(myDir, fileName);
                 //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                if (mime != null && (mime.contains("png") || mime.contains(".PNG")))
                     bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
                 else
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
@@ -1241,7 +1258,7 @@ public class Helper {
                 fos.write(bitmapdata);
                 fos.flush();
                 fos.close();
-            }else{
+            } else {
                 File fileVideoTargeded = new File(myDir, fileName);
                 copy(fileVideo, fileVideoTargeded);
                 file = fileVideoTargeded;
@@ -1253,11 +1270,11 @@ public class Helper {
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
             intent.setDataAndType(uri, getMimeType(url));
 
-            if( !isSharing)
+            if (!isSharing)
                 Glide.with(context)
                         .asBitmap()
                         .load(preview_url)
-                        .listener(new RequestListener<Bitmap>(){
+                        .listener(new RequestListener<Bitmap>() {
 
                             @Override
                             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
@@ -1271,8 +1288,8 @@ public class Helper {
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                                 notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                                        R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                                Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                                        R.mipmap.ic_launcher), NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                Toasty.success(context, context.getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
                                 return false;
                             }
                         })
@@ -1283,13 +1300,13 @@ public class Helper {
                                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                                notify_user(context, account, intent, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                                Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                                notify_user(context, account, intent, resource, NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                Toasty.success(context, context.getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
                             }
                         });
             else {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                if( bitmap != null)
+                if (bitmap != null)
                     shareIntent.setType("image/*");
                 else
                     shareIntent.setType("video/*");
@@ -1297,12 +1314,14 @@ public class Helper {
                 shareIntent.putExtra(Intent.EXTRA_TEXT, R.string.share_with);
                 context.startActivity(shareIntent);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
 
     /**
      * Copy a file by transferring bytes from in to out
+     *
      * @param src File source file
      * @param dst File targeted file
      * @throws IOException Exception
@@ -1319,20 +1338,23 @@ public class Helper {
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
                 }
-            }catch (Exception ignored){}finally {
+            } catch (Exception ignored) {
+            } finally {
                 out.close();
             }
-        } catch (Exception ignored){}finally {
+        } catch (Exception ignored) {
+        } finally {
             in.close();
         }
     }
 
     /**
      * Returns the instance of the authenticated user
+     *
      * @param context Context
      * @return String domain instance
      */
-    public static String getLiveInstance(Context context){
+    public static String getLiveInstance(Context context) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         return sharedpreferences.getString(Helper.PREF_INSTANCE, null);
     }
@@ -1341,59 +1363,60 @@ public class Helper {
         return instanceWithProtocol(context, getLiveInstance(context));
     }
 
-    public static String instanceWithProtocol(Context context, String instance){
-        if( instance == null)
+    public static String instanceWithProtocol(Context context, String instance) {
+        if (instance == null)
             return null;
-        if( instance.endsWith(".onion")) {
+        if (instance.endsWith(".onion")) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(SET_ONION_SCHEME+instance, "http");
+            String scheme = sharedpreferences.getString(SET_ONION_SCHEME + instance, "http");
             return scheme + "://" + instance;
-        }else {
+        } else {
             return "https://" + instance;
         }
     }
 
 
-
     /**
      * Converts dp to pixel
-     * @param dp float - the value in dp to convert
+     *
+     * @param dp      float - the value in dp to convert
      * @param context Context
      * @return float - the converted value in pixel
      */
-    public static float convertDpToPixel(float dp, Context context){
+    public static float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
 
     /**
      * Toggle for the menu (ie: main menu or accounts menu)
+     *
      * @param activity Activity
      */
-    public static void menuAccounts(final Activity activity){
+    public static void menuAccounts(final Activity activity) {
 
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
         SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
-        final ImageView arrow  = navigationView.getHeaderView(0).findViewById(R.id.owner_accounts);
-        if( currrentUserId == null)
+        final ImageView arrow = navigationView.getHeaderView(0).findViewById(R.id.owner_accounts);
+        if (currrentUserId == null)
             return;
 
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
-            changeDrawableColor(activity, R.drawable.ic_person_add,R.color.dark_text);
-            changeDrawableColor(activity, R.drawable.ic_person,R.color.dark_text);
-            changeDrawableColor(activity, R.drawable.ic_cancel,R.color.dark_text);
-        }else {
-            changeDrawableColor(activity, R.drawable.ic_person_add,R.color.black);
-            changeDrawableColor(activity, R.drawable.ic_person,R.color.black);
-            changeDrawableColor(activity, R.drawable.ic_cancel,R.color.black);
+        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+            changeDrawableColor(activity, R.drawable.ic_person_add, R.color.dark_text);
+            changeDrawableColor(activity, R.drawable.ic_person, R.color.dark_text);
+            changeDrawableColor(activity, R.drawable.ic_cancel, R.color.dark_text);
+        } else {
+            changeDrawableColor(activity, R.drawable.ic_person_add, R.color.black);
+            changeDrawableColor(activity, R.drawable.ic_person, R.color.black);
+            changeDrawableColor(activity, R.drawable.ic_cancel, R.color.black);
         }
 
-        if( !menuAccountsOpened ){
+        if (!menuAccountsOpened) {
             arrow.setImageResource(R.drawable.ic_arrow_drop_up);
             SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
@@ -1402,94 +1425,94 @@ public class Helper {
             navigationView.inflateMenu(R.menu.menu_accounts);
             Menu mainMenu = navigationView.getMenu();
             SubMenu currentSubmenu = null;
-            if( accounts != null)
-            for(final Account account: accounts) {
+            if (accounts != null)
+                for (final Account account : accounts) {
 
-                if( !currrentUserId.equals(account.getId()) || !getLiveInstance(activity).equals(account.getInstance()) ) {
-                    if( !lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())){
-                        lastInstance = account.getInstance().toUpperCase();
-                        currentSubmenu = mainMenu.addSubMenu(account.getInstance().toUpperCase());
-                    }
-                    if( currentSubmenu  == null)
-                        continue;
-                    final MenuItem item = currentSubmenu.add("@" + account.getAcct());
-                    item.setIcon(R.drawable.ic_person);
-                    String url = account.getAvatar();
-                    if( url.startsWith("/") ){
-                        url = "https://" + account.getInstance() + account.getAvatar();
-                    }
-                    if(!url.equals("null"))
-                    Glide.with(navigationView.getContext())
-                            .asBitmap()
-                            .load(url)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    item.setIcon(new BitmapDrawable(activity.getResources(), resource));
-                                    item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                    if (!currrentUserId.equals(account.getId()) || !getLiveInstance(activity).equals(account.getInstance())) {
+                        if (!lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())) {
+                            lastInstance = account.getInstance().toUpperCase();
+                            currentSubmenu = mainMenu.addSubMenu(account.getInstance().toUpperCase());
+                        }
+                        if (currentSubmenu == null)
+                            continue;
+                        final MenuItem item = currentSubmenu.add("@" + account.getAcct());
+                        item.setIcon(R.drawable.ic_person);
+                        String url = account.getAvatar();
+                        if (url.startsWith("/")) {
+                            url = "https://" + account.getInstance() + account.getAvatar();
+                        }
+                        if (!url.equals("null"))
+                            Glide.with(navigationView.getContext())
+                                    .asBitmap()
+                                    .load(url)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            item.setIcon(new BitmapDrawable(activity.getResources(), resource));
+                                            item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                                        }
+                                    });
+                        else
+                            Glide.with(navigationView.getContext())
+                                    .asBitmap()
+                                    .load(R.drawable.missing_peertube)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                            item.setIcon(new BitmapDrawable(activity.getResources(), resource));
+                                            item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                                        }
+                                    });
+
+                        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                if (!activity.isFinishing()) {
+                                    menuAccountsOpened = false;
+                                    Toasty.info(activity.getApplicationContext(), activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
+                                    changeUser(activity, account.getId(), account.getInstance(), false);
+                                    arrow.setImageResource(R.drawable.ic_arrow_drop_down);
+                                    return true;
                                 }
-                            });
-                    else
-                        Glide.with(navigationView.getContext())
-                                .asBitmap()
-                                .load(R.drawable.missing_peertube)
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        item.setIcon(new BitmapDrawable(activity.getResources(), resource));
-                                        item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
-                                    }
-                                });
-
-                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            if( ! activity.isFinishing() ) {
-                                menuAccountsOpened = false;
-                                Toasty.info(activity.getApplicationContext(), activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, account.getId(), account.getInstance(), false);
-                                arrow.setImageResource(R.drawable.ic_arrow_drop_down);
-                                return true;
+                                return false;
                             }
-                            return false;
-                        }
-                    });
-                    item.setActionView(R.layout.update_account);
-                    ImageView deleteButton = item.getActionView().findViewById(R.id.account_remove_button);
-                    deleteButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                            int style;
-                            if (theme == Helper.THEME_DARK) {
-                                style = R.style.DialogDark;
-                            } else if (theme == Helper.THEME_BLACK){
-                                style = R.style.DialogBlack;
-                            }else {
-                                style = R.style.Dialog;
+                        });
+                        item.setActionView(R.layout.update_account);
+                        ImageView deleteButton = item.getActionView().findViewById(R.id.account_remove_button);
+                        deleteButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                                int style;
+                                if (theme == Helper.THEME_DARK) {
+                                    style = R.style.DialogDark;
+                                } else if (theme == Helper.THEME_BLACK) {
+                                    style = R.style.DialogBlack;
+                                } else {
+                                    style = R.style.Dialog;
+                                }
+                                new AlertDialog.Builder(activity, style)
+                                        .setTitle(activity.getString(R.string.delete_account_title))
+                                        .setMessage(activity.getString(R.string.delete_account_message, "@" + account.getAcct() + "@" + account.getInstance()))
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                new RemoveAccountAsyncTask(activity, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                                item.setVisible(false);
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
                             }
-                            new AlertDialog.Builder(activity, style)
-                                    .setTitle(activity.getString(R.string.delete_account_title))
-                                    .setMessage(activity.getString(R.string.delete_account_message, "@" + account.getAcct() + "@" + account.getInstance()))
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new RemoveAccountAsyncTask(activity, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                            item.setVisible(false);
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // do nothing
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
-                        }
-                    });
+                        });
 
+                    }
                 }
-            }
             currentSubmenu = mainMenu.addSubMenu("");
             MenuItem addItem = currentSubmenu.add(R.string.add_account);
             addItem.setIcon(R.drawable.ic_person_add);
@@ -1502,7 +1525,7 @@ public class Helper {
                     return true;
                 }
             });
-        }else{
+        } else {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
             hideMenuItem(activity, navigationView.getMenu());
@@ -1513,119 +1536,119 @@ public class Helper {
 
     }
 
-    public static void hideMenuItem(Activity activity, Menu menu){
+    public static void hideMenuItem(Activity activity, Menu menu) {
 
-        if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        if (BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             MenuItem itemCom = menu.findItem(R.id.nav_main_com);
-            if( itemCom != null)
+            if (itemCom != null)
                 itemCom.setVisible(false);
             MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
-            if( itemOpt != null)
+            if (itemOpt != null)
                 itemOpt.setVisible(false);
             MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
-            if( itemPFCom != null)
+            if (itemPFCom != null)
                 itemPFCom.setVisible(false);
 
-        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+        } else if (BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             MenuItem itemCom = menu.findItem(R.id.nav_main_com);
-            if( itemCom != null)
+            if (itemCom != null)
                 itemCom.setVisible(false);
             MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
-            if( itemOpt != null)
+            if (itemOpt != null)
                 itemOpt.setVisible(false);
             MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
-            if( itemPCom != null)
+            if (itemPCom != null)
                 itemPCom.setVisible(false);
-        }else if(  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
-            if( itemCom != null)
+            if (itemCom != null)
                 itemCom.setVisible(false);
             MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
-            if( itemPFCom != null)
+            if (itemPFCom != null)
                 itemPFCom.setVisible(false);
 
-            if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            if (BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 MenuItem nav_list = menu.findItem(R.id.nav_list);
-                if( nav_list != null)
+                if (nav_list != null)
                     nav_list.setVisible(false);
                 MenuItem nav_peertube = menu.findItem(R.id.nav_peertube);
-                if( nav_peertube != null)
+                if (nav_peertube != null)
                     nav_peertube.setVisible(false);
                 MenuItem nav_filters = menu.findItem(R.id.nav_filters);
-                if( nav_filters != null)
+                if (nav_filters != null)
                     nav_filters.setVisible(false);
                 MenuItem nav_follow_request = menu.findItem(R.id.nav_follow_request);
-                if( nav_follow_request != null)
+                if (nav_follow_request != null)
                     nav_follow_request.setVisible(false);
                 MenuItem nav_who_to_follow = menu.findItem(R.id.nav_who_to_follow);
-                if( nav_who_to_follow != null)
+                if (nav_who_to_follow != null)
                     nav_who_to_follow.setVisible(false);
                 MenuItem nav_blocked = menu.findItem(R.id.nav_blocked);
-                if( nav_blocked != null)
+                if (nav_blocked != null)
                     nav_blocked.setVisible(false);
                 MenuItem nav_muted = menu.findItem(R.id.nav_muted);
-                if( nav_muted != null)
+                if (nav_muted != null)
                     nav_muted.setVisible(false);
                 MenuItem nav_blocked_domains = menu.findItem(R.id.nav_blocked_domains);
-                if( nav_blocked_domains != null)
+                if (nav_blocked_domains != null)
                     nav_blocked_domains.setVisible(false);
-                if(BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ){
+                if (BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                     MenuItem nav_group = menu.findItem(R.id.nav_group);
-                    if( nav_group != null)
+                    if (nav_group != null)
                         nav_group.setVisible(true);
                 }
 
-            }else{
+            } else {
                 SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 MainMenuItem mainMenuItem = new MainMenuDAO(activity, db).getMainMenu();
-                if (mainMenuItem == null){
+                if (mainMenuItem == null) {
                     mainMenuItem = new MainMenuItem();
                 }
-                if( !mainMenuItem.isNav_list()){
+                if (!mainMenuItem.isNav_list()) {
                     menu.findItem(R.id.nav_list).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_archive()){
+                if (!mainMenuItem.isNav_archive()) {
                     menu.findItem(R.id.nav_archive).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_archive_notifications()){
+                if (!mainMenuItem.isNav_archive_notifications()) {
                     menu.findItem(R.id.nav_archive_notifications).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_blocked()){
+                if (!mainMenuItem.isNav_blocked()) {
                     menu.findItem(R.id.nav_blocked).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_blocked_domains()){
+                if (!mainMenuItem.isNav_blocked_domains()) {
                     menu.findItem(R.id.nav_blocked_domains).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_filters()){
+                if (!mainMenuItem.isNav_filters()) {
                     menu.findItem(R.id.nav_filters).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_how_to_follow()){
+                if (!mainMenuItem.isNav_how_to_follow()) {
                     menu.findItem(R.id.nav_who_to_follow).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_howto()){
+                if (!mainMenuItem.isNav_howto()) {
                     menu.findItem(R.id.nav_how_to).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_muted()){
+                if (!mainMenuItem.isNav_muted()) {
                     menu.findItem(R.id.nav_muted).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_news()){
+                if (!mainMenuItem.isNav_news()) {
                     menu.findItem(R.id.nav_news).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_peertube()){
+                if (!mainMenuItem.isNav_peertube()) {
                     menu.findItem(R.id.nav_peertube).setVisible(false);
                 }
-                if( !mainMenuItem.isNav_scheduled()){
+                if (!mainMenuItem.isNav_scheduled()) {
                     menu.findItem(R.id.nav_scheduled).setVisible(false);
                 }
             }
         }
         if (!BuildConfig.DONATIONS) {
             MenuItem openCollectiveItem = menu.findItem(R.id.nav_opencollective);
-            if( openCollectiveItem != null){
+            if (openCollectiveItem != null) {
                 openCollectiveItem.setVisible(false);
             }
             MenuItem partnerShipItem = menu.findItem(R.id.nav_partnership);
-            if( partnerShipItem != null){
+            if (partnerShipItem != null) {
                 partnerShipItem.setVisible(false);
             }
         }
@@ -1634,8 +1657,9 @@ public class Helper {
 
     /**
      * Changes the user in shared preferences
+     *
      * @param activity Activity
-     * @param userID String - the new user id
+     * @param userID   String - the new user id
      */
     public static void changeUser(Activity activity, String userID, String instance, boolean notificationIntent) {
 
@@ -1648,15 +1672,15 @@ public class Helper {
         hideMenuItem(activity, navigationView.getMenu());
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(activity,db).getUniqAccount(userID, instance);
+        Account account = new AccountDAO(activity, db).getUniqAccount(userID, instance);
         //Can happen when an account has been deleted and there is a click on an old notification
-        if( account == null)
+        if (account == null)
             return;
 
         String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        if( !account.getToken().equals(token)){
+        if (!account.getToken().equals(token)) {
             FragmentManager fm = activity.getFragmentManager();
-            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                 fm.popBackStack();
             }
         }
@@ -1670,7 +1694,7 @@ public class Helper {
         editor.commit();
         Intent changeAccount = new Intent(activity, MainActivity.class);
         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        if( notificationIntent)
+        if (notificationIntent)
             changeAccount.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
         activity.finish();
         activity.startActivity(changeAccount);
@@ -1704,7 +1728,7 @@ public class Helper {
         });
 
         Map<K, V> result = new LinkedHashMap<>();
-        for (Iterator<Map.Entry<K, V>> it = list.iterator(); it.hasNext();) {
+        for (Iterator<Map.Entry<K, V>> it = list.iterator(); it.hasNext(); ) {
             Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
             result.put(entry.getKey(), entry.getValue());
         }
@@ -1713,21 +1737,22 @@ public class Helper {
 
     /**
      * Load the profile picture at the place of hamburger icon
+     *
      * @param activity Activity The current activity
-     * @param account Account for the profile picture
+     * @param account  Account for the profile picture
      */
-    public static void loadPictureIcon(final Activity activity, Account account, final ImageView imageView){
-        loadGiF(activity,account.getAvatar(), imageView);
+    public static void loadPictureIcon(final Activity activity, Account account, final ImageView imageView) {
+        loadGiF(activity, account.getAvatar(), imageView);
     }
 
 
-    public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions){
+    public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions) {
 
         String cw_mention = "";
-        if( mentions == null)
+        if (mentions == null)
             return new SpannableString(cw_mention);
-        for(Mention mention:mentions){
-            cw_mention = String.format("@%s %s",mention.getUsername(),cw_mention);
+        for (Mention mention : mentions) {
+            cw_mention = String.format("@%s %s", mention.getUsername(), cw_mention);
         }
         SpannableString spannableString = new SpannableString(cw_mention);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1737,29 +1762,30 @@ public class Helper {
             if (spannableString.toString().contains(targetedAccount)) {
 
                 //Accounts can be mentioned several times so we have to loop
-                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1; startPosition++) {
                     int endPosition = startPosition + targetedAccount.length();
                     spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(@NotNull View textView) {
-                                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("accountId", mention.getId());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(@NotNull TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                    ds.setUnderlineText(false);
-                                    if (theme == THEME_DARK)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                    else if (theme == THEME_BLACK)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                    else if (theme == THEME_LIGHT)
-                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                                }
-                            },
+                                                @Override
+                                                public void onClick(@NotNull View textView) {
+                                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                    Bundle b = new Bundle();
+                                                    b.putString("accountId", mention.getId());
+                                                    intent.putExtras(b);
+                                                    context.startActivity(intent);
+                                                }
+
+                                                @Override
+                                                public void updateDrawState(@NotNull TextPaint ds) {
+                                                    super.updateDrawState(ds);
+                                                    ds.setUnderlineText(false);
+                                                    if (theme == THEME_DARK)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                    else if (theme == THEME_BLACK)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                    else if (theme == THEME_LIGHT)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                }
+                                            },
                             startPosition, endPosition,
                             Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
@@ -1771,11 +1797,12 @@ public class Helper {
 
     /**
      * Update the header with the new selected account
-     * @param activity Activity
-     * @param account Account - new account in use
+     *
+     * @param activity     Activity
+     * @param account      Account - new account in use
      * @param headerLayout View - the menu header
      */
-    public static void updateHeaderAccountInfo(Activity activity, final Account account, final View headerLayout){
+    public static void updateHeaderAccountInfo(Activity activity, final Account account, final View headerLayout) {
 
 
         ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
@@ -1789,32 +1816,32 @@ public class Helper {
         ImageView icon = new ImageView(activity);
 
 
-        FloatingActionButton.LayoutParams layoutparmans = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(35,activity),(int)Helper.convertDpToPixel(35,activity));
-        FloatingActionButton.LayoutParams layoutparmanImg = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(25,activity),(int)Helper.convertDpToPixel(25,activity));
+        FloatingActionButton.LayoutParams layoutparmans = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
+        FloatingActionButton.LayoutParams layoutparmanImg = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(25, activity), (int) Helper.convertDpToPixel(25, activity));
         MenuFloating actionButton = null;
-        if( theme == THEME_LIGHT) {
+        if (theme == THEME_LIGHT) {
             icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
             actionButton = new MenuFloating.Builder(activity)
                     .setContentView(icon, layoutparmanImg)
-                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
+                    .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular))
                     .setLayoutParams(layoutparmans)
                     .setTag("THEME")
                     .intoView(more_option_container)
                     .build();
-        }else if( theme == THEME_DARK) {
+        } else if (theme == THEME_DARK) {
             icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
             actionButton = new MenuFloating.Builder(activity)
                     .setContentView(icon, layoutparmanImg)
-                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark))
+                    .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_dark))
                     .setLayoutParams(layoutparmans)
                     .setTag("THEME")
                     .intoView(more_option_container)
                     .build();
-        }else if( theme == THEME_BLACK) {
+        } else if (theme == THEME_BLACK) {
             icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
             actionButton = new MenuFloating.Builder(activity)
                     .setContentView(icon, layoutparmanImg)
-                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black))
+                    .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_black))
                     .setLayoutParams(layoutparmans)
                     .setTag("THEME")
                     .intoView(more_option_container)
@@ -1827,19 +1854,19 @@ public class Helper {
         ImageView itemIconLight = new ImageView(activity);
         itemIconLight.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
         SubActionButton buttonLight = itemBuilder
-                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
+                .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular))
                 .setContentView(itemIconLight).build();
 
         ImageView itemDark = new ImageView(activity);
         itemDark.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
         SubActionButton buttonDark = itemBuilder
-                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark))
+                .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_dark))
                 .setContentView(itemDark).build();
 
         ImageView itemBlack = new ImageView(activity);
         itemBlack.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
         SubActionButton buttonBlack = itemBuilder
-                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black))
+                .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_black))
                 .setContentView(itemBlack).build();
 
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(activity)
@@ -1851,13 +1878,13 @@ public class Helper {
                 .setEndAngle(90)
                 .build();
 
-        if( actionButton != null) {
+        if (actionButton != null) {
             actionButton.setFocusableInTouchMode(true);
             actionButton.setFocusable(true);
             actionButton.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(actionMenu.isOpen())
+                    if (actionMenu.isOpen())
                         actionMenu.close(true);
                     else
                         actionMenu.open(true);
@@ -1869,7 +1896,8 @@ public class Helper {
                 public void onFocusChange(View v, boolean hasFocus) {
                     try {
                         actionMenu.close(true);
-                    }catch (Exception ignored){}
+                    } catch (Exception ignored) {
+                    }
 
                 }
             });
@@ -1908,17 +1936,17 @@ public class Helper {
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
-        if( activity.isFinishing())
+        if (activity.isFinishing())
             return;
-        if( accounts != null && accounts.size() > 1) {
+        if (accounts != null && accounts.size() > 1) {
 
             FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(37, activity), (int) Helper.convertDpToPixel(37, activity));
             FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
             MenuFloating actionButtonAcc = null;
             SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
-            for(final Account accountChoice: accounts) {
-                if( !accountChoice.getAvatar().startsWith("http"))
+            for (final Account accountChoice : accounts) {
+                if (!accountChoice.getAvatar().startsWith("http"))
                     accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
                 if (currrentUserId != null && (!currrentUserId.equals(accountChoice.getId()) || !getLiveInstance(activity).equals(accountChoice.getInstance()))) {
                     icon = new ImageView(activity);
@@ -1926,17 +1954,18 @@ public class Helper {
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
-                            .listener(new RequestListener<Bitmap>(){
+                            .listener(new RequestListener<Bitmap>() {
 
                                 @Override
                                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                     return false;
                                 }
+
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+                                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                         finalIcon.setImageResource(R.drawable.missing);
-                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                    else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                         finalIcon.setImageResource(R.drawable.missing_peertube);
                                     return false;
                                 }
@@ -1949,12 +1978,12 @@ public class Helper {
                                 }
                             });
                     MenuFloating.Builder actionButtonAccBuild = new MenuFloating.Builder(activity);
-                    if( theme == THEME_LIGHT) {
-                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular));
-                    }else if( theme == THEME_DARK) {
-                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark));
-                    }else if( theme == THEME_BLACK) {
-                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black));
+                    if (theme == THEME_LIGHT) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular));
+                    } else if (theme == THEME_DARK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_dark));
+                    } else if (theme == THEME_BLACK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_black));
                     }
 
                     actionButtonAcc = actionButtonAccBuild
@@ -1970,27 +1999,28 @@ public class Helper {
 
             FloatingActionMenu.Builder actionMenuAccBuilder = new FloatingActionMenu.Builder(activity);
 
-            for(final Account accountChoice: accounts) {
+            for (final Account accountChoice : accounts) {
                 if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
                     SubActionButton.Builder itemBuilderAcc = new SubActionButton.Builder(activity);
-                    if( !accountChoice.getAvatar().startsWith("http"))
+                    if (!accountChoice.getAvatar().startsWith("http"))
                         accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
                     ImageView itemIconAcc = new ImageView(activity);
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .load(accountChoice.getAvatar())
-                            .listener(new RequestListener<Bitmap>(){
+                            .listener(new RequestListener<Bitmap>() {
 
                                 @Override
                                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                     return false;
                                 }
+
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+                                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                         itemIconAcc.setImageResource(R.drawable.missing);
-                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                    else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                         itemIconAcc.setImageResource(R.drawable.missing_peertube);
                                     return false;
                                 }
@@ -2002,8 +2032,8 @@ public class Helper {
                                 }
                             });
 
-                    if( accounts.size() > 2 ) {
-                        if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                    if (accounts.size() > 2) {
+                        if (accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
                             itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_peertube));
                         else
                             itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_mastodon));
@@ -2014,7 +2044,7 @@ public class Helper {
                         subActionButtonAcc.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if( !accountChoice.getToken().equals("null")) {
+                                if (!accountChoice.getToken().equals("null")) {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
                                     editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
@@ -2030,7 +2060,7 @@ public class Helper {
                                     changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     activity.finish();
                                     activity.startActivity(changeAccount);
-                                }else{ //The account was logged out
+                                } else { //The account was logged out
                                     Intent intent = new Intent(activity, LoginActivity.class);
                                     intent.putExtra("instance", accountChoice.getInstance());
                                     intent.putExtra("social", accountChoice.getSocial());
@@ -2043,18 +2073,18 @@ public class Helper {
                 }
             }
 
-            if( actionButtonAcc != null) {
+            if (actionButtonAcc != null) {
                 FloatingActionMenu actionMenuAcc = actionMenuAccBuilder.attachTo(actionButtonAcc)
                         .setStartAngle(0)
                         .setEndAngle(135)
                         .build();
-                if( accounts.size() > 2){
+                if (accounts.size() > 2) {
                     actionButtonAcc.setFocusableInTouchMode(true);
                     actionButtonAcc.setFocusable(true);
                     actionButtonAcc.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
-                            if(actionMenuAcc.isOpen())
+                            if (actionMenuAcc.isOpen())
                                 actionMenuAcc.close(true);
                             else
                                 actionMenuAcc.open(true);
@@ -2066,17 +2096,18 @@ public class Helper {
                         public void onFocusChange(View v, boolean hasFocus) {
                             try {
                                 actionMenuAcc.close(true);
-                            }catch (Exception ignored){}
+                            } catch (Exception ignored) {
+                            }
 
                         }
                     });
-                }else{
+                } else {
                     actionButtonAcc.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            for(final Account accountChoice: accounts) {
+                            for (final Account accountChoice : accounts) {
                                 if (!currrentUserId.equals(accountChoice.getId())) {
-                                    if( !accountChoice.getToken().equals("null")) {
+                                    if (!accountChoice.getToken().equals("null")) {
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
                                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
                                         editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
@@ -2088,7 +2119,7 @@ public class Helper {
                                         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         activity.finish();
                                         activity.startActivity(changeAccount);
-                                    }else{ //The account was logged out
+                                    } else { //The account was logged out
                                         Intent intent = new Intent(activity, LoginActivity.class);
                                         intent.putExtra("instance", accountChoice.getInstance());
                                         intent.putExtra("social", accountChoice.getSocial());
@@ -2103,32 +2134,32 @@ public class Helper {
             }
 
         }
-        if( account == null ) {
+        if (account == null) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
-            Toasty.error(activity.getApplicationContext(),activity.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
-        }else {
-            Account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
-            username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
+        } else {
+            Account.makeAccountNameEmoji(activity, ((BaseMainActivity) activity), account);
+            username.setText(String.format("@%s", account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             loadGiF(activity, account.getAvatar(), profilePicture);
             String urlHeader = account.getHeader();
-            if( urlHeader.startsWith("/") ){
+            if (urlHeader.startsWith("/")) {
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
             ImageView owner_accounts = headerLayout.findViewById(R.id.owner_accounts);
             ImageView header_option_info = headerLayout.findViewById(R.id.header_option_info);
             ImageView header_option_menu = headerLayout.findViewById(R.id.header_option_menu);
-            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
-                changeDrawableColor(activity, owner_accounts,R.color.dark_text);
-                changeDrawableColor(activity, header_option_info,R.color.dark_text);
-                changeDrawableColor(activity, header_option_menu,R.color.dark_text);
-            }else {
-                changeDrawableColor(activity, owner_accounts,R.color.light_black);
-                changeDrawableColor(activity, header_option_info,R.color.light_black);
-                changeDrawableColor(activity, header_option_menu,R.color.light_black);
+            if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                changeDrawableColor(activity, owner_accounts, R.color.dark_text);
+                changeDrawableColor(activity, header_option_info, R.color.dark_text);
+                changeDrawableColor(activity, header_option_menu, R.color.dark_text);
+            } else {
+                changeDrawableColor(activity, owner_accounts, R.color.light_black);
+                changeDrawableColor(activity, header_option_info, R.color.light_black);
+                changeDrawableColor(activity, header_option_menu, R.color.light_black);
             }
             if (!urlHeader.contains("missing.png")) {
                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
@@ -2140,16 +2171,16 @@ public class Helper {
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
 
                                 backgroundImage.setImageBitmap(resource);
-                                if( theme == THEME_LIGHT){
+                                if (theme == THEME_LIGHT) {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                         backgroundImage.setImageAlpha(80);
-                                    }else {
+                                    } else {
                                         backgroundImage.setAlpha(80);
                                     }
-                                }else{
+                                } else {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                         backgroundImage.setImageAlpha(60);
-                                    }else {
+                                    } else {
                                         backgroundImage.setAlpha(60);
                                     }
                                 }
@@ -2165,10 +2196,10 @@ public class Helper {
                 if (account != null) {
                     Intent intent = new Intent(activity, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                         b.putBoolean("peertubeaccount", true);
                         b.putString("accountId", account.getAcct());
-                    }else
+                    } else
                         b.putString("accountId", account.getId());
                     intent.putExtras(b);
                     activity.startActivity(intent);
@@ -2180,22 +2211,23 @@ public class Helper {
 
     /**
      * Retrieves the cache size
+     *
      * @param directory File
      * @return long value in Mo
      */
     public static long cacheSize(File directory) {
         long length = 0;
-        if( directory == null || directory.length() == 0 )
+        if (directory == null || directory.length() == 0)
             return -1;
         for (File file : directory.listFiles()) {
-            if (file.isFile()){
+            if (file.isFile()) {
                 try {
                     length += file.length();
                 } catch (NullPointerException e) {
                     return -1;
                 }
-            }else {
-                if( !file.getName().equals("databases") && !file.getName().equals("shared_prefs")) {
+            } else {
+                if (!file.getName().equals("databases") && !file.getName().equals("shared_prefs")) {
                     length += cacheSize(file);
                 }
             }
@@ -2215,12 +2247,10 @@ public class Helper {
                 }
             }
             return dir.delete();
-        } else{
+        } else {
             return dir != null && dir.isFile() && dir.delete();
         }
     }
-
-
 
 
     /***
@@ -2240,8 +2270,8 @@ public class Helper {
         Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableStringT.toString());
         ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
-        while (matcherALink.find()){
-            String acct = matcherALink.group(3).replace("@","");
+        while (matcherALink.find()) {
+            String acct = matcherALink.group(3).replace("@", "");
             String instance = matcherALink.group(2);
             Account account = new Account();
             account.setAcct(acct);
@@ -2255,7 +2285,7 @@ public class Helper {
             spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString()));
 
         URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
-        for(URLSpan span : urls)
+        for (URLSpan span : urls)
             spannableString.removeSpan(span);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -2264,18 +2294,19 @@ public class Helper {
             matcher = Patterns.WEB_URL.matcher(spannableString);
         else
             matcher = urlPattern.matcher(spannableString);
-        while (matcher.find()){
+        while (matcher.find()) {
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String url = spannableString.toString().substring(matchStart, matchEnd);
 
-            if( url.startsWith("http"))
-                if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if (url.startsWith("http"))
+                if (matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NotNull View textView) {
                             Helper.openBrowser(context, url);
                         }
+
                         @Override
                         public void updateDrawState(@NotNull TextPaint ds) {
                             super.updateDrawState(ds);
@@ -2290,11 +2321,11 @@ public class Helper {
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         matcher = hashtagPattern.matcher(spannableString);
-        while (matcher.find()){
+        while (matcher.find()) {
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String tag = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if (matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
@@ -2304,6 +2335,7 @@ public class Helper {
                         intent.putExtras(b);
                         context.startActivity(intent);
                     }
+
                     @Override
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
@@ -2317,45 +2349,46 @@ public class Helper {
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        if( accountsMentionUnknown.size() > 0 ) {
-            for(Account account: accountsMentionUnknown){
+        if (accountsMentionUnknown.size() > 0) {
+            for (Account account : accountsMentionUnknown) {
                 String targetedAccount = "@" + account.getAcct();
                 if (spannableString.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
                     //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableString.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                    for (int startPosition = -1; (startPosition = spannableString.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1; startPosition++) {
                         int endPosition = startPosition + targetedAccount.length();
-                        if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                        if (endPosition <= spannableString.toString().length() && endPosition >= startPosition)
                             spannableString.setSpan(new ClickableSpan() {
-                                 @Override
-                                 public void onClick(@NotNull View textView) {
-                                     CrossActions.doCrossProfile(context,account);
-                                 }
-                                 @Override
-                                 public void updateDrawState(@NotNull TextPaint ds) {
-                                     super.updateDrawState(ds);
-                                     ds.setUnderlineText(false);
-                                     if (theme == THEME_DARK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                     else if (theme == THEME_BLACK)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                     else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                                 }
-                             },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                        @Override
+                                                        public void onClick(@NotNull View textView) {
+                                                            CrossActions.doCrossProfile(context, account);
+                                                        }
+
+                                                        @Override
+                                                        public void updateDrawState(@NotNull TextPaint ds) {
+                                                            super.updateDrawState(ds);
+                                                            ds.setUnderlineText(false);
+                                                            if (theme == THEME_DARK)
+                                                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                            else if (theme == THEME_BLACK)
+                                                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                            else if (theme == THEME_LIGHT)
+                                                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                        }
+                                                    },
+                                    startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
             }
         }
         matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(spannableString);
-        while (matcher.find()){
+        while (matcher.find()) {
             int matchStart = matcher.start(0);
             int matchEnd = matcher.end();
             final String email = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+            if (matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
                 urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     spannableString.removeSpan(span);
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
@@ -2365,10 +2398,11 @@ public class Helper {
                             emailIntent.setType("plain/text");
                             emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
                             context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
                         }
                     }
+
                     @Override
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
@@ -2385,13 +2419,13 @@ public class Helper {
 
         }
         matcher = Helper.xmppPattern.matcher(spannableString);
-        while (matcher.find()){
+        while (matcher.find()) {
             int matchStart = matcher.start(0);
             int matchEnd = matcher.end();
             final String url = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+            if (matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
                 urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
-                for(URLSpan span : urls)
+                for (URLSpan span : urls)
                     spannableString.removeSpan(span);
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
@@ -2399,10 +2433,11 @@ public class Helper {
                         try {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                             context.startActivity(intent);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
                         }
                     }
+
                     @Override
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
@@ -2422,7 +2457,7 @@ public class Helper {
     }
 
 
-    public static WebView initializeWebview(Activity activity, int webviewId){
+    public static WebView initializeWebview(Activity activity, int webviewId) {
 
         WebView webView = activity.findViewById(webviewId);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -2480,16 +2515,18 @@ public class Helper {
             }
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException ignored) {}
+        } catch (NoSuchAlgorithmException ignored) {
+        }
         return "";
     }
 
     /**
      * change color of a drawable
-     * @param drawable int the drawable
+     *
+     * @param drawable  int the drawable
      * @param hexaColor example 0xffff00
      */
-    public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor){
+    public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor) {
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
         int color = Color.parseColor(context.getString(hexaColor));
         assert mDrawable != null;
@@ -2497,40 +2534,46 @@ public class Helper {
         DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
     }
+
     /**
      * change color of a drawable
+     *
      * @param imageView int the ImageView
      * @param hexaColor example 0xffff00
      */
-    public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor){
-        if( imageView == null)
+    public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor) {
+        if (imageView == null)
             return;
         imageView.setColorFilter(context.getResources().getColor(hexaColor));
     }
 
     /**
      * change color of a drawable
+     *
      * @param imageButton int the ImageButton
-     * @param hexaColor example 0xffff00
+     * @param hexaColor   example 0xffff00
      */
-    public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor){
-        if( imageButton == null)
+    public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor) {
+        if (imageButton == null)
             return;
         imageButton.setColorFilter(context.getResources().getColor(hexaColor));
     }
 
     /**
      * change color of a drawable
-     * @param button int the button
+     *
+     * @param button    int the button
      * @param hexaColor example 0xffff00
      */
-    public static void changeButtonTextColor(Context context, Button button, int hexaColor){
-        if( button == null)
+    public static void changeButtonTextColor(Context context, Button button, int hexaColor) {
+        if (button == null)
             return;
         button.setTextColor(context.getResources().getColor(hexaColor));
     }
+
     /**
      * Returns the current locale of the device
+     *
      * @param context Context
      * @return String locale
      */
@@ -2551,20 +2594,21 @@ public class Helper {
 
     /**
      * Compare date with these in shared pref.
-     * @param context Context
-     * @param newDate String
+     *
+     * @param context         Context
+     * @param newDate         String
      * @param shouldBeGreater boolean if date passed as a parameter should be greater
      * @return boolean
      */
-    public static boolean compareDate(Context context, String newDate, boolean shouldBeGreater){
+    public static boolean compareDate(Context context, String newDate, boolean shouldBeGreater) {
         String dateRef;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if (shouldBeGreater) {
             dateRef = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
-        }else {
+        } else {
             dateRef = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
         }
-        try{
+        try {
             Locale userLocale;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 userLocale = context.getResources().getConfiguration().getLocales().get(0);
@@ -2576,7 +2620,7 @@ public class Helper {
             Date dateRefD = formatter.parse(dateRef);
             if (shouldBeGreater) {
                 return (newDateD.after(dateRefD));
-            }else {
+            } else {
                 return (newDateD.before(dateRefD));
             }
         } catch (java.text.ParseException e) {
@@ -2587,16 +2631,17 @@ public class Helper {
 
     /**
      * Tells if the the service can notify depending of the current hour and minutes
+     *
      * @param context Context
      * @return boolean
      */
-    public static boolean canNotify(Context context){
+    public static boolean canNotify(Context context) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( !notify)
+        if (!notify)
             return false;
         boolean enable_time_slot = sharedpreferences.getBoolean(Helper.SET_ENABLE_TIME_SLOT, true);
-        if( ! enable_time_slot)
+        if (!enable_time_slot)
             return true;
         String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
@@ -2604,10 +2649,10 @@ public class Helper {
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
-        String hourS = String.valueOf(hour).length() == 1?"0"+String.valueOf(hour):String.valueOf(hour);
-        String minuteS = String.valueOf(minute).length() == 1?"0"+String.valueOf(minute):String.valueOf(minute);
+        String hourS = String.valueOf(hour).length() == 1 ? "0" + String.valueOf(hour) : String.valueOf(hour);
+        String minuteS = String.valueOf(minute).length() == 1 ? "0" + String.valueOf(minute) : String.valueOf(minute);
         String currentDate = hourS + ":" + minuteS;
-        try{
+        try {
             Locale userLocale;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 userLocale = context.getResources().getConfiguration().getLocales().get(0);
@@ -2619,9 +2664,9 @@ public class Helper {
             Date dateEndD = formatter.parse(dateEnd);
             Date currentDateD = formatter.parse(currentDate);
             boolean canNotify = false;
-            if( currentDateD.before(dateEndD) && currentDateD.after(dateIniD) && notification == Helper.ACTION_ACTIVE)
+            if (currentDateD.before(dateEndD) && currentDateD.after(dateIniD) && notification == Helper.ACTION_ACTIVE)
                 canNotify = true;
-            else if ( currentDateD.after(dateEndD) && currentDateD.before(dateIniD) && notification == Helper.ACTION_SILENT )
+            else if (currentDateD.after(dateEndD) && currentDateD.before(dateIniD) && notification == Helper.ACTION_SILENT)
                 canNotify = true;
             return canNotify;
         } catch (java.text.ParseException e) {
@@ -2632,28 +2677,30 @@ public class Helper {
 
     /**
      * Unserialized a
+     *
      * @param serializedListTimeline String serialized List
      * @return List
      */
-    public static app.fedilab.android.client.Entities.List restoreListtimelineFromString(String serializedListTimeline){
+    public static app.fedilab.android.client.Entities.List restoreListtimelineFromString(String serializedListTimeline) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedListTimeline, app.fedilab.android.client.Entities.List.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a List class
+     *
      * @param listTimeline List to serialize
      * @return String serialized List
      */
-    public static String listTimelineToStringStorage(app.fedilab.android.client.Entities.List listTimeline){
+    public static String listTimelineToStringStorage(app.fedilab.android.client.Entities.List listTimeline) {
         Gson gson = new Gson();
         try {
             return gson.toJson(listTimeline);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2661,28 +2708,30 @@ public class Helper {
 
     /**
      * Unserialized a TagTimeline
+     *
      * @param serializedTagTimeline String serialized TagTimeline
      * @return TagTimeline
      */
-    public static TagTimeline restoreTagTimelineFromString(String serializedTagTimeline){
+    public static TagTimeline restoreTagTimelineFromString(String serializedTagTimeline) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedTagTimeline, TagTimeline.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a TagTimeline class
+     *
      * @param tagTimeline TagTimeline to serialize
      * @return String serialized TagTimeline
      */
-    public static String tagTimelineToStringStorage(TagTimeline tagTimeline){
+    public static String tagTimelineToStringStorage(TagTimeline tagTimeline) {
         Gson gson = new Gson();
         try {
             return gson.toJson(tagTimeline);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2690,28 +2739,30 @@ public class Helper {
 
     /**
      * Unserialized a RemoteInstance
+     *
      * @param serializedRemoteInstance String serialized RemoteInstance
      * @return RemoteInstance
      */
-    public static RemoteInstance restoreRemoteInstanceFromString(String serializedRemoteInstance){
+    public static RemoteInstance restoreRemoteInstanceFromString(String serializedRemoteInstance) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedRemoteInstance, RemoteInstance.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a RemoteInstance class
+     *
      * @param remoteInstance RemoteInstance to serialize
      * @return String serialized RemoteInstance
      */
-    public static String remoteInstanceToStringStorage(RemoteInstance remoteInstance){
+    public static String remoteInstanceToStringStorage(RemoteInstance remoteInstance) {
         Gson gson = new Gson();
         try {
             return gson.toJson(remoteInstance);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2719,140 +2770,150 @@ public class Helper {
 
     /**
      * Unserialized a Locale
+     *
      * @param serializedLocale String serialized locale
      * @return Locale
      */
-    public static Locale restoreLocaleFromString(String serializedLocale){
+    public static Locale restoreLocaleFromString(String serializedLocale) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedLocale, Locale.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a Locale class
+     *
      * @param locale Locale to serialize
      * @return String serialized Locale
      */
-    public static String localeToStringStorage(Locale locale){
+    public static String localeToStringStorage(Locale locale) {
         Gson gson = new Gson();
         try {
             return gson.toJson(locale);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a Status class
+     *
      * @param status Status to serialize
      * @return String serialized Status
      */
-    public static String statusToStringStorage(Status status){
+    public static String statusToStringStorage(Status status) {
         Gson gson = new Gson();
         try {
             return gson.toJson(status);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a Card
+     *
      * @param serializedCard String serialized card
      * @return Card
      */
-    public static Card restoreCardFromString(String serializedCard){
+    public static Card restoreCardFromString(String serializedCard) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedCard, Card.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a Card class
+     *
      * @param card Card to serialize
      * @return String serialized Status
      */
-    public static String cardToStringStorage(Card card){
+    public static String cardToStringStorage(Card card) {
         Gson gson = new Gson();
         try {
             return gson.toJson(card);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a Status
+     *
      * @param serializedStatus String serialized status
      * @return Status
      */
-    public static Status restoreStatusFromString(String serializedStatus){
+    public static Status restoreStatusFromString(String serializedStatus) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedStatus, Status.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized a List<String>
+     *
      * @param list List<String> to serialize
      * @return String serialized List
      */
-    public static String arrayToStringStorage(List<String> list){
+    public static String arrayToStringStorage(List<String> list) {
         Gson gson = new Gson();
         try {
             return gson.toJson(list);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a List<String>
+     *
      * @param serializedArray String serialized array
      * @return List<String> list
      */
-    public static List<String> restoreArrayFromString(String serializedArray){
+    public static List<String> restoreArrayFromString(String serializedArray) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedArray, List.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Serialized an Application class
+     *
      * @param application Application to serialize
      * @return String serialized Application
      */
-    public static String applicationToStringStorage(Application application){
+    public static String applicationToStringStorage(Application application) {
         Gson gson = new Gson();
         try {
             return gson.toJson(application);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized an Application
+     *
      * @param serializedApplication String serialized application
      * @return Application
      */
-    public static Application restoreApplicationFromString(String serializedApplication){
+    public static Application restoreApplicationFromString(String serializedApplication) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedApplication, Application.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2860,14 +2921,15 @@ public class Helper {
 
     /**
      * Serialized a Account class
+     *
      * @param account Account to serialize
      * @return String serialized Account
      */
-    public static String accountToStringStorage(Account account){
+    public static String accountToStringStorage(Account account) {
         Gson gson = new Gson();
         try {
             return gson.toJson(account);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -2876,14 +2938,15 @@ public class Helper {
 
     /**
      * Unserialized an Account
+     *
      * @param serializedAccount String serialized account
      * @return Account
      */
-    public static Account restoreAccountFromString(String serializedAccount){
+    public static Account restoreAccountFromString(String serializedAccount) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(serializedAccount, Account.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2891,28 +2954,31 @@ public class Helper {
 
     /**
      * Serialized a List of Emojis class
+     *
      * @param emojis Emojis List to serialize
      * @return String serialized List of Emojis
      */
-    public static String emojisToStringStorage(List<Emojis> emojis){
+    public static String emojisToStringStorage(List<Emojis> emojis) {
         Gson gson = new Gson();
         try {
             return gson.toJson(emojis);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a list of Emojis
+     *
      * @param serializedEmojis String serialized emojis
      * @return List<Emojis>
      */
-    public static List<Emojis> restoreEmojisFromString(String serializedEmojis){
-        Type listType = new TypeToken<ArrayList<Emojis>>(){}.getType();
+    public static List<Emojis> restoreEmojisFromString(String serializedEmojis) {
+        Type listType = new TypeToken<ArrayList<Emojis>>() {
+        }.getType();
         try {
             return new Gson().fromJson(serializedEmojis, listType);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2920,59 +2986,64 @@ public class Helper {
 
     /**
      * Serialized a List of a Attachment class
+     *
      * @param attachments Attachment List to serialize
      * @return String serialized List of Attachment
      */
-    public static String attachmentToStringStorage(List<Attachment> attachments){
+    public static String attachmentToStringStorage(List<Attachment> attachments) {
         Gson gson = new Gson();
         try {
             return gson.toJson(attachments);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a list of Attachment
+     *
      * @param serializedAttachment String serialized attachment
      * @return List<Attachment>
      */
-    public static ArrayList<Attachment> restoreAttachmentFromString(String serializedAttachment){
-        Type listType = new TypeToken<ArrayList<Attachment>>(){}.getType();
+    public static ArrayList<Attachment> restoreAttachmentFromString(String serializedAttachment) {
+        Type listType = new TypeToken<ArrayList<Attachment>>() {
+        }.getType();
         try {
             return new Gson().fromJson(serializedAttachment, listType);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
 
-
     /**
      * Serialized a List of a Mention class
+     *
      * @param mentions Mention List to serialize
      * @return String serialized List of Mention
      */
-    public static String mentionToStringStorage(List<Mention> mentions){
+    public static String mentionToStringStorage(List<Mention> mentions) {
         Gson gson = new Gson();
         try {
             return gson.toJson(mentions);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a list of Mention
+     *
      * @param serializedMention String serialized mention
      * @return String serialized List of Mention
      */
-    public static List<Mention> restoreMentionFromString(String serializedMention){
-        Type listType = new TypeToken<ArrayList<Mention>>(){}.getType();
+    public static List<Mention> restoreMentionFromString(String serializedMention) {
+        Type listType = new TypeToken<ArrayList<Mention>>() {
+        }.getType();
         try {
             return new Gson().fromJson(serializedMention, listType);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -2980,50 +3051,54 @@ public class Helper {
 
     /**
      * Serialized a List of a Tag class
+     *
      * @param tags Tag List to serialize
      * @return String serialized List of Tag
      */
-    public static String tagToStringStorage(List<Tag> tags){
+    public static String tagToStringStorage(List<Tag> tags) {
         Gson gson = new Gson();
         try {
             return gson.toJson(tags);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Unserialized a list of Tag
+     *
      * @param serializedTag String serialized tag
      * @return String serialized List of Tag
      */
-    public static List<Tag> restoreTagFromString(String serializedTag){
-        Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
+    public static List<Tag> restoreTagFromString(String serializedTag) {
+        Type listType = new TypeToken<ArrayList<Tag>>() {
+        }.getType();
         try {
             return new Gson().fromJson(serializedTag, listType);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
 
-
     /**
      * Check if a job id is in array of ids
+     *
      * @param jobIds int[]
-     * @param id int id to check
+     * @param id     int id to check
      * @return boolean
      */
-    public static boolean isJobPresent(int[] jobIds, int id){
-        for(int x:jobIds) {
-            if (x == id) {return true;}
+    public static boolean isJobPresent(int[] jobIds, int id) {
+        for (int x : jobIds) {
+            if (x == id) {
+                return true;
+            }
         }
         return false;
     }
 
 
-
-    public static void unCheckAllMenuItems(NavigationView navigationView){
+    public static void unCheckAllMenuItems(NavigationView navigationView) {
         navigationView.setCheckedItem(R.id.menu_none);
         unCheckAllMenuItemsRec(navigationView.getMenu());
     }
@@ -3032,7 +3107,7 @@ public class Helper {
         int size = menu.size();
         for (int i = 0; i < size; i++) {
             final MenuItem item = menu.getItem(i);
-            if(item.hasSubMenu()) {
+            if (item.hasSubMenu()) {
                 unCheckAllMenuItemsRec(item.getSubMenu());
             } else {
                 item.setChecked(false);
@@ -3043,9 +3118,10 @@ public class Helper {
 
     /**
      * Changes the menu layout
+     *
      * @param activity Activity must be an instance of MainActivity
      */
-    public static void switchLayout(Activity activity){
+    public static void switchLayout(Activity activity) {
         //Check if the class calling the method is an instance of MainActivity
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
@@ -3053,19 +3129,19 @@ public class Helper {
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(activity,db).getUniqAccount(userID, instance);
-        if( account != null) {
+        Account account = new AccountDAO(activity, db).getUniqAccount(userID, instance);
+        if (account != null) {
             if (account.isLocked()) {
-                if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
             } else {
-                if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
             }
 
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 MenuItem adminItem = navigationView.getMenu().findItem(R.id.nav_administration);
-                if( adminItem != null){
+                if (adminItem != null) {
                     adminItem.setVisible(false);
                 }
             }
@@ -3074,23 +3150,23 @@ public class Helper {
     }
 
 
-
     /**
      * Get a bitmap from a view
+     *
      * @param view The view to convert
      * @return Bitmap
      */
     public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
-        if( view.getWidth() == 0 || view.getHeight() == 0){
-            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (view.getWidth() == 0 || view.getHeight() == 0) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return null;
         }
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+(int)Helper.convertDpToPixel(10, context), view.getHeight()+(int)Helper.convertDpToPixel(30, context), Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth() + (int) Helper.convertDpToPixel(10, context), view.getHeight() + (int) Helper.convertDpToPixel(30, context), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
-        canvas.drawBitmap(returnedBitmap, view.getWidth()+(int)Helper.convertDpToPixel(10, context), 0, null);
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null)
+        canvas.drawBitmap(returnedBitmap, view.getWidth() + (int) Helper.convertDpToPixel(10, context), 0, null);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
             bgDrawable.draw(canvas);
         else {
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -3098,10 +3174,9 @@ public class Helper {
             if (theme == Helper.THEME_DARK) {
                 canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
 
-            }else if( theme == Helper.THEME_BLACK){
+            } else if (theme == Helper.THEME_BLACK) {
                 canvas.drawColor(ContextCompat.getColor(context, R.color.black));
-            }
-            else {
+            } else {
                 canvas.drawColor(Color.WHITE);
             }
         }
@@ -3111,9 +3186,9 @@ public class Helper {
         int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
         paint.setColor(mastodonC4);
         paint.setStrokeWidth(12);
-        paint.setTextSize((int)Helper.convertDpToPixel(14, context));
+        paint.setTextSize((int) Helper.convertDpToPixel(14, context));
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText(name +" - #Fedilab", 0, view.getHeight() +(int)Helper.convertDpToPixel(15, context), paint);
+        canvas.drawText(name + " - #Fedilab", 0, view.getHeight() + (int) Helper.convertDpToPixel(15, context), paint);
 
         return returnedBitmap;
     }
@@ -3126,15 +3201,16 @@ public class Helper {
         Locale locale = null;
         try {
             locale = Locale.getDefault();
-        }catch (Exception ignored){}
-        if(locale != null)
-        return String.format(locale, "%.1f %c",
-                count / Math.pow(1000, exp),
-                "kMGTPE".charAt(exp-1));
-        else
-            return String.format( "%.1f %c",
+        } catch (Exception ignored) {
+        }
+        if (locale != null)
+            return String.format(locale, "%.1f %c",
                     count / Math.pow(1000, exp),
-                    "kMGTPE".charAt(exp-1));
+                    "kMGTPE".charAt(exp - 1));
+        else
+            return String.format("%.1f %c",
+                    count / Math.pow(1000, exp),
+                    "kMGTPE".charAt(exp - 1));
     }
 
 
@@ -3161,32 +3237,32 @@ public class Helper {
 
     public static String secondsToString(int pTime) {
 
-        int hour = pTime/3600;
-        int min = (pTime -(hour*3600))/60;
-        int sec = pTime -(hour*3600)-(min*60);
-        String strHour="0", strMin="0", strSec="0";
+        int hour = pTime / 3600;
+        int min = (pTime - (hour * 3600)) / 60;
+        int sec = pTime - (hour * 3600) - (min * 60);
+        String strHour = "0", strMin = "0", strSec = "0";
 
-        if( hour > 0 )
+        if (hour > 0)
             strHour = String.format(Locale.getDefault(), "%02d", hour);
-        if( min > 0 )
+        if (min > 0)
             strMin = String.format(Locale.getDefault(), "%02d", min);
         strSec = String.format(Locale.getDefault(), "%02d", sec);
-        if( hour > 0 )
-            return String.format(Locale.getDefault(),"%s:%s:%s",strHour, strMin,strSec);
+        if (hour > 0)
+            return String.format(Locale.getDefault(), "%s:%s:%s", strHour, strMin, strSec);
         else
-            return String.format(Locale.getDefault(), "%s:%s",strMin,strSec);
+            return String.format(Locale.getDefault(), "%s:%s", strMin, strSec);
     }
 
-    public static void loadGiF(final Context context, String url, final ImageView imageView){
+    public static void loadGiF(final Context context, String url, final ImageView imageView) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
-        if( url != null && url.startsWith("/")){
+        if (url != null && url.startsWith("/")) {
             url = Helper.getLiveInstanceWithProtocol(context) + url;
         }
-        if( !(context instanceof MainApplication) && ((Activity)context).isFinishing()){
+        if (!(context instanceof MainApplication) && ((Activity) context).isFinishing()) {
             return;
         }
-        if( disableGif){
+        if (disableGif) {
             try {
                 Glide.with(imageView.getContext())
                         .asBitmap()
@@ -3194,7 +3270,7 @@ public class Helper {
                         .thumbnail(0.1f)
                         .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                         .into(imageView);
-            }catch (Exception e){
+            } catch (Exception e) {
                 try {
                     if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                         Glide.with(imageView.getContext())
@@ -3215,16 +3291,17 @@ public class Helper {
                                 .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                 .into(imageView);
                     }
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
-        }else{
+        } else {
             try {
                 Glide.with(imageView.getContext())
                         .load(url)
                         .thumbnail(0.1f)
                         .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                         .into(imageView);
-            }catch (Exception e){
+            } catch (Exception e) {
                 try {
                     if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                         Glide.with(imageView.getContext())
@@ -3245,7 +3322,8 @@ public class Helper {
                                 .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                 .into(imageView);
                     }
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         }
 
@@ -3254,13 +3332,14 @@ public class Helper {
 
     /**
      * Manage URLs to open (built-in or external app)
+     *
      * @param context Context
-     * @param url String url to open
+     * @param url     String url to open
      */
-    public static void openBrowser(Context context, String url){
+    public static void openBrowser(Context context, String url) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-        if( embedded_browser) {
+        if (embedded_browser) {
             Intent intent = new Intent(context, WebviewActivity.class);
             Bundle b = new Bundle();
             String finalUrl = url;
@@ -3269,22 +3348,24 @@ public class Helper {
             b.putString("url", finalUrl);
             intent.putExtras(b);
             context.startActivity(intent);
-        }else {
+        } else {
             boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
-            if( custom_tabs){
+            if (custom_tabs) {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 builder.setToolbarColor(ContextCompat.getColor(context, R.color.mastodonC1));
                 try {
                     customTabsIntent.launchUrl(context, Uri.parse(url));
-                }catch (Exception ignored){Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();}
-            }else{
+                } catch (Exception ignored) {
+                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                }
+            } else {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 try {
                     context.startActivity(intent);
-                }catch (Exception e){
-                    Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -3292,40 +3373,44 @@ public class Helper {
     }
 
 
-    public static void installProvider(){
+    public static void installProvider() {
 
         boolean patch_provider = true;
         try {
             Context ctx = MainApplication.getApp();
             SharedPreferences sharedpreferences = ctx.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
-        }catch (Exception ignored){}
-        if( patch_provider)
+        } catch (Exception ignored) {
+        }
+        if (patch_provider)
             try {
-                Security.insertProviderAt(Conscrypt.newProvider(),1);
-            }catch (Exception ignored){}
+                Security.insertProviderAt(Conscrypt.newProvider(), 1);
+            } catch (Exception ignored) {
+            }
     }
 
 
-    public enum MediaType{
+    public enum MediaType {
         MEDIA,
         PROFILE
     }
 
-    
-    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType){
+
+    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType) {
 
         ContentResolver cr = context.getContentResolver();
         String mime = cr.getType(uriFile);
         ByteArrayInputStream bs = null;
-        if(mime != null && mime.toLowerCase().contains("image")){
+        if (mime != null && mime.toLowerCase().contains("image")) {
             Bitmap takenImage;
             try {
                 takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
             } catch (IOException e) {
                 try {
                     Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-                }catch (Exception ignored){};
+                } catch (Exception ignored) {
+                }
+                ;
                 return null;
             }
             ExifInterface exif = null;
@@ -3336,105 +3421,111 @@ public class Helper {
                 e.printStackTrace();
             }
             Matrix matrix = null;
-            if( takenImage != null ){
+            if (takenImage != null) {
                 int size = takenImage.getByteCount();
-                if( exif != null) {
+                if (exif != null) {
                     int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                     int rotationDegree = 0;
-                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
-                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
-                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                        rotationDegree = 90;
+                    } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                        rotationDegree = 180;
+                    } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                        rotationDegree = 270;
+                    }
                     matrix = new Matrix();
-                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                    if (rotation != 0f) {
+                        matrix.preRotate(rotationDegree);
+                    }
                 }
 
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
-                if( mediaType == MediaType.PROFILE)
+                if (mediaType == MediaType.PROFILE)
                     resizeSet = Helper.S_1MO;
                 double resizeby = size;
-                if( resizeSet == Helper.S_512KO){
+                if (resizeSet == Helper.S_512KO) {
                     resizeby = 4194304;
-                }else if(resizeSet == Helper.S_1MO){
+                } else if (resizeSet == Helper.S_1MO) {
                     resizeby = 8388608;
-                }else if(resizeSet == Helper.S_2MO){
+                } else if (resizeSet == Helper.S_2MO) {
                     resizeby = 16777216;
-                }else if(resizeSet == Helper.S_4MO){
+                } else if (resizeSet == Helper.S_4MO) {
                     resizeby = 33554432;
-                }else if(resizeSet == Helper.S_6MO){
+                } else if (resizeSet == Helper.S_6MO) {
                     resizeby = 50331648;
-                }else if(resizeSet == Helper.S_8MO) {
+                } else if (resizeSet == Helper.S_8MO) {
                     resizeby = 67108864;
                 }
 
-                double resize = ((double)size)/resizeby;
-                if( resize > 1 ){
+                double resize = ((double) size) / resizeby;
+                if (resize > 1) {
                     Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
                             (int) (takenImage.getHeight() / resize), true);
                     Bitmap adjustedBitmap;
-                    if( matrix != null)
+                    if (matrix != null)
                         try {
                             adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             adjustedBitmap = newBitmap;
                         }
                     else
                         adjustedBitmap = newBitmap;
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    if( mime.contains("png") || mime.contains(".PNG"))
+                    if (mime.contains("png") || mime.contains(".PNG"))
                         adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
                     else
                         adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                     byte[] bitmapdata = bos.toByteArray();
                     bs = new ByteArrayInputStream(bitmapdata);
-                }else {
+                } else {
                     try {
                         InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                         byte[] buff = new byte[8 * 1024];
                         int bytesRead;
                         ByteArrayOutputStream bao = new ByteArrayOutputStream();
                         assert inputStream != null;
-                        while((bytesRead = inputStream.read(buff)) != -1) {
+                        while ((bytesRead = inputStream.read(buff)) != -1) {
                             bao.write(buff, 0, bytesRead);
                         }
                         byte[] data = bao.toByteArray();
-                        bs  = new ByteArrayInputStream(data);
+                        bs = new ByteArrayInputStream(data);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-            }else {
+            } else {
                 try {
                     InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                     byte[] buff = new byte[8 * 1024];
                     int bytesRead;
                     ByteArrayOutputStream bao = new ByteArrayOutputStream();
                     assert inputStream != null;
-                    while((bytesRead = inputStream.read(buff)) != -1) {
+                    while ((bytesRead = inputStream.read(buff)) != -1) {
                         bao.write(buff, 0, bytesRead);
                     }
                     byte[] data = bao.toByteArray();
-                    bs  = new ByteArrayInputStream(data);
+                    bs = new ByteArrayInputStream(data);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }else{
+        } else {
             try {
                 InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                 byte[] buff = new byte[8 * 1024];
                 int bytesRead;
                 ByteArrayOutputStream bao = new ByteArrayOutputStream();
                 assert inputStream != null;
-                while((bytesRead = inputStream.read(buff)) != -1) {
+                while ((bytesRead = inputStream.read(buff)) != -1) {
                     bao.write(buff, 0, bytesRead);
                 }
                 byte[] data = bao.toByteArray();
-                bs  = new ByteArrayInputStream(data);
+                bs = new ByteArrayInputStream(data);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -3457,25 +3548,25 @@ public class Helper {
             returnCursor.close();
             Random r = new Random();
             int suf = r.nextInt(9999 - 1000) + 1000;
-            return String.valueOf(suf)+name;
-        }catch (Exception e){
+            return String.valueOf(suf) + name;
+        } catch (Exception e) {
             Random r = new Random();
             int suf = r.nextInt(9999 - 1000) + 1000;
             ContentResolver cr = context.getContentResolver();
             String mime = cr.getType(uri);
-            if( mime != null && mime.split("/").length > 1)
-                return "__" + String.valueOf(suf)+"."+mime.split("/")[1];
+            if (mime != null && mime.split("/").length > 1)
+                return "__" + String.valueOf(suf) + "." + mime.split("/")[1];
             else
-                return "__" + String.valueOf(suf)+".jpg";
+                return "__" + String.valueOf(suf) + ".jpg";
         }
     }
 
-    public static Bitmap compressImageIfNeeded(Context context, Bitmap bmToCompress){
+    public static Bitmap compressImageIfNeeded(Context context, Bitmap bmToCompress) {
 
         int size = bmToCompress.getByteCount();
-        double resizeby =  33554432; //4Mo
-        double resize = ((double)size)/resizeby;
-        if( resize > 1 ) {
+        double resizeby = 33554432; //4Mo
+        double resize = ((double) size) / resizeby;
+        if (resize > 1) {
             Bitmap newBitmap = Bitmap.createScaledBitmap(bmToCompress, (int) (bmToCompress.getWidth() / resize),
                     (int) (bmToCompress.getHeight() / resize), true);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -3497,17 +3588,14 @@ public class Helper {
     }
 
 
-
-
-
-
     /**
      * Allows to split the toot by dot "." for sentences - adds number at the end automatically
-     * @param content String initial content
+     *
+     * @param content  String initial content
      * @param maxChars int the max chars per toot (minus 10 to write the page: 1/x, 2/x etc.)
      * @return ArrayList<String> split toot
      */
-    public static ArrayList<String> splitToots(String content, int maxChars){
+    public static ArrayList<String> splitToots(String content, int maxChars) {
         String[] splitContent = content.split("\\s");
 
 
@@ -3520,32 +3608,32 @@ public class Helper {
         matcher = mentionLongPattern.matcher(content);
         while (matcher.find()) {
             String mentionLong = matcher.group(1);
-            if( !mentions.contains(mentionLong)) {
+            if (!mentions.contains(mentionLong)) {
                 mentions.add(mentionLong);
             }
         }
         matcher = mentionPattern.matcher(content);
         while (matcher.find()) {
             String mention = matcher.group(1);
-            if( !mentions.contains(mention)) {
+            if (!mentions.contains(mention)) {
                 mentions.add(mention);
             }
         }
         StringBuilder mentionString = new StringBuilder();
-        for(String mention: mentions){
+        for (String mention : mentions) {
             mentionString.append(mention).append(" ");
         }
-        int mentionLength = mentionString.length()+1;
-        int maxCharsPerMessage = (maxChars-10) - mentionLength;
+        int mentionLength = mentionString.length() + 1;
+        int maxCharsPerMessage = (maxChars - 10) - mentionLength;
         int totalCurrent = 0;
         ArrayList<String> reply = new ArrayList<>();
         int index = 0;
-        for(int i= 0 ; i < splitContent.length ; i++) {
-            if ((totalCurrent + splitContent[i].length()+1) < maxCharsPerMessage) {
-                totalCurrent += (splitContent[i].length()+1);
+        for (int i = 0; i < splitContent.length; i++) {
+            if ((totalCurrent + splitContent[i].length() + 1) < maxCharsPerMessage) {
+                totalCurrent += (splitContent[i].length() + 1);
             } else {
                 if (content.length() > totalCurrent && totalCurrent > 0) {
-                    String tempContent = content.substring(0, (totalCurrent-1));
+                    String tempContent = content.substring(0, (totalCurrent - 1));
                     content = content.substring(totalCurrent);
 
                     reply.add(index, tempContent);
@@ -3554,16 +3642,16 @@ public class Helper {
                 }
             }
         }
-        if( totalCurrent > 0 ){
+        if (totalCurrent > 0) {
             reply.add(index, content);
         }
-        if( reply.size() > 1 ){
+        if (reply.size() > 1) {
             int i = 0;
-            for(String r: reply){
-                if( mentions.size() > 0 ){
-                    reply.set(i, r + " " + mentionString + " - " + (i+1) + "/" + reply.size());
-                }else{
-                    reply.set(i, r + " - " + (i+1) + "/" + reply.size());
+            for (String r : reply) {
+                if (mentions.size() > 0) {
+                    reply.set(i, r + " " + mentionString + " - " + (i + 1) + "/" + reply.size());
+                } else {
+                    reply.set(i, r + " - " + (i + 1) + "/" + reply.size());
                 }
                 i++;
             }
@@ -3572,19 +3660,19 @@ public class Helper {
     }
 
 
-    public static int countLength(String text){
-        if( text == null) {
+    public static int countLength(String text) {
+        if (text == null) {
             return 0;
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             Matcher matcherALink = Patterns.WEB_URL.matcher(text);
-            while (matcherALink.find()){
+            while (matcherALink.find()) {
                 int matchStart = matcherALink.start();
                 int matchEnd = matcherALink.end();
                 final String url = text.substring(matcherALink.start(1), matcherALink.end(1));
-                if( matchEnd <= text.length() && matchEnd >= matchStart){
-                    if( url.length() > 23){
-                        text = text.replaceFirst(url,"abcdefghijklmnopkrstuvw");
+                if (matchEnd <= text.length() && matchEnd >= matchStart) {
+                    if (url.length() > 23) {
+                        text = text.replaceFirst(url, "abcdefghijklmnopkrstuvw");
                     }
                 }
             }
@@ -3593,7 +3681,7 @@ public class Helper {
     }
 
 
-    public static int countWithEmoji(String text){
+    public static int countWithEmoji(String text) {
         int emojiCount = 0;
         for (int i = 0; i < text.length(); i++) {
             int type = Character.getType(text.charAt(i));
@@ -3601,65 +3689,67 @@ public class Helper {
                 emojiCount++;
             }
         }
-        return emojiCount/2;
+        return emojiCount / 2;
     }
 
-    public static boolean filterToots(Status status, RetrieveFeedsAsyncTask.Type type, boolean showAccountActivity, boolean showAccountActivityBoost, boolean showAccountActivityReplies){
+    public static boolean filterToots(Status status, RetrieveFeedsAsyncTask.Type type, boolean showAccountActivity, boolean showAccountActivityBoost, boolean showAccountActivityReplies) {
         String filter;
-        if( status == null)
+        if (status == null)
             return true;
 
-        if( type != null) {
+        if (type != null) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME)
                 filter = regex_home;
             else if (type == RetrieveFeedsAsyncTask.Type.LOCAL)
                 filter = regex_local;
             else
                 filter = regex_public;
-        }else {
+        } else {
             filter = regex_public;
         }
 
         String content = status.getContent();
-        if( status.getSpoiler_text() != null)
-            content += " "+ status.getSpoiler_text();
-        if( status.getAccount()  == null)
+        if (status.getSpoiler_text() != null)
+            content += " " + status.getSpoiler_text();
+        if (status.getAccount() == null)
             return false;
 
-        if( type == RetrieveFeedsAsyncTask.Type.ART && !MainActivity.show_art_nsfw && status.isSensitive())
+        if (type == RetrieveFeedsAsyncTask.Type.ART && !MainActivity.show_art_nsfw && status.isSensitive())
             return false;
 
-        if(MainActivity.filters != null){
-            for(Filters mfilter: filters){
+        if (MainActivity.filters != null) {
+            for (Filters mfilter : filters) {
                 ArrayList<String> filterContext = mfilter.getContext();
-                if(
+                if (
                         (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
                                 (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("public")) ||
                                 (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
 
-                        ) {
+                ) {
                     if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
                         return false;
                     } else {
                         try {
-                            if( mfilter.getPhrase().contains("#"))
+                            if (mfilter.getPhrase().contains("#"))
                                 mfilter.setPhrase(mfilter.getPhrase().replaceAll("\\#", "\\#"));
                             Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = filterPattern.matcher(content);
                             if (matcher.find())
                                 return false;
-                        } catch (Exception ignored) { }
+                        } catch (Exception ignored) {
+                        }
                     }
                 }
             }
         }
-        if(filter != null && filter.length() > 0){
+        if (filter != null && filter.length() > 0) {
             try {
                 Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
                 Matcher matcher = filterPattern.matcher(content);
                 if (matcher.find())
                     return false;
-            }catch (Exception ignored){ }
+            } catch (Exception ignored) {
+            }
         }
         if (type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (status.getReblog() != null && !MainActivity.show_boosts)
@@ -3668,7 +3758,7 @@ public class Helper {
                 return false;
             }
         } else {
-            if( showAccountActivity) {
+            if (showAccountActivity) {
                 if (status.getReblog() != null && !showAccountActivityBoost)
                     return false;
                 else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !showAccountActivityReplies)
@@ -3677,7 +3767,7 @@ public class Helper {
         }
         if (mutedAccount != null && mutedAccount.size() > 0 && mutedAccount.contains(status.getAccount().getId()))
             return false;
-        if( status.isNotice())
+        if (status.isNotice())
             return false;
         return true;
     }
@@ -3685,7 +3775,7 @@ public class Helper {
     public static void colorizeIconMenu(Menu menu, int toolbarIconsColor) {
         final PorterDuffColorFilter colorFilter
                 = new PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY);
-        for(int i = 0; i < menu.size(); i++) {
+        for (int i = 0; i < menu.size(); i++) {
             MenuItem v = menu.getItem(i);
             v.getIcon().setColorFilter(colorFilter);
         }
@@ -3694,41 +3784,42 @@ public class Helper {
     /**
      * Code from "Michal Pawlowski"
      * https://snow.dog/blog/how-to-dynamicaly-change-android-toolbar-icons-color
-     * @param toolbarView toolbar view being colored
+     *
+     * @param toolbarView       toolbar view being colored
      * @param toolbarIconsColor the target color of toolbar icons
-     * @param activity reference to activity needed to register observers
+     * @param activity          reference to activity needed to register observers
      */
     public static void colorizeToolbar(Toolbar toolbarView, int toolbarIconsColor, Activity activity) {
         final PorterDuffColorFilter colorFilter
                 = new PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.SRC_ATOP);
 
-        for(int i = 0; i < toolbarView.getChildCount(); i++) {
+        for (int i = 0; i < toolbarView.getChildCount(); i++) {
             final View v = toolbarView.getChildAt(i);
 
             //Step 1 : Changing the color of back button (or open drawer button).
-            if(v instanceof ImageButton) {
+            if (v instanceof ImageButton) {
                 //Action Bar back button
-                ((ImageButton)v).getDrawable().setColorFilter(colorFilter);
+                ((ImageButton) v).getDrawable().setColorFilter(colorFilter);
             }
-            if(v instanceof ImageView) {
+            if (v instanceof ImageView) {
                 //Action Bar back button
-                if( v.getId() != R.id.pp_actionBar)
-                    ((ImageView)v).setColorFilter(colorFilter);
+                if (v.getId() != R.id.pp_actionBar)
+                    ((ImageView) v).setColorFilter(colorFilter);
             }
-            if(v instanceof MenuItem) {
-                ((MenuItem)v).getIcon().setColorFilter(colorFilter);
+            if (v instanceof MenuItem) {
+                ((MenuItem) v).getIcon().setColorFilter(colorFilter);
             }
-            if(v instanceof ActionMenuView) {
-                for(int j = 0; j < ((ActionMenuView)v).getChildCount(); j++) {
+            if (v instanceof ActionMenuView) {
+                for (int j = 0; j < ((ActionMenuView) v).getChildCount(); j++) {
 
                     //Step 2: Changing the color of any ActionMenuViews - icons that
                     //are not back button, nor text, nor overflow menu icon.
-                    final View innerView = ((ActionMenuView)v).getChildAt(j);
+                    final View innerView = ((ActionMenuView) v).getChildAt(j);
 
-                    if(innerView instanceof ActionMenuItemView) {
-                        int drawablesCount = ((ActionMenuItemView)innerView).getCompoundDrawables().length;
-                        for(int k = 0; k < drawablesCount; k++) {
-                            if(((ActionMenuItemView)innerView).getCompoundDrawables()[k] != null) {
+                    if (innerView instanceof ActionMenuItemView) {
+                        int drawablesCount = ((ActionMenuItemView) innerView).getCompoundDrawables().length;
+                        for (int k = 0; k < drawablesCount; k++) {
+                            if (((ActionMenuItemView) innerView).getCompoundDrawables()[k] != null) {
                                 final int finalK = k;
 
                                 //Important to set the color filter in seperate thread,
@@ -3745,11 +3836,11 @@ public class Helper {
                     }
                 }
             }
-            if(v instanceof LinearLayout) {
-                for(int j = 0; j < ((LinearLayout)v).getChildCount(); j++) {
+            if (v instanceof LinearLayout) {
+                for (int j = 0; j < ((LinearLayout) v).getChildCount(); j++) {
                     //Action Bar back button
                     if (((LinearLayout) v).getChildAt(j) instanceof ImageView)
-                        ((ImageView)((LinearLayout) v).getChildAt(j)).setColorFilter(colorFilter);
+                        ((ImageView) ((LinearLayout) v).getChildAt(j)).setColorFilter(colorFilter);
                 }
             }
             //Step 3: Changing the color of title and subtitle.
@@ -3764,12 +3855,12 @@ public class Helper {
     /**
      * It's important to set overflowDescription atribute in styles, so we can grab the reference
      * to the overflow icon. Check: res/values/styles.xml
+     *
      * @param activity
      * @param colorFilter
      */
     private static void setOverflowButtonColor(final Activity activity, final PorterDuffColorFilter colorFilter) {
-        @SuppressLint("PrivateResource")
-        final String overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description);
+        @SuppressLint("PrivateResource") final String overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description);
         final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         final ViewTreeObserver viewTreeObserver = decorView.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -3781,9 +3872,9 @@ public class Helper {
                 if (outViews.isEmpty()) {
                     return;
                 }
-                androidx.appcompat.widget.AppCompatImageView overflow=(androidx.appcompat.widget.AppCompatImageView) outViews.get(0);
+                androidx.appcompat.widget.AppCompatImageView overflow = (androidx.appcompat.widget.AppCompatImageView) outViews.get(0);
                 overflow.setColorFilter(colorFilter);
-                removeOnGlobalLayoutListener(decorView,this);
+                removeOnGlobalLayoutListener(decorView, this);
             }
         });
     }
@@ -3791,17 +3882,14 @@ public class Helper {
     private static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
-        }
-        else {
+        } else {
             v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
         }
     }
 
 
-
-
-    public static String getLocalesTwoChars(int stringLocaleId){
-        switch (stringLocaleId){
+    public static String getLocalesTwoChars(int stringLocaleId) {
+        switch (stringLocaleId) {
             case R.string.default_language:
                 return Locale.getDefault().getLanguage();
             case R.string.english:
@@ -3856,14 +3944,10 @@ public class Helper {
     }
 
 
-
-
-
-
-    public static int languageSpinnerPosition(Context context){
+    public static int languageSpinnerPosition(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, "NOT_DEFINED");
-        switch (defaultLocaleString){
+        switch (defaultLocaleString) {
             case "NOT_DEFINED":
                 return 0;
             case "en":
@@ -3911,7 +3995,7 @@ public class Helper {
         }
     }
 
-    public static String[] getLocales(Context context){
+    public static String[] getLocales(Context context) {
         String[] locale = new String[21];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = context.getString(R.string.english);
@@ -3937,32 +4021,32 @@ public class Helper {
         return locale;
     }
 
-    public static boolean containsCaseInsensitive(String s, List<String> l){
-        for (String string : l){
-            if (string.equalsIgnoreCase(s)){
+    public static boolean containsCaseInsensitive(String s, List<String> l) {
+        for (String string : l) {
+            if (string.equalsIgnoreCase(s)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isTablet(Context context){
+    public static boolean isTablet(Context context) {
         return context.getResources().getBoolean(R.bool.isTablet);
     }
 
-    public static void changeMaterialSpinnerColor(Context context, MaterialSpinner materialSpinner){
+    public static void changeMaterialSpinnerColor(Context context, MaterialSpinner materialSpinner) {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == THEME_BLACK) {
+        if (theme == THEME_BLACK) {
             materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
             materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
             materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-        }else if( theme == THEME_DARK){
+        } else if (theme == THEME_DARK) {
             materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
             materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
             materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-        }else {
+        } else {
             materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
             materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.black));
             materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -4001,8 +4085,8 @@ public class Helper {
                 style = R.style.Dialog;
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
-            LayoutInflater inflater = ((MainActivity)contextReference.get()).getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.popup_cache,  new LinearLayout((MainActivity)contextReference.get()), false);
+            LayoutInflater inflater = ((MainActivity) contextReference.get()).getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.popup_cache, new LinearLayout((MainActivity) contextReference.get()), false);
             TextView message = dialogView.findViewById(R.id.message);
             message.setText(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))));
             builder.setView(dialogView);
@@ -4027,24 +4111,24 @@ public class Helper {
                                         }
                                         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                         new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
-                                        if( clean_all.isChecked()){
-                                            if( cache_timeline.isChecked()){
+                                        if (clean_all.isChecked()) {
+                                            if (cache_timeline.isChecked()) {
                                                 new TimelineCacheDAO(contextReference.get(), db).removeAll();
                                             }
-                                            if( cache_owntoots.isChecked()){
+                                            if (cache_owntoots.isChecked()) {
                                                 new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
                                             }
-                                            if( cache_bookmarks.isChecked()){
+                                            if (cache_bookmarks.isChecked()) {
                                                 new StatusCacheDAO(contextReference.get(), db).removeAll(BOOKMARK_CACHE);
                                             }
-                                        }else{
-                                            if( cache_timeline.isChecked()){
+                                        } else {
+                                            if (cache_timeline.isChecked()) {
                                                 new TimelineCacheDAO(contextReference.get(), db).removeAllConnected();
                                             }
-                                            if( cache_owntoots.isChecked()){
+                                            if (cache_owntoots.isChecked()) {
                                                 new StatusCacheDAO(contextReference.get(), db).removeAllStatus(ARCHIVE_CACHE);
                                             }
-                                            if( cache_bookmarks.isChecked()){
+                                            if (cache_bookmarks.isChecked()) {
                                                 new StatusCacheDAO(contextReference.get(), db).removeAllStatus(BOOKMARK_CACHE);
                                             }
                                         }
@@ -4065,7 +4149,6 @@ public class Helper {
                     .show();
         }
     }
-
 
 
     public static String getFilePathFromURI(Context context, Uri contentUri) {
@@ -4135,14 +4218,14 @@ public class Helper {
 
     };
 
-    public static String remove_tracking_param(String original_content){
-        if( original_content == null)
+    public static String remove_tracking_param(String original_content) {
+        if (original_content == null)
             return original_content;
         String cleaned_content = original_content;
-        for(String utm: UTM_PARAMS){
-            cleaned_content = cleaned_content.replaceAll("&amp;"+utm+"=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("&"+utm+"=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("\\?"+utm+"=[0-9a-zA-Z._-]*", "?");
+        for (String utm : UTM_PARAMS) {
+            cleaned_content = cleaned_content.replaceAll("&amp;" + utm + "=[0-9a-zA-Z._-]*", "");
+            cleaned_content = cleaned_content.replaceAll("&" + utm + "=[0-9a-zA-Z._-]*", "");
+            cleaned_content = cleaned_content.replaceAll("\\?" + utm + "=[0-9a-zA-Z._-]*", "?");
         }
         return cleaned_content;
     }
@@ -4160,7 +4243,7 @@ public class Helper {
     }
 
 
-    public static void download(Context context, String file, String url){
+    public static void download(Context context, String file, String url) {
 
 
         FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(context)
@@ -4171,37 +4254,47 @@ public class Helper {
             @Override
             public void onWaitingNetwork(@NotNull Download download) {
             }
+
             @Override
             public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
             }
+
             @Override
             public void onResumed(@NotNull Download download) {
             }
+
             @Override
             public void onRemoved(@NotNull Download download) {
             }
+
             @Override
             public void onQueued(@NotNull Download download, boolean b) {
             }
+
             @Override
             public void onProgress(@NotNull Download download, long l, long l1) {
             }
+
             @Override
             public void onPaused(@NotNull Download download) {
             }
+
             @Override
             public void onError(@NotNull Download download, @NotNull Error error, @org.jetbrains.annotations.Nullable Throwable throwable) {
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
+
             @Override
             public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
             }
+
             @Override
             public void onDeleted(@NotNull Download download) {
             }
+
             @Override
             public void onCompleted(@NotNull Download download) {
-                if( download.getFileUri().getPath() != null) {
+                if (download.getFileUri().getPath() != null) {
                     String url = download.getUrl();
                     final String fileName = URLUtil.guessFileName(url, null, null);
                     final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -4209,19 +4302,21 @@ public class Helper {
                     File file = new File(download.getFileUri().getPath());
                     final Intent intent = new Intent();
                     intent.setAction(android.content.Intent.ACTION_VIEW);
-                    Uri uri = Uri.parse("file://" + file.getAbsolutePath() );
+                    Uri uri = Uri.parse("file://" + file.getAbsolutePath());
                     intent.setDataAndType(uri, mime);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                     Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                 }
             }
+
             @Override
             public void onCancelled(@NotNull Download download) {
             }
+
             @Override
             public void onAdded(@NotNull Download download) {
             }
@@ -4276,7 +4371,8 @@ public class Helper {
                     orbotConnected = false;
                 }
             });
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 
 
@@ -4309,17 +4405,18 @@ public class Helper {
                 specs.add(ConnectionSpec.CLEARTEXT);
 
                 client.connectionSpecs(specs);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         return client;
     }
 
 
-    public static void exportInstanceBlock(Context context, String username){
+    public static void exportInstanceBlock(Context context, String username) {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String backupDBPath = "instance_mute_"+timeStamp+".csv";
+        String backupDBPath = "instance_mute_" + timeStamp + ".csv";
         File sd = Environment.getExternalStorageDirectory();
         final String filename = sd + "/" + backupDBPath;
 
@@ -4337,9 +4434,10 @@ public class Helper {
                 apiResponse = new API(contextReference.get()).getBlockedDomain(null);
                 return apiResponse.getDomains();
             }
+
             @Override
-            protected void onPostExecute( List<String> domains) {
-                if( domains == null){
+            protected void onPostExecute(List<String> domains) {
+                if (domains == null) {
                     return;
                 }
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -4347,21 +4445,21 @@ public class Helper {
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = ((MutedInstanceActivity)context).getLayoutInflater();
+                LayoutInflater inflater = ((MutedInstanceActivity) context).getLayoutInflater();
                 ScrollView scrollView = new ScrollView(context);
                 LinearLayout linearLayout_main = new LinearLayout(context);
 
                 linearLayout_main.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout_main.setOrientation(LinearLayout.VERTICAL);
 
-                for(String domain: domains){
-                    View item = inflater.inflate(R.layout.muted_instance_popup,   new LinearLayout(context), false);
+                for (String domain : domains) {
+                    View item = inflater.inflate(R.layout.muted_instance_popup, new LinearLayout(context), false);
                     CheckBox checkBox = item.findViewById(R.id.popup_domain);
                     checkBox.setText(domain);
                     linearLayout_main.addView(item);
@@ -4372,20 +4470,20 @@ public class Helper {
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        for( int i = 0; i < linearLayout_main.getChildCount() ; i++){
+                        for (int i = 0; i < linearLayout_main.getChildCount(); i++) {
                             LinearLayout linearLayout = (LinearLayout) linearLayout_main.getChildAt(i);
                             CheckBox checkBox = linearLayout.findViewById(R.id.popup_domain);
                             EditText editText = linearLayout.findViewById(R.id.popup_comment);
-                            if( checkBox.isChecked()){
+                            if (checkBox.isChecked()) {
                                 String comment = null;
                                 String domain = checkBox.getText().toString().trim();
-                                if(  editText.getText() != null) {
+                                if (editText.getText() != null) {
                                     comment = editText.getText().toString().trim();
                                 }
                                 domainBlocked.put(domain, comment);
                             }
                         }
-                        if( domainBlocked.size() > 0 ){
+                        if (domainBlocked.size() > 0) {
                             new Thread() {
                                 public void run() {
                                     try {
@@ -4397,10 +4495,10 @@ public class Helper {
                                         fw.append('\n');
                                         Iterator it = domainBlocked.entrySet().iterator();
                                         while (it.hasNext()) {
-                                            Map.Entry pair = (Map.Entry)it.next();
-                                            fw.append((String)pair.getKey());
+                                            Map.Entry pair = (Map.Entry) it.next();
+                                            fw.append((String) pair.getKey());
                                             fw.append(',');
-                                            fw.append((String)pair.getValue());
+                                            fw.append((String) pair.getValue());
                                             fw.append('\n');
                                             it.remove();
                                         }
@@ -4415,8 +4513,8 @@ public class Helper {
                                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                                    Helper.notify_user(context, account,intent, BitmapFactory.decodeResource(context.getResources(),
-                                            R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
+                                    Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
+                                            R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
                                 }
                             }.start();
                         }
@@ -4432,12 +4530,11 @@ public class Helper {
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
-
-    public static void importInstanceBlock(Context context, HashMap<String, String> instances){
+    public static void importInstanceBlock(Context context, HashMap<String, String> instances) {
 
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -4445,13 +4542,13 @@ public class Helper {
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-        LayoutInflater inflater = ((MutedInstanceActivity)context).getLayoutInflater();
+        LayoutInflater inflater = ((MutedInstanceActivity) context).getLayoutInflater();
         ScrollView scrollView = new ScrollView(context);
         LinearLayout linearLayout_main = new LinearLayout(context);
 
@@ -4459,12 +4556,12 @@ public class Helper {
         linearLayout_main.setOrientation(LinearLayout.VERTICAL);
         Iterator it = instances.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            View item = inflater.inflate(R.layout.muted_instance_popup,   new LinearLayout(context), false);
+            Map.Entry pair = (Map.Entry) it.next();
+            View item = inflater.inflate(R.layout.muted_instance_popup, new LinearLayout(context), false);
             CheckBox checkBox = item.findViewById(R.id.popup_domain);
             checkBox.setText(pair.getKey().toString().trim());
             item.findViewById(R.id.popup_comment).setVisibility(View.GONE);
-            if( pair.getValue() != null) {
+            if (pair.getValue() != null) {
                 TextView textView = item.findViewById(R.id.comment_text);
                 textView.setText(pair.getValue().toString());
                 textView.setVisibility(View.VISIBLE);
@@ -4478,26 +4575,26 @@ public class Helper {
         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                for( int i = 0; i < linearLayout_main.getChildCount() ; i++){
+                for (int i = 0; i < linearLayout_main.getChildCount(); i++) {
                     LinearLayout linearLayout = (LinearLayout) linearLayout_main.getChildAt(i);
                     CheckBox checkBox = linearLayout.findViewById(R.id.popup_domain);
-                    if( checkBox.isChecked()){
+                    if (checkBox.isChecked()) {
                         String domain = checkBox.getText().toString().trim();
                         domainBlocked.put(domain, null);
                     }
                 }
-                if( domainBlocked.size() > 0 ){
+                if (domainBlocked.size() > 0) {
                     new Thread() {
                         public void run() {
                             Iterator it = domainBlocked.entrySet().iterator();
                             while (it.hasNext()) {
-                                Map.Entry pair = (Map.Entry)it.next();
+                                Map.Entry pair = (Map.Entry) it.next();
                                 try {
                                     sleep(200);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                new PostActionAsyncTask(context, API.StatusAction.BLOCK_DOMAIN, pair.getKey().toString().trim(), ((MutedInstanceActivity)context)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new PostActionAsyncTask(context, API.StatusAction.BLOCK_DOMAIN, pair.getKey().toString().trim(), ((MutedInstanceActivity) context)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 it.remove();
                             }
                         }
@@ -4528,38 +4625,39 @@ public class Helper {
                 apiResponse = new API(contextReference.get()).getBlockedDomain(null);
                 return apiResponse.getDomains();
             }
+
             @Override
-            protected void onPostExecute( List<String> domains) {
-                if( domains == null){
+            protected void onPostExecute(List<String> domains) {
+                if (domains == null) {
                     return;
                 }
 
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
     }
 
 
-    public static String[] ALPHA = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
+    public static String[] ALPHA = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
             "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", ",", "?",
-            ".", "'" };
-    public static String[] MORSE = { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
+            ".", "'"};
+    public static String[] MORSE = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
             "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
             "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----", "-.-.--", "--..--",
-            "..--..", ".-.-.-", ".----.", };
+            "..--..", ".-.-.-", ".----.",};
 
-    public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
+            if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }
         }
 
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);

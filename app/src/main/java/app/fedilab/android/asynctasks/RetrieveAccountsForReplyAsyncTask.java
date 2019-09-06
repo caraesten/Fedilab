@@ -43,7 +43,7 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
     private ArrayList<Account> accounts;
     private WeakReference<Context> contextReference;
 
-    public RetrieveAccountsForReplyAsyncTask(Context context, app.fedilab.android.client.Entities.Status status, OnRetrieveAccountsReplyInterface onRetrieveAccountsReplyInterface){
+    public RetrieveAccountsForReplyAsyncTask(Context context, app.fedilab.android.client.Entities.Status status, OnRetrieveAccountsReplyInterface onRetrieveAccountsReplyInterface) {
         this.contextReference = new WeakReference<>(context);
         this.status = status;
         this.listener = onRetrieveAccountsReplyInterface;
@@ -59,20 +59,20 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
         addedAccounts.add(status.getAccount().getAcct());
 
         //Retrieves the first toot
-        if( statusContext.getAncestors().size() > 0 ) {
+        if (statusContext.getAncestors().size() > 0) {
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }
-        if( statusContext != null && statusContext.getDescendants().size() >  0){
-            for(app.fedilab.android.client.Entities.Status status : statusContext.getDescendants()){
-                if( canBeAdded(status.getAccount().getAcct())){
+        if (statusContext != null && statusContext.getDescendants().size() > 0) {
+            for (app.fedilab.android.client.Entities.Status status : statusContext.getDescendants()) {
+                if (canBeAdded(status.getAccount().getAcct())) {
                     accounts.add(status.getAccount());
                     addedAccounts.add(status.getAccount().getAcct());
                 }
             }
         }
-        if( statusContext != null && statusContext.getAncestors().size() >  0){
-            for(app.fedilab.android.client.Entities.Status status : statusContext.getAncestors()){
-                if( canBeAdded(status.getAccount().getAcct())){
+        if (statusContext != null && statusContext.getAncestors().size() > 0) {
+            for (app.fedilab.android.client.Entities.Status status : statusContext.getAncestors()) {
+                if (canBeAdded(status.getAccount().getAcct())) {
                     accounts.add(status.getAccount());
                     addedAccounts.add(status.getAccount().getAcct());
                 }
@@ -81,7 +81,7 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
         return null;
     }
 
-    private boolean canBeAdded(String acct){
+    private boolean canBeAdded(String acct) {
         final SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

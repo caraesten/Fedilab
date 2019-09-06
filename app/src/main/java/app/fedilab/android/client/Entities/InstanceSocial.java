@@ -45,7 +45,6 @@ public class InstanceSocial {
     private String thumbnail;
 
 
-
     public String getVersion() {
         return version;
     }

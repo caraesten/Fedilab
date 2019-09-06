@@ -17,14 +17,18 @@ package app.fedilab.android.drawers;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
 
@@ -38,12 +42,12 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<String> tags;
 
-    public SearchTagsAdapter(List<String> tags){
-        this.tags = ( tags != null)?tags:new ArrayList<>();
+    public SearchTagsAdapter(List<String> tags) {
+        this.tags = (tags != null) ? tags : new ArrayList<>();
     }
 
     public String getItem(int position) {
-       return tags.get(position);
+        return tags.get(position);
     }
 
     @NonNull
@@ -54,8 +58,9 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search_tab, parent, false));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tag_name;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tag_name = itemView.findViewById(R.id.tag_name);
@@ -67,7 +72,7 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
         final ViewHolder holder = (ViewHolder) viewHolder;
         final String tag = getItem(i);
 
-        holder.tag_name.setText(String.format("#%s",tag));
+        holder.tag_name.setText(String.format("#%s", tag));
         holder.tag_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +95,6 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return tags.size();
     }
-
 
 
 }

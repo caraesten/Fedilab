@@ -21,8 +21,10 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +32,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
@@ -55,7 +61,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
     private Context context;
     private AccountsFollowRequestAdapter accountsFollowRequestAdapter;
 
-    public AccountsFollowRequestAdapter(List<Account> accounts){
+    public AccountsFollowRequestAdapter(List<Account> accounts) {
         this.accounts = accounts;
         accountsFollowRequestAdapter = this;
     }
@@ -76,7 +82,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         final Account account = accounts.get(position);
         holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
-        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(),true));
+        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_un.setText(account.getAcct());
         //Profile picture
         Glide.with(holder.account_pp.getContext())
@@ -114,7 +120,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         });
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT) {
+        if (theme == Helper.THEME_LIGHT) {
             holder.btn_reject.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.btn_authorize.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
@@ -130,7 +136,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         return accounts.size();
     }
 
-    private void openAccountDetails(Account account){
+    private void openAccountDetails(Account account) {
         Intent intent = new Intent(context, ShowAccountActivity.class);
         Bundle b = new Bundle();
         b.putParcelable("account", account);
@@ -140,16 +146,16 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When authorizing or rejecting an account, this account is removed from the list
         List<Account> accountToRemove = new ArrayList<>();
-        if( statusAction == API.StatusAction.AUTHORIZE || statusAction == API.StatusAction.REJECT){
-            for(Account account: accounts){
-                if( account.getId().equals(userId))
+        if (statusAction == API.StatusAction.AUTHORIZE || statusAction == API.StatusAction.REJECT) {
+            for (Account account : accounts) {
+                if (account.getId().equals(userId))
                     accountToRemove.add(account);
             }
             accounts.removeAll(accountToRemove);

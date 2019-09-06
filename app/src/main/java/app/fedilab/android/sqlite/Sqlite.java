@@ -136,9 +136,9 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
             + COL_DISPLAYED_NAME + " TEXT NOT NULL, " + COL_LOCKED + " INTEGER NOT NULL, "
             + COL_FOLLOWERS_COUNT + " INTEGER NOT NULL, " + COL_FOLLOWING_COUNT + " INTEGER NOT NULL, " + COL_STATUSES_COUNT + " INTEGER NOT NULL, "
-            + COL_NOTE + " TEXT NOT NULL, "+ COL_URL + " TEXT NOT NULL, "
-            + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
-            + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
+            + COL_NOTE + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
+            + COL_AVATAR + " TEXT NOT NULL, " + COL_AVATAR_STATIC + " TEXT NOT NULL, "
+            + COL_HEADER + " TEXT NOT NULL, " + COL_HEADER_STATIC + " TEXT NOT NULL, "
             + COL_EMOJIS + " TEXT, "
             + COL_SOCIAL + " TEXT, "
             + COL_IS_MODERATOR + " INTEGER  DEFAULT 0, "
@@ -172,20 +172,20 @@ public class Sqlite extends SQLiteOpenHelper {
     private final String CREATE_TABLE_CUSTOM_EMOJI = "CREATE TABLE " + TABLE_CUSTOM_EMOJI + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
-            + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)";
+            + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
     static final String COL_KEYWORDS = "KEYWORDS";
-    static final String COL_IS_ART= "IS_ART";
-    static final String COL_IS_NSFW= "IS_NSFW";
-    static final String COL_ANY= "ANY_TAG";
-    static final String COL_ALL= "ALL_TAG";
+    static final String COL_IS_ART = "IS_ART";
+    static final String COL_IS_NSFW = "IS_NSFW";
+    static final String COL_ANY = "ANY_TAG";
+    static final String COL_ALL = "ALL_TAG";
     static final String COL_NONE = "NONE_TAG";
     static final String COL_NAME = "NAME";
     private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
-            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, "+ COL_NAME + " TEXT, "
+            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, " + COL_NAME + " TEXT, "
             + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
             + COL_DATE_CREATION + " TEXT NOT NULL)";
 
@@ -224,7 +224,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
+            + COL_CACHED_ACTION + " INTEGER NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
             + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
             + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
             + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
@@ -235,13 +235,13 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
 
     private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
-            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + "," +COL_CACHED_ACTION +")";
+            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE + "," + COL_STATUS_ID + "," + COL_CACHED_ACTION + ")";
 
     static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
     static final String COL_FILTERED_WITH = "FILTERED_WITH";
     private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_TAGS + " TEXT, " + COL_FILTERED_WITH + " TEXT, "+ COL_DATE_CREATION + " TEXT NOT NULL)";
+            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_TAGS + " TEXT, " + COL_FILTERED_WITH + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
     static final String COL_UUID = "UUID";
@@ -257,18 +257,16 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_DATE + " TEXT NOT NULL)";
 
 
-
     private final String CREATE_TABLE_CACHE_TAGS = "CREATE TABLE "
             + TABLE_CACHE_TAGS + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_TAGS + " TEXT NOT NULL)";
 
 
-
     private static final String CREATE_TABLE_BOOST_SCHEDULE = "CREATE TABLE " + TABLE_BOOST_SCHEDULE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
-            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, "+ COL_DATE_SCHEDULED + " TEXT, "
+            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_DATE_SCHEDULED + " TEXT, "
             + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
 
 
@@ -303,7 +301,6 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_USER_ID + " TEXT NOT NULL, "
             + COL_CACHE + " TEXT NOT NULL, "
             + COL_DATE + " TEXT NOT NULL)";
-
 
 
     static final String COL_NOTIFICATION_ID = "NOTIFICATION_ID";
@@ -348,10 +345,10 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NAV_PEERTUBE + " INTEGER  DEFAULT 1, "
             + COL_NAV_FILTERS + " INTEGER  DEFAULT 1, "
             + COL_NAV_HOW_TO_FOLLOW + " INTEGER  DEFAULT 1, "
-            + COL_NAV_ADMINISTRATION+ " INTEGER  DEFAULT 1, "
-            + COL_NAV_BLOCKED+ " INTEGER  DEFAULT 1, "
-            + COL_NAV_MUTED+ " INTEGER  DEFAULT 1, "
-            + COL_NAV_BLOCKED_DOMAINS+ " INTEGER  DEFAULT 1, "
+            + COL_NAV_ADMINISTRATION + " INTEGER  DEFAULT 1, "
+            + COL_NAV_BLOCKED + " INTEGER  DEFAULT 1, "
+            + COL_NAV_MUTED + " INTEGER  DEFAULT 1, "
+            + COL_NAV_BLOCKED_DOMAINS + " INTEGER  DEFAULT 1, "
             + COL_NAV_HOWTO + " INTEGER  DEFAULT 1)";
 
 
@@ -360,8 +357,7 @@ public class Sqlite extends SQLiteOpenHelper {
     }
 
 
-    public static synchronized Sqlite getInstance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
-    {
+    public static synchronized Sqlite getInstance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         if (sInstance == null) {
             sInstance = new Sqlite(context, name, factory, version);
         }
@@ -408,9 +404,9 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CUSTOM_EMOJI + " ("
                         + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
-                        + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)");
+                        + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)");
             case 5:
-                db.execSQL("delete from "+ TABLE_CUSTOM_EMOJI); //Reset table due to bugs
+                db.execSQL("delete from " + TABLE_CUSTOM_EMOJI); //Reset table due to bugs
             case 6:
                 db.execSQL(CREATE_TABLE_SEARCH);
             case 7:
@@ -428,15 +424,15 @@ public class Sqlite extends SQLiteOpenHelper {
             case 11:
                 db.execSQL(CREATE_TABLE_INSTANCES);
             case 12:
-                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN "+ COL_EMOJIS + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_EMOJIS + " TEXT");
             case 13:
-                if( oldVersion > 11)
-                    db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
+                if (oldVersion > 11)
+                    db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_INSTANCE_TYPE + " TEXT");
             case 14:
                 db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
             case 15:
-                if( oldVersion > 8)
-                    db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN "+ COL_CARD + " TEXT");
+                if (oldVersion > 8)
+                    db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN " + COL_CARD + " TEXT");
             case 16:
             case 17:
                 db.execSQL("DROP TABLE IF EXISTS '" + TABLE_TIMELINE_CACHE + "'");
@@ -444,18 +440,18 @@ public class Sqlite extends SQLiteOpenHelper {
             case 18:
                 db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
             case 19:
-                if( oldVersion > 6) {
+                if (oldVersion > 6) {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_ART + " INTEGER  DEFAULT 0");
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_NSFW + " INTEGER  DEFAULT 0");
                 }
             case 20:
-                if( oldVersion > 6) {
+                if (oldVersion > 6) {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ANY + " TEXT");
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ALL + " TEXT");
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NONE + " TEXT");
                 }
             case 21:
-                if( oldVersion > 6) {
+                if (oldVersion > 6) {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NAME + " TEXT");
                 }
             case 22:
@@ -465,10 +461,10 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_CLIENT_SECRET + " TEXT");
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_REFRESH_TOKEN + " TEXT");
             case 24:
-                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_IS_MODERATOR + " INTEGER  DEFAULT 0");
-                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_IS_ADMIN + " INTEGER  DEFAULT 0");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_IS_MODERATOR + " INTEGER  DEFAULT 0");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_IS_ADMIN + " INTEGER  DEFAULT 0");
             case 25:
-                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_UPDATED_AT + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_UPDATED_AT + " TEXT");
             case 26:
                 db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
             case 27:
@@ -479,7 +475,7 @@ public class Sqlite extends SQLiteOpenHelper {
             case 29:
                 db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
             case 30:
-                if( oldVersion > 11) {
+                if (oldVersion > 11) {
                     db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_TAGS + " TEXT");
                     db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN " + COL_FILTERED_WITH + " TEXT");
                 }
@@ -488,9 +484,9 @@ public class Sqlite extends SQLiteOpenHelper {
                         + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
                         + COL_DISPLAYED_NAME + " TEXT NOT NULL, " + COL_LOCKED + " INTEGER NOT NULL, "
                         + COL_FOLLOWERS_COUNT + " INTEGER NOT NULL, " + COL_FOLLOWING_COUNT + " INTEGER NOT NULL, " + COL_STATUSES_COUNT + " INTEGER NOT NULL, "
-                        + COL_NOTE + " TEXT NOT NULL, "+ COL_URL + " TEXT NOT NULL, "
-                        + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
-                        + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
+                        + COL_NOTE + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
+                        + COL_AVATAR + " TEXT NOT NULL, " + COL_AVATAR_STATIC + " TEXT NOT NULL, "
+                        + COL_HEADER + " TEXT NOT NULL, " + COL_HEADER_STATIC + " TEXT NOT NULL, "
                         + COL_EMOJIS + " TEXT, "
                         + COL_SOCIAL + " TEXT, "
                         + COL_IS_MODERATOR + " INTEGER  DEFAULT 0, "
@@ -502,20 +498,20 @@ public class Sqlite extends SQLiteOpenHelper {
                         + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
                 db.execSQL(CREATE_TABLE_USER_ACCOUNT_TEMP);
 
-                String insert = "INSERT INTO "+TABLE_USER_ACCOUNT_TEMP+" ("
-                        +COL_USER_ID+", "+COL_USERNAME+", "+COL_ACCT+", "+COL_DISPLAYED_NAME+", "+COL_LOCKED+", "+COL_FOLLOWERS_COUNT+", "
-                        +COL_FOLLOWING_COUNT+", "+COL_STATUSES_COUNT+", "+COL_NOTE+", "+COL_URL+", "+COL_AVATAR+", "+COL_AVATAR_STATIC+", "
-                        +COL_HEADER+", "+COL_HEADER_STATIC+", "+COL_EMOJIS+", "+COL_SOCIAL+", "+COL_IS_MODERATOR+", "+COL_IS_ADMIN+", "
-                        +COL_CLIENT_ID+", "+COL_CLIENT_SECRET+", "+COL_REFRESH_TOKEN+", "+COL_UPDATED_AT+", "+COL_PRIVACY+", "+COL_SENSITIVE+", "
-                        +COL_INSTANCE+", "+COL_OAUTHTOKEN+", "+COL_CREATED_AT+") "
-                        +" SELECT "+COL_USER_ID+", "+COL_USERNAME+", "+COL_ACCT+", "+COL_DISPLAYED_NAME+", "+COL_LOCKED+", "+COL_FOLLOWERS_COUNT+", "
-                        +COL_FOLLOWING_COUNT+", "+COL_STATUSES_COUNT+", "+COL_NOTE+", "+COL_URL+", "+COL_AVATAR+", "+COL_AVATAR_STATIC+", "
-                        +COL_HEADER+", "+COL_HEADER_STATIC+", "+COL_EMOJIS+", "+COL_SOCIAL+", "+COL_IS_MODERATOR+", "+COL_IS_ADMIN+", "
-                        +COL_CLIENT_ID+", "+COL_CLIENT_SECRET+", "+COL_REFRESH_TOKEN+", "+COL_UPDATED_AT+", "+COL_PRIVACY+", "+COL_SENSITIVE+", "
-                        +COL_INSTANCE+", "+COL_OAUTHTOKEN+", "+COL_CREATED_AT+ " FROM " + TABLE_USER_ACCOUNT;
+                String insert = "INSERT INTO " + TABLE_USER_ACCOUNT_TEMP + " ("
+                        + COL_USER_ID + ", " + COL_USERNAME + ", " + COL_ACCT + ", " + COL_DISPLAYED_NAME + ", " + COL_LOCKED + ", " + COL_FOLLOWERS_COUNT + ", "
+                        + COL_FOLLOWING_COUNT + ", " + COL_STATUSES_COUNT + ", " + COL_NOTE + ", " + COL_URL + ", " + COL_AVATAR + ", " + COL_AVATAR_STATIC + ", "
+                        + COL_HEADER + ", " + COL_HEADER_STATIC + ", " + COL_EMOJIS + ", " + COL_SOCIAL + ", " + COL_IS_MODERATOR + ", " + COL_IS_ADMIN + ", "
+                        + COL_CLIENT_ID + ", " + COL_CLIENT_SECRET + ", " + COL_REFRESH_TOKEN + ", " + COL_UPDATED_AT + ", " + COL_PRIVACY + ", " + COL_SENSITIVE + ", "
+                        + COL_INSTANCE + ", " + COL_OAUTHTOKEN + ", " + COL_CREATED_AT + ") "
+                        + " SELECT " + COL_USER_ID + ", " + COL_USERNAME + ", " + COL_ACCT + ", " + COL_DISPLAYED_NAME + ", " + COL_LOCKED + ", " + COL_FOLLOWERS_COUNT + ", "
+                        + COL_FOLLOWING_COUNT + ", " + COL_STATUSES_COUNT + ", " + COL_NOTE + ", " + COL_URL + ", " + COL_AVATAR + ", " + COL_AVATAR_STATIC + ", "
+                        + COL_HEADER + ", " + COL_HEADER_STATIC + ", " + COL_EMOJIS + ", " + COL_SOCIAL + ", " + COL_IS_MODERATOR + ", " + COL_IS_ADMIN + ", "
+                        + COL_CLIENT_ID + ", " + COL_CLIENT_SECRET + ", " + COL_REFRESH_TOKEN + ", " + COL_UPDATED_AT + ", " + COL_PRIVACY + ", " + COL_SENSITIVE + ", "
+                        + COL_INSTANCE + ", " + COL_OAUTHTOKEN + ", " + COL_CREATED_AT + " FROM " + TABLE_USER_ACCOUNT;
                 db.execSQL(insert);
-                db.execSQL("DROP TABLE "+TABLE_USER_ACCOUNT);
-                db.execSQL("ALTER TABLE "+TABLE_USER_ACCOUNT_TEMP + " RENAME TO "+ TABLE_USER_ACCOUNT);
+                db.execSQL("DROP TABLE " + TABLE_USER_ACCOUNT);
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT_TEMP + " RENAME TO " + TABLE_USER_ACCOUNT);
 
             case 32:
                 db.execSQL(CREATE_TABLE_NOTIFICATIONS);
@@ -523,29 +519,26 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
             case 34:
                 db.execSQL("DROP INDEX IF EXISTS instance_statusid");
-                db.execSQL("DELETE FROM "+TABLE_STATUSES_CACHE);
-                db.execSQL("DELETE FROM "+TABLE_NOTIFICATION_CACHE);
+                db.execSQL("DELETE FROM " + TABLE_STATUSES_CACHE);
+                db.execSQL("DELETE FROM " + TABLE_NOTIFICATION_CACHE);
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             default:
                 break;
         }
     }
 
-    public SQLiteDatabase open(){
+    public SQLiteDatabase open() {
         //opened with write access
         db = getWritableDatabase();
         return db;
     }
 
-    public void close(){
+    public void close() {
         //Close the db
-        if( db != null && db.isOpen() ) {
+        if (db != null && db.isOpen()) {
             db.close();
         }
     }
-
-
-
 
 
     public static void importDB(Activity activity, String backupDBPath) {
@@ -561,7 +554,7 @@ public class Sqlite extends SQLiteOpenHelper {
             Helper.logoutCurrentUser(activity);
         } catch (Exception e) {
             e.printStackTrace();
-            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
+            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.data_import_error_simple), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -572,9 +565,9 @@ public class Sqlite extends SQLiteOpenHelper {
             if (sd.canWrite()) {
 
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-                String backupDBPath = "Fedilab_export_"+timeStamp+".fedilab";
+                String backupDBPath = "Fedilab_export_" + timeStamp + ".fedilab";
                 File dbSource = context.getDatabasePath(DB_NAME);
-                File dbDest = new File(sd,backupDBPath);
+                File dbDest = new File(sd, backupDBPath);
                 FileChannel src = new FileInputStream(dbSource).getChannel();
                 FileChannel dst = new FileOutputStream(dbDest).getChannel();
                 dst.transferFrom(src, 0, src.size());
@@ -590,15 +583,14 @@ public class Sqlite extends SQLiteOpenHelper {
                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                 Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                        R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
-                Toasty.success(context, context.getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
+                        R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
+                Toasty.success(context, context.getString(R.string.data_base_exported), Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
             Toasty.error(context, context.getString(R.string.data_export_error_simple), Toast.LENGTH_LONG).show();
         }
     }
-
 
 
 }

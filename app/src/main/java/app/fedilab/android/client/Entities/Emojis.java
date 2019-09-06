@@ -32,7 +32,8 @@ public class Emojis implements Parcelable {
     private Drawable drawable;
     private boolean drawableFound;
 
-    public Emojis(){}
+    public Emojis() {
+    }
 
     public String getShortcode() {
         return shortcode;

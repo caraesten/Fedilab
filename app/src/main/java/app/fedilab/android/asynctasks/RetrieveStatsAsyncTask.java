@@ -17,7 +17,9 @@ package app.fedilab.android.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
+
 import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.sqlite.Sqlite;
@@ -36,7 +38,7 @@ public class RetrieveStatsAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private Statistics statistics;
 
-    public RetrieveStatsAsyncTask(Context context, OnRetrieveStatsInterface onRetrieveStatsInterface){
+    public RetrieveStatsAsyncTask(Context context, OnRetrieveStatsInterface onRetrieveStatsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveStatsInterface;
     }

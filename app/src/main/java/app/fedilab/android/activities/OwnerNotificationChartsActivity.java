@@ -101,7 +101,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -116,12 +116,12 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         }
         Bundle b = getIntent().getExtras();
         status_id = null;
-        if(b != null)
+        if (b != null)
             status_id = b.getString("status_id");
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -135,8 +135,8 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-            Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
-            if( account != null) {
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+            if (account != null) {
                 Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
             }
 
@@ -146,12 +146,12 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
                     finish();
                 }
             });
-            if( account != null) {
+            if (account != null) {
                 toolbar_title.setText(getString(R.string.owner_charts) + " - " + account.getUsername() + "@" + account.getInstance());
-            }else{
+            } else {
                 toolbar_title.setText(R.string.owner_charts);
             }
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, OwnerNotificationChartsActivity.this);
             }
@@ -162,19 +162,19 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         chart = findViewById(R.id.chart);
         settings_time_from = findViewById(R.id.settings_time_from);
         settings_time_to = findViewById(R.id.settings_time_to);
-        loader =  findViewById(R.id.loader);
+        loader = findViewById(R.id.loader);
         validate = findViewById(R.id.validate);
         LinearLayout date_container = findViewById(R.id.date_container);
         SQLiteDatabase db = Sqlite.getInstance(OwnerNotificationChartsActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( status_id == null) {
+        if (status_id == null) {
             dateIni = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getSmallerDate();
             dateEnd = new NotificationCacheDAO(OwnerNotificationChartsActivity.this, db).getGreaterDate();
-        }else{
+        } else {
             Status status = new StatusCacheDAO(getApplicationContext(), db).getStatus(status_id);
-            if( status == null){
+            if (status == null) {
                 finish();
                 return;
-            }else{
+            } else {
                 dateIni = status.getCreated_at();
                 dateEnd = dateIni;
                 date_container.setVisibility(View.GONE);
@@ -183,15 +183,15 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
 
         int style;
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        }else  if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         Calendar c = Calendar.getInstance();
-        if(dateIni != null) {
+        if (dateIni != null) {
             c.setTime(dateIni);
         }
         int yearIni = c.get(Calendar.YEAR);
@@ -207,7 +207,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             }
         });
 
-        if( dateIni != null) {
+        if (dateIni != null) {
             Calendar ce = Calendar.getInstance();
             c.setTime(dateEnd);
             int yearEnd = ce.get(Calendar.YEAR);
@@ -264,24 +264,24 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
 
         Iterator it = charts.getReblogs().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            boostsEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            boostsEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
         List<Entry> favEntry = new ArrayList<>();
         it = charts.getFavourites().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            favEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            favEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
         List<Entry> mentionEntry = new ArrayList<>();
         it = charts.getMentions().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            mentionEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            mentionEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
@@ -289,8 +289,8 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         List<Entry> followEntry = new ArrayList<>();
         it = charts.getFollows().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            followEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            followEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
@@ -303,7 +303,6 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         }*/
 
 
-
         LineDataSet dataSetBoosts = new LineDataSet(boostsEntry, getString(R.string.reblog));
         dataSetBoosts.setColor(ContextCompat.getColor(OwnerNotificationChartsActivity.this, R.color.chart_notif_boost));
         dataSetBoosts.setValueTextSize(10f);
@@ -314,9 +313,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetBoosts.setDrawCircles(false);
         dataSetBoosts.setDrawCircleHole(false);
         dataSetBoosts.setLineWidth(2f);
-        if( status_id == null) {
+        if (status_id == null) {
             dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        }else{
+        } else {
             dataSetBoosts.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         }
 
@@ -330,9 +329,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dateSetFavorites.setDrawCircles(false);
         dateSetFavorites.setDrawCircleHole(false);
         dateSetFavorites.setLineWidth(2f);
-        if( status_id == null) {
+        if (status_id == null) {
             dateSetFavorites.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        }else{
+        } else {
             dateSetFavorites.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         }
 
@@ -346,9 +345,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetMention.setDrawCircles(false);
         dataSetMention.setDrawCircleHole(false);
         dataSetMention.setLineWidth(2f);
-        if( status_id == null) {
+        if (status_id == null) {
             dataSetMention.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        }else{
+        } else {
             dataSetMention.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         }
 
@@ -363,9 +362,9 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         dataSetFollow.setDrawCircles(false);
         dataSetFollow.setDrawCircleHole(false);
         dataSetFollow.setLineWidth(2f);
-        if( status_id == null) {
+        if (status_id == null) {
             dataSetFollow.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        }else{
+        } else {
             dataSetFollow.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         }
 
@@ -420,14 +419,14 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         description.setEnabled(false);
 
         //Update colors
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 xAxis.setTextColor(Color.BLACK);
                 dataSetBoosts.setValueTextColor(Color.BLACK);
                 dateSetFavorites.setValueTextColor(Color.BLACK);
                 dataSetFollow.setValueTextColor(Color.BLACK);
                 dataSetMention.setValueTextColor(Color.BLACK);
-              //  dataSetPolls.setValueTextColor(Color.BLACK);
+                //  dataSetPolls.setValueTextColor(Color.BLACK);
 
                 legend.setTextColor(Color.BLACK);
                 leftAxis.setTextColor(Color.BLACK);
@@ -440,7 +439,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
                 dateSetFavorites.setValueTextColor(color);
                 dataSetFollow.setValueTextColor(color);
                 dataSetMention.setValueTextColor(color);
-              //  dataSetPolls.setValueTextColor(color);
+                //  dataSetPolls.setValueTextColor(color);
                 legend.setTextColor(color);
                 leftAxis.setTextColor(color);
         }
@@ -463,24 +462,27 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         public CustomMarkerView(Context context, int layoutResource) {
             super(context, layoutResource);
             tvContent = findViewById(R.id.tvContent);
-            if( theme == Helper.THEME_DARK){
+            if (theme == Helper.THEME_DARK) {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            }else  if( theme == Helper.THEME_BLACK){
+            } else if (theme == Helper.THEME_BLACK) {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            }else {
+            } else {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
         }
+
         @Override
         public void refreshContent(Entry e, Highlight highlight) {
             Date date = new Date(((long) e.getX()));
-            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " +(int)e.getY()));
+            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " + (int) e.getY()));
             super.refreshContent(e, highlight);
         }
+
         private MPPointF mOffset;
+
         @Override
         public MPPointF getOffset() {
-            if(mOffset == null) {
+            if (mOffset == null) {
                 mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
             }
             return mOffset;
@@ -525,7 +527,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         }
     }
 
-    private void loadGraph(Date dateIni, Date dateEnd){
+    private void loadGraph(Date dateIni, Date dateEnd) {
         String dateInitString = Helper.shortDateToString(dateIni);
         String dateEndString = Helper.shortDateToString(dateEnd);
 
@@ -544,19 +546,19 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
     }
 
 
-
     public class MyXAxisValueFormatter extends ValueFormatter {
         private DateFormat mDataFormat;
         private Date mDate;
 
         MyXAxisValueFormatter() {
-            if( status_id == null) {
+            if (status_id == null) {
                 this.mDataFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
-            }else{
+            } else {
                 this.mDataFormat = new SimpleDateFormat("hh'h'", Locale.getDefault());
             }
             this.mDate = new Date();
         }
+
         @Override
         public String getFormattedValue(float value) {
             return getDateString((long) value);
@@ -566,7 +568,7 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
             try {
                 mDate.setTime(timestamp);
                 return mDataFormat.format(mDate);
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 return "xx";
             }
         }

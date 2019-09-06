@@ -30,12 +30,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -86,7 +88,6 @@ import app.fedilab.android.interfaces.OnUpdateCredentialInterface;
 public class EditProfileActivity extends BaseActivity implements OnRetrieveAccountInterface, OnUpdateCredentialInterface {
 
 
-
     private EditText set_profile_name, set_profile_description;
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
@@ -110,7 +111,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -127,7 +128,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         setContentView(R.layout.activity_edit_profile);
 
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -137,7 +138,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.settings_title_profile);
             ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
-            if( close_conversation != null){
+            if (close_conversation != null) {
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -145,18 +146,17 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     }
                 });
             }
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, EditProfileActivity.this);
             }
-        }else{
+        } else {
             setTitle(R.string.settings_title_profile);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
-
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
 
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
@@ -174,10 +174,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.3");
-        if(currentVersion.compareTo(minVersion) == 1) {
+        if (currentVersion.compareTo(minVersion) == 1) {
             set_lock_account.setVisibility(View.VISIBLE);
             set_sensitive_content.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             set_lock_account.setVisibility(View.GONE);
             set_sensitive_content.setVisibility(View.GONE);
         }
@@ -207,21 +207,21 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
     @Override
     public void onRetrieveAccount(Account account, Error error) {
-        if( error != null ){
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         set_profile_name.setText(account.getDisplay_name());
         set_profile_name.setSelection(set_profile_name.getText().length());
 
         String content = account.getNote();
-        if( content != null) {
+        if (content != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
             else
                 //noinspection deprecation
                 content = Html.fromHtml(content).toString();
-        }else
+        } else
             content = "";
         set_profile_description.setText(content);
 
@@ -232,40 +232,44 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_profile_description.setEnabled(true);
         set_lock_account.setEnabled(true);
         set_sensitive_content.setEnabled(true);
-        if( account.isLocked())
+        if (account.isLocked())
             set_lock_account.setChecked(true);
         else
             set_lock_account.setChecked(false);
-        if( account.isSensitive())
+        if (account.isSensitive())
             set_sensitive_content.setChecked(true);
         else
             set_sensitive_content.setChecked(false);
         set_profile_description.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() > 160){
-                    String content = s.toString().substring(0,160);
+                if (s.length() > 160) {
+                    String content = s.toString().substring(0, 160);
                     set_profile_description.setText(content);
                     set_profile_description.setSelection(set_profile_description.getText().length());
-                    Toasty.info(getApplicationContext(),getString(R.string.note_no_space),Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.note_no_space), Toast.LENGTH_LONG).show();
                 }
             }
         });
-        if ( account.getFields() != null && account.getFields().size() > 0){
+        if (account.getFields() != null && account.getFields().size() > 0) {
             HashMap<String, String> fields = account.getFields();
             Iterator it = fields.entrySet().iterator();
             int i = 1;
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                String label = (String)pair.getKey();
-                String value = (String)pair.getValue();
+                Map.Entry pair = (Map.Entry) it.next();
+                String label = (String) pair.getKey();
+                String value = (String) pair.getValue();
                 EditText labelView;
                 EditText valueView;
-                switch(i){
+                switch (i) {
                     case 1:
                         labelView = findViewById(R.id.cf_key_1);
                         valueView = findViewById(R.id.cf_val_1);
@@ -300,16 +304,20 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
         set_profile_name.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() > 30){
-                    String content = s.toString().substring(0,30);
+                if (s.length() > 30) {
+                    String content = s.toString().substring(0, 30);
                     set_profile_name.setText(content);
                     set_profile_name.setSelection(set_profile_name.getText().length());
-                    Toasty.info(getApplicationContext(),getString(R.string.username_no_space),Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.username_no_space), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -334,7 +342,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 pickIntent.setType("image/*");
 
                 Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
                 startActivityForResult(chooserIntent, PICK_IMAGE_HEADER);
             }
         });
@@ -360,7 +368,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 pickIntent.setType("image/*");
 
                 Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
                 startActivityForResult(chooserIntent, PICK_IMAGE_PROFILE);
             }
         });
@@ -371,7 +379,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         Glide.with(set_header_picture.getContext())
                 .load(account.getHeader())
                 .into(set_header_picture);
-        if( account.getHeader() == null || account.getHeader().contains("missing.png"))
+        if (account.getHeader() == null || account.getHeader().contains("missing.png"))
             set_header_picture_overlay.setVisibility(View.VISIBLE);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -379,21 +387,21 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_profile_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(set_profile_name.getText() != null && !set_profile_name.getText().toString().equals(set_profile_name.getHint()))
+                if (set_profile_name.getText() != null && !set_profile_name.getText().toString().equals(set_profile_name.getHint()))
                     profile_username = set_profile_name.getText().toString().trim();
                 else
                     profile_username = null;
 
-                if(set_profile_description.getText() != null && !set_profile_description.getText().toString().equals(set_profile_description.getHint()))
+                if (set_profile_description.getText() != null && !set_profile_description.getText().toString().equals(set_profile_description.getHint()))
                     profile_note = set_profile_description.getText().toString().trim();
                 else
                     profile_note = null;
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EditProfileActivity.this, style);
@@ -406,43 +414,43 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 TextView dialog_profile_name = dialogView.findViewById(R.id.dialog_profile_name);
                 TextView dialog_profile_description = dialogView.findViewById(R.id.dialog_profile_description);
 
-                if( profile_username != null)
+                if (profile_username != null)
                     dialog_profile_name.setText(profile_username);
-                if( profile_note != null)
+                if (profile_note != null)
                     dialog_profile_description.setText(profile_note);
-                if( profile_header_bmp != null) {
+                if (profile_header_bmp != null) {
                     BitmapDrawable background = new BitmapDrawable(getApplicationContext().getResources(), profile_header_bmp);
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                         //noinspection deprecation
                         back_ground_image.setBackgroundDrawable(background);
                     } else {
                         back_ground_image.setBackground(background);
                     }
-                }else {
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                } else {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                         //noinspection deprecation
                         back_ground_image.setBackgroundDrawable(set_header_picture.getDrawable());
                     } else {
                         back_ground_image.setBackground(set_header_picture.getDrawable());
                     }
                 }
-                if( profile_picture_bmp != null) {
+                if (profile_picture_bmp != null) {
                     BitmapDrawable background = new BitmapDrawable(getApplicationContext().getResources(), profile_picture_bmp);
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                         //noinspection deprecation
                         dialog_profile_picture.setBackgroundDrawable(background);
                     } else {
                         dialog_profile_picture.setBackground(background);
                     }
-                }else {
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                } else {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                         //noinspection deprecation
                         dialog_profile_picture.setBackgroundDrawable(set_profile_picture.getDrawable());
                     } else {
                         dialog_profile_picture.setBackground(set_profile_picture.getDrawable());
                     }
                 }
-                profile_privacy = set_lock_account.isChecked()?API.accountPrivacy.LOCKED:API.accountPrivacy.PUBLIC;
+                profile_privacy = set_lock_account.isChecked() ? API.accountPrivacy.LOCKED : API.accountPrivacy.PUBLIC;
                 sensitive = set_sensitive_content.isChecked();
                 dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
@@ -458,22 +466,22 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         HashMap<String, String> newCustomFields = new HashMap<>();
 
                         String key1, key2, key3, key4, val1, val2, val3, val4;
-                        key1 = ((EditText)findViewById(R.id.cf_key_1)).getText().toString();
-                        key2 = ((EditText)findViewById(R.id.cf_key_2)).getText().toString();
-                        key3 = ((EditText)findViewById(R.id.cf_key_3)).getText().toString();
-                        key4 = ((EditText)findViewById(R.id.cf_key_4)).getText().toString();
+                        key1 = ((EditText) findViewById(R.id.cf_key_1)).getText().toString();
+                        key2 = ((EditText) findViewById(R.id.cf_key_2)).getText().toString();
+                        key3 = ((EditText) findViewById(R.id.cf_key_3)).getText().toString();
+                        key4 = ((EditText) findViewById(R.id.cf_key_4)).getText().toString();
 
-                        val1 = ((EditText)findViewById(R.id.cf_val_1)).getText().toString();
-                        val2 = ((EditText)findViewById(R.id.cf_val_2)).getText().toString();
-                        val3 = ((EditText)findViewById(R.id.cf_val_3)).getText().toString();
-                        val4 = ((EditText)findViewById(R.id.cf_val_4)).getText().toString();
+                        val1 = ((EditText) findViewById(R.id.cf_val_1)).getText().toString();
+                        val2 = ((EditText) findViewById(R.id.cf_val_2)).getText().toString();
+                        val3 = ((EditText) findViewById(R.id.cf_val_3)).getText().toString();
+                        val4 = ((EditText) findViewById(R.id.cf_val_4)).getText().toString();
 
-                        newCustomFields.put(key1,val1);
-                        newCustomFields.put(key2,val2);
-                        newCustomFields.put(key3,val3);
-                        newCustomFields.put(key4,val4);
+                        newCustomFields.put(key1, val1);
+                        newCustomFields.put(key2, val2);
+                        newCustomFields.put(key3, val3);
+                        newCustomFields.put(key4, val4);
 
-                        new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, sensitive, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName, header_picture, headerName, profile_privacy, sensitive, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -521,7 +529,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_HEADER && resultCode == RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;
             }
             Uri fileUri = data.getData();
@@ -537,9 +545,9 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 e.printStackTrace();
             }
             header_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.MEDIA);
-        }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == RESULT_OK) {
+        } else if (requestCode == PICK_IMAGE_PROFILE && resultCode == RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;
             }
             Uri fileUri = data.getData();
@@ -561,7 +569,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     @Override
     public void onUpdateCredential(APIResponse apiResponse) {
         set_profile_save.setEnabled(true);
-        if( apiResponse.getError() != null){
+        if (apiResponse.getError() != null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }

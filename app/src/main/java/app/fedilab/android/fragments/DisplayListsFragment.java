@@ -22,8 +22,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -91,68 +94,67 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         asyncTask = new ManageListsAsyncTask(context, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
-        }catch (Exception ignored){}
-        if( add_new != null)
-        add_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                int style;
-                if (theme == Helper.THEME_DARK) {
-                    style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
-                    style = R.style.DialogBlack;
-                }else {
-                    style = R.style.Dialog;
+        } catch (Exception ignored) {
+        }
+        if (add_new != null)
+            add_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK) {
+                        style = R.style.DialogBlack;
+                    } else {
+                        style = R.style.Dialog;
+                    }
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                    LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.add_list, new LinearLayout(context), false);
+                    dialogBuilder.setView(dialogView);
+                    final EditText editText = dialogView.findViewById(R.id.add_list);
+                    editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (editText.getText() != null && editText.getText().toString().trim().length() > 0)
+                                new ManageListsAsyncTask(context, ManageListsAsyncTask.action.CREATE_LIST, null, null, null, editText.getText().toString().trim(), DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            dialog.dismiss();
+                            add_new.setEnabled(false);
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.setTitle(getString(R.string.action_lists_create));
+                    alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            //Hide keyboard
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            assert imm != null;
+                            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                        }
+                    });
+                    if (alertDialog.getWindow() != null)
+                        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    alertDialog.show();
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.add_list,   new LinearLayout(context), false);
-                dialogBuilder.setView(dialogView);
-                final EditText editText = dialogView.findViewById(R.id.add_list);
-                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        if( editText.getText() != null && editText.getText().toString().trim().length() > 0 )
-                            new ManageListsAsyncTask(context, ManageListsAsyncTask.action.CREATE_LIST, null, null, null, editText.getText().toString().trim(), DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        dialog.dismiss();
-                        add_new.setEnabled(false);
-                    }
-                });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.setTitle(getString(R.string.action_lists_create));
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        //Hide keyboard
-                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        assert imm != null;
-                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    }
-                });
-                if( alertDialog.getWindow() != null )
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                alertDialog.show();
-            }
-        });
+            });
         return rootView;
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -165,7 +167,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
@@ -174,11 +176,11 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
-        if( actionType == ManageListsAsyncTask.action.GET_LIST) {
+        if (actionType == ManageListsAsyncTask.action.GET_LIST) {
             if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
                 this.lists.addAll(apiResponse.getLists());
                 listAdapter.notifyDataSetChanged();
@@ -186,7 +188,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
             } else {
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
-        }else if( actionType == ManageListsAsyncTask.action.CREATE_LIST){
+        } else if (actionType == ManageListsAsyncTask.action.CREATE_LIST) {
             if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
                 String listId = apiResponse.getLists().get(0).getId();
                 String title = apiResponse.getLists().get(0).getTitle();
@@ -201,11 +203,11 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                 textviewNoAction.setVisibility(View.GONE);
                 Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentUP);
-            }else{
-                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             }
-        }else if( actionType == ManageListsAsyncTask.action.DELETE_LIST){
-            if( this.lists.size() == 0)
+        } else if (actionType == ManageListsAsyncTask.action.DELETE_LIST) {
+            if (this.lists.size() == 0)
                 textviewNoAction.setVisibility(View.VISIBLE);
             Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentUP);

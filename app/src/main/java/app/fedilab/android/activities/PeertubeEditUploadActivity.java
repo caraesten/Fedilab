@@ -21,9 +21,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +88,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -101,19 +103,19 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         }
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
+        if (b != null) {
             videoId = b.getString("video_id", null);
         }
-        if( videoId == null){
+        if (videoId == null) {
             videoId = sharedpreferences.getString(Helper.VIDEO_ID, null);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -125,7 +127,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 }
             });
             toolbar_title.setText(R.string.update_video);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeEditUploadActivity.this);
             }
@@ -147,7 +149,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
 
 
-
         //Change spinner colors
         Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_channel);
         Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_categories);
@@ -165,22 +166,22 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 builderInner = new AlertDialog.Builder(PeertubeEditUploadActivity.this, style);
                 builderInner.setMessage(getString(R.string.delete_video_confirmation));
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
                 builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBEDELETEVIDEO, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
@@ -189,23 +190,23 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         });
         //Get params from the API
-        LinkedHashMap<Integer, String>  categories = new LinkedHashMap<>(peertubeInformation.getCategories());
+        LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
         LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
         LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
         LinkedHashMap<String, String> translations = null;
-        if( peertubeInformation.getTranslations() != null)
+        if (peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
         //Populate catgories
         String[] categoriesA = new String[categories.size()];
         Iterator it = categories.entrySet().iterator();
         int i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null ||translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                categoriesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                categoriesA[i] = (String) pair.getValue();
             else
-                categoriesA[i] =  translations.get((String)pair.getValue());
+                categoriesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
@@ -214,17 +215,16 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_categories.setAdapter(adapterCatgories);
 
 
-
         //Populate licenses
         String[] licensesA = new String[licences.size()];
         it = licences.entrySet().iterator();
         i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                licensesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                licensesA[i] = (String) pair.getValue();
             else
-                licensesA[i] =  translations.get((String)pair.getValue());
+                licensesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
@@ -238,11 +238,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         it = languages.entrySet().iterator();
         i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                languagesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                languagesA[i] = (String) pair.getValue();
             else
-                languagesA[i] =  translations.get((String)pair.getValue());
+                languagesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
@@ -256,11 +256,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         it = privacies.entrySet().iterator();
         i = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
-                privaciesA[i] =  (String)pair.getValue();
+            Map.Entry pair = (Map.Entry) it.next();
+            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+                privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] =  translations.get((String)pair.getValue());
+                privaciesA[i] = translations.get((String) pair.getValue());
             it.remove();
             i++;
         }
@@ -278,12 +278,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     }
 
 
-
-
     @Override
     public void onRetrievePeertube(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
-            if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
+        if (apiResponse.getError() != null || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0) {
+            if (apiResponse.getError() != null && apiResponse.getError().getError() != null)
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -294,11 +292,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         //Peertube video
         Peertube peertube = apiResponse.getPeertubes().get(0);
 
-        if( peertube.isUpdate()){
+        if (peertube.isUpdate()) {
             Toasty.success(getApplicationContext(), getString(R.string.toast_peertube_video_updated), Toast.LENGTH_LONG).show();
             peertube.setUpdate(false);
             set_upload_submit.setEnabled(true);
-        }else {
+        } else {
             new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
@@ -308,54 +306,54 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         categoryToSend = peertube.getCategory();
 
 
-        if( languageToSend == null){
+        if (languageToSend == null) {
             LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
-            Map.Entry<String,String> entryString = languages.entrySet().iterator().next();
+            Map.Entry<String, String> entryString = languages.entrySet().iterator().next();
             languageToSend = new HashMap<>();
             languageToSend.put(entryString.getKey(), entryString.getValue());
         }
 
-        if( licenseToSend == null){
+        if (licenseToSend == null) {
             LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
-            Map.Entry<Integer,String> entryInt = licences.entrySet().iterator().next();
+            Map.Entry<Integer, String> entryInt = licences.entrySet().iterator().next();
             licenseToSend = new HashMap<>();
             licenseToSend.put(entryInt.getKey(), entryInt.getValue());
         }
 
-        if( categoryToSend == null){
+        if (categoryToSend == null) {
             LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
-            Map.Entry<Integer,String> entryInt = categories.entrySet().iterator().next();
+            Map.Entry<Integer, String> entryInt = categories.entrySet().iterator().next();
             categoryToSend = new HashMap<>();
             categoryToSend.put(entryInt.getKey(), entryInt.getValue());
         }
-        if( privacyToSend == null){
+        if (privacyToSend == null) {
             LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
-            Map.Entry<Integer,String> entryInt = privacies.entrySet().iterator().next();
+            Map.Entry<Integer, String> entryInt = privacies.entrySet().iterator().next();
             privacyToSend = new HashMap<>();
             privacyToSend.put(entryInt.getKey(), entryInt.getValue());
         }
 
         String language = null;
 
-        if( languageToSend != null) {
+        if (languageToSend != null) {
             Map.Entry<String, String> entryString = languageToSend.entrySet().iterator().next();
             language = entryString.getValue();
         }
 
         String license = null;
-        if( licenseToSend != null) {
+        if (licenseToSend != null) {
             Map.Entry<Integer, String> entryInt = licenseToSend.entrySet().iterator().next();
             license = entryInt.getValue();
         }
 
         String privacy = null;
-        if( privacyToSend != null) {
+        if (privacyToSend != null) {
             Map.Entry<Integer, String> entryInt = privacyToSend.entrySet().iterator().next();
             privacy = entryInt.getValue();
         }
 
         String category = null;
-        if( categoryToSend != null) {
+        if (categoryToSend != null) {
             Map.Entry<Integer, String> entryInt = categoryToSend.entrySet().iterator().next();
             category = entryInt.getValue();
         }
@@ -377,49 +375,49 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
         LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
         LinkedHashMap<String, String> translations = null;
-        if( peertubeInformation.getTranslations() != null)
+        if (peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
 
         int languagePosition = 0;
-        if( languages.containsValue(language)){
+        if (languages.containsValue(language)) {
             Iterator it = languages.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getValue().equals(language))
+                Map.Entry pair = (Map.Entry) it.next();
+                if (pair.getValue().equals(language))
                     break;
                 it.remove();
                 languagePosition++;
             }
         }
         int privacyPosition = 0;
-        if( privacy != null && privacies.containsValue(privacy)){
+        if (privacy != null && privacies.containsValue(privacy)) {
             Iterator it = privacies.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getValue().equals(privacy))
+                Map.Entry pair = (Map.Entry) it.next();
+                if (pair.getValue().equals(privacy))
                     break;
                 it.remove();
                 privacyPosition++;
             }
         }
         int licensePosition = 0;
-        if( license != null && licences.containsValue(license)){
+        if (license != null && licences.containsValue(license)) {
             Iterator it = licences.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getValue().equals(license))
+                Map.Entry pair = (Map.Entry) it.next();
+                if (pair.getValue().equals(license))
                     break;
                 it.remove();
                 licensePosition++;
             }
         }
         int categoryPosition = 0;
-        if(category != null && categories.containsValue(category)){
+        if (category != null && categories.containsValue(category)) {
             Iterator it = categories.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getValue().equals(category))
+                Map.Entry pair = (Map.Entry) it.next();
+                if (pair.getValue().equals(category))
                     break;
                 it.remove();
                 categoryPosition++;
@@ -434,10 +432,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         privacyToSend = new HashMap<>();
-                        privacyToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        privacyToSend.put((Integer) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();
@@ -453,10 +451,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 Iterator it = licensesCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         licenseToSend = new HashMap<>();
-                        licenseToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        licenseToSend.put((Integer) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();
@@ -472,10 +470,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 Iterator it = categoriesCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         categoryToSend = new HashMap<>();
-                        categoryToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        categoryToSend.put((Integer) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();
@@ -491,10 +489,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 Iterator it = languagesCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         languageToSend = new HashMap<>();
-                        languageToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        languageToSend.put((String) pair.getKey(), (String) pair.getValue());
                         break;
                     }
                     it.remove();
@@ -512,10 +510,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if( i == position){
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (i == position) {
                         channelToSend = new HashMap<>();
-                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        channelToSend.put((String) pair.getKey(), (String) pair.getValue());
 
                         break;
                     }
@@ -555,7 +553,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_categories.setSelectedIndex(categoryPosition);
 
         List<String> tags = peertube.getTags();
-        if( tags != null && tags.size() > 0) {
+        if (tags != null && tags.size() > 0) {
             String[] tagsA = tags.toArray(new String[tags.size()]);
             p_video_tags.setTags(tagsA);
         }
@@ -569,8 +567,8 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
     @Override
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
-            if ( apiResponse.getError().getError() != null)
+        if (apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0) {
+            if (apiResponse.getError().getError() != null)
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -581,8 +579,8 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         List<Account> accounts = apiResponse.getAccounts();
         String[] channelName = new String[accounts.size()];
         int i = 0;
-        for(Account account: accounts){
-            channels.put(account.getUsername(),account.getId());
+        for (Account account : accounts) {
+            channels.put(account.getUsername(), account.getId());
             channelName[i] = account.getUsername();
             i++;
         }
@@ -591,14 +589,14 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_channel.setAdapter(adapterChannel);
 
         int channelPosition = 0;
-        if( channels.containsKey(channel.getUsername())){
+        if (channels.containsKey(channel.getUsername())) {
             LinkedHashMap<String, String> channelsIterator = new LinkedHashMap<>(channels);
             Iterator it = channelsIterator.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getKey().equals(channel.getUsername())) {
+                Map.Entry pair = (Map.Entry) it.next();
+                if (pair.getKey().equals(channel.getUsername())) {
                     channelToSend = new HashMap<>();
-                    channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+                    channelToSend.put((String) pair.getKey(), (String) pair.getValue());
                     break;
                 }
                 it.remove();

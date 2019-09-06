@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,18 +14,18 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="2dp"
     android:id="@+id/account_container"
     android:orientation="horizontal">
+
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
@@ -37,6 +36,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:contentDescription="@string/profile_picture" />
+
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"

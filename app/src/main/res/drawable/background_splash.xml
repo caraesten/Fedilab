@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -17,12 +16,11 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:drawable="@color/mastodonC1"/>
+    <item android:drawable="@color/mastodonC1" />
 
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/mastodonlogo"/>
+            android:src="@drawable/mastodonlogo" />
     </item>
 </layer-list>

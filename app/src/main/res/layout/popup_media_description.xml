@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,13 +14,13 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="app.fedilab.android.activities.TootActivity"
     android:layout_margin="@dimen/fab_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
@@ -29,6 +28,7 @@
         android:id="@+id/media_picture"
         android:layout_width="match_parent"
         android:contentDescription="@string/media_description" />
+
     <EditText
         android:layout_alignBottom="@+id/media_picture"
         android:id="@+id/media_description"

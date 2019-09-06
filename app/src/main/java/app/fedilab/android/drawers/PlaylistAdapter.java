@@ -23,7 +23,9 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,7 @@ public class PlaylistAdapter extends BaseAdapter implements OnPlaylistActionInte
     private PlaylistAdapter playlistAdapter;
     private RelativeLayout textviewNoAction;
 
-    public PlaylistAdapter(Context context, List<Playlist> lists, RelativeLayout textviewNoAction){
+    public PlaylistAdapter(Context context, List<Playlist> lists, RelativeLayout textviewNoAction) {
         this.playlists = lists;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -96,21 +98,21 @@ public class PlaylistAdapter extends BaseAdapter implements OnPlaylistActionInte
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-        }else if(theme == Helper.THEME_DARK){
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
+        } else if (theme == Helper.THEME_DARK) {
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-        }else if(theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
+        } else if (theme == Helper.THEME_BLACK) {
             holder.search_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(playlist.getDisplayName());
         assert next != null;
         final float scale = context.getResources().getDisplayMetrics().density;
-        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
+        next.setBounds(0, 0, (int) (30 * scale + 0.5f), (int) (30 * scale + 0.5f));
         holder.search_title.setCompoundDrawables(null, null, next, null);
 
         holder.search_container.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +128,9 @@ public class PlaylistAdapter extends BaseAdapter implements OnPlaylistActionInte
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
@@ -137,15 +139,15 @@ public class PlaylistAdapter extends BaseAdapter implements OnPlaylistActionInte
             public boolean onLongClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setTitle(context.getString(R.string.action_lists_delete) + ": " + playlist.getDisplayName());
-                builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
+                builder.setMessage(context.getString(R.string.action_lists_confirm_delete));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 playlists.remove(playlist);
                                 playlistAdapter.notifyDataSetChanged();
-                                new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST,playlist, null, null,  PlaylistAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                if( playlists.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                new ManagePlaylistsAsyncTask(context, ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST, playlist, null, null, PlaylistAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                if (playlists.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }

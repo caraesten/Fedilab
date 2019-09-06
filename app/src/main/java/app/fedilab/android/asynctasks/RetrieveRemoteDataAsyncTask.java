@@ -41,13 +41,13 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
 
 
-    public RetrieveRemoteDataAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+    public RetrieveRemoteDataAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface) {
         this.url = Helper.instanceWithProtocol(context, instance) + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
         this.contextReference = new WeakReference<>(context);
     }
 
-    public RetrieveRemoteDataAsyncTask(Context context, String url, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+    public RetrieveRemoteDataAsyncTask(Context context, String url, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface) {
         this.url = url;
         this.listener = onRetrieveRemoteAccountInterface;
         this.contextReference = new WeakReference<>(context);
@@ -57,7 +57,7 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         APIResponse apiResponse = api.search(this.url);
-        if( apiResponse.getResults() != null)
+        if (apiResponse.getResults() != null)
             results = apiResponse.getResults();
         return null;
     }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -19,13 +18,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
         <!-- About app name -->
         <TextView
             android:layout_marginTop="10dp"
@@ -55,13 +53,15 @@
             android:textColor="?colorAccent"
             android:gravity="center_vertical"
             android:text="@string/about_developer"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
+
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_developers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
+
         <TextView
             android:id="@+id/txt_developers"
             android:visibility="gone"
@@ -77,8 +77,7 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="@string/support_the_app_on_liberapay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/about_support_paypal"
@@ -89,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />
+
         <TextView
             android:id="@+id/about_wiki"
             android:layout_gravity="center"
@@ -98,8 +98,7 @@
             android:autoLink="web"
             android:text="@string/how_to_videos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/about_website"
@@ -124,14 +123,15 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="@string/thanks_text_ux"/>
+            android:text="@string/thanks_text_ux" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_ux"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
+
         <TextView
             android:id="@+id/txt_ux"
             android:visibility="gone"
@@ -158,14 +158,15 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="@string/thanks_text_logo"/>
+            android:text="@string/thanks_text_logo" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_designers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
+
         <TextView
             android:id="@+id/txt_designers"
             android:visibility="gone"
@@ -184,20 +185,22 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="@string/thanks_text_dev"/>
+            android:text="@string/thanks_text_dev" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_contributors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
+
         <TextView
             android:id="@+id/txt_thankyou1"
             android:visibility="gone"
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/txt_thankyou2"
             android:visibility="gone"
@@ -219,7 +222,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_license"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_license"
@@ -227,7 +230,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/about_license_action"/>
+                android:text="@string/about_license_action" />
         </LinearLayout>
 
         <!-- About license -->
@@ -244,7 +247,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_code"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_code"
@@ -252,7 +255,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/about_code_action"/>
+                android:text="@string/about_code_action" />
         </LinearLayout>
 
 
@@ -270,7 +273,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_thekinrar"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_thekinrar"
@@ -278,7 +281,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/about_thekinrar_action"/>
+                android:text="@string/about_thekinrar_action" />
         </LinearLayout>
 
         <!-- About Trunk\'s API -->
@@ -295,7 +298,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_trunk"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_trunk"
@@ -303,7 +306,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/about_trunk_action"/>
+                android:text="@string/about_trunk_action" />
         </LinearLayout>
 
 
@@ -321,7 +324,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_yandex"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_translation"
@@ -329,7 +332,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/about_yandex_action"/>
+                android:text="@string/about_yandex_action" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

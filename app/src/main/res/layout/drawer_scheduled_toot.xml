@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -20,6 +19,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:id="@+id/scheduled_toot_container">
+
     <ImageView
         android:id="@+id/scheduled_toot_pp"
         android:layout_gravity="center_vertical|top"
@@ -28,6 +28,7 @@
         android:layout_marginTop="5dp"
         android:layout_height="50dp"
         android:contentDescription="@string/profile_picture" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -35,30 +36,35 @@
         android:padding="5dp"
         android:id="@+id/account_container"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/scheduled_toot_title"
             android:maxLines="3"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/scheduled_toot_privacy"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:contentDescription="@string/toot_visibility_tilte"/>
+                android:contentDescription="@string/toot_visibility_tilte" />
+
             <TextView
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/scheduled_toot_media_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/scheduled_toot_date_creation"
                 android:textSize="12sp"
@@ -69,11 +75,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <Button
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
@@ -96,6 +104,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <ImageView
         android:id="@+id/scheduled_toot_delete"
         android:src="@drawable/ic_cancel"

@@ -75,6 +75,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     private boolean swiped;
     private RecyclerView lv_reports;
     private boolean unresolved;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -108,9 +109,8 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
         mLayoutManager = new LinearLayoutManager(context);
         lv_reports.setLayoutManager(mLayoutManager);
         lv_reports.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
@@ -144,7 +144,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -171,8 +171,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     }
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -180,7 +179,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     /**
      * Refresh report in list
      */
-    public void refreshFilter(){
+    public void refreshFilter() {
         reportsListAdapter.notifyDataSetChanged();
     }
 
@@ -192,12 +191,12 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
-    public void scrollToTop(){
-        if( lv_reports != null)
+    public void scrollToTop() {
+        if (lv_reports != null)
             lv_reports.setAdapter(reportsListAdapter);
     }
 
@@ -206,55 +205,55 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
     public void onAdminAction(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
+        if (apiResponse.getError() != null) {
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             //Admin right not granted through the API?
-            if( apiResponse.getError().getStatusCode() == 403){
+            if (apiResponse.getError().getStatusCode() == 403) {
                 AlertDialog.Builder builderInner;
                 builderInner = new AlertDialog.Builder(context, R.style.AdminDialog);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
                 builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(context, LoginActivity.class);
                         intent.putExtra("admin", true);
                         context.startActivity(intent);
                     }
                 });
                 builderInner.show();
-            }else{
-                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             }
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
+        flag_loading = (apiResponse.getMax_id() == null);
         List<Report> reports = apiResponse.getReports();
 
-        if( !swiped && firstLoad && (reports == null || reports.size() == 0))
+        if (!swiped && firstLoad && (reports == null || reports.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
         max_id = apiResponse.getMax_id();
 
-        if( swiped ){
+        if (swiped) {
             reportsListAdapter = new ReportsListAdapter(this.reports);
             lv_reports.setAdapter(reportsListAdapter);
             swiped = false;
         }
-        if( reports != null && reports.size() > 0) {
+        if (reports != null && reports.size() > 0) {
             int currentPosition = this.reports.size();
             this.reports.addAll(reports);
-            reportsListAdapter.notifyItemRangeChanged(currentPosition,reports.size());
+            reportsListAdapter.notifyItemRangeChanged(currentPosition, reports.size());
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;

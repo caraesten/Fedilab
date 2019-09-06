@@ -52,21 +52,21 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private Error error;
     private StoredStatus storedStatus;
 
-    public PostActionAsyncTask(Context context, API.StatusAction apiAction, StoredStatus storedStatus, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, StoredStatus storedStatus, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.storedStatus = storedStatus;
     }
 
-    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.targetedId = targetedId;
     }
 
-    public PostActionAsyncTask(Context context, Account account, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, Account account, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
@@ -74,7 +74,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.account = account;
     }
 
-    public PostActionAsyncTask(Context context, Account account, app.fedilab.android.client.Entities.Status remoteStatus, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, Account account, app.fedilab.android.client.Entities.Status remoteStatus, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
@@ -82,7 +82,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.account = account;
     }
 
-    public PostActionAsyncTask(Context context, Account account, Account remoteAccount, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, Account account, Account remoteAccount, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
@@ -90,7 +90,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.account = account;
     }
 
-    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, app.fedilab.android.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, app.fedilab.android.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
@@ -98,7 +98,8 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.comment = comment;
         this.status = status;
     }
-    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, boolean muteNotifications, OnPostActionInterface onPostActionInterface){
+
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, boolean muteNotifications, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
@@ -107,7 +108,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    public PostActionAsyncTask(Context context, String targetedId, String comment, String targetedComment, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, String targetedId, String comment, String targetedComment, OnPostActionInterface onPostActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = API.StatusAction.PEERTUBEREPLY;
@@ -119,7 +120,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             //Remote action
             API api;
             if (account != null)
@@ -162,26 +163,24 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             } else {
                 if (apiAction == API.StatusAction.REPORT) {
-                    if( status != null ) {
+                    if (status != null) {
                         statusCode = api.reportAction(status, comment);
-                    }else{
+                    } else {
                         statusCode = api.reportAction(targetedId, comment);
                     }
-                }
-                else if (apiAction == API.StatusAction.CREATESTATUS)
+                } else if (apiAction == API.StatusAction.CREATESTATUS)
                     statusCode = api.statusAction(status);
-                else if(apiAction == API.StatusAction.UPDATESERVERSCHEDULE) {
+                else if (apiAction == API.StatusAction.UPDATESERVERSCHEDULE) {
                     api.scheduledAction("PUT", storedStatus.getStatus(), null, storedStatus.getScheduledServerdId());
-                }
-                else if(apiAction == API.StatusAction.DELETESCHEDULED) {
+                } else if (apiAction == API.StatusAction.DELETESCHEDULED) {
                     api.scheduledAction("DELETE", null, null, storedStatus.getScheduledServerdId());
-                }else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                } else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
                     statusCode = api.muteNotifications(targetedId, muteNotifications);
                 else
                     statusCode = api.postAction(apiAction, targetedId);
             }
             error = api.getError();
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             //Remote action
             PeertubeAPI peertubeAPI;
             if (account != null)
@@ -189,22 +188,22 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
             else
                 peertubeAPI = new PeertubeAPI(contextReference.get());
 
-            if( apiAction == API.StatusAction.FOLLOW || apiAction == API.StatusAction.UNFOLLOW)
+            if (apiAction == API.StatusAction.FOLLOW || apiAction == API.StatusAction.UNFOLLOW)
                 statusCode = peertubeAPI.postAction(apiAction, targetedId);
-            else if( apiAction == API.StatusAction.RATEVIDEO )
+            else if (apiAction == API.StatusAction.RATEVIDEO)
                 statusCode = peertubeAPI.postRating(targetedId, comment);
-            else if(  apiAction == API.StatusAction.PEERTUBECOMMENT)
+            else if (apiAction == API.StatusAction.PEERTUBECOMMENT)
                 statusCode = peertubeAPI.postComment(targetedId, comment);
-            else if(  apiAction == API.StatusAction.PEERTUBEREPLY)
+            else if (apiAction == API.StatusAction.PEERTUBEREPLY)
                 statusCode = peertubeAPI.postReply(targetedId, comment, targetedComment);
-            else if( apiAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
+            else if (apiAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
                 statusCode = peertubeAPI.deleteComment(targetedId, comment);
                 targetedId = comment;
-            } else if( apiAction == API.StatusAction.PEERTUBEDELETEVIDEO) {
+            } else if (apiAction == API.StatusAction.PEERTUBEDELETEVIDEO) {
                 statusCode = peertubeAPI.deleteVideo(targetedId);
             }
             error = peertubeAPI.getError();
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             GNUAPI gnuapi;
             if (account != null)
                 gnuapi = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());

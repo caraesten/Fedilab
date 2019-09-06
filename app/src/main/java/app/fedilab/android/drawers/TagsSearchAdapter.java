@@ -16,7 +16,9 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +39,10 @@ import app.fedilab.android.R;
  */
 public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterable {
 
-    private List<String> tags, tempTags, suggestions ;
+    private List<String> tags, tempTags, suggestions;
     private LayoutInflater layoutInflater;
 
-    public TagsSearchAdapter(Context context, List<String> tags){
+    public TagsSearchAdapter(Context context, List<String> tags) {
         super(context, android.R.layout.simple_list_item_1, tags);
         this.tags = tags;
         this.tempTags = new ArrayList<>(tags);
@@ -117,7 +119,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
                 clear();
                 addAll(c);
                 notifyDataSetChanged();
-            } else{
+            } else {
                 clear();
                 notifyDataSetChanged();
             }

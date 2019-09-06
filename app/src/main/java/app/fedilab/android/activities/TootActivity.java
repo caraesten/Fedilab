@@ -38,6 +38,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -215,7 +216,6 @@ import static app.fedilab.android.helper.Helper.countWithEmoji;
 public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface {
 
 
-
     private String visibility;
     private final int PICK_IMAGE = 56556;
     private final int TAKE_PHOTO = 56532;
@@ -284,7 +284,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private EditText wysiwygEditText;
     private String url_for_media;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
-    List<Emojis>  emojis;
+    List<Emojis> emojis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,7 +323,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.toot_action_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
@@ -335,14 +335,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     assert inputMethodManager != null;
                     inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
                     boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-                    if( !storeToot ) {
-                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+                    if (!storeToot) {
+                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0) {
                             finish();
-                        }else if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim())){
-                                finish();
-                        }else if (displayWYSIWYG() && initialContent.trim().equals(wysiwyg.getContentAsHTML().trim())){
+                        } else if (!displayWYSIWYG() && initialContent.trim().equals(toot_content.getText().toString().trim())) {
                             finish();
-                        }else {
+                        } else if (displayWYSIWYG() && initialContent.trim().equals(wysiwyg.getContentAsHTML().trim())) {
+                            finish();
+                        } else {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                             dialogBuilder.setMessage(R.string.save_draft);
                             dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
@@ -369,7 +369,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             alertDialog.show();
                         }
 
-                    }else{
+                    } else {
                         finish();
                     }
                 }
@@ -384,7 +384,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         changeColor();
-
 
 
         //By default the toot is not restored so the id -1 is defined
@@ -430,7 +429,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ScrollView wysiwyg_container = findViewById(R.id.wysiwyg_container);
         wysiwyg = findViewById(R.id.editor);
 
-        switch (theme){
+        switch (theme) {
             case THEME_LIGHT:
                 wysiwyg.setEditorTextColor("#000000");
                 break;
@@ -440,7 +439,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 break;
         }
 
-        if( displayWYSIWYG()){
+        if (displayWYSIWYG()) {
             wysiwyg_container.setVisibility(View.VISIBLE);
             composer_container.setVisibility(View.GONE);
             HorizontalScrollView toolbar_scrollview = findViewById(R.id.toolbar_scrollview);
@@ -520,9 +519,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     totalChar = countLength(wysiwyg, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                 }
+
                 @Override
                 public void onUpload(Bitmap image, String uuid) {
-                    if( url_for_media != null) {
+                    if (url_for_media != null) {
                         wysiwyg.onImageUploadComplete(url_for_media, uuid);
                     }
                 }
@@ -563,7 +563,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             accountReply = null;
             if (accountReplyToken != null) {
                 String[] val = accountReplyToken.split("\\|");
-                if( val.length == 2) {
+                if (val.length == 2) {
                     accountReply = new AccountDAO(getApplicationContext(), db).getUniqAccount(val[0], val[1]);
                 }
             }
@@ -579,7 +579,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             quickmessagecontent = b.getString("quickmessagecontent", null);
-            quickmessagevisibility =  b.getString("quickmessagevisibility", null);
+            quickmessagevisibility = b.getString("quickmessagevisibility", null);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
@@ -597,11 +597,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             restored = b.getLong("restored", -1);
         }
-        if( tootReply != null){
-            if( tootReply.getAccount().getMoved_to_account() != null){
+        if (tootReply != null) {
+            if (tootReply.getAccount().getMoved_to_account() != null) {
                 warning_message.setVisibility(View.VISIBLE);
             }
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), tootReply.getAccount().getId(),TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), tootReply.getAccount().getId(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         if (scheduledstatus != null)
             toot_it.setText(R.string.modify);
@@ -613,7 +613,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (accountReply == null) {
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             instanceReply = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-        }else {
+        } else {
             userIdReply = accountReply.getId();
             instanceReply = accountReply.getInstance();
         }
@@ -676,7 +676,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         toot_content.requestFocus();
-        if( quickmessagecontent == null) {
+        if (quickmessagecontent == null) {
             if (mentionAccount != null) {
                 toot_content.setText(String.format("@%s\n", mentionAccount));
                 toot_content.setSelection(toot_content.getText().length());
@@ -686,15 +686,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
                 toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
-        }else{
+        } else {
             toot_content.setText(quickmessagecontent);
             toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             toot_content.setSelection(toot_content.getText().length());
         }
 
 
-        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
-
+        initialContent = displayWYSIWYG() ? wysiwyg.getContentAsHTML() : toot_content.getText().toString();
 
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
@@ -794,9 +793,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( !displayWYSIWYG()) {
+                if (!displayWYSIWYG()) {
                     sendToot(null, null);
-                }else{
+                } else {
                     sendToot(null, "text/html");
                 }
             }
@@ -854,7 +853,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent.setType("*/*");
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    String[] mimetypes = {"image/*", "video/*" , "audio/mpeg", "audio/opus", "audio/flac", "audio/wav" , "audio/ogg"};
+                    String[] mimetypes = {"image/*", "video/*", "audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/ogg"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
@@ -921,11 +920,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static TextWatcher initializeTextWatcher(Context context,  UpdateAccountInfoAsyncTask.SOCIAL social,
-            MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
-            ImageView pp_actionBar, ProgressBar pp_progress,
-            OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
-    ){
+    public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social,
+                                                    MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
+                                                    ImageView pp_actionBar, ProgressBar pp_progress,
+                                                    OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
+    ) {
 
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
@@ -960,18 +959,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             String fedilabHugsTrigger = ":fedilab_hugs:";
                             String fedilabMorseTrigger = ":fedilab_morse:";
 
-                            if( s.toString().contains(fedilabHugsTrigger)){
+                            if (s.toString().contains(fedilabHugsTrigger)) {
                                 newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
                                 int currentLength = countLength(social, toot_content, toot_cw_content);
-                                int toFill = 500  - currentLength;
-                                if(toFill <= 0) {
+                                int toFill = 500 - currentLength;
+                                if (toFill <= 0) {
                                     return;
                                 }
 
 
-
                                 StringBuilder hugs = new StringBuilder();
-                                for(int i = 0; i < toFill; i++) {
+                                for (int i = 0; i < toFill; i++) {
                                     hugs.append(new String(Character.toChars(0x1F917)));
                                 }
 
@@ -989,23 +987,23 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     }
                                 };
                                 mainHandler.post(myRunnable);
-                            }else if(s.toString().contains(fedilabMorseTrigger)){
+                            } else if (s.toString().contains(fedilabMorseTrigger)) {
                                 newContent[0] = s.toString().replaceAll(fedilabMorseTrigger, "").trim();
                                 List<String> mentions = new ArrayList<>();
                                 String mentionPattern = "@[a-z0-9_]+(@[a-z0-9\\.\\-]+[a-z0-9]+)?";
                                 final Pattern mPattern = Pattern.compile(mentionPattern, Pattern.CASE_INSENSITIVE);
                                 Matcher matcherMentions = mPattern.matcher(newContent[0]);
-                                while ( matcherMentions.find()){
+                                while (matcherMentions.find()) {
                                     mentions.add(matcherMentions.group());
                                 }
-                                for(String mention: mentions){
+                                for (String mention : mentions) {
                                     newContent[0] = newContent[0].replace(mention, "");
                                 }
                                 newContent[0] = Normalizer.normalize(newContent[0], Normalizer.Form.NFD);
                                 newContent[0] = newContent[0].replaceAll("[^\\p{ASCII}]", "");
 
                                 HashMap<String, String> ALPHA_TO_MORSE = new HashMap<>();
-                                for (int i = 0; i < ALPHA.length  &&  i < MORSE.length; i++) {
+                                for (int i = 0; i < ALPHA.length && i < MORSE.length; i++) {
                                     ALPHA_TO_MORSE.put(ALPHA[i], MORSE[i]);
                                 }
                                 StringBuilder builder = new StringBuilder();
@@ -1020,10 +1018,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     builder.append("  ");
                                 }
                                 newContent[0] = "";
-                                for(String mention: mentions){
+                                for (String mention : mentions) {
                                     newContent[0] += mention + " ";
                                 }
-                                newContent[0] +=  builder.toString();
+                                newContent[0] += builder.toString();
 
                                 Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -1133,7 +1131,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         @Override
         public void onReceive(Context context, Intent intent) {
             String imgpath = intent.getStringExtra("imgpath");
-            if( imgpath != null) {
+            if (imgpath != null) {
                 prepareUpload(TootActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
             }
         }
@@ -1156,18 +1154,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     };
 
 
-    private void addNewMedia(JSONObject response, ArrayList<String>successfullyUploadedFiles){
+    private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
         Attachment attachment;
         //response = new JSONObject(serverResponse.getBodyAsString());
-        if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             attachment = API.parseAttachmentResponse(response);
         else
             attachment = GNUAPI.parseUploadedAttachmentResponse(response);
 
         boolean alreadyAdded = false;
         int index = 0;
-        for(Attachment attach_: attachments){
-            if( attach_.getId().equals(attachment.getId())){
+        for (Attachment attach_ : attachments) {
+            if (attach_.getId().equals(attachment.getId())) {
                 alreadyAdded = true;
                 break;
             }
@@ -1176,7 +1174,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         File audioFile = new File(getCacheDir() + "/fedilab_recorded_audio.wav");
         audioFile.delete();
-        if( !alreadyAdded){
+        if (!alreadyAdded) {
             toot_picture_container.setVisibility(View.VISIBLE);
             String url = attachment.getPreview_url();
             if (url == null || url.trim().equals(""))
@@ -1185,17 +1183,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
-                if( successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                if (successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
 
                     Iterator it = filesMap.entrySet().iterator();
                     Uri fileName = null;
                     while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
+                        Map.Entry pair = (Map.Entry) it.next();
                         fileName = (Uri) pair.getValue();
                         it.remove();
                     }
-                    if (fileName != null ) {
+                    if (fileName != null) {
                         Glide.with(imageView.getContext())
                                 .asBitmap()
                                 .load(fileName)
@@ -1208,7 +1206,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
 
-            }else {
+            } else {
                 String finalUrl = url;
                 String uuid = attachment.getId();
                 Glide.with(imageView.getContext())
@@ -1219,23 +1217,22 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 imageView.setImageBitmap(resource);
-                                if( displayWYSIWYG()) {
+                                if (displayWYSIWYG()) {
                                     url_for_media = finalUrl;
                                     Iterator it = filesMap.entrySet().iterator();
                                     String fileName = null;
                                     while (it.hasNext()) {
-                                        Map.Entry pair = (Map.Entry)it.next();
+                                        Map.Entry pair = (Map.Entry) it.next();
                                         fileName = (String) pair.getKey();
                                         it.remove();
                                     }
-                                    if( fileName != null && fileName.toString().contains("fedilabins_")) {
+                                    if (fileName != null && fileName.toString().contains("fedilabins_")) {
                                         wysiwyg.insertImage(resource);
                                     }
                                 }
                             }
                         });
             }
-
 
 
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -1248,7 +1245,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if (show_media_urls && !displayWYSIWYG()) {
                 //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
+                toot_content.setText(String.format("%s\n\n%s", toot_content.getText().toString(), attachment.getText_url()));
                 toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                 //Moves the cursor
                 toot_content.setSelection(selectionBefore);
@@ -1281,12 +1278,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_picture.setEnabled(true);
             toot_it.setEnabled(true);
             toot_sensitive.setVisibility(View.VISIBLE);
-            if( account.isSensitive()){
+            if (account.isSensitive()) {
                 toot_sensitive.setChecked(true);
             }
             picture_scrollview.setVisibility(View.VISIBLE);
-        }else {
-            if( attachments.size() > index && attachment.getDescription() != null) {
+        } else {
+            if (attachments.size() > index && attachment.getDescription() != null) {
                 attachments.get(index).setDescription(attachment.getDescription());
             }
         }
@@ -1364,11 +1361,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                if(BuildConfig.DONATIONS) {
+                if (BuildConfig.DONATIONS) {
                     photoFileUri = FileProvider.getUriForFile(this,
                             "fr.gouv.etalab.mastodon.fileProvider",
                             photoFile);
-                }else{
+                } else {
                     photoFileUri = FileProvider.getUriForFile(this,
                             "app.fedilab.android.fileProvider",
                             photoFile);
@@ -1426,47 +1423,47 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if (mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif"))) {
-                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
+                    prepareUpload(TootActivity.this, data.getData(), filename, uploadReceiver);
                 } else if (mime != null && mime.toLowerCase().contains("image")) {
-                    if( photo_editor) {
+                    if (photo_editor) {
                         Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
                         Bundle b = new Bundle();
                         intent.putExtra("imageUri", data.getData().toString());
                         intent.putExtras(b);
                         startActivity(intent);
-                    }else{
-                        prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
+                    } else {
+                        prepareUpload(TootActivity.this, data.getData(), filename, uploadReceiver);
                     }
-                }else if(mime != null && mime.toLowerCase().contains("audio")){
-                    prepareUpload(TootActivity.this, data.getData(), filename,uploadReceiver);
-                }else {
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                } else if (mime != null && mime.toLowerCase().contains("audio")) {
+                    prepareUpload(TootActivity.this, data.getData(), filename, uploadReceiver);
+                } else {
+                    Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 }
             }
 
-        }else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
+        } else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
 
             Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedilab_recorded_audio.wav"));
-            prepareUpload(TootActivity.this, uri, "fedilab_recorded_audio.wav",uploadReceiver);
-        }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            if( photo_editor) {
+            prepareUpload(TootActivity.this, uri, "fedilab_recorded_audio.wav", uploadReceiver);
+        } else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
+            if (photo_editor) {
                 Intent intent = new Intent(TootActivity.this, PhotoEditorActivity.class);
                 Bundle b = new Bundle();
                 intent.putExtra("imageUri", photoFileUri.toString());
                 intent.putExtras(b);
                 startActivity(intent);
-            }else {
+            } else {
                 prepareUpload(TootActivity.this, photoFileUri, null, uploadReceiver);
             }
-        }else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+        } else if (requestCode == wysiwyg.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             String filename = Helper.getFileName(TootActivity.this, data.getData());
-            prepareUpload(TootActivity.this, data.getData(), "fedilabins_"+filename, uploadReceiver);
+            prepareUpload(TootActivity.this, data.getData(), "fedilabins_" + filename, uploadReceiver);
         }
     }
 
 
-    private void prepareUpload(Activity activity, android.net.Uri uri,String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
-        if( uploadReceiver == null){
+    private void prepareUpload(Activity activity, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        if (uploadReceiver == null) {
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(TootActivity.this);
             uploadReceiver.register(this);
         }
@@ -1483,7 +1480,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         String filename;
         UpdateAccountInfoAsyncTask.SOCIAL social;
 
-        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver){
+        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
             this.uploadReceiver = uploadReceiver;
@@ -1492,8 +1489,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
         @Override
-        protected  void onPreExecute(){
-            if( uriFile == null) {
+        protected void onPreExecute() {
+            if (uriFile == null) {
                 Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                 error = true;
             }
@@ -1502,7 +1499,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if( error) {
+            if (error) {
                 return null;
             }
             bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
@@ -1511,7 +1508,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         @Override
         protected void onPostExecute(Void result) {
-            if( !error) {
+            if (!error) {
                 if (bs == null)
                     return;
                 ImageButton toot_picture;
@@ -1524,7 +1521,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_picture_container.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
                 toot_it.setEnabled(false);
-                if( filename == null) {
+                if (filename == null) {
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
@@ -1535,9 +1532,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    static private void upload(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver){
+    static private void upload(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         String uploadId = UUID.randomUUID().toString();
-        if( uploadReceiver != null) {
+        if (uploadReceiver != null) {
             uploadReceiver.setUploadID(uploadId);
         }
         Uri uri;
@@ -1546,14 +1543,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
         int suffixPosition = filename.lastIndexOf(".");
         String suffix = "";
-        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        if (suffixPosition > 0) suffix = filename.substring(suffixPosition);
         try {
             File file;
             tempInput = activity.getContentResolver().openInputStream(inUri);
-            if( fname.startsWith("fedilabins_")){
-                file = File.createTempFile("fedilabins_randomTemp1", suffix,  activity.getCacheDir());
-            }else{
-                file = File.createTempFile("randomTemp1", suffix,  activity.getCacheDir());
+            if (fname.startsWith("fedilabins_")) {
+                file = File.createTempFile("fedilabins_randomTemp1", suffix, activity.getCacheDir());
+            } else {
+                file = File.createTempFile("randomTemp1", suffix, activity.getCacheDir());
             }
 
             filesMap.put(file.getAbsolutePath(), inUri);
@@ -1564,18 +1561,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             while ((read = tempInput.read(buff)) > 0) {
                 tempOut.write(buff, 0, read);
             }
-            if(BuildConfig.DONATIONS) {
-                uri = FileProvider.getUriForFile( activity,
+            if (BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile(activity,
                         "fr.gouv.etalab.mastodon.fileProvider",
                         file);
-            }else{
-                uri = FileProvider.getUriForFile( activity,
+            } else {
+                uri = FileProvider.getUriForFile(activity,
                         "app.fedilab.android.fileProvider",
                         file);
             }
             tempInput.close();
             tempOut.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             uri = inUri;
         } finally {
@@ -1585,32 +1582,33 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         try {
             final String fileName = FileNameCleaner.cleanFileName(fname);
-            SharedPreferences sharedpreferences =  activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME+Helper.getLiveInstance( activity), "https");
+            SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME + Helper.getLiveInstance(activity), "https");
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
             String url = null;
-            if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/v1/media";
-            }else {
-                url = scheme + "://" + Helper.getLiveInstance( activity) + "/api/media/upload.json";
+            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/v1/media";
+            } else {
+                url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/media/upload.json";
             }
             UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
             uploadConfig
                     .setClearOnActionForAllStatuses(true);
             uploadConfig.getProgress().message = activity.getString(R.string.uploading);
             uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest( activity,uploadId, url);
+            MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
             if (token != null && !token.startsWith("Basic "))
                 request.addHeader("Authorization", "Bearer " + token);
-            else if( token != null && token.startsWith("Basic "))
+            else if (token != null && token.startsWith("Basic "))
                 request.addHeader("Authorization", token);
             request.setNotificationConfig(uploadConfig);
-            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                request.addFileToUpload(uri.toString().replace("file://",""), "file");
-            }else {
-                request.addFileToUpload(uri.toString().replace("file://",""), "media");
-            };
+            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                request.addFileToUpload(uri.toString().replace("file://", ""), "file");
+            } else {
+                request.addFileToUpload(uri.toString().replace("file://", ""), "media");
+            }
+            ;
             request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
                     .startUpload();
         } catch (MalformedURLException e) {
@@ -1622,10 +1620,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
-        }else {
-            Toasty.success(getApplicationContext(),getString(R.string.toot_scheduled),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.success(getApplicationContext(), getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
             resetForNextToot();
         }
     }
@@ -1640,7 +1638,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
                         Exception exception) {
         Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-        if( attachments.size() == 0 )
+        if (attachments.size() == 0)
             toot_picture_container.setVisibility(View.GONE);
         toot_picture.setEnabled(true);
         toot_it.setEnabled(true);
@@ -1664,10 +1662,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {
-        if( error != null){
+        if (error != null) {
             return;
         }
-        if( relationship != null && relationship.isBlocked_by() ){
+        if (relationship != null && relationship.isBlocked_by()) {
             warning_message.setVisibility(View.VISIBLE);
         }
 
@@ -1681,13 +1679,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (extras != null && extras.getString("imageUri") != null) {
             Uri imageUri = Uri.parse(extras.getString("imageUri"));
             picture_scrollview.setVisibility(View.VISIBLE);
-            if( imageUri == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+            if (imageUri == null) {
+                Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;
             }
-            String filename =  Helper.getFileName(TootActivity.this, imageUri);
+            String filename = Helper.getFileName(TootActivity.this, imageUri);
 
-            prepareUpload(TootActivity.this, imageUri, filename,uploadReceiver);
+            prepareUpload(TootActivity.this, imageUri, filename, uploadReceiver);
         }
 
     }
@@ -1700,9 +1698,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
@@ -1718,7 +1716,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 input.setPadding(30, 30, 30, 30);
                 alert.setView(input);
                 String content = tootReply.getContent();
-                if(tootReply.getReblog() != null)
+                if (tootReply.getReblog() != null)
                     content = tootReply.getReblog().getContent();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
@@ -1732,7 +1730,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 });
                 alert.setNegativeButton(R.string.accounts, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply.getReblog() != null?tootReply.getReblog():tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply.getReblog() != null ? tootReply.getReblog() : tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 });
@@ -1744,18 +1742,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 return false;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
-                if( theme == Helper.THEME_LIGHT){
+                if (theme == Helper.THEME_LIGHT) {
                     picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
-                }else {
+                } else {
                     picker.setStyle(R.style.AppThemeDark, R.style.AlertDialogDark);
                 }
-                if( toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
+                if (toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
                     return true;
                 String dateString = sharedpreferences.getString(Helper.LAST_TRANSLATION_TIME, null);
-                if( dateString != null){
+                if (dateString != null) {
                     Date dateCompare = Helper.stringToDate(getApplicationContext(), dateString);
                     Date date = new Date();
-                    if( date.before(dateCompare)) {
+                    if (date.before(dateCompare)) {
                         Toasty.info(getApplicationContext(), getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                         return true;
                     }
@@ -1767,10 +1765,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this, style);
                         transAlert.setTitle(R.string.translate_toot);
 
-                        popup_trans = getLayoutInflater().inflate( R.layout.popup_translate,  new LinearLayout(getApplicationContext()), false );
+                        popup_trans = getLayoutInflater().inflate(R.layout.popup_translate, new LinearLayout(getApplicationContext()), false);
                         transAlert.setView(popup_trans);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
                         editor.apply();
                         TextView yandex_translate = popup_trans.findViewById(R.id.yandex_translate);
                         yandex_translate.setOnClickListener(new View.OnClickListener() {
@@ -1784,75 +1782,75 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
                         myTransL.setObfuscation(true);
                         myTransL.setTimeout(60);
-                        if( toot_cw_content.getText().toString().length() > 0)
+                        if (toot_cw_content.getText().toString().length() > 0)
                             myTransL.translate(toot_cw_content.getText().toString(), locale, new com.github.stom79.mytransl.client.Results() {
                                 @Override
                                 public void onSuccess(Translate translate) {
                                     try {
-                                        if( translate.getTranslatedContent() == null)
+                                        if (translate.getTranslatedContent() == null)
                                             return;
-                                        if( popup_trans != null ) {
+                                        if (popup_trans != null) {
                                             ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
                                             ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
-                                            if( trans_progress_cw != null)
+                                            if (trans_progress_cw != null)
                                                 trans_progress_cw.setVisibility(View.GONE);
                                             LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
-                                            if( trans_container != null ){
+                                            if (trans_container != null) {
                                                 TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
-                                                if( cw_trans != null) {
+                                                if (cw_trans != null) {
                                                     cw_trans.setVisibility(View.VISIBLE);
                                                     cw_trans.setText(translate.getTranslatedContent());
                                                 }
-                                            }else {
-                                                Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toasty.error(getApplicationContext(), getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                                             }
-                                            if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
-                                                if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                            if (trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE)
+                                                if (dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
                                                     dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                         }
                                     } catch (IllegalArgumentException e) {
-                                        Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(), getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                                     }
 
                                 }
 
                                 @Override
                                 public void onFail(HttpsConnectionException e) {
-                                        e.printStackTrace();
+                                    e.printStackTrace();
                                 }
                             });
                         else {
                             ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
                             trans_progress_cw.setVisibility(View.GONE);
                         }
-                        if( toot_content.getText().toString().length() > 0)
+                        if (toot_content.getText().toString().length() > 0)
                             myTransL.translate(toot_content.getText().toString(), locale, new com.github.stom79.mytransl.client.Results() {
                                 @Override
                                 public void onSuccess(Translate translate) {
                                     try {
-                                        if( translate.getTranslatedContent() == null)
+                                        if (translate.getTranslatedContent() == null)
                                             return;
-                                        if( popup_trans != null ) {
+                                        if (popup_trans != null) {
                                             ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
                                             ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
-                                            if( trans_progress_toot != null)
+                                            if (trans_progress_toot != null)
                                                 trans_progress_toot.setVisibility(View.GONE);
                                             LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
-                                            if( trans_container != null ){
+                                            if (trans_container != null) {
                                                 TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
-                                               if(toot_trans != null){
+                                                if (toot_trans != null) {
                                                     toot_trans.setVisibility(View.VISIBLE);
                                                     toot_trans.setText(translate.getTranslatedContent());
                                                 }
-                                            }else {
-                                                Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toasty.error(getApplicationContext(), getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                                             }
-                                            if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
-                                                if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                            if (trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE)
+                                                if (dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
                                                     dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                         }
                                     } catch (IllegalArgumentException e) {
-                                        Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(), getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                                     }
                                 }
 
@@ -1871,11 +1869,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
                                 TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
-                                if( toot_trans != null) {
+                                if (toot_trans != null) {
                                     toot_content.setText(toot_trans.getText().toString());
                                     toot_content.setSelection(toot_content.getText().length());
                                 }
-                                if( cw_trans != null)
+                                if (cw_trans != null)
                                     toot_cw_content.setText(cw_trans.getText().toString());
                                 dialog.dismiss();
                             }
@@ -1888,7 +1886,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             public void onShow(DialogInterface dialog) {
                                 Button negativeButton = ((AlertDialog) dialog)
                                         .getButton(AlertDialog.BUTTON_NEGATIVE);
-                                if( negativeButton != null)
+                                if (negativeButton != null)
                                     negativeButton.setEnabled(false);
                             }
                         });
@@ -1902,30 +1900,30 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;
                 float density = getResources().getDisplayMetrics().density;
-                int paddingDp = (int)(paddingPixel * density);
+                int paddingDp = (int) (paddingPixel * density);
                 builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
                 builder.setTitle(R.string.insert_emoji);
-                if( emojis != null && emojis.size() > 0) {
+                if (emojis != null && emojis.size() > 0) {
                     GridView gridView = new GridView(TootActivity.this);
                     gridView.setAdapter(new CustomEmojiAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, emojis));
                     gridView.setNumColumns(5);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            toot_content.getText().insert(toot_content.getSelectionStart(), " :" + emojis.get(position).getShortcode()+": ");
+                            toot_content.getText().insert(toot_content.getSelectionStart(), " :" + emojis.get(position).getShortcode() + ": ");
                             alertDialogEmoji.dismiss();
                         }
                     });
-                    gridView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    gridView.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
                     builder.setView(gridView);
-                }else{
+                } else {
                     TextView textView = new TextView(TootActivity.this);
                     textView.setText(getString(R.string.no_emoji));
-                    textView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    textView.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
                     builder.setView(textView);
                 }
                 alertDialogEmoji = builder.show();
@@ -1941,29 +1939,32 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                 builderSingle.setTitle(getString(R.string.select_accounts));
                 LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.popup_contact,  new LinearLayout(getApplicationContext()), false);
+                View dialogView = inflater.inflate(R.layout.popup_contact, new LinearLayout(getApplicationContext()), false);
 
                 loader = dialogView.findViewById(R.id.loader);
                 EditText search_account = dialogView.findViewById(R.id.search_account);
                 lv_accounts_search = dialogView.findViewById(R.id.lv_accounts_search);
                 loader.setVisibility(View.VISIBLE);
-                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a",  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a", true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 search_account.addTextChangedListener(new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if (count > 0) {
                             search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
-                        }else{
+                        } else {
                             search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
                         }
                     }
+
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if( s != null && s.length() > 0){
-                            new RetrieveSearchAccountsAsyncTask(TootActivity.this, s.toString(),  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if (s != null && s.length() > 0) {
+                            new RetrieveSearchAccountsAsyncTask(TootActivity.this, s.toString(), true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
                 });
@@ -1974,7 +1975,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         if (event.getAction() == MotionEvent.ACTION_UP) {
                             if (search_account.length() > 0 && event.getRawX() >= (search_account.getRight() - search_account.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                                 search_account.setText("");
-                                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a",  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a", true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         }
 
@@ -2021,9 +2022,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 startActivity(intentTags);
                 return true;
             case R.id.action_restore:
-                try{
+                try {
                     final List<StoredStatus> drafts = new StatusStoredDAO(TootActivity.this, db).getAllDrafts();
-                    if( drafts == null || drafts.size() == 0){
+                    if (drafts == null || drafts.size() == 0) {
                         Toasty.info(getApplicationContext(), getString(R.string.no_draft), Toast.LENGTH_LONG).show();
                         return true;
                     }
@@ -2032,7 +2033,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(drafts);
                     final int[] ids = new int[drafts.size()];
                     int i = 0;
-                    for(StoredStatus draft: drafts){
+                    for (StoredStatus draft : drafts) {
                         ids[i] = draft.getId();
                         i++;
                     }
@@ -2075,14 +2076,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         }
                     });
                     builderSingle.show();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                 }
                 return true;
 
             case R.id.action_schedule:
-                if(toot_content.getText().toString().trim().length() == 0 ){
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
+                if (toot_content.getText().toString().trim().length() == 0) {
+                    Toasty.error(getApplicationContext(), getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
                     return true;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
@@ -2134,7 +2135,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             hour = timePicker.getHour();
                             minute = timePicker.getMinute();
-                        }else {
+                        } else {
                             //noinspection deprecation
                             hour = timePicker.getCurrentHour();
                             //noinspection deprecation
@@ -2147,9 +2148,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 minute);
                         final long[] time = {calendar.getTimeInMillis()};
 
-                        if( (time[0] - new Date().getTime()) < 60000 ){
+                        if ((time[0] - new Date().getTime()) < 60000) {
                             Toasty.warning(getApplicationContext(), getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
-                        }else {
+                        } else {
                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                             String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
                             Version currentVersion = new Version(instanceVersion);
@@ -2191,15 +2192,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void sendToot(String timestamp, String content_type){
+    private void sendToot(String timestamp, String content_type) {
         toot_it.setEnabled(false);
-        if(!displayWYSIWYG() && toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
-            Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+        if (!displayWYSIWYG() && toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0) {
+            Toasty.error(getApplicationContext(), getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
             toot_it.setEnabled(true);
             return;
         }
-        if(displayWYSIWYG() && wysiwyg.getContent().toString().trim().length() == 0 && attachments.size() == 0){
-            Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+        if (displayWYSIWYG() && wysiwyg.getContent().toString().trim().length() == 0 && attachments.size() == 0) {
+            Toasty.error(getApplicationContext(), getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
             toot_it.setEnabled(true);
             return;
         }
@@ -2209,52 +2210,52 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             return;
         }*/
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
 
-        if(displayWYSIWYG()){
+        if (displayWYSIWYG()) {
             split_toot = false;
         }
         String tootContent;
-        if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
+        if (toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0)
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(social, toot_content, toot_cw_content)  < split_toot_size)){
-            if( !displayWYSIWYG()) {
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
+            if (!displayWYSIWYG()) {
                 tootContent = toot_content.getText().toString().trim();
-            }else{
+            } else {
                 tootContent = wysiwyg.getContentAsHTML();
             }
-        }else{
+        } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
             tootContent = splitToot.get(0);
             stepSpliToot = 1;
         }
         Status toot = new Status();
-        if(content_type != null)
+        if (content_type != null)
             toot.setContentType(content_type);
         toot.setSensitive(isSensitive);
 
-        if( toot_cw_content.getText().toString().trim().length() > 0)
+        if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        if( tootReply != null)
+        if (tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             if (poll != null) {
                 toot.setPoll(poll);
             } else {
                 toot.setMedia_attachments(attachments);
             }
-        }else{
+        } else {
             if (poll != null) {
                 toot.setPoll(poll);
             }
             toot.setMedia_attachments(attachments);
         }
-        if( timestamp == null)
-            if( scheduledstatus == null)
-                new PostStatusAsyncTask(getApplicationContext(),  social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (timestamp == null)
+            if (scheduledstatus == null)
+                new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else {
                 toot.setScheduled_at(Helper.dateToString(scheduledstatus.getScheduled_date()));
                 scheduledstatus.setStatus(toot);
@@ -2270,13 +2271,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void serverSchedule(String time){
+    private void serverSchedule(String time) {
         sendToot(time, null);
         isScheduled = true;
         resetForNextToot();
     }
 
-    private void deviceSchedule(long time){
+    private void deviceSchedule(long time) {
         //Store the toot as draft first
         storeToot(false, false);
         isScheduled = true;
@@ -2286,12 +2287,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void resetForNextToot(){
+    private void resetForNextToot() {
         //Clear content
         toot_content.setText("");
         toot_cw_content.setText("");
         toot_space_left.setText("0");
-        if( attachments != null) {
+        if (attachments != null) {
             for (Attachment attachment : attachments) {
                 View namebar = findViewById(Integer.parseInt(attachment.getId()));
                 if (namebar != null && namebar.getParent() != null)
@@ -2305,33 +2306,33 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         isSensitive = false;
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
-        Toasty.info(getApplicationContext(),getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+        Toasty.info(getApplicationContext(), getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toot, menu);
-        if( restored != -1 ){
+        if (restored != -1) {
             MenuItem itemRestore = menu.findItem(R.id.action_restore);
-            if( itemRestore != null)
+            if (itemRestore != null)
                 itemRestore.setVisible(false);
             MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
-            if( restoredScheduled )
+            if (restoredScheduled)
                 itemSchedule.setVisible(false);
         }
         MenuItem itemViewReply = menu.findItem(R.id.action_view_reply);
-        if( tootReply == null){
-            if( itemViewReply != null)
+        if (tootReply == null) {
+            if (itemViewReply != null)
                 itemViewReply.setVisible(false);
         }
-        if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             MenuItem itemPoll = menu.findItem(R.id.action_poll);
-            if( itemPoll != null)
+            if (itemPoll != null)
                 itemPoll.setVisible(false);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT)
+        if (theme == Helper.THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
         changeColor();
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
@@ -2339,27 +2340,27 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Version minVersion = new Version("2.0");
         MenuItem itemEmoji = menu.findItem(R.id.action_emoji);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
+        final List<Emojis> emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
         //Displays button only if custom emojis
         if (emojis != null && emojis.size() > 0 && (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion))) {
             itemEmoji.setVisible(true);
-        }else{
+        } else {
             itemEmoji.setVisible(false);
         }
-        if( accountReply != null){
+        if (accountReply != null) {
             MenuItem itemRestore = menu.findItem(R.id.action_restore);
-            if( itemRestore != null)
+            if (itemRestore != null)
                 itemRestore.setVisible(false);
             MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
-            if( itemSchedule != null)
+            if (itemSchedule != null)
                 itemSchedule.setVisible(false);
-            MenuItem itemStore= menu.findItem(R.id.action_store);
-            if( itemStore != null)
+            MenuItem itemStore = menu.findItem(R.id.action_store);
+            if (itemStore != null)
                 itemStore.setVisible(false);
         }
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             MenuItem itemContacts = menu.findItem(R.id.action_contacts);
-            if( itemContacts != null)
+            if (itemContacts != null)
                 itemContacts.setVisible(false);
         }
         return true;
@@ -2369,7 +2370,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     @Override
     public void onDownloaded(String pathToFile, String url, Error error) {
 
-        if( error == null && pathToFile != null) {
+        if (error == null && pathToFile != null) {
             picture_scrollview.setVisibility(View.VISIBLE);
             Uri uri = Uri.fromFile(new File(pathToFile));
             String filename = FileNameCleaner.cleanFileName(url);
@@ -2390,21 +2391,21 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ProgressBar progressBar = findViewById(R.id.upload_progress);
         TextView toolbar_text = findViewById(R.id.toolbar_text);
         RelativeLayout progress_bar_container = findViewById(R.id.progress_bar_container);
-        if( progress <= 100) {
+        if (progress <= 100) {
             progressBar.setScaleY(3f);
             progress_bar_container.setVisibility(View.VISIBLE);
             progressBar.setProgress(progress);
             toolbar_text.setText(String.format("%s%%", progress));
-        }else{
+        } else {
             progress_bar_container.setVisibility(View.GONE);
         }
     }
 
-    private void showAddDescription(final Attachment attachment){
+    private void showAddDescription(final Attachment attachment) {
         AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
         builderInner.setTitle(R.string.upload_form_description);
 
-        View popup_media_description = getLayoutInflater().inflate( R.layout.popup_media_description,  new LinearLayout(getApplicationContext()), false );
+        View popup_media_description = getLayoutInflater().inflate(R.layout.popup_media_description, new LinearLayout(getApplicationContext()), false);
         builderInner.setView(popup_media_description);
 
         //Text for report
@@ -2421,7 +2422,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         media_picture.setImageBitmap(resource);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             media_picture.setImageAlpha(60);
-                        }else {
+                        } else {
                             media_picture.setAlpha(60);
                         }
                     }
@@ -2434,14 +2435,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+        if (attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
             input.setText(attachment.getDescription());
             input.setSelection(input.getText().length());
         }
         builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), account,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), account, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 attachment.setDescription(input.getText().toString());
                 addBorder();
                 dialog.dismiss();
@@ -2454,29 +2455,30 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     /**
      * Removes a media
+     *
      * @param viewId String
      */
-    private void showRemove(final int viewId){
+    private void showRemove(final int viewId) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
 
         dialog.setMessage(R.string.toot_delete_media);
         dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
         dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 View namebar = findViewById(viewId);
-                for(Attachment attachment: attachments){
-                    if( Integer.valueOf(attachment.getId()) == viewId){
+                for (Attachment attachment : attachments) {
+                    if (Integer.valueOf(attachment.getId()) == viewId) {
                         attachments.remove(attachment);
                         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-                        if( show_media_urls) {
+                        if (show_media_urls) {
                             //Clears the text_url at the end of the toot  for this attachment
                             int selectionBefore = toot_content.getSelectionStart();
                             toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
@@ -2490,7 +2492,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
                 dialog.dismiss();
-                if( attachments.size() == 0 ) {
+                if (attachments.size() == 0) {
                     toot_sensitive.setVisibility(View.GONE);
                     isSensitive = false;
                     toot_sensitive.setChecked(false);
@@ -2504,7 +2506,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void tootVisibilityDialog(){
+    private void tootVisibilityDialog() {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
         dialog.setTitle(R.string.toot_visibility_tilte);
@@ -2519,7 +2521,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         visibility = "public";
                         toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -2545,7 +2547,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -2553,13 +2554,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-        if( storeToot && accountReply == null) {
+        if (storeToot && accountReply == null) {
             storeToot(true, false);
-        }else if( storeToot) {
+        } else if (storeToot) {
             storeToot(false, false);
         }
     }
@@ -2568,12 +2569,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public void onBackPressed() {
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-        if( !storeToot ){
-            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0){
+        if (!storeToot) {
+            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0) {
                 finish();
-            }else if (initialContent.trim().equals(toot_content.getText().toString().trim())){
+            } else if (initialContent.trim().equals(toot_content.getText().toString().trim())) {
                 finish();
-            }else {
+            } else {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                 dialogBuilder.setMessage(R.string.save_draft);
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
@@ -2599,7 +2600,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 alertDialog.setCancelable(false);
                 alertDialog.show();
             }
-        }else{
+        } else {
             super.onBackPressed();
         }
 
@@ -2617,12 +2618,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
-        if( apiResponse.getError() != null ){
+        if (apiResponse.getError() != null) {
             toot_it.setEnabled(true);
-            if( apiResponse.getError().getError().contains("422")){
+            if (apiResponse.getError().getError().contains("422")) {
                 showAToast(getString(R.string.toast_error_char_limit));
                 return;
-            }else if( apiResponse.getError().getStatusCode() == -33){
+            } else if (apiResponse.getError().getStatusCode() == -33) {
                 storeToot(false, true);
             } else {
                 showAToast(apiResponse.getError().getError());
@@ -2631,29 +2632,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
 
         int cwSize = toot_cw_content.getText().toString().trim().length();
         int size = toot_content.getText().toString().trim().length() + cwSize;
 
-        if( split_toot && splitToot != null && stepSpliToot < splitToot.size()){
+        if (split_toot && splitToot != null && stepSpliToot < splitToot.size()) {
             String tootContent = splitToot.get(stepSpliToot);
             stepSpliToot += 1;
             Status toot = new Status();
             toot.setSensitive(isSensitive);
             toot.setMedia_attachments(attachments);
-            if( toot_cw_content.getText().toString().trim().length() > 0)
+            if (toot_cw_content.getText().toString().trim().length() > 0)
                 toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
             toot.setVisibility(visibility);
-            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
+            if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
             toot.setContent(tootContent);
             new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
         }
-        if(   apiResponse.getError() == null || apiResponse.getError().getStatusCode() != -33) {
+        if (apiResponse.getError() == null || apiResponse.getError().getStatusCode() != -33) {
             if (restored != -1) {
                 SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new StatusStoredDAO(getApplicationContext(), db).remove(restored);
@@ -2666,7 +2667,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_content.setText("");
         toot_cw_content.setText("");
         toot_space_left.setText("0");
-        if( attachments != null) {
+        if (attachments != null) {
             for (Attachment attachment : attachments) {
                 View namebar = findViewById(Integer.parseInt(attachment.getId()));
                 if (namebar != null && namebar.getParent() != null)
@@ -2680,28 +2681,28 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         isSensitive = false;
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
-        if(apiResponse.getError() == null) {
+        if (apiResponse.getError() == null) {
             if (scheduledstatus == null && !isScheduled) {
                 boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
-                if( display_confirm){
+                if (display_confirm) {
                     Toasty.success(getApplicationContext(), getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
                 }
-            }else
+            } else
                 Toasty.success(getApplicationContext(), getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
-        }else {
-            if(apiResponse.getError().getStatusCode() == -33)
+        } else {
+            if (apiResponse.getError().getStatusCode() == -33)
                 Toasty.info(getApplicationContext(), getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
         toot_it.setEnabled(true);
         //It's a reply, so the user will be redirect to its answer
-        if( tootReply != null){
+        if (tootReply != null) {
             List<Status> statuses = apiResponse.getStatuses();
-            if( statuses != null && statuses.size() > 0 ){
+            if (statuses != null && statuses.size() > 0) {
                 Status status = statuses.get(0);
-                if( status != null ) {
+                if (status != null) {
                     Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    if( idRedirect == null)
+                    if (idRedirect == null)
                         b.putParcelable("status", status);
                     else {
                         b.putParcelable("status", idRedirect);
@@ -2711,7 +2712,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     finish();
                 }
             }
-        }else {
+        } else {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra(Helper.INTENT_ACTION, Helper.HOME_TIMELINE_INTENT);
             startActivity(intent);
@@ -2722,15 +2723,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
-        if( pp_progress != null && pp_actionBar != null) {
+        if (pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( apiResponse.getError() != null)
+        if (apiResponse.getError() != null)
             return;
         final List<Account> accounts = apiResponse.getAccounts();
-        if( accounts != null && accounts.size() > 0){
-            if( !displayWYSIWYG()) {
+        if (accounts != null && accounts.size() > 0) {
+            if (!displayWYSIWYG()) {
                 int currentCursorPosition = toot_content.getSelectionStart();
                 AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
                 toot_content.setThreshold(1);
@@ -2774,11 +2775,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         });
                     }
                 }
-            }else { //For Pleroma and its wysiwyg
+            } else { //For Pleroma and its wysiwyg
                 RecyclerView suggestionsRV = findViewById(R.id.suggestions);
                 suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
                 List<Suggestion> suggestions = new ArrayList<>();
-                for(Account account: accounts){
+                for (Account account : accounts) {
                     Suggestion suggestion = new Suggestion();
                     suggestion.setContent(account.getAcct());
                     suggestion.setImageUrl(account.getAvatar());
@@ -2836,12 +2837,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onRetrieveContact(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getAccounts() == null)
+        if (apiResponse.getError() != null || apiResponse.getAccounts() == null)
             return;
         this.contacts = new ArrayList<>();
         this.checkedValues = new ArrayList<>();
         this.contacts.addAll(apiResponse.getAccounts());
-        for(Account account: contacts) {
+        for (Account account : contacts) {
             this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
         this.loader.setVisibility(View.GONE);
@@ -2861,56 +2862,56 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onRetrieveSearchEmoji(final List<Emojis> emojis) {
-        if( pp_progress != null && pp_actionBar != null) {
+        if (pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
 
         if (emojis != null && emojis.size() > 0) {
-            if( !displayWYSIWYG()) {
-            int currentCursorPosition = toot_content.getSelectionStart();
-            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
-            toot_content.setThreshold(1);
-            toot_content.setAdapter(emojisSearchAdapter);
-            final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
-            if (searchA.length > 0) {
-                final String search = searchA[searchA.length - 1];
-                toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String shortcode = emojis.get(position).getShortcode();
-                        String deltaSearch = "";
-                        int searchLength = 15;
-                        if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
-                            searchLength = currentCursorPosition;
-                        }
-                        if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
-                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
-                        else {
-                            if (currentCursorPosition >= oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
-                        }
+            if (!displayWYSIWYG()) {
+                int currentCursorPosition = toot_content.getSelectionStart();
+                EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
+                toot_content.setThreshold(1);
+                toot_content.setAdapter(emojisSearchAdapter);
+                final String oldContent = toot_content.getText().toString();
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split(":");
+                if (searchA.length > 0) {
+                    final String search = searchA[searchA.length - 1];
+                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String shortcode = emojis.get(position).getShortcode();
+                            String deltaSearch = "";
+                            int searchLength = 15;
+                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                searchLength = currentCursorPosition;
+                            }
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
 
-                        if (!search.equals(""))
-                            deltaSearch = deltaSearch.replace(":" + search, "");
-                        String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
-                        newContent += deltaSearch;
-                        newContent += ":" + shortcode + ": ";
-                        int newPosition = newContent.length();
-                        if (currentCursorPosition < oldContent.length())
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length());
-                        toot_content.setText(newContent);
-                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
-                        toot_content.setSelection(newPosition);
-                        EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
-                        toot_content.setThreshold(1);
-                        toot_content.setAdapter(emojisSearchAdapter);
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace(":" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += ":" + shortcode + ": ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length())
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            toot_content.setText(newContent);
+                            toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                            toot_content.setSelection(newPosition);
+                            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
+                            toot_content.setThreshold(1);
+                            toot_content.setAdapter(emojisSearchAdapter);
 
-                    }
-                });
-            }
-        } else {
+                        }
+                    });
+                }
+            } else {
                 int currentCursorPosition = wysiwygEditText.getSelectionStart();
                 RecyclerView suggestionsRV = findViewById(R.id.suggestions);
                 suggestionsRV.setLayoutManager(new LinearLayoutManager(this));
@@ -2970,21 +2971,21 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private void checkMastodon( Uri inUri){
+    private void checkMastodon(Uri inUri) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), inUri);
             int imageWidth = -1;
             int imageHeight = -1;
             long size = -1;
-            if( bitmap != null) {
+            if (bitmap != null) {
                 imageWidth = bitmap.getWidth();
                 imageHeight = bitmap.getHeight();
             }
-            if( inUri != null) {
+            if (inUri != null) {
                 File imageFile = new File(inUri.getPath());
                 size = imageFile.length();
             }
-            if( imageWidth != -1 && imageHeight != -1 && size != -1){
+            if (imageWidth != -1 && imageHeight != -1 && size != -1) {
 
             }
         } catch (IOException e) {
@@ -2993,23 +2994,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-
-
-
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
 
 
-        if( pp_progress != null && pp_actionBar != null) {
+        if (pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( apiResponse == null || apiResponse.getResults() == null)
+        if (apiResponse == null || apiResponse.getResults() == null)
             return;
         Results results = apiResponse.getResults();
         final List<String> tags = results.getHashtags();
-        if( tags != null && tags.size() > 0){
-            if( !displayWYSIWYG()) {
+        if (tags != null && tags.size() > 0) {
+            if (!displayWYSIWYG()) {
                 int currentCursorPosition = toot_content.getSelectionStart();
                 TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
                 toot_content.setThreshold(1);
@@ -3056,7 +3054,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
                     }
                 });
-            }else{
+            } else {
                 int currentCursorPosition = wysiwygEditText.getSelectionStart();
 
                 List<Suggestion> suggestions = new ArrayList<>();
@@ -3115,27 +3113,27 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-    private void restoreToot(long id){
+    private void restoreToot(long id) {
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
-        if( draft == null)
+        if (draft == null)
             return;
         Status status = draft.getStatus();
         //Retrieves attachments
-        if( removed ){
+        if (removed) {
             new StatusStoredDAO(TootActivity.this, db).remove(draft.getId());
         }
         restored = id;
         attachments = status.getMedia_attachments();
         int childCount = toot_picture_container.getChildCount();
         ArrayList<ImageView> toRemove = new ArrayList<>();
-        if( childCount > 0 ){
-            for(int i = 0 ; i < childCount ; i++){
-                if( toot_picture_container.getChildAt(i) instanceof ImageView)
-                    toRemove.add((ImageView)toot_picture_container.getChildAt(i));
+        if (childCount > 0) {
+            for (int i = 0; i < childCount; i++) {
+                if (toot_picture_container.getChildAt(i) instanceof ImageView)
+                    toRemove.add((ImageView) toot_picture_container.getChildAt(i));
             }
-            if( toRemove.size() > 0){
-                for(ImageView imageView: toRemove)
+            if (toRemove.size() > 0) {
+                for (ImageView imageView : toRemove)
                     toot_picture_container.removeView(imageView);
             }
             toRemove.clear();
@@ -3147,29 +3145,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             content = matcher.replaceAll("$3@$2");
         }
 
-        if( removed ) {
+        if (removed) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
             else
                 //noinspection deprecation
                 content = Html.fromHtml(content).toString();
         }
-        if( status.getPoll() != null) {
+        if (status.getPoll() != null) {
             poll = status.getPoll();
             poll_action.setVisibility(View.VISIBLE);
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 toot_picture.setVisibility(View.GONE);
                 picture_scrollview.setVisibility(View.GONE);
             }
         }
 
-        if( attachments != null && attachments.size() > 0){
+        if (attachments != null && attachments.size() > 0) {
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
-            int i = 0 ;
-            for(final Attachment attachment: attachments){
+            int i = 0;
+            for (final Attachment attachment : attachments) {
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
+                if (url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
@@ -3218,47 +3216,47 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 });
                 addBorder();
-                if( attachments.size() < max_media_count)
+                if (attachments.size() < max_media_count)
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
                 i++;
             }
-        }else {
+        } else {
             toot_picture_container.setVisibility(View.GONE);
         }
         //Sensitive content
         toot_sensitive.setChecked(status.isSensitive());
-        if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
+        if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
             toot_cw_content.setText(status.getSpoiler_text());
             toot_cw_content.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
-        if( !displayWYSIWYG()) {
+        if (!displayWYSIWYG()) {
             toot_content.setText(content);
-        }else{
-            if( content != null){
-                content =content.replaceAll("<p[^>]*><\\/p>","");
+        } else {
+            if (content != null) {
+                content = content.replaceAll("<p[^>]*><\\/p>", "");
             }
             wysiwyg.render(content);
             try {
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             }
         }
         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
-        if( !displayWYSIWYG()) {
+        if (!displayWYSIWYG()) {
             toot_content.setSelection(toot_content.getText().length());
-        }else{
-            if( wysiwygEditText != null) {
+        } else {
+            if (wysiwygEditText != null) {
                 wysiwygEditText.setSelection(wysiwygEditText.getText().length());
             }
         }
 
-        switch (status.getVisibility()){
+        switch (status.getVisibility()) {
             case "public":
                 visibility = "public";
                 toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -3280,17 +3278,16 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         //The current id is set to the draft
         currentToId = draft.getId();
         tootReply = draft.getStatusReply();
-        if( tootReply != null) {
+        if (tootReply != null) {
             tootReply();
 
-        }else {
-            if( title != null){
-                if(social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        } else {
+            if (title != null) {
+                if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     title.setText(getString(R.string.queet_title));
                 else
                     title.setText(getString(R.string.toot_title));
-            }
-            else {
+            } else {
                 if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                     setTitle(R.string.queet_title);
                 else
@@ -3298,27 +3295,27 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
         invalidateOptionsMenu();
-        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
-        if( !displayWYSIWYG()) {
+        initialContent = displayWYSIWYG() ? wysiwyg.getContentAsHTML() : toot_content.getText().toString();
+        if (!displayWYSIWYG()) {
             toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
-        }else{
+        } else {
             toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
         }
     }
 
 
-    private void restoreServerSchedule(Status status){
+    private void restoreServerSchedule(Status status) {
 
         attachments = status.getMedia_attachments();
         int childCount = toot_picture_container.getChildCount();
         ArrayList<ImageView> toRemove = new ArrayList<>();
-        if( childCount > 0 ){
-            for(int i = 0 ; i < childCount ; i++){
-                if( toot_picture_container.getChildAt(i) instanceof ImageView)
-                    toRemove.add((ImageView)toot_picture_container.getChildAt(i));
+        if (childCount > 0) {
+            for (int i = 0; i < childCount; i++) {
+                if (toot_picture_container.getChildAt(i) instanceof ImageView)
+                    toRemove.add((ImageView) toot_picture_container.getChildAt(i));
             }
-            if( toRemove.size() > 0){
-                for(ImageView imageView: toRemove)
+            if (toRemove.size() > 0) {
+                for (ImageView imageView : toRemove)
                     toot_picture_container.removeView(imageView);
             }
             toRemove.clear();
@@ -3329,20 +3326,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (matcher.find()) {
             content = matcher.replaceAll("$3@$2");
         }
-        if( removed ) {
+        if (removed) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
             else
                 //noinspection deprecation
                 content = Html.fromHtml(content).toString();
         }
-        if( attachments != null && attachments.size() > 0){
+        if (attachments != null && attachments.size() > 0) {
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
-            int i = 0 ;
-            for(final Attachment attachment: attachments){
+            int i = 0;
+            for (final Attachment attachment : attachments) {
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
+                if (url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
@@ -3391,20 +3388,20 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 });
                 addBorder();
-                if( attachments.size() < max_media_count)
+                if (attachments.size() < max_media_count)
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
                 i++;
             }
-        }else {
+        } else {
             toot_picture_container.setVisibility(View.GONE);
         }
         //Sensitive content
         toot_sensitive.setChecked(status.isSensitive());
-        if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
+        if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
             toot_cw_content.setText(status.getSpoiler_text());
             toot_cw_content.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
@@ -3412,7 +3409,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot_content.setText(content);
         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
         toot_content.setSelection(toot_content.getText().length());
-        switch (status.getVisibility()){
+        switch (status.getVisibility()) {
             case "public":
                 visibility = "public";
                 toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -3431,60 +3428,58 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 break;
         }
 
-        if( title != null) {
+        if (title != null) {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 title.setText(getString(R.string.queet_title));
             else
                 title.setText(getString(R.string.toot_title));
-        }
-        else {
+        } else {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 setTitle(R.string.queet_title);
             else
                 setTitle(R.string.toot_title);
         }
         invalidateOptionsMenu();
-        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
+        initialContent = displayWYSIWYG() ? wysiwyg.getContentAsHTML() : toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
     }
 
-    private void tootReply(){
+    private void tootReply() {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        if( title != null) {
+        if (title != null) {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 title.setText(getString(R.string.queet_title_reply));
             else
                 title.setText(getString(R.string.toot_title_reply));
-        }
-        else {
+        } else {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 setTitle(R.string.queet_title_reply);
             else
                 setTitle(R.string.toot_title_reply);
         }
         String userIdReply;
-        if( accountReply == null)
+        if (accountReply == null)
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         else
             userIdReply = accountReply.getId();
 
         //If toot is not restored
-        if( restored == -1 ){
+        if (restored == -1) {
             //Gets the default visibility, will be used if not set in settings
-            String defaultVisibility = account.isLocked()?"private":"public";
+            String defaultVisibility = account.isLocked() ? "private" : "public";
             String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             int initialTootVisibility = 0;
             int ownerTootVisibility = 0;
             String temp_visibility = tootReply.getVisibility();
-            if( quickmessagevisibility != null){
+            if (quickmessagevisibility != null) {
                 temp_visibility = quickmessagevisibility;
             }
-            switch (temp_visibility){
+            switch (temp_visibility) {
                 case "public":
                     initialTootVisibility = 4;
                     break;
                 case "unlisted":
-                    initialTootVisibility  = 3;
+                    initialTootVisibility = 3;
                     break;
                 case "private":
                     visibility = "private";
@@ -3496,12 +3491,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     break;
             }
             if (settingsVisibility != null) {
-                switch (settingsVisibility){
+                switch (settingsVisibility) {
                     case "public":
                         ownerTootVisibility = 4;
                         break;
                     case "unlisted":
-                        ownerTootVisibility  = 3;
+                        ownerTootVisibility = 3;
                         break;
                     case "private":
                         visibility = "private";
@@ -3514,12 +3509,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
             }
             int tootVisibility;
-            if( ownerTootVisibility >= initialTootVisibility){
+            if (ownerTootVisibility >= initialTootVisibility) {
                 tootVisibility = initialTootVisibility;
-            }else {
+            } else {
                 tootVisibility = ownerTootVisibility;
             }
-            switch (tootVisibility){
+            switch (tootVisibility) {
                 case 4:
                     visibility = "public";
                     toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -3538,61 +3533,61 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     break;
             }
 
-            if( tootReply.getSpoiler_text() != null && tootReply.getSpoiler_text().length() > 0) {
+            if (tootReply.getSpoiler_text() != null && tootReply.getSpoiler_text().length() > 0) {
                 toot_cw_content.setText(tootReply.getSpoiler_text());
                 toot_cw_content.setVisibility(View.VISIBLE);
             }
 
-            if( tootReply != null) {
+            if (tootReply != null) {
                 manageMentions(getApplicationContext(), social, userIdReply, toot_content, toot_cw_content, toot_space_left, tootReply);
             }
             boolean forwardTags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
-            if( tootReply != null && forwardTags && tootReply.getTags() != null && tootReply.getTags().size() > 0){
+            if (tootReply != null && forwardTags && tootReply.getTags() != null && tootReply.getTags().size() > 0) {
                 int currentCursorPosition = toot_content.getSelectionStart();
-                toot_content.setText(toot_content.getText() +"\n");
-                for(Tag tag: tootReply.getTags()){
-                    toot_content.setText(toot_content.getText() +" #"+tag.getName());
+                toot_content.setText(toot_content.getText() + "\n");
+                for (Tag tag : tootReply.getTags()) {
+                    toot_content.setText(toot_content.getText() + " #" + tag.getName());
                 }
                 toot_content.setSelection(currentCursorPosition);
                 toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
             }
 
         }
-        initialContent = displayWYSIWYG()?wysiwyg.getContentAsHTML():toot_content.getText().toString();
+        initialContent = displayWYSIWYG() ? wysiwyg.getContentAsHTML() : toot_content.getText().toString();
     }
 
 
-    public static void manageMentions(Context context,  UpdateAccountInfoAsyncTask.SOCIAL social, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply){
+    public static void manageMentions(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply) {
 
         //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
         ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int cursorReply = 0;
-        if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
+        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
             contentView.setText(String.format("@%s", tootReply.getAccount().getAcct()));
             mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
             //Evaluate the cursor position => mention length + 1 char for carriage return
             cursorReply = contentView.getText().toString().length() + 1;
         }
 
-        if( tootReply.getMentions() != null ){
+        if (tootReply.getMentions() != null) {
             //Put other accounts mentioned at the bottom
             boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
-            if( capitalize)
+            if (capitalize)
                 contentView.setText(String.format("%s", (contentView.getText().toString() + "\n\n")));
             else
                 contentView.setText(String.format("%s", (contentView.getText().toString() + " ")));
-            for(Mention mention : tootReply.getMentions()){
-                if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+            for (Mention mention : tootReply.getMentions()) {
+                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                     mentionedAccountsAdded.add(mention.getAcct());
                     String tootTemp = String.format("@%s ", mention.getAcct());
-                    contentView.setText(String.format("%s ", (contentView.getText().toString() +  tootTemp.trim())));
+                    contentView.setText(String.format("%s ", (contentView.getText().toString() + tootTemp.trim())));
                 }
             }
 
             contentView.setText(contentView.getText().toString().trim());
-            if (contentView.getText().toString().startsWith("@") ) {
-                if( capitalize )
+            if (contentView.getText().toString().startsWith("@")) {
+                if (capitalize)
                     contentView.append("\n");
                 else
                     contentView.append(" ");
@@ -3600,7 +3595,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             counterView.setText(String.valueOf(countLength(social, contentView, CWView)));
             contentView.requestFocus();
 
-            if( capitalize) {
+            if (capitalize) {
                 if (mentionedAccountsAdded.size() == 1) {
                     contentView.setSelection(contentView.getText().length()); //Put cursor at the end
                 } else {
@@ -3609,13 +3604,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     else
                         contentView.setSelection(contentView.getText().length()); //Put cursor at the end
                 }
-            }else {
+            } else {
                 contentView.setSelection(contentView.getText().length()); //Put cursor at the end
             }
         }
     }
 
-    private void displayPollPopup(){
+    private void displayPollPopup() {
         AlertDialog.Builder alertPoll = new AlertDialog.Builder(TootActivity.this, style);
         alertPoll.setTitle(R.string.create_poll);
         View view = getLayoutInflater().inflate(R.layout.popup_poll, null);
@@ -3631,11 +3626,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         int max_length = 25;
         pollCountItem = 2;
         remove.setVisibility(View.GONE);
-        if( MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_options")){
-            max_entry = MainActivity.poll_limits.get("max_options")!=null?MainActivity.poll_limits.get("max_options"):4;
+        if (MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_options")) {
+            max_entry = MainActivity.poll_limits.get("max_options") != null ? MainActivity.poll_limits.get("max_options") : 4;
         }
-        if( MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_option_chars")){
-            max_length = MainActivity.poll_limits.get("max_option_chars")!=null?MainActivity.poll_limits.get("max_option_chars"):25;
+        if (MainActivity.poll_limits != null && MainActivity.poll_limits.containsKey("max_option_chars")) {
+            max_length = MainActivity.poll_limits.get("max_option_chars") != null ? MainActivity.poll_limits.get("max_option_chars") : 25;
         }
         InputFilter[] fArray = new InputFilter[1];
         fArray[0] = new InputFilter.LengthFilter(max_length);
@@ -3647,18 +3642,18 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( pollCountItem < finalMax_entry){
+                if (pollCountItem < finalMax_entry) {
                     EditText poll_item = new EditText(TootActivity.this);
                     InputFilter[] fArray = new InputFilter[1];
                     fArray[0] = new InputFilter.LengthFilter(finalMax_length);
                     poll_item.setFilters(fArray);
-                    poll_item.setHint(getString(R.string.poll_choice_s,(pollCountItem+1)));
+                    poll_item.setHint(getString(R.string.poll_choice_s, (pollCountItem + 1)));
                     poll_items_container.addView(poll_item);
                 }
                 pollCountItem++;
-                if( pollCountItem >= finalMax_entry){
+                if (pollCountItem >= finalMax_entry) {
                     add.setVisibility(View.GONE);
-                }else{
+                } else {
                     add.setVisibility(View.VISIBLE);
                 }
                 remove.setVisibility(View.VISIBLE);
@@ -3667,14 +3662,14 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( pollCountItem > 2){
+                if (pollCountItem > 2) {
                     int childCount = poll_items_container.getChildCount();
-                    poll_items_container.removeViewAt(childCount -1);
+                    poll_items_container.removeViewAt(childCount - 1);
                 }
                 pollCountItem--;
-                if( pollCountItem <= 2){
+                if (pollCountItem <= 2) {
                     remove.setVisibility(View.GONE);
-                }else{
+                } else {
                     remove.setVisibility(View.VISIBLE);
                 }
                 add.setVisibility(View.VISIBLE);
@@ -3690,22 +3685,22 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         poll_duration.setAdapter(pollduration);
         poll_duration.setSelection(4);
         poll_choice.setSelection(0);
-        if( poll != null && poll.getOptionsList() != null){
+        if (poll != null && poll.getOptionsList() != null) {
             int i = 1;
-            for(PollOptions pollOptions: poll.getOptionsList()){
-                if( i == 1){
-                    if( pollOptions.getTitle() != null)
+            for (PollOptions pollOptions : poll.getOptionsList()) {
+                if (i == 1) {
+                    if (pollOptions.getTitle() != null)
                         choice_1.setText(pollOptions.getTitle());
-                }else if(i == 2){
-                    if( pollOptions.getTitle() != null)
+                } else if (i == 2) {
+                    if (pollOptions.getTitle() != null)
                         choice_2.setText(pollOptions.getTitle());
-                }else{
+                } else {
                     EditText poll_item = new EditText(TootActivity.this);
                     fArray = new InputFilter[1];
                     fArray[0] = new InputFilter.LengthFilter(finalMax_length);
                     poll_item.setFilters(fArray);
-                    poll_item.setHint(getString(R.string.poll_choice_s,(pollCountItem+1)));
-                    if( pollOptions.getTitle() != null){
+                    poll_item.setHint(getString(R.string.poll_choice_s, (pollCountItem + 1)));
+                    if (pollOptions.getTitle() != null) {
                         poll_item.setText(pollOptions.getTitle());
                     }
                     poll_items_container.addView(poll_item);
@@ -3715,12 +3710,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             remove.setVisibility(View.VISIBLE);
             add.setVisibility(View.VISIBLE);
-            if(poll.getOptionsList().size() >= max_entry){
+            if (poll.getOptionsList().size() >= max_entry) {
                 add.setVisibility(View.GONE);
-            }else if( poll.getOptionsList().size() <= 2 ){
+            } else if (poll.getOptionsList().size() <= 2) {
                 remove.setVisibility(View.GONE);
             }
-            switch (poll.getExpires_in()){
+            switch (poll.getExpires_in()) {
                 case 300:
                     poll_duration.setSelection(0);
                     break;
@@ -3743,7 +3738,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     poll_duration.setSelection(6);
                     break;
             }
-            if( poll.isMultiple())
+            if (poll.isMultiple())
                 poll_choice.setSelection(1);
             else
                 poll_choice.setSelection(0);
@@ -3752,11 +3747,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         alertPoll.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                if( poll != null)
+                if (poll != null)
                     poll = null;
                 poll_action.setVisibility(View.GONE);
                 toot_picture.setVisibility(View.VISIBLE);
-                if( attachments != null && attachments.size() > 0)
+                if (attachments != null && attachments.size() > 0)
                     picture_scrollview.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
@@ -3779,13 +3774,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         String choice1 = choice_1.getText().toString().trim();
                         String choice2 = choice_2.getText().toString().trim();
 
-                        if( choice1.isEmpty() && choice2.isEmpty()){
+                        if (choice1.isEmpty() && choice2.isEmpty()) {
                             Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             poll = new Poll();
                             poll.setMultiple(poll_choice_pos != 0);
                             int expire = 0;
-                            switch (poll_duration_pos){
+                            switch (poll_duration_pos) {
                                 case 0:
                                     expire = 300;
                                     break;
@@ -3822,31 +3817,31 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             pollOptions.add(pollOption2);
 
                             int childCount = poll_items_container.getChildCount();
-                            if( childCount > 2){
-                                for( int i = 2 ; i < childCount; i++){
+                            if (childCount > 2) {
+                                for (int i = 2; i < childCount; i++) {
                                     PollOptions pollItem = new PollOptions();
-                                    pollItem.setTitle(((EditText)poll_items_container.getChildAt(i)).getText().toString());
+                                    pollItem.setTitle(((EditText) poll_items_container.getChildAt(i)).getText().toString());
                                     pollOptions.add(pollItem);
                                 }
                             }
                             List<String> options = new ArrayList<>();
                             boolean doubleTitle = false;
-                            for(PollOptions po: pollOptions){
-                                if( !options.contains(po.getTitle().trim())){
+                            for (PollOptions po : pollOptions) {
+                                if (!options.contains(po.getTitle().trim())) {
                                     options.add(po.getTitle().trim());
-                                }else{
+                                } else {
                                     doubleTitle = true;
                                 }
                             }
-                            if( !doubleTitle) {
+                            if (!doubleTitle) {
                                 poll.setOptionsList(pollOptions);
                                 dialog.dismiss();
-                            }else {
+                            } else {
                                 Toasty.error(getApplicationContext(), getString(R.string.poll_duplicated_entry), Toast.LENGTH_SHORT).show();
                             }
                         }
                         poll_action.setVisibility(View.VISIBLE);
-                        if(social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                             toot_picture.setVisibility(View.GONE);
                             picture_scrollview.setVisibility(View.GONE);
                         }
@@ -3858,15 +3853,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         alertPollDiaslog.show();
     }
 
-    private void storeToot(boolean message, boolean forced){
+    private void storeToot(boolean message, boolean forced) {
         //Nothing to store here....
         String currentContent;
-        if( displayWYSIWYG()){
+        if (displayWYSIWYG()) {
             currentContent = wysiwyg.getContentAsHTML().trim();
-        }else{
+        } else {
             currentContent = toot_content.getText().toString().trim();
         }
-        if( !forced) {
+        if (!forced) {
             if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
             if (initialContent.trim().equals(currentContent))
@@ -3875,39 +3870,40 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Status toot = new Status();
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
-        if( toot_cw_content.getText().toString().trim().length() > 0)
+        if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
         toot.setContent(currentContent);
 
-        if( poll != null)
+        if (poll != null)
             toot.setPoll(poll);
-        if( tootReply != null)
+        if (tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        try{
-            if( currentToId == -1 ) {
+        try {
+            if (currentToId == -1) {
                 currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, tootReply);
 
-            }else{
+            } else {
                 StoredStatus storedStatus = new StatusStoredDAO(TootActivity.this, db).getStatus(currentToId);
-                if( storedStatus != null ){
+                if (storedStatus != null) {
                     new StatusStoredDAO(TootActivity.this, db).updateStatus(currentToId, toot);
-                }else { //Might have been deleted, so it needs insertion
+                } else { //Might have been deleted, so it needs insertion
                     new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, tootReply);
                 }
             }
-            if( message )
+            if (message)
                 Toasty.success(getApplicationContext(), getString(R.string.toast_toot_saved), Toast.LENGTH_LONG).show();
-        }catch (Exception e){
-            if( message)
+        } catch (Exception e) {
+            if (message)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
         }
     }
-    private void changeColor(){
+
+    private void changeColor() {
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.dark_text);
@@ -3924,7 +3920,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.dark_text);
             Helper.changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.dark_text);
 
-        }else {
+        } else {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.white);
@@ -3949,7 +3945,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     public void onRetrieveAccountsReply(ArrayList<Account> accounts) {
         final boolean[] checkedValues = new boolean[accounts.size()];
         int i = 0;
-        for(Account account: accounts) {
+        for (Account account : accounts) {
             checkedValues[i] = toot_content.getText().toString().contains("@" + account.getAcct());
             i++;
         }
@@ -3966,12 +3962,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         builderSingle.show();
     }
 
-    public void changeAccountReply(boolean isChecked, String acct){
+    public void changeAccountReply(boolean isChecked, String acct) {
         if (isChecked) {
-            if( !toot_content.getText().toString().contains(acct))
-                toot_content.setText(String.format("%s %s",acct, toot_content.getText()));
+            if (!toot_content.getText().toString().contains(acct))
+                toot_content.setText(String.format("%s %s", acct, toot_content.getText()));
         } else {
-            toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +acct, ""));
+            toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" + acct, ""));
         }
     }
 
@@ -3987,21 +3983,21 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         active = false;
     }
 
-    private void addBorder(){
+    private void addBorder() {
         for (int i = 0; i < toot_picture_container.getChildCount(); i++) {
             View v = toot_picture_container.getChildAt(i);
             if (v instanceof ImageView) {
-                for(Attachment attachment: attachments){
-                    if(attachment.getType().toLowerCase().equals("image"))
-                    if( v.getTag().toString().trim().equals(attachment.getId().trim())){
-                        int borderSize = (int) Helper.convertDpToPixel(1, TootActivity.this);
-                        int borderSizeTop = (int) Helper.convertDpToPixel(6, TootActivity.this);
-                        v.setPadding(borderSize,borderSizeTop,borderSize,borderSizeTop);
-                        if( attachment.getDescription() == null ||attachment.getDescription().trim().equals("null") || attachment.getDescription().trim().equals("")) {
-                            v.setBackgroundColor( ContextCompat.getColor(TootActivity.this, R.color.red_1));
-                        }else
-                            v.setBackgroundColor(ContextCompat.getColor(TootActivity.this, R.color.green_1));
-                    }
+                for (Attachment attachment : attachments) {
+                    if (attachment.getType().toLowerCase().equals("image"))
+                        if (v.getTag().toString().trim().equals(attachment.getId().trim())) {
+                            int borderSize = (int) Helper.convertDpToPixel(1, TootActivity.this);
+                            int borderSizeTop = (int) Helper.convertDpToPixel(6, TootActivity.this);
+                            v.setPadding(borderSize, borderSizeTop, borderSize, borderSizeTop);
+                            if (attachment.getDescription() == null || attachment.getDescription().trim().equals("null") || attachment.getDescription().trim().equals("")) {
+                                v.setBackgroundColor(ContextCompat.getColor(TootActivity.this, R.color.red_1));
+                            } else
+                                v.setBackgroundColor(ContextCompat.getColor(TootActivity.this, R.color.green_1));
+                        }
                 }
 
             }
@@ -4010,19 +4006,19 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content, EditText toot_cw_content){
-        if( toot_content == null || toot_cw_content == null) {
+    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content, EditText toot_cw_content) {
+        if (toot_content == null || toot_cw_content == null) {
             return -1;
         }
         String content = toot_content.getText().toString();
         String cwContent = toot_cw_content.getText().toString();
         String contentCount = content;
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON ){
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)","$1@$3");
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
             Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
-            while (matcherALink.find()){
+            while (matcherALink.find()) {
                 final String url = matcherALink.group(1);
-                contentCount = contentCount.replace(url,"abcdefghijklmnopkrstuvw");
+                contentCount = contentCount.replace(url, "abcdefghijklmnopkrstuvw");
             }
         }
 
@@ -4031,8 +4027,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
-     int countLength(Editor wysiwyg, EditText toot_cw_content){
-        if( wysiwyg == null || toot_cw_content == null) {
+    int countLength(Editor wysiwyg, EditText toot_cw_content) {
+        if (wysiwyg == null || toot_cw_content == null) {
             return -1;
         }
         String content = wysiwyg.getContentAsHTML();
@@ -4042,7 +4038,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         return cwLength + contentLength;
     }
 
-    private void recordAudio(){
+    private void recordAudio() {
         String filePath = getCacheDir() + "/fedilab_recorded_audio.wav";
         int color = getResources().getColor(R.color.mastodonC1);
         AndroidAudioRecorder.with(this)
@@ -4062,15 +4058,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-    private boolean displayWYSIWYG(){
-        if( social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+    private boolean displayWYSIWYG() {
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             return false;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         return sharedpreferences.getBoolean(Helper.SET_WYSIWYG, false);
     }
 
-    private void renderEditor(){
+    private void renderEditor() {
 
 
         findViewById(R.id.action_h1).setOnClickListener(new View.OnClickListener() {

@@ -27,6 +27,8 @@ import app.fedilab.android.client.Entities.Status;
  */
 public interface OnRetrieveEmojiInterface {
     void onRetrieveEmoji(Status status, boolean fromTranslation);
+
     void onRetrieveEmoji(Notification notification);
+
     void onRetrieveSearchEmoji(List<Emojis> emojis);
 }

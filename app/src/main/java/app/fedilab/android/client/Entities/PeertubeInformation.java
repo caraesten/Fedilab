@@ -30,6 +30,7 @@ public class PeertubeInformation {
 
 
     public static final LinkedHashMap<String, String> langueMapped;
+
     static {
         LinkedHashMap<String, String> aMap = new LinkedHashMap<>();
         aMap.put("ca", "ca-ES");

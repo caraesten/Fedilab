@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,20 +14,20 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="app.fedilab.android.activities.ShowAccountActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
@@ -38,6 +37,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             app:layout_scrollFlags="scroll">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -139,6 +139,7 @@
                     android:gravity="center"
                     app:layout_scrollFlags="scroll|enterAlways"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/header_container"
                         android:layout_marginTop="5dp"
@@ -147,6 +148,7 @@
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false">
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -155,6 +157,7 @@
                             android:gravity="center_horizontal"
                             android:layout_height="wrap_content"
                             tools:ignore="UselessParent">
+
                             <TextView
                                 android:id="@+id/account_dn"
                                 android:textColor="?colorAccent"
@@ -163,14 +166,15 @@
                                 android:maxLines="1"
                                 android:textSize="16sp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
                             <TextView
                                 android:textColor="?attr/color_in_account_header"
                                 android:id="@+id/account_un"
                                 android:maxLines="1"
                                 android:layout_width="wrap_content"
                                 android:textSize="14sp"
-                                android:layout_height="wrap_content"
-                                />
+                                android:layout_height="wrap_content" />
+
                             <TextView
                                 android:layout_marginTop="5dp"
                                 android:visibility="gone"
@@ -180,6 +184,7 @@
                                 android:id="@+id/account_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
                             <TextView
                                 android:layout_marginTop="5dp"
                                 android:visibility="gone"
@@ -189,6 +194,7 @@
                                 android:id="@+id/account_bot"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
                             <TextView
                                 android:id="@+id/temp_mute"
                                 android:visibility="gone"
@@ -196,10 +202,12 @@
                                 android:textColor="@color/red"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:textColor="@color/verified_text"
                                     android:background="@drawable/green_border"
@@ -211,6 +219,7 @@
                                     android:maxLines="1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content" />
+
                                 <TextView
                                     android:id="@+id/account_follow_request"
                                     android:textColor="@color/mastodonC4"
@@ -221,9 +230,9 @@
                                     android:text="@string/request_sent"
                                     android:maxLines="1"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
+
                             <TextView
                                 android:layout_marginTop="5dp"
                                 android:textSize="16sp"
@@ -237,6 +246,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/account_note"
                         android:padding="10dp"
@@ -253,6 +263,7 @@
                         android:gravity="center"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:gravity="center"
                             android:layout_gravity="center"
@@ -263,6 +274,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
                         <TextView
                             android:id="@+id/seperator"
                             android:text="-"
@@ -272,6 +284,7 @@
                             android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
                         <TextView
                             android:gravity="center"
                             android:layout_gravity="center"
@@ -294,6 +307,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/label1"
                                 android:padding="5dp"
@@ -306,6 +320,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="match_parent" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_weight="2"
@@ -313,6 +328,7 @@
                                 android:id="@+id/value1BG"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/value1"
                                     android:layout_gravity="center"
@@ -324,12 +340,14 @@
 
                             </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/field2"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/label2"
                                 android:padding="10dp"
@@ -342,6 +360,7 @@
                                 android:gravity="center"
                                 android:layout_weight="1"
                                 android:layout_height="match_parent" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_weight="2"
@@ -349,6 +368,7 @@
                                 android:id="@+id/value2BG"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/value2"
                                     android:layout_gravity="center"
@@ -360,12 +380,14 @@
 
                             </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/field3"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/label3"
                                 android:padding="10dp"
@@ -378,12 +400,14 @@
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
                                 android:layout_height="match_parent" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_weight="2"
                                 android:layout_height="match_parent"
                                 android:id="@+id/value3BG"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/value3"
                                     android:layout_gravity="center"
@@ -394,12 +418,14 @@
                                     android:layout_height="match_parent" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/field4"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/label4"
                                 android:padding="10dp"
@@ -412,12 +438,14 @@
                                 android:paddingBottom="5dp"
                                 android:layout_weight="1"
                                 android:layout_height="match_parent" />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_weight="2"
                                 android:layout_height="match_parent"
                                 android:id="@+id/value4BG"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/value4"
                                     android:layout_gravity="center"
@@ -442,8 +470,8 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:layout_collapseMode="pin"
-            app:theme="@style/ThemeOverlay.AppCompat.Light"
-            >
+            app:theme="@style/ThemeOverlay.AppCompat.Light">
+
             <LinearLayout
                 android:id="@+id/toolbar_content"
                 android:animationCache="true"
@@ -451,6 +479,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/pp_actionBar"
                     android:layout_width="30dp"
@@ -459,7 +488,8 @@
                     android:gravity="center_vertical"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:contentDescription="@string/profile_picture"  />
+                    android:contentDescription="@string/profile_picture" />
+
                 <TextView
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
@@ -470,8 +500,8 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="?attr/actionBarTextColor"
-                    />
+                    android:textColor="?attr/actionBarTextColor" />
+
                 <ImageButton
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/reload_tabs"
@@ -482,6 +512,7 @@
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:contentDescription="@string/refresh" />
+
                 <ImageButton
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/action_more"
@@ -492,8 +523,9 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:contentDescription="@string/display_toot_truncate"  />
+                    android:contentDescription="@string/display_toot_truncate" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/warning_message"
                 android:visibility="gone"
@@ -503,21 +535,20 @@
                 android:text="@string/disclaimer_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/account_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
-            app:tabGravity="fill"
-            />
+            app:tabGravity="fill" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/account_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

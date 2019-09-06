@@ -15,7 +15,6 @@
 package app.fedilab.android.client.Entities;
 
 
-
 /**
  * Created by Thomas on 23/01/2019.
  */

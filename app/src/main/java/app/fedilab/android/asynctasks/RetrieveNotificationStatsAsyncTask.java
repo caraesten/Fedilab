@@ -38,7 +38,7 @@ public class RetrieveNotificationStatsAsyncTask extends AsyncTask<Void, Void, Vo
     private WeakReference<Context> contextReference;
     private StatisticsNotification statistics;
 
-    public RetrieveNotificationStatsAsyncTask(Context context, OnRetrieveNotificationStatsInterface onRetrieveNotificationStatsInterface){
+    public RetrieveNotificationStatsAsyncTask(Context context, OnRetrieveNotificationStatsInterface onRetrieveNotificationStatsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveNotificationStatsInterface;
     }

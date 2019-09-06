@@ -23,7 +23,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -82,7 +84,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
     private RelativeLayout textviewNoAction;
     private DisplayScheduledTootsFragment.typeOfSchedule type;
 
-    public ScheduledTootsListAdapter(Context context, DisplayScheduledTootsFragment.typeOfSchedule type, List<StoredStatus> storedStatuses, RelativeLayout textviewNoAction){
+    public ScheduledTootsListAdapter(Context context, DisplayScheduledTootsFragment.typeOfSchedule type, List<StoredStatus> storedStatuses, RelativeLayout textviewNoAction) {
         this.context = context;
         this.storedStatuses = storedStatuses;
         layoutInflater = LayoutInflater.from(this.context);
@@ -90,7 +92,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
         this.textviewNoAction = textviewNoAction;
         this.type = type;
     }
-
 
 
     @Override
@@ -118,7 +119,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_scheduled_toot, parent, false);
             holder = new ViewHolder();
-            holder.scheduled_toot_pp= convertView.findViewById(R.id.scheduled_toot_pp);
+            holder.scheduled_toot_pp = convertView.findViewById(R.id.scheduled_toot_pp);
             holder.scheduled_toot_title = convertView.findViewById(R.id.scheduled_toot_title);
             holder.scheduled_toot_date_creation = convertView.findViewById(R.id.scheduled_toot_date_creation);
             holder.scheduled_toot_media_count = convertView.findViewById(R.id.scheduled_toot_media_count);
@@ -135,24 +136,24 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_BLACK) {
-            Helper.changeDrawableColor(context, R.drawable.ic_cancel,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_public,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_open,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.action_black);
-            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.action_black);
-        }else if( theme == Helper.THEME_DARK){
-            Helper.changeDrawableColor(context, R.drawable.ic_cancel,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_public,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_open,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.action_dark);
-            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.action_dark);
-        }else {
-            Helper.changeDrawableColor(context, R.drawable.ic_cancel,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_public,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_open,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.action_light);
-            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.action_light);
+        if (theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_cancel, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_public, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_open, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline, R.color.action_black);
+            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline, R.color.action_black);
+        } else if (theme == Helper.THEME_DARK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_cancel, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_public, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_open, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline, R.color.action_dark);
+            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline, R.color.action_dark);
+        } else {
+            Helper.changeDrawableColor(context, R.drawable.ic_cancel, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_public, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_open, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_lock_outline, R.color.action_light);
+            Helper.changeDrawableColor(context, R.drawable.ic_mail_outline, R.color.action_light);
         }
 
         switch (status.getVisibility()) {
@@ -173,9 +174,9 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         //Delete scheduled toot
@@ -185,7 +186,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
 
                 String message;
-                if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
+                if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
                     message = status.getContent() + '\n' + Helper.dateToString(storedStatus.getCreation_date());
                 else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -201,7 +202,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+                                if (type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
                                     if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
                                         new StatusStoredDAO(context, db).remove(storedStatus.getId());
                                     else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST)
@@ -215,7 +216,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                                         ApplicationJob.cancelJob(storedStatus.getJobId());
                                     } catch (Exception ignored) {
                                     }
-                                }else{
+                                } else {
                                     new PostActionAsyncTask(context, API.StatusAction.DELETESCHEDULED, storedStatus, ScheduledTootsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     storedStatuses.remove(storedStatus);
                                     scheduledTootsListAdapter.notifyDataSetChanged();
@@ -236,7 +237,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
             }
         });
 
-        if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+        if (type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
             if (storedStatus.getJobId() > 0) {
                 holder.scheduled_toot_failed.setVisibility(View.GONE);
             } else {
@@ -246,35 +247,35 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
         holder.scheduled_toot_media_count.setText(context.getString(R.string.media_count, status.getMedia_attachments().size()));
         holder.scheduled_toot_date_creation.setText(Helper.dateToString(storedStatus.getCreation_date()));
         holder.scheduled_toot_date.setText(Helper.dateToString(storedStatus.getScheduled_date()));
-        if( type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST){
+        if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST) {
             holder.scheduled_toot_media_count.setVisibility(View.GONE);
             holder.scheduled_toot_date_creation.setVisibility(View.GONE);
             holder.scheduled_toot_privacy.setVisibility(View.GONE);
             Helper.loadGiF(context, storedStatus.getStatus().getAccount().getAvatar(), holder.scheduled_toot_pp);
-        }else {
+        } else {
             holder.scheduled_toot_pp.setVisibility(View.GONE);
         }
         holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.datetime_picker,   new LinearLayout(context), false);
+                LayoutInflater inflater = ((MainActivity) context).getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.datetime_picker, new LinearLayout(context), false);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
-                if( theme == Helper.THEME_BLACK){
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous,R.color.action_black);
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next,R.color.action_black);
-                    Helper.changeDrawableColor(context, R.drawable.ic_check,R.color.action_black);
-                }else if( theme == Helper.THEME_DARK){
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous,R.color.action_dark);
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next,R.color.action_dark);
-                    Helper.changeDrawableColor(context, R.drawable.ic_check,R.color.action_dark);
-                }else {
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous,R.color.action_light);
-                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next,R.color.action_light);
-                    Helper.changeDrawableColor(context, R.drawable.ic_check,R.color.action_light);
+                if (theme == Helper.THEME_BLACK) {
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous, R.color.action_black);
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next, R.color.action_black);
+                    Helper.changeDrawableColor(context, R.drawable.ic_check, R.color.action_black);
+                } else if (theme == Helper.THEME_DARK) {
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous, R.color.action_dark);
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next, R.color.action_dark);
+                    Helper.changeDrawableColor(context, R.drawable.ic_check, R.color.action_dark);
+                } else {
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_previous, R.color.action_light);
+                    Helper.changeDrawableColor(context, R.drawable.ic_skip_next, R.color.action_light);
+                    Helper.changeDrawableColor(context, R.drawable.ic_check, R.color.action_light);
                 }
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
@@ -322,7 +323,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             hour = timePicker.getHour();
                             minute = timePicker.getMinute();
-                        }else {
+                        } else {
                             //noinspection deprecation
                             hour = timePicker.getCurrentHour();
                             //noinspection deprecation
@@ -334,11 +335,11 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                                 hour,
                                 minute);
                         long time = calendar.getTimeInMillis();
-                        if( (time - new Date().getTime()) < 60000 ){
+                        if ((time - new Date().getTime()) < 60000) {
                             Toasty.error(context, context.getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
-                        }else {
+                        } else {
                             //Schedules the toot to the new date
-                            if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+                            if (type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
                                 try {
                                     //Removes the job
                                     ApplicationJob.cancelJob(storedStatus.getJobId());
@@ -362,7 +363,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                                         Toasty.success(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
                                 } catch (Exception ignored) {
                                 }
-                            }else{
+                            } else {
                                 int offset = TimeZone.getDefault().getRawOffset();
                                 calendar.add(Calendar.MILLISECOND, -offset);
                                 final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
@@ -377,9 +378,9 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                 alertDialog.show();
             }
         });
-        if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
+        if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
             holder.scheduled_toot_title.setText(status.getContent());
-        else if( type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST){
+        else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST) {
             Spanned message;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY);
@@ -390,8 +391,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
         }
 
 
-
-        if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
+        if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
             holder.scheduled_toot_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -403,7 +403,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                     context.startActivity(intentToot);
                 }
             });
-        else if( type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST)
+        else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST)
             holder.scheduled_toot_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,13 +414,13 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                     context.startActivity(intentToot);
                 }
             });
-        else if( type == DisplayScheduledTootsFragment.typeOfSchedule.SERVER)
+        else if (type == DisplayScheduledTootsFragment.typeOfSchedule.SERVER)
             holder.scheduled_toot_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intentToot = new Intent(context, TootActivity.class);
                     Bundle b = new Bundle();
-                    if( storedStatus.getStatus().getSpoiler_text().equals("null"))
+                    if (storedStatus.getStatus().getSpoiler_text().equals("null"))
                         storedStatus.getStatus().setSpoiler_text("");
                     b.putParcelable("storedStatus", storedStatus);
                     intentToot.putExtras(b);

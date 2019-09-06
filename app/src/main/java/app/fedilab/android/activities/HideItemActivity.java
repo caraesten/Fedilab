@@ -27,8 +27,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import app.fedilab.android.R;
 
 import app.fedilab.android.client.Entities.MainMenuItem;
@@ -50,7 +52,7 @@ public class HideItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -64,10 +66,10 @@ public class HideItemActivity extends BaseActivity {
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -82,7 +84,7 @@ public class HideItemActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.hide_menu_items);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, HideItemActivity.this);
             }
@@ -91,7 +93,7 @@ public class HideItemActivity extends BaseActivity {
 
         SQLiteDatabase db = Sqlite.getInstance(HideItemActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         MainMenuItem mainMenu = new MainMenuDAO(getApplicationContext(), db).getMainMenu();
-        if( mainMenu == null){
+        if (mainMenu == null) {
             mainMenu = new MainMenuItem();
         }
         CheckBox nav_news = findViewById(R.id.nav_news);
@@ -139,9 +141,9 @@ public class HideItemActivity extends BaseActivity {
             mainMenuItem.setNav_howto(nav_how_to.isChecked());
             MainMenuItem mainMenuItem1 = new MainMenuDAO(getApplicationContext(), db).getMainMenu();
 
-            if( mainMenuItem1 != null){
+            if (mainMenuItem1 != null) {
                 new MainMenuDAO(getApplicationContext(), db).updateMenu(mainMenuItem);
-            }else{
+            } else {
                 new MainMenuDAO(getApplicationContext(), db).insertMenu(mainMenuItem);
             }
             Intent mainActivity = new Intent(HideItemActivity.this, MainActivity.class);

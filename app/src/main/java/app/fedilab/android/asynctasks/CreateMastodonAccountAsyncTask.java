@@ -18,6 +18,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
@@ -38,7 +39,7 @@ public class CreateMastodonAccountAsyncTask extends AsyncTask<Void, Void, Void> 
     private WeakReference<Context> contextReference;
     private String instance;
 
-    public CreateMastodonAccountAsyncTask(Context context, AccountCreation accountCreation, String instance, OnPostStatusActionInterface onPostStatusActionInterface){
+    public CreateMastodonAccountAsyncTask(Context context, AccountCreation accountCreation, String instance, OnPostStatusActionInterface onPostStatusActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.accountCreation = accountCreation;

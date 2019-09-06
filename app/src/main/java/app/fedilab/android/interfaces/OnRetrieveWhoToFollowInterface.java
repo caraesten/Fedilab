@@ -25,5 +25,6 @@ import app.fedilab.android.client.Entities.TrunkAccount;
  */
 public interface OnRetrieveWhoToFollowInterface {
     void onRetrieveWhoToFollowList(List<String> list);
+
     void onRetrieveWhoToFollowAccount(List<TrunkAccount> trunkAccounts);
 }

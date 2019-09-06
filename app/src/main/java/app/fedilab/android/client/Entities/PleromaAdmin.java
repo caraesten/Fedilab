@@ -30,7 +30,8 @@ public class PleromaAdmin implements Parcelable {
     private String password;
     private String tags;
 
-    public PleromaAdmin(){}
+    public PleromaAdmin() {
+    }
 
 
     public String getNickname() {

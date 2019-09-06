@@ -42,18 +42,21 @@ public class DomainBlockDAO {
 
     /**
      * Insert a domain in database
+     *
      * @param domain String
      */
     private void insert(String domain) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_DOMAIN, domain);
-        try{
+        try {
             db.insert(Sqlite.TABLE_TRACKING_BLOCK, null, values);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     /**
      * Insert domains in database
+     *
      * @param domains List<String>
      */
     public void set(List<String> domains) {
@@ -63,26 +66,28 @@ public class DomainBlockDAO {
 
     }
 
-    public int getTotalCount(){
-        Cursor mCount= db.rawQuery("SELECT Count(*) FROM " + Sqlite.TABLE_TRACKING_BLOCK, null);
+    public int getTotalCount() {
+        Cursor mCount = db.rawQuery("SELECT Count(*) FROM " + Sqlite.TABLE_TRACKING_BLOCK, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();
         return count;
     }
+
     /***
      * Remove all domains
      */
-    private void removeAll(){
+    private void removeAll() {
         db.delete(Sqlite.TABLE_TRACKING_BLOCK, null, null);
     }
 
 
     /**
      * Returns all domains in db
+     *
      * @return string domain List<String>
      */
-    public List<String> getAll(){
+    public List<String> getAll() {
         try {
             Cursor c = db.query(Sqlite.TABLE_TRACKING_BLOCK, null, null, null, null, null, null, null);
             return cursorToDomain(c);
@@ -92,20 +97,19 @@ public class DomainBlockDAO {
     }
 
 
-
     /***
      * Method to hydrate domain from database
      * @param c Cursor
      * @return List<String>
      */
-    private List<String> cursorToDomain(Cursor c){
+    private List<String> cursorToDomain(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
             return null;
         }
         List<String> domains = new ArrayList<>();
-        while (c.moveToNext() ) {
+        while (c.moveToNext()) {
             domains.add(c.getString(c.getColumnIndex(Sqlite.COL_DOMAIN)));
         }
         //Close the cursor

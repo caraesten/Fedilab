@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -19,14 +18,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
 
         <!-- About OpenCollective -->
@@ -46,7 +44,8 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/about_opencollective"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
+
             <Button
                 android:id="@+id/about_opencollective"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
@@ -76,12 +75,13 @@
             android:text="Backers"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
+
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_backers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
 
 
         <!-- About UX/UI designer -->
@@ -103,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"/>
+            android:divider="@null" />
 
     </LinearLayout>
 </ScrollView>

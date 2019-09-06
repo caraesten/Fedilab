@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -24,6 +23,7 @@
     app:isSwipeFromEdge="true"
     app:maskAlpha="125"
     app:swipeBackFactor="0.5">
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,8 +37,8 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            >
+            android:gravity="center">
+
             <ProgressBar
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:indeterminate="false"
@@ -46,8 +46,8 @@
                 android:layout_width="match_parent"
                 android:max="100"
                 android:progress="0"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/loader_progress"
                 android:layout_width="match_parent"
@@ -57,16 +57,18 @@
                 android:layout_gravity="center"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+
         <FrameLayout
             android:layout_centerInParent="true"
             android:id="@+id/media_webview_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <WebView
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:id="@+id/webview_video"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </FrameLayout>
 
         <FrameLayout
@@ -80,8 +82,8 @@
                 android:id="@+id/media_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                />
+                android:adjustViewBounds="true" />
+
             <TextView
                 android:visibility="gone"
                 android:gravity="center"
@@ -92,8 +94,7 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:padding="12dp"
                 android:background="#AA000000"
-                android:textColor="#ffffffff"
-                />
+                android:textColor="#ffffffff" />
         </FrameLayout>
 
         <RelativeLayout
@@ -120,7 +121,7 @@
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:fontFamily="sans-serif-light"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/timer"
@@ -129,7 +130,7 @@
                     android:textSize="60sp"
                     android:textColor="@android:color/white"
                     android:fontFamily="sans-serif-thin"
-                    android:text="00:00:00"/>
+                    android:text="00:00:00" />
 
             </LinearLayout>
 
@@ -149,7 +150,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/aar_ic_play"
                     android:onClick="togglePlaying"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
+                    style="@style/Widget.AppCompat.Button.Borderless" />
             </RelativeLayout>
 
         </RelativeLayout>
@@ -159,8 +160,7 @@
             android:id="@+id/media_video"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
+            android:layout_height="match_parent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -168,6 +168,7 @@
             android:background="@color/transparent_grey"
             android:id="@+id/action_bar_container"
             android:paddingTop="16dp">
+
             <ImageButton
                 android:id="@+id/media_close"
                 android:layout_width="35dp"
@@ -184,7 +185,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_close"
                 app:layout_anchorGravity="top|left" />
-
 
 
             <LinearLayout
@@ -207,8 +207,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_save_white"
-                    android:contentDescription="@string/download"
-                    />
+                    android:contentDescription="@string/download" />
 
                 <ImageButton
                     android:id="@+id/media_share"
@@ -224,8 +223,7 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_share_media"
                     android:scaleType="fitXY"
-                    android:contentDescription="@string/share"
-                    />
+                    android:contentDescription="@string/share" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -279,6 +277,6 @@
             android:layout_alignBottom="@+id/media_picture_container"
             android:layout_marginBottom="40dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp" />
     </RelativeLayout>
 </com.gw.swipeback.SwipeBackLayout>

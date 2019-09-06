@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
@@ -33,7 +34,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
+
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.fragments.DisplayAdminAccountsFragment;
@@ -49,7 +52,7 @@ import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
  * Admin activity
  */
 
-public class AdminActivity extends BaseActivity  {
+public class AdminActivity extends BaseActivity {
 
 
     private boolean unresolved;
@@ -65,10 +68,10 @@ public class AdminActivity extends BaseActivity  {
 
         setTheme(R.style.AppAdminTheme);
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -82,7 +85,7 @@ public class AdminActivity extends BaseActivity  {
                     finish();
                 }
             });
-            toolbar_title.setText(String.format(getString(R.string.administration)+ " %s", Helper.getLiveInstance(getApplicationContext())));
+            toolbar_title.setText(String.format(getString(R.string.administration) + " %s", Helper.getLiveInstance(getApplicationContext())));
         }
         setContentView(R.layout.activity_admin);
         unresolved = local = active = true;
@@ -113,7 +116,7 @@ public class AdminActivity extends BaseActivity  {
                         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
                         fragTransaction.detach(displayAdminReportsFragment);
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean("unresolved",unresolved);
+                        bundle.putBoolean("unresolved", unresolved);
                         displayAdminReportsFragment.setArguments(bundle);
                         fragTransaction.attach(displayAdminReportsFragment);
                         fragTransaction.commit();
@@ -161,7 +164,7 @@ public class AdminActivity extends BaseActivity  {
                 final MenuItem itemDisabled = menu.findItem(R.id.action_disabled);
                 final MenuItem itemSilenced = menu.findItem(R.id.action_silenced);
                 final MenuItem itemSuspended = menu.findItem(R.id.action_suspended);
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     itemSilenced.setVisible(false);
                     itemPending.setVisible(false);
                     itemSuspended.setVisible(false);
@@ -181,13 +184,13 @@ public class AdminActivity extends BaseActivity  {
                         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
                         fragTransaction.detach(displayAdminAccountsFragment);
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean("local",local);
-                        bundle.putBoolean("remote",remote);
-                        bundle.putBoolean("active",active);
-                        bundle.putBoolean("pending",pending);
-                        bundle.putBoolean("disabled",disabled);
-                        bundle.putBoolean("silenced",silenced);
-                        bundle.putBoolean("suspended",suspended);
+                        bundle.putBoolean("local", local);
+                        bundle.putBoolean("remote", remote);
+                        bundle.putBoolean("active", active);
+                        bundle.putBoolean("pending", pending);
+                        bundle.putBoolean("disabled", disabled);
+                        bundle.putBoolean("silenced", silenced);
+                        bundle.putBoolean("suspended", suspended);
                         displayAdminAccountsFragment.setArguments(bundle);
                         fragTransaction.attach(displayAdminAccountsFragment);
                         fragTransaction.commit();
@@ -210,21 +213,21 @@ public class AdminActivity extends BaseActivity  {
                                 return false;
                             }
                         });
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.action_local:
-                                if( !local) {
+                                if (!local) {
                                     remote = false;
                                     local = true;
                                 }
                                 break;
                             case R.id.action_remote:
-                                if( !remote) {
+                                if (!remote) {
                                     remote = true;
                                     local = false;
                                 }
                                 break;
                             case R.id.action_active:
-                                if( !active) {
+                                if (!active) {
                                     active = true;
                                     pending = false;
                                     disabled = false;
@@ -233,7 +236,7 @@ public class AdminActivity extends BaseActivity  {
                                 }
                                 break;
                             case R.id.action_pending:
-                                if( !pending) {
+                                if (!pending) {
                                     pending = true;
                                     active = false;
                                     disabled = false;
@@ -242,7 +245,7 @@ public class AdminActivity extends BaseActivity  {
                                 }
                                 break;
                             case R.id.action_disabled:
-                                if( !disabled) {
+                                if (!disabled) {
                                     disabled = true;
                                     active = false;
                                     pending = false;
@@ -251,7 +254,7 @@ public class AdminActivity extends BaseActivity  {
                                 }
                                 break;
                             case R.id.action_silenced:
-                                if( !silenced) {
+                                if (!silenced) {
                                     silenced = true;
                                     active = false;
                                     pending = false;
@@ -260,7 +263,7 @@ public class AdminActivity extends BaseActivity  {
                                 }
                                 break;
                             case R.id.action_suspended:
-                                if( !suspended) {
+                                if (!suspended) {
                                     suspended = true;
                                     active = false;
                                     pending = false;
@@ -286,7 +289,6 @@ public class AdminActivity extends BaseActivity  {
         });
 
 
-
         PagerAdapter mPagerAdapter = new AdminPagerAdapter(getSupportFragmentManager());
         admin_viewpager.setAdapter(mPagerAdapter);
         admin_viewpager.setOffscreenPageLimit(2);
@@ -305,17 +307,17 @@ public class AdminActivity extends BaseActivity  {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 Fragment fragment = null;
-                if( admin_viewpager.getAdapter() != null)
+                if (admin_viewpager.getAdapter() != null)
                     fragment = (Fragment) admin_viewpager.getAdapter().instantiateItem(admin_viewpager, tab.getPosition());
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
-                        if( fragment != null) {
+                        if (fragment != null) {
                             displayAdminReportsFragment = ((DisplayAdminReportsFragment) fragment);
                             displayAdminReportsFragment.scrollToTop();
                         }
                         break;
                     case 1:
-                        if( fragment != null) {
+                        if (fragment != null) {
                             displayAdminAccountsFragment = ((DisplayAdminAccountsFragment) fragment);
                             displayAdminAccountsFragment.scrollToTop();
                         }
@@ -337,23 +339,23 @@ public class AdminActivity extends BaseActivity  {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            switch (position){
+            switch (position) {
                 case 0:
                     displayAdminReportsFragment = new DisplayAdminReportsFragment();
                     bundle = new Bundle();
-                    bundle.putBoolean("unresolved",unresolved);
+                    bundle.putBoolean("unresolved", unresolved);
                     displayAdminReportsFragment.setArguments(bundle);
                     return displayAdminReportsFragment;
                 case 1:
                     displayAdminAccountsFragment = new DisplayAdminAccountsFragment();
                     bundle = new Bundle();
-                    bundle.putBoolean("local",local);
-                    bundle.putBoolean("remote",remote);
-                    bundle.putBoolean("active",active);
-                    bundle.putBoolean("pending",pending);
-                    bundle.putBoolean("disabled",disabled);
-                    bundle.putBoolean("silenced",silenced);
-                    bundle.putBoolean("suspended",suspended);
+                    bundle.putBoolean("local", local);
+                    bundle.putBoolean("remote", remote);
+                    bundle.putBoolean("active", active);
+                    bundle.putBoolean("pending", pending);
+                    bundle.putBoolean("disabled", disabled);
+                    bundle.putBoolean("silenced", silenced);
+                    bundle.putBoolean("suspended", suspended);
                     displayAdminAccountsFragment.setArguments(bundle);
                     return displayAdminAccountsFragment;
             }

@@ -20,7 +20,7 @@ public class Suggestion {
     private String imageUrl;
     private suggestionType type;
 
-    public enum suggestionType{
+    public enum suggestionType {
         TAG,
         ACCOUNT,
         EMOJI

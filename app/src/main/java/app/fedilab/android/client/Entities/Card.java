@@ -41,7 +41,8 @@ public class Card implements Parcelable {
     private int height;
     private int width;
 
-    public Card(){}
+    public Card() {
+    }
 
     public static final Creator<Card> CREATOR = new Creator<Card>() {
         @Override
@@ -87,7 +88,6 @@ public class Card implements Parcelable {
         dest.writeInt(height);
         dest.writeInt(width);
     }
-
 
 
     public String getUrl() {

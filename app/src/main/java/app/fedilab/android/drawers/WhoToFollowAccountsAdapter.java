@@ -16,13 +16,16 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;
@@ -40,7 +43,7 @@ public class WhoToFollowAccountsAdapter extends BaseAdapter {
     private List<TrunkAccount> lists;
     private Context context;
 
-    public WhoToFollowAccountsAdapter(List<TrunkAccount> lists){
+    public WhoToFollowAccountsAdapter(List<TrunkAccount> lists) {
         this.lists = lists;
     }
 
@@ -93,7 +96,7 @@ public class WhoToFollowAccountsAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Account account = new Account();
                 String[] val = trunkAccount.getAcct().split("@");
-                if( val.length > 1){
+                if (val.length > 1) {
                     account.setAcct(val[0]);
                     account.setInstance(val[1]);
                     CrossActions.doCrossProfile(context, account);

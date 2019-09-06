@@ -30,6 +30,7 @@
         android:paddingTop="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
         android:paddingBottom="@dimen/fab_margin">
+
         <TextView
             android:visibility="gone"
             android:id="@+id/warning_message"
@@ -41,6 +42,7 @@
             android:textColor="@color/red_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/toot_cw_content"
             android:layout_width="match_parent"
@@ -75,14 +77,17 @@
                 android:minLines="4" />
         </ScrollView>
 
-        <HorizontalScrollView android:id="@+id/toolbar_scrollview"
+        <HorizontalScrollView
+            android:id="@+id/toolbar_scrollview"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e6e6e6"
             android:scrollbars="none">
+
             <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
         </HorizontalScrollView>
+
         <ScrollView
             android:id="@+id/wysiwyg_container"
             android:visibility="gone"
@@ -96,6 +101,7 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:fillViewport="true">
+
             <com.github.irshulx.Editor
                 android:layout_width="match_parent"
                 android:id="@+id/editor"
@@ -105,9 +111,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_height="wrap_content"
-                android:paddingBottom="100dp"
-                />
+                android:paddingBottom="100dp" />
         </ScrollView>
+
         <LinearLayout
             android:id="@+id/bottom_bar_tooting"
             android:layout_width="match_parent"
@@ -188,7 +194,7 @@
                     android:contentDescription="@string/poll"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_view_list_poll"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/toot_visibility"

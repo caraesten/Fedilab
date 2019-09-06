@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2018 Thomas Schneider
 
     This file is a part of Fedilab
@@ -22,6 +21,7 @@
     android:divider="?android:dividerHorizontal"
     android:padding="1dp"
     android:orientation="vertical">
+
     <ImageView
         android:id="@+id/media"
         android:scaleType="centerCrop"

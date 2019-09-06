@@ -27,7 +27,7 @@ public interface OnUndoListener {
      * Called when an item is removed
      *
      * @param timelines The timeline ManageTimelines
-     * @param position The position of the item in tablayout
+     * @param position  The position of the item in tablayout
      */
     void onUndo(ManageTimelines timelines, int position);
 

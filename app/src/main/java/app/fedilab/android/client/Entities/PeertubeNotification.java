@@ -15,14 +15,13 @@
 package app.fedilab.android.client.Entities;
 
 
-
 import java.util.Date;
 
 /**
  * Created by Thomas on 23/01/2019.
  */
 
-public class PeertubeNotification  {
+public class PeertubeNotification {
 
     private String id;
     private boolean read;
@@ -32,7 +31,10 @@ public class PeertubeNotification  {
     private PeertubeVideoNotification peertubeVideoNotification;
     private PeertubeActorFollow peertubeActorFollow;
 
-    public PeertubeNotification(){};
+    public PeertubeNotification() {
+    }
+
+    ;
 
     public String getId() {
         return id;

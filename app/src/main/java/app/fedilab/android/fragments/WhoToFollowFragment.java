@@ -18,8 +18,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,6 @@ import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveWhoToFollowInterface;
-
 
 
 /**
@@ -64,10 +65,10 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, -15);
         Date dateAllowed = cal.getTime();
-        if (lastDateListRefresh == null || Helper.stringToDate(context, lastDateListRefresh).before(dateAllowed)){
+        if (lastDateListRefresh == null || Helper.stringToDate(context, lastDateListRefresh).before(dateAllowed)) {
             mainLoader.setVisibility(View.VISIBLE);
             new WhoToFollowAsyncTask(context, null, WhoToFollowFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else {
+        } else {
             String lastList = sharedpreferences.getString(Helper.LAST_LIST, null);
             List<String> list = Helper.restoreArrayFromString(lastList);
             displayResults(list);
@@ -77,8 +78,7 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
     }
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -89,21 +89,21 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
     }
 
 
-    private void displayResults(List<String> list){
+    private void displayResults(List<String> list) {
 
         mainLoader.setVisibility(View.GONE);
-        if( list != null){
+        if (list != null) {
             ListView lv_list = rootView.findViewById(R.id.lv_list);
             WhoToFollowAdapter whoToFollowAdapter = new WhoToFollowAdapter(list);
             lv_list.setAdapter(whoToFollowAdapter);
-        }else{
-            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onRetrieveWhoToFollowList(List<String> list) {
-        if( list != null){
+        if (list != null) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_DATE_LIST_REFRESH, Helper.dateToString(new Date()));

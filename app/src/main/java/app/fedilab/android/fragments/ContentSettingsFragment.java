@@ -114,7 +114,7 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFA
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
-public class ContentSettingsFragment  extends Fragment implements ScreenShotable {
+public class ContentSettingsFragment extends Fragment implements ScreenShotable {
 
 
     private View containerView;
@@ -123,7 +123,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
     private type type;
     private Context context;
 
-    public enum type{
+    public enum type {
         CLOSE,
         TIMELINES,
         ADMIN,
@@ -165,37 +165,37 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         if (resultCode != RESULT_OK) return;
 
 
-        if(requestCode == ACTIVITY_CHOOSE_FILE) {
+        if (requestCode == ACTIVITY_CHOOSE_FILE) {
             Uri treeUri = data.getData();
             Uri docUri = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 docUri = DocumentsContract.buildDocumentUriUsingTree(treeUri,
                         DocumentsContract.getTreeDocumentId(treeUri));
             }
-            try{
+            try {
                 String path = getPath(context, docUri);
-                if( path == null )
+                if (path == null)
                     path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.SET_FOLDER_RECORD, path);
                 editor.apply();
                 set_folder.setText(path);
-            }catch (Exception e){
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
 
         }
-        if (requestCode == ACTIVITY_CHOOSE_SOUND){
-            try{
+        if (requestCode == ACTIVITY_CHOOSE_SOUND) {
+            try {
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
+                editor.putString(Helper.SET_NOTIF_SOUND, uri.toString());
                 editor.apply();
 
-            }catch (Exception e){
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -216,9 +216,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            type = (type)bundle.getSerializable("type");
+            type = (type) bundle.getSerializable("type");
         }
-
 
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -226,13 +225,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
 
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
                 break;
@@ -253,22 +252,22 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         LinearLayout settings_battery = rootView.findViewById(R.id.settings_battery);
 
         String title = "";
-        if(type == null || type.equals(TIMELINES)){
+        if (type == null || type.equals(TIMELINES)) {
             settings_timeline.setVisibility(View.VISIBLE);
             title = context.getString(R.string.timelines);
-        }else if( type == NOTIFICATIONS){
+        } else if (type == NOTIFICATIONS) {
             settings_notifications.setVisibility(View.VISIBLE);
             title = context.getString(R.string.notifications);
-        }else if( type == ADMIN){
+        } else if (type == ADMIN) {
             settings_admin.setVisibility(View.VISIBLE);
             title = context.getString(R.string.administration);
-        }else if(type == INTERFACE){
+        } else if (type == INTERFACE) {
             settings_interface.setVisibility(View.VISIBLE);
             title = context.getString(R.string.u_interface);
-        }else if(type == BATTERY){
+        } else if (type == BATTERY) {
             title = context.getString(R.string.battery);
             settings_battery.setVisibility(View.VISIBLE);
-        }else if(type == COMPOSE){
+        } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
             title = context.getString(R.string.compose);
         }
@@ -312,14 +311,14 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
 
-        boolean auto_backup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES+userId+instance, false);
+        boolean auto_backup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + userId + instance, false);
         final CheckBox set_auto_backup = rootView.findViewById(R.id.set_auto_backup);
         set_auto_backup.setChecked(auto_backup);
         set_auto_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_AUTO_BACKUP_STATUSES+userId+instance, set_auto_backup.isChecked());
+                editor.putBoolean(Helper.SET_AUTO_BACKUP_STATUSES + userId + instance, set_auto_backup.isChecked());
                 editor.apply();
             }
         });
@@ -337,14 +336,14 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-        boolean auto_backup_notifications = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS+userId+instance, false);
+        boolean auto_backup_notifications = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS + userId + instance, false);
         final CheckBox set_auto_backup_notifications = rootView.findViewById(R.id.set_auto_backup_notifications);
         set_auto_backup_notifications.setChecked(auto_backup_notifications);
         set_auto_backup_notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS+userId+instance, set_auto_backup_notifications.isChecked());
+                editor.putBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS + userId + instance, set_auto_backup_notifications.isChecked());
                 editor.apply();
             }
         });
@@ -354,12 +353,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
 
         TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             Set<String> featuredTagsSet = sharedpreferences.getStringSet(Helper.SET_FEATURED_TAGS, null);
 
 
             List<String> tags = new ArrayList<>();
-            if( featuredTagsSet != null){
+            if (featuredTagsSet != null) {
                 tags = new ArrayList<>(featuredTagsSet);
             }
             String[] tagsString = tags.toArray(new String[tags.size()]);
@@ -379,11 +378,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
                 }
             });
-        }else{
+        } else {
             set_featured_tags.setVisibility(View.GONE);
         }
-
-
 
 
         Button update_tracking_domains = rootView.findViewById(R.id.update_tracking_domains);
@@ -394,7 +391,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         //Manage download of attachments
         RadioGroup radioGroup = rootView.findViewById(R.id.set_attachment_group);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        switch (attachmentAction){
+        switch (attachmentAction) {
             case Helper.ATTACHMENT_ALWAYS:
                 radioGroup.check(R.id.set_attachment_always);
                 break;
@@ -408,7 +405,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId) {
+                switch (checkedId) {
                     case R.id.set_attachment_always:
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -429,7 +426,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
-
         int videoMode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
 
 
@@ -441,13 +437,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
             videoMode = Helper.VIDEO_MODE_DIRECT;
         int positionVideoMode = 0;
-        if( videoMode == Helper.VIDEO_MODE_DIRECT)
+        if (videoMode == Helper.VIDEO_MODE_DIRECT)
             positionVideoMode = 1;
         video_mode_spinner.setSelection(positionVideoMode);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count5 > 0 ) {
+                if (count5 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         /*case 0:
@@ -466,6 +462,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
                 count5++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -513,9 +510,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.putBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, set_display_admin_menu.isChecked());
                 editor.apply();
                 Bundle b = new Bundle();
-                if( set_display_admin_menu.isChecked()){
+                if (set_display_admin_menu.isChecked()) {
                     b.putString("menu", "show_admin");
-                }else{
+                } else {
                     b.putString("menu", "hide_admin");
                 }
                 Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
@@ -595,12 +592,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 int translatore = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
                 String store = null;
-                if( translatore == Helper.TRANS_YANDEX)
+                if (translatore == Helper.TRANS_YANDEX)
                     store = Helper.SET_YANDEX_API_KEY;
-                else if( translatore == Helper.TRANS_DEEPL)
+                else if (translatore == Helper.TRANS_DEEPL)
                     store = Helper.SET_DEEPL_API_KEY;
-                if( store != null)
-                    if( s != null && s.length() > 0)
+                if (store != null)
+                    if (s != null && s.length() > 0)
                         editor.putString(store, s.toString().trim());
                     else
                         editor.putString(store, null);
@@ -681,8 +678,14 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         max_times_bar.setProgress(upload_img_max_retry_times);
         max_times_value.setText(String.valueOf(upload_img_max_retry_times));
         max_times_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 max_times_value.setText(String.valueOf(progress));
@@ -707,7 +710,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_remember_position_text.setOnClickListener(v -> set_remember_position.performClick());
 
 
-
         boolean hide_delete_notification_on_tab = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
         final CheckBox set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
         set_hide_delete_notification_on_tab.setChecked(hide_delete_notification_on_tab);
@@ -718,10 +720,10 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, set_hide_delete_notification_on_tab.isChecked());
                 editor.apply();
-                if( getActivity() != null)
+                if (getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
-                if(getActivity() != null)
+                if (getActivity() != null)
                     getActivity().finish();
                 startActivity(intent);
             }
@@ -744,7 +746,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
 
 
-
         TextView set_invidious_host = rootView.findViewById(R.id.set_invidious_host);
 
 
@@ -758,21 +759,21 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_INVIDIOUS, set_invidious.isChecked());
                 editor.apply();
-                if( set_invidious.isChecked() ){
+                if (set_invidious.isChecked()) {
                     set_invidious_host.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     set_invidious_host.setVisibility(View.GONE);
                 }
             }
         });
-        if( invidious ){
+        if (invidious) {
             set_invidious_host.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             set_invidious_host.setVisibility(View.GONE);
         }
 
         String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, null);
-        if( invidiousHost != null){
+        if (invidiousHost != null) {
             set_invidious_host.setText(invidiousHost);
         }
         set_invidious_host.addTextChangedListener(new TextWatcher() {
@@ -780,10 +781,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -819,9 +822,9 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.putBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, set_display_timeline_in_list.isChecked());
                 editor.apply();
                 Bundle b = new Bundle();
-                if( set_display_timeline_in_list.isChecked()){
+                if (set_display_timeline_in_list.isChecked()) {
                     b.putString("menu", "show_list_button");
-                }else{
+                } else {
                     b.putString("menu", "hide_list_button");
                 }
                 Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
@@ -857,7 +860,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_SEND_CRASH_REPORTS, set_enable_crash_report.isChecked());
                 editor.apply();
-                if( getActivity() != null)
+                if (getActivity() != null)
                     getActivity().recreate();
             }
         });
@@ -872,9 +875,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_truncate_toots.setText(String.valueOf(truncate_toots_size));
         set_truncate_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 set_truncate_toots.setText(String.valueOf(progress));
@@ -883,7 +890,6 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.apply();
             }
         });
-
 
 
         boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
@@ -973,17 +979,17 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
         RadioGroup set_mode = rootView.findViewById(R.id.set_mode);
-        if( compact_mode){
+        if (compact_mode) {
             set_mode.check(R.id.set_compact_mode);
-        }else if(console_mode){
+        } else if (console_mode) {
             set_mode.check(R.id.set_console_mode);
-        }else {
+        } else {
             set_mode.check(R.id.set_normal_mode);
         }
         set_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId) {
+                switch (checkedId) {
                     case R.id.set_compact_mode:
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putBoolean(Helper.SET_COMPACT_MODE, true);
@@ -1038,7 +1044,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
         final CheckBox set_custom_sharing = rootView.findViewById(R.id.set_custom_sharing);
         set_custom_sharing.setChecked(custom_sharing);
-        if( custom_sharing)
+        if (custom_sharing)
             edit_custom_sharing_url.setVisibility(View.VISIBLE);
         else
             edit_custom_sharing_url.setVisibility(View.GONE);
@@ -1048,7 +1054,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_CUSTOM_SHARING, set_custom_sharing.isChecked());
                 editor.apply();
-                if( set_custom_sharing.isChecked())
+                if (set_custom_sharing.isChecked())
                     edit_custom_sharing_url.setVisibility(View.VISIBLE);
                 else
                     edit_custom_sharing_url.setVisibility(View.GONE);
@@ -1070,7 +1076,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-        String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,"");
+        String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL, "");
         if (custom_sharing_url.equals("")) {
             custom_sharing_url = "http://cs.example.net/add?token=umVe1zurZk47ihElSOQcBG05KUSA2v-GSet4_fFnJ4M&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}&creator=${creator}&thumbnailurl=${thumbnailurl}";
         }
@@ -1105,7 +1111,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISABLE_GIF, set_disable_gif.isChecked());
                 editor.apply();
-                if( getActivity() != null)
+                if (getActivity() != null)
                     getActivity().recreate();
             }
         });
@@ -1133,16 +1139,18 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, set_live_notif.isChecked());
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING, set_live_notif.isChecked());
                 editor.apply();
-                if( set_live_notif.isChecked() ){
+                if (set_live_notif.isChecked()) {
                     try {
                         Intent streamingIntent = new Intent(context, LiveNotificationService.class);
                         context.startService(streamingIntent);
-                    }catch (Exception ignored){ignored.printStackTrace();}
-                }else{
+                    } catch (Exception ignored) {
+                        ignored.printStackTrace();
+                    }
+                } else {
                     context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                     if (Build.VERSION.SDK_INT >= 26) {
                         NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
-                        if( notif != null) {
+                        if (notif != null) {
                             notif.deleteNotificationChannel(LiveNotificationService.CHANNEL_ID);
                         }
                     }
@@ -1204,16 +1212,16 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
-        final CheckBox set_custom_tabs  = rootView.findViewById(R.id.set_custom_tabs);
-        final  LinearLayout custom_tabs_container  = rootView.findViewById(R.id.custom_tabs_container);
+        final CheckBox set_custom_tabs = rootView.findViewById(R.id.set_custom_tabs);
+        final LinearLayout custom_tabs_container = rootView.findViewById(R.id.custom_tabs_container);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
-        if( !embedded_browser){
+        if (!embedded_browser) {
             set_javascript_container.setVisibility(View.GONE);
             custom_tabs_container.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             set_javascript_container.setVisibility(View.VISIBLE);
             custom_tabs_container.setVisibility(View.GONE);
         }
@@ -1224,10 +1232,10 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_EMBEDDED_BROWSER, set_embedded_browser.isChecked());
                 editor.apply();
-                if( !set_embedded_browser.isChecked()){
+                if (!set_embedded_browser.isChecked()) {
                     set_javascript_container.setVisibility(View.GONE);
                     custom_tabs_container.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     set_javascript_container.setVisibility(View.VISIBLE);
                     custom_tabs_container.setVisibility(View.GONE);
                 }
@@ -1271,7 +1279,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_cookies_container.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             set_cookies_container.setVisibility(View.GONE);
         }
         final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
@@ -1291,14 +1299,14 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             LinearLayout file_chooser = rootView.findViewById(R.id.file_chooser);
             file_chooser.setVisibility(View.GONE);
         }*/
-        set_folder.setOnClickListener(view ->{
+        set_folder.setOnClickListener(view -> {
             FileListerDialog fileListerDialog = FileListerDialog.createFileListerDialog(context, style);
             fileListerDialog.setDefaultDir(targeted_folder);
             fileListerDialog.setFileFilter(FileListerDialog.FILE_FILTER.DIRECTORY_ONLY);
             fileListerDialog.setOnFileSelectedListener(new OnFileSelectedListener() {
                 @Override
                 public void onFileSelected(File file, String path) {
-                    if( path == null )
+                    if (path == null)
                         path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
                     final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -1316,7 +1324,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_night_mode.setAdapter(adapterTheme);
 
         int positionSpinnerTheme;
-        switch (sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK)){
+        switch (sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK)) {
             case Helper.THEME_DARK:
                 positionSpinnerTheme = 0;
                 break;
@@ -1333,7 +1341,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count1 > 0 ) {
+                if (count1 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
                     switch (position) {
@@ -1359,6 +1367,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
                 count1++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -1367,17 +1376,22 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
 
         SeekBar toot_per_page = rootView.findViewById(R.id.set_toot_per_page);
-        final TextView set_toot_per_page_count = rootView.findViewById(R.id.set_toot_per_page_count);;
+        final TextView set_toot_per_page_count = rootView.findViewById(R.id.set_toot_per_page_count);
+        ;
         toot_per_page.setMax(20);
         int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
-        toot_per_page.setProgress(tootperpage-Helper.TOOTS_PER_PAGE);
+        toot_per_page.setProgress(tootperpage - Helper.TOOTS_PER_PAGE);
         set_toot_per_page_count.setText(String.valueOf(tootperpage));
 
         toot_per_page.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -1404,9 +1418,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         nsfwTimeoutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -1419,22 +1437,19 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
-
-
-
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
         final Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             Helper.changeDrawableColor(context, set_toot_visibility, R.color.dark_text);
-        }else {
+        } else {
             Helper.changeDrawableColor(context, set_toot_visibility, R.color.white);
         }
         //Only displayed for non locked accounts
-        if (account != null ) {
-            String defaultVisibility = account.isLocked()?"private":"public";
+        if (account != null) {
+            String defaultVisibility = account.isLocked() ? "private" : "public";
             String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             switch (tootVisibility) {
                 case "public":
@@ -1450,7 +1465,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                     break;
             }
-        }else {
+        } else {
             toot_visibility_container.setVisibility(View.GONE);
         }
 
@@ -1475,7 +1490,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     public void onClick(DialogInterface dialog, int position) {
                         String visibility = "public";
 
-                        switch (position){
+                        switch (position) {
                             case 0:
                                 visibility = "public";
                                 set_toot_visibility.setImageResource(R.drawable.ic_public);
@@ -1493,13 +1508,13 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                                 set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                                 break;
                         }
-                        if( account != null) {
+                        if (account != null) {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), visibility);
                             editor.apply();
                             Toasty.info(context, context.getString(R.string.toast_visibility_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                        } else {
+                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                         }
 
                         dialog.dismiss();
@@ -1510,28 +1525,29 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         });
 
 
-        boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM+userId+instance, true);
+        boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + userId + instance, true);
         TextView set_allow_live_notifications_title = rootView.findViewById(R.id.set_allow_live_notifications_title);
-        set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@"+account.getInstance()));
+        set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
         final CheckBox set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
         set_allow_live_notifications.setChecked(allow_live_notifications);
         set_allow_live_notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_ALLOW_STREAM+userId+instance, set_allow_live_notifications.isChecked());
+                editor.putBoolean(Helper.SET_ALLOW_STREAM + userId + instance, set_allow_live_notifications.isChecked());
                 editor.apply();
-                if( set_allow_live_notifications.isChecked()){
+                if (set_allow_live_notifications.isChecked()) {
                     LiveNotificationService.totalAccount++;
-                }else{
+                } else {
                     LiveNotificationService.totalAccount--;
                 }
                 boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-                if( liveNotifications) {
+                if (liveNotifications) {
                     Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
                     try {
                         context.startService(streamingServiceIntent);
-                    }catch (Exception ignored){}
+                    } catch (Exception ignored) {
+                    }
                 }
             }
         });
@@ -1548,7 +1564,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             }
         });
 
-        int split_size_val = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, Helper.SPLIT_TOOT_SIZE);
+        int split_size_val = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
 
         LinearLayout set_split_container = rootView.findViewById(R.id.set_split_container);
         //split size
@@ -1560,21 +1576,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         split_size.setMax(5);
         split_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int newProgress = (progress + 1) * Helper.SPLIT_TOOT_SIZE;
                 split_text.setText(String.valueOf(newProgress));
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE+userId+instance, newProgress);
+                editor.putInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, newProgress);
                 editor.apply();
             }
         });
 
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, false);
-        if( !split_toot){
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
+        if (!split_toot) {
             set_split_container.setVisibility(View.GONE);
         }
         final CheckBox set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
@@ -1583,11 +1603,11 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS+userId+instance, set_split_toot.isChecked());
+                editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, set_split_toot.isChecked());
                 editor.apply();
-                if( set_split_toot.isChecked()){
+                if (set_split_toot.isChecked()) {
                     set_split_container.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     set_split_container.setVisibility(View.GONE);
                 }
             }
@@ -1600,7 +1620,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         translation_layout_spinner.setAdapter(adapterTrans);
 
         int positionSpinnerTrans;
-        switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)){
+        switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)) {
             case Helper.TRANS_YANDEX:
                 positionSpinnerTrans = 0;
                 your_api_key.setVisibility(View.VISIBLE);
@@ -1623,7 +1643,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count3 > 0 ) {
+                if (count3 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
@@ -1648,7 +1668,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                             editor.apply();
                             break;
                     }
-                    if( getActivity() != null)
+                    if (getActivity() != null)
                         getActivity().recreate();
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
@@ -1656,6 +1676,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
                 count3++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -1672,34 +1693,25 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count4 > 0) {
+                if (count4 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_PICTURE_RESIZE, position);
                     editor.apply();
                 }
                 count4++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
 
-
-
-
-
-
-
-
-
-
-
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
         switchCompatNotify.setChecked(notify);
         final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
-        if( notify)
+        if (notify)
             notification_settings.setVisibility(View.VISIBLE);
         else
             notification_settings.setVisibility(View.GONE);
@@ -1710,13 +1722,12 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
-                if( isChecked)
+                if (isChecked)
                     notification_settings.setVisibility(View.VISIBLE);
                 else
                     notification_settings.setVisibility(View.GONE);
             }
         });
-
 
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -1843,7 +1854,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     startActivity(intent);
                 }
             });
-        }else{
+        } else {
             set_notif_sound.setVisibility(View.VISIBLE);
             channels_container.setVisibility(View.GONE);
             set_notif_sound.setOnClickListener(new View.OnClickListener() {
@@ -1881,14 +1892,14 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0"+String.valueOf(hourOfDay):String.valueOf(hourOfDay);
-                        String minutes = (String.valueOf(minute).length() == 1) ? "0"+String.valueOf(minute):String.valueOf(minute);
+                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + String.valueOf(hourOfDay) : String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + String.valueOf(minute) : String.valueOf(minute);
                         String newDate = hours + ":" + minutes;
-                        if( Helper.compareDate(context, newDate, false) ) {
+                        if (Helper.compareDate(context, newDate, false)) {
                             editor.putString(Helper.SET_TIME_FROM, newDate);
                             editor.apply();
                             settings_time_from.setText(newDate);
-                        }else {
+                        } else {
                             String ateRef = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
                             Toasty.error(context, context.getString(R.string.settings_time_lower, ateRef), Toast.LENGTH_LONG).show();
                         }
@@ -1903,7 +1914,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
             @Override
             public void onClick(View v) {
                 String[] datetime = time_to.split(":");
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),style, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), style, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -1931,7 +1942,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 R.array.action_notification, android.R.layout.simple_spinner_item);
         action_notification.setAdapter(adapterAction);
         int positionNotificationAntion;
-        switch (sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE)){
+        switch (sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE)) {
             case Helper.ACTION_ACTIVE:
                 positionNotificationAntion = 0;
                 break;
@@ -1945,7 +1956,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
         action_notification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count7 > 0 ) {
+                if (count7 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
                     switch (position) {
@@ -1961,6 +1972,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
                 count7++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -2080,9 +2092,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
             });
-        }
-
-        else {
+        } else {
             ledLabel.setEnabled(false);
             for (View lol : led_colour_spinner.getTouchables()) {
                 lol.setEnabled(false);
@@ -2108,7 +2118,8 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                     Canvas canvas = new Canvas(bitmap);
                     containerView.draw(canvas);
                     ContentSettingsFragment.this.bitmap = bitmap;
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
 
             }
         };
@@ -2163,7 +2174,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
                 return getDataColumn(context, contentUri, selection, selectionArgs);
@@ -2185,6 +2196,7 @@ public class ContentSettingsFragment  extends Fragment implements ScreenShotable
 
         return null;
     }
+
     public static String getDataColumn(Context context, Uri uri, String selection,
                                        String[] selectionArgs) {
 

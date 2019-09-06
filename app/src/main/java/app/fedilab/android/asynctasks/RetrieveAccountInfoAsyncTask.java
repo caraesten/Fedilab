@@ -36,7 +36,7 @@ public class RetrieveAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     private API api;
     private WeakReference<Context> contextReference;
 
-    public RetrieveAccountInfoAsyncTask(Context context, OnRetrieveAccountInterface onRetrieveAccountInterface){
+    public RetrieveAccountInfoAsyncTask(Context context, OnRetrieveAccountInterface onRetrieveAccountInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveAccountInterface;
     }

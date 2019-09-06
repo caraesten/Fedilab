@@ -46,7 +46,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private SOCIAL social;
 
-    public enum SOCIAL{
+    public enum SOCIAL {
         MASTODON,
         PEERTUBE,
         PIXELFED,
@@ -54,7 +54,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         GNU,
         FRIENDICA
     }
-    public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social){
+
+    public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social) {
         this.contextReference = new WeakReference<>(context);
         this.token = token;
         this.instance = instance;
@@ -67,17 +68,17 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Account account;
-        if( social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
+        if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            if( account != null)
+            if (account != null)
                 account.setSocial(account.getSocial());
-        }else if( social == SOCIAL.PEERTUBE) {
+        } else if (social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            if( account != null)
+            if (account != null)
                 account.setSocial("PEERTUBE");
-        }else{
+        } else {
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            if( account != null)
+            if (account != null)
                 account.setSocial(account.getSocial());
         }
         if (account == null)
@@ -85,7 +86,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");
-        } catch (UnsupportedEncodingException ignored) {}
+        } catch (UnsupportedEncodingException ignored) {
+        }
 
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         account.setToken(token);
@@ -101,10 +103,10 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
         editor.putString(Helper.PREF_INSTANCE, instance);
         editor.apply();
-        if( userExists)
+        if (userExists)
             new AccountDAO(this.contextReference.get(), db).updateAccountCredential(account);
         else {
-            if( account.getUsername() != null && account.getCreated_at() != null)
+            if (account.getUsername() != null && account.getCreated_at() != null)
                 new AccountDAO(this.contextReference.get(), db).insertAccount(account);
         }
 
@@ -114,7 +116,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
-        if( this.contextReference.get() != null) {
+        if (this.contextReference.get() != null) {
             Intent mainActivity = new Intent(this.contextReference.get(), MainActivity.class);
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
             this.contextReference.get().startActivity(mainActivity);

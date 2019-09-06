@@ -29,9 +29,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,7 +82,7 @@ public class WebviewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -97,14 +99,14 @@ public class WebviewActivity extends BaseActivity {
 
         setContentView(R.layout.activity_webview);
         Bundle b = getIntent().getExtras();
-        if(b != null) {
+        if (b != null) {
             url = b.getString("url", null);
             peertubeLinkToFetch = b.getString("peertubeLinkToFetch", null);
-            peertubeLink =  b.getBoolean("peertubeLink", false);
+            peertubeLink = b.getBoolean("peertubeLink", false);
         }
-        if( url == null)
+        if (url == null)
             finish();
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
@@ -115,13 +117,13 @@ public class WebviewActivity extends BaseActivity {
 
 
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        if( proxyEnabled ){
+        if (proxyEnabled) {
             String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
             int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            ProxyHelper.setProxy(getApplicationContext(), webView,host, port,WebviewActivity.class.getName());
+            ProxyHelper.setProxy(getApplicationContext(), webView, host, port, WebviewActivity.class.getName());
         }
 
-        MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this,  webView, webview_container, videoLayout);
+        MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this, webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
             @Override
             public void toggledFullscreen(boolean fullscreen) {
@@ -150,26 +152,26 @@ public class WebviewActivity extends BaseActivity {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
 
-                if(Build.VERSION.SDK_INT >= 23 ){
+                if (Build.VERSION.SDK_INT >= 23) {
                     if (ContextCompat.checkSelfPermission(WebviewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(WebviewActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(WebviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
                         Helper.manageDownloads(WebviewActivity.this, url);
                     }
-                }else{
+                } else {
                     Helper.manageDownloads(WebviewActivity.this, url);
                 }
             }
         });
-        if( !url.startsWith("http://") && !url.startsWith("https://"))
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
             url = "http://" + url;
-        if( trackingDomains == null){
+        if (trackingDomains == null) {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
                     SQLiteDatabase db = Sqlite.getInstance(WebviewActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     trackingDomains = new DomainBlockDAO(WebviewActivity.this, db).getAll();
-                    if( trackingDomains == null)
+                    if (trackingDomains == null)
                         trackingDomains = new ArrayList<>();
                     // Get a handler that can be used to post to the main thread
                     Handler mainHandler = new Handler(getMainLooper());
@@ -183,13 +185,13 @@ public class WebviewActivity extends BaseActivity {
 
                 }
             });
-        }else
+        } else
             webView.loadUrl(url);
     }
 
 
     public void setCount(Context context, String count) {
-        if( defaultMenu != null && !peertubeLink) {
+        if (defaultMenu != null && !peertubeLink) {
             MenuItem menuItem = defaultMenu.findItem(R.id.action_block);
             LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
 
@@ -211,7 +213,7 @@ public class WebviewActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(!peertubeLink)
+        if (!peertubeLink)
             setCount(this, "0");
         defaultMenu = menu;
         return super.onPrepareOptionsMenu(menu);
@@ -221,17 +223,18 @@ public class WebviewActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
         defaultMenu = menu;
-        if( peertubeLink ){
+        if (peertubeLink) {
             menu.findItem(R.id.action_go).setVisible(false);
             menu.findItem(R.id.action_block).setVisible(false);
             menu.findItem(R.id.action_comment).setVisible(true);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT)
+        if (theme == Helper.THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -249,9 +252,9 @@ public class WebviewActivity extends BaseActivity {
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this, style);
@@ -279,8 +282,8 @@ public class WebviewActivity extends BaseActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 try {
                     startActivity(browserIntent);
-                }catch (Exception e){
-                    Toasty.error(getApplicationContext(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                 }
                 return true;
             case R.id.action_comment:
@@ -293,7 +296,7 @@ public class WebviewActivity extends BaseActivity {
                     @Override
                     protected Void doInBackground(Void... voids) {
 
-                        if(url != null) {
+                        if (url != null) {
                             APIResponse search = new API(contextReference.get()).search(peertubeLinkToFetch);
                             if (search != null && search.getResults() != null) {
                                 remoteStatuses = search.getResults().getStatuses();
@@ -306,46 +309,46 @@ public class WebviewActivity extends BaseActivity {
                     protected void onPostExecute(Void result) {
                         Intent intent = new Intent(contextReference.get(), TootActivity.class);
                         Bundle b = new Bundle();
-                        if( remoteStatuses == null || remoteStatuses.size() == 0){
-                            Toasty.error(contextReference.get(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+                        if (remoteStatuses == null || remoteStatuses.size() == 0) {
+                            Toasty.error(contextReference.get(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                             return;
                         }
-                        if( remoteStatuses.get(0).getReblog() != null ) {
+                        if (remoteStatuses.get(0).getReblog() != null) {
                             b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                        }else {
+                        } else {
                             b.putParcelable("tootReply", remoteStatuses.get(0));
                         }
                         intent.putExtras(b); //Put your id to your next Intent
                         contextReference.get().startActivity(intent);
                     }
-                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void setUrl(String newUrl){
+    public void setUrl(String newUrl) {
         this.url = newUrl;
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if( webView != null)
+        if (webView != null)
             webView.onPause();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( webView != null)
+        if (webView != null)
             webView.onResume();
     }
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()){
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
@@ -353,9 +356,9 @@ public class WebviewActivity extends BaseActivity {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        if( webView != null)
+        if (webView != null)
             webView.destroy();
     }
 }

@@ -116,7 +116,6 @@
     <string name="pin_remove">Unpin this toot?</string>
 
 
-
     <string name="more_action_1">Mute</string>
     <string name="more_action_2">Block</string>
     <string name="more_action_3">Report</string>
@@ -358,7 +357,6 @@
     <string name="settings_ui_layout">Layout for timelines: </string>
 
 
-
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
         <item>Menu</item>
@@ -579,7 +577,7 @@
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="mastohost_name" translatable="false">masto.host</string>
     <string name="about_partnership" translatable="false"><b>Masto.host</b> is our Mastodon hosting partner.\n\nWith this partnership they provide me free hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> and in exchange I promote them in here.\n\nTo be clear, there is no money involved or tracking of users. I needed an instance for testing, we talked and agreed on this.\n\n<a href="https://masto.host">Go check them out</a> if you want to run your own Mastodon instance.</string>
-    <string name="action_partnership" >Partnerships</string>
+    <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
 
     <string name="hide_boost">Hide boosts from %s</string>
@@ -1167,11 +1165,11 @@
         <item quantity="other">%d votes</item>
     </plurals>
 
-    <string-array  name="poll_choice_type">
+    <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
     </string-array>
-    <string-array  name="poll_duration">
+    <string-array name="poll_duration">
         <item>5 minutes</item>
         <item>30 minutes</item>
         <item>1 hour</item>
@@ -1179,7 +1177,7 @@
         <item>1 day</item>
         <item>3 days</item>
         <item>7 days</item>
-    </string-array >
+    </string-array>
 
     <string-array name="settings_video_mode">
         <item>Webview</item>

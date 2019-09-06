@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -28,6 +29,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,7 +81,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -94,17 +96,17 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         }
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(ListActivity.this, R.color.black));
         setSupportActionBar(toolbar);
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         statuses = new ArrayList<>();
 
         RecyclerView lv_status = findViewById(R.id.lv_status);
-        mainLoader =  findViewById(R.id.loader);
+        mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
-        textviewNoAction =  findViewById(R.id.no_action);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         max_id = null;
@@ -124,29 +126,28 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         lv_status.setLayoutManager(mLayoutManager);
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             title = b.getString("title");
             listId = b.getString("id");
-        }else{
-            Toasty.error(getApplicationContext(),getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle(title);
 
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                if(dy > 0){
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                        if(!flag_loading ) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
                             flag_loading = true;
-                            new ManageListsAsyncTask(ListActivity.this,listId, max_id ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new ManageListsAsyncTask(ListActivity.this, listId, max_id, null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -165,11 +166,11 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewStatus = 0;
-                new ManageListsAsyncTask(ListActivity.this,listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new ManageListsAsyncTask(ListActivity.this, listId, null, null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -190,7 +191,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 break;
         }
 
-        new ManageListsAsyncTask(ListActivity.this,listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ManageListsAsyncTask(ListActivity.this, listId, null, null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -218,9 +219,9 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
+                } else if (theme == Helper.THEME_BLACK) {
                     style = R.style.DialogBlack;
-                }else {
+                } else {
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ListActivity.this, style);
@@ -233,7 +234,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        if( editText.getText() != null && editText.getText().toString().trim().length() > 0 )
+                        if (editText.getText() != null && editText.getText().toString().trim().length() > 0)
                             new ManageListsAsyncTask(ListActivity.this, ManageListsAsyncTask.action.UPDATE_LIST, null, listId, editText.getText().toString(), editText.getText().toString().trim(), ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
@@ -257,7 +258,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     }
                 });
-                if( alertDialog.getWindow() != null )
+                if (alertDialog.getWindow() != null)
                     alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 alertDialog.show();
                 return true;
@@ -274,14 +275,14 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
-            if ( !apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -"))
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        if( actionType == ManageListsAsyncTask.action.GET_LIST_TIMELINE) {
+        if (actionType == ManageListsAsyncTask.action.GET_LIST_TIMELINE) {
 
             int previousPosition = this.statuses.size();
             List<Status> statuses = apiResponse.getStatuses();
@@ -307,7 +308,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
             }
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
-        }else if(actionType == ManageListsAsyncTask.action.UPDATE_LIST) {
+        } else if (actionType == ManageListsAsyncTask.action.UPDATE_LIST) {
             Intent intentUP = new Intent(Helper.RECEIVE_UPDATE_TOPBAR);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentUP);
         }

@@ -3,10 +3,10 @@
 
     android:shape="oval"
     android:thicknessRatio="1.9"
-    android:useLevel="false" >
+    android:useLevel="false">
     <solid android:color="@color/mastodonC4" />
 
     <stroke
-    android:width="10dp"
-    android:color="@color/mastodonC4" />
+        android:width="10dp"
+        android:color="@color/mastodonC4" />
 </shape>

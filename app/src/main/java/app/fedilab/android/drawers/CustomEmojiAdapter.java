@@ -16,6 +16,7 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -90,8 +91,7 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
         }
 
 
-
-        if( !emoji.isDrawableFound()  ) {
+        if (!emoji.isDrawableFound()) {
             emoji.setDrawableFound(true);
             Glide.with(context)
                     .asFile()
@@ -104,7 +104,7 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
                             Drawable resource;
                             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-                            if( !disableAnimatedEmoji) {
+                            if (!disableAnimatedEmoji) {
                                 if (GifParser.isGif(resourceFile.getAbsolutePath())) {
                                     resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
                                     emoji.setDrawable(resource);
@@ -116,14 +116,14 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
                                     emoji.setDrawable(resource);
 
                                 }
-                            }else{
+                            } else {
                                 resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
                                 emoji.setDrawable(resource);
                             }
                             customEmojiAdapter.notifyDataSetChanged();
                         }
                     });
-        }else{
+        } else {
             imageView.setImageDrawable(emoji.getDrawable());
         }
         return convertView;

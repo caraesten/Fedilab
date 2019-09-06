@@ -42,7 +42,7 @@ public class RetrieveNotificationChartsAsyncTask extends AsyncTask<Void, Void, V
     private Date dateEnd;
     private String status_id;
 
-    public RetrieveNotificationChartsAsyncTask(Context context, String status_id, Date dateIni, Date dateEnd, OnRetrieveNotificationChartsInterface onRetrieveNotificationChartsInterface){
+    public RetrieveNotificationChartsAsyncTask(Context context, String status_id, Date dateIni, Date dateEnd, OnRetrieveNotificationChartsInterface onRetrieveNotificationChartsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveNotificationChartsInterface;
         this.dateIni = dateIni;

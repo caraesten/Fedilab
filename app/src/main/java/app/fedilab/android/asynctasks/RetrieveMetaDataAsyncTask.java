@@ -45,7 +45,8 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private String image, title, description, sharedSubject, sharedText;
     private WeakReference<Context> contextWeakReference;
     private boolean shouldFetchMetaData = true;
-    public RetrieveMetaDataAsyncTask(Context context,boolean shouldFetchMetaData, String sharedSubject, String sharedText,String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
+
+    public RetrieveMetaDataAsyncTask(Context context, boolean shouldFetchMetaData, String sharedSubject, String sharedText, String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface) {
         this.url = url;
         this.listener = onRetrieveRemoteAccountInterface;
         this.sharedText = sharedText;
@@ -56,12 +57,13 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(shouldFetchMetaData)
+        if (shouldFetchMetaData)
             return execRetrieveMetaDataInBackground();
         else
             return null;
     }
-    private Void execRetrieveMetaDataInBackground(){
+
+    private Void execRetrieveMetaDataInBackground() {
 
         String potentialUrl = "";
         if (url == null) {
@@ -77,10 +79,10 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                 matcher = Patterns.WEB_URL.matcher(url);
             else
                 matcher = Helper.urlPattern.matcher(url);
-            while (matcher.find()){
+            while (matcher.find()) {
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
-                if(matchStart < matchEnd && url.length() >= matchEnd)
+                if (matchStart < matchEnd && url.length() >= matchEnd)
                     potentialUrl = url.substring(matchStart, matchEnd);
             }
             // If we actually have a URL then make use of it.
@@ -103,15 +105,15 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                         image = matcherImage.group(1);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        if( titleEncoded != null)
+                        if (titleEncoded != null)
                             title = Html.fromHtml(titleEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
-                        if( descriptionEncoded != null)
+                        if (descriptionEncoded != null)
                             description = Html.fromHtml(descriptionEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
-                    }else {
+                    } else {
                         //noinspection deprecation
-                        if( titleEncoded != null)
+                        if (titleEncoded != null)
                             title = Html.fromHtml(titleEncoded).toString();
-                        if( descriptionEncoded != null)
+                        if (descriptionEncoded != null)
                             description = Html.fromHtml(descriptionEncoded).toString();
                     }
                 } catch (NoSuchAlgorithmException e) {
@@ -127,6 +129,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
+
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveMetaData(error, sharedSubject, sharedText, image, title, description);

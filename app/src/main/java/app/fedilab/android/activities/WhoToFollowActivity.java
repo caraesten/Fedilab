@@ -19,8 +19,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +61,6 @@ import app.fedilab.android.interfaces.OnRetrieveWhoToFollowInterface;
 public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoToFollowInterface, OnPostActionInterface, OnListActionInterface {
 
 
-
     private String item;
     private List<String> followedId;
     private List<String> accountListId;
@@ -75,7 +76,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
@@ -92,30 +93,30 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         no_action = findViewById(R.id.no_action);
         Toolbar toolbar = findViewById(R.id.toolbar);
         progess_action = findViewById(R.id.progess_action);
-        if( theme == Helper.THEME_BLACK)
+        if (theme == Helper.THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(WhoToFollowActivity.this, R.color.black));
         setSupportActionBar(toolbar);
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mainLoader = findViewById(R.id.loader);
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             item = b.getString("item");
         }
         followedId = new ArrayList<>();
-        String lastDateListNameRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_NAME_REFRESH+item, null);
+        String lastDateListNameRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_NAME_REFRESH + item, null);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date( ));
+        cal.setTime(new Date());
         cal.add(Calendar.MINUTE, -5);
         Date dateAllowed = cal.getTime();
-        if( lastDateListNameRefresh == null || Helper.stringToDate(WhoToFollowActivity.this, lastDateListNameRefresh).before(dateAllowed)) {
+        if (lastDateListNameRefresh == null || Helper.stringToDate(WhoToFollowActivity.this, lastDateListNameRefresh).before(dateAllowed)) {
             new WhoToFollowAsyncTask(WhoToFollowActivity.this, item, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             mainLoader.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             String lastList = sharedpreferences.getString(Helper.LAST_LIST_NAME + item, null);
             List<String> acctString = Helper.restoreArrayFromString(lastList);
-            if( acctString != null) {
+            if (acctString != null) {
                 trunkAccounts = new ArrayList<>();
                 for (String acct : acctString) {
                     TrunkAccount trunkAccount = new TrunkAccount();
@@ -129,19 +130,19 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
     }
 
 
-    private void displayResults(){
+    private void displayResults() {
         mainLoader.setVisibility(View.GONE);
         WhoToFollowAccountsAdapter whoToFollowAccountsAdapter;
-        if( trunkAccounts != null){
-            if( trunkAccounts.size() > 0) {
+        if (trunkAccounts != null) {
+            if (trunkAccounts.size() > 0) {
                 ListView lv_list = findViewById(R.id.lv_list);
                 whoToFollowAccountsAdapter = new WhoToFollowAccountsAdapter(trunkAccounts);
                 lv_list.setAdapter(whoToFollowAccountsAdapter);
-            }else {
+            } else {
                 no_action.setVisibility(View.VISIBLE);
                 return;
             }
-        }else{
+        } else {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -150,15 +151,15 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         follow_accounts_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(follow_accounts_select.getText().equals(getString(R.string.select_all))){
+                if (follow_accounts_select.getText().equals(getString(R.string.select_all))) {
                     follow_accounts_select.setText(R.string.unselect_all);
-                    for(TrunkAccount trunkAccount: trunkAccounts){
+                    for (TrunkAccount trunkAccount : trunkAccounts) {
                         trunkAccount.setChecked(true);
                     }
                     whoToFollowAccountsAdapter.notifyDataSetChanged();
-                }else {
+                } else {
                     follow_accounts_select.setText(R.string.select_all);
-                    for(TrunkAccount trunkAccount: trunkAccounts){
+                    for (TrunkAccount trunkAccount : trunkAccounts) {
                         trunkAccount.setChecked(false);
                     }
                     whoToFollowAccountsAdapter.notifyDataSetChanged();
@@ -173,21 +174,21 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                 follow_accounts_select.setEnabled(false);
                 progess_action.setVisibility(View.VISIBLE);
                 toFollowdId = new ArrayList<>();
-                for(TrunkAccount trunkAccount: trunkAccounts){
-                    if( trunkAccount.isChecked()){
+                for (TrunkAccount trunkAccount : trunkAccounts) {
+                    if (trunkAccount.isChecked()) {
                         toFollowdId.add(trunkAccount.getAcct());
                     }
                 }
-                if(toFollowdId.size() > 0){
+                if (toFollowdId.size() > 0) {
                     Account account = new Account();
                     String[] val = toFollowdId.get(0).split("@");
                     progess_action.setText(getString(R.string.follow_trunk, toFollowdId.get(0)));
-                    if( val.length > 1){
+                    if (val.length > 1) {
                         account.setAcct(val[0]);
                         account.setInstance(val[1]);
                         new PostActionAsyncTask(WhoToFollowActivity.this, null, account, API.StatusAction.FOLLOW, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }else {
-                        Toasty.error(getApplicationContext(),getString(R.string.toast_impossible_to_follow), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toasty.error(getApplicationContext(), getString(R.string.toast_impossible_to_follow), Toast.LENGTH_LONG).show();
                         follow_accounts.setEnabled(true);
                         follow_accounts_select.setEnabled(true);
                         progess_action.setVisibility(View.GONE);
@@ -216,12 +217,12 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
 
     @Override
     public void onRetrieveWhoToFollowAccount(List<TrunkAccount> trunkAccounts) {
-        if( trunkAccounts != null){
+        if (trunkAccounts != null) {
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_DATE_LIST_NAME_REFRESH + item, Helper.dateToString(new Date()));
             List<String> accounts = new ArrayList<>();
-            for(TrunkAccount trunkAccount: trunkAccounts)
+            for (TrunkAccount trunkAccount : trunkAccounts)
                 accounts.add(trunkAccount.getAcct());
             editor.putString(Helper.LAST_LIST_NAME + item, Helper.arrayToStringStorage(accounts));
             editor.apply();
@@ -233,14 +234,14 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         followedId.add(userId);
-        if( followedId != null && followedId.size() >= toFollowdId.size()) {
+        if (followedId != null && followedId.size() >= toFollowdId.size()) {
             progess_action.setText(getString(R.string.create_list_trunk, item));
             new ManageListsAsyncTask(WhoToFollowActivity.this, ManageListsAsyncTask.action.CREATE_LIST, null, null, null, item, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else {
+        } else {
             Account account = new Account();
             String[] val = toFollowdId.get(followedId.size()).split("@");
             progess_action.setText(getString(R.string.follow_trunk, toFollowdId.get(followedId.size())));
-            if( val.length > 1){
+            if (val.length > 1) {
                 account.setAcct(val[0]);
                 account.setInstance(val[1]);
                 new PostActionAsyncTask(WhoToFollowActivity.this, null, account, API.StatusAction.FOLLOW, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -253,16 +254,16 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
 
         List<app.fedilab.android.client.Entities.List> lists = apiResponse.getLists();
-        if( lists!= null && lists.size() > 0 && actionType == ManageListsAsyncTask.action.CREATE_LIST){
+        if (lists != null && lists.size() > 0 && actionType == ManageListsAsyncTask.action.CREATE_LIST) {
             String[] accountsId = followedId.toArray(new String[0]);
             progess_action.setText(R.string.add_account_list_trunk);
             listId = lists.get(0).getId();
             listTitle = lists.get(0).getTitle();
             new ManageListsAsyncTask(WhoToFollowActivity.this, ManageListsAsyncTask.action.ADD_USERS, new String[]{followedId.get(0)}, null, lists.get(0).getId(), null, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             accountListId = new ArrayList<>();
-        }else if(accountListId != null){
+        } else if (accountListId != null) {
 
-            if( accountListId.size() >= followedId.size() -1) {
+            if (accountListId.size() >= followedId.size() - 1) {
                 progess_action.setText(R.string.account_added_list_trunk);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -274,12 +275,12 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                         b.putString("title", listTitle);
                         intent.putExtras(b);
                         startActivity(intent);
-                       finish();
+                        finish();
                     }
 
                 }, 1000);
 
-            }else {
+            } else {
                 accountListId.add(followedId.get(accountListId.size()));
                 progess_action.setText(R.string.adding_account_list_trunk);
                 String userIdToAdd = followedId.get(accountListId.size());

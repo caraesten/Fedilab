@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -15,8 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,13 +22,15 @@
     android:id="@+id/account_container"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
+
     <ImageView
         android:layout_margin="5dp"
         android:layout_gravity="center"
         android:id="@+id/emoji_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:contentDescription="@string/custom_emoji_picker"  />
+        android:contentDescription="@string/custom_emoji_picker" />
+
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"

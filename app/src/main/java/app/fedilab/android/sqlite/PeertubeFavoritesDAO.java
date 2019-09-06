@@ -49,8 +49,10 @@ public class PeertubeFavoritesDAO {
 
 
     //------- INSERTIONS  -------
+
     /**
      * Insert a status in database
+     *
      * @param peertube Peertube
      * @return boolean
      */
@@ -62,10 +64,10 @@ public class PeertubeFavoritesDAO {
         values.put(Sqlite.COL_CACHE, peertube.getCache().toString());
         //Inserts cached peertube
         long last_id;
-        try{
+        try {
             last_id = db.insert(Sqlite.TABLE_PEERTUBE_FAVOURITES, null, values);
-        }catch (Exception e) {
-            last_id =  -1;
+        } catch (Exception e) {
+            last_id = -1;
         }
         return last_id;
     }
@@ -75,30 +77,30 @@ public class PeertubeFavoritesDAO {
      * Remove stored status
      * @return int
      */
-    public int remove(Peertube peertube){
-        return db.delete(Sqlite.TABLE_PEERTUBE_FAVOURITES,  Sqlite.COL_UUID + " = \""+ peertube.getUuid() +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + peertube.getInstance() + "\"", null);
+    public int remove(Peertube peertube) {
+        return db.delete(Sqlite.TABLE_PEERTUBE_FAVOURITES, Sqlite.COL_UUID + " = \"" + peertube.getUuid() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + peertube.getInstance() + "\"", null);
     }
 
     /***
      * Remove stored status
      * @return int
      */
-    public int removeAll(){
-        return db.delete(Sqlite.TABLE_PEERTUBE_FAVOURITES,  null, null);
+    public int removeAll() {
+        return db.delete(Sqlite.TABLE_PEERTUBE_FAVOURITES, null, null);
     }
-
 
 
     //------- GETTERS  -------
 
     /**
      * Returns all cached Peertube
+     *
      * @return stored peertube List<Peertube>
      */
-    public List<Peertube> getAllPeertube(){
+    public List<Peertube> getAllPeertube() {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         try {
-            Cursor c = db.query(Sqlite.TABLE_PEERTUBE_FAVOURITES, null,  null, null, null, null, Sqlite.COL_DATE+ " DESC");
+            Cursor c = db.query(Sqlite.TABLE_PEERTUBE_FAVOURITES, null, null, null, null, null, Sqlite.COL_DATE + " DESC");
             return cursorToListPeertube(c);
         } catch (Exception e) {
             return null;
@@ -107,12 +109,13 @@ public class PeertubeFavoritesDAO {
 
     /**
      * Returns a cached Peertube
+     *
      * @return stored peertube List<Peertube>
      */
-    public List<Peertube> getSinglePeertube(Peertube peertube){
+    public List<Peertube> getSinglePeertube(Peertube peertube) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         try {
-            Cursor c = db.query(Sqlite.TABLE_PEERTUBE_FAVOURITES, null,  Sqlite.COL_UUID + " = \""+ peertube.getUuid() +"\" AND " + Sqlite.COL_INSTANCE + " = \"" + peertube.getInstance() + "\"", null, null, null, Sqlite.COL_DATE+ " DESC");
+            Cursor c = db.query(Sqlite.TABLE_PEERTUBE_FAVOURITES, null, Sqlite.COL_UUID + " = \"" + peertube.getUuid() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + peertube.getInstance() + "\"", null, null, null, Sqlite.COL_DATE + " DESC");
             return cursorToListPeertube(c);
         } catch (Exception e) {
             return null;
@@ -124,14 +127,14 @@ public class PeertubeFavoritesDAO {
      * @param c Cursor
      * @return List<Peertube>
      */
-    private List<Peertube> cursorToListPeertube(Cursor c){
+    private List<Peertube> cursorToListPeertube(Cursor c) {
         //No element found
         if (c.getCount() == 0) {
             c.close();
             return null;
         }
         List<Peertube> peertubes = new ArrayList<>();
-        while (c.moveToNext() ) {
+        while (c.moveToNext()) {
             //Restore cached status
             try {
                 Peertube peertube = API.parsePeertube(context, c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)), new JSONObject(c.getString(c.getColumnIndex(Sqlite.COL_CACHE))));

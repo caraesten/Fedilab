@@ -36,7 +36,7 @@ public class DeleteDomainsAsyncTask extends AsyncTask<Void, Void, Void> {
     private int response;
     private String domainName;
 
-    public DeleteDomainsAsyncTask(Context context, String domainName, OnRetrieveDomainsInterface onRetrieveDomainsInterface){
+    public DeleteDomainsAsyncTask(Context context, String domainName, OnRetrieveDomainsInterface onRetrieveDomainsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveDomainsInterface;
         this.domainName = domainName;

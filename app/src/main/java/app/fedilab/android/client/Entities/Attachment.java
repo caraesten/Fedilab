@@ -22,7 +22,7 @@ import android.os.Parcelable;
  * Manages Media
  */
 
-public class Attachment implements Parcelable{
+public class Attachment implements Parcelable {
 
     private String id;
     private String type;

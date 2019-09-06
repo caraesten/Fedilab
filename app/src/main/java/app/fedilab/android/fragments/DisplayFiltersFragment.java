@@ -21,10 +21,14 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,124 +101,124 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         asyncTask = new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.GET_ALL_FILTER, null, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
-        }catch (Exception ignored){}
-        if( add_new != null)
-        add_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                int style;
-                if (theme == Helper.THEME_DARK) {
-                    style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
-                    style = R.style.DialogBlack;
-                }else {
-                    style = R.style.Dialog;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.add_filter,   new LinearLayout(context), false);
-                dialogBuilder.setView(dialogView);
-
-                EditText add_phrase = dialogView.findViewById(R.id.add_phrase);
-                CheckBox context_home = dialogView.findViewById(R.id.context_home);
-                CheckBox context_public = dialogView.findViewById(R.id.context_public);
-                CheckBox context_notification = dialogView.findViewById(R.id.context_notification);
-                CheckBox context_conversation = dialogView.findViewById(R.id.context_conversation);
-                CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
-                CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
-                Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
-                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()),
-                        R.array.filter_expire, android.R.layout.simple_spinner_item);
-                filter_expire.setAdapter(adapterResize);
-                final int[] expire = {-1};
-                filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                       switch (position){
-                           case 0:
-                               expire[0] = -1;
-                               break;
-                           case 1:
-                               expire[0] = 3600;
-                               break;
-                           case 2:
-                               expire[0] = 21600;
-                               break;
-                           case 3:
-                               expire[0] = 43200;
-                               break;
-                           case 4:
-                               expire[0] = 86400;
-                               break;
-                           case 5:
-                               expire[0] = 604800;
-                               break;
-                       }
+        } catch (Exception ignored) {
+        }
+        if (add_new != null)
+            add_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK) {
+                        style = R.style.DialogBlack;
+                    } else {
+                        style = R.style.Dialog;
                     }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.add_filter, new LinearLayout(context), false);
+                    dialogBuilder.setView(dialogView);
 
-                        if( add_phrase.getText() != null && add_phrase.getText().toString().trim().length() > 0 ) {
-                            Filters filter = new Filters();
-                            ArrayList<String> contextFilter = new ArrayList<>();
-                            if( context_home.isChecked())
-                                contextFilter.add("home");
-                            if( context_public.isChecked())
-                                contextFilter.add("public");
-                            if( context_notification.isChecked())
-                                contextFilter.add("notifications");
-                            if( context_conversation.isChecked())
-                                contextFilter.add("thread");
-                            filter.setContext(contextFilter);
-                            filter.setPhrase(add_phrase.getText().toString());
-                            filter.setExpires_in(expire[0]);
-                            filter.setWhole_word(context_whole_word.isChecked());
-                            filter.setIrreversible(context_drop.isChecked());
-                            new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.CREATE_FILTER, filter, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    EditText add_phrase = dialogView.findViewById(R.id.add_phrase);
+                    CheckBox context_home = dialogView.findViewById(R.id.context_home);
+                    CheckBox context_public = dialogView.findViewById(R.id.context_public);
+                    CheckBox context_notification = dialogView.findViewById(R.id.context_notification);
+                    CheckBox context_conversation = dialogView.findViewById(R.id.context_conversation);
+                    CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
+                    CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
+                    Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
+                    ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()),
+                            R.array.filter_expire, android.R.layout.simple_spinner_item);
+                    filter_expire.setAdapter(adapterResize);
+                    final int[] expire = {-1};
+                    filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:
+                                    expire[0] = -1;
+                                    break;
+                                case 1:
+                                    expire[0] = 3600;
+                                    break;
+                                case 2:
+                                    expire[0] = 21600;
+                                    break;
+                                case 3:
+                                    expire[0] = 43200;
+                                    break;
+                                case 4:
+                                    expire[0] = 86400;
+                                    break;
+                                case 5:
+                                    expire[0] = 604800;
+                                    break;
+                            }
                         }
-                        dialog.dismiss();
-                        add_new.setEnabled(false);
-                    }
-                });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            if (add_phrase.getText() != null && add_phrase.getText().toString().trim().length() > 0) {
+                                Filters filter = new Filters();
+                                ArrayList<String> contextFilter = new ArrayList<>();
+                                if (context_home.isChecked())
+                                    contextFilter.add("home");
+                                if (context_public.isChecked())
+                                    contextFilter.add("public");
+                                if (context_notification.isChecked())
+                                    contextFilter.add("notifications");
+                                if (context_conversation.isChecked())
+                                    contextFilter.add("thread");
+                                filter.setContext(contextFilter);
+                                filter.setPhrase(add_phrase.getText().toString());
+                                filter.setExpires_in(expire[0]);
+                                filter.setWhole_word(context_whole_word.isChecked());
+                                filter.setIrreversible(context_drop.isChecked());
+                                new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.CREATE_FILTER, filter, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                            dialog.dismiss();
+                            add_new.setEnabled(false);
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
 
 
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.setTitle(getString(R.string.action_filter_create));
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        //Hide keyboard
-                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        assert imm != null;
-                        imm.hideSoftInputFromWindow(add_phrase.getWindowToken(), 0);
-                    }
-                });
-                if( alertDialog.getWindow() != null )
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                alertDialog.show();
-            }
-        });
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.setTitle(getString(R.string.action_filter_create));
+                    alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            //Hide keyboard
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            assert imm != null;
+                            imm.hideSoftInputFromWindow(add_phrase.getWindowToken(), 0);
+                        }
+                    });
+                    if (alertDialog.getWindow() != null)
+                        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    alertDialog.show();
+                }
+            });
         return rootView;
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
@@ -227,22 +231,20 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
-
 
 
     @Override
     public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
-        if( actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {
+        if (actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {
             if (apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0) {
                 this.filters.addAll(apiResponse.getFilters());
                 filterAdapter.notifyDataSetChanged();
@@ -252,24 +254,24 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 textviewNoAction.setVisibility(View.VISIBLE);
                 lv_filters.setVisibility(View.GONE);
             }
-        }else if( actionType == ManageFiltersAsyncTask.action.CREATE_FILTER){
+        } else if (actionType == ManageFiltersAsyncTask.action.CREATE_FILTER) {
             if (apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0) {
                 this.filters.add(0, apiResponse.getFilters().get(0));
                 filterAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
                 lv_filters.setVisibility(View.VISIBLE);
-            }else{
-                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
         }
         MainActivity.filters = apiResponse.getFilters();
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
-        if( mPageReferenceMap == null) {
+        if (mPageReferenceMap == null) {
             return;
         }
-        for(ManageTimelines tl: timelines) {
-            if( tl.getType() == ManageTimelines.Type.HOME || tl.getType() == ManageTimelines.Type.LOCAL || tl.getType() == ManageTimelines.Type.PUBLIC) {
+        for (ManageTimelines tl : timelines) {
+            if (tl.getType() == ManageTimelines.Type.HOME || tl.getType() == ManageTimelines.Type.LOCAL || tl.getType() == ManageTimelines.Type.PUBLIC) {
                 DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) mPageReferenceMap.get(tl.getPosition());
                 if (displayStatusFragment != null)
                     displayStatusFragment.refreshFilter();

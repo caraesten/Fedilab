@@ -47,12 +47,10 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
     private Context context;
     private AccountsAdminListAdapter accountsAdminListAdapter;
 
-    public AccountsAdminListAdapter(List<AccountAdmin> accountAdmins){
+    public AccountsAdminListAdapter(List<AccountAdmin> accountAdmins) {
         this.accountAdmins = accountAdmins;
         this.accountsAdminListAdapter = this;
     }
-
-
 
 
     @NonNull
@@ -71,26 +69,26 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
 
 
         Account.makeAccountNameEmoji(context, AccountsAdminListAdapter.this, account);
-        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
+        if (account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
+            if (account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else if (account.getDisplay_name() != null) {
-                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+                holder.account_dn.setText(account.getDisplay_name().replace("@", ""));
             }
-        }else
-            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        } else
+            holder.account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
 
-        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
-            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
+        if (account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
+            if (account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             else if (account.getDisplay_name() != null) {
-                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+                holder.account_dn.setText(account.getDisplay_name().replace("@", ""));
             }
-        }else
-            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        holder.account_un.setText(String.format("@%s",account.getUsername()));
+        } else
+            holder.account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        holder.account_un.setText(String.format("@%s", account.getUsername()));
         holder.account_ac.setText(account.getAcct());
-        if( account.getDisplay_name().equals(account.getAcct()))
+        if (account.getDisplay_name().equals(account.getAcct()))
             holder.account_ac.setVisibility(View.GONE);
         else
             holder.account_ac.setVisibility(View.VISIBLE);
@@ -99,7 +97,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
 
 
-        holder.main_container.setOnClickListener(view ->{
+        holder.main_container.setOnClickListener(view -> {
             Intent intent = new Intent(context, AccountReportActivity.class);
             Bundle b = new Bundle();
             b.putParcelable("targeted_account", accountAdmin);
@@ -118,8 +116,8 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
         return accountAdmins.size();
     }
 
-    private AccountAdmin getItemAt(int position){
-        if( accountAdmins.size() > position)
+    private AccountAdmin getItemAt(int position) {
+        if (accountAdmins.size() > position)
             return accountAdmins.get(position);
         else
             return null;
@@ -130,7 +128,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
         notifyAccountChanged(account);
     }
 
-    private void notifyAccountChanged(Account account){
+    private void notifyAccountChanged(Account account) {
         for (int i = 0; i < accountsAdminListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (accountsAdminListAdapter.getItemAt(i) != null && accountsAdminListAdapter.getItemAt(i).getAccount().getId().equals(account.getId())) {
@@ -143,7 +141,7 @@ public class AccountsAdminListAdapter extends RecyclerView.Adapter implements On
     }
 
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp;
         TextView account_ac;
         TextView account_dn;

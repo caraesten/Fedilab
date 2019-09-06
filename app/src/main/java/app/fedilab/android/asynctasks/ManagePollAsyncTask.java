@@ -16,6 +16,7 @@ package app.fedilab.android.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
@@ -38,12 +39,12 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
     private Poll poll;
     private type_s type;
 
-    public enum type_s{
+    public enum type_s {
         SUBMIT,
         REFRESH
     }
 
-    public ManagePollAsyncTask(Context context, type_s type, app.fedilab.android.client.Entities.Status status, int[] choices, OnPollInterface onPollInterface){
+    public ManagePollAsyncTask(Context context, type_s type, app.fedilab.android.client.Entities.Status status, int[] choices, OnPollInterface onPollInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPollInterface;
         this.status = status;
@@ -54,16 +55,16 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Poll _poll;
-        if( status.getReblog() != null)
+        if (status.getReblog() != null)
             _poll = status.getReblog().getPoll();
         else
             _poll = status.getPoll();
 
-        if( _poll.getId() == null)
+        if (_poll.getId() == null)
             return null;
-        if (type == type_s.SUBMIT){
-            poll = new API(contextReference.get()).submiteVote(_poll.getId(),choices);
-        }else if( type == type_s.REFRESH){
+        if (type == type_s.SUBMIT) {
+            poll = new API(contextReference.get()).submiteVote(_poll.getId(), choices);
+        } else if (type == type_s.REFRESH) {
             poll = new API(contextReference.get()).getPoll(status);
         }
         return null;

@@ -19,9 +19,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -58,7 +60,7 @@ public class TagCacheActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(TagCacheActivity.this, R.color.mastodonC3__));
@@ -88,10 +90,10 @@ public class TagCacheActivity extends BaseActivity {
         save_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( tag_add.getText() != null && tag_add.getText().toString().trim().replaceAll("\\#","").length() > 0) {
-                    String tagToInsert = tag_add.getText().toString().trim().replaceAll("\\#","");
+                if (tag_add.getText() != null && tag_add.getText().toString().trim().replaceAll("\\#", "").length() > 0) {
+                    String tagToInsert = tag_add.getText().toString().trim().replaceAll("\\#", "");
                     boolean isPresent = new TagsCacheDAO(TagCacheActivity.this, db).isPresent(tagToInsert);
-                    if( isPresent)
+                    if (isPresent)
                         Toasty.warning(TagCacheActivity.this, getString(R.string.tags_already_stored), Toast.LENGTH_LONG).show();
                     else {
                         new TagsCacheDAO(TagCacheActivity.this, db).insert(tagToInsert);
@@ -111,9 +113,9 @@ public class TagCacheActivity extends BaseActivity {
             public void run() {
 
                 List<String> tagsTemp = new TagsCacheDAO(TagCacheActivity.this, db).getAll();
-                if( tagsTemp != null)
+                if (tagsTemp != null)
                     tags = tagsTemp;
-                if( tags != null){
+                if (tags != null) {
                     tagsEditAdapter = new TagsEditAdapter(tags);
                     tag_list.setAdapter(tagsEditAdapter);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(TagCacheActivity.this);

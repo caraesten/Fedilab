@@ -17,8 +17,10 @@ package app.fedilab.android.drawers;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
         final ImageAdapter.ViewHolder holder = (ImageAdapter.ViewHolder) viewHolder;
 
-        if( !((ShowAccountActivity)context).isFinishing())
+        if (!((ShowAccountActivity) context).isFinishing())
             Glide.with(context).load(status.getArt_attachment().getPreview_url()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +82,11 @@ public class ImageAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, MediaActivity.class);
                 Bundle b = new Bundle();
                 ArrayList<Attachment> attachmentsTmp = new ArrayList<>();
-                for(Status status1: statuses){
+                for (Status status1 : statuses) {
                     attachmentsTmp.add(status1.getArt_attachment());
                 }
                 intent.putParcelableArrayListExtra("mediaArray", attachmentsTmp);
-                b.putInt("position", (viewHolder.getAdapterPosition()+1));
+                b.putInt("position", (viewHolder.getAdapterPosition() + 1));
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -112,7 +114,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
 
         public ViewHolder(View itemView) {

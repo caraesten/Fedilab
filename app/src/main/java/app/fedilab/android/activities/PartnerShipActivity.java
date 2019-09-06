@@ -20,8 +20,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -66,7 +68,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -80,14 +82,14 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_partnership);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -99,7 +101,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
                 }
             });
             toolbar_title.setText(R.string.action_partnership);
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PartnerShipActivity.this);
             }
@@ -113,11 +115,11 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
         ImageView mastohost = findViewById(R.id.mastohost_logo);
 
         mastohost.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://masto.host"));
-               startActivity(browserIntent);
-           }
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://masto.host"));
+                startActivity(browserIntent);
+            }
         });
 
         setTitle(R.string.action_partnership);
@@ -129,7 +131,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
 
 
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mastohost", "mastodon.social", PartnerShipActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-         }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -146,13 +148,13 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
     @Override
     public void onRetrieveRemoteAccount(Results results) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        if( results == null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (results == null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();
         Account account;
-        if( accounts != null && accounts.size() > 0){
+        if (accounts != null && accounts.size() > 0) {
             account = accounts.get(0);
             account.setFollowing(true);
             switch (account.getUsername()) {
@@ -161,17 +163,17 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
                     mastohostAdapter.notifyDataSetChanged();
                     break;
             }
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),PartnerShipActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), PartnerShipActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( mastohostAcct != null){
-            for(Account account: mastohostAcct){
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),PartnerShipActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (mastohostAcct != null) {
+            for (Account account : mastohostAcct) {
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), PartnerShipActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -180,11 +182,11 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
-        if( error != null){
+        if (error != null) {
             return;
         }
-        for( int i = 0 ; i < mastohostAcct.size() ; i++){
-            if( mastohostAcct.get(i).getId() != null && mastohostAcct.get(i).getId().equals(relationship.getId())){
+        for (int i = 0; i < mastohostAcct.size(); i++) {
+            if (mastohostAcct.get(i).getId() != null && mastohostAcct.get(i).getId().equals(relationship.getId())) {
                 mastohostAcct.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 mastohostAdapter.notifyDataSetChanged();
                 break;

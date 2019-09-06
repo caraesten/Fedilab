@@ -43,7 +43,7 @@ public class RetrieveNotificationsCacheAsyncTask extends AsyncTask<Void, Void, V
     private WeakReference<Context> contextReference;
     private FilterNotifications filterNotifications;
 
-    public RetrieveNotificationsCacheAsyncTask(Context context, FilterNotifications filterNotifications, String max_id, OnRetrieveCacheNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveNotificationsCacheAsyncTask(Context context, FilterNotifications filterNotifications, String max_id, OnRetrieveCacheNotificationsInterface onRetrieveNotificationsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
@@ -56,7 +56,7 @@ public class RetrieveNotificationsCacheAsyncTask extends AsyncTask<Void, Void, V
         List<Notification> notifications = new NotificationCacheDAO(contextReference.get(), db).getNotificationsFromID(filterNotifications, max_id);
         apiResponse = new APIResponse();
         apiResponse.setNotifications(notifications);
-        if( notifications != null && notifications.size() > 0 ) {
+        if (notifications != null && notifications.size() > 0) {
             apiResponse.setMax_id(notifications.get(notifications.size() - 1).getId());
         }
         return null;

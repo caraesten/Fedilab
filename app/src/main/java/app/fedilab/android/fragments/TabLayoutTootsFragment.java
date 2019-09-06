@@ -13,13 +13,18 @@ package app.fedilab.android.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +54,7 @@ public class TabLayoutTootsFragment extends Fragment {
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.replies)));
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.media)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pinned_toots)));
         }
@@ -63,7 +68,7 @@ public class TabLayoutTootsFragment extends Fragment {
                 (getChildFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -103,7 +108,7 @@ public class TabLayoutTootsFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedid", targetedId);
-                    bundle.putBoolean("showReply",false);
+                    bundle.putBoolean("showReply", false);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 1:
@@ -111,7 +116,7 @@ public class TabLayoutTootsFragment extends Fragment {
                     bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedid", targetedId);
-                    bundle.putBoolean("showReply",true);
+                    bundle.putBoolean("showReply", true);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 2:
@@ -125,7 +130,7 @@ public class TabLayoutTootsFragment extends Fragment {
                     bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedid", targetedId);
-                    bundle.putBoolean("showPinned",true);
+                    bundle.putBoolean("showPinned", true);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 default:
@@ -140,7 +145,7 @@ public class TabLayoutTootsFragment extends Fragment {
         }
     }
 
-    public ViewPager getViewPager(){
+    public ViewPager getViewPager() {
         return viewPager;
     }
 }

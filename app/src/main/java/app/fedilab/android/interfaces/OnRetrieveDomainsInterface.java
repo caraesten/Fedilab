@@ -23,5 +23,6 @@ import app.fedilab.android.client.APIResponse;
  */
 public interface OnRetrieveDomainsInterface {
     void onRetrieveDomains(APIResponse apiResponse);
+
     void onRetrieveDomainsDeleted(int response);
 }

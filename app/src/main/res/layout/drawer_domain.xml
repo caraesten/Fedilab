@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2018 Thomas Schneider
 
     This file is a part of Fedilab
@@ -23,6 +22,7 @@
     android:layout_marginTop="10dp"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
+
     <TextView
         android:id="@+id/domain_name"
         android:layout_marginStart="10dp"
@@ -33,6 +33,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/domain_delete"
         android:src="@drawable/ic_cancel"

@@ -22,8 +22,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -72,13 +74,14 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     private String bundle_content;
     private String bundle_thumbnailurl;
     private String bundle_creator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -95,7 +98,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         setContentView(R.layout.activity_custom_sharing);
 
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -105,7 +108,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.settings_title_custom_sharing);
             ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
-            if( close_conversation != null){
+            if (close_conversation != null) {
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -113,25 +116,25 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                     }
                 });
             }
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, CustomSharingActivity.this);
             }
-        }else{
+        } else {
             setTitle(R.string.settings_title_custom_sharing);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
         Bundle b = getIntent().getExtras();
         Status status = null;
-        if(b != null) {
+        if (b != null) {
             status = b.getParcelable("status");
         }
-        if( status == null){
+        if (status == null) {
             finish();
             return;
         }
@@ -142,7 +145,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_source = status.getAccount().getUrl();
         String bundle_tags = status.getTagsString();
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
-        if( status.getCard() != null && status.getCard().getImage() != null) {
+        if (status.getCard() != null && status.getCard().getImage() != null) {
             bundle_thumbnailurl = status.getCard().getImage();
         } else if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
             ArrayList<Attachment> mediaAttachments = status.getMedia_attachments();
@@ -162,7 +165,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         String[] lines = bundle_content.split("\n");
         //Remove tags in title
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            lines[0] = Html.fromHtml( lines[0], Html.FROM_HTML_MODE_LEGACY).toString();
+            lines[0] = Html.fromHtml(lines[0], Html.FROM_HTML_MODE_LEGACY).toString();
         else
             //noinspection deprecation
             lines[0] = Html.fromHtml(lines[0]).toString();
@@ -175,7 +178,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         set_custom_sharing_title.setText(newTitle);
         String newDescription = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            newDescription = Html.fromHtml( bundle_content, Html.FROM_HTML_MODE_LEGACY).toString();
+            newDescription = Html.fromHtml(bundle_content, Html.FROM_HTML_MODE_LEGACY).toString();
         else
             //noinspection deprecation
             newDescription = Html.fromHtml(bundle_content).toString();
@@ -192,8 +195,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 CharSequence comma_only = ",";
                 CharSequence space_only = " ";
                 CharSequence double_space = "  ";
-                keywords = keywords.replace(comma_only,space_only);
-                keywords = keywords.replace(double_space,space_only);
+                keywords = keywords.replace(comma_only, space_only);
+                keywords = keywords.replace(double_space, space_only);
                 // Create encodedCustomSharingURL
                 custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,
                         "http://example.net/add?token=YOUR_TOKEN&url=${url}&title=${title}" +
@@ -218,7 +221,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     @Override
     public void onCustomSharing(CustomSharingResponse customSharingResponse) {
         set_custom_sharing_save.setEnabled(true);
-        if( customSharingResponse.getError() != null){
+        if (customSharingResponse.getError() != null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
@@ -244,8 +247,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         for (String param_name : args) {
             paramFound = false;
             String param_value = uri.getQueryParameter(param_name);
-            if(param_value != null)
-                switch(param_value) {
+            if (param_value != null)
+                switch (param_value) {
                     case "${url}":
                         paramFound = true;
                         builder.appendQueryParameter(param_name, bundle_url);
@@ -287,14 +290,14 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     }
 
 
-    private String formatedContent(String content, List<Emojis> emojis){
+    private String formatedContent(String content, List<Emojis> emojis) {
         //Avoid null content
-        if( content == null)
+        if (content == null)
             return "";
-        if( emojis == null || emojis.size() == 0)
+        if (emojis == null || emojis.size() == 0)
             return content;
         for (Emojis emoji : emojis) {
-            content = content.replaceAll(":"+emoji.getShortcode()+":","<img src='"+emoji.getUrl()+"' width=20 alt='"+emoji.getShortcode()+"'/>");
+            content = content.replaceAll(":" + emoji.getShortcode() + ":", "<img src='" + emoji.getUrl() + "' width=20 alt='" + emoji.getShortcode() + "'/>");
         }
         return content;
     }

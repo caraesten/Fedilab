@@ -1,4 +1,5 @@
 package app.fedilab.android.client.Entities;
+
 /* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Fedilab

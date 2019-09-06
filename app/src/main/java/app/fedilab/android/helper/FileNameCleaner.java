@@ -16,7 +16,7 @@ public class FileNameCleaner {
     public static String cleanFileName(String badFileName) {
         StringBuilder cleanName = new StringBuilder();
         int len = badFileName.codePointCount(0, badFileName.length());
-        for (int i=0; i<len; i++) {
+        for (int i = 0; i < len; i++) {
             int c = badFileName.codePointAt(i);
             if (Arrays.binarySearch(illegalChars, c) < 0) {
                 cleanName.appendCodePoint(c);

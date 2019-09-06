@@ -36,9 +36,7 @@ public class ManageCachedStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
 
 
-
-
-    public ManageCachedStatusAsyncTask(Context context, String statusId, OnRefreshCachedStatusInterface onRefreshCachedStatusInterface){
+    public ManageCachedStatusAsyncTask(Context context, String statusId, OnRefreshCachedStatusInterface onRefreshCachedStatusInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRefreshCachedStatusInterface;
         this.statusId = statusId;
@@ -48,12 +46,12 @@ public class ManageCachedStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         APIResponse apiResponse = new API(contextReference.get()).getStatusbyIdAndCache(statusId);
-        if( apiResponse.getStatuses().size() > 0){
+        if (apiResponse.getStatuses().size() > 0) {
             refreshedStatus = apiResponse.getStatuses().get(0);
-            if( refreshedStatus != null){
+            if (refreshedStatus != null) {
                 refreshedStatus.setcached(true);
             }
-        }else {
+        } else {
             refreshedStatus = new app.fedilab.android.client.Entities.Status();
             refreshedStatus.setId(statusId);
 

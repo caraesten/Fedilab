@@ -39,7 +39,7 @@ import app.fedilab.android.sqlite.Sqlite;
 
 public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action{
+    public enum action {
         GET_PLAYLIST,
         GET_LIST_VIDEOS,
         CREATE_PLAYLIST,
@@ -59,7 +59,7 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
     private Playlist playlist;
     private String videoId;
 
-    public ManagePlaylistsAsyncTask(Context context, action apiAction, Playlist playlist, String videoId, String max_id, OnPlaylistActionInterface onPlaylistActionInterface){
+    public ManagePlaylistsAsyncTask(Context context, action apiAction, Playlist playlist, String videoId, String max_id, OnPlaylistActionInterface onPlaylistActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onPlaylistActionInterface;
         this.apiAction = apiAction;
@@ -78,15 +78,15 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
         Account account = new AccountDAO(contextReference.get(), db).getUniqAccount(userId, instance);
         if (apiAction == action.GET_PLAYLIST) {
             apiResponse = new PeertubeAPI(contextReference.get()).getPlayists(account.getUsername());
-        }else if(apiAction == action.GET_LIST_VIDEOS){
-            apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistVideos(playlist.getId(),max_id, null);
-        }else if(apiAction == action.DELETE_PLAYLIST){
+        } else if (apiAction == action.GET_LIST_VIDEOS) {
+            apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistVideos(playlist.getId(), max_id, null);
+        } else if (apiAction == action.DELETE_PLAYLIST) {
             statusCode = new PeertubeAPI(contextReference.get()).deletePlaylist(playlist.getId());
-        }else if(apiAction == action.ADD_VIDEOS){
-            statusCode = new PeertubeAPI(contextReference.get()).addVideoPlaylist(playlist.getId(),videoId);
-        }else if(apiAction == action.DELETE_VIDEOS){
-            statusCode = new PeertubeAPI(contextReference.get()).deleteVideoPlaylist(playlist.getId(),videoId);
-        }else if(apiAction == action.GET_PLAYLIST_FOR_VIDEO){
+        } else if (apiAction == action.ADD_VIDEOS) {
+            statusCode = new PeertubeAPI(contextReference.get()).addVideoPlaylist(playlist.getId(), videoId);
+        } else if (apiAction == action.DELETE_VIDEOS) {
+            statusCode = new PeertubeAPI(contextReference.get()).deleteVideoPlaylist(playlist.getId(), videoId);
+        } else if (apiAction == action.GET_PLAYLIST_FOR_VIDEO) {
             apiResponse = new PeertubeAPI(contextReference.get()).getPlaylistForVideo(videoId);
         }
         return null;

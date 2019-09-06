@@ -19,8 +19,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +64,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
     private FilterAdapter filterAdapter;
     private RelativeLayout textviewNoAction;
 
-    public FilterAdapter(List<Filters> filters, RelativeLayout textviewNoAction){
+    public FilterAdapter(List<Filters> filters, RelativeLayout textviewNoAction) {
         this.filters = filters;
         this.filterAdapter = this;
         this.textviewNoAction = textviewNoAction;
@@ -102,8 +105,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
         }
         holder.filter_word.setText(filter.getPhrase());
         StringBuilder contextString = new StringBuilder();
-        if( filter.getContext() != null)
-            for(String ct: filter.getContext())
+        if (filter.getContext() != null)
+            for (String ct : filter.getContext())
                 contextString.append(ct).append(" ");
         holder.filter_context.setText(contextString.toString());
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -111,17 +114,17 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         holder.edit_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = ((BaseMainActivity)context).getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.add_filter,   new LinearLayout(context), false);
+                LayoutInflater inflater = ((BaseMainActivity) context).getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.add_filter, new LinearLayout(context), false);
                 dialogBuilder.setView(dialogView);
 
                 EditText add_phrase = dialogView.findViewById(R.id.add_phrase);
@@ -139,7 +142,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                 filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        switch (position){
+                        switch (position) {
                             case 0:
                                 expire[0] = -1;
                                 break;
@@ -160,14 +163,15 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                                 break;
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
 
                 add_phrase.setText(filter.getPhrase());
-                if( filter.getContext() != null)
-                    for(String val: filter.getContext()){
+                if (filter.getContext() != null)
+                    for (String val : filter.getContext()) {
                         switch (val) {
                             case "home":
                                 context_home.setChecked(true);
@@ -190,17 +194,17 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        if( add_phrase.getText() != null && add_phrase.getText().toString().trim().length() > 0 ) {
+                        if (add_phrase.getText() != null && add_phrase.getText().toString().trim().length() > 0) {
                             Filters filterSent = new Filters();
                             filterSent.setId(filter.getId());
                             ArrayList<String> contextFilter = new ArrayList<>();
-                            if( context_home.isChecked())
+                            if (context_home.isChecked())
                                 contextFilter.add("home");
-                            if( context_public.isChecked())
+                            if (context_public.isChecked())
                                 contextFilter.add("public");
-                            if( context_notification.isChecked())
+                            if (context_notification.isChecked())
                                 contextFilter.add("notifications");
-                            if( context_conversation.isChecked())
+                            if (context_conversation.isChecked())
                                 contextFilter.add("thread");
                             filterSent.setContext(contextFilter);
                             filterSent.setExpires_in(expire[0]);
@@ -232,7 +236,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                         imm.hideSoftInputFromWindow(add_phrase.getWindowToken(), 0);
                     }
                 });
-                if( alertDialog.getWindow() != null )
+                if (alertDialog.getWindow() != null)
                     alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 alertDialog.show();
             }
@@ -241,16 +245,16 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
-                builder.setTitle(context.getString(R.string.action_filter_delete) );
-                builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
+                builder.setTitle(context.getString(R.string.action_filter_delete));
+                builder.setMessage(context.getString(R.string.action_lists_confirm_delete));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 filters.remove(filter);
                                 filterAdapter.notifyDataSetChanged();
-                                new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.DELETE_FILTER,filter, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                if( filters.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.DELETE_FILTER, filter, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                if (filters.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }
@@ -268,8 +272,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
     }
 
 
-    private Filters getItemAt(int position){
-        if( filters.size() > position)
+    private Filters getItemAt(int position) {
+        if (filters.size() > position)
             return filters.get(position);
         else
             return null;
@@ -277,7 +281,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
 
     @Override
     public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-        if( apiResponse != null) {
+        if (apiResponse != null) {
             if (apiResponse.getError() != null) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
                 return;
@@ -289,7 +293,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
         }
     }
 
-    private void notifyStatusChanged(Filters filter){
+    private void notifyStatusChanged(Filters filter) {
         for (int i = 0; i < filterAdapter.getCount(); i++) {
             //noinspection ConstantConditions
             if (filterAdapter.getItemAt(i) != null && filterAdapter.getItemAt(i).getId().equals(filter.getId())) {

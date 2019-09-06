@@ -15,11 +15,12 @@
 package app.fedilab.android.activities;
 
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class ProxyActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC3__));
@@ -69,7 +70,7 @@ public class ProxyActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_proxy);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
         //Enable proxy
@@ -96,12 +97,12 @@ public class ProxyActivity extends BaseActivity {
         int portVal = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
         final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
         final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
-        if( hostVal.length() > 0)
+        if (hostVal.length() > 0)
             host.setText(hostVal);
         port.setText(String.valueOf(portVal));
-        if( login != null && login.length() > 0)
+        if (login != null && login.length() > 0)
             proxy_login.setText(login);
-        if( pwd != null && proxy_password.length() > 0)
+        if (pwd != null && proxy_password.length() > 0)
             proxy_password.setText(pwd);
         count2 = 0;
         final Spinner proxy_type = findViewById(R.id.type);
@@ -114,14 +115,15 @@ public class ProxyActivity extends BaseActivity {
         proxy_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0){
+                if (count2 > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_PROXY_TYPE, position);
                     editor.apply();
-                }else {
+                } else {
                     count2++;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -136,7 +138,7 @@ public class ProxyActivity extends BaseActivity {
                 String proxy_passwordVal = proxy_password.getText().toString().trim();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.SET_PROXY_HOST, hostVal);
-                if( portVal.matches("\\d+") )
+                if (portVal.matches("\\d+"))
                     editor.putInt(Helper.SET_PROXY_PORT, Integer.parseInt(portVal));
                 editor.putString(Helper.SET_PROXY_LOGIN, proxy_loginVal);
                 editor.putString(Helper.SET_PROXY_PASSWORD, proxy_passwordVal);
@@ -156,9 +158,6 @@ public class ProxyActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
 
 
 }

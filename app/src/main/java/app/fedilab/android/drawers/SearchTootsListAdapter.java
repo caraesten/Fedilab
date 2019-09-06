@@ -22,8 +22,10 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.util.List;
 
 import app.fedilab.android.helper.Helper;
@@ -46,7 +49,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 22/11/2017.
  * Adapter for search
  */
-public class SearchTootsListAdapter extends BaseAdapter  {
+public class SearchTootsListAdapter extends BaseAdapter {
 
     private List<String> searches;
     private LayoutInflater layoutInflater;
@@ -54,7 +57,7 @@ public class SearchTootsListAdapter extends BaseAdapter  {
     private SearchTootsListAdapter searchTootsListAdapter;
     private RelativeLayout textviewNoAction;
 
-    public SearchTootsListAdapter(Context context, List<String> searches, RelativeLayout textviewNoAction){
+    public SearchTootsListAdapter(Context context, List<String> searches, RelativeLayout textviewNoAction) {
         this.searches = searches;
         this.searchTootsListAdapter = this;
         this.textviewNoAction = textviewNoAction;
@@ -93,21 +96,21 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
+        if (theme == Helper.THEME_LIGHT) {
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-        }else if(theme == Helper.THEME_DARK){
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
+        } else if (theme == Helper.THEME_DARK) {
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-        }else if(theme == Helper.THEME_BLACK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
+        } else if (theme == Helper.THEME_BLACK) {
             holder.search_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(search);
         final float scale = context.getResources().getDisplayMetrics().density;
         assert next != null;
-        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
+        next.setBounds(0, 0, (int) (30 * scale + 0.5f), (int) (30 * scale + 0.5f));
         holder.search_title.setCompoundDrawables(null, null, next, null);
 
         holder.search_container.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +127,9 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
@@ -141,7 +144,7 @@ public class SearchTootsListAdapter extends BaseAdapter  {
                                 new SearchDAO(context, db).remove(search.trim());
                                 searches.remove(search);
                                 searchTootsListAdapter.notifyDataSetChanged();
-                                if( searches.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                if (searches.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }

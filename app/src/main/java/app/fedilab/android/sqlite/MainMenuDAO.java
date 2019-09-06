@@ -46,36 +46,39 @@ public class MainMenuDAO {
 
     /**
      * Insert a menu configuration name in database
+     *
      * @param mainMenuItem MainMenuItem
-     * @param userId String
-     * @param instance String
+     * @param userId       String
+     * @param instance     String
      */
     public void insertMenu(MainMenuItem mainMenuItem, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news()?1:0);
-        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list()?1:0);
-        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications()?1:0);
-        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
-        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
-        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto()?1:0);
+        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
         //Inserts menu conf
-        try{
+        try {
             db.insert(Sqlite.TABLE_MAIN_MENU_ITEMS, null, values);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     //------- INSERTIONS  -------
 
     /**
      * Insert a menu configuration name in database
+     *
      * @param mainMenuItem MainMenuItem
      */
     public void insertMenu(MainMenuItem mainMenuItem) {
@@ -85,22 +88,23 @@ public class MainMenuDAO {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news()?1:0);
-        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list()?1:0);
-        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications()?1:0);
-        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
-        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
-        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto()?1:0);
+        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
         //Inserts menu conf
-        try{
+        try {
             db.insert(Sqlite.TABLE_MAIN_MENU_ITEMS, null, values);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
 
@@ -109,33 +113,37 @@ public class MainMenuDAO {
 
     /**
      * update menu items in database
+     *
      * @param mainMenuItem MainMenuItem
      */
     public void updateMenu(MainMenuItem mainMenuItem, String userId, String instance) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news()?1:0);
-        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list()?1:0);
-        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications()?1:0);
-        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
-        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
-        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto()?1:0);
-        try{
-            db.update(Sqlite.TABLE_MAIN_MENU_ITEMS,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? " ,
+        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
+        try {
+            db.update(Sqlite.TABLE_MAIN_MENU_ITEMS, values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
                     new String[]{userId, instance});
-        }catch (Exception ignored) {ignored.printStackTrace();}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 
 
     /**
      * update menu items in database
+     *
      * @param mainMenuItem MainMenuItem
      */
     public void updateMenu(MainMenuItem mainMenuItem) {
@@ -146,25 +154,25 @@ public class MainMenuDAO {
 
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news()?1:0);
-        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list()?1:0);
-        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive()?1:0);
-        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications()?1:0);
-        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube()?1:0);
-        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters()?1:0);
-        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted()?1:0);
-        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked()?1:0);
-        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto()?1:0);
-        try{
-            db.update(Sqlite.TABLE_MAIN_MENU_ITEMS,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? " ,
+        values.put(Sqlite.COL_NAV_NEWS, mainMenuItem.isNav_news() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_LIST, mainMenuItem.isNav_list() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_SCHEDULED, mainMenuItem.isNav_scheduled() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE, mainMenuItem.isNav_archive() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_ARCHIVE_NOTIFICATIONS, mainMenuItem.isNav_archive_notifications() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_PEERTUBE, mainMenuItem.isNav_peertube() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_FILTERS, mainMenuItem.isNav_filters() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOW_TO_FOLLOW, mainMenuItem.isNav_how_to_follow() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
+        try {
+            db.update(Sqlite.TABLE_MAIN_MENU_ITEMS, values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
                     new String[]{userId, instance});
-        }catch (Exception ignored) {ignored.printStackTrace();}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
-
-
 
 
     //------- GETTERS  -------
@@ -172,13 +180,14 @@ public class MainMenuDAO {
 
     /**
      * Returns instance by its nale in db
-     * @param userId String
+     *
+     * @param userId   String
      * @param instance String
      * @return MainMenuItem
      */
-    public MainMenuItem getMainMenu(String userId, String instance){
+    public MainMenuItem getMainMenu(String userId, String instance) {
         try {
-            Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
+            Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
             return null;
@@ -187,14 +196,15 @@ public class MainMenuDAO {
 
     /**
      * Returns instance by its nale in db
+     *
      * @return MainMenuItem
      */
-    public MainMenuItem getMainMenu(){
+    public MainMenuItem getMainMenu() {
         try {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, "1");
+            Cursor c = db.query(Sqlite.TABLE_MAIN_MENU_ITEMS, null, Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'", null, null, null, null, "1");
             return cursorToMainMenu(c);
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,13 +213,12 @@ public class MainMenuDAO {
     }
 
 
-
     /***
      * Method to hydrate main menu items from database
      * @param c Cursor
      * @return MainMenuItem
      */
-    private MainMenuItem cursorToMainMenu(Cursor c){
+    private MainMenuItem cursorToMainMenu(Cursor c) {
         //No element found
         MainMenuItem mainMenuItem = new MainMenuItem();
         if (c.getCount() == 0) {

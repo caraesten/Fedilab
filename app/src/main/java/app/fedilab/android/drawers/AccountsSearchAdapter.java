@@ -18,7 +18,9 @@ package app.fedilab.android.drawers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+
 import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +50,12 @@ import app.fedilab.android.R;
  */
 public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filterable {
 
-    private List<Account> accounts, tempAccounts, suggestions ;
+    private List<Account> accounts, tempAccounts, suggestions;
     private LayoutInflater layoutInflater;
     private boolean owner;
     private Context context;
 
-    public AccountsSearchAdapter(Context context, List<Account> accounts){
+    public AccountsSearchAdapter(Context context, List<Account> accounts) {
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
         this.context = context;
@@ -62,7 +64,8 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         layoutInflater = LayoutInflater.from(context);
         this.owner = false;
     }
-    public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner){
+
+    public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner) {
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
         this.context = context;
@@ -108,16 +111,16 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if( owner) {
+        if (owner) {
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
-            instance = (account.getInstance() !=null)?account.getInstance():currentAccount.getInstance();
+            instance = (account.getInstance() != null) ? account.getInstance() : currentAccount.getInstance();
             holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + instance));
             holder.account_dn.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.account_un.setText(String.format("@%s", account.getAcct()));
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_dn.setVisibility(View.VISIBLE);
@@ -164,7 +167,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
                 clear();
                 addAll(c);
                 notifyDataSetChanged();
-            } else{
+            } else {
                 clear();
                 notifyDataSetChanged();
             }

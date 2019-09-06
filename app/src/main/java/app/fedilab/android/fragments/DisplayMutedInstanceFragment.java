@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -37,9 +38,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
@@ -101,16 +105,16 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
         mLayoutManager = new LinearLayoutManager(context);
         lv_domains.setLayoutManager(mLayoutManager);
         lv_domains.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);                            nextElementLoader.setVisibility(View.VISIBLE);
+                            asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
                         nextElementLoader.setVisibility(View.GONE);
@@ -126,11 +130,12 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);            }
+                asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -154,11 +159,11 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
         asyncTask = new RetrieveDomainsAsyncTask(context, max_id, DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
-        }catch (Exception ignored){}
-        if( add_new != null)
+        } catch (Exception ignored) {
+        }
+        if (add_new != null)
             add_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -167,24 +172,24 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
                     int style;
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                     LayoutInflater inflater = getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.add_blocked_instance,   new LinearLayout(context), false);
+                    View dialogView = inflater.inflate(R.layout.add_blocked_instance, new LinearLayout(context), false);
                     dialogBuilder.setView(dialogView);
 
                     EditText add_domain = dialogView.findViewById(R.id.add_domain);
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            if(add_domain.getText() != null && add_domain.getText().toString().trim().matches("^[\\da-zA-Z.-]+\\.[a-zA-Z.]{2,10}$")){
+                            if (add_domain.getText() != null && add_domain.getText().toString().trim().matches("^[\\da-zA-Z.-]+\\.[a-zA-Z.]{2,10}$")) {
                                 new PostActionAsyncTask(context, API.StatusAction.BLOCK_DOMAIN, add_domain.getText().toString().trim(), DisplayMutedInstanceFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 dialog.dismiss();
-                            }else{
+                            } else {
                                 Toasty.error(context, context.getString(R.string.toast_empty_content)).show();
                             }
                         }
@@ -197,7 +202,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
                     });
                     AlertDialog alertDialog = dialogBuilder.create();
                     alertDialog.setTitle(getString(R.string.block_domain));
-                    if( alertDialog.getWindow() != null )
+                    if (alertDialog.getWindow() != null)
                         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     alertDialog.show();
                 }
@@ -207,11 +212,9 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
     }
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override
@@ -222,12 +225,12 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
-    public void scrollToTop(){
-        if( lv_domains != null)
+    public void scrollToTop() {
+        if (lv_domains != null)
             lv_domains.setAdapter(domainsListAdapter);
     }
 
@@ -235,26 +238,26 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
     public void onRetrieveDomains(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
+        flag_loading = (apiResponse.getMax_id() == null);
         List<String> domains = apiResponse.getDomains();
-        if( !swiped && firstLoad && (domains == null || domains.size() == 0))
+        if (!swiped && firstLoad && (domains == null || domains.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
-        if( swiped ){
+        if (swiped) {
             domainsListAdapter = new DomainsListAdapter(this.domains, textviewNoAction);
             lv_domains.setAdapter(domainsListAdapter);
             swiped = false;
         }
-        if( domains != null && domains.size() > 0) {
+        if (domains != null && domains.size() > 0) {
             this.domains.addAll(domains);
             domainsListAdapter.notifyDataSetChanged();
         }
@@ -270,12 +273,12 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
-        this.domains.add(0,userId);
+        this.domains.add(0, userId);
         domainsListAdapter.notifyItemInserted(0);
     }
 }

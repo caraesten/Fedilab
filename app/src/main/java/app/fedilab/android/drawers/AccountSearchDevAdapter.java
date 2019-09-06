@@ -20,8 +20,11 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +49,6 @@ import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 
 
-
 /**
  * Created by Thomas on 03/09/2017.
  * Adapter for accounts from web
@@ -58,10 +60,9 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     private Context context;
     private ViewHolder holder;
 
-    public AccountSearchDevAdapter(List<Account> accounts){
+    public AccountSearchDevAdapter(List<Account> accounts) {
         this.accounts = accounts;
     }
-
 
 
     @Override
@@ -101,17 +102,17 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }
         //Redraws icon for locked accounts
         final float scale = context.getResources().getDisplayMetrics().density;
-        if( account.isLocked()){
+        if (account.isLocked()) {
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_lock_outline);
             assert img != null;
-            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
-            holder.account_dn.setCompoundDrawables( null, null, img, null);
-        }else{
-            holder.account_dn.setCompoundDrawables( null, null, null, null);
+            img.setBounds(0, 0, (int) (20 * scale + 0.5f), (int) (20 * scale + 0.5f));
+            holder.account_dn.setCompoundDrawables(null, null, img, null);
+        } else {
+            holder.account_dn.setCompoundDrawables(null, null, null, null);
         }
 
 
-        if( !account.getSocial().contains("OPENCOLLECTIVE")) {
+        if (!account.getSocial().contains("OPENCOLLECTIVE")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
                 holder.account_un.setText(String.format("@%s", account.getAcct()));
@@ -119,31 +120,31 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
                 holder.account_un.setText(String.format("@%s", account.getAcct()));
             }
-            if( account.isFollowing()){
+            if (account.isFollowing()) {
                 holder.account_follow.hide();
-            }else{
+            } else {
                 holder.account_follow.show();
             }
-        }else{
+        } else {
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_un.setText(account.getAcct());
             holder.account_follow.hide();
         }
-        Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
+        Helper.changeDrawableColor(context, R.drawable.ic_lock_outline, R.color.mastodonC4);
         //Profile picture
 
-        if( account.getAvatar().startsWith("http")) {
+        if (account.getAvatar().startsWith("http")) {
             Glide.with(holder.account_pp.getContext())
                     .load(account.getAvatar())
                     .into(holder.account_pp);
-        }else if(account.getSocial().contains("OPENCOLLECTIVE")){
+        } else if (account.getSocial().contains("OPENCOLLECTIVE")) {
             Glide.with(holder.account_pp.getContext())
                     .load(R.drawable.missing)
                     .into(holder.account_pp);
         }
 
 
-        if( !account.getSocial().contains("OPENCOLLECTIVE")) {
+        if (!account.getSocial().contains("OPENCOLLECTIVE")) {
 
             holder.account_follow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -162,11 +163,11 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                     context.startActivity(intent);
                 }
             });
-        }else{
+        } else {
             holder.acccount_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   Helper.openBrowser(context, account.getUrl());
+                    Helper.openBrowser(context, account.getUrl());
                 }
             });
         }
@@ -176,13 +177,13 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
-            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             holder.account_follow.setEnabled(true);
             return;
         }
-        for( Account account: accounts){
-            if(account.getId().equals(userId)) {
+        for (Account account : accounts) {
+            if (account.getId().equals(userId)) {
                 account.setFollowing(true);
                 notifyDataSetChanged();
                 break;

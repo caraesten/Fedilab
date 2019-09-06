@@ -34,7 +34,7 @@ public class RemoveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Activity> activityReference;
     private Account account;
 
-    public RemoveAccountAsyncTask(Activity activity, Account account){
+    public RemoveAccountAsyncTask(Activity activity, Account account) {
         activityReference = new WeakReference<>(activity);
         this.account = account;
     }

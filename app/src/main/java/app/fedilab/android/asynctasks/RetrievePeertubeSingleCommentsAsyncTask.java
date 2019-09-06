@@ -32,7 +32,6 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 public class RetrievePeertubeSingleCommentsAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
-
     private APIResponse apiResponse;
     private String videoId;
     private OnRetrievePeertubeInterface listener;
@@ -40,14 +39,12 @@ public class RetrievePeertubeSingleCommentsAsyncTask extends AsyncTask<Void, Voi
     private String instanceName;
 
 
-
-    public RetrievePeertubeSingleCommentsAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+    public RetrievePeertubeSingleCommentsAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface) {
         this.contextReference = new WeakReference<>(context);
         this.videoId = videoId;
         this.listener = onRetrievePeertubeInterface;
         this.instanceName = instanceName;
     }
-
 
 
     @Override

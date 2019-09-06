@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,6 +47,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.provider.MediaStore;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.transition.ChangeBounds;
@@ -53,6 +55,7 @@ import androidx.transition.TransitionManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
@@ -74,7 +77,7 @@ import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
 
-public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorListener,
+public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorListener,
         View.OnClickListener,
         PropertiesBSFragment.Properties,
         EmojiBSFragment.EmojiListener,
@@ -107,7 +110,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -122,12 +125,12 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         }
 
         Bundle b = getIntent().getExtras();
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         String path = null;
-        if(b != null)
+        if (b != null)
             path = b.getString("imageUri", null);
-        if( path == null) {
+        if (path == null) {
             finish();
         }
         uri = Uri.parse(path);
@@ -156,7 +159,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         mRvFilters.setAdapter(mFilterViewAdapter);
 
 
-
         Typeface mEmojiTypeFace = Typeface.createFromAsset(getAssets(), "emojione-android.ttf");
 
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
@@ -165,14 +167,13 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 .build(); // build photo editor sdk
 
 
-
         mPhotoEditor.setOnPhotoEditorListener(this);
 
         //Set Image Dynamically
         mPhotoEditorView.getSource().setImageURI(uri);
 
 
-        if( uri != null ) {
+        if (uri != null) {
             try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
                 assert inputStream != null;
                 ExifInterface exif = new ExifInterface(inputStream);
@@ -196,9 +197,13 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
     }
 
     private static int exifToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
-        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
-        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
         return 0;
     }
 
@@ -306,9 +311,9 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
             showLoading(getString(R.string.saving));
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, getCacheDir().getAbsolutePath());
-            String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
+            String filename = System.currentTimeMillis() + "_" + Helper.getFileName(PhotoEditorActivity.this, uri);
 
-            File file = new File(myDir+"/"+filename);
+            File file = new File(myDir + "/" + filename);
             try {
                 file.createNewFile();
 
@@ -323,7 +328,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                         hideLoading();
                         showSnackbar(getString(R.string.image_saved));
                         mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
-                        if( exit ){
+                        if (exit) {
                             Intent intentImage = new Intent(Helper.INTENT_SEND_MODIFIED_IMAGE);
                             intentImage.putExtra("imgpath", imagePath);
                             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentImage);
@@ -352,7 +357,7 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
             ExifInterface exif = null;
             int rotation = 0;
             int rotationInDegrees = 0;
-            if( data != null && data.getData() != null) {
+            if (data != null && data.getData() != null) {
                 try (InputStream inputStream = getContentResolver().openInputStream(data.getData())) {
                     assert inputStream != null;
                     exif = new androidx.exifinterface.media.ExifInterface(inputStream);
@@ -383,15 +388,15 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                     CropImage.ActivityResult result = CropImage.getActivityResult(data);
                     Uri resultUri = result.getUri();
-                    if( resultUri != null) {
+                    if (resultUri != null) {
                         mPhotoEditorView.getSource().setImageURI(resultUri);
                         mPhotoEditorView.getSource().setRotation(rotationInDegrees);
                         File fdelete = new File(uri.getPath());
                         if (fdelete.exists()) {
-                           fdelete.delete();
+                            fdelete.delete();
                         }
                         uri = resultUri;
-                        String filename = System.currentTimeMillis()+"_"+Helper.getFileName(PhotoEditorActivity.this, uri);
+                        String filename = System.currentTimeMillis() + "_" + Helper.getFileName(PhotoEditorActivity.this, uri);
                         tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
 
                     }
@@ -444,13 +449,13 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
-        builder.setMessage( getString(R.string.confirm_exit_editing));
+        builder.setMessage(getString(R.string.confirm_exit_editing));
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -517,8 +522,6 @@ public class PhotoEditorActivity  extends BaseActivity implements OnPhotoEditorL
                 break;
         }
     }
-
-
 
 
     void showFilter(boolean isVisible) {

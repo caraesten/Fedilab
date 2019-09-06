@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Fedilab
@@ -21,6 +20,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_status_container">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,16 +32,19 @@
         android:divider="?android:dividerHorizontal"
         android:showDividers="end"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main_container"
             android:orientation="horizontal"
             card_view:ignore="DisableBaselineAlignment">
+
             <LinearLayout
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_marginTop="5dp"
                     android:id="@+id/notification_account_profile"
@@ -49,23 +52,27 @@
                     android:layout_width="50dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal|top"
-                    android:contentDescription="@string/profile_picture"/>
+                    android:contentDescription="@string/profile_picture" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:padding="5dp"
                     android:id="@+id/notification_type"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/notification_account_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/status_date"
                     android:layout_width="match_parent"
@@ -77,13 +84,16 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="50dp"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
@@ -94,22 +104,26 @@
                     android:layout_height="25dp"
                     android:contentDescription="@string/delete_notification" />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/status_spoiler_container"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_height="wrap_content">
+
                     <app.fedilab.android.helper.CustomTextView
                         android:id="@+id/status_spoiler"
                         android:layout_marginBottom="10dp"
                         android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <Button
                         android:id="@+id/status_spoiler_button"
                         android:textAllCaps="false"
@@ -135,11 +149,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <app.fedilab.android.helper.CustomTextView
                         android:id="@+id/notification_status_content"
                         android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <LinearLayout
                         android:id="@+id/status_document_container"
                         android:orientation="horizontal"
@@ -147,16 +163,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:baselineAligned="false">
+
                         <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            >
+                            android:layout_height="match_parent">
+
                             <ImageView
                                 android:id="@+id/status_prev1"
                                 android:layout_width="match_parent"
                                 android:scaleType="centerCrop"
                                 android:layout_height="match_parent" />
+
                             <ImageView
                                 android:id="@+id/status_prev1_play"
                                 android:visibility="gone"
@@ -166,6 +184,7 @@
                                 android:layout_height="20dp"
                                 android:contentDescription="@string/play_video" />
                         </RelativeLayout>
+
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="0dp"
@@ -174,17 +193,19 @@
                             android:id="@+id/status_container2"
                             android:layout_weight="1"
                             android:layout_height="match_parent">
+
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:scaleType="centerCrop"
                                 android:layout_height="0dp"
                                 android:layout_weight="1">
+
                                 <ImageView
                                     android:id="@+id/status_prev2"
                                     android:layout_width="match_parent"
                                     android:scaleType="centerCrop"
-                                    android:layout_height="match_parent"
-                                   />
+                                    android:layout_height="match_parent" />
+
                                 <ImageView
                                     android:visibility="gone"
                                     android:id="@+id/status_prev2_play"
@@ -192,7 +213,7 @@
                                     android:layout_width="20dp"
                                     android:src="@drawable/ic_play_arrow"
                                     android:layout_height="20dp"
-                                    android:contentDescription="@string/play_video"  />
+                                    android:contentDescription="@string/play_video" />
                             </RelativeLayout>
 
                             <LinearLayout
@@ -203,16 +224,18 @@
                                 android:id="@+id/status_container3"
                                 android:layout_height="0dp"
                                 android:baselineAligned="false">
+
                                 <RelativeLayout
                                     android:layout_weight="1"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content">
+
                                     <ImageView
                                         android:id="@+id/status_prev3"
                                         android:layout_width="match_parent"
                                         android:scaleType="centerCrop"
-                                        android:layout_height="match_parent"
-                                        />
+                                        android:layout_height="match_parent" />
+
                                     <ImageView
                                         android:id="@+id/status_prev3_play"
                                         android:layout_centerInParent="true"
@@ -222,6 +245,7 @@
                                         android:layout_height="20dp"
                                         android:contentDescription="@string/play_video" />
                                 </RelativeLayout>
+
                                 <RelativeLayout
                                     android:layout_marginLeft="2dp"
                                     android:layout_marginStart="2dp"
@@ -229,12 +253,13 @@
                                     android:layout_width="0dp"
                                     android:id="@+id/status_prev4_container"
                                     android:layout_height="wrap_content">
+
                                     <ImageView
                                         android:id="@+id/status_prev4"
                                         android:layout_width="match_parent"
                                         android:scaleType="centerCrop"
-                                        android:layout_height="match_parent"
-                                        />
+                                        android:layout_height="match_parent" />
+
                                     <ImageView
                                         android:id="@+id/status_prev4_play"
                                         android:layout_centerInParent="true"
@@ -247,6 +272,7 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                     <Button
                         android:id="@+id/status_show_more"
                         android:visibility="gone"
@@ -267,12 +293,14 @@
                         style="?attr/borderless"
                         android:text="@string/load_attachment" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/status_spoiler_mention_container"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/status_mention_spoiler"
                         android:layout_marginBottom="10dp"
@@ -386,10 +414,11 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:visibility="gone"
         android:background="@color/white"
         android:id="@+id/container_trans"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </FrameLayout>

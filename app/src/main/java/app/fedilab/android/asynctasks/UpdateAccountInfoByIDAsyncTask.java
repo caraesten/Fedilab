@@ -45,7 +45,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
     private WeakReference<Context> contextReference;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
 
-    public UpdateAccountInfoByIDAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface){
+    public UpdateAccountInfoByIDAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onUpdateAccountInfoInterface;
         this.social = social;
@@ -58,29 +58,29 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = null;
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             account = new API(this.contextReference.get()).verifyCredentials();
-        else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+        else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
             account.setSocial("PEERTUBE");
-        }else if ( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+        } else if (social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             account = new GNUAPI(this.contextReference.get()).verifyCredentials();
         }
-        if( account == null)
+        if (account == null)
             return null;
         account.setInstance(Helper.getLiveInstance(contextReference.get()));
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
-        if( userExists) {
+        if (userExists) {
             Account accountDb = new AccountDAO(this.contextReference.get(), db).getUniqAccount(userId, instance);
 
-            if( accountDb != null){
+            if (accountDb != null) {
                 account.setInstance(accountDb.getInstance());
                 account.setToken(accountDb.getToken());
                 new AccountDAO(this.contextReference.get(), db).updateAccountCredential(account);
             }
         }
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             try {
                 APIResponse response = new API(contextReference.get()).getCustomEmoji();
                 if (response != null && response.getEmojis() != null && response.getEmojis().size() > 0) {

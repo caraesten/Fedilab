@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.DimenRes;
 import androidx.annotation.Px;
+
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
@@ -58,7 +60,7 @@ public class MastalabAutoCompleteTextView extends androidx.appcompat.widget.AppC
     protected void onTextChanged(final CharSequence text, final int start, final int lengthBefore, final int lengthAfter) {
         final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
         final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
-        if( emoji && !autocomplete) {
+        if (emoji && !autocomplete) {
             EmojiManager.getInstance().replaceWithImages(getContext(), getText(), emojiSize, defaultEmojiSize);
         }
     }
@@ -75,7 +77,9 @@ public class MastalabAutoCompleteTextView extends androidx.appcompat.widget.AppC
         return emojiSize;
     }
 
-    @Override @CallSuper public void input(final Emoji emoji) {
+    @Override
+    @CallSuper
+    public void input(final Emoji emoji) {
         if (emoji != null && !autocomplete) {
             final int start = getSelectionStart();
             final int end = getSelectionEnd();

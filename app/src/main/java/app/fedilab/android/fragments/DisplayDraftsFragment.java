@@ -19,10 +19,14 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +58,7 @@ public class DisplayDraftsFragment extends Fragment {
     private List<StoredStatus> drafts;
     private DraftsListAdapter draftsListAdapter;
     private RelativeLayout textviewNoAction;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,28 +72,29 @@ public class DisplayDraftsFragment extends Fragment {
         mainLoader.setVisibility(View.VISIBLE);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            Helper.changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
-        }else {
-            Helper.changeDrawableColor(context, R.drawable.ic_cancel,R.color.black);
+        if (theme == Helper.THEME_DARK) {
+            Helper.changeDrawableColor(context, R.drawable.ic_cancel, R.color.dark_text);
+        } else {
+            Helper.changeDrawableColor(context, R.drawable.ic_cancel, R.color.black);
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //Removes all scheduled toots that have sent
         new StatusStoredDAO(context, db).removeAllSent();
         drafts = new StatusStoredDAO(context, db).getAllDrafts();
-        if( drafts != null && drafts.size() > 0) {
+        if (drafts != null && drafts.size() > 0) {
             draftsListAdapter = new DraftsListAdapter(drafts, true, textviewNoAction);
             lv_draft_toots.setAdapter(draftsListAdapter);
             draftsListAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             textviewNoAction.setVisibility(View.VISIBLE);
         }
         mainLoader.setVisibility(View.GONE);
         FloatingActionButton delete_all = null;
         try {
             delete_all = ((MainActivity) context).findViewById(R.id.delete_all);
-        }catch (Exception ignored){}
-        if( delete_all != null)
+        } catch (Exception ignored) {
+        }
+        if (delete_all != null)
             delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -97,9 +103,9 @@ public class DisplayDraftsFragment extends Fragment {
                     int style;
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
@@ -132,8 +138,7 @@ public class DisplayDraftsFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 

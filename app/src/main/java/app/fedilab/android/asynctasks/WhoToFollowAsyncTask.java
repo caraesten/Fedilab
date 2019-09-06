@@ -13,8 +13,10 @@
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.asynctasks;
+
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class WhoToFollowAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveWhoToFollowInterface listener;
     private WeakReference<Context> contextReference;
 
-    public WhoToFollowAsyncTask(Context context, String name, OnRetrieveWhoToFollowInterface onRetrieveWhoToFollowInterface){
+    public WhoToFollowAsyncTask(Context context, String name, OnRetrieveWhoToFollowInterface onRetrieveWhoToFollowInterface) {
         this.contextReference = new WeakReference<>(context);
         this.name = name;
         this.listener = onRetrieveWhoToFollowInterface;
@@ -46,7 +48,7 @@ public class WhoToFollowAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
-        if( name != null)
+        if (name != null)
             response = api.getCommunitywikiList(name);
         else
             response = api.getCommunitywikiList();
@@ -55,11 +57,11 @@ public class WhoToFollowAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        if( name == null)
+        if (name == null)
             listener.onRetrieveWhoToFollowList(response);
         else {
             List<TrunkAccount> trunkAccounts = null;
-            if(response != null) {
+            if (response != null) {
                 trunkAccounts = new ArrayList<>();
                 for (String res : response) {
                     TrunkAccount trunkAccount = new TrunkAccount();

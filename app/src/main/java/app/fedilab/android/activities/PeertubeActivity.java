@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -143,16 +144,17 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private ImageView my_pp, send;
     private TextView add_comment_read;
     private EditText add_comment_write;
-    private  String instance;
+    private String instance;
     private List<String> playlistForVideo;
     private List<Playlist> playlists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         fullscreen = FullScreenMediaController.fullscreen.OFF;
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -185,7 +187,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         add_comment_read = findViewById(R.id.add_comment_read);
         add_comment_write = findViewById(R.id.add_comment_write);
         peertube_playlist = findViewById(R.id.peertube_playlist);
-        send  = findViewById(R.id.send);
+        send = findViewById(R.id.send);
         add_comment_read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,10 +200,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             }
         });
         Helper.changeDrawableColor(getApplicationContext(), send, R.color.mastodonC4);
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             write_comment_container.setVisibility(View.GONE);
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             peertube_playlist.setVisibility(View.VISIBLE);
             peertube_bookmark.setVisibility(View.GONE);
         }
@@ -210,7 +212,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onClick(View v) {
                 String comment = add_comment_write.getText().toString();
-                if( comment.trim().length() > 0 ) {
+                if (comment.trim().length() > 0) {
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBECOMMENT, peertube.getId(), null, comment, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     add_comment_write.setText("");
                     add_comment_read.setVisibility(View.VISIBLE);
@@ -227,17 +229,17 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), my_pp);
         Bundle b = getIntent().getExtras();
-        if(b != null) {
+        if (b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
             videoId = b.getString("video_id", null);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            View view = inflater.inflate(R.layout.simple_bar,  new LinearLayout(getApplicationContext()), false);
+            View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -248,7 +250,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     finish();
                 }
             });
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
             }
@@ -256,9 +258,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
 
         mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
-        if( mode != Helper.VIDEO_MODE_WEBVIEW && mode != Helper.VIDEO_MODE_DIRECT)
+        if (mode != Helper.VIDEO_MODE_WEBVIEW && mode != Helper.VIDEO_MODE_DIRECT)
             mode = Helper.VIDEO_MODE_DIRECT;
-        if( mode == Helper.VIDEO_MODE_WEBVIEW){
+        if (mode == Helper.VIDEO_MODE_WEBVIEW) {
             webview_video.setVisibility(View.VISIBLE);
             playerView.setVisibility(View.GONE);
 
@@ -299,34 +301,34 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             }
             webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
             webview_video.loadUrl("https://" + peertubeInstance + "/videos/embed/" + videoId);
-        }else {
+        } else {
             webview_video.setVisibility(View.GONE);
             playerView.setVisibility(View.VISIBLE);
             loader.setVisibility(View.VISIBLE);
         }
 
 
-        if( mode != Helper.VIDEO_MODE_WEBVIEW){
+        if (mode != Helper.VIDEO_MODE_WEBVIEW) {
             playerView.setControllerShowTimeoutMs(1000);
             playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
             initFullscreenDialog();
             initFullscreenButton();
         }
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-            new ManagePlaylistsAsyncTask(PeertubeActivity.this,GET_PLAYLIST, null, null, null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            new ManagePlaylistsAsyncTask(PeertubeActivity.this, GET_PLAYLIST, null, null, null, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public void change(){
-        if(fullscreen == FullScreenMediaController.fullscreen.ON){
+    public void change() {
+        if (fullscreen == FullScreenMediaController.fullscreen.ON) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
                     WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             Objects.requireNonNull(getSupportActionBar()).hide();
             peertube_information_container.setVisibility(View.GONE);
-        }else{
+        } else {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
             Objects.requireNonNull(getSupportActionBar()).show();
@@ -358,7 +360,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     public static void hideKeyboard(Activity activity) {
         if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
         }
     }
@@ -371,15 +373,16 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         menu.findItem(R.id.action_comment).setVisible(true);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT)
+        if (theme == Helper.THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             MenuItem item = menu.findItem(R.id.action_comment);
-            if( item != null)
+            if (item != null)
                 item.setVisible(false);
         }
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -387,7 +390,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 finish();
                 return true;
             case R.id.action_comment:
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     Toasty.info(getApplicationContext(), getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                     new AsyncTask<Void, Void, Void>() {
 
@@ -423,9 +426,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                             contextReference.get().startActivity(intent);
                         }
                     }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                    if(! peertube.isCommentsEnabled()) {
-                        Toasty.info(getApplicationContext(), getString(R.string.comment_no_allowed_peertube),Toast.LENGTH_LONG).show();
+                } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                    if (!peertube.isCommentsEnabled()) {
+                        Toasty.info(getApplicationContext(), getString(R.string.comment_no_allowed_peertube), Toast.LENGTH_LONG).show();
                         return true;
                     }
                     int style;
@@ -433,9 +436,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                     if (theme == Helper.THEME_DARK) {
                         style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK){
+                    } else if (theme == Helper.THEME_BLACK) {
                         style = R.style.DialogBlack;
-                    }else {
+                    } else {
                         style = R.style.Dialog;
                     }
                     AlertDialog.Builder builderInner;
@@ -449,15 +452,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     builderInner.setView(input);
                     builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog,int which) {
+                        public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
                     builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog,int which) {
+                        public void onClick(DialogInterface dialog, int which) {
                             String comment = input.getText().toString();
-                            if( comment.trim().length() > 0 ) {
+                            if (comment.trim().length() > 0) {
                                 new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBECOMMENT, peertube.getId(), null, comment, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 dialog.dismiss();
                             }
@@ -482,31 +485,31 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public void onRetrievePeertube(APIResponse apiResponse) {
 
-        if( apiResponse == null || (apiResponse.getError() != null) || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (apiResponse == null || (apiResponse.getError() != null) || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
-        if( apiResponse.getPeertubes() == null || apiResponse.getPeertubes().get(0) == null || apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().get(0) == null || apiResponse.getPeertubes().get(0).getFileUrl(null) == null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
 
         peertube = apiResponse.getPeertubes().get(0);
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-            new ManagePlaylistsAsyncTask(PeertubeActivity.this,GET_PLAYLIST_FOR_VIDEO, null, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            new ManagePlaylistsAsyncTask(PeertubeActivity.this, GET_PLAYLIST_FOR_VIDEO, null, peertube.getId(), null, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
 
         peertube_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( playlists != null && peertube.getId() != null) {
+                if (playlists != null && peertube.getId() != null) {
                     PopupMenu popup = new PopupMenu(PeertubeActivity.this, peertube_playlist);
 
-                    for(Playlist playlist: playlists){
+                    for (Playlist playlist : playlists) {
                         String title = null;
                         for (String id : playlistForVideo) {
                             if (playlist.getId().equals(id)) {
@@ -514,7 +517,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                                 break;
                             }
                         }
-                        if( title == null){
+                        if (title == null) {
                             title = playlist.getDisplayName();
                         }
                         MenuItem item = popup.getMenu().add(0, 0, Menu.NONE, title);
@@ -534,13 +537,13 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                                         return false;
                                     }
                                 });
-                                if(playlistForVideo.contains(playlist.getId())){
+                                if (playlistForVideo.contains(playlist.getId())) {
                                     item.setTitle(playlist.getDisplayName());
-                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this,ManagePlaylistsAsyncTask.action.DELETE_VIDEOS, playlist, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this, ManagePlaylistsAsyncTask.action.DELETE_VIDEOS, playlist, peertube.getId(), null, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     playlistForVideo.remove(playlist.getId());
-                                }else{
-                                    item.setTitle( "✔ " + playlist.getDisplayName());
-                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this,ManagePlaylistsAsyncTask.action.ADD_VIDEOS, playlist, peertube.getId(), null , PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                } else {
+                                    item.setTitle("✔ " + playlist.getDisplayName());
+                                    new ManagePlaylistsAsyncTask(PeertubeActivity.this, ManagePlaylistsAsyncTask.action.ADD_VIDEOS, playlist, peertube.getId(), null, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     playlistForVideo.add(playlist.getId());
                                 }
                                 return false;
@@ -553,12 +556,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         });
 
 
-
-        if( peertube.isCommentsEnabled()) {
+        if (peertube.isCommentsEnabled()) {
             new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                 write_comment_container.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             RelativeLayout no_action = findViewById(R.id.no_action);
             TextView no_action_text = findViewById(R.id.no_action_text);
             no_action_text.setText(getString(R.string.comment_no_allowed_peertube));
@@ -578,11 +580,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         changeColor();
         initResolution();
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             peertube_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String newState = peertube.getMyRating().equals("like")?"none":"like";
+                    String newState = peertube.getMyRating().equals("like") ? "none" : "like";
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.RATEVIDEO, peertube.getId(), null, newState, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     peertube.setMyRating(newState);
                     changeColor();
@@ -591,20 +593,20 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             peertube_dislike_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String newState = peertube.getMyRating().equals("dislike")?"none":"dislike";
+                    String newState = peertube.getMyRating().equals("dislike") ? "none" : "dislike";
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.RATEVIDEO, peertube.getId(), null, newState, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     peertube.setMyRating(newState);
                     changeColor();
                 }
             });
-        }else{
+        } else {
             peertube_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String newState = peertube.getMyRating().equals("like")?"none":"like";
+                    String newState = peertube.getMyRating().equals("like") ? "none" : "like";
                     Status status = new Status();
                     status.setUri("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
-                    CrossActions.doCrossAction(getApplicationContext(),  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.FAVOURITE, null, PeertubeActivity.this, true);
+                    CrossActions.doCrossAction(getApplicationContext(), RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.FAVOURITE, null, PeertubeActivity.this, true);
                     peertube.setMyRating(newState);
                     changeColor();
                 }
@@ -612,10 +614,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             peertube_dislike_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String newState = peertube.getMyRating().equals("dislike")?"none":"dislike";
+                    String newState = peertube.getMyRating().equals("dislike") ? "none" : "dislike";
                     Status status = new Status();
                     status.setUri("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
-                    CrossActions.doCrossAction(getApplicationContext(),  RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.UNFAVOURITE, null, PeertubeActivity.this, true);
+                    CrossActions.doCrossAction(getApplicationContext(), RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, status, null, API.StatusAction.UNFAVOURITE, null, PeertubeActivity.this, true);
                     peertube.setMyRating(newState);
                     changeColor();
                 }
@@ -630,7 +632,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             e.printStackTrace();
         }
 
-        if( mode == Helper.VIDEO_MODE_DIRECT){
+        if (mode == Helper.VIDEO_MODE_DIRECT) {
 
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
                     Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
@@ -647,17 +649,16 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
 
-
         peertube_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= 23 ){
+                if (Build.VERSION.SDK_INT >= 23) {
                     if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
                         Helper.manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                     }
-                }else{
+                } else {
                     Helper.manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                 }
             }
@@ -667,7 +668,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
         Drawable img;
 
-        if( peertubes == null || peertubes.size() == 0)
+        if (peertubes == null || peertubes.size() == 0)
             img = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border);
         else
             img = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube);
@@ -677,17 +678,17 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onClick(View v) {
                 List<Peertube> peertubes = new PeertubeFavoritesDAO(PeertubeActivity.this, db).getSinglePeertube(peertube);
-                if( peertubes == null || peertubes.size() == 0){
+                if (peertubes == null || peertubes.size() == 0) {
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).insert(peertube);
-                    Toasty.success(getApplicationContext(),getString(R.string.bookmark_add_peertube), Toast.LENGTH_SHORT).show();
-                }else{
+                    Toasty.success(getApplicationContext(), getString(R.string.bookmark_add_peertube), Toast.LENGTH_SHORT).show();
+                } else {
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).remove(peertube);
-                    Toasty.success(getApplicationContext(),getString(R.string.bookmark_remove_peertube), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), getString(R.string.bookmark_remove_peertube), Toast.LENGTH_SHORT).show();
                 }
-                if( peertubes != null && peertubes.size() > 0) //Was initially in cache
-                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border), null ,null);
+                if (peertubes != null && peertubes.size() > 0) //Was initially in cache
+                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border), null, null);
                 else
-                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube), null ,null);
+                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube), null, null);
             }
         });
 
@@ -698,11 +699,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shared_via));
                 String url;
 
-                url = "https://" +peertube.getInstance() + "/videos/watch/"+ peertube.getUuid();
+                url = "https://" + peertube.getInstance() + "/videos/watch/" + peertube.getUuid();
                 boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
                 String extra_text;
-                if( share_details) {
-                    extra_text  = "@" +peertube.getAccount().getAcct();
+                if (share_details) {
+                    extra_text = "@" + peertube.getAccount().getAcct();
                     extra_text += "\r\n\r\n" + peertube.getName();
                     extra_text += "\n\n" + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
                     final String contentToot;
@@ -712,7 +713,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                         //noinspection deprecation
                         contentToot = Html.fromHtml(peertube.getDescription()).toString();
                     extra_text += contentToot;
-                }else {
+                } else {
                     extra_text = url;
                 }
                 sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
@@ -727,7 +728,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if( mode != Helper.VIDEO_MODE_WEBVIEW) {
+        if (mode != Helper.VIDEO_MODE_WEBVIEW) {
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 openFullscreenDialog();
                 setFullscreen(FullScreenMediaController.fullscreen.ON);
@@ -736,8 +737,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 setFullscreen(FullScreenMediaController.fullscreen.OFF);
             }
             change();
-        }else {
-           final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+        } else {
+            final ViewGroup videoLayout = findViewById(R.id.videoLayout);
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 setFullscreen(FullScreenMediaController.fullscreen.ON);
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -752,22 +753,22 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     @Override
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
-        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
-            if( apiResponse == null)
-                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
+            if (apiResponse == null)
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
         RecyclerView lv_comments = findViewById(R.id.peertube_comments);
-        if( statuses == null || statuses.size() == 0){
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+        if (statuses == null || statuses.size() == 0) {
+            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                 RelativeLayout no_action = findViewById(R.id.no_action);
                 no_action.setVisibility(View.VISIBLE);
                 lv_comments.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             lv_comments.setVisibility(View.VISIBLE);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
@@ -789,43 +790,43 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if( player != null)
+        if (player != null)
             player.release();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if( player != null) {
+        if (player != null) {
             player.setPlayWhenReady(false);
         }
     }
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if( player != null) {
+        if (player != null) {
             player.setPlayWhenReady(true);
         }
     }
 
-    public void displayResolution(){
+    public void displayResolution() {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(PeertubeActivity.this, style);
         builderSingle.setTitle(R.string.pickup_resolution);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(PeertubeActivity.this, android.R.layout.select_dialog_item);
-        for(String resolution: peertube.getResolution())
-            arrayAdapter.add(resolution+"p");
+        for (String resolution : peertube.getResolution())
+            arrayAdapter.add(resolution + "p");
         builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -837,14 +838,14 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             public void onClick(DialogInterface dialog, int which) {
                 String res = arrayAdapter.getItem(which).substring(0, arrayAdapter.getItem(which).length() - 1);
 
-                if( playerView != null) {
+                if (playerView != null) {
                     loader.setVisibility(View.VISIBLE);
                     long position = player.getCurrentPosition();
                     PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
                     resolution = controlView.findViewById(R.id.resolution);
-                    resolution.setText(String.format("%sp",res));
-                    if( mode == Helper.VIDEO_MODE_DIRECT){
-                        if( player != null)
+                    resolution.setText(String.format("%sp", res));
+                    if (mode == Helper.VIDEO_MODE_DIRECT) {
+                        if (player != null)
                             player.release();
                         player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
                         playerView.setPlayer(player);
@@ -868,7 +869,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
 
-        if( peertube.isCommentsEnabled() && statusAction == API.StatusAction.PEERTUBECOMMENT)
+        if (peertube.isCommentsEnabled() && statusAction == API.StatusAction.PEERTUBECOMMENT)
             new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
@@ -923,7 +924,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private void initResolution() {
         PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
         resolution = controlView.findViewById(R.id.resolution);
-        resolution.setText(String.format("%sp",peertube.getResolution().get(0)));
+        resolution.setText(String.format("%sp", peertube.getResolution().get(0)));
         resolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -933,30 +934,29 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
 
-
-    private void changeColor(){
-        if( peertube.getMyRating() != null && peertube.getMyRating().equals("like")){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.positive_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.neutral_thumbs);
-        }else if( peertube.getMyRating() != null && peertube.getMyRating().equals("dislike")){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.negative_thumbs);
-        }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.neutral_thumbs);
+    private void changeColor() {
+        if (peertube.getMyRating() != null && peertube.getMyRating().equals("like")) {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.positive_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
+        } else if (peertube.getMyRating() != null && peertube.getMyRating().equals("dislike")) {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.negative_thumbs);
+        } else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
         }
         Drawable thumbUp = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_up_peertube);
         Drawable thumbDown = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_down_peertube);
-        peertube_like_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbUp, null, null);
-        peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbDown, null, null);
+        peertube_like_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbUp, null, null);
+        peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbDown, null, null);
     }
 
     @Override
     public void onActionDone(ManagePlaylistsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
 
-        if( actionType == GET_PLAYLIST_FOR_VIDEO && apiResponse != null) {
+        if (actionType == GET_PLAYLIST_FOR_VIDEO && apiResponse != null) {
             playlistForVideo = apiResponse.getPlaylistForVideos();
-        }else if( actionType == GET_PLAYLIST && apiResponse != null){
+        } else if (actionType == GET_PLAYLIST && apiResponse != null) {
             playlists = apiResponse.getPlaylists();
         }
     }

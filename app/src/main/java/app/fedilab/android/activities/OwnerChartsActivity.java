@@ -40,6 +40,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.IMarker;
@@ -99,7 +100,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -112,10 +113,10 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             default:
                 setTheme(R.style.AppThemeDark);
         }
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -129,8 +130,8 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-            Account account = new AccountDAO(getApplicationContext(),db).getUniqAccount(userId, instance);
-            if( account != null) {
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+            if (account != null) {
                 Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
             }
 
@@ -140,12 +141,12 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
                     finish();
                 }
             });
-            if( account != null) {
+            if (account != null) {
                 toolbar_title.setText(getString(R.string.owner_charts) + " - " + account.getUsername() + "@" + account.getInstance());
-            }else{
+            } else {
                 toolbar_title.setText(R.string.owner_charts);
             }
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, OwnerChartsActivity.this);
             }
@@ -156,7 +157,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         chart = findViewById(R.id.chart);
         settings_time_from = findViewById(R.id.settings_time_from);
         settings_time_to = findViewById(R.id.settings_time_to);
-        loader =  findViewById(R.id.loader);
+        loader = findViewById(R.id.loader);
         validate = findViewById(R.id.validate);
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerChartsActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -165,11 +166,11 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
 
 
         int style;
-        if( theme == Helper.THEME_DARK){
+        if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
-        }else  if( theme == Helper.THEME_BLACK){
+        } else if (theme == Helper.THEME_BLACK) {
             style = R.style.DialogBlack;
-        }else {
+        } else {
             style = R.style.Dialog;
         }
         Calendar c = Calendar.getInstance();
@@ -226,7 +227,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         CustomMarkerView mv = new CustomMarkerView(getApplicationContext(), R.layout.markerview);
         chart.setMarkerView(mv);
 
-        validate.setOnClickListener(v->{
+        validate.setOnClickListener(v -> {
             loadGraph(dateIni, dateEnd);
         });
 
@@ -241,24 +242,27 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         public CustomMarkerView(Context context, int layoutResource) {
             super(context, layoutResource);
             tvContent = findViewById(R.id.tvContent);
-            if( theme == Helper.THEME_DARK){
+            if (theme == Helper.THEME_DARK) {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            }else  if( theme == Helper.THEME_BLACK){
+            } else if (theme == Helper.THEME_BLACK) {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            }else {
+            } else {
                 tvContent.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
         }
+
         @Override
         public void refreshContent(Entry e, Highlight highlight) {
             Date date = new Date(((long) e.getX()));
-            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " +(int)e.getY()));
+            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " + (int) e.getY()));
             super.refreshContent(e, highlight);
         }
+
         private MPPointF mOffset;
+
         @Override
         public MPPointF getOffset() {
-            if(mOffset == null) {
+            if (mOffset == null) {
                 mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
             }
             return mOffset;
@@ -303,7 +307,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         }
     }
 
-    private void loadGraph(Date dateIni, Date dateEnd){
+    private void loadGraph(Date dateIni, Date dateEnd) {
         String dateInitString = Helper.shortDateToString(dateIni);
         String dateEndString = Helper.shortDateToString(dateEnd);
 
@@ -329,24 +333,24 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         int i = 0;
         Iterator it = charts.getBoosts().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            boostsEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            boostsEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
         List<Entry> repliesEntry = new ArrayList<>();
         it = charts.getReplies().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            repliesEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            repliesEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
         List<Entry> statusesEntry = new ArrayList<>();
         it = charts.getStatuses().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            statusesEntry.add(new Entry((long)pair.getKey(), (int)pair.getValue()));
+            Map.Entry pair = (Map.Entry) it.next();
+            statusesEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
 
@@ -419,7 +423,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         description.setEnabled(false);
 
         //Update colors
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 xAxis.setTextColor(Color.BLACK);
                 dataSetBoosts.setValueTextColor(Color.BLACK);
@@ -461,6 +465,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             this.mDataFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
             this.mDate = new Date();
         }
+
         @Override
         public String getFormattedValue(float value) {
             return getDateString((long) value);
@@ -470,7 +475,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             try {
                 mDate.setTime(timestamp);
                 return mDataFormat.format(mDate);
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 return "xx";
             }
         }

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
@@ -25,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +67,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     private TextView no_action_text;
     private boolean swiped;
     private RecyclerView lv_accounts;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -95,9 +98,8 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         mLayoutManager = new LinearLayoutManager(context);
         lv_accounts.setLayoutManager(mLayoutManager);
         lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
@@ -126,7 +128,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             }
         });
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                         R.color.mastodonC2,
@@ -152,13 +154,10 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     }
 
 
-
     @Override
-    public void onCreate(Bundle saveInstance)
-    {
+    public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override
@@ -169,7 +168,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
 
     public void onDestroy() {
         super.onDestroy();
-        if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
 
@@ -179,26 +178,26 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();
-        if( !swiped && firstLoad && (accounts == null || accounts.size() == 0)) {
+        if (!swiped && firstLoad && (accounts == null || accounts.size() == 0)) {
             no_action_text.setText(context.getString(R.string.no_follow_request));
             textviewNoAction.setVisibility(View.VISIBLE);
-        }else
+        } else
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
-        if( swiped ){
+        if (swiped) {
             accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(this.accounts);
             lv_accounts.setAdapter(accountsFollowRequestAdapter);
             swiped = false;
         }
-        if( accounts != null && accounts.size() > 0) {
+        if (accounts != null && accounts.size() > 0) {
             this.accounts.addAll(accounts);
             accountsFollowRequestAdapter.notifyDataSetChanged();
         }

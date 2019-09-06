@@ -20,8 +20,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,7 +67,7 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -79,10 +81,10 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
                 setTheme(R.style.AppThemeDark);
         }
 
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ) {
+        if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -97,7 +99,7 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
                 }
             });
             toolbar_title.setText("Open Collective");
-            if (theme == Helper.THEME_LIGHT){
+            if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, OpencollectiveActivity.this);
             }
@@ -112,11 +114,11 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
         Button about_opencollective = findViewById(R.id.about_opencollective);
 
         about_opencollective.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://opencollective.com/mastalab"));
-               startActivity(browserIntent);
-           }
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://opencollective.com/mastalab"));
+                startActivity(browserIntent);
+            }
         });
 
         setTitle("Open Collective");
@@ -130,8 +132,8 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
         lv_sponsors.setAdapter(sponsorsAdapter);
 
         new RetrieveOpenCollectiveAsyncTask(getApplicationContext(), RetrieveOpenCollectiveAsyncTask.Type.BACKERS, OpencollectiveActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveOpenCollectiveAsyncTask(getApplicationContext(),  RetrieveOpenCollectiveAsyncTask.Type.SPONSORS, OpencollectiveActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-     }
+        new RetrieveOpenCollectiveAsyncTask(getApplicationContext(), RetrieveOpenCollectiveAsyncTask.Type.SPONSORS, OpencollectiveActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
 
     @Override
@@ -149,16 +151,16 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
     @Override
     public void onRetrieveRemoteAccount(Results results) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        if( results == null){
-            Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+        if (results == null) {
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();
-        if( accounts != null && accounts.size() > 0){
-            if( accounts.get(0).getSocial().equals("OPENCOLLECTIVE_BACKER")){
+        if (accounts != null && accounts.size() > 0) {
+            if (accounts.get(0).getSocial().equals("OPENCOLLECTIVE_BACKER")) {
                 bakers.addAll(accounts);
                 backersAdapter.notifyDataSetChanged();
-            }else if( accounts.get(0).getSocial().equals("OPENCOLLECTIVE_SPONSOR")){
+            } else if (accounts.get(0).getSocial().equals("OPENCOLLECTIVE_SPONSOR")) {
                 sponsors.addAll(accounts);
                 sponsorsAdapter.notifyDataSetChanged();
             }

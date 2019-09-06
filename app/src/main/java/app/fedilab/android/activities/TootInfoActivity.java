@@ -17,12 +17,15 @@ package app.fedilab.android.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
@@ -55,7 +58,7 @@ public class TootInfoActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme){
+        switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
@@ -71,24 +74,24 @@ public class TootInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_toot_info);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         Bundle b = getIntent().getExtras();
-        if( getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         int toot_reblogs_count = 0;
         int toot_favorites_count = 0;
-        if( b != null){
+        if (b != null) {
             toot_id = b.getString("toot_id", null);
             toot_reblogs_count = b.getInt("toot_reblogs_count", 0);
             toot_favorites_count = b.getInt("toot_favorites_count", 0);
         }
-        if( toot_id == null){
+        if (toot_id == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             finish();
         }
         userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         tabLayout = findViewById(R.id.tabLayout);
         mPager = findViewById(R.id.viewpager);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " ("+toot_reblogs_count+")"));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " ("+toot_favorites_count+")"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " (" + toot_reblogs_count + ")"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " (" + toot_favorites_count + ")"));
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -96,6 +99,7 @@ public class TootInfoActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mPager.setCurrentItem(tab.getPosition());
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -118,7 +122,7 @@ public class TootInfoActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
+                if (tab != null)
                     tab.select();
             }
 
@@ -130,12 +134,12 @@ public class TootInfoActivity extends BaseActivity {
     }
 
 
-    public void updateBoostCount(int count){
-        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.reblog) + " ("+count+")");
+    public void updateBoostCount(int count) {
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.reblog) + " (" + count + ")");
     }
 
-    public void updateFavCount(int count){
-        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.favourite) + " ("+count+")");
+    public void updateFavCount(int count) {
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.favourite) + " (" + count + ")");
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -147,7 +151,7 @@ public class TootInfoActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            switch (position){
+            switch (position) {
                 case 0:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.REBLOGGED);

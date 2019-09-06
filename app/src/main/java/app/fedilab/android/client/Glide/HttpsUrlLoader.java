@@ -1,6 +1,7 @@
 package app.fedilab.android.client.Glide;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,7 +15,6 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 
-
 /**
  * Created by Thomas on 13/12/2017.
  * Custom UrlLoader
@@ -25,7 +25,8 @@ public class HttpsUrlLoader implements ModelLoader<GlideUrl, InputStream> {
     private static WeakReference<Context> contextWeakReference;
 
     HttpsUrlLoader(Context context) {
-        contextWeakReference = new WeakReference<>(context);}
+        contextWeakReference = new WeakReference<>(context);
+    }
 
     @Nullable
     @Override
@@ -41,14 +42,16 @@ public class HttpsUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
 
-        Factory(Context context){
+        Factory(Context context) {
             contextWeakReference = new WeakReference<>(context);
         }
+
         @NonNull
         @Override
         public ModelLoader<GlideUrl, InputStream> build(@NonNull MultiModelLoaderFactory multiFactory) {
             return new HttpsUrlLoader(contextWeakReference.get());
         }
+
         @Override
         public void teardown() {
 
