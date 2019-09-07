@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;

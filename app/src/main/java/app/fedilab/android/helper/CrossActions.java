@@ -148,7 +148,7 @@ public class CrossActions {
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getUniqAccount(userId, instance);
-            if (confirmation)
+            if (confirmation && status.getContent() != null)
                 displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface, baseAdapter);
             else {
                 new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
