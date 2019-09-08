@@ -887,7 +887,7 @@
     <string name="category_games">游戏</string>
     <string name="category_tech">技术</string>
     <string name="category_adult">成人内容</string>
-    <string name="category_furry">Furry</string>
+    <string name="category_furry">兽迷</string>
     <string name="category_food">美食</string>
     <string name="instance_logo">实例的标志</string>
     <string name="toast_error_instance_reg">检查可用实例时出错！</string>
@@ -1046,9 +1046,9 @@
     <string name="set_disable_animated_emoji">禁用自定义动画表情</string>
     <string name="owner_charts">图表</string>
     <string name="display_charts">显示图表</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
+    <string name="collecting_data_wait">应用程序正在收集您的本地数据，请稍候……</string>
+    <string name="set_backup">备份</string>
+    <string name="set_auto_backup">自动备份状态</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <string name="set_auto_backup_notifications">Auto backup notifications</string>
     <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
