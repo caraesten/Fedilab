@@ -1078,25 +1078,25 @@
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
     <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
+    <string name="all_accounts">对所有帐号执行</string>
+    <string name="database_cache">数据库缓存</string>
+    <string name="cache_timeline_clear">清除你的主页时间线缓存</string>
     <string name="cache_owntoots_clear">Clear your cached statuses</string>
     <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
+    <string name="file_cache">缓存文件</string>
     <string name="total_notifications">Total notifications</string>
     <string name="hide_menu_items">隐藏菜单项目</string>
     <string name="top_notification">Fedilab is running live notifications</string>
     <string name="top_notification_message">For %1$s accounts with %2$s events</string>
     <string name="set_allow_live_notifications">Live notifications for %1$s</string>
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
+    <string name="set_clear_cache_exit">离开时清除缓存</string>
+    <string name="set_clear_cache_exit_indication">离开此应用程序时，将自动清除缓存（媒体、缓存消息、内建浏览器的数据）。</string>
+    <string name="unfollow_confirm">你确定要取消关注此帐号吗？</string>
+    <string name="set_unfollow_validation">取消关注前显示确认对话框</string>
+    <string name="set_invidious">用 Invidio.us 替换 Youtube</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
+    <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
 </resources>
