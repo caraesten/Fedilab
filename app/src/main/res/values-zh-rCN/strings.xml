@@ -1052,9 +1052,9 @@
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <string name="set_auto_backup_notifications">Auto backup notifications</string>
     <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="report_account">举报帐号</string>
+    <string name="send_invitation">发送邀请</string>
+    <string name="registration_closed">你的实例不允许注册新帐户！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
@@ -1077,12 +1077,12 @@
     </string-array>
     <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
+    <string name="poll_duplicated_entry">你的投票不能有重复的选项！</string>
     <string name="all_accounts">对所有帐号执行</string>
     <string name="database_cache">数据库缓存</string>
     <string name="cache_timeline_clear">清除你的主页时间线缓存</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
+    <string name="cache_owntoots_clear">清除你缓存的状态</string>
+    <string name="cache_bookmarks_clear">清除你的书签</string>
     <string name="file_cache">缓存文件</string>
     <string name="total_notifications">Total notifications</string>
     <string name="hide_menu_items">隐藏菜单项目</string>
@@ -1098,5 +1098,5 @@
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
     <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">要隐藏留在状态栏里的通知，请点击眼睛图标的按钮，然后取消勾选：“在状态栏内显示”</string>
 </resources>
