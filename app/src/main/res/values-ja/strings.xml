@@ -399,7 +399,7 @@
     <string name="action_sync">同期</string>
     <string name="action_filter">フィルター</string>
     <string name="owner_cached_toots">あなたのトゥート</string>
-    <string name="owner_cached_notifications">自分の通知</string>
+    <string name="owner_cached_notifications">あなたの通知</string>
     <string name="v_public">公開</string>
     <string name="v_unlisted">未収載</string>
     <string name="v_private">非公開</string>
@@ -1076,12 +1076,12 @@
     <string name="file_cache">キャッシュ内のファイル</string>
     <string name="total_notifications">全ての通知</string>
     <string name="hide_menu_items">メニューの項目を非表示にする</string>
-    <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
-    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
+    <string name="top_notification">Fedilabのライブ通知が動作中です</string>
+    <string name="top_notification_message">%1$s個のアカウントに%2$s個のイベントがあります</string>
+    <string name="set_allow_live_notifications">%1$s のライブ通知</string>
+    <string name="set_allow_live_notifications_indication">このアカウントではライブ通知が有効です。</string>
+    <string name="set_clear_cache_exit">終了時にキャッシュを消去する</string>
+    <string name="set_clear_cache_exit_indication">アプリケーションの終了時にキャッシュ(メディア、キャッシュされたメッセージ、ビルトインブラウザのデータ)が自動的に消去されます。</string>
     <string name="unfollow_confirm">このアカウントのフォローを解除しますか？</string>
     <string name="set_unfollow_validation">フォローを解除する前に確認を表示する</string>
     <string name="set_invidious">YouTubeをInvidio.usに置き換える</string>
