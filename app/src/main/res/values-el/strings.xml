@@ -474,7 +474,7 @@
     <string name="action_lists_search_users">Αναζήτηση ανάμεσα σε ανθρώπους που παρακολουθείς</string>
     <string name="action_lists_owner">Τα δικά σου κατάστιχα</string>
     <string name="action_lists_add_user">Ο λογαριασμός προστέθηκε στο κατάστιχο.</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_empty">Ακόμα να ορίσεις κάποια κατάστιχα.</string>
     <!-- Migration -->
     <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
     <string name="show_boost_count">Εμφάνιση του μετρητή των ενισχυμένων και των αγαπημένων</string>
@@ -875,7 +875,7 @@
     <string name="unmute_conversation">Ξεφίμωμα της συζήτησης</string>
     <string name="toast_unmute_conversation">Η συζήτηση δεν είναι, πια, φιμωμένη!</string>
     <string name="toast_mute_conversation">Η συζήτηση είναι σιωπηρή</string>
-    <string name="app_features">Open application features</string>
+    <string name="app_features">Άνοιγμα των χαρακτηριστικών της εφαρμογής</string>
     <string name="timed_mute">Χρονομετρημένη σίγαση</string>
     <string name="mention_account">Μνημόνευση του λογαριασμού</string>
     <string name="refresh_cache">Ανανέωση της μικραποθήκευσης</string>
@@ -883,18 +883,18 @@
     <string name="mention_status">Μνημόνευση της κατάστασης</string>
     <string name="action_news">Νέα</string>
     <string name="set_display_news_from_fedilab">Εμφάνιση των νέων, από το λογαριασμό του Φέντιλαμπ</string>
-    <string name="category_general">General</string>
-    <string name="category_regional">Regional</string>
-    <string name="category_art">Art</string>
-    <string name="category_journalism">Journalism</string>
-    <string name="category_activism">Activism</string>
-    <string name="category_games">Gaming</string>
-    <string name="category_tech">Technology</string>
-    <string name="category_adult">Adult content</string>
+    <string name="category_general">Γενικά</string>
+    <string name="category_regional">Κατά περιοχή</string>
+    <string name="category_art">Τέχνη</string>
+    <string name="category_journalism">Δημοσιογραφία</string>
+    <string name="category_activism">Ακτιβισμός</string>
+    <string name="category_games">Παιχνίδια</string>
+    <string name="category_tech">Τεχνολογία</string>
+    <string name="category_adult">Για ενήλικες</string>
     <string name="category_furry">Furry</string>
-    <string name="category_food">Food</string>
-    <string name="instance_logo">Logo of the instance</string>
-    <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
+    <string name="category_food">Φαΐ</string>
+    <string name="instance_logo">Το λογότυπο της υπόστασης</string>
+    <string name="toast_error_instance_reg">Κάτι δεν πήγε καλά, κατά τον έλεγχο των διαθέσιμων υποστάσεων.</string>
     <string name="join_mastodon">Join Mastodon</string>
     <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
     <string name="users">%1$s users</string>
