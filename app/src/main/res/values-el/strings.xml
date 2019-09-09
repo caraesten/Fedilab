@@ -246,7 +246,7 @@
     <string name="pinned_toots">Καρφιτσωμένα</string>
     <!-- TOAST -->
     <string name="client_error">Αδυναμία λήψης του αριθμού ταυτότητας (id) του πελάτη.</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Αδυναμία σύνδεσης στον τομέα της υπόστασης.</string>
     <string name="no_internet">Καμία σύνδεση στο διαδίκτυο.</string>
     <string name="toast_block">Ο λογαριασμός φράχτηκε.</string>
     <string name="toast_unblock">Ο λογαριασμός δεν είναι πλέον φραγμένος.</string>
@@ -354,9 +354,9 @@
         <item>512 Χιλιομπάιτια</item>
         <item>1 Μεγαμπάιτιο</item>
         <item>2 Μεγαμπάιτια</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
+        <item>4 Μεγαμπάιτια</item>
+        <item>6 Μεγαμπάιτια</item>
+        <item>8 Μεγαμπάιτια</item>
     </string-array>
     <string name="set_led_colour">Το χρώμα του λεντιού:</string>
     <string-array name="led_colours">
@@ -404,7 +404,7 @@
     <string name="action_sync">Συγχρονισμός</string>
     <string name="action_filter">Κόσκινο</string>
     <string name="owner_cached_toots">Οι φωνές σου</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Οι ειδοποιήσεις σου</string>
     <string name="v_public">Δημόσια</string>
     <string name="v_unlisted">Αταξινόμητα</string>
     <string name="v_private">Ιδιωτικά</string>
@@ -414,9 +414,9 @@
     <string name="show_pinned">Εμφάνιση των καρφιτσωμένων</string>
     <string name="filter_no_result">Δεν βρέθηκαν αποτελέσματα που να ταιριάζουν.</string>
     <string name="data_backup_toots">Δημιουργία αντιγράφου δεδομένων των φωνών του %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
+    <string name="data_backup_notifications">Αποθήκευση αντίγραφου ασφαλείας για %1$s</string>
     <string name="data_backup_success">Έχουν εισαχθεί %1$s νέες φωνές</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">Έχουν εισαχθεί %1$s νέες ειδοποιήσεις</string>
     <string-array name="filter_select">
         <item>Καθόλου</item>
         <item>Μόνο</item>
@@ -473,7 +473,7 @@
     <string name="action_lists_title_placeholder">Το όνομα του νέου κατάστιχου</string>
     <string name="action_lists_search_users">Αναζήτηση ανάμεσα σε ανθρώπους που παρακολουθείς</string>
     <string name="action_lists_owner">Τα δικά σου κατάστιχα</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_add_user">Ο λογαριασμός προστέθηκε στο κατάστιχο.</string>
     <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
