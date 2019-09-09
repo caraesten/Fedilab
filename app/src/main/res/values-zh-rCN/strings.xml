@@ -404,7 +404,7 @@
     <string name="v_public">公开</string>
     <string name="v_unlisted">未列出</string>
     <string name="v_private">私密</string>
-    <string name="v_direct">直接</string>
+    <string name="v_direct">私信</string>
     <string name="v_keywords">一些关键词…</string>
     <string name="show_media">显示媒体</string>
     <string name="show_pinned">显示置顶</string>
@@ -525,7 +525,7 @@
     <string name="toast_unendorse">该帐号已不再推荐到个人页上</string>
     <string name="toast_show_boost">现已显示转嘟！</string>
     <string name="toast_hide_boost">现已隐藏转嘟！</string>
-    <string name="direct_message">直接发送消息</string>
+    <string name="direct_message">私信</string>
     <string name="filters">筛选器</string>
     <string name="action_filters_empty_content">没有筛选器可以显示。您可以点击“+”按钮新建一个。</string>
     <string name="filter_keyword">关键词或短语</string>
@@ -801,7 +801,7 @@
     <string name="poll_finish_at">在 %s 结束</string>
     <string name="refresh_poll">刷新投票</string>
     <string name="vote">投票</string>
-    <string name="poll_not_private">投票无法附加到直接消息上！</string>
+    <string name="poll_not_private">投票无法附加到私信上！</string>
     <string name="notif_poll">一个你参加过的投票已经结束</string>
     <string name="notif_poll_self">您所嘟出的一个投票已经结束</string>
     <string name="settings_category_notif_customize">定制</string>
