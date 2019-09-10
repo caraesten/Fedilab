@@ -1025,8 +1025,8 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="number_with_cw">Anzahl mit CW</string>
     <string name="first_toot_date">Datum des ersten Status</string>
     <string name="last_toot_date">Datum des letzten Status</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Erste Benachrichtigung</string>
+    <string name="last_notification_date">Letztes Benachrichtigungsdatum</string>
     <string name="frequency">Häufigkeit</string>
     <string name="toot_per_day">%s Status pro Tag</string>
     <string name="notification_per_day">%s Benachrichtigungen pro Tag</string>
