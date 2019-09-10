@@ -1097,11 +1097,11 @@
     <string name="set_allow_live_notifications_indication">Activaranse as notificacións ao vivo para esta conta.</string>
     <string name="set_clear_cache_exit">Limpar caché ao saír</string>
     <string name="set_clear_cache_exit_indication">A caché (medios, menxases almacenadas, datos do navegador incluído) borraranse automáticamente ao saír da aplicación.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="unfollow_confirm">Queres deixar de seguir esta conta?</string>
+    <string name="set_unfollow_validation">Mostrar cadro de confirmación antes de deixar de seguir</string>
+    <string name="set_invidious">Substituír YouTube con Invidio.us</string>
+    <string name="set_invidious_indication">Invidious é unha interface de usuaria alternativa para YouTube</string>
+    <string name="set_invidious_host">Introduce o teu servidor personalizado ou deixa baldeiro para usar invidio.us</string>
+    <string name="set_hide_status_bar">Ocultar barra de notificacións de Fedilab</string>
+    <string name="set_hide_status_bar_indication">Para ocultar as notificacións remanentes na barra de estado, pulsa na icona do ollo e desmarca: \"Mostrar en barra de estado\"</string>
 </resources>
