@@ -404,7 +404,7 @@
     <string name="v_public">公开</string>
     <string name="v_unlisted">未列出</string>
     <string name="v_private">私密</string>
-    <string name="v_direct">直接</string>
+    <string name="v_direct">私信</string>
     <string name="v_keywords">一些关键词…</string>
     <string name="show_media">显示媒体</string>
     <string name="show_pinned">显示置顶</string>
@@ -525,7 +525,7 @@
     <string name="toast_unendorse">该帐号已不再推荐到个人页上</string>
     <string name="toast_show_boost">现已显示转嘟！</string>
     <string name="toast_hide_boost">现已隐藏转嘟！</string>
-    <string name="direct_message">直接发送消息</string>
+    <string name="direct_message">私信</string>
     <string name="filters">筛选器</string>
     <string name="action_filters_empty_content">没有筛选器可以显示。您可以点击“+”按钮新建一个。</string>
     <string name="filter_keyword">关键词或短语</string>
@@ -588,7 +588,6 @@
     <string name="comment">评论</string>
     <string name="peertube_instance">Peertube 实例</string>
     <string name="set_display_direct">显示私人消息时间线</string>
-    <string name="set_keep_background_process">关闭应用时保留后台进程</string>
     <string name="no_comments">使用右上角的按钮，成为第一个对此视频留言的人！</string>
     <string name="number_view_video">%s 次观看</string>
     <string name="duration_video">时长：%s</string>
@@ -801,7 +800,7 @@
     <string name="poll_finish_at">在 %s 结束</string>
     <string name="refresh_poll">刷新投票</string>
     <string name="vote">投票</string>
-    <string name="poll_not_private">投票无法附加到直接消息上！</string>
+    <string name="poll_not_private">投票无法附加到私信上！</string>
     <string name="notif_poll">一个你参加过的投票已经结束</string>
     <string name="notif_poll_self">您所嘟出的一个投票已经结束</string>
     <string name="settings_category_notif_customize">定制</string>
@@ -887,7 +886,7 @@
     <string name="category_games">游戏</string>
     <string name="category_tech">技术</string>
     <string name="category_adult">成人内容</string>
-    <string name="category_furry">Furry</string>
+    <string name="category_furry">兽迷</string>
     <string name="category_food">美食</string>
     <string name="instance_logo">实例的标志</string>
     <string name="toast_error_instance_reg">检查可用实例时出错！</string>
@@ -1046,15 +1045,15 @@
     <string name="set_disable_animated_emoji">禁用自定义动画表情</string>
     <string name="owner_charts">图表</string>
     <string name="display_charts">显示图表</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
-    <string name="set_backup">Backup</string>
-    <string name="set_auto_backup">Auto backup statuses</string>
-    <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
-    <string name="report_account">Report account</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="collecting_data_wait">应用程序正在收集您的本地数据，请稍候……</string>
+    <string name="set_backup">备份</string>
+    <string name="set_auto_backup">自动备份状态</string>
+    <string name="set_auto_backup_indication">此选项是每个帐号单独设置的。它会启动服务，将你的状态自动储存到本地数据库里。这样可以获取统计数据和图表</string>
+    <string name="set_auto_backup_notifications">自动备份通知</string>
+    <string name="set_auto_backup_notifications_indication">此选项是每个帐号单独设置的。它会启动服务，将你的通知自动储存到本地数据库里。这样可以获取统计数据和图表</string>
+    <string name="report_account">举报帐号</string>
+    <string name="send_invitation">发送邀请</string>
+    <string name="registration_closed">你的实例不允许注册新帐户！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
@@ -1075,28 +1074,32 @@
         <item>Webview</item>
         <item>直接串流</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
-    </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
-    <string name="total_notifications">Total notifications</string>
+    <string name="join_instance">要加入我的实例“%1$s”，你可以下载 Fedilab：\n\nF-Droid：%2$s\nGoogle：%3$s\n\n然后打开下面这个带有 Fedilab 的链接就可以创建你的帐户了 :)\n\n%4$s    </string>
+    <string name="poll_duplicated_entry">你的投票不能有重复的选项！</string>
+    <string name="all_accounts">对所有帐号执行</string>
+    <string name="database_cache">数据库缓存</string>
+    <string name="cache_timeline_clear">清除你的主页时间线缓存</string>
+    <string name="cache_owntoots_clear">清除你缓存的状态</string>
+    <string name="cache_bookmarks_clear">清除你的书签</string>
+    <string name="file_cache">缓存文件</string>
+    <string name="total_notifications">通知总数</string>
     <string name="hide_menu_items">隐藏菜单项目</string>
-    <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
-    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="top_notification">Fedilab 正运行实时通知</string>
+    <string name="top_notification_message">%1$s 个帐号，总共 %2$s 条活动</string>
+    <string name="set_allow_live_notifications">%1$s 的实时通知</string>
+    <string name="set_allow_live_notifications_indication">将启用此帐号的实时通知。</string>
+    <string name="set_clear_cache_exit">离开时清除缓存</string>
+    <string name="set_clear_cache_exit_indication">离开此应用程序时，将自动清除缓存（媒体、缓存消息、内建浏览器的数据）。</string>
+    <string name="unfollow_confirm">你确定要取消关注此帐号吗？</string>
+    <string name="set_unfollow_validation">取消关注前显示确认对话框</string>
+    <string name="set_invidious">用 Invidio.us 替换 Youtube</string>
+    <string name="set_invidious_indication">Invidious 是个 YouTube 的替代前端</string>
+    <string name="set_invidious_host">输入你自定义的主机或者留空以使用 invidio.us</string>
+    <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
+    <string name="set_hide_status_bar_indication">要隐藏留在状态栏里的通知，请点击眼睛图标的按钮，然后取消勾选：“在状态栏内显示”</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
