@@ -592,7 +592,6 @@
     <string name="comment">Commenta</string>
     <string name="peertube_instance">Istanza Peertube</string>
     <string name="set_display_direct">Mostra la timeline dei messaggi diretti</string>
-    <string name="set_keep_background_process">Mantieni attivo il processo in background quando l\'app è chiusa</string>
     <string name="no_comments">Lascia per primo un commento su questo video premendo il pulsante in alto a destra!</string>
     <string name="number_view_video">%s visualizzazioni</string>
     <string name="duration_video">Durata: %s</string>
@@ -1103,4 +1102,9 @@
     <string name="set_invidious_host">Inserisci il tuo host personalizzato o lascia vuoto per usare invidio.us</string>
     <string name="set_hide_status_bar">Nascondi barra di notifica di Fedilab</string>
     <string name="set_hide_status_bar_indication">Per nascondere le notifiche rimanenti nella barra di stato, clicca sul pulsante con l\'icona di un occhio e deseleziona: \"Mostra nella barra di stato\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
