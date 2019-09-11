@@ -1654,7 +1654,6 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onDestroy() {
         super.onDestroy();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean clearCacheExit = sharedpreferences.getBoolean(Helper.SET_CLEAR_CACHE_EXIT, false);
         WeakReference<Context> contextReference = new WeakReference<>(getApplicationContext());
         if (clearCacheExit) {
@@ -1676,8 +1675,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             });
         }
-        if (!backgroundProcess)
-            sendBroadcast(new Intent(getApplicationContext(), StopLiveNotificationReceiver.class));
         if (hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
         if (update_topbar != null)

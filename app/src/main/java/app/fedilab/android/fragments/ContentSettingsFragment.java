@@ -1165,6 +1165,18 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         if( Helper.liveNotifType(context) == Helper.NOTIF_NONE){
             live_notif_per_account.setVisibility(View.GONE);
         }
+        TextView set_live_type_indication = rootView.findViewById(R.id.set_live_type_indication);
+        switch (Helper.liveNotifType(context)){
+            case Helper.NOTIF_LIVE:
+                set_live_type_indication.setText(R.string.live_notif_indication);
+                break;
+            case Helper.NOTIF_DELAYED:
+                set_live_type_indication.setText(R.string.set_live_type_indication);
+                break;
+            case Helper.NOTIF_NONE:
+                set_live_type_indication.setText(R.string.no_live_indication);
+                break;
+        }
         set_live_type.setSelection(Helper.liveNotifType(context));
         set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1189,6 +1201,17 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.GONE);
                             editor.apply();
+                            break;
+                    }
+                    switch (Helper.liveNotifType(context)){
+                        case Helper.NOTIF_LIVE:
+                            set_live_type_indication.setText(R.string.live_notif_indication);
+                            break;
+                        case Helper.NOTIF_DELAYED:
+                            set_live_type_indication.setText(R.string.set_live_type_indication);
+                            break;
+                        case Helper.NOTIF_NONE:
+                            set_live_type_indication.setText(R.string.no_live_indication);
                             break;
                     }
                 }

@@ -183,14 +183,12 @@ public class SettingsActivity extends BaseActivity implements ViewAnimator.ViewA
         SlideMenuItem menuItemAdmin = new SlideMenuItem(ContentSettingsFragment.type.ADMIN, R.drawable.ic_security_admin_menu);
         SlideMenuItem menuItemInterface = new SlideMenuItem(ContentSettingsFragment.type.INTERFACE, R.drawable.ic_tablet_menu);
         SlideMenuItem menuItemEdit = new SlideMenuItem(ContentSettingsFragment.type.COMPOSE, R.drawable.ic_edit_black_menu);
-        SlideMenuItem menuItemBattery = new SlideMenuItem(ContentSettingsFragment.type.BATTERY, R.drawable.ic_battery_alert_menu);
         SlideMenuItem menuLanguage = new SlideMenuItem(ContentSettingsFragment.type.LANGUAGE, R.drawable.ic_translate_menu);
         SlideMenuItem menuMenu = new SlideMenuItem(ContentSettingsFragment.type.MENU, R.drawable.ic_menu_menu);
         list.add(menuItemClose);
         list.add(menuItemTimeline);
         list.add(menuItemNotification);
         list.add(menuItemInterface);
-        list.add(menuItemBattery);
         list.add(menuItemEdit);
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             list.add(menuMenu);
