@@ -581,7 +581,6 @@
     <string name="comment">コメント</string>
     <string name="peertube_instance">Peertubeインスタンス</string>
     <string name="set_display_direct">プライベートメッセージのタイムラインを表示</string>
-    <string name="set_keep_background_process">アプリが閉じているときもバックグラウンドプロセスを実行する</string>
     <string name="no_comments">右上のボタンをタップして最初のコメントを投稿しましょう！</string>
     <string name="number_view_video">%s 回再生</string>
     <string name="duration_video">長さ: %s</string>
@@ -1089,4 +1088,9 @@
     <string name="set_invidious_host">カスタムホストを入力してください。空欄にするとinvidio.usが使用されます。</string>
     <string name="set_hide_status_bar">Fedilab通知バーを非表示にする</string>
     <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
