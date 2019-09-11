@@ -587,7 +587,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="comment">Comentar</string>
     <string name="peertube_instance">Instancia de Peertube</string>
     <string name="set_display_direct">Mostrar línea de tiempo de mensajes privados</string>
-    <string name="set_keep_background_process">Mantener el proceso en segundo plano cuando la aplicación está cerrada</string>
     <string name="no_comments">¡Sé el primero en dejar un comentario en este video con el botón superior derecho!</string>
     <string name="number_view_video">%s visitas</string>
     <string name="duration_video">Duración: %s</string>
@@ -1097,4 +1096,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_invidious_host">Introduce tu host personalizado o deja en blanco para usar invidio.us</string>
     <string name="set_hide_status_bar">Ocultar la barra de notificaciones de Fedilab</string>
     <string name="set_hide_status_bar_indication">Para ocultar el resto de la notificación en la barra de estado, presione en el botón con el ícono de un ojo y luego desactivar \"Mostrar en la barra de estado\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
