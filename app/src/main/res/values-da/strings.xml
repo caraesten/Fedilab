@@ -592,7 +592,6 @@
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube instans</string>
     <string name="set_display_direct">Vis \'private beskeder\'-tidslinje</string>
-    <string name="set_keep_background_process">Bevar baggrundsprocessen, når app\'en lukkes</string>
     <string name="no_comments">Vær den første til at skrive en kommentar til denne video via den øverste, højre knap!</string>
     <string name="number_view_video">%s visninger</string>
     <string name="duration_video">Varighed: %s</string>
@@ -1096,11 +1095,16 @@
     <string name="set_allow_live_notifications_indication">Live-notifikationer bliver kun deaktiveret for denne konto.</string>
     <string name="set_clear_cache_exit">Ryd cache ved afslutning</string>
     <string name="set_clear_cache_exit_indication">Cache (medier, cache-lagrede beskeder, data fra den indbyggede browser), vil automatisk blive ryddet, når appen forlader.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
+    <string name="unfollow_confirm">Stop med at følge denne konto?</string>
+    <string name="set_unfollow_validation">Vis bekræftelsesdialog inden Følg stoppes</string>
     <string name="set_invidious">Udskift Youtube med Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_invidious_indication">Invidious er en alternativ front-end til YouTube</string>
+    <string name="set_invidious_host">Angiv din tilpassede vært eller udfykd ikke for at benytte invidio.os</string>
+    <string name="set_hide_status_bar">Skjul Fedilab-notifikationsbjælke</string>
+    <string name="set_hide_status_bar_indication">For at skjule den resterende notifikation på statusbjælken, så klik på øjeikonknappen og fjern derefter markeringen: \"Vises på statusbjælke\"</string>
+    <string name="set_live_type_title">Aktivér udskudte notifikationer</string>
+    <string name="set_live_type_indication">Notifikationer udskydes hvert 30. sekund. Dette vil betyde lavere batteridræning.</string>
+    <string name="live_delayed">Live-notifikationer udskudt</string>
+    <string name="no_live_notif">Ingen live-notifikationer</string>
+    <string name="no_live_indication">Notifikationer hentes hvert 15. minut.</string>
 </resources>

@@ -600,7 +600,6 @@
     <string name="comment">Комментарий</string>
     <string name="peertube_instance">Инстанс Peertube</string>
     <string name="set_display_direct">Показывать приватные сообщения в ленте</string>
-    <string name="set_keep_background_process">Сохранять фоновый процесс, когда приложение закрыто</string>
     <string name="no_comments">Будьте первым прокомментировавшим это видео (при помощи верхней правой кнопки)!</string>
     <string name="number_view_video">%s просмотров</string>
     <string name="duration_video">Продолжительность: %s</string>
@@ -1106,11 +1105,16 @@
     <string name="set_allow_live_notifications_indication">Живые уведомления будут отключены только для этого аккаунта.</string>
     <string name="set_clear_cache_exit">Очистить кеш при выходе</string>
     <string name="set_clear_cache_exit_indication">Кэш (медиа, кэшированные сообщения, данные из встроенного браузера) будут автоматически очищаться при выходе из приложения.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
+    <string name="unfollow_confirm">Вы хотите отписаться от этого аккаунта?</string>
+    <string name="set_unfollow_validation">Предупреждать перед отменой подписки</string>
     <string name="set_invidious">Заменить Youtube на Invidio.us</string>
     <string name="set_invidious_indication">Invidious - это альтернативный интерфейс для YouTube</string>
     <string name="set_invidious_host">Введите собственный хост или оставьте пустым для использования invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar">Скрыть панель уведомлений Fedilab</string>
+    <string name="set_hide_status_bar_indication">Чтобы скрыть уведомление в строке состояния, нажмите на кнопку с пиктограммой глаза и снимите флажок: \"Показывать в строке состояния\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>

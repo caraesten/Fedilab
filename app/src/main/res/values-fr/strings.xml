@@ -590,7 +590,6 @@
     <string name="comment">Commenter</string>
     <string name="peertube_instance">Instance PeerTube</string>
     <string name="set_display_direct">Afficher le fil des messages privés</string>
-    <string name="set_keep_background_process">Garder les processus d’arrière-plan lorsque l’application est fermée</string>
     <string name="no_comments">Soyez le·a premier·ère à laisser un commentaire sur cette vidéo en utilisant le bouton supérieur droit !</string>
     <string name="number_view_video">%s vues</string>
     <string name="duration_video">Durée : %s</string>
@@ -1093,11 +1092,16 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_allow_live_notifications_indication">Les notifications en direct seront activées uniquement pour ce compte.</string>
     <string name="set_clear_cache_exit">Vider le cache en quittant</string>
     <string name="set_clear_cache_exit_indication">Le cache (média, messages en caches, données du navigateur intégré) sera automatiquement vidé lorsque vous quittez l’application.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
+    <string name="unfollow_confirm">Voulez-vous cesser de suivre ce compte ?</string>
+    <string name="set_unfollow_validation">Afficher une boîte de dialogue de confirmation avant d\'arrêter de suivre un compte</string>
     <string name="set_invidious">Remplacer YouTube par Invidio.us</string>
     <string name="set_invidious_indication">Indivious est une alternative visuelle pour YouTube</string>
-    <string name="set_invidious_host">Entrez votre hôte personnalisé ou laissez vide pour utiliser invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_invidious_host">Entrez votre nom de domaine personnalisé ou laissez vide pour utiliser invidio.us</string>
+    <string name="set_hide_status_bar">Masquer la barre de notification de Fedilab</string>
+    <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de statut, cliquez sur le bouton en forme d\'œil, puis décochez: \"Afficher dans la barre de statut\"</string>
+    <string name="set_live_type_title">Activer les notifications différées</string>
+    <string name="set_live_type_indication">Les notifications seront mises à jour toutes les 30 secondes. Cela permet de réduire la consommation de la batterie.</string>
+    <string name="live_delayed">Notifications en direct différées</string>
+    <string name="no_live_notif">Aucune notification en direct</string>
+    <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
 </resources>

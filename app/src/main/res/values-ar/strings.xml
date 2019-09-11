@@ -607,7 +607,6 @@
     <string name="comment">تعليق</string>
     <string name="peertube_instance">مثيل خادم بيرتيوب</string>
     <string name="set_display_direct">عرض الخيط المحلي للرسائل الخاصة</string>
-    <string name="set_keep_background_process">إبقاء العمل في الخلفية عند إغلاق التطبيق</string>
     <string name="no_comments">كن الأول في التعليق على هذا الفيديو بالضغط على الزر الأيمن في الأعلى!</string>
     <string name="number_view_video">%s مشاهدات</string>
     <string name="duration_video">المدة: %s</string>
@@ -1115,11 +1114,16 @@
     <string name="set_allow_live_notifications_indication">لن يتم تعطيل الإشعارات الحية سوى لهذا الحساب.</string>
     <string name="set_clear_cache_exit">امسح ذاكرة التخزين المؤقت عند المغادرة</string>
     <string name="set_clear_cache_exit_indication">سيتم مسح ذاكرة التخزين المؤقت تلقائيا (الوسائط والرسائل المخزّنة وبيانات المتصفح المدمج) عند الخروج من التطبيق.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
+    <string name="unfollow_confirm">هل تريد إلغاء متابعة هذا الحساب؟</string>
+    <string name="set_unfollow_validation">أظهر مربع حوار التأكيد قبل إلغاء المتابعة</string>
+    <string name="set_invidious">استبدل Youtube بـ Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
+    <string name="set_hide_status_bar">أخفِ شريط إشعارات Fedilab</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_live_type_title">تمكين الإشعارات المتأخرة</string>
+    <string name="set_live_type_indication">سيتم تأجيل الإشعارات كل 30 ثانية. الشيء الذي من شأنه أن يسمح باستنزاف أقل للبطارية.</string>
+    <string name="live_delayed">تم تأخير الإشعارات الحية</string>
+    <string name="no_live_notif">ليس هناك إشعارات حية</string>
+    <string name="no_live_indication">سيتم جلب الإشعارات كل 15 دقيقة.</string>
 </resources>

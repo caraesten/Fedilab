@@ -585,7 +585,6 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube Instanz</string>
     <string name="set_display_direct">Direktnachrichten als eigene Zeitleiste anzeigen</string>
-    <string name="set_keep_background_process">Im Hintergrund ausführen</string>
     <string name="no_comments">Kommentiere als Erster dieses Video mit den Knopf oben rechts!</string>
     <string name="number_view_video">%s mal gesehen</string>
     <string name="duration_video">Dauer: %s</string>
@@ -1014,7 +1013,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="number_boosts">Anzahl geteilter Beiträge</string>
     <string name="number_favourites">Anzahl der Favoriten</string>
     <string name="number_mentions">Anzahl der Erwähnungen</string>
-    <string name="number_follows">Number of follows</string>
+    <string name="number_follows">Anzahl der Folgenden</string>
     <string name="number_polls">Anzahl der Umfragen</string>
     <string name="number_replies">Anzahl der Antworten</string>
     <string name="number_statuses">Status-Anzahl</string>
@@ -1025,11 +1024,11 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="number_with_cw">Anzahl mit CW</string>
     <string name="first_toot_date">Datum des ersten Status</string>
     <string name="last_toot_date">Datum des letzten Status</string>
-    <string name="first_notification_date">First notification date</string>
-    <string name="last_notification_date">Last notification date</string>
+    <string name="first_notification_date">Erste Benachrichtigung</string>
+    <string name="last_notification_date">Letztes Benachrichtigungsdatum</string>
     <string name="frequency">Häufigkeit</string>
     <string name="toot_per_day">%s Status pro Tag</string>
-    <string name="notification_per_day">%s notifications per day</string>
+    <string name="notification_per_day">%s Benachrichtigungen pro Tag</string>
     <string name="date_range">Datumsbereich</string>
     <string name="action_groups">Gruppen</string>
     <string name="no_messages">Keine Gruppen!</string>
@@ -1040,11 +1039,11 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Status automatisch als Backup sichern</string>
     <string name="set_auto_backup_indication">Diese Option ist pro Konto. Es wird einen Dienst starten, der deine Status automatisch in einer lokalen Datenbank speichert. Dies erlaubt dir, Statistiken und Diagramme zu erhalten</string>
-    <string name="set_auto_backup_notifications">Auto backup notifications</string>
-    <string name="set_auto_backup_notifications_indication">This option is per account. It will launch a service that will automatically store your notifications locally in the database. That allows to get statistics and charts</string>
+    <string name="set_auto_backup_notifications">Auto-Backup-Benachrichtigungen</string>
+    <string name="set_auto_backup_notifications_indication">Diese Option ist pro Konto. Es wird einen Dienst starten, der deine Benachrichtigungen automatisch lokal in der Datenbank speichert. Dies erlaubt Statistiken und Diagramme zu erhalten</string>
     <string name="report_account">Konto melden</string>
-    <string name="send_invitation">Send an invitation</string>
-    <string name="registration_closed">Your instance does not allow to register a new account!</string>
+    <string name="send_invitation">Einladung senden</string>
+    <string name="registration_closed">Deine Instanz erlaubt es nicht, ein neues Konto zu registrieren!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
@@ -1066,28 +1065,33 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
         <item>Torrent</item>
         <item>Webansicht</item>
     </string-array>
-    <string name="join_instance">For joining my instance \"%1$s\", you can download Fedilab:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nThen open the link below with Fedilab and create your account :)\n\n%4$s
+    <string name="join_instance">Um meiner Instanz \"%1$s\" beizutreten, kannstu du Fedilab herunterladen:\n\nF-Droid: %2$s\nGoogle: %3$s\n\nDann öffne den Link unten mit Fedilab und erstelle dein Konto :)\n\n%4$s
     </string>
-    <string name="poll_duplicated_entry">Your poll can\'t have duplicated options!</string>
-    <string name="all_accounts">For all accounts</string>
-    <string name="database_cache">Database cache</string>
-    <string name="cache_timeline_clear">Clear your home timeline cache</string>
-    <string name="cache_owntoots_clear">Clear your cached statuses</string>
-    <string name="cache_bookmarks_clear">Clear your bookmarks</string>
-    <string name="file_cache">Files in cache</string>
-    <string name="total_notifications">Total notifications</string>
-    <string name="hide_menu_items">Hide menu items</string>
-    <string name="top_notification">Fedilab is running live notifications</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
-    <string name="set_allow_live_notifications">Live notifications for %1$s</string>
-    <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Clear cache when leaving</string>
-    <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="poll_duplicated_entry">Ihre Umfrage kann keine doppelten Optionen haben!</string>
+    <string name="all_accounts">Für alle Konten</string>
+    <string name="database_cache">Datenbank-Cache</string>
+    <string name="cache_timeline_clear">Lösche deinen Home Timeline Cache</string>
+    <string name="cache_owntoots_clear">Lösche deine gespeicherten Status</string>
+    <string name="cache_bookmarks_clear">Lesezeichen löschen</string>
+    <string name="file_cache">Dateien im Cache</string>
+    <string name="total_notifications">Gesamte Benachrichtigungen</string>
+    <string name="hide_menu_items">Menüpunkte ausblenden</string>
+    <string name="top_notification">Fedilab läuft mit Echtzeitbenachrichtigungen</string>
+    <string name="top_notification_message">Für %1$s Konten mit %2$s Veranstaltungen</string>
+    <string name="set_allow_live_notifications">Live-Benachrichtigungen für %1$s</string>
+    <string name="set_allow_live_notifications_indication">Live-Benachrichtigungen werden für dieses Konto aktiviert.</string>
+    <string name="set_clear_cache_exit">Cache beim Verlassen löschen</string>
+    <string name="set_clear_cache_exit_indication">Der Cache (Medien, zwischengespeicherte Nachrichten, Daten aus dem eingebauten Browser) wird automatisch gelöscht, wenn die Anwendung verlassen wird.</string>
+    <string name="unfollow_confirm">Möchtest du diesem Konto nicht mehr folgen?</string>
+    <string name="set_unfollow_validation">Bestätigungsdialog anzeigen, bevor nicht mehr gefolgt wird</string>
+    <string name="set_invidious">Youtube durch Invidio.us ersetzen</string>
+    <string name="set_invidious_indication">Invidious ist ein alternatives Frontend zu YouTube</string>
+    <string name="set_invidious_host">Geben Sie Ihren eigenen Host ein oder lassen Sie leer, um invidio.us zu verwenden</string>
+    <string name="set_hide_status_bar">Fedilab Benachrichtigungsleiste ausblenden</string>
+    <string name="set_hide_status_bar_indication">Um die verbleibende Benachrichtigung in der Statusleiste zu verstecken, klicken Sie auf die Augensymbol-Schaltfläche und deaktivieren Sie: \"In Statusleiste anzeigen\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
