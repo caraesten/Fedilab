@@ -344,6 +344,7 @@ public class Helper {
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String NEWS_ACCOUNT_ID = "news_account_id";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
+    public static final String SET_DELAYED_NOTIFICATIONS = "set_delayed_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_DISABLE_ANIMATED_EMOJI = "set_disable_animated_emoji";
     public static final String SET_CAPITALIZE = "set_capitalize";
@@ -358,7 +359,6 @@ public class Helper {
     public static final String SET_CUSTOM_SHARING_URL = "set_custom_sharing_url";
     public static final String SET_NOTIF_SOUND = "set_notif_sound";
     public static final String SET_ENABLE_TIME_SLOT = "set_enable_time_slot";
-    public static final String SET_KEEP_BACKGROUND_PROCESS = "set_keep_background_process";
     public static final String SET_CLEAR_CACHE_EXIT = "set_clear_cache_exit";
     public static final String SET_DISPLAY_EMOJI = "set_display_emoji";
     public static final String SET_DISPLAY_CARD = "set_display_card";
@@ -405,6 +405,10 @@ public class Helper {
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
     public static final int THEME_BLACK = 3;
+
+    public static final int NOTIF_LIVE = 2;
+    public static final int NOTIF_DELAYED = 1;
+    public static final int NOTIF_NONE = 0;
 
     public static final int LED_COLOUR = 0;
 
@@ -544,6 +548,19 @@ public class Helper {
         TOOT
     }
 
+
+    public static int liveNotifType(Context context){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean live = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, false );
+        boolean delayed = sharedpreferences.getBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true );
+        if( delayed){
+            return Helper.NOTIF_DELAYED;
+        }else if( live ){
+            return Helper.NOTIF_LIVE;
+        }else {
+            return Helper.NOTIF_NONE;
+        }
+    }
 
     /**
      * Converts emojis in input to unicode

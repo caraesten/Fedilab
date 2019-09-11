@@ -42,7 +42,6 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -65,39 +64,30 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.google.android.material.navigation.NavigationView;
 import com.google.common.collect.ImmutableSet;
-
-import org.apache.poi.sl.usermodel.Line;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.LanguageActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.services.LiveNotificationDelayedService;
-import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -106,10 +96,8 @@ import mabbas007.tagsedittext.TagsEditText;
 
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
-import static app.fedilab.android.fragments.ContentSettingsFragment.type.BATTERY;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
@@ -131,7 +119,6 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         NOTIFICATIONS,
         INTERFACE,
         COMPOSE,
-        BATTERY,
         LANGUAGE,
         MENU
     }
@@ -250,7 +237,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
         LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
-        LinearLayout settings_battery = rootView.findViewById(R.id.settings_battery);
+
 
         String title = "";
         if (type == null || type.equals(TIMELINES)) {
@@ -265,9 +252,6 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         } else if (type == INTERFACE) {
             settings_interface.setVisibility(View.VISIBLE);
             title = context.getString(R.string.u_interface);
-        } else if (type == BATTERY) {
-            title = context.getString(R.string.battery);
-            settings_battery.setVisibility(View.VISIBLE);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
             title = context.getString(R.string.compose);
@@ -1130,24 +1114,32 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
             }
         });
 
-        boolean livenotif = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        final CheckBox set_live_notif = rootView.findViewById(R.id.set_live_notify);
-        set_live_notif.setChecked(livenotif);
-        set_live_notif.setOnClickListener(new View.OnClickListener() {
+
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
+        switchCompatNotify.setChecked(notify);
+        final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
+        if (notify)
+            notification_settings.setVisibility(View.VISIBLE);
+        else
+            notification_settings.setVisibility(View.GONE);
+        switchCompatNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Save the state here
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, set_live_notif.isChecked());
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING, set_live_notif.isChecked());
+                editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
-                if (set_live_notif.isChecked()) {
+                if (isChecked) {
+                    notification_settings.setVisibility(View.VISIBLE);
                     try {
                         Intent streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
                         context.startService(streamingIntent);
                     } catch (Exception ignored) {
                         ignored.printStackTrace();
                     }
-                } else {
+                }else {
+                    notification_settings.setVisibility(View.GONE);
                     context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                     if (Build.VERSION.SDK_INT >= 26) {
                         NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
@@ -1158,22 +1150,57 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                 }
             }
         });
-        final LinearLayout set_live_notify_text = rootView.findViewById(R.id.set_live_notify_text);
-        set_live_notify_text.setOnClickListener(v -> set_live_notif.performClick());
 
-        boolean keep_background_process = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
-        final CheckBox set_keep_background_process = rootView.findViewById(R.id.set_keep_background_process);
-        set_keep_background_process.setChecked(keep_background_process);
-        set_keep_background_process.setOnClickListener(new View.OnClickListener() {
+
+
+
+        //Live notification mode
+        final Spinner set_live_type = rootView.findViewById(R.id.set_live_type);
+        String[] labels = {context.getString(R.string.live_notif), context.getString(R.string.live_delayed), context.getString(R.string.no_live_notif)};
+        ArrayAdapter<String> adapterLive = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_dropdown_item,labels );
+
+        LinearLayout live_notif_per_account  = rootView.findViewById(R.id.live_notif_per_account);
+        set_live_type.setAdapter(adapterLive);
+        if( Helper.liveNotifType(context) == Helper.NOTIF_NONE){
+            live_notif_per_account.setVisibility(View.GONE);
+        }
+        set_live_type.setSelection(Helper.liveNotifType(context));
+        set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, set_keep_background_process.isChecked());
-                editor.apply();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (count2 > 0) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        case Helper.NOTIF_LIVE:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                            live_notif_per_account.setVisibility(View.VISIBLE);
+                            editor.apply();
+                            break;
+                        case Helper.NOTIF_DELAYED:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
+                            live_notif_per_account.setVisibility(View.VISIBLE);
+                            editor.apply();
+                            break;
+                        case Helper.NOTIF_NONE:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                            live_notif_per_account.setVisibility(View.GONE);
+                            editor.apply();
+                            break;
+                    }
+                }
+                count2++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
-        final LinearLayout set_keep_background_process_text = rootView.findViewById(R.id.set_keep_background_process_text);
-        set_keep_background_process_text.setOnClickListener(v -> set_keep_background_process.performClick());
+
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
@@ -1708,27 +1735,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         });
 
 
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
-        switchCompatNotify.setChecked(notify);
-        final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
-        if (notify)
-            notification_settings.setVisibility(View.VISIBLE);
-        else
-            notification_settings.setVisibility(View.GONE);
-        switchCompatNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Save the state here
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_NOTIFY, isChecked);
-                editor.apply();
-                if (isChecked)
-                    notification_settings.setVisibility(View.VISIBLE);
-                else
-                    notification_settings.setVisibility(View.GONE);
-            }
-        });
+
 
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);

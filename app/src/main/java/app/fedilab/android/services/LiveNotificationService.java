@@ -95,7 +95,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     public static String CHANNEL_ID = "live_notifications";
     protected Account account;
-    boolean backgroundProcess;
     private static HashMap<String, Thread> threads = new HashMap<>();
     private static HashMap<String, String> lastNotification = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
@@ -111,13 +110,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
     }
 
     private void startStream() {
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if (liveNotifications) {
@@ -138,37 +135,33 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if (intent == null || intent.getBooleanExtra("stop", false)) {
             stopSelf();
         }
-        if (backgroundProcess) {
-            if (Build.VERSION.SDK_INT >= 26) {
-                channel = new NotificationChannel(CHANNEL_ID,
-                        "Live notifications",
-                        NotificationManager.IMPORTANCE_DEFAULT);
+        if (Build.VERSION.SDK_INT >= 26) {
+            channel = new NotificationChannel(CHANNEL_ID,
+                    "Live notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT);
 
-                ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
-                totalAccount = 0;
-                for (Account account : accountStreams) {
-                    if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
-                        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                        boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                        if (allowStream) {
-                            totalAccount++;
-                        }
+            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+            totalAccount = 0;
+            for (Account account : accountStreams) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
+                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                    if (allowStream) {
+                        totalAccount++;
                     }
                 }
-
-                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setSmallIcon(R.drawable.fedilab_notification_icon)
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-                startForeground(1, notification);
             }
-            return START_STICKY;
-        } else {
-            return START_NOT_STICKY;
+
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setSmallIcon(R.drawable.fedilab_notification_icon)
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+            startForeground(1, notification);
         }
+        return START_STICKY;
     }
 
     @Override
@@ -188,9 +181,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        if (backgroundProcess) {
-            restart();
-        }
+        restart();
     }
 
     private void restart() {

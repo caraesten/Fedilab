@@ -55,7 +55,9 @@
         <service
             android:name="app.fedilab.android.services.LiveNotificationDelayedService"
             android:exported="false" />
-
+        <service
+            android:name="app.fedilab.android.services.LiveNotificationService"
+            android:exported="false" />
         <service
             android:name="app.fedilab.android.services.BackupStatusService"
             android:exported="false" />
@@ -70,7 +72,6 @@
             android:name="app.fedilab.android.services.RestartLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="LiveNotificationDelayedService" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
