@@ -1096,12 +1096,12 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_unfollow_validation">Afficher une boîte de dialogue de confirmation avant d\'arrêter de suivre un compte</string>
     <string name="set_invidious">Remplacer YouTube par Invidio.us</string>
     <string name="set_invidious_indication">Indivious est une alternative visuelle pour YouTube</string>
-    <string name="set_invidious_host">Entrez votre hôte personnalisé ou laissez vide pour utiliser invidio.us</string>
+    <string name="set_invidious_host">Entrez votre nom de domaine personnalisé ou laissez vide pour utiliser invidio.us</string>
     <string name="set_hide_status_bar">Masquer la barre de notification de Fedilab</string>
-    <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de status, cliquez sur le bouton en forme d\'œil, puis décochez: \"Voir dans la barre de status\"</string>
-    <string name="set_live_type_title">Activer les notifications retardées</string>
+    <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de statut, cliquez sur le bouton en forme d\'œil, puis décochez: \"Afficher dans la barre de statut\"</string>
+    <string name="set_live_type_title">Activer les notifications différées</string>
     <string name="set_live_type_indication">Les notifications seront mises à jour toutes les 30 secondes. Cela permet de réduire la consommation de la batterie.</string>
-    <string name="live_delayed">Notifications en direct retardés</string>
-    <string name="no_live_notif">Aucune notifications en direct</string>
+    <string name="live_delayed">Notifications en direct différées</string>
+    <string name="no_live_notif">Aucune notification en direct</string>
     <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
 </resources>
