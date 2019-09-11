@@ -84,34 +84,32 @@ public class LiveNotificationDelayedService extends Service {
     public static int eventsCount = 0;
     private HashMap<String, String> since_ids = new HashMap<>();
     private static Thread thread;
+    private boolean fetch;
 
     public void onCreate() {
         super.onCreate();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
     }
 
     private void startStream() {
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if (liveNotifications) {
+        if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED) {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
             if (accountStreams != null) {
                 if( thread != null && !thread.isInterrupted()){
                     thread.interrupt();
                 }
-                final boolean[] fetch = {Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED};
+                fetch = true;
                 thread = new Thread() {
                     @Override
                     public void run() {
-                        while (fetch[0]) {
+                        while (fetch) {
                             for (final Account accountStream : accountStreams) {
                                 if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
                                     taks(accountStream);
                                 }
                             }
-                            fetch[0] = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                            fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
                             SystemClock.sleep(30000);
                         }
                     }
@@ -123,10 +121,6 @@ public class LiveNotificationDelayedService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (intent == null || intent.getBooleanExtra("stop", false)) {
-            stopSelf();
-        }
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -196,7 +190,6 @@ public class LiveNotificationDelayedService extends Service {
                 last_notifid = since_ids.get(key);
             }
             apiResponse = api.getNotifications(DisplayNotificationsFragment.Type.ALL, null, false);
-
             if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
                 since_ids.put(key, apiResponse.getNotifications().get(0).getId());
                 for (Notification notification : apiResponse.getNotifications()) {
@@ -236,7 +229,6 @@ public class LiveNotificationDelayedService extends Service {
                 startForeground(1, notificationChannel);
             }
             event = Helper.EventStreaming.NOTIFICATION;
-            boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
             boolean canNotify = Helper.canNotify(getApplicationContext());
             boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
             String targeted_account = null;
@@ -246,7 +238,7 @@ public class LiveNotificationDelayedService extends Service {
             if (!allowStream) {
                 canNotify = false;
             }
-            if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
+            if ((userId == null || !userId.equals(account.getId()) || !activityRunning)  && canNotify && notify) {
                 boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                 boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                 boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);

@@ -690,10 +690,9 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added, R.color.dark_text);
         }
 
-        boolean live_notification = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-
-        if (live_notification && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA))
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             startSreaming();
+        }
 
         if (hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
@@ -2540,14 +2539,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 try {
                     Intent streamingIntent = new Intent(this, LiveNotificationDelayedService.class);
                     startService(streamingIntent);
-                } catch (Exception ignored) {
+                } catch (Exception ignored) {ignored.printStackTrace();
                 }
                 break;
         }
     }
 
     public void manageFloatingButton(boolean display) {
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             if (display) {
                 tootShow();
