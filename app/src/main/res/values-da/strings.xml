@@ -1102,9 +1102,9 @@
     <string name="set_invidious_host">Angiv din tilpassede vært eller udfykd ikke for at benytte invidio.os</string>
     <string name="set_hide_status_bar">Skjul Fedilab-notifikationsbjælke</string>
     <string name="set_hide_status_bar_indication">For at skjule den resterende notifikation på statusbjælken, så klik på øjeikonknappen og fjern derefter markeringen: \"Vises på statusbjælke\"</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">Aktivér udskudte notifikationer</string>
+    <string name="set_live_type_indication">Notifikationer udskydes hvert 30. sekund. Dette vil betyde lavere batteridræning.</string>
+    <string name="live_delayed">Live-notifikationer udskudt</string>
+    <string name="no_live_notif">Ingen live-notifikationer</string>
+    <string name="no_live_indication">Notifikationer hentes hvert 15. minut.</string>
 </resources>
