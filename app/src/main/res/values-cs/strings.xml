@@ -598,7 +598,6 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="comment">Komentovat</string>
     <string name="peertube_instance">Peertube instance</string>
     <string name="set_display_direct">Zobrazit časovou osu se soukromými zprávami</string>
-    <string name="set_keep_background_process">Udržovat aplikační proces na pozadí i pokud je aplikace zavřena</string>
     <string name="no_comments">Zanechte první komentáře pro toto video. Klepněte na tlačítko vpravo nahoře!</string>
     <string name="number_view_video">%s zhlédnutí</string>
     <string name="duration_video">Doba trvání: %s</string>
@@ -1110,4 +1109,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
