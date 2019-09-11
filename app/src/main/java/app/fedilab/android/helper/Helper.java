@@ -406,9 +406,9 @@ public class Helper {
     public static final int THEME_DARK = 2;
     public static final int THEME_BLACK = 3;
 
-    public static final int NOTIF_LIVE = 2;
+    public static final int NOTIF_LIVE = 0;
     public static final int NOTIF_DELAYED = 1;
-    public static final int NOTIF_NONE = 0;
+    public static final int NOTIF_NONE = 2;
 
     public static final int LED_COLOUR = 0;
 

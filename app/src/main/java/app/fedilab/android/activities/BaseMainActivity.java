@@ -2513,23 +2513,37 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     public void startSreaming() {
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if (liveNotifications) {
-            ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-            assert manager != null;
-            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
-                    return;
+        int liveNotifications = Helper.liveNotifType(getApplicationContext());
+        switch (liveNotifications){
+            case Helper.NOTIF_LIVE:
+                ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                assert manager != null;
+                for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                    if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
+                        return;
+                    }
                 }
-            }
-            try {
-                Intent streamingIntent = new Intent(this, LiveNotificationDelayedService.class);
-                startService(streamingIntent);
-            } catch (Exception ignored) {
-            }
+                try {
+                    Intent streamingIntent = new Intent(this, LiveNotificationService.class);
+                    startService(streamingIntent);
+                } catch (Exception ignored) {
+                }
+                break;
+            case Helper.NOTIF_DELAYED:
+                manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                assert manager != null;
+                for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                    if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
+                        return;
+                    }
+                }
+                try {
+                    Intent streamingIntent = new Intent(this, LiveNotificationDelayedService.class);
+                    startService(streamingIntent);
+                } catch (Exception ignored) {
+                }
+                break;
         }
-
     }
 
     public void manageFloatingButton(boolean display) {

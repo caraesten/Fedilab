@@ -88,6 +88,7 @@ import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.services.LiveNotificationDelayedService;
+import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -1133,11 +1134,17 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                 if (isChecked) {
                     notification_settings.setVisibility(View.VISIBLE);
                     try {
-                        Intent streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                        context.startService(streamingIntent);
-                    } catch (Exception ignored) {
-                        ignored.printStackTrace();
-                    }
+                        switch (Helper.liveNotifType(context)) {
+                            case Helper.NOTIF_LIVE:
+                                Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                                context.startService(streamingIntent);
+                                break;
+                            case Helper.NOTIF_DELAYED:
+                                streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
+                                context.startService(streamingIntent);
+                                break;
+                        }
+                    } catch (Exception ignored) {}
                 }else {
                     notification_settings.setVisibility(View.GONE);
                     context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
@@ -1182,6 +1189,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (count2 > 0) {
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:
@@ -1189,11 +1197,15 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.VISIBLE);
                             editor.apply();
+                            Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                            context.startService(streamingIntent);
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
                             live_notif_per_account.setVisibility(View.VISIBLE);
+                            streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
+                            context.startService(streamingIntent);
                             editor.apply();
                             break;
                         case Helper.NOTIF_NONE:
@@ -1201,6 +1213,12 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.GONE);
                             editor.apply();
+                            if (Build.VERSION.SDK_INT >= 26) {
+                                NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+                                if (notif != null) {
+                                    notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
+                                }
+                            }
                             break;
                     }
                     switch (Helper.liveNotifType(context)){

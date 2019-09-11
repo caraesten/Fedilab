@@ -101,16 +101,17 @@ public class LiveNotificationDelayedService extends Service {
                 if( thread != null && !thread.isInterrupted()){
                     thread.interrupt();
                 }
+                final boolean[] fetch = {Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED};
                 thread = new Thread() {
                     @Override
                     public void run() {
-                        //noinspection InfiniteLoopStatement
-                        while (true) {
+                        while (fetch[0]) {
                             for (final Account accountStream : accountStreams) {
                                 if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
                                     taks(accountStream);
                                 }
                             }
+                            fetch[0] = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
                             SystemClock.sleep(30000);
                         }
                     }

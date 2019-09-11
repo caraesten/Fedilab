@@ -554,6 +554,7 @@
                         android:textColor="@color/mastodonC2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         />
 
                     <LinearLayout
