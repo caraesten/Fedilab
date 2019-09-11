@@ -592,7 +592,6 @@
     <string name="comment">Reageren</string>
     <string name="peertube_instance">PeerTube-server</string>
     <string name="set_display_direct">Tijdlijn met directe berichten tonen</string>
-    <string name="set_keep_background_process">Fedilab op de achtergrond blijven uitvoeren</string>
     <string name="no_comments">Wees de eerste om op deze video te reageren m.b.v. de knop rechtsboven!</string>
     <string name="number_view_video">%s keer bekeken</string>
     <string name="duration_video">Duur: %s</string>
@@ -1100,4 +1099,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
