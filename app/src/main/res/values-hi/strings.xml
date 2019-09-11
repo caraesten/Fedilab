@@ -585,7 +585,6 @@
     <string name="comment">टिप्पणी</string>
     <string name="peertube_instance">पीयरट्यूब इंस्टंस</string>
     <string name="set_display_direct">निजी संदेश टाइम्लाइन दिखाएं</string>
-    <string name="set_keep_background_process">एेप बंद करने के बाद भी पृष्ठभूमि प्रक्रिया को चालू रखें</string>
     <string name="no_comments">वीडियो पे सबसे पहले टिप्पणी करने वाले बने ऊपरी दाई ओर वाले बटन के साथ!</string>
     <string name="number_view_video">%s बार देखा</string>
     <string name="duration_video">अवधि: %s</string>
@@ -1093,4 +1092,9 @@
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
