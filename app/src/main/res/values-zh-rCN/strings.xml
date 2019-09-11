@@ -588,7 +588,6 @@
     <string name="comment">评论</string>
     <string name="peertube_instance">Peertube 实例</string>
     <string name="set_display_direct">显示私人消息时间线</string>
-    <string name="set_keep_background_process">关闭应用时保留后台进程</string>
     <string name="no_comments">使用右上角的按钮，成为第一个对此视频留言的人！</string>
     <string name="number_view_video">%s 次观看</string>
     <string name="duration_video">时长：%s</string>
@@ -1098,4 +1097,9 @@
     <string name="set_invidious_host">输入你自定义的主机或者留空以使用 invidio.us</string>
     <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
     <string name="set_hide_status_bar_indication">要隐藏留在状态栏里的通知，请点击眼睛图标的按钮，然后取消勾选：“在状态栏内显示”</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
