@@ -523,7 +523,7 @@ public class Helper {
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
     public static final Pattern groupPattern = Pattern.compile("(\\![\\w_]+(\\s|$))");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
-    public static final Pattern youtubePattern = Pattern.compile("(www\\.)?youtube\\.com\\/watch\\?v=(\\w+)");
+    public static final Pattern youtubePattern = Pattern.compile("(m\\.|www\\.)?youtu(\\.be/|be\\.com/watch\\?v=)([\\w-]+)");
     public static final Pattern youtubeOembedPattern = Pattern.compile("(www\\.)?youtube\\.com\\/embed\\/(\\w+)\\?feature=oembed");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");

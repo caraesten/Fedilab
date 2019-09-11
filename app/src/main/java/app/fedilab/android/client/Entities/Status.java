@@ -622,6 +622,20 @@ public class Status implements Parcelable {
             return;
 
         String content = status.getReblog() != null ? status.getReblog().getContent() : status.getContent();
+
+
+        Matcher matcher = Helper.youtubePattern.matcher(content);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+        if (invidious) {
+            while (matcher.find()) {
+                final String youtubeId = matcher.group(3);
+                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
+                content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
+                content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
+            }
+        }
+
         Pattern aLink = Pattern.compile("<a((?!href).)*href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
         Matcher matcherALink = aLink.matcher(content);
         int count = 0;
@@ -650,23 +664,13 @@ public class Status implements Parcelable {
                 content = content.replaceFirst(Pattern.quote(beforemodification), Matcher.quoteReplacement(urlText));
             }
         }
-        Matcher matcher = Helper.youtubePattern.matcher(content);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
-        if (invidious) {
-            while (matcher.find()) {
-                final String youtubeId = matcher.group(2);
-                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST);
-                content = content.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(invidiousHost + "/watch?v=" + youtubeId));
 
-            }
-        }
         Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
         matcher = imgPattern.matcher(content);
         List<String> imgs = new ArrayList<>();
         int i = 1;
         while (matcher.find()) {
-            content = content.replaceAll(Pattern.quote(matcher.group(0)), "<br/>[media_" + i + "]<br/>");
+            content = content.replaceAll(Pattern.quote(matcher.group()), "<br/>[media_" + i + "]<br/>");
             imgs.add("[media_" + i + "]|" + matcher.group(1));
             i++;
         }
