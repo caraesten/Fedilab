@@ -115,6 +115,7 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.services.BackupStatusService;
+import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -2521,12 +2522,12 @@ public abstract class BaseMainActivity extends BaseActivity
             ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             assert manager != null;
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (LiveNotificationService.class.getName().equals(service.service.getClassName())) {
+                if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
                     return;
                 }
             }
             try {
-                Intent streamingIntent = new Intent(this, LiveNotificationService.class);
+                Intent streamingIntent = new Intent(this, LiveNotificationDelayedService.class);
                 startService(streamingIntent);
             } catch (Exception ignored) {
             }

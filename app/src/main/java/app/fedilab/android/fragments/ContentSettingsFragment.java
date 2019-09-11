@@ -96,6 +96,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -1141,7 +1142,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                 editor.apply();
                 if (set_live_notif.isChecked()) {
                     try {
-                        Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                        Intent streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
                         context.startService(streamingIntent);
                     } catch (Exception ignored) {
                         ignored.printStackTrace();
@@ -1151,7 +1152,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                     if (Build.VERSION.SDK_INT >= 26) {
                         NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
                         if (notif != null) {
-                            notif.deleteNotificationChannel(LiveNotificationService.CHANNEL_ID);
+                            notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
                         }
                     }
                 }
@@ -1537,13 +1538,13 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                 editor.putBoolean(Helper.SET_ALLOW_STREAM + userId + instance, set_allow_live_notifications.isChecked());
                 editor.apply();
                 if (set_allow_live_notifications.isChecked()) {
-                    LiveNotificationService.totalAccount++;
+                    LiveNotificationDelayedService.totalAccount++;
                 } else {
-                    LiveNotificationService.totalAccount--;
+                    LiveNotificationDelayedService.totalAccount--;
                 }
                 boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                 if (liveNotifications) {
-                    Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
+                    Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationDelayedService.class);
                     try {
                         context.startService(streamingServiceIntent);
                     } catch (Exception ignored) {
@@ -1779,7 +1780,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, LiveNotificationService.CHANNEL_ID);
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, LiveNotificationDelayedService.CHANNEL_ID);
                     startActivity(intent);
                 }
             });
