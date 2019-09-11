@@ -585,7 +585,6 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube Instanz</string>
     <string name="set_display_direct">Direktnachrichten als eigene Zeitleiste anzeigen</string>
-    <string name="set_keep_background_process">Im Hintergrund ausführen</string>
     <string name="no_comments">Kommentiere als Erster dieses Video mit den Knopf oben rechts!</string>
     <string name="number_view_video">%s mal gesehen</string>
     <string name="duration_video">Dauer: %s</string>
@@ -1090,4 +1089,9 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="set_invidious_host">Geben Sie Ihren eigenen Host ein oder lassen Sie leer, um invidio.us zu verwenden</string>
     <string name="set_hide_status_bar">Fedilab Benachrichtigungsleiste ausblenden</string>
     <string name="set_hide_status_bar_indication">Um die verbleibende Benachrichtigung in der Statusleiste zu verstecken, klicken Sie auf die Augensymbol-Schaltfläche und deaktivieren Sie: \"In Statusleiste anzeigen\"</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
