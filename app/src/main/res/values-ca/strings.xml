@@ -1096,7 +1096,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Activa l\'ajornament de notificacions</string>
     <string name="set_live_type_indication">S\'ajornaran les notificacions cada 30 segons. Això permet gastar menys la pila.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="live_delayed">Notificacions ajornades</string>
+    <string name="no_live_notif">Notificacions instantànies desactivades</string>
+    <string name="no_live_indication">Les notificacions es recolliran cada 15 minuts.</string>
 </resources>
