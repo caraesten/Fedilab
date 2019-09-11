@@ -1099,9 +1099,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_invidious_host">Entrez votre hôte personnalisé ou laissez vide pour utiliser invidio.us</string>
     <string name="set_hide_status_bar">Masquer la barre de notification de Fedilab</string>
     <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de status, cliquez sur le bouton en forme d\'œil, puis décochez: \"Voir dans la barre de status\"</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">Activer les notifications retardées</string>
+    <string name="set_live_type_indication">Les notifications seront mises à jour toutes les 30 secondes. Cela permet de réduire la consommation de la batterie.</string>
+    <string name="live_delayed">Notifications en direct retardés</string>
+    <string name="no_live_notif">Aucune notifications en direct</string>
+    <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
 </resources>
