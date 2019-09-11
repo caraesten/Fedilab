@@ -588,7 +588,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="comment">評論</string>
     <string name="peertube_instance">PeerTube 站台</string>
     <string name="set_display_direct">顯示私人訊息時間軸</string>
-    <string name="set_keep_background_process">當應用程式關閉時，保留背景處理程序</string>
     <string name="no_comments">使用右上角的按鈕來成為第一個對這部影片留下評論的人！</string>
     <string name="number_view_video">%s 次檢視</string>
     <string name="duration_video">長度：%s</string>
@@ -1097,4 +1096,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_invidious_host">輸入您的自訂主機或留空以使用 invidio.us</string>
     <string name="set_hide_status_bar">隱藏 Fedilab 通知列</string>
     <string name="set_hide_status_bar_indication">要隱藏狀態列中的其餘通知，點擊眼睛圖示的按鈕上然後取消勾選「在狀態列中顯示」</string>
+    <string name="set_live_type_title">Enable delayed notifications</string>
+    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
+    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
 </resources>
