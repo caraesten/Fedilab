@@ -1102,5 +1102,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="no_live_notif">Sin notificaciones en vivo</string>
     <string name="no_live_indication">Se buscarán notificaciones cada 15 minutos.</string>
     <string name="action_add_notes">Añadir notas</string>
-    <string name="note_for_account">Notas para la cuenta</string>
+    <string name="note_for_account">Notas de la cuenta</string>
 </resources>
