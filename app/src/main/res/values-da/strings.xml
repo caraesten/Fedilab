@@ -1107,4 +1107,6 @@
     <string name="live_delayed">Live-notifikationer udskudt</string>
     <string name="no_live_notif">Ingen live-notifikationer</string>
     <string name="no_live_indication">Notifikationer hentes hvert 15. minut.</string>
+    <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>
