@@ -912,7 +912,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         dialog.dismiss();
                     }
                 });
-                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
@@ -1516,7 +1516,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 dialog.dismiss();
                             }
                         });
-                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
