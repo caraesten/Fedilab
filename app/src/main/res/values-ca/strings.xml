@@ -1099,4 +1099,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="live_delayed">Notificacions ajornades</string>
     <string name="no_live_notif">Notificacions instantànies desactivades</string>
     <string name="no_live_indication">Les notificacions es recolliran cada 15 minuts.</string>
+    <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>
