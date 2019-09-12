@@ -51,6 +51,7 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -86,6 +87,7 @@ import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.drawers.AccountsInAListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
@@ -97,6 +99,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
+import app.fedilab.android.sqlite.NotesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TempMuteDAO;
 import es.dmoral.toasty.Toasty;
@@ -133,7 +136,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
-    private ImageButton account_follow;
+    private ImageButton account_follow, account_personal_note;
     private String addToList;
     private ViewPager mPager;
     private TabLayout tabLayout;
@@ -194,6 +197,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         pins = new ArrayList<>();
         Bundle b = getIntent().getExtras();
         account_follow = findViewById(R.id.account_follow);
+        account_personal_note = findViewById(R.id.account_personal_note);
         account_follow_request = findViewById(R.id.account_follow_request);
         header_edit_profile = findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
@@ -885,6 +889,51 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 return false;
             }
         });
+
+        UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
+        if( userNote != null ){
+
+            account_personal_note.setVisibility(View.VISIBLE);
+            account_personal_note.setOnClickListener(view->{
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                builderInner.setTitle(R.string.note_for_account);
+                EditText input = new EditText(ShowAccountActivity.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                input.setSingleLine(false);
+                input.setText(userNote.getNote());
+                input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+                builderInner.setView(input);
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
+                        if( userNote == null) {
+                            userNote = new UserNote();
+                            userNote.setAcct(account.getAcct());
+                        }
+                        userNote.setNote(input.getText().toString());
+                        new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
+                        if( input.getText().toString().trim().length() > 0 ){
+                            account_personal_note.setVisibility(View.VISIBLE);
+                        }else{
+                            account_personal_note.setVisibility(View.GONE);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+            });
+        }
+
         TextView account_date = findViewById(R.id.account_date);
         account_date.setText(Helper.shortDateToString(account.getCreated_at()));
         new Thread(new Runnable() {
@@ -1181,6 +1230,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
             popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+            popup.getMenu().findItem(R.id.action_add_notes).setVisible(false);
             popup.getMenu().findItem(R.id.action_add_to_list).setVisible(false);
             stringArrayConf = getResources().getStringArray(R.array.more_action_owner_confirm);
         } else {
@@ -1231,10 +1281,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 } else {
                     style = R.style.Dialog;
                 }
+                final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 switch (item.getItemId()) {
                     case R.id.action_follow_instance:
                         String finalInstanceName = splitAcct[1];
-                        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
                         if (remoteInstances != null && remoteInstances.size() > 0) {
                             Toasty.info(getApplicationContext(), getString(R.string.toast_instance_already_added), Toast.LENGTH_LONG).show();
@@ -1263,7 +1313,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
                                     runOnUiThread(new Runnable() {
                                         public void run() {
-                                            final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                             if (!peertubeAccount)
                                                 new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
                                             else
@@ -1441,6 +1490,47 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 if (input.getText() != null)
                                     comment = input.getText().toString();
                                 new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), null, comment, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                        return true;
+                    case R.id.action_add_notes:
+                        UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        builderInner.setTitle(R.string.note_for_account);
+                        input = new EditText(ShowAccountActivity.this);
+                        lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        input.setLayoutParams(lp);
+                        input.setSingleLine(false);
+                        if( userNote != null) {
+                            input.setText(userNote.getNote());
+                        }
+                        input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+                        builderInner.setView(input);
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
+                                if( userNote == null) {
+                                    userNote = new UserNote();
+                                    userNote.setAcct(account.getAcct());
+                                }
+                                userNote.setNote(input.getText().toString());
+                                new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
+                                if( input.getText().toString().trim().length() > 0 ){
+                                    account_personal_note.setVisibility(View.VISIBLE);
+                                }else{
+                                    account_personal_note.setVisibility(View.GONE);
+                                }
                                 dialog.dismiss();
                             }
                         });

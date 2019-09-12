@@ -1214,4 +1214,5 @@
     <string name="no_live_notif">No live notifications</string>
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
     <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>

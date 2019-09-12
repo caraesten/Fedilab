@@ -94,7 +94,18 @@
                         android:visibility="gone"
                         app:layout_constraintStart_toEndOf="@id/account_pp"
                         app:layout_constraintTop_toBottomOf="@id/banner_pp" />
-
+                    <ImageButton
+                        android:id="@+id/account_personal_note"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_note"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@id/account_follow"
+                        app:layout_constraintTop_toBottomOf="@id/banner_pp" />
                     <View
                         android:id="@+id/fake_actionbar"
                         android:layout_width="match_parent"
