@@ -70,7 +70,7 @@ ext.netCipherVersion = "2.0.0-alpha1"
 ext.acraVersion = "5.4.0"
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -120,8 +120,8 @@ dependencies {
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation 'com.github.stom79:Android-WYSIWYG-Editor:3.2.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
-    implementation 'com.github.penfeizhou.android.animation:apng:1.0.1'
-    implementation 'com.github.penfeizhou.android.animation:gif:1.0.1'
+    implementation 'com.github.penfeizhou.android.animation:apng:1.1.0'
+    implementation 'com.github.penfeizhou.android.animation:gif:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 
