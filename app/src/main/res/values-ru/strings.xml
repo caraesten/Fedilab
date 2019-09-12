@@ -1117,6 +1117,6 @@
     <string name="live_delayed">Живое уведомление отложено</string>
     <string name="no_live_notif">Нет живых уведомлений</string>
     <string name="no_live_indication">Уведомления будут поступать каждые 15 минут.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="action_add_notes">Добавить примечания</string>
+    <string name="note_for_account">Примечания для аккаунта</string>
 </resources>
