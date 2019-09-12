@@ -1110,4 +1110,6 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="live_delayed">Live notifications delayed</string>
     <string name="no_live_notif">No live notifications</string>
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>
