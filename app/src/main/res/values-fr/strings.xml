@@ -1104,4 +1104,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="live_delayed">Notifications en direct différées</string>
     <string name="no_live_notif">Aucune notification en direct</string>
     <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
+    <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>
