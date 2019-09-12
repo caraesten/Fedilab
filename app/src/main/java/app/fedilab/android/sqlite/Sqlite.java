@@ -49,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 35;
+    public static final int DB_VERSION = 36;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -103,6 +103,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for main menu items
     public static final String TABLE_MAIN_MENU_ITEMS = "MAIN_MENU_ITEMS";
+
+    //Table for taking notes about accounts
+    public static final String TABLE_USER_NOTES = "USER_NOTES";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -352,6 +355,13 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NAV_HOWTO + " INTEGER  DEFAULT 1)";
 
 
+    private static final String CREATE_TABLE_USER_NOTES = "CREATE TABLE "
+            + TABLE_USER_NOTES + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_ACCT + " TEXT NOT NULL, "
+            + COL_NOTE + " TEXT, "
+            + COL_DATE_CREATION + " TEXT NOT NULL)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -382,7 +392,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TIMELINE_CACHE);
         db.execSQL(CREATE_TABLE_NOTIFICATIONS);
         db.execSQL(CREATE_TABLE_MAIN_MENU_ITEMS);
-
+        db.execSQL(CREATE_TABLE_USER_NOTES);
     }
 
     @Override
@@ -522,6 +532,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("DELETE FROM " + TABLE_STATUSES_CACHE);
                 db.execSQL("DELETE FROM " + TABLE_NOTIFICATION_CACHE);
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
+            case 35:
+                db.execSQL(CREATE_TABLE_USER_NOTES);
             default:
                 break;
         }

@@ -17,6 +17,11 @@
         android:icon="@drawable/ic_open_with"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_add_notes"
+        android:title="@string/action_add_notes"
+        android:icon="@drawable/ic_note"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_mute"
         android:title="@string/more_action_1"
         android:icon="@drawable/ic_volume_mute"
