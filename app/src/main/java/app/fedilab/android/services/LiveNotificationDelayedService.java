@@ -189,7 +189,7 @@ public class LiveNotificationDelayedService extends Service {
             if( since_ids.containsKey(key) ){
                 last_notifid = since_ids.get(key);
             }
-            apiResponse = api.getNotifications(DisplayNotificationsFragment.Type.ALL, null, false);
+            apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
             if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
                 since_ids.put(key, apiResponse.getNotifications().get(0).getId());
                 for (Notification notification : apiResponse.getNotifications()) {
