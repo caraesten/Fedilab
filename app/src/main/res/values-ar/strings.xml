@@ -1126,4 +1126,6 @@
     <string name="live_delayed">تم تأخير الإشعارات الحية</string>
     <string name="no_live_notif">ليس هناك إشعارات حية</string>
     <string name="no_live_indication">سيتم جلب الإشعارات كل 15 دقيقة.</string>
+    <string name="action_add_notes">Add notes</string>
+    <string name="note_for_account">Notes for the account</string>
 </resources>
