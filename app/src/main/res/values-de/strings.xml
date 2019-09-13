@@ -1088,7 +1088,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="set_invidious_indication">Invidious ist ein alternatives Frontend zu YouTube</string>
     <string name="set_invidious_host">Geben Sie Ihren eigenen Host ein oder lassen Sie leer, um invidio.us zu verwenden</string>
     <string name="set_nitter">Replace Twitter with Nitter</string>
-    <string name="set_nitter_indication">Nitter is open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Fedilab Benachrichtigungsleiste ausblenden</string>
     <string name="set_hide_status_bar_indication">Um die verbleibende Benachrichtigung in der Statusleiste zu verstecken, klicken Sie auf die Augensymbol-Schaltfläche und deaktivieren Sie: \"In Statusleiste anzeigen\"</string>
