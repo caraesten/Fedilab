@@ -1107,6 +1107,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_invidious">Replace Youtube with Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
