@@ -629,10 +629,21 @@ public class Status implements Parcelable {
         boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
         if (invidious) {
             while (matcher.find()) {
-                final String youtubeId = matcher.group(3);
+                final String youtubeId = matcher.group(4);
                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
                 content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
                 content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
+            }
+        }
+
+        matcher = Helper.nitterPattern.matcher(content);
+        boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+        if (nitter) {
+            while (matcher.find()) {
+                final String nitter_directory = matcher.group(2);
+                String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+                content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
+                content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+nitterHost + nitter_directory));
             }
         }
 
