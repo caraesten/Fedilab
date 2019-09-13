@@ -1093,8 +1093,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_invidious_indication">Invidious és una alternativa a YouTube en funcions de frontal</string>
     <string name="set_invidious_host">Escriu aquí el teu hoste particular o deixa-ho buit i s\'usarà invidio.us</string>
     <string name="set_nitter">Substitueix Twitter amb Nitter</string>
-    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
-    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
+    <string name="set_nitter_indication">Nitter és una alternativa de codi obert que fa de frontal per Twitter i protegeix la privacitat.</string>
+    <string name="set_nitter_host">Introdueix aquí el teu hoste personalitzat o deixa-ho en blanc i s\'usarà nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Activa l\'ajornament de notificacions</string>
@@ -1102,6 +1102,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="live_delayed">Notificacions ajornades</string>
     <string name="no_live_notif">Notificacions instantànies desactivades</string>
     <string name="no_live_indication">Les notificacions es recolliran cada 15 minuts.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="action_add_notes">Afegeix-hi notes</string>
+    <string name="note_for_account">Notes per al compte</string>
 </resources>
