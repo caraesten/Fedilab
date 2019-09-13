@@ -1094,9 +1094,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_invidious">使用 Invidio.us 取代 Youtube</string>
     <string name="set_invidious_indication">Invidious 是一個 YouTube 的替代前端</string>
     <string name="set_invidious_host">輸入您的自訂主機或留空以使用 invidio.us</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
-    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
-    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
+    <string name="set_nitter">使用 Nitter 取代 Twitter</string>
+    <string name="set_nitter_indication">Nitter 是一個尊重隱私的開放原始碼替代 Twitter 前端。</string>
+    <string name="set_nitter_host">輸入您的自訂主機或留空以使用 nitter.net</string>
     <string name="set_hide_status_bar">隱藏 Fedilab 通知列</string>
     <string name="set_hide_status_bar_indication">要隱藏狀態列中的其餘通知，點擊眼睛圖示的按鈕上然後取消勾選「在狀態列中顯示」</string>
     <string name="set_live_type_title">啟用延遲通知</string>
