@@ -2541,7 +2541,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Helper.openBrowser(context, card.getUrl());
+                                    String url = card.getUrl();
+                                    boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+                                    if (nitter) {
+                                        Matcher matcher = Helper.nitterPattern.matcher(url);
+                                        while (matcher.find()) {
+                                            final String nitter_directory = matcher.group(2);
+                                            String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+                                            url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
+                                        }
+                                    }
+                                    Helper.openBrowser(context, url);
                                 }
                             });
                         } else if (card.getType().toLowerCase().equals("video") && (display_video_preview || viewHolder.getAdapterPosition() == conversationPosition)) {
@@ -2572,8 +2582,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     String url = finalSrc;
                                     if (url != null) {
                                         boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
-                                        Matcher matcher = Helper.youtubeOembedPattern.matcher(url);
                                         if (invidious) {
+                                            Matcher matcher = Helper.youtubeOembedPattern.matcher(url);
                                             while (matcher.find()) {
                                                 final String youtubeId = matcher.group(2);
                                                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
