@@ -825,7 +825,7 @@
     <string name="set_blur_sensitive">閲覧注意のメディアをぼかす</string>
     <string name="set_display_timeline_in_list">リストにタイムラインを表示する</string>
     <string name="display_timeline">タイムラインを表示</string>
-    <string name="set_display_bot_icon">botアカウントのトゥートにバッジをつける</string>
+    <string name="set_display_bot_icon">botアカウントによるトゥートに印をつける</string>
     <string name="add_tags">タグ管理</string>
     <string name="set_remember_position">ホームタイムラインの位置を記憶する</string>
     <string name="history">履歴</string>
@@ -1086,6 +1086,9 @@
     <string name="set_invidious">YouTubeをInvidio.usに置き換える</string>
     <string name="set_invidious_indication">InvidiousはYouTubeの代替フロントエンドです</string>
     <string name="set_invidious_host">カスタムホストを入力してください。空欄にするとinvidio.usが使用されます。</string>
+    <string name="set_nitter">TwitterをNitterに置き換える</string>
+    <string name="set_nitter_indication">Nitterはプライバシーに重点を置いたオープンソースのTwitter代替フロントエンドです。</string>
+    <string name="set_nitter_host">カスタムホストを入力してください。空欄にするとnitter.netが使用されます。</string>
     <string name="set_hide_status_bar">Fedilab通知バーを非表示にする</string>
     <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
@@ -1093,6 +1096,6 @@
     <string name="live_delayed">Live notifications delayed</string>
     <string name="no_live_notif">No live notifications</string>
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="action_add_notes">メモを追加</string>
+    <string name="note_for_account">このアカウントのメモ</string>
 </resources>
