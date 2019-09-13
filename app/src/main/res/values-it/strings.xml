@@ -1107,6 +1107,6 @@
     <string name="live_delayed">Notifiche in tempo reale differite</string>
     <string name="no_live_notif">Nessuna notifica in tempo reale</string>
     <string name="no_live_indication">Le notifiche saranno recuperate ogni 15 minuti.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="action_add_notes">Aggiungi note</string>
+    <string name="note_for_account">Note per l\'account</string>
 </resources>
