@@ -1100,6 +1100,9 @@
     <string name="set_invidious">Sostituisci Youtube con Invidio.us</string>
     <string name="set_invidious_indication">Invidious è un\'interfaccia alternativa per YouTube</string>
     <string name="set_invidious_host">Inserisci il tuo host personalizzato o lascia vuoto per usare invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Nascondi barra di notifica di Fedilab</string>
     <string name="set_hide_status_bar_indication">Per nascondere le notifiche rimanenti nella barra di stato, clicca sul pulsante con l\'icona di un occhio e deseleziona: \"Mostra nella barra di stato\"</string>
     <string name="set_live_type_title">Abilita notifiche differite</string>
@@ -1107,4 +1110,6 @@
     <string name="live_delayed">Notifiche in tempo reale differite</string>
     <string name="no_live_notif">Nessuna notifica in tempo reale</string>
     <string name="no_live_indication">Le notifiche saranno recuperate ogni 15 minuti.</string>
+    <string name="action_add_notes">Aggiungi note</string>
+    <string name="note_for_account">Note per l\'account</string>
 </resources>

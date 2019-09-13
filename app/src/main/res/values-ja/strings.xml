@@ -275,9 +275,9 @@
     <string name="toast_empty_search">インスタンス名と表示名を空欄にすることはできません！</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">読み込みの最適化</string>
-    <string name="set_toots_page">読み込みあたりのトゥート数</string>
-    <string name="set_accounts_page">読み込みあたりのアカウント数</string>
-    <string name="set_notifications_page">読み込みあたりの通知の数</string>
+    <string name="set_toots_page">一回あたりに読み込むトゥートの数</string>
+    <string name="set_accounts_page">一回あたりに読み込むアカウントの数</string>
+    <string name="set_notifications_page">一回あたりに読み込む通知の数</string>
     <string name="set_attachment_always">常に</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">尋ねる</string>
@@ -825,7 +825,7 @@
     <string name="set_blur_sensitive">閲覧注意のメディアをぼかす</string>
     <string name="set_display_timeline_in_list">リストにタイムラインを表示する</string>
     <string name="display_timeline">タイムラインを表示</string>
-    <string name="set_display_bot_icon">botアカウントのトゥートにバッジをつける</string>
+    <string name="set_display_bot_icon">botアカウントによるトゥートに印をつける</string>
     <string name="add_tags">タグ管理</string>
     <string name="set_remember_position">ホームタイムラインの位置を記憶する</string>
     <string name="history">履歴</string>
@@ -1086,11 +1086,16 @@
     <string name="set_invidious">YouTubeをInvidio.usに置き換える</string>
     <string name="set_invidious_indication">InvidiousはYouTubeの代替フロントエンドです</string>
     <string name="set_invidious_host">カスタムホストを入力してください。空欄にするとinvidio.usが使用されます。</string>
+    <string name="set_nitter">TwitterをNitterに置き換える</string>
+    <string name="set_nitter_indication">Nitterはプライバシーに重点を置いたオープンソースのTwitter代替フロントエンドです。</string>
+    <string name="set_nitter_host">カスタムホストを入力してください。空欄にするとnitter.netが使用されます。</string>
     <string name="set_hide_status_bar">Fedilab通知バーを非表示にする</string>
     <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">通知を遅らせる</string>
+    <string name="set_live_type_indication">通知は30秒ごとに遅延が発生します。バッテリーの持ちが改善します。</string>
+    <string name="live_delayed">ライブ通知の遅れ</string>
+    <string name="no_live_notif">ライブ通知はありません</string>
+    <string name="no_live_indication">15分ごとに通知を取得します。</string>
+    <string name="action_add_notes">メモを追加</string>
+    <string name="note_for_account">このアカウントのメモ</string>
 </resources>
