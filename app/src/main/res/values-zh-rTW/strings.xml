@@ -1094,11 +1094,16 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_invidious">使用 Invidio.us 取代 Youtube</string>
     <string name="set_invidious_indication">Invidious 是一個 YouTube 的替代前端</string>
     <string name="set_invidious_host">輸入您的自訂主機或留空以使用 invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">隱藏 Fedilab 通知列</string>
     <string name="set_hide_status_bar_indication">要隱藏狀態列中的其餘通知，點擊眼睛圖示的按鈕上然後取消勾選「在狀態列中顯示」</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">啟用延遲通知</string>
+    <string name="set_live_type_indication">通知將會每30秒被延遲一次。這將會降低電池的消耗。</string>
+    <string name="live_delayed">即時通知已延遲</string>
+    <string name="no_live_notif">沒有即時通知</string>
+    <string name="no_live_indication">將會每15分鐘擷取一次通知。</string>
+    <string name="action_add_notes">新增註記</string>
+    <string name="note_for_account">帳號註記</string>
 </resources>

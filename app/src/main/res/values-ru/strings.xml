@@ -1110,11 +1110,16 @@
     <string name="set_invidious">Заменить Youtube на Invidio.us</string>
     <string name="set_invidious_indication">Invidious - это альтернативный интерфейс для YouTube</string>
     <string name="set_invidious_host">Введите собственный хост или оставьте пустым для использования invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Скрыть панель уведомлений Fedilab</string>
     <string name="set_hide_status_bar_indication">Чтобы скрыть уведомление в строке состояния, нажмите на кнопку с пиктограммой глаза и снимите флажок: \"Показывать в строке состояния\"</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">Включить отложенные уведомления</string>
+    <string name="set_live_type_indication">Уведомления будут появляться на 30 секунд позже. Это позволит уменьшить влияние на батарею.</string>
+    <string name="live_delayed">Живое уведомление отложено</string>
+    <string name="no_live_notif">Нет живых уведомлений</string>
+    <string name="no_live_indication">Уведомления будут поступать каждые 15 минут.</string>
+    <string name="action_add_notes">Добавить примечания</string>
+    <string name="note_for_account">Примечания для аккаунта</string>
 </resources>

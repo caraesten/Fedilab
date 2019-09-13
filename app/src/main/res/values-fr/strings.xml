@@ -1097,6 +1097,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_invidious">Remplacer YouTube par Invidio.us</string>
     <string name="set_invidious_indication">Indivious est une alternative visuelle pour YouTube</string>
     <string name="set_invidious_host">Entrez votre nom de domaine personnalisé ou laissez vide pour utiliser invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Masquer la barre de notification de Fedilab</string>
     <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de statut, cliquez sur le bouton en forme d\'œil, puis décochez: \"Afficher dans la barre de statut\"</string>
     <string name="set_live_type_title">Activer les notifications différées</string>
@@ -1104,4 +1107,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="live_delayed">Notifications en direct différées</string>
     <string name="no_live_notif">Aucune notification en direct</string>
     <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
+    <string name="action_add_notes">Ajouter des notes</string>
+    <string name="note_for_account">Notes pour le compte</string>
 </resources>

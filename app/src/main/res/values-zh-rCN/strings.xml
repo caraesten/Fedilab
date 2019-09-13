@@ -242,7 +242,7 @@
     <string name="pinned_toots">置顶</string>
     <!-- TOAST -->
     <string name="client_error">无法获取客户端 ID！</string>
-    <string name="connect_error">无法连接到实例的域！</string>
+    <string name="connect_error">无法连接到实例域！</string>
     <string name="no_internet">没有互联网连接！</string>
     <string name="toast_block">该帐号已被屏蔽！</string>
     <string name="toast_unblock">该帐号不再被屏蔽！</string>
@@ -350,7 +350,7 @@
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
-        <item>4Mb</item>
+        <item>4 Mb</item>
         <item>6 Mb</item>
         <item>8 Mb</item>
     </string-array>
@@ -1095,11 +1095,16 @@
     <string name="set_invidious">用 Invidio.us 替换 Youtube</string>
     <string name="set_invidious_indication">Invidious 是个 YouTube 的替代前端</string>
     <string name="set_invidious_host">输入你自定义的主机或者留空以使用 invidio.us</string>
+    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
+    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
     <string name="set_hide_status_bar_indication">要隐藏留在状态栏里的通知，请点击眼睛图标的按钮，然后取消勾选：“在状态栏内显示”</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
+    <string name="set_live_type_title">启用延迟通知</string>
+    <string name="set_live_type_indication">通知将被延迟为每30秒产生。这将允许耗尽较少电池。</string>
+    <string name="live_delayed">直播通知延迟</string>
+    <string name="no_live_notif">没有直播通知</string>
+    <string name="no_live_indication">通知将被延迟为每15分钟产生。</string>
+    <string name="action_add_notes">添加注释</string>
+    <string name="note_for_account">账户说明</string>
 </resources>
