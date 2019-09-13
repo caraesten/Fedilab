@@ -776,7 +776,63 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
             @Override
             public void afterTextChanged(Editable s) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_INVIDIOUS_HOST, s.toString().trim());
+                if( s.toString().trim().length() > 0) {
+                    editor.putString(Helper.SET_INVIDIOUS_HOST, s.toString().toLowerCase().trim());
+                }else{
+                    editor.putString(Helper.SET_INVIDIOUS_HOST, null);
+                }
+                editor.apply();
+            }
+        });
+
+
+        TextView set_nitter_host = rootView.findViewById(R.id.set_nitter_host);
+        boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+        final CheckBox set_nitter = rootView.findViewById(R.id.set_nitter);
+        set_nitter.setChecked(nitter);
+
+        set_nitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NITTER, set_nitter.isChecked());
+                editor.apply();
+                if (set_nitter.isChecked()) {
+                    set_nitter_host.setVisibility(View.VISIBLE);
+                } else {
+                    set_nitter_host.setVisibility(View.GONE);
+                }
+            }
+        });
+        if (nitter) {
+            set_nitter_host.setVisibility(View.VISIBLE);
+        } else {
+            set_nitter_host.setVisibility(View.GONE);
+        }
+
+        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, null);
+        if (nitterHost != null) {
+            set_nitter_host.setText(nitterHost);
+        }
+        set_nitter_host.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                if( s.toString().trim().length() > 0) {
+                    editor.putString(Helper.SET_NITTER_HOST, s.toString().toLowerCase().trim());
+                }else{
+                    editor.putString(Helper.SET_NITTER_HOST, null);
+                }
                 editor.apply();
             }
         });

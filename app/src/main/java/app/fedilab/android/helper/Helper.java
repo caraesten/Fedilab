@@ -437,6 +437,8 @@ public class Helper {
 
     public static final String SET_INVIDIOUS = "set_invidious";
     public static final String SET_INVIDIOUS_HOST = "set_invidious_host";
+    public static final String SET_NITTER = "set_nitter";
+    public static final String SET_NITTER_HOST = "set_nitter_host";
     public static final String DEFAULT_INVIDIOUS_HOST = "invidio.us";
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
