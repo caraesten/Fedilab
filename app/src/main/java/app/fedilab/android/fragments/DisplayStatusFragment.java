@@ -778,7 +778,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.setMenuVisibility(visible);
         if (context == null)
             return;
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        int liveNotifications = Helper.liveNotifType(context);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (visible) {
@@ -791,7 +791,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
-                if (liveNotifications) {
+                if (liveNotifications != 2) {
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                     try {
                         context.startService(streamingFederatedIntent);
@@ -813,7 +813,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
-                if (liveNotifications) {
+                if (liveNotifications != 2) {
                     streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
                     try {
                         context.startService(streamingLocalIntent);

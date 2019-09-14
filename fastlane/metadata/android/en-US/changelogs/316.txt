@@ -14,3 +14,4 @@ Fixed
 - Fix mentions
 - Crash when clicking on thumbs-up button for Peertube videos with a Mastodon account
 - Fix a scrolling issue
+- Fix Peertube playlist 1.4+
