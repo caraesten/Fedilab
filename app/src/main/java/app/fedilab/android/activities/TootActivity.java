@@ -477,7 +477,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
 
-                    String[] searchInArray =(s.toString().substring(currentCursorPosition[ - searchLength, currentCursorPosition)).split("\\s");
+                    String[] searchInArray =(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)).split("\\s");
                     String searchIn = searchInArray[searchInArray.length-1];
                     Matcher m, mt;
                     m = sPattern.matcher(searchIn);

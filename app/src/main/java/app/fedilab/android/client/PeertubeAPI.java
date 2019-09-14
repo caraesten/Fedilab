@@ -1693,6 +1693,13 @@ public class PeertubeAPI {
      */
     public static Peertube parsePeertube(Context context, JSONObject resobj) {
         Peertube peertube = new Peertube();
+        if( resobj.has("video")){
+            try {
+                resobj = resobj.getJSONObject("video");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             peertube.setId(resobj.get("id").toString());
             peertube.setCache(resobj);
