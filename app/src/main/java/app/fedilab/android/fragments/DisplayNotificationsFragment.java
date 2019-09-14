@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +48,9 @@ import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.NotificationsListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.services.LiveNotificationDelayedService;
+import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -56,6 +60,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
 import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 
+import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.countNewNotifications;
 
 
@@ -275,6 +280,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void onResume() {
         super.onResume();
         swipeRefreshLayout.setEnabled(true);
+        if (context == null)
+            return;
+        if (getUserVisibleHint() && notifications != null && notifications.size() > 0) {
+            retrieveMissingNotifications(notifications.get(0).getId());
+            updateNotificationLastId(notifications.get(0).getId());
+        }
     }
 
     @Override
@@ -319,12 +330,24 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
         }
         if (notifications != null && notifications.size() > 0) {
+            if (type == Type.ALL) {
+                if (lastReadNotifications != null && notifications.get(0).getId().compareTo(lastReadNotifications) > 0) {
+                    countNewNotifications++;
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    Account accountdb = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                    LiveNotificationDelayedService.since_ids.put(accountdb.getAcct() + "@" + accountdb.getInstance(), notifications.get(0).getId());
+                }
+            }
             for (Notification tmpNotification : notifications) {
 
                 if (type == Type.ALL) {
                     if (lastReadNotifications != null && tmpNotification.getId().compareTo(lastReadNotifications) > 0) {
                         countNewNotifications++;
                     }
+
                     try {
                         ((MainActivity) context).updateNotifCounter();
                     } catch (Exception ignored) {
@@ -439,6 +462,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if (MainActivity.lastNotificationId == null || notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) >= 0) {
                     MainActivity.lastNotificationId = notifications.get(0).getId();
                     updateNotificationLastId(notifications.get(0).getId());
+                }
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                if (MainActivity.lastNotificationId != null && notifications.get(0).getId().compareTo(MainActivity.lastNotificationId) > 0) {
+                    LiveNotificationDelayedService.since_ids.put(account.getAcct() + "@" + account.getInstance(), notifications.get(0).getId());
                 }
             }
             if (textviewNoAction.getVisibility() == View.VISIBLE) {

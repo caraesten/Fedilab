@@ -82,7 +82,7 @@ public class LiveNotificationDelayedService extends Service {
     private NotificationChannel channel;
     public static int totalAccount = 0;
     public static int eventsCount = 0;
-    private HashMap<String, String> since_ids = new HashMap<>();
+    public static HashMap<String, String> since_ids = new HashMap<>();
     private static Thread thread;
     private boolean fetch;
 
