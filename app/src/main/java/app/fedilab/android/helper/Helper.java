@@ -3626,11 +3626,6 @@ public class Helper {
         Matcher matcher = mentionLongPattern.matcher(content);
         while (matcher.find()) {
             String mentionLong = matcher.group(1);
-            mentions.add(mentionLong);
-        }
-        matcher = mentionLongPattern.matcher(content);
-        while (matcher.find()) {
-            String mentionLong = matcher.group(1);
             if (!mentions.contains(mentionLong)) {
                 mentions.add(mentionLong);
             }
@@ -3671,8 +3666,14 @@ public class Helper {
         if (reply.size() > 1) {
             int i = 0;
             for (String r : reply) {
-                if (mentions.size() > 0) {
-                    reply.set(i, r + " " + mentionString + " - " + (i + 1) + "/" + reply.size());
+                if (mentions.size() > 0 ) {
+                    String tmpMention = mentionString.toString();
+                    for (String mention : mentions) {
+                        if(r.contains(mention)){
+                            tmpMention = tmpMention.replace(mention,"");
+                        }
+                    }
+                    reply.set(i, r + " " + tmpMention + " - " + (i + 1) + "/" + reply.size());
                 } else {
                     reply.set(i, r + " - " + (i + 1) + "/" + reply.size());
                 }
