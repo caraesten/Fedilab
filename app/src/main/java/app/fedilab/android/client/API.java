@@ -1615,17 +1615,15 @@ public class API {
                     }
                 }
             }
-            if (statuses == null) {
+            if (statuses == null || statuses.size() <= 1 ) {
                 return getHomeTimeline(max_id);
             } else {
-                if (statuses.size() > 0) {
-                    if (statuses.get(0).getId().matches("\\d+")) {
-                        apiResponse.setSince_id(String.valueOf(statuses.get(0).getId()));
-                        apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
-                    } else {
-                        apiResponse.setSince_id(statuses.get(0).getId());
-                        apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
-                    }
+                if (statuses.get(0).getId().matches("\\d+")) {
+                    apiResponse.setSince_id(String.valueOf(statuses.get(0).getId()));
+                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+                } else {
+                    apiResponse.setSince_id(statuses.get(0).getId());
+                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                 }
                 apiResponse.setStatuses(statuses);
                 return apiResponse;
