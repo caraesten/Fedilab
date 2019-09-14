@@ -20,61 +20,27 @@
     android:paddingRight="20dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:layout_marginTop="10dp"
         android:layout_gravity="center_vertical"
         android:text="@string/settings_popup_message"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <!--
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_popup_timeline"/>
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/set_push_hometimeline"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="start|center_vertical"
-            android:layout_margin="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
-    -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_popup_notification" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/set_push_notification"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="start|center_vertical"
-            android:layout_margin="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:checked="true"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <!-- Choose stream -->
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:layout_marginBottom="20dp"
+        android:id="@+id/set_live_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/set_live_type_indication"
+        android:textColor="@color/mastodonC2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
 

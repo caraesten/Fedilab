@@ -18,6 +18,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,6 +43,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -66,11 +68,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1230,49 +1235,101 @@ public abstract class BaseMainActivity extends BaseActivity
                 delete_instance.setVisibility(View.GONE);
             }
         });
-
+        final int[] count2 = {0};
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
         if (!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
+
             AlertDialog.Builder dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.popup_quick_settings, new LinearLayout(getApplicationContext()), false);
             dialogBuilderOptin.setView(dialogView);
 
-            //final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
-            final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
-            boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-            boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-            boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-            boolean notifif_notifications = !(!notif_follow && !notif_add && !notif_mention && !notif_share);
-            //set_push_hometimeline.setChecked(notif_hometimeline);
-            set_push_notification.setChecked(notifif_notifications);
+
+            //Live notification mode
+            final MaterialSpinner set_live_type = dialogView.findViewById(R.id.set_live_type);
+            String[] labels = {getString(R.string.live_notif), getString(R.string.live_delayed), getString(R.string.no_live_notif)};
+            ArrayAdapter<String> adapterLive = new ArrayAdapter<>(getApplicationContext(),
+                    android.R.layout.simple_spinner_dropdown_item,labels );
+            set_live_type.setAdapter(adapterLive);
+            TextView set_live_type_indication = dialogView.findViewById(R.id.set_live_type_indication);
+            switch (Helper.liveNotifType(getApplicationContext())){
+                case Helper.NOTIF_LIVE:
+                    set_live_type_indication.setText(R.string.live_notif_indication);
+                    break;
+                case Helper.NOTIF_DELAYED:
+                    set_live_type_indication.setText(R.string.set_live_type_indication);
+                    break;
+                case Helper.NOTIF_NONE:
+                    set_live_type_indication.setText(R.string.no_live_indication);
+                    break;
+            }
+            Helper.changeMaterialSpinnerColor(BaseMainActivity.this, set_live_type);
+            set_live_type.setSelectedIndex(Helper.liveNotifType(getApplicationContext()));
+            set_live_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                    sendBroadcast(new Intent(getApplicationContext(), StopLiveNotificationReceiver.class));
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        case Helper.NOTIF_LIVE:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                            editor.apply();
+                            Intent streamingIntent = new Intent(getApplicationContext(), LiveNotificationService.class);
+                            startService(streamingIntent);
+                            break;
+                        case Helper.NOTIF_DELAYED:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
+                            streamingIntent = new Intent(getApplicationContext(), LiveNotificationDelayedService.class);
+                            startService(streamingIntent);
+                            editor.apply();
+                            break;
+                        case Helper.NOTIF_NONE:
+                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                            editor.apply();
+                            if (Build.VERSION.SDK_INT >= 26) {
+                                NotificationManager notif = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+                                if (notif != null) {
+                                    notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
+                                }
+                            }
+                            break;
+                    }
+                    switch (Helper.liveNotifType(getApplicationContext())){
+                        case Helper.NOTIF_LIVE:
+                            set_live_type_indication.setText(R.string.live_notif_indication);
+                            break;
+                        case Helper.NOTIF_DELAYED:
+                            set_live_type_indication.setText(R.string.set_live_type_indication);
+                            break;
+                        case Helper.NOTIF_NONE:
+                            set_live_type_indication.setText(R.string.no_live_indication);
+                            break;
+                    }
+                }
+            });
+
+
 
             dialogBuilderOptin.setTitle(R.string.settings_popup_title);
             dialogBuilderOptin.setCancelable(false);
             dialogBuilderOptin.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_ADD, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_POLL, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_POPUP_PUSH, true);
                     editor.apply();
-                    /*if( set_push_notification.isChecked() ){
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                            try {
-                                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                                intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }*/
+
                 }
             });
             try {
