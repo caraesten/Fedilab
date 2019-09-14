@@ -286,6 +286,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private UpdateAccountInfoAsyncTask.SOCIAL social;
     List<Emojis> emojis;
 
+    private static int searchDeep = 15;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -450,7 +452,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 public void onTextChanged(EditText editText, Editable s) {
                     wysiwygEditText = editText;
 
-                    String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
+                    String pattern = "^(.|\\s)*(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)$";
                     final Pattern sPattern = Pattern.compile(pattern);
 
                     String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
@@ -465,33 +467,29 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         currentCursorPosition = 0;
                     //Only check last 15 characters before cursor position to avoid lags
                     int searchLength;
-                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                    if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                         searchLength = currentCursorPosition;
                     } else {
-                        searchLength = 15;
+                        searchLength = searchDeep;
                     }
                     int totalChar = countLength(wysiwyg, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                     if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
 
+                    String[] searchInArray = s.toString().split("\\s");
+                    String searchIn = searchInArray[searchInArray.length-1];
                     Matcher m, mt;
-                    if (s.toString().charAt(0) == '@')
-                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
-                    else
-                        m = sPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                    m = sPattern.matcher(searchIn);
                     if (m.matches()) {
-                        String search = m.group(3);
+                        String search = m.group(1);
                         if (pp_progress != null && pp_actionBar != null) {
                             pp_progress.setVisibility(View.VISIBLE);
                             pp_actionBar.setVisibility(View.GONE);
                         }
                         new RetrieveSearchAccountsAsyncTask(getApplicationContext(), search, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
-                        if (s.toString().charAt(0) == '#')
-                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
-                        else
-                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                        mt = tPattern.matcher(searchIn);
                         if (mt.matches()) {
                             String search = mt.group(3);
                             if (pp_progress != null && pp_actionBar != null) {
@@ -500,10 +498,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             }
                             new RetrieveSearchAsyncTask(TootActivity.this, search, true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } else {
-                            if (s.toString().charAt(0) == ':')
-                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition));
-                            else
-                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition - (searchLength - 1), currentCursorPosition));
+                            mt = ePattern.matcher(searchIn);
                             if (mt.matches()) {
                                 String shortcode = mt.group(3);
                                 if (pp_progress != null && pp_actionBar != null) {
@@ -514,8 +509,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             }
                         }
                     }
-
-
                     totalChar = countLength(wysiwyg, toot_cw_content);
                     toot_space_left.setText(String.valueOf(totalChar));
                 }
@@ -926,7 +919,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                                     OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
     ) {
 
-        String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
+        String pattern = "(.|\\s)*(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)";
         final Pattern sPattern = Pattern.compile(pattern);
 
         String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
@@ -936,7 +929,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         final Pattern ePattern = Pattern.compile(patternEmoji);
         final int[] currentCursorPosition = {toot_content.getSelectionStart()};
         final String[] newContent = {null};
-        final int[] searchLength = {15};
+        final int[] searchLength = {searchDeep};
         TextWatcher textw = null;
         TextWatcher finalTextw = textw;
         textw = new TextWatcher() {
@@ -1047,10 +1040,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 if (s.toString().length() == 0)
                     currentCursorPosition[0] = 0;
                 //Only check last 15 characters before cursor position to avoid lags
-                if (currentCursorPosition[0] < 15) { //Less than 15 characters are written before the cursor position
+                if (currentCursorPosition[0] < searchDeep) { //Less than 15 characters are written before the cursor position
                     searchLength[0] = currentCursorPosition[0];
                 } else {
-                    searchLength[0] = 15;
+                    searchLength[0] = searchDeep;
                 }
 
 
@@ -1075,24 +1068,19 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     autocomplete = true;
                     return;
                 }
-
+                String[] searchInArray = s.toString().split("\\s");
+                String searchIn = searchInArray[searchInArray.length-1];
                 Matcher m, mt;
-                if (s.toString().charAt(0) == '@')
-                    m = sPattern.matcher(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0]));
-                else
-                    m = sPattern.matcher(s.toString().substring(currentCursorPosition[0] - (searchLength[0] - 1), currentCursorPosition[0]));
+                m = sPattern.matcher(searchIn);
                 if (m.matches()) {
-                    String search = m.group(3);
+                    String search = m.group();
                     if (pp_progress != null && pp_actionBar != null) {
                         pp_progress.setVisibility(View.VISIBLE);
                         pp_actionBar.setVisibility(View.GONE);
                     }
                     new RetrieveSearchAccountsAsyncTask(context, search, listenerAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
-                    if (s.toString().charAt(0) == '#')
-                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0]));
-                    else
-                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition[0] - (searchLength[0] - 1), currentCursorPosition[0]));
+                    mt = tPattern.matcher(searchIn);
                     if (mt.matches()) {
                         String search = mt.group(3);
                         if (pp_progress != null && pp_actionBar != null) {
@@ -1101,10 +1089,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         }
                         new RetrieveSearchAsyncTask(context, search, true, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
-                        if (s.toString().charAt(0) == ':')
-                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0]));
-                        else
-                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition[0] - (searchLength[0] - 1), currentCursorPosition[0]));
+                        mt = ePattern.matcher(searchIn);
                         if (mt.matches()) {
                             String shortcode = mt.group(3);
                             if (pp_progress != null && pp_actionBar != null) {
@@ -2746,8 +2731,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Account account = accounts.get(position);
                                 String deltaSearch = "";
-                                int searchLength = 15;
-                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                int searchLength = searchDeep;
+                                if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                                     searchLength = currentCursorPosition;
                                 }
                                 if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
@@ -2802,8 +2787,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
                                 String deltaSearch = "";
-                                int searchLength = 15;
-                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                int searchLength = searchDeep;
+                                if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                                     searchLength = currentCursorPosition;
                                 }
                                 if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
@@ -2882,8 +2867,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String shortcode = emojis.get(position).getShortcode();
                             String deltaSearch = "";
-                            int searchLength = 15;
-                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                            int searchLength = searchDeep;
+                            if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                                 searchLength = currentCursorPosition;
                             }
                             if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
@@ -2938,8 +2923,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
                                 String deltaSearch = "";
-                                int searchLength = 15;
-                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                int searchLength = searchDeep;
+                                if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                                     searchLength = currentCursorPosition;
                                 }
                                 if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
@@ -3026,8 +3011,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             return;
                         String tag = tags.get(position);
                         String deltaSearch = "";
-                        int searchLength = 15;
-                        if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        int searchLength = searchDeep;
+                        if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                             searchLength = currentCursorPosition;
                         }
                         if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
@@ -3081,8 +3066,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
                                 String deltaSearch = "";
-                                int searchLength = 15;
-                                if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                int searchLength = searchDeep;
+                                if (currentCursorPosition < searchDeep) { //Less than 15 characters are written before the cursor position
                                     searchLength = currentCursorPosition;
                                 }
                                 if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())

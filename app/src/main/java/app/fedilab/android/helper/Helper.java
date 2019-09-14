@@ -533,6 +533,7 @@ public class Helper {
     public static final Pattern youtubeOembedPattern = Pattern.compile("(www\\.)?youtube\\.com\\/embed\\/(\\w+)\\?feature=oembed");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
+    private static final Pattern mentionSearchPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)");
     public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
 
     //Event Type
