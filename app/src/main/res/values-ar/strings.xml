@@ -1119,7 +1119,7 @@
     <string name="set_invidious">استبدل Youtube بـ Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_nitter">استبدل تويتر بـ Nitter</string>
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">أخفِ شريط إشعارات Fedilab</string>
@@ -1129,6 +1129,6 @@
     <string name="live_delayed">تم تأخير الإشعارات الحية</string>
     <string name="no_live_notif">ليس هناك إشعارات حية</string>
     <string name="no_live_indication">سيتم جلب الإشعارات كل 15 دقيقة.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="action_add_notes">أضف ملاحظات</string>
+    <string name="note_for_account">ملاحظات الحساب</string>
 </resources>
