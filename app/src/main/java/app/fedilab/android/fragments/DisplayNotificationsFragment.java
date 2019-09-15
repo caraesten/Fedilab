@@ -142,7 +142,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).execute();
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -205,7 +205,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if (notifications != null && notifications.size() > 0)
                     sinceId = notifications.get(0).getId();
                 if (context != null)
-                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).execute();
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -231,13 +231,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 break;
         }
         if (context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).execute();
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (context != null)
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).execute();
                 }
             }, 500);
         return rootView;
@@ -381,7 +381,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
      * @param sinceId String
      */
     void retrieveMissingNotifications(String sinceId) {
-        asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).execute();
     }
 
     @Override
@@ -415,7 +415,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if (type == Type.ALL) {
             countNewNotifications = 0;
         }
-        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, null, DisplayNotificationsFragment.this).execute();
     }
 
 

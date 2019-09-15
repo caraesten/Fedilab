@@ -394,7 +394,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         main_app_container = findViewById(R.id.main_app_container);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, BaseMainActivity.this).execute();
 
         } else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             TabLayout.Tab pTabsub = tabLayout.newTab();
@@ -752,7 +752,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 int position = 0;
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).execute();
             }
         };
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(hidde_menu, new IntentFilter(Helper.RECEIVE_HIDE_ITEM));
@@ -1478,12 +1478,12 @@ public abstract class BaseMainActivity extends BaseActivity
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REDRAW_MENU) {
                 Helper.hideMenuItem(BaseMainActivity.this, navigationView.getMenu());
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG) {
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REFRESH_TIMELINE) {
                 int position = 0;
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_REMOTE) {
                 String url = extras.getString(Helper.SEARCH_URL);
                 intent.replaceExtras(new Bundle());

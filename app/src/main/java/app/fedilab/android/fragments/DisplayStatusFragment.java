@@ -361,9 +361,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         max_id = "0";
                         peertubeAdapater.notifyItemRangeRemoved(0, size);
                         if (search_peertube == null) { //Not a Peertube search
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).execute();
                         } else {
-                            asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).execute();
                         }
                     }
                 }
@@ -582,7 +582,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded) {
                 boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                 if (remember_position_home)
-                    asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
                 firstTootsLoaded = true;
             }
             //Let's deal with statuses
@@ -739,13 +739,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private void retrieveMissingToots(String sinceId) {
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME)
-            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
         if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
-            asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).execute();
         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
-            asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).execute();
         else
-            asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).execute();
 
     }
 
@@ -764,7 +764,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if (statuses.size() > 0)
                 initialBookMarkDate = statuses.get(0).getCreated_at();
-            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
         }
     }
 
@@ -963,7 +963,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id) {
-        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, true, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, true, DisplayStatusFragment.this).execute();
     }
 
     @Override
@@ -1050,21 +1050,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private void manageAsyncTask(boolean pagination) {
         //Message for an account
         if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).execute();
             //Tag timelines
         else if (type == RetrieveFeedsAsyncTask.Type.SEARCH)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).execute();
         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, timelineId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, timelineId, max_id, DisplayStatusFragment.this).execute();
         else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             //Remote instances
             if (search_peertube == null) { //Not a Peertube search
                 if (remote_channel_name == null) { //Not a channel
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).execute();
                 } else
-                    asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).execute();
             } else
-                asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).execute();
         } else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE_FILTERED) {
             RetrieveFeedsParam retrieveFeedsParam = new RetrieveFeedsParam();
             retrieveFeedsParam.setAction(type);
@@ -1072,27 +1072,27 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             retrieveFeedsParam.setRemoteInstance(remoteInstance);
             retrieveFeedsParam.setMax_id(max_id);
             retrieveFeedsParam.setSocial(instanceType);
-            asyncTask = new RetrieveFeedsAsyncTask(context, retrieveFeedsParam, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAsyncTask(context, retrieveFeedsParam, DisplayStatusFragment.this).execute();
         } else if (type == RetrieveFeedsAsyncTask.Type.LIST) {
-            new ManageListsAsyncTask(context, targetedId, max_id, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new ManageListsAsyncTask(context, targetedId, max_id, null, DisplayStatusFragment.this).execute();
         } else {
             if (!pagination) {
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
                     if (context instanceof BaseMainActivity) {
                         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                         if (remember_position_home)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).execute();
                         else
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).execute();
                     }
                 } else { //Most classical search will be done by this call
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).execute();
                 }
             } else {
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).execute();
                 } else {//Most classical search will be done by this call for pagination
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).execute();
                 }
             }
         }
@@ -1178,9 +1178,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 max_id = "0";
                 peertubeAdapater.notifyItemRangeRemoved(0, size);
                 if (search_peertube == null) { //Not a Peertube search
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).execute();
                 } else {
-                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).execute();
                 }
             }
         }
