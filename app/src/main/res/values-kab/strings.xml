@@ -61,7 +61,7 @@
     <string name="drafts">Irewwayen</string>
     <string name="new_data">New data are available! Do you want to display them?</string>
     <string name="favourite">Ismenyifen</string>
-    <string name="follow">New followers</string>
+    <string name="follow">Imeḍfaṛen imaynuten</string>
     <string name="mention">Mentions</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
@@ -201,7 +201,7 @@
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
+    <string name="followers_cnt">Imeḍfaṛen \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Sireg</string>
     <string name="reject">Agi</string>
