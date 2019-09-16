@@ -1069,6 +1069,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     return;
                 }
                 String[] searchInArray =(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])).split("\\s");
+                if( searchInArray.length < 1){
+                    return;
+                }
                 String searchIn = searchInArray[searchInArray.length-1];
                 Matcher m, mt;
                 m = sPattern.matcher(searchIn);

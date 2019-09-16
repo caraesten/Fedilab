@@ -3413,7 +3413,9 @@ public class API {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setNotifications(notifications);
+        if( apiResponse != null) {
+            apiResponse.setNotifications(notifications);
+        }
         return apiResponse;
     }
 
