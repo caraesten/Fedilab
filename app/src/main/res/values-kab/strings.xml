@@ -172,7 +172,7 @@
     <string-array name="toot_visibility">
         <item>Post to public timelines</item>
         <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
+        <item>Azen iy imeḍfaṛen kan</item>
         <item>Post to mentioned users only</item>
     </string-array>
     <string name="no_draft">Wlac irewwayen!</string>
@@ -200,7 +200,7 @@
     <string name="no_accounts">Ulac kra n umiḍan ara d-nesken</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
+    <string name="following_cnt">Yeṭafaṛ \n %1$s</string>
     <string name="followers_cnt">Imeḍfaṛen \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Sireg</string>
@@ -314,7 +314,7 @@
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Sewḥel amiḍan</string>
     <string name="set_save_changes">Sekles ibeddilen</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
@@ -328,7 +328,7 @@
     <string name="settings_hour_init">Akud n tazwara</string>
     <string name="settings_hour_end">Azemz n tagara</string>
     <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Iccaren udmawanen</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
@@ -394,18 +394,18 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Azwel</string>
+    <string name="title_hint_custom_sharing">Azwel&#8230;</string>
+    <string name="description_header_custom_sharing">Aglam</string>
+    <string name="description_hint_custom_sharing">Aglam&#8230;</string>
+    <string name="keywords_header_custom_sharing">Awalen n tsaruţ</string>
+    <string name="keywords_hint_custom_sharing">Awalen n tsaruţ&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Mtawi</string>
     <string name="action_filter">Sizdeg</string>
     <string name="owner_cached_toots">Your toots</string>
     <string name="owner_cached_notifications">Your notifications</string>
-    <string name="v_public">Public</string>
+    <string name="v_public">Azayez</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">Uslig</string>
     <string name="v_direct">Direct</string>
