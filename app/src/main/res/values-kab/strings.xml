@@ -75,13 +75,13 @@
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Tinefrunin</string>
     <string name="favorites_menu">Ismenyifen</string>
-    <string name="communication_menu_title">Communication</string>
+    <string name="communication_menu_title">Taγwalt</string>
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
     <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">Ilγuyen</string>
     <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
+    <string name="optimization">Asefrer</string>
     <string name="settings">Iγewwaṛen</string>
     <string name="profile">Ameγnu</string>
     <string name="make_a_choice">What do you want to do?</string>
@@ -498,7 +498,7 @@
     <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Apṛuksi</string>
-    <string name="proxy_type">Type</string>
+    <string name="proxy_type">Tawsit</string>
     <string name="proxy_enable">Rmed apṛuksi?</string>
     <string name="poxy_host">Asenneftaγ</string>
     <string name="poxy_port">Awwur</string>
@@ -594,7 +594,7 @@
     <string name="set_display_direct">Display private messages timeline</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s n tiẓriwin</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="duration_video">Tangazt: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
