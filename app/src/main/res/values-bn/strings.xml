@@ -32,18 +32,18 @@
     <string name="no_result">কোনও ফলাফল পাওয়া যায় নি!</string>
     <string name="instance">ইনস্ট্যান্স</string>
     <string name="instance_example">ইনস্ট্যান্স: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-    <string name="add_account">Add an account</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
-    <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
-    <string name="speech_prompt">Please, say something</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
+    <string name="toast_account_changed" formatted="false">%1$s এখন কাজ করছে</string>
+    <string name="add_account">একটি অ্যাকাউন্ট যোগ করুন</string>
+    <string name="clipboard">টুটের সামগ্রীটি ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
+    <string name="clipboard_url">টুটের URL টি ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
+    <string name="change">পরিবর্তন</string>
+    <string name="choose_picture">একটি ছবি নির্বাচন করুন…</string>
+    <string name="clear">পরিষ্কার</string>
+    <string name="microphone">মাইক্রোফোন</string>
+    <string name="camera">ক্য়ামেরা</string>
+    <string name="speech_prompt">দোয়া করে কিছু বলুন</string>
+    <string name="speech_not_supported">দুঃখিত! আপনার ডিভাইস ভয়েস ইনপুটসমর্থন করে না!</string>
+    <string name="delete_all">সব মুছে দিন</string>
     <string name="translate_toot">Translate this toot.</string>
     <string name="schedule">Schedule</string>
     <string name="text_size">Text and icon sizes</string>
