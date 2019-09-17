@@ -121,17 +121,17 @@
     <string name="more_action_9">মুছে &amp; পুনরায় খসড়া</string>
     <string-array name="more_action_confirm">
         <item>এই অ্যাকাউন্ট নিঃশব্দ করবেন?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
-        <item>Unmute this account?</item>
+        <item>এই অ্যাকাউন্ট ব্লক করবেন?</item>
+        <item>এই টুট টি প্রতিবেদন করবেন?</item>
+        <item>এই ডোমেইন ব্লক করবেন?</item>
+        <item>এই একাউন্ট টি কে নিঃশব্দ তালিকা থেকে সরাবেন?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>বিজ্ঞপ্তি</item>
+        <item>নিঃশব্দ</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
+        <item>এই টুট টি মুছে ফেলবেন?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
