@@ -42,7 +42,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -631,11 +630,16 @@ public class Status implements Parcelable {
         if (invidious) {
             while (matcher.find()) {
                 final String youtubeId = matcher.group(3);
-                Log.v(Helper.TAG,"youtubeId: " + youtubeId);
                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
-                Log.v(Helper.TAG,"quote: " + "https://"+Pattern.quote(matcher.group()));
-                content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
-                content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/" + youtubeId+"&local=true"));
+                if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
+                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
+                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
+                }else{
+                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
+                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/" + youtubeId+"&local=true"));
+                }
+
+
             }
         }
 

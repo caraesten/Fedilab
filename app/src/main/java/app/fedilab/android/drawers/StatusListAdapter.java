@@ -2587,7 +2587,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             while (matcher.find()) {
                                                 final String youtubeId = matcher.group(3);
                                                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
-                                                url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
+                                                if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
+                                                    url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
+                                                }else{
+                                                    url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
+                                                }
                                             }
                                         }
                                     }
