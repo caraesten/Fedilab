@@ -1077,7 +1077,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="total_notifications">Gesamte Benachrichtigungen</string>
     <string name="hide_menu_items">Menüpunkte ausblenden</string>
     <string name="top_notification">Fedilab läuft mit Echtzeitbenachrichtigungen</string>
-    <string name="top_notification_message">Für %1$s Konten mit %2$s Veranstaltungen</string>
+    <string name="top_notification_message">Für %1$s Konten mit %2$s Ereignissen</string>
     <string name="set_allow_live_notifications">Live-Benachrichtigungen für %1$s</string>
     <string name="set_allow_live_notifications_indication">Live-Benachrichtigungen werden für dieses Konto aktiviert.</string>
     <string name="set_clear_cache_exit">Cache beim Verlassen löschen</string>
@@ -1087,16 +1087,16 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="set_invidious">Youtube durch Invidio.us ersetzen</string>
     <string name="set_invidious_indication">Invidious ist ein alternatives Frontend zu YouTube</string>
     <string name="set_invidious_host">Geben Sie Ihren eigenen Host ein oder lassen Sie leer, um invidio.us zu verwenden</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
-    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
-    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
+    <string name="set_nitter">Twitter mit Nitter ersetzen</string>
+    <string name="set_nitter_indication">Nitter ist eine Open Source Alternative zum Twitter Front-End, mit dem Fokus auf Privatsphäre.</string>
+    <string name="set_nitter_host">Geben Sie Ihren eigenen Host ein oder lassen Sie leer, um nitter.net zu verwenden</string>
     <string name="set_hide_status_bar">Fedilab Benachrichtigungsleiste ausblenden</string>
     <string name="set_hide_status_bar_indication">Um die verbleibende Benachrichtigung in der Statusleiste zu verstecken, klicken Sie auf die Augensymbol-Schaltfläche und deaktivieren Sie: \"In Statusleiste anzeigen\"</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
-    <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
-    <string name="live_delayed">Live notifications delayed</string>
-    <string name="no_live_notif">No live notifications</string>
-    <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
-    <string name="action_add_notes">Add notes</string>
-    <string name="note_for_account">Notes for the account</string>
+    <string name="set_live_type_title">Verzögerte Benachrichtigungen aktivieren</string>
+    <string name="set_live_type_indication">Benachrichtigungen werden 30 Sekunden verzögert. Dadurch wird weniger Akku verbraucht.</string>
+    <string name="live_delayed">Verzögerte Echtzeit-Benachrichtigungen</string>
+    <string name="no_live_notif">Keine Echtzeit-Benachrichtigungen</string>
+    <string name="no_live_indication">Benachrichtigungen werden alle 15 Minuten abgerufen.</string>
+    <string name="action_add_notes">Notizen hinzufügen</string>
+    <string name="note_for_account">Notizen für das Konto</string>
 </resources>
