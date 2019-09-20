@@ -1122,4 +1122,5 @@
     <string name="no_live_indication">Уведомления будут поступать каждые 15 минут.</string>
     <string name="action_add_notes">Добавить примечания</string>
     <string name="note_for_account">Примечания для аккаунта</string>
+    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
 </resources>
