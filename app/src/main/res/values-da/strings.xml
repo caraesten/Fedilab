@@ -1112,5 +1112,5 @@
     <string name="no_live_indication">Notifikationer hentes hvert 15. minut.</string>
     <string name="action_add_notes">Tilføj notater</string>
     <string name="note_for_account">Notater til kontoen</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_picture_indication">Tillad for at komprimere store fotos til mindre størrelser med små eller ubetydelige kvalitetstab.</string>
 </resources>
