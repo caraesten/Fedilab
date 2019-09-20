@@ -1107,4 +1107,5 @@
     <string name="no_live_indication">通知将被延迟为每15分钟产生。</string>
     <string name="action_add_notes">添加注释</string>
     <string name="note_for_account">账户说明</string>
+    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
 </resources>
