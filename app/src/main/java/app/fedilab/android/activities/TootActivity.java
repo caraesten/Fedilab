@@ -1490,7 +1490,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if (error) {
                 return null;
             }
-            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
+            bs = Helper.compressImage(activityWeakReference.get(), uriFile);
             return null;
         }
 

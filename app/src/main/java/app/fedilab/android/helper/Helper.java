@@ -221,6 +221,7 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import id.zelory.compressor.Compressor;
 import info.guardianproject.netcipher.client.StrongBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
 import okhttp3.ConnectionSpec;
@@ -349,7 +350,7 @@ public class Helper {
     public static final String SET_DISABLE_ANIMATED_EMOJI = "set_disable_animated_emoji";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_WYSIWYG = "set_wysiwyg";
-    public static final String SET_PICTURE_RESIZE = "set_picture_resize";
+    public static final String SET_PICTURE_COMPRESSED = "set_picture_compressed";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
@@ -383,13 +384,6 @@ public class Helper {
     public static final String SET_AUTO_BACKUP_STATUSES = "set_auto_backup_statuses";
     public static final String SET_AUTO_BACKUP_NOTIFICATIONS = "set_auto_backup_notifications";
 
-    public static final int S_NO = 0;
-    static final int S_512KO = 1;
-    public static final int S_1MO = 2;
-    public static final int S_2MO = 3;
-    public static final int S_4MO = 4;
-    public static final int S_6MO = 5;
-    public static final int S_8MO = 6;
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -3420,23 +3414,14 @@ public class Helper {
     }
 
 
-    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType) {
+    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile) {
 
         ContentResolver cr = context.getContentResolver();
         String mime = cr.getType(uriFile);
+        File file = new File(uriFile.getPath());
         ByteArrayInputStream bs = null;
         if (mime != null && mime.toLowerCase().contains("image")) {
-            Bitmap takenImage;
-            try {
-                takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
-            } catch (IOException e) {
-                try {
-                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-                } catch (Exception ignored) {
-                }
-                ;
-                return null;
-            }
+
             ExifInterface exif = null;
             try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
                 assert inputStream != null;
@@ -3444,99 +3429,56 @@ public class Helper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Matrix matrix = null;
-            if (takenImage != null) {
-                int size = takenImage.getByteCount();
-                if (exif != null) {
-                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    int rotationDegree = 0;
-                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
-                        rotationDegree = 90;
-                    } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
-                        rotationDegree = 180;
-                    } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
-                        rotationDegree = 270;
-                    }
-                    matrix = new Matrix();
-                    if (rotation != 0f) {
-                        matrix.preRotate(rotationDegree);
-                    }
-                }
 
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
-                if (mediaType == MediaType.PROFILE)
-                    resizeSet = Helper.S_1MO;
-                double resizeby = size;
-                if (resizeSet == Helper.S_512KO) {
-                    resizeby = 4194304;
-                } else if (resizeSet == Helper.S_1MO) {
-                    resizeby = 8388608;
-                } else if (resizeSet == Helper.S_2MO) {
-                    resizeby = 16777216;
-                } else if (resizeSet == Helper.S_4MO) {
-                    resizeby = 33554432;
-                } else if (resizeSet == Helper.S_6MO) {
-                    resizeby = 50331648;
-                } else if (resizeSet == Helper.S_8MO) {
-                    resizeby = 67108864;
+            Matrix matrix;
+            if (exif != null) {
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int rotationDegree = 0;
+                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                    rotationDegree = 90;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                    rotationDegree = 180;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                    rotationDegree = 270;
                 }
+                matrix = new Matrix();
+                if (rotation != 0f) {
+                    matrix.preRotate(rotationDegree);
+                }
+            }
 
-                double resize = ((double) size) / resizeby;
-                if (resize > 1) {
-                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
-                            (int) (takenImage.getHeight() / resize), true);
-                    Bitmap adjustedBitmap;
-                    if (matrix != null)
-                        try {
-                            adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
-                        } catch (Exception e) {
-                            adjustedBitmap = newBitmap;
-                        }
-                    else
-                        adjustedBitmap = newBitmap;
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    if (mime.contains("png") || mime.contains(".PNG"))
-                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                    else
-                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-                    byte[] bitmapdata = bos.toByteArray();
-                    bs = new ByteArrayInputStream(bitmapdata);
-                } else {
-                    try {
-                        InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
-                        byte[] buff = new byte[8 * 1024];
-                        int bytesRead;
-                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                        assert inputStream != null;
-                        while ((bytesRead = inputStream.read(buff)) != -1) {
-                            bao.write(buff, 0, bytesRead);
-                        }
-                        byte[] data = bao.toByteArray();
-                        bs = new ByteArrayInputStream(data);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
+            InputStream resizedIS = null;
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
+
+            if( compressed) {
                 try {
-                    InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
-                    byte[] buff = new byte[8 * 1024];
-                    int bytesRead;
-                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                    assert inputStream != null;
-                    while ((bytesRead = inputStream.read(buff)) != -1) {
-                        bao.write(buff, 0, bytesRead);
-                    }
-                    byte[] data = bao.toByteArray();
-                    bs = new ByteArrayInputStream(data);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    File compressedFile= new Compressor(context).compressToFile(file);
+                    resizedIS = new FileInputStream(compressedFile.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else{
+                try {
+                    resizedIS = context.getContentResolver().openInputStream(uriFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                byte[] buff = new byte[8 * 1024];
+                int bytesRead;
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                assert resizedIS != null;
+                while ((bytesRead = resizedIS.read(buff)) != -1) {
+                    bao.write(buff, 0, bytesRead);
+                }
+                byte[] data = bao.toByteArray();
+                bs = new ByteArrayInputStream(data);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
             try {

@@ -544,7 +544,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            header_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.MEDIA);
+            header_picture = Helper.compressImage(EditProfileActivity.this, fileUri);
         } else if (requestCode == PICK_IMAGE_PROFILE && resultCode == RESULT_OK) {
             if (data == null || data.getData() == null) {
                 Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
@@ -562,7 +562,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            profile_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.PROFILE);
+            profile_picture = Helper.compressImage(EditProfileActivity.this, fileUri);
         }
     }
 

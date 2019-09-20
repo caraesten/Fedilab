@@ -114,7 +114,7 @@ dependencies {
 
     implementation  'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
     implementation 'yogesh.firzen:MukkiyaSevaigal:1.0.6'
-
+    implementation 'id.zelory:compressor:2.1.0'
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-limiter:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"

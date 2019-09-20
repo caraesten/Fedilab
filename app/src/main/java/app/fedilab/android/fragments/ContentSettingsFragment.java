@@ -1809,28 +1809,17 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         });
 
         //Resize
-        final Spinner resize_layout_spinner = rootView.findViewById(R.id.set_resize_picture);
-        ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
-        resize_layout_spinner.setAdapter(adapterResize);
-        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_4MO);
-        resize_layout_spinner.setSelection(positionSpinnerResize);
-        resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final CheckBox set_resize_picture = rootView.findViewById(R.id.set_resize_picture);
+        boolean compress = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
+        set_resize_picture.setChecked(compress);
+        set_resize_picture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count4 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_PICTURE_RESIZE, position);
-                    editor.apply();
-                }
-                count4++;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_PICTURE_COMPRESSED, set_resize_picture.isChecked());
+                editor.apply();
             }
         });
-
 
 
 

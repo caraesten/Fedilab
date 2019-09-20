@@ -1519,27 +1519,6 @@
                             android:layout_height="wrap_content"></SeekBar>
                     </LinearLayout>
 
-                    <!-- Resize pictures -->
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:textSize="16sp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_resize_picture" />
-
-                        <Spinner
-                            android:id="@+id/set_resize_picture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
 
                     <!-- Translation engine -->
                     <LinearLayout
@@ -1840,6 +1819,41 @@
                             <TextView
                                 android:textColor="@color/mastodonC2"
                                 android:text="@string/set_capitalize_indication"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_checkbox_margin"
+                        android:layout_marginBottom="@dimen/settings_checkbox_margin"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/set_resize_picture"
+                            android:layout_width="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:id="@+id/set_resize_picture_text"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textSize="16sp"
+                                android:text="@string/set_resize_picture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:textColor="@color/mastodonC2"
+                                android:text="@string/set_resize_picture_indication"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
