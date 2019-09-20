@@ -1109,5 +1109,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
     <string name="action_add_notes">Ajouter des notes</string>
     <string name="note_for_account">Notes pour le compte</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_picture_indication">Permet de comprimer de grandes photos en photos plus petites avec une perte de qualité d\'image très petite ou négligeable.</string>
 </resources>
