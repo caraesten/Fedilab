@@ -1093,8 +1093,8 @@
     <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
     <string name="set_live_type_title">通知を遅らせる</string>
     <string name="set_live_type_indication">通知は30秒ごとに遅延が発生します。バッテリーの持ちが改善します。</string>
-    <string name="live_delayed">ライブ通知の遅れ</string>
-    <string name="no_live_notif">ライブ通知はありません</string>
+    <string name="live_delayed">遅延ありのライブ通知</string>
+    <string name="no_live_notif">ライブ通知を利用しない</string>
     <string name="no_live_indication">15分ごとに通知を取得します。</string>
     <string name="action_add_notes">メモを追加</string>
     <string name="note_for_account">このアカウントのメモ</string>
