@@ -1115,4 +1115,5 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
+    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
 </resources>
