@@ -15,11 +15,7 @@ package app.fedilab.android.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.ContentUris;
@@ -30,7 +26,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -77,12 +72,12 @@ import java.util.List;
 import java.util.Set;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.LanguageActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.MainMenuItem;
 import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
 import app.fedilab.android.helper.Helper;
@@ -90,6 +85,7 @@ import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.MainMenuDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 import mabbas007.tagsedittext.TagsEditText;
@@ -100,15 +96,14 @@ import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.LANGUAGE;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.MENU;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
 public class ContentSettingsFragment extends Fragment {
 
 
-    private View containerView;
-    protected int res;
-    private Bitmap bitmap;
     private type type;
     private Context context;
 
@@ -145,7 +140,6 @@ public class ContentSettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
         assert context != null;
-        this.containerView = view.findViewById(R.id.container);
     }
 
     @Override
@@ -192,8 +186,6 @@ public class ContentSettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        assert getArguments() != null;
-        res = getArguments().getInt(Integer.class.getName());
     }
 
     @Override
@@ -237,9 +229,10 @@ public class ContentSettingsFragment extends Fragment {
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
         LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
+        LinearLayout settings_hide_menu = rootView.findViewById(R.id.settings_hide_menu);
+        LinearLayout settings_translation = rootView.findViewById(R.id.settings_translation);
 
 
-        String title = "";
         if (type == null || type.equals(TIMELINES)) {
             settings_timeline.setVisibility(View.VISIBLE);
         } else if (type == NOTIFICATIONS) {
@@ -250,6 +243,10 @@ public class ContentSettingsFragment extends Fragment {
             settings_interface.setVisibility(View.VISIBLE);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
+        } else if( type == MENU){
+            settings_hide_menu.setVisibility(View.VISIBLE);
+        }else if( type == LANGUAGE){
+            settings_translation.setVisibility(View.VISIBLE);
         }
 
 
@@ -2197,6 +2194,68 @@ public class ContentSettingsFragment extends Fragment {
                 lol.setEnabled(false);
             }
         }
+
+        CheckBox nav_news = rootView.findViewById(R.id.nav_news);
+        CheckBox nav_list = rootView.findViewById(R.id.nav_list);
+        CheckBox nav_scheduled = rootView.findViewById(R.id.nav_scheduled);
+        CheckBox nav_archive = rootView.findViewById(R.id.nav_archive);
+        CheckBox nav_archive_notifications = rootView.findViewById(R.id.nav_archive_notifications);
+        CheckBox nav_peertube = rootView.findViewById(R.id.nav_peertube);
+        CheckBox nav_filters = rootView.findViewById(R.id.nav_filters);
+        CheckBox nav_who_to_follow = rootView.findViewById(R.id.nav_who_to_follow);
+        CheckBox nav_blocked = rootView.findViewById(R.id.nav_blocked);
+        CheckBox nav_muted = rootView.findViewById(R.id.nav_muted);
+        CheckBox nav_blocked_domains = rootView.findViewById(R.id.nav_blocked_domains);
+        CheckBox nav_how_to = rootView.findViewById(R.id.nav_how_to);
+        Button validate = rootView.findViewById(R.id.validate);
+
+        MainMenuItem mainMenu = new MainMenuDAO(context, db).getMainMenu();
+        if (mainMenu == null) {
+            mainMenu = new MainMenuItem();
+        }
+        nav_news.setChecked(mainMenu.isNav_news());
+        nav_list.setChecked(mainMenu.isNav_list());
+        nav_scheduled.setChecked(mainMenu.isNav_scheduled());
+        nav_archive.setChecked(mainMenu.isNav_archive());
+        nav_archive_notifications.setChecked(mainMenu.isNav_archive_notifications());
+        nav_peertube.setChecked(mainMenu.isNav_peertube());
+        nav_filters.setChecked(mainMenu.isNav_filters());
+        nav_who_to_follow.setChecked(mainMenu.isNav_how_to_follow());
+        nav_blocked.setChecked(mainMenu.isNav_blocked());
+        nav_muted.setChecked(mainMenu.isNav_muted());
+        nav_blocked_domains.setChecked(mainMenu.isNav_blocked_domains());
+        nav_how_to.setChecked(mainMenu.isNav_howto());
+
+
+        validate.setOnClickListener(view -> {
+            MainMenuItem mainMenuItem = new MainMenuItem();
+            mainMenuItem.setNav_news(nav_news.isChecked());
+            mainMenuItem.setNav_list(nav_list.isChecked());
+            mainMenuItem.setNav_scheduled(nav_scheduled.isChecked());
+            mainMenuItem.setNav_archive(nav_archive.isChecked());
+            mainMenuItem.setNav_archive_notifications(nav_archive_notifications.isChecked());
+            mainMenuItem.setNav_peertube(nav_peertube.isChecked());
+            mainMenuItem.setNav_filters(nav_filters.isChecked());
+            mainMenuItem.setNav_how_to_follow(nav_who_to_follow.isChecked());
+            mainMenuItem.setNav_blocked(nav_blocked.isChecked());
+            mainMenuItem.setNav_muted(nav_muted.isChecked());
+            mainMenuItem.setNav_blocked_domains(nav_blocked_domains.isChecked());
+            mainMenuItem.setNav_howto(nav_how_to.isChecked());
+            MainMenuItem mainMenuItem1 = new MainMenuDAO(context, db).getMainMenu();
+
+            if (mainMenuItem1 != null) {
+                new MainMenuDAO(context, db).updateMenu(mainMenuItem);
+            } else {
+                new MainMenuDAO(context, db).insertMenu(mainMenuItem);
+            }
+            Intent mainActivity = new Intent(context, MainActivity.class);
+            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.REDRAW_MENU);
+            startActivity(mainActivity);
+        });
+
+
+
+
         return rootView;
     }
 
@@ -2205,9 +2264,6 @@ public class ContentSettingsFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
     }
-
-
-
 
 
 
