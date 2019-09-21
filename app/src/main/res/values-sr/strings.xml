@@ -385,6 +385,7 @@
     <string name="action_search">Претрага</string>
     <string name="set_capitalize">Прво слово велико у одговорима</string>
     <string name="set_resize_picture">Мењај величине слика</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Брза обавештења</string>
     <string name="settings_popup_message">        Потврдите која брза обавештења желите да примате.
@@ -1118,4 +1119,5 @@
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
