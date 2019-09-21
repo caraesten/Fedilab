@@ -18,6 +18,7 @@ package app.fedilab.android.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -1335,7 +1336,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     String mCurrentPhotoPath;
     File photoFile = null;
-    Uri photoFileUri = null;
+    public static Uri photoFileUri = null;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -1358,7 +1359,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             "app.fedilab.android.fileProvider",
                             photoFile);
                 }
-
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
@@ -1387,7 +1387,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean photo_editor = sharedpreferences.getBoolean(Helper.SET_PHOTO_EDITOR, true);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null) {
                 Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;
@@ -1430,7 +1429,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
 
         } else if (requestCode == SEND_VOICE_MESSAGE && resultCode == RESULT_OK) {
-
             Uri uri = Uri.fromFile(new File(getCacheDir() + "/fedilab_recorded_audio.wav"));
             prepareUpload(TootActivity.this, uri, "fedilab_recorded_audio.wav", uploadReceiver);
         } else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
@@ -1482,6 +1480,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                 error = true;
             }
+            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
+
         }
 
 
@@ -1496,6 +1496,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         @Override
         protected void onPostExecute(Void result) {
+            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
+            activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
             if (!error) {
                 if (bs == null)
                     return;
@@ -1666,7 +1668,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         Bundle extras = intent.getExtras();
         if (extras != null && extras.getString("imageUri") != null) {
             Uri imageUri = Uri.parse(extras.getString("imageUri"));
-            picture_scrollview.setVisibility(View.VISIBLE);
             if (imageUri == null) {
                 Toasty.error(getApplicationContext(), getString(R.string.toot_select_image_error), Toast.LENGTH_LONG).show();
                 return;

@@ -17,9 +17,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:aztec="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    app:ignore="NamespaceTypo">
 
     <RelativeLayout
         android:id="@+id/drawer_layout"
@@ -168,6 +168,32 @@
                     android:orientation="horizontal"
                     android:padding="5dp"></LinearLayout>
             </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:id="@+id/compression_loader"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="3dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+                <ProgressBar
+                    android:layout_gravity="center"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"/>
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:textColor="?colorAccent"
+                    android:layout_marginStart="5dp"
+                    android:textSize="12sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/please_wait_compression"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

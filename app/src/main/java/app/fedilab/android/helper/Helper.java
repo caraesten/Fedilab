@@ -25,6 +25,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 
@@ -3420,15 +3422,15 @@ public class Helper {
 
         ContentResolver cr = context.getContentResolver();
         String mime = cr.getType(uriFile);
-        File file = new File(uriFile.getPath());
         ByteArrayInputStream bs = null;
 
+        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath()+"/compress");
+        if (!destinationDirectory.exists()) {
+            destinationDirectory.mkdirs();
+        }
 
-        File dir = new File(context.getCacheDir().getAbsolutePath()+"/compress");
-        if (!dir.exists()) dir.mkdirs();
-        String destinationDirectory = context.getCacheDir().getAbsolutePath()+"/compress/"+ file.getName();
         InputStream resizedIS = null;
-        if (mime != null && mime.toLowerCase().contains("image")) {
+        if (mime == null || mime.toLowerCase().contains("image")) {
             ExifInterface exif = null;
             try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
                 assert inputStream != null;
@@ -3456,10 +3458,17 @@ public class Helper {
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
             if( compressed) {
                 try {
-                    String filePath = SiliCompressor.with(context).compress(file.getAbsolutePath(), new File(destinationDirectory));
+                    String filePath = SiliCompressor.with(context).compress(uriFile.toString(), destinationDirectory);
                     resizedIS = new FileInputStream(filePath);
-                } catch (IOException e) {
+                } catch (IOException|ArithmeticException e) {
                     e.printStackTrace();
+                }
+                if( resizedIS == null){
+                    try {
+                        resizedIS = context.getContentResolver().openInputStream(uriFile);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }else{
                 try {
@@ -3489,7 +3498,8 @@ public class Helper {
             if( compressed) {
                 String filePath = null;
                 try {
-                    filePath = SiliCompressor.with(context).compressVideo(file.getAbsolutePath(), destinationDirectory);
+                    filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/");
+
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -3498,6 +3508,13 @@ public class Helper {
                     resizedIS = new FileInputStream(filePath);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                }
+                if( resizedIS == null){
+                    try {
+                        resizedIS = context.getContentResolver().openInputStream(uriFile);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }else{
                 try {
@@ -3524,6 +3541,81 @@ public class Helper {
         }
         return bs;
     }
+
+
+    public static String getRealPathFromURI(Context context, Uri uri) throws URISyntaxException  {
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[]{
+                        split[1]
+                };
+            }
+        }
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+
+            if (isGooglePhotosUri(uri)) {
+                return uri.getLastPathSegment();
+            }
+
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
 
     public static String getFileName(Context context, Uri uri) {
         ContentResolver resolver = context.getContentResolver();
