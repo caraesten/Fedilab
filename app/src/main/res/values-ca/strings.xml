@@ -381,6 +381,7 @@
     <string name="action_search">Cerca</string>
     <string name="set_capitalize">Primera lletra en majúscula a les respostes</string>
     <string name="set_resize_picture">Redimensiona les fotos</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificacions emergents</string>
     <string name="settings_popup_message">Sisplau, confirma les notificacions emergents que vols rebre.
@@ -1105,4 +1106,5 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="action_add_notes">Afegeix-hi notes</string>
     <string name="note_for_account">Notes per al compte</string>
     <string name="set_resize_picture_indication">Permet la compressió de fotos grans en més petites amb una pèrduda mínima o negligible de qualitat d\'imatge.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
