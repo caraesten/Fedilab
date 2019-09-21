@@ -80,7 +80,6 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.LanguageActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
-import app.fedilab.android.animatemenu.interfaces.ScreenShotable;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
@@ -104,7 +103,7 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFA
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
-public class ContentSettingsFragment extends Fragment implements ScreenShotable {
+public class ContentSettingsFragment extends Fragment {
 
 
     private View containerView;
@@ -205,7 +204,7 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            type = (type) bundle.getSerializable("type");
+            type = (type) bundle.getSerializable("typeOfSettings");
         }
 
 
@@ -243,22 +242,15 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         String title = "";
         if (type == null || type.equals(TIMELINES)) {
             settings_timeline.setVisibility(View.VISIBLE);
-            title = context.getString(R.string.timelines);
         } else if (type == NOTIFICATIONS) {
             settings_notifications.setVisibility(View.VISIBLE);
-            title = context.getString(R.string.notifications);
         } else if (type == ADMIN) {
             settings_admin.setVisibility(View.VISIBLE);
-            title = context.getString(R.string.administration);
         } else if (type == INTERFACE) {
             settings_interface.setVisibility(View.VISIBLE);
-            title = context.getString(R.string.u_interface);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
-            title = context.getString(R.string.compose);
         }
-        ((SettingsActivity) context)
-                .setActionBarTitle(title);
 
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
@@ -2214,30 +2206,9 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         this.context = context;
     }
 
-    @Override
-    public void takeScreenShot() {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bitmap);
-                    containerView.draw(canvas);
-                    ContentSettingsFragment.this.bitmap = bitmap;
-                } catch (Exception e) {
-                }
 
-            }
-        };
 
-        thread.start();
-    }
 
-    @Override
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
 
 
     //From: https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
