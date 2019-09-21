@@ -377,6 +377,7 @@
     <string name="action_search">検索</string>
     <string name="set_capitalize">返信で最初の文字を大文字にする</string>
     <string name="set_resize_picture">画像をリサイズ</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
     <string name="settings_popup_message">受信したいプッシュ通知を確認してください。
@@ -1099,4 +1100,5 @@
     <string name="action_add_notes">メモを追加</string>
     <string name="note_for_account">このアカウントのメモ</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
