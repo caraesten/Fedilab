@@ -1116,4 +1116,5 @@
     <string name="note_for_account">Notas para a conta</string>
     <string name="set_resize_picture_indication">Permitir comprimir imaxes grandes a un tamaño menor con perda mínima de calidade.</string>
     <string name="set_resize_video_indication">Permitir que se compriman os vídeos mantendo a calidade.</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>
