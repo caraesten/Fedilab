@@ -389,6 +389,7 @@
     <string name="action_search">Пошук</string>
     <string name="set_capitalize">Починати відповіді з великої букви</string>
     <string name="set_resize_picture">Змінити розмір зображень</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-сповіщення</string>
     <string name="settings_popup_message">Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).    </string>
@@ -1113,4 +1114,5 @@
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
