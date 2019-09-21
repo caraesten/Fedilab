@@ -1109,4 +1109,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="note_for_account">Notas de la cuenta</string>
     <string name="set_resize_picture_indication">Permitir la compresión de imágenes de gran tamaño a imágenes más pequeñas con poca o ninguna pérdida de calidad.</string>
     <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>
