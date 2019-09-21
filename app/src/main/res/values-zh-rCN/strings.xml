@@ -377,7 +377,7 @@
     <string name="action_search">搜索</string>
     <string name="set_capitalize">回复时首字母大写</string>
     <string name="set_resize_picture">调整图片大小</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">调整视频大小</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推送通知</string>
     <string name="settings_popup_message">        请确认要接收的推送通知。
@@ -1096,9 +1096,9 @@
     <string name="set_invidious">用 Invidio.us 替换 Youtube</string>
     <string name="set_invidious_indication">Invidious 是个 YouTube 的替代前端</string>
     <string name="set_invidious_host">输入你自定义的主机或者留空以使用 invidio.us</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
-    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
-    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
+    <string name="set_nitter">用Nitter取代Twitter</string>
+    <string name="set_nitter_indication">Niter是一种开放源码的替代的 Twitter 的前端，注重保护隐私。</string>
+    <string name="set_nitter_host">输入你自定义的主机或者留空以使用 nitter.net</string>
     <string name="set_hide_status_bar">隐藏 Fedilab 通知栏</string>
     <string name="set_hide_status_bar_indication">要隐藏留在状态栏里的通知，请点击眼睛图标的按钮，然后取消勾选：“在状态栏内显示”</string>
     <string name="set_live_type_title">启用延迟通知</string>
@@ -1108,6 +1108,7 @@
     <string name="no_live_indication">通知将被延迟为每15分钟产生。</string>
     <string name="action_add_notes">添加注释</string>
     <string name="note_for_account">账户说明</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
-    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
+    <string name="set_resize_picture_indication">允许将大型照片压缩到较小大小的照片，图像质量丢失甚少或微不足道。</string>
+    <string name="set_resize_video_indication">允许在保持视频质量的同时压缩视频。</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>
