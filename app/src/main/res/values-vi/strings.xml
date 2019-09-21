@@ -379,6 +379,7 @@ và %d toots khác để khám phá</item>
     <string name="action_search">Tìm kiếm</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push thông báo</string>
     <string name="settings_popup_message">Vui lòng xác nhận thông báo đẩy mà bạn muốn nhận.         
@@ -1106,4 +1107,5 @@ và %d toots khác để khám phá</item>
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
