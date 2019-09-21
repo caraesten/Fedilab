@@ -397,6 +397,7 @@
     <string name="action_search">البحث</string>
     <string name="set_capitalize">حروف كبيرة في أول الجملة عند الرد</string>
     <string name="set_resize_picture">تعديل حجم الصور</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">الإشعارات المدفوعة</string>
     <string name="settings_popup_message">        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
@@ -1132,4 +1133,5 @@
     <string name="action_add_notes">أضف ملاحظات</string>
     <string name="note_for_account">ملاحظات الحساب</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
