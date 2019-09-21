@@ -249,44 +249,14 @@ public class LoginActivity extends BaseActivity {
             login_instance = findViewById(R.id.login_instance);
             login_uid = findViewById(R.id.login_uid);
             login_passwd = findViewById(R.id.login_passwd);
-            MaterialSpinner set_instance_type = findViewById(R.id.set_instance_type);
             connect_button = findViewById(R.id.connect_button);
             step_login_credential = findViewById(R.id.step_login_credential);
             instance_chosen = findViewById(R.id.instance_chosen);
             step_instance = findViewById(R.id.step_instance);
             connectionButton = findViewById(R.id.login_button);
             info_instance = findViewById(R.id.info_instance);
-            Helper.changeMaterialSpinnerColor(LoginActivity.this, set_instance_type);
-            set_instance_type.setItems("Mastodon", "Pleroma", "Pixelfed", "Peertube", "GNU Social", "Friendica");
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
             //Manage instances
-            set_instance_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                    switch (position) {
-                        case 0:
-                        case 1:
-                        case 2:
-                            login_uid.setHint(R.string.email);
-                            connectionButton.setEnabled(false);
-                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                            break;
-                        case 3:
-                            login_uid.setHint(R.string.username);
-                            connectionButton.setEnabled(false);
-                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                            break;
-                        case 4:
-                        case 5:
-                            login_uid.setHint(R.string.username);
-                            connectionButton.setEnabled(true);
-                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                            break;
-                    }
-                    if (login_instance.getText() != null && login_instance.getText().toString().length() > 0)
-                        retrievesClientId();
-                }
-            });
             info_instance.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -294,7 +264,6 @@ public class LoginActivity extends BaseActivity {
                 }
             });
 
-            set_instance_type.setEnabled(true);
 
             connect_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -399,22 +368,18 @@ public class LoginActivity extends BaseActivity {
                                                 try {
                                                     JSONObject jsonObject = new JSONObject(response);
                                                     JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                                    if (jsonArray != null) {
-                                                        int length = 0;
-                                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                                            if (!jsonArray.getJSONObject(i).get("name").toString().contains("@"))
-                                                                length++;
+                                                    int length = 0;
+                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@"))
+                                                            length++;
+                                                    }
+                                                    instances = new String[length];
+                                                    int j = 0;
+                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@")) {
+                                                            instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                            j++;
                                                         }
-                                                        instances = new String[length];
-                                                        int j = 0;
-                                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                                            if (!jsonArray.getJSONObject(i).get("name").toString().contains("@")) {
-                                                                instances[j] = jsonArray.getJSONObject(i).get("name").toString();
-                                                                j++;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        instances = new String[]{};
                                                     }
                                                     login_instance.setAdapter(null);
                                                     ArrayAdapter<String> adapter =
@@ -504,28 +469,6 @@ public class LoginActivity extends BaseActivity {
                 retrievesClientId();
                 login_uid.requestFocus();
             }
-            if (social != null) {
-                switch (social) {
-                    case "MASTODON":
-                        set_instance_type.setSelectedIndex(0);
-                        break;
-                    case "PLEROMA":
-                        set_instance_type.setSelectedIndex(1);
-                        break;
-                    case "PIXELFED":
-                        set_instance_type.setSelectedIndex(2);
-                        break;
-                    case "PEERTUBE":
-                        set_instance_type.setSelectedIndex(3);
-                        break;
-                    case "GNU":
-                        set_instance_type.setSelectedIndex(4);
-                        break;
-                    case "FRIENDICA":
-                        set_instance_type.setSelectedIndex(5);
-                        break;
-                }
-            }
         }
     }
 
@@ -570,12 +513,6 @@ public class LoginActivity extends BaseActivity {
             } else {
                 parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
             }
-            /*if(socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
-                client_id = "8";
-                client_secret = "rjnu93kmK1KbRBBMZflMi8rxKJxOjeGtnDUVEUNK";
-                manageClient(client_id, client_secret, null);
-                return;
-            }*/
 
             parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
             new Thread(new Runnable() {
@@ -655,10 +592,8 @@ public class LoginActivity extends BaseActivity {
                     parameters.put("password", login_passwd.getText().toString());
                 }
                 String oauthUrl = null;
-                if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     parameters.put("scope", " read write follow");
-                    oauthUrl = "/oauth/token";
-                } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     oauthUrl = "/oauth/token";
                 } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
@@ -893,13 +828,10 @@ public class LoginActivity extends BaseActivity {
         String queryString = Helper.CLIENT_ID + "=" + clientId;
         queryString += "&" + Helper.REDIRECT_URI + "=" + Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE + "=code";
-        if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-
-            if (admin) {
-                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
-            } else {
-                queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
-            }
+        if (admin) {
+            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
+        } else {
+            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
         }
         return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }

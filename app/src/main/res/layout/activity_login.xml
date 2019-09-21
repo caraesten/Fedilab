@@ -81,12 +81,6 @@
                             android:layout_height="30dp" />
                     </LinearLayout>
 
-                    <com.jaredrummler.materialspinner.MaterialSpinner
-                        android:id="@+id/set_instance_type"
-                        android:textSize="16sp"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
