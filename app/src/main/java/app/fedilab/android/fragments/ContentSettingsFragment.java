@@ -1822,6 +1822,19 @@ public class ContentSettingsFragment extends Fragment implements ScreenShotable 
         });
 
 
+        //Resize
+        final CheckBox set_resize_video = rootView.findViewById(R.id.set_resize_video);
+        boolean compressVideo = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
+        set_resize_video.setChecked(compressVideo);
+        set_resize_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_VIDEO_COMPRESSED, set_resize_video.isChecked());
+                editor.apply();
+            }
+        });
+
 
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);

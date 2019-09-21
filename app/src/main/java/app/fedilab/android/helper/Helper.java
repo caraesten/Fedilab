@@ -123,6 +123,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.tabs.TabLayout;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.iceteck.silicompressorr.SiliCompressor;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -158,6 +159,7 @@ import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -221,7 +223,6 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import id.zelory.compressor.Compressor;
 import info.guardianproject.netcipher.client.StrongBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
 import okhttp3.ConnectionSpec;
@@ -351,6 +352,7 @@ public class Helper {
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_WYSIWYG = "set_wysiwyg";
     public static final String SET_PICTURE_COMPRESSED = "set_picture_compressed";
+    public static final String SET_VIDEO_COMPRESSED = "set_picture_compressed";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
@@ -3420,8 +3422,13 @@ public class Helper {
         String mime = cr.getType(uriFile);
         File file = new File(uriFile.getPath());
         ByteArrayInputStream bs = null;
-        if (mime != null && mime.toLowerCase().contains("image")) {
 
+
+        File dir = new File(context.getCacheDir().getAbsolutePath()+"/compress");
+        if (!dir.exists()) dir.mkdirs();
+        String destinationDirectory = context.getCacheDir().getAbsolutePath()+"/compress/"+ file.getName();
+        InputStream resizedIS = null;
+        if (mime != null && mime.toLowerCase().contains("image")) {
             ExifInterface exif = null;
             try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
                 assert inputStream != null;
@@ -3429,7 +3436,6 @@ public class Helper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             Matrix matrix;
             if (exif != null) {
                 int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
@@ -3446,15 +3452,12 @@ public class Helper {
                     matrix.preRotate(rotationDegree);
                 }
             }
-
-            InputStream resizedIS = null;
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
-
             if( compressed) {
                 try {
-                    File compressedFile= new Compressor(context).compressToFile(file);
-                    resizedIS = new FileInputStream(compressedFile.getAbsolutePath());
+                    String filePath = SiliCompressor.with(context).compress(file.getAbsolutePath(), new File(destinationDirectory));
+                    resizedIS = new FileInputStream(filePath);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -3481,13 +3484,34 @@ public class Helper {
                 e.printStackTrace();
             }
         } else {
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean compressed = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
+            if( compressed) {
+                String filePath = null;
+                try {
+                    filePath = SiliCompressor.with(context).compressVideo(file.getAbsolutePath(), destinationDirectory);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    assert filePath != null;
+                    resizedIS = new FileInputStream(filePath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                try {
+                    resizedIS = context.getContentResolver().openInputStream(uriFile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
-                InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
                 byte[] buff = new byte[8 * 1024];
                 int bytesRead;
                 ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                assert inputStream != null;
-                while ((bytesRead = inputStream.read(buff)) != -1) {
+                assert resizedIS != null;
+                while ((bytesRead = resizedIS.read(buff)) != -1) {
                     bao.write(buff, 0, bytesRead);
                 }
                 byte[] data = bao.toByteArray();
@@ -3498,7 +3522,6 @@ public class Helper {
                 e.printStackTrace();
             }
         }
-
         return bs;
     }
 
