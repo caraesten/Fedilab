@@ -1107,4 +1107,5 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="note_for_account">Notes per al compte</string>
     <string name="set_resize_picture_indication">Permet la compressió de fotos grans en més petites amb una pèrduda mínima o negligible de qualitat d\'imatge.</string>
     <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>
