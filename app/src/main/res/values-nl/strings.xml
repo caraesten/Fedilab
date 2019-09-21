@@ -381,6 +381,7 @@
     <string name="action_search">Zoeken</string>
     <string name="set_capitalize">Eerste letter een hoofdletter in reacties</string>
     <string name="set_resize_picture">Afbeeldingen schalen</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Pushmeldingen</string>
     <string name="settings_popup_message">        Bevestig de pushmeldingen die jij wilt ontvangen.
@@ -1110,4 +1111,5 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
