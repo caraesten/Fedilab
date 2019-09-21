@@ -385,6 +385,7 @@
     <string name="action_search">Căutare</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificări instant</string>
     <string name="settings_popup_message">Vă rugăm să confirmați notificările instant pe care doriți să le primiți
@@ -1116,4 +1117,5 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
 </resources>
