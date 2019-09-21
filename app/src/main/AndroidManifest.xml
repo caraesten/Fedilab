@@ -285,11 +285,6 @@
             android:label="@string/app_name"
             android:launchMode="singleTask" />
         <activity
-            android:name="app.fedilab.android.activities.LanguageActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
             android:name="app.fedilab.android.activities.AboutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

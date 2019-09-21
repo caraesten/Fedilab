@@ -18,16 +18,19 @@ package app.fedilab.android.fragments;
 import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -69,18 +72,29 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.LanguageActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.MainMenuItem;
+import app.fedilab.android.client.Entities.Relationship;
+import app.fedilab.android.client.Entities.Results;
+import app.fedilab.android.drawers.AccountSearchDevAdapter;
 import app.fedilab.android.filelister.FileListerDialog;
 import app.fedilab.android.filelister.OnFileSelectedListener;
+import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
+import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
@@ -101,11 +115,47 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.MENU;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
-public class ContentSettingsFragment extends Fragment {
+public class ContentSettingsFragment extends Fragment implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
 
 
     private type type;
     private Context context;
+
+    @Override
+    public void onRetrieveRemoteAccount(Results results) {
+        if (results == null) {
+            return;
+        }
+        List<Account> accounts = results.getAccounts();
+        Account account;
+        if (accounts != null && accounts.size() > 0) {
+            account = accounts.get(0);
+            account.setFollowing(true);
+            switch (account.getUsername()) {
+                case "ButterflyOfFire":
+                    translators.add(account);
+                    translatorManager.notifyDataSetChanged();
+                    break;
+            }
+            new RetrieveRelationshipAsyncTask(context, account.getId(), ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
+        if (error != null) {
+            return;
+        }
+        for (int i = 0; i < translators.size(); i++) {
+            if (translators.get(i).getId() != null && translators.get(i).getId().equals(relationship.getId())) {
+                translators.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
+                translatorManager.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
 
     public enum type {
         CLOSE,
@@ -117,7 +167,8 @@ public class ContentSettingsFragment extends Fragment {
         LANGUAGE,
         MENU
     }
-
+    private List<Account> translators = new ArrayList<>();
+    private AccountSearchDevAdapter translatorManager;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     private EditText your_api_key;
@@ -2255,6 +2306,149 @@ public class ContentSettingsFragment extends Fragment {
 
 
 
+
+
+
+
+        Button about_translation = rootView.findViewById(R.id.about_translation);
+
+
+        about_translation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/mastalab"));
+                startActivity(browserIntent);
+            }
+        });
+
+        ExpandableHeightListView lv_translator_manager = rootView.findViewById(R.id.lv_translator_manager);
+
+        lv_translator_manager.setExpanded(true);
+        translatorManager = new AccountSearchDevAdapter(translators);
+        lv_translator_manager.setAdapter(translatorManager);
+
+        if( type == LANGUAGE) {
+            new RetrieveRemoteDataAsyncTask(context, "ButterflyOfFire", "mstdn.fr", ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+
+        String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
+        Locale currentLocale = Helper.restoreLocaleFromString(currentLanguage);
+        final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
+        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
+
+        set_change_locale.setAdapter(adapterLocale);
+
+        int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
+        set_change_locale.setSelection(positionSpinnerLanguage);
+        set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (count2 > 0) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        case 0:
+                            editor.remove(Helper.SET_DEFAULT_LOCALE_NEW);
+                            editor.commit();
+                            break;
+                        case 1:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "en");
+                            editor.commit();
+                            break;
+                        case 2:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "fr");
+                            editor.commit();
+                            break;
+                        case 3:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "de");
+                            editor.commit();
+                            break;
+                        case 4:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "it");
+                            editor.commit();
+                            break;
+                        case 5:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ja");
+                            editor.commit();
+                            break;
+                        case 6:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-TW");
+                            editor.commit();
+                            break;
+                        case 7:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-CN");
+                            editor.commit();
+                            break;
+                        case 8:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "eu");
+                            editor.commit();
+                            break;
+                        case 9:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ar");
+                            editor.commit();
+                            break;
+                        case 10:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "nl");
+                            editor.commit();
+                            break;
+                        case 11:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "gl");
+                            editor.commit();
+                            break;
+                        case 12:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "el");
+                            editor.commit();
+                            break;
+                        case 13:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pt");
+                            editor.commit();
+                            break;
+                        case 14:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "es");
+                            editor.commit();
+                            break;
+                        case 15:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pl");
+                            editor.commit();
+                            break;
+                        case 16:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "sr");
+                            editor.commit();
+                            break;
+                        case 17:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
+                            editor.commit();
+                            break;
+                        case 18:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
+                            editor.commit();
+                            break;
+                        case 19:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
+                            editor.commit();
+                            break;
+                        case 20:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "kab");
+                            editor.commit();
+                            break;
+                    }
+
+                    PackageManager packageManager = context.getPackageManager();
+                    Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+                    assert intent != null;
+                    ComponentName componentName = intent.getComponent();
+                    Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                    startActivity(mainIntent);
+                    Runtime.getRuntime().exit(0);
+                }
+                count2++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return rootView;
     }
