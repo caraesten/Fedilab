@@ -377,6 +377,7 @@
     <string name="action_search">검색</string>
     <string name="set_capitalize">답글의 첫 글자를 대문자로</string>
     <string name="set_resize_picture">이미지 크기 조정</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">푸시 알림</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
@@ -1107,4 +1108,7 @@
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
     <string name="action_add_notes">Add notes</string>
     <string name="note_for_account">Notes for the account</string>
+    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
+    <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>
