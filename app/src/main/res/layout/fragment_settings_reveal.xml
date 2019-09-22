@@ -19,6 +19,7 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:paddingLeft="@dimen/drawer_padding"
             android:paddingRight="@dimen/drawer_padding"
+            android:scrollbars="none"
             tools:ignore="UselessParent">
 
 
@@ -229,6 +230,7 @@
 
                     <EditText
                         android:id="@+id/set_invidious_host"
+                        android:ellipsize="end"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/set_invidious_host"
@@ -274,6 +276,7 @@
 
                     <EditText
                         android:id="@+id/set_nitter_host"
+                        android:ellipsize="end"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/set_nitter_host"
