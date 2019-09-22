@@ -12,7 +12,7 @@
     <dimen name="layout_height_header">180dp</dimen>
     <dimen name="fab_margin_floating">16dp</dimen>
     <dimen name="item_offset">5dp</dimen>
-    <dimen name="settings_checkbox_margin">2dp</dimen>
+    <dimen name="settings_option_margin">10dp</dimen>
     <dimen name="settings_category_label_margin">2dp</dimen>
     <dimen name="activity_vertical_margin_login">50dp</dimen>
     <dimen name="badge_count_textsize">12sp</dimen>
