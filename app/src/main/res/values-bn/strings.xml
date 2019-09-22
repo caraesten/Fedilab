@@ -98,9 +98,9 @@
     <string name="no_emoji">অ্যাপটি মুহুর্তের জন্য কাস্টম ইমোজিগুলি সংগ্রহ করে নি।</string>
     <string name="live_notif">লাইভ বিজ্ঞপ্তিগুলি</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="no_status">প্রদর্শনের জন্য কোন টুট নেই</string>
+    <string name="fav_added">টুটটি প্রিয়গুলি সূচিতে যুক্ত হয়েছিল</string>
+    <string name="fav_removed">টুটটি প্রিয়গুলি সূচি থেকে সরানো হয়েছিল!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">Boosted by %1$s</string>
