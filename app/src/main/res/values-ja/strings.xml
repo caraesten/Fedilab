@@ -377,7 +377,7 @@
     <string name="action_search">検索</string>
     <string name="set_capitalize">返信で最初の文字を大文字にする</string>
     <string name="set_resize_picture">画像をリサイズ</string>
-    <string name="set_resize_video">動画のサイズ変更</string>
+    <string name="set_resize_video">動画のリサイズ</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
     <string name="settings_popup_message">受信したいプッシュ通知を確認してください。
