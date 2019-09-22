@@ -84,19 +84,19 @@
     <string name="optimization">অপ্টিমাইজেশন</string>
     <string name="settings">বিন্যাস</string>
     <string name="profile">প্রোফাইল</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="make_a_choice">আপনি কি করতে চান?</string>
+    <string name="delete_account_title">একটি অ্যাকাউন্ট মুছেন</string>
+    <string name="delete_account_message" formatted="false">আপনি কি এই %1$s একাউন্ট টি এপ্লিকেশন থেকে মুছে ফেলতে চান?</string>
+    <string name="send_email">একটি ইমেইল পাঠান</string>
+    <string name="choose_file">অনুগ্রহ করে একটি ফাইল নির্বাচন করুন</string>
+    <string name="choose_file_error">কোন ফাইল এক্সপ্লোরার পাওয়া যে নি!</string>
+    <string name="click_to_change">এটি পরিবর্তন করার জন্য পথে ক্লিক করুন</string>
+    <string name="failed">ব্যর্থ!</string>
+    <string name="scheduled_toots">নির্ধারিত টুটগুলি</string>
+    <string name="disclaimer_full">নীচের তথ্যগুলি ব্যবহারকারীর প্রোফাইলকে অসম্পূর্ণভাবে প্রতিবিম্বিত করতে পারে।</string>
+    <string name="insert_emoji">ইমোজি ঢোকান</string>
+    <string name="no_emoji">অ্যাপটি মুহুর্তের জন্য কাস্টম ইমোজিগুলি সংগ্রহ করে নি।</string>
+    <string name="live_notif">লাইভ বিজ্ঞপ্তিগুলি</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
