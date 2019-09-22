@@ -76,7 +76,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.LanguageActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
@@ -303,7 +302,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
-        final CheckBox set_auto_store = rootView.findViewById(R.id.set_auto_store);
+        final SwitchCompat set_auto_store = rootView.findViewById(R.id.set_auto_store);
         set_auto_store.setChecked(auto_store);
         set_auto_store.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +314,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
-        final CheckBox set_display_content_after_fetch_more = rootView.findViewById(R.id.set_display_content_after_fetch_more);
+        final SwitchCompat set_display_content_after_fetch_more = rootView.findViewById(R.id.set_display_content_after_fetch_more);
         set_display_content_after_fetch_more.setChecked(display_content_after_fetch_more);
         set_display_content_after_fetch_more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,8 +324,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_display_content_after_fetch_more_text = rootView.findViewById(R.id.set_display_content_after_fetch_more_text);
-        set_display_content_after_fetch_more_text.setOnClickListener(v -> set_display_content_after_fetch_more.performClick());
 
         count1 = 0;
         count2 = 0;
@@ -338,7 +335,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
 
         boolean auto_backup = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_STATUSES + userId + instance, false);
-        final CheckBox set_auto_backup = rootView.findViewById(R.id.set_auto_backup);
+        final SwitchCompat set_auto_backup = rootView.findViewById(R.id.set_auto_backup);
         set_auto_backup.setChecked(auto_backup);
         set_auto_backup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -351,7 +348,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean clear_cache_exit = sharedpreferences.getBoolean(Helper.SET_CLEAR_CACHE_EXIT, false);
-        final CheckBox set_clear_cache_exit = rootView.findViewById(R.id.set_clear_cache_exit);
+        final SwitchCompat set_clear_cache_exit = rootView.findViewById(R.id.set_clear_cache_exit);
         set_clear_cache_exit.setChecked(clear_cache_exit);
         set_clear_cache_exit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,7 +360,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean auto_backup_notifications = sharedpreferences.getBoolean(Helper.SET_AUTO_BACKUP_NOTIFICATIONS + userId + instance, false);
-        final CheckBox set_auto_backup_notifications = rootView.findViewById(R.id.set_auto_backup_notifications);
+        final SwitchCompat set_auto_backup_notifications = rootView.findViewById(R.id.set_auto_backup_notifications);
         set_auto_backup_notifications.setChecked(auto_backup_notifications);
         set_auto_backup_notifications.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,9 +370,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-
-        final LinearLayout set_auto_backup_text = rootView.findViewById(R.id.set_auto_backup_text);
-        set_auto_backup_text.setOnClickListener(view -> set_auto_backup.performClick());
 
 
         TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
@@ -496,7 +490,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
-        final CheckBox set_security_provider = rootView.findViewById(R.id.set_security_provider);
+        final SwitchCompat set_security_provider = rootView.findViewById(R.id.set_security_provider);
         set_security_provider.setChecked(patch_provider);
 
         set_security_provider.setOnClickListener(new View.OnClickListener() {
@@ -507,13 +501,11 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_security_provider_text = rootView.findViewById(R.id.set_security_provider_text);
-        set_security_provider_text.setOnClickListener(v -> set_security_provider.performClick());
 
 
         boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 
-        final CheckBox set_display_card = rootView.findViewById(R.id.set_display_card);
+        final SwitchCompat set_display_card = rootView.findViewById(R.id.set_display_card);
         set_display_card.setChecked(display_card);
         set_display_card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -527,7 +519,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
 
-        final CheckBox set_display_admin_menu = rootView.findViewById(R.id.set_display_admin_menu);
+        final SwitchCompat set_display_admin_menu = rootView.findViewById(R.id.set_display_admin_menu);
         set_display_admin_menu.setChecked(display_admin_menu);
         set_display_admin_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -549,7 +541,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         boolean display_admin_statuses = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_STATUSES + userId + instance, false);
 
-        final CheckBox set_display_admin_statuses = rootView.findViewById(R.id.set_display_admin_statuses);
+        final SwitchCompat set_display_admin_statuses = rootView.findViewById(R.id.set_display_admin_statuses);
         set_display_admin_statuses.setChecked(display_admin_statuses);
         set_display_admin_statuses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -561,7 +553,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-        final CheckBox set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);
+        final SwitchCompat set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);
         set_auto_add_media_url.setChecked(show_media_urls);
 
         set_auto_add_media_url.setOnClickListener(new View.OnClickListener() {
@@ -574,7 +566,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
-        final CheckBox set_display_video_preview = rootView.findViewById(R.id.set_display_video_preview);
+        final SwitchCompat set_display_video_preview = rootView.findViewById(R.id.set_display_video_preview);
         set_display_video_preview.setChecked(display_video_preview);
 
         set_display_video_preview.setOnClickListener(new View.OnClickListener() {
@@ -585,11 +577,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_display_video_preview_text = rootView.findViewById(R.id.set_display_video_preview_text);
-        set_display_video_preview_text.setOnClickListener(v -> set_display_video_preview.performClick());
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-        final CheckBox set_share_validation = rootView.findViewById(R.id.set_share_validation);
+        final SwitchCompat set_share_validation = rootView.findViewById(R.id.set_share_validation);
         set_share_validation.setChecked(notif_validation);
 
         set_share_validation.setOnClickListener(new View.OnClickListener() {
@@ -632,7 +622,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean notif_validation_fav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-        final CheckBox set_share_validation_fav = rootView.findViewById(R.id.set_share_validation_fav);
+        final SwitchCompat set_share_validation_fav = rootView.findViewById(R.id.set_share_validation_fav);
         set_share_validation_fav.setChecked(notif_validation_fav);
 
         set_share_validation_fav.setOnClickListener(new View.OnClickListener() {
@@ -646,7 +636,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
-        final CheckBox set_expand_cw = rootView.findViewById(R.id.set_expand_cw);
+        final SwitchCompat set_expand_cw = rootView.findViewById(R.id.set_expand_cw);
         set_expand_cw.setChecked(expand_cw);
 
         set_expand_cw.setOnClickListener(new View.OnClickListener() {
@@ -659,7 +649,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean display_emoji = sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true);
-        final CheckBox set_display_emoji = rootView.findViewById(R.id.set_display_emoji);
+        final SwitchCompat set_display_emoji = rootView.findViewById(R.id.set_display_emoji);
         set_display_emoji.setChecked(display_emoji);
 
         set_display_emoji.setOnClickListener(new View.OnClickListener() {
@@ -672,7 +662,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
-        final CheckBox set_expand_media = rootView.findViewById(R.id.set_expand_image);
+        final SwitchCompat set_expand_media = rootView.findViewById(R.id.set_expand_image);
         set_expand_media.setChecked(expand_media);
 
         set_expand_media.setOnClickListener(new View.OnClickListener() {
@@ -686,7 +676,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean photo_editor = sharedpreferences.getBoolean(Helper.SET_PHOTO_EDITOR, true);
-        final CheckBox set_photo_editor = rootView.findViewById(R.id.set_photo_editor);
+        final SwitchCompat set_photo_editor = rootView.findViewById(R.id.set_photo_editor);
         set_photo_editor.setChecked(photo_editor);
 
         set_photo_editor.setOnClickListener(new View.OnClickListener() {
@@ -721,7 +711,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
-        final CheckBox set_remember_position = rootView.findViewById(R.id.set_remember_position);
+        final SwitchCompat set_remember_position = rootView.findViewById(R.id.set_remember_position);
         set_remember_position.setChecked(remember_position_home);
 
         set_remember_position.setOnClickListener(new View.OnClickListener() {
@@ -732,12 +722,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_remember_position_text = rootView.findViewById(R.id.set_remember_position_text);
-        set_remember_position_text.setOnClickListener(v -> set_remember_position.performClick());
 
 
         boolean hide_delete_notification_on_tab = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
-        final CheckBox set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
+        final SwitchCompat set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
         set_hide_delete_notification_on_tab.setChecked(hide_delete_notification_on_tab);
 
         set_hide_delete_notification_on_tab.setOnClickListener(new View.OnClickListener() {
@@ -757,7 +745,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean blur_sensitive = sharedpreferences.getBoolean(Helper.SET_BLUR_SENSITIVE, true);
-        final CheckBox set_blur_sensitive = rootView.findViewById(R.id.set_blur_sensitive);
+        final SwitchCompat set_blur_sensitive = rootView.findViewById(R.id.set_blur_sensitive);
         set_blur_sensitive.setChecked(blur_sensitive);
 
         set_blur_sensitive.setOnClickListener(new View.OnClickListener() {
@@ -768,15 +756,13 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_blur_sensitive_text = rootView.findViewById(R.id.set_blur_sensitive_text);
-        set_blur_sensitive_text.setOnClickListener(v -> set_blur_sensitive.performClick());
 
 
         TextView set_invidious_host = rootView.findViewById(R.id.set_invidious_host);
 
 
         boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
-        final CheckBox set_invidious = rootView.findViewById(R.id.set_invidious);
+        final SwitchCompat set_invidious = rootView.findViewById(R.id.set_invidious);
         set_invidious.setChecked(invidious);
 
         set_invidious.setOnClickListener(new View.OnClickListener() {
@@ -828,7 +814,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         TextView set_nitter_host = rootView.findViewById(R.id.set_nitter_host);
         boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
-        final CheckBox set_nitter = rootView.findViewById(R.id.set_nitter);
+        final SwitchCompat set_nitter = rootView.findViewById(R.id.set_nitter);
         set_nitter.setChecked(nitter);
 
         set_nitter.setOnClickListener(new View.OnClickListener() {
@@ -878,7 +864,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
-        final CheckBox set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
+        final SwitchCompat set_long_press_media = rootView.findViewById(R.id.set_long_press_media);
         set_long_press_media.setChecked(long_press_media);
 
         set_long_press_media.setOnClickListener(new View.OnClickListener() {
@@ -889,12 +875,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_long_press_media_text = rootView.findViewById(R.id.set_long_press_media_text);
-        set_long_press_media_text.setOnClickListener(v -> set_long_press_media.performClick());
 
 
         boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
-        final CheckBox set_display_timeline_in_list = rootView.findViewById(R.id.set_display_timeline_in_list);
+        final SwitchCompat set_display_timeline_in_list = rootView.findViewById(R.id.set_display_timeline_in_list);
         set_display_timeline_in_list.setChecked(display_timeline_in_list);
 
         set_display_timeline_in_list.setOnClickListener(new View.OnClickListener() {
@@ -914,12 +898,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
         });
-        final LinearLayout set_display_timeline_in_list_text = rootView.findViewById(R.id.set_display_timeline_in_list_text);
-        set_display_timeline_in_list_text.setOnClickListener(v -> set_display_timeline_in_list.performClick());
 
 
         boolean unfollow_validation = sharedpreferences.getBoolean(Helper.SET_UNFOLLOW_VALIDATION, true);
-        final CheckBox set_unfollow_validation = rootView.findViewById(R.id.set_unfollow_validation);
+        final SwitchCompat set_unfollow_validation = rootView.findViewById(R.id.set_unfollow_validation);
         set_unfollow_validation.setChecked(unfollow_validation);
 
         set_unfollow_validation.setOnClickListener(new View.OnClickListener() {
@@ -933,7 +915,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean send_crash_reports = sharedpreferences.getBoolean(Helper.SET_SEND_CRASH_REPORTS, false);
-        final CheckBox set_enable_crash_report = rootView.findViewById(R.id.set_enable_crash_report);
+        final SwitchCompat set_enable_crash_report = rootView.findViewById(R.id.set_enable_crash_report);
         set_enable_crash_report.setChecked(send_crash_reports);
 
         set_enable_crash_report.setOnClickListener(new View.OnClickListener() {
@@ -946,8 +928,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     getActivity().recreate();
             }
         });
-        final LinearLayout set_enable_crash_report_text = rootView.findViewById(R.id.set_enable_crash_report_text);
-        set_enable_crash_report_text.setOnClickListener(v -> set_enable_crash_report.performClick());
 
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
@@ -975,7 +955,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
-        final CheckBox set_new_badge = rootView.findViewById(R.id.set_display_new_badge);
+        final SwitchCompat set_new_badge = rootView.findViewById(R.id.set_display_new_badge);
         set_new_badge.setChecked(new_badge);
 
         set_new_badge.setOnClickListener(new View.OnClickListener() {
@@ -988,7 +968,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean fedilab_features_button = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FEDILAB_FEATURES_BUTTON, true);
-        final CheckBox set_fedilab_features_button = rootView.findViewById(R.id.set_display_fedilab_features_button);
+        final SwitchCompat set_fedilab_features_button = rootView.findViewById(R.id.set_display_fedilab_features_button);
         set_fedilab_features_button.setChecked(fedilab_features_button);
 
         set_fedilab_features_button.setOnClickListener(new View.OnClickListener() {
@@ -999,11 +979,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_display_fedilab_features_button_text = rootView.findViewById(R.id.set_display_fedilab_features_button_text);
-        set_display_fedilab_features_button_text.setOnClickListener(v -> set_fedilab_features_button.performClick());
 
         boolean bot_icon = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOT_ICON, true);
-        final CheckBox set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
+        final SwitchCompat set_bot_icon = rootView.findViewById(R.id.set_display_bot_icon);
         set_bot_icon.setChecked(bot_icon);
 
         set_bot_icon.setOnClickListener(new View.OnClickListener() {
@@ -1016,7 +994,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
-        final CheckBox set_display_confirm = rootView.findViewById(R.id.set_display_confirm);
+        final SwitchCompat set_display_confirm = rootView.findViewById(R.id.set_display_confirm);
         set_display_confirm.setChecked(display_confirm);
 
         set_display_confirm.setOnClickListener(new View.OnClickListener() {
@@ -1029,7 +1007,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean quick_reply = sharedpreferences.getBoolean(Helper.SET_QUICK_REPLY, true);
-        final CheckBox set_quick_reply = rootView.findViewById(R.id.set_quick_reply);
+        final SwitchCompat set_quick_reply = rootView.findViewById(R.id.set_quick_reply);
         set_quick_reply.setChecked(quick_reply);
 
         set_quick_reply.setOnClickListener(new View.OnClickListener() {
@@ -1040,11 +1018,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_quick_reply_text = rootView.findViewById(R.id.set_quick_reply_text);
-        set_quick_reply_text.setOnClickListener(v -> set_quick_reply.performClick());
 
         boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
-        final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
+        final SwitchCompat set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
         set_fit_preview.setChecked(fit_preview);
 
         set_fit_preview.setOnClickListener(new View.OnClickListener() {
@@ -1055,8 +1031,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_fit_preview_text = rootView.findViewById(R.id.set_fit_preview_text);
-        set_fit_preview_text.setOnClickListener(v -> set_fit_preview.performClick());
 
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
@@ -1095,7 +1069,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
-        final CheckBox set_share_details = rootView.findViewById(R.id.set_share_details);
+        final SwitchCompat set_share_details = rootView.findViewById(R.id.set_share_details);
         set_share_details.setChecked(share_details);
 
         set_share_details.setOnClickListener(new View.OnClickListener() {
@@ -1109,7 +1083,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         // retrieve metadata if URL from external apps when composing
         boolean should_retrieve_metadata = sharedpreferences.getBoolean(Helper.SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL, true);
-        final CheckBox set_retrieve_metadata = rootView.findViewById(R.id.set_retrieve_metadata_share_from_extras);
+        final SwitchCompat set_retrieve_metadata = rootView.findViewById(R.id.set_retrieve_metadata_share_from_extras);
         set_retrieve_metadata.setChecked(should_retrieve_metadata);
 
         set_retrieve_metadata.setOnClickListener(new View.OnClickListener() {
@@ -1124,7 +1098,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         // Custom Sharing
         final EditText edit_custom_sharing_url = rootView.findViewById(R.id.custom_sharing_url);
         boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
-        final CheckBox set_custom_sharing = rootView.findViewById(R.id.set_custom_sharing);
+        final SwitchCompat set_custom_sharing = rootView.findViewById(R.id.set_custom_sharing);
         set_custom_sharing.setChecked(custom_sharing);
         if (custom_sharing)
             edit_custom_sharing_url.setVisibility(View.VISIBLE);
@@ -1142,12 +1116,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     edit_custom_sharing_url.setVisibility(View.GONE);
             }
         });
-        final LinearLayout set_custom_sharing_text = rootView.findViewById(R.id.set_custom_sharing_text);
-        set_custom_sharing_text.setOnClickListener(v -> set_custom_sharing.performClick());
 
         // forward tags in replies
         boolean forward_tags = sharedpreferences.getBoolean(Helper.SET_FORWARD_TAGS_IN_REPLY, false);
-        final CheckBox set_forward_tags = rootView.findViewById(R.id.set_forward_tags);
+        final SwitchCompat set_forward_tags = rootView.findViewById(R.id.set_forward_tags);
         set_forward_tags.setChecked(forward_tags);
         set_forward_tags.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1185,7 +1157,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
-        final CheckBox set_disable_gif = rootView.findViewById(R.id.set_disable_gif);
+        final SwitchCompat set_disable_gif = rootView.findViewById(R.id.set_disable_gif);
         set_disable_gif.setChecked(disableGif);
         set_disable_gif.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1200,7 +1172,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        final CheckBox set_disable_animated_emoji = rootView.findViewById(R.id.set_disable_animated_emoji);
+        final SwitchCompat set_disable_animated_emoji = rootView.findViewById(R.id.set_disable_animated_emoji);
         set_disable_animated_emoji.setChecked(disableAnimatedEmoji);
         set_disable_animated_emoji.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1341,7 +1313,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
-        final CheckBox set_capitalize = rootView.findViewById(R.id.set_capitalize);
+        final SwitchCompat set_capitalize = rootView.findViewById(R.id.set_capitalize);
         set_capitalize.setChecked(capitalize);
 
         set_capitalize.setOnClickListener(new View.OnClickListener() {
@@ -1352,8 +1324,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_capitalize_text = rootView.findViewById(R.id.set_capitalize_text);
-        set_capitalize_text.setOnClickListener(v -> set_capitalize.performClick());
 
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
@@ -1362,7 +1332,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         }
 
         boolean wysiwyg = sharedpreferences.getBoolean(Helper.SET_WYSIWYG, false);
-        final CheckBox set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
+        final SwitchCompat set_wysiwyg = rootView.findViewById(R.id.set_wysiwyg);
         set_wysiwyg.setChecked(wysiwyg);
 
         set_wysiwyg.setOnClickListener(new View.OnClickListener() {
@@ -1375,9 +1345,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
-        final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
+        final SwitchCompat set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
-        final CheckBox set_custom_tabs = rootView.findViewById(R.id.set_custom_tabs);
+        final SwitchCompat set_custom_tabs = rootView.findViewById(R.id.set_custom_tabs);
         final LinearLayout custom_tabs_container = rootView.findViewById(R.id.custom_tabs_container);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
@@ -1426,8 +1396,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-        final LinearLayout set_custom_tabs_text = rootView.findViewById(R.id.set_custom_tabs_text);
-        set_custom_tabs_text.setOnClickListener(v -> set_custom_tabs.performClick());
 
         final LinearLayout set_cookies_container = rootView.findViewById(R.id.set_cookies_container);
         final SwitchCompat set_cookies = rootView.findViewById(R.id.set_cookies);
@@ -1693,7 +1661,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + userId + instance, true);
         TextView set_allow_live_notifications_title = rootView.findViewById(R.id.set_allow_live_notifications_title);
         set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
-        final CheckBox set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
+        final SwitchCompat set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
         set_allow_live_notifications.setChecked(allow_live_notifications);
         set_allow_live_notifications.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1762,7 +1730,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         if (!split_toot) {
             set_split_container.setVisibility(View.GONE);
         }
-        final CheckBox set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
+        final SwitchCompat set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
         set_split_toot.setChecked(split_toot);
         set_split_toot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1849,7 +1817,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
         //Resize
-        final CheckBox set_resize_picture = rootView.findViewById(R.id.set_resize_picture);
+        final SwitchCompat set_resize_picture = rootView.findViewById(R.id.set_resize_picture);
         boolean compress = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
         set_resize_picture.setChecked(compress);
         set_resize_picture.setOnClickListener(new View.OnClickListener() {
@@ -1863,7 +1831,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         //Resize
-        final CheckBox set_resize_video = rootView.findViewById(R.id.set_resize_video);
+        final SwitchCompat set_resize_video = rootView.findViewById(R.id.set_resize_video);
         boolean compressVideo = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
         set_resize_video.setChecked(compressVideo);
         set_resize_video.setOnClickListener(new View.OnClickListener() {
@@ -1891,11 +1859,11 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         final String time_to = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
 
 
-        final CheckBox set_notif_follow = rootView.findViewById(R.id.set_notif_follow);
-        final CheckBox set_notif_follow_add = rootView.findViewById(R.id.set_notif_follow_add);
-        final CheckBox set_notif_follow_mention = rootView.findViewById(R.id.set_notif_follow_mention);
-        final CheckBox set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
-        final CheckBox set_notif_follow_poll = rootView.findViewById(R.id.set_notif_follow_poll);
+        final SwitchCompat set_notif_follow = rootView.findViewById(R.id.set_notif_follow);
+        final SwitchCompat set_notif_follow_add = rootView.findViewById(R.id.set_notif_follow_add);
+        final SwitchCompat set_notif_follow_mention = rootView.findViewById(R.id.set_notif_follow_mention);
+        final SwitchCompat set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
+        final SwitchCompat set_notif_follow_poll = rootView.findViewById(R.id.set_notif_follow_poll);
 
 
         final SwitchCompat switchCompatWIFI = rootView.findViewById(R.id.set_wifi_only);
@@ -2018,7 +1986,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         boolean enable_time_slot = sharedpreferences.getBoolean(Helper.SET_ENABLE_TIME_SLOT, true);
-        final CheckBox set_enable_time_slot = rootView.findViewById(R.id.set_enable_time_slot);
+        final SwitchCompat set_enable_time_slot = rootView.findViewById(R.id.set_enable_time_slot);
         set_enable_time_slot.setChecked(enable_time_slot);
 
         set_enable_time_slot.setOnClickListener(new View.OnClickListener() {
