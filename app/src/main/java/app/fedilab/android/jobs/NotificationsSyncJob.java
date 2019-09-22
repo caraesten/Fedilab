@@ -291,7 +291,7 @@ public class NotificationsSyncJob extends Job {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
-                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
+                                                R.drawable.fedilab_logo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

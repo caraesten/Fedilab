@@ -434,7 +434,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                         Helper.notify_user(getApplicationContext(), account, intent, BitmapFactory.decodeResource(getResources(),
-                                                                R.drawable.mastodonlogo), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                                                R.drawable.fedilab_logo), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
                                                         return false;
                                                     }
                                                 })

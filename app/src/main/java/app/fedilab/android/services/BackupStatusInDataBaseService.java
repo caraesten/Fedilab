@@ -150,7 +150,7 @@ public class BackupStatusInDataBaseService extends IntentService {
             String title = getString(R.string.data_backup_toots, account.getAcct());
             if (finalToastMessage) {
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
-                        R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
+                        R.drawable.fedilab_logo), Helper.NotifType.BACKUP, title, message);
             }
         } catch (Exception e) {
             e.printStackTrace();

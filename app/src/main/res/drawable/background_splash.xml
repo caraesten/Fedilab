@@ -21,6 +21,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/mastodonlogo" />
+            android:src="@drawable/fedilab_logo" />
     </item>
 </layer-list>

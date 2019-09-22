@@ -189,7 +189,7 @@ public class BackupStatusService extends IntentService {
             intentOpen.setDataAndType(uri, "text/csv");
             String title = getString(R.string.data_export_toots, account.getAcct());
             Helper.notify_user(getApplicationContext(), account, intentOpen, BitmapFactory.decodeResource(getResources(),
-                    R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
+                    R.drawable.fedilab_logo), Helper.NotifType.BACKUP, title, message);
         } catch (Exception e) {
             e.printStackTrace();
             message = getString(R.string.data_export_error, account.getAcct());
