@@ -389,7 +389,7 @@
     <string name="action_search">Поиск</string>
     <string name="set_capitalize">Заглавная первая буква в ответах</string>
     <string name="set_resize_picture">Изменять размер изображений</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Изменить размер видео</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
     <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получать.
@@ -1123,7 +1123,7 @@
     <string name="no_live_indication">Уведомления будут поступать каждые 15 минут.</string>
     <string name="action_add_notes">Добавить примечания</string>
     <string name="note_for_account">Примечания для аккаунта</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
-    <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
-    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
+    <string name="set_resize_picture_indication">Позволяет сжимать большие фотографии в меньшие по размеру с очень маленькой или незначительной потерей качества изображения.</string>
+    <string name="set_resize_video_indication">Разрешить сжатие видео с сохранением при этом его качества.</string>
+    <string name="please_wait_compression">Приложение сжимает медиа, это может продолжаться достаточно долго…</string>
 </resources>
