@@ -377,6 +377,7 @@
     <string name="action_search">搜尋</string>
     <string name="set_capitalize">回覆的第一個字母大寫</string>
     <string name="set_resize_picture">調整圖片大小</string>
+    <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推播通知</string>
     <string name="settings_popup_message">        請確認要接收的推播通知。
@@ -1106,4 +1107,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="no_live_indication">將會每15分鐘擷取一次通知。</string>
     <string name="action_add_notes">新增註記</string>
     <string name="note_for_account">帳號註記</string>
+    <string name="set_resize_picture_indication">允許將較大的相片壓縮成尺寸較小的相片，且只有非常少或可忽略不計的圖片品質損失。</string>
+    <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
+    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
 </resources>

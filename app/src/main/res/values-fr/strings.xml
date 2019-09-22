@@ -381,6 +381,7 @@
     <string name="action_search">Recherche</string>
     <string name="set_capitalize">Première lettre en majuscule pour les réponses</string>
     <string name="set_resize_picture">Redimensionner les images</string>
+    <string name="set_resize_video">Redimensionner les vidéos</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notifications poussées</string>
     <string name="settings_popup_message">        Veuillez confirmer les notifications que vous souhaitez recevoir.
@@ -1109,4 +1110,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="no_live_indication">Les notifications seront récupérées toutes les 15 minutes.</string>
     <string name="action_add_notes">Ajouter des notes</string>
     <string name="note_for_account">Notes pour le compte</string>
+    <string name="set_resize_picture_indication">Permet de comprimer de grandes photos en photos plus petites avec une perte de qualité d\'image très petite ou négligeable.</string>
+    <string name="set_resize_video_indication">Permet de compresser les vidéos tout en préservant leur qualité.</string>
+    <string name="please_wait_compression">L\'application est en train de compresser le média, cela peut être assez long…</string>
 </resources>
