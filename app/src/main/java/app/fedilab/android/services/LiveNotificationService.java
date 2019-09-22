@@ -78,6 +78,7 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
@@ -102,6 +103,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     private NotificationChannel channel;
     public static int totalAccount = 0;
     public static int eventsCount = 0;
+    public static int liveNotifBadge = 0;
 
     public void onCreate() {
         super.onCreate();
@@ -418,6 +420,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             final String finalMessage = message;
                             Handler mainHandler = new Handler(Looper.getMainLooper());
                             Helper.NotifType finalNotifType = notifType;
+                            liveNotifBadge++;
+                            ShortcutBadger.applyCount(getApplicationContext(), liveNotifBadge);
                             Runnable myRunnable = new Runnable() {
                                 @Override
                                 public void run() {
