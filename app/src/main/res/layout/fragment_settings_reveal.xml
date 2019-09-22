@@ -2650,56 +2650,189 @@
                             android:background="?colorAccent" />
                     </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/nav_news"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_news" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/nav_list"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/action_news"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_news"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_lists" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/action_lists"
+                            android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/nav_scheduled"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/scheduled_toots" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/scheduled_toots"
+                            android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/nav_archive"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_scheduled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/owner_cached_toots" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/nav_archive_notifications"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/owner_cached_toots"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_archive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/owner_cached_notifications" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/owner_cached_notifications"
+                            android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/nav_peertube"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_archive_notifications"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/peertube_favorites" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/nav_filters"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/filters" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/peertube_favorites"
+                            android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/nav_who_to_follow"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_peertube"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/how_to_follow" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/filters"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_filters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/how_to_follow"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_who_to_follow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
 
                     <LinearLayout
@@ -2730,24 +2863,75 @@
                             android:background="?colorAccent" />
                     </LinearLayout>
 
-
-                    <CheckBox
-                        android:id="@+id/nav_blocked"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/blocked_menu" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/nav_muted"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/muted_menu" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/blocked_menu"
+                            android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/nav_blocked_domains"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_blocked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/blocked_domains" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/muted_menu"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_muted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/blocked_domains"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_blocked_domains"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -2777,11 +2961,28 @@
                             android:background="?colorAccent" />
                     </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/nav_how_to"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/how_to_videos" />
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/how_to_videos"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_how_to"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
 
                     <Button
@@ -2791,6 +2992,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/validate" />
+
                 </LinearLayout>
 
 

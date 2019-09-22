@@ -2214,18 +2214,18 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         }
 
-        CheckBox nav_news = rootView.findViewById(R.id.nav_news);
-        CheckBox nav_list = rootView.findViewById(R.id.nav_list);
-        CheckBox nav_scheduled = rootView.findViewById(R.id.nav_scheduled);
-        CheckBox nav_archive = rootView.findViewById(R.id.nav_archive);
-        CheckBox nav_archive_notifications = rootView.findViewById(R.id.nav_archive_notifications);
-        CheckBox nav_peertube = rootView.findViewById(R.id.nav_peertube);
-        CheckBox nav_filters = rootView.findViewById(R.id.nav_filters);
-        CheckBox nav_who_to_follow = rootView.findViewById(R.id.nav_who_to_follow);
-        CheckBox nav_blocked = rootView.findViewById(R.id.nav_blocked);
-        CheckBox nav_muted = rootView.findViewById(R.id.nav_muted);
-        CheckBox nav_blocked_domains = rootView.findViewById(R.id.nav_blocked_domains);
-        CheckBox nav_how_to = rootView.findViewById(R.id.nav_how_to);
+        SwitchCompat nav_news = rootView.findViewById(R.id.nav_news);
+        SwitchCompat nav_list = rootView.findViewById(R.id.nav_list);
+        SwitchCompat nav_scheduled = rootView.findViewById(R.id.nav_scheduled);
+        SwitchCompat nav_archive = rootView.findViewById(R.id.nav_archive);
+        SwitchCompat nav_archive_notifications = rootView.findViewById(R.id.nav_archive_notifications);
+        SwitchCompat nav_peertube = rootView.findViewById(R.id.nav_peertube);
+        SwitchCompat nav_filters = rootView.findViewById(R.id.nav_filters);
+        SwitchCompat nav_who_to_follow = rootView.findViewById(R.id.nav_who_to_follow);
+        SwitchCompat nav_blocked = rootView.findViewById(R.id.nav_blocked);
+        SwitchCompat nav_muted = rootView.findViewById(R.id.nav_muted);
+        SwitchCompat nav_blocked_domains = rootView.findViewById(R.id.nav_blocked_domains);
+        SwitchCompat nav_how_to = rootView.findViewById(R.id.nav_how_to);
         Button validate = rootView.findViewById(R.id.validate);
 
         MainMenuItem mainMenu = new MainMenuDAO(context, db).getMainMenu();
