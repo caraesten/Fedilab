@@ -377,7 +377,7 @@
     <string name="action_search">検索</string>
     <string name="set_capitalize">返信で最初の文字を大文字にする</string>
     <string name="set_resize_picture">画像をリサイズ</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">動画のサイズ変更</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">プッシュ通知</string>
     <string name="settings_popup_message">受信したいプッシュ通知を確認してください。
@@ -1095,11 +1095,11 @@
     <string name="set_live_type_title">通知を遅らせる</string>
     <string name="set_live_type_indication">通知は30秒ごとに遅延が発生します。バッテリーの持ちが改善します。</string>
     <string name="live_delayed">遅延ありのライブ通知</string>
-    <string name="no_live_notif">ライブ通知を利用しない</string>
+    <string name="no_live_notif">ライブ通知なし</string>
     <string name="no_live_indication">15分ごとに通知を取得します。</string>
     <string name="action_add_notes">メモを追加</string>
     <string name="note_for_account">このアカウントのメモ</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
-    <string name="set_resize_video_indication">Allow to compress videos while maintaining their quality.</string>
-    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
+    <string name="set_resize_picture_indication">大きな画像を非常に少ない無視できる程度の損失で小さい画像に圧縮できます。</string>
+    <string name="set_resize_video_indication">品質を維持しつつ動画を圧縮できます。</string>
+    <string name="please_wait_compression">メディアを圧縮しています、これには時間がかかることがあります…</string>
 </resources>
