@@ -27,6 +27,7 @@ import java.net.URLDecoder;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.Helper;
@@ -70,8 +71,9 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         Account account;
         if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            if (account != null)
-                account.setSocial(account.getSocial());
+            InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).getRealNodeInfo(this.instance);
+            if (info != null)
+                account.setSocial(info.getName().toUpperCase());
         } else if (social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
             if (account != null)

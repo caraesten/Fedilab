@@ -61,6 +61,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -215,6 +216,7 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
+
 
         //Update the static variable which manages account type
         if (account.getSocial() == null || account.getSocial().equals("MASTODON"))
