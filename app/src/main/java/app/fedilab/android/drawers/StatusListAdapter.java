@@ -4252,6 +4252,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
+                    if( statuses.get(i).isFocused()){
+                        status.setFocused(true);
+                    }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                     /*if( mRecyclerView != null) {
@@ -4277,6 +4280,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
+                    if( statuses.get(i).isFocused()){
+                        status.setFocused(true);
+                    }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                     /*if( mRecyclerView != null) {
