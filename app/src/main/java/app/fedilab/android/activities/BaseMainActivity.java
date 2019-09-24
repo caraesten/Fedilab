@@ -2446,7 +2446,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     return fragment;
                 } else if (position == 2) {
                     DisplayNotificationsFragment fragment = new DisplayNotificationsFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_NOTIFICATION);
+                    bundle.putSerializable("type", DisplayNotificationsFragment.Type.ALL);
                     fragment.setArguments(bundle);
                     return fragment;
                 }
