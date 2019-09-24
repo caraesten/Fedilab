@@ -381,7 +381,7 @@
     <string name="action_search">Cerca</string>
     <string name="set_capitalize">Prima lettera in maiuscolo per le risposte</string>
     <string name="set_resize_picture">Ridimensiona foto</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Rimpicciolisci video</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notifiche push</string>
     <string name="settings_popup_message">Per favore, conferma le notifiche push che vuoi ricevere.
@@ -1113,7 +1113,7 @@
     <string name="no_live_indication">Le notifiche saranno recuperate ogni 15 minuti.</string>
     <string name="action_add_notes">Aggiungi note</string>
     <string name="note_for_account">Note per l\'account</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
-    <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
-    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
+    <string name="set_resize_picture_indication">Permette di comprimere foto grandi in foto di dimensione ridotta con poca o trascurabile perdita in qualità dell\'immagine.</string>
+    <string name="set_resize_video_indication">Permette di comprimere video mantenendo la loro qualità.</string>
+    <string name="please_wait_compression">L\'app sta comprimendo il media, può volerci un po\'…</string>
 </resources>
