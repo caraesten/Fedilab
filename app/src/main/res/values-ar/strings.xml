@@ -1023,7 +1023,7 @@
     <string name="default_directory">المجلد الافتراضي</string>
     <string name="folder">المجلد</string>
     <string name="create_folder">إنشاء مجلد</string>
-    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا.</string>
+    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا</string>
     <string name="set_display_confirm">عرض رسالة بعد تمام العمليات كالدعم والتفضيل وغيرها؟</string>
     <string name="export_muted_instance">تصدير مثيلات الخوادم المكتومة</string>
     <string name="muted_instance_exported">لقد تم تصدير مثيلات الخوادم المكتومة!</string>
