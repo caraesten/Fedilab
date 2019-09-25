@@ -299,7 +299,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case USER:
-                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     if (showMediaOnly)
                         apiResponse = api.getStatusWithMedia(targetedID, max_id);
                     else if (showPinned)
@@ -446,13 +446,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case PF_LOCAL:
                 api = new API(this.contextReference.get());
                 apiResponse = api.getPublicTimeline(true, max_id);
+                break;
             case PF_DISCOVER:
                 api = new API(this.contextReference.get());
                 apiResponse = api.getDiscoverTimeline(true, max_id);
                 break;
             case HASHTAG:
                 break;
-
             case GNU_HOME:
                 GNUAPI gnuAPI = new GNUAPI(this.contextReference.get());
                 apiResponse = gnuAPI.getHomeTimeline(max_id);
