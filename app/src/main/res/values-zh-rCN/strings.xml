@@ -1111,4 +1111,6 @@
     <string name="set_resize_picture_indication">允许将大型照片压缩到较小大小的照片，图像质量丢失甚少或微不足道。</string>
     <string name="set_resize_video_indication">允许在保持视频质量的同时压缩视频。</string>
     <string name="please_wait_compression">该应用正在压缩媒体，它可能需要相当长时间…</string>
+    <string name="change_app_icon_experimental">Change app icon</string>
+    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
 </resources>
