@@ -2156,7 +2156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Change app icon (Experimental)"
+                            android:text="@string/change_app_icon_experimental"
                             android:textSize="16sp" />
 
                         <ImageButton
@@ -2165,7 +2165,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
-                            android:contentDescription="Click to change the app icon (Not recommended)"
+                            android:contentDescription="@string/click_to_change_the_app_icon"
                             android:padding="5dp"
                             android:src="@drawable/ic_all_inclusive_menu" />
                     </LinearLayout>

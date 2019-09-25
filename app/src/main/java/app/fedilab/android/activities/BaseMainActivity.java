@@ -197,7 +197,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static String regex_home, regex_local, regex_public;
     public static boolean show_boosts, show_replies, show_art_nsfw;
 
-    enum iconLauncher{
+    public enum iconLauncher{
         BUBBLES,
         FEDIVERSE,
         HERO,

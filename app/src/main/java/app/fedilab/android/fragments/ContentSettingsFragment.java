@@ -76,6 +76,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
@@ -106,6 +107,11 @@ import mabbas007.tagsedittext.TagsEditText;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.ATOM;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.BRAINCRASH;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.BUBBLES;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.FEDIVERSE;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.HERO;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
@@ -2436,6 +2442,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         ImageButton btn_select_icon = rootView.findViewById(R.id.btn_select_icon);
         btn_select_icon.setOnClickListener(v -> {
+
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
             View icon_selector = inflater.inflate(R.layout.dialog_icon_selector, null);
             dialogBuilder.setView(icon_selector);
@@ -2452,30 +2459,53 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             icon_selector.findViewById(R.id.icon_bubbles).setOnClickListener(v1 -> {
                 hideAllIcons(context);
                 setIcon(context,"Bubbles");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "bubbles");
+                editor2.apply();
+                BaseMainActivity.mLauncher = BUBBLES;
                 icon_selector_dialog.dismiss();
             });
 
             icon_selector.findViewById(R.id.icon_fediverse).setOnClickListener(v1 -> {
                 hideAllIcons(context);
                 setIcon(context,"Fediverse");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "fediverse");
+                editor2.apply();
+                BaseMainActivity.mLauncher = FEDIVERSE;
                 icon_selector_dialog.dismiss();
             });
 
             icon_selector.findViewById(R.id.icon_hero).setOnClickListener(v1 -> {
                 hideAllIcons(context);
                 setIcon(context,"Hero");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "hero");
+                editor2.apply();
+                BaseMainActivity.mLauncher = HERO;
                 icon_selector_dialog.dismiss();
             });
 
             icon_selector.findViewById(R.id.icon_atom).setOnClickListener(v1 -> {
                 hideAllIcons(context);
                 setIcon(context,"Atom");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "atom");
+                editor2.apply();
+                BaseMainActivity.mLauncher = ATOM;
                 icon_selector_dialog.dismiss();
             });
 
             icon_selector.findViewById(R.id.icon_braincrash).setOnClickListener(v1 -> {
                 hideAllIcons(context);
                 setIcon(context,"BrainCrash");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "braincrash");
+                editor2.apply();
+                BaseMainActivity.mLauncher = BRAINCRASH;
                 icon_selector_dialog.dismiss();
             });
 
