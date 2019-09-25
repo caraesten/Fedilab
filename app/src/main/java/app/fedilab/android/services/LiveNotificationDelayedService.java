@@ -383,8 +383,28 @@ public class LiveNotificationDelayedService extends Service {
 
                                             @Override
                                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                                int logo_icon = R.drawable.fedilab_logo_bubble;
+                                                switch (BaseMainActivity.mLauncher){
+                                                    case BUBBLES:
+                                                        logo_icon = R.drawable.fedilab_logo_bubble;
+                                                        break;
+                                                    case FEDIVERSE:
+                                                        logo_icon = R.drawable.fedilab_logo_fediverse;
+                                                        break;
+                                                    case HERO:
+                                                        logo_icon = R.drawable.fedilab_logo_hero;
+                                                        break;
+                                                    case ATOM:
+                                                        logo_icon = R.drawable.fedilab_logo_atom;
+                                                        break;
+                                                    case BRAINCRASH:
+                                                        logo_icon = R.drawable.fedilab_logo_braincrash;
+                                                        break;
+                                                    default:
+                                                        logo_icon = R.drawable.fedilab_logo_bubble;
+                                                }
                                                 Helper.notify_user(getApplicationContext(), account, intent, BitmapFactory.decodeResource(getResources(),
-                                                        R.drawable.fedilab_logo), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                                        logo_icon), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
                                                 return false;
                                             }
                                         })

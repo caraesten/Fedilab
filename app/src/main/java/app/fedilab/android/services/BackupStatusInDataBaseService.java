@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -149,8 +150,28 @@ public class BackupStatusInDataBaseService extends IntentService {
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());
             if (finalToastMessage) {
+                int logo_icon = R.drawable.fedilab_logo_bubble;
+                switch (BaseMainActivity.mLauncher){
+                    case BUBBLES:
+                        logo_icon = R.drawable.fedilab_logo_bubble;
+                        break;
+                    case FEDIVERSE:
+                        logo_icon = R.drawable.fedilab_logo_fediverse;
+                        break;
+                    case HERO:
+                        logo_icon = R.drawable.fedilab_logo_hero;
+                        break;
+                    case ATOM:
+                        logo_icon = R.drawable.fedilab_logo_atom;
+                        break;
+                    case BRAINCRASH:
+                        logo_icon = R.drawable.fedilab_logo_braincrash;
+                        break;
+                    default:
+                        logo_icon = R.drawable.fedilab_logo_bubble;
+                }
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
-                        R.drawable.fedilab_logo), Helper.NotifType.BACKUP, title, message);
+                        logo_icon), Helper.NotifType.BACKUP, title, message);
             }
         } catch (Exception e) {
             e.printStackTrace();

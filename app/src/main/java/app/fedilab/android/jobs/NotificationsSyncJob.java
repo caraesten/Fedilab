@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -44,6 +45,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -290,8 +292,31 @@ public class NotificationsSyncJob extends Job {
 
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+
+                                        int logo_icon = R.drawable.fedilab_logo_bubble;
+                                        switch (BaseMainActivity.mLauncher){
+                                            case BUBBLES:
+                                                logo_icon = R.drawable.fedilab_logo_bubble;
+                                                break;
+                                            case FEDIVERSE:
+                                                logo_icon = R.drawable.fedilab_logo_fediverse;
+                                                break;
+                                            case HERO:
+                                                logo_icon = R.drawable.fedilab_logo_hero;
+                                                break;
+                                            case ATOM:
+                                                logo_icon = R.drawable.fedilab_logo_atom;
+                                                break;
+                                            case BRAINCRASH:
+                                                logo_icon = R.drawable.fedilab_logo_braincrash;
+                                                break;
+                                            default:
+                                                logo_icon = R.drawable.fedilab_logo_bubble;
+                                        }
+
+
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
-                                                R.drawable.fedilab_logo), finalNotifType, finalTitle, message);
+                                                logo_icon), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

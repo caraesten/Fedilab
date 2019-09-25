@@ -255,6 +255,28 @@ public class LoginActivity extends BaseActivity {
             step_instance = findViewById(R.id.step_instance);
             connectionButton = findViewById(R.id.login_button);
             info_instance = findViewById(R.id.info_instance);
+            ImageView main_logo = findViewById(R.id.main_logo);
+
+            switch (BaseMainActivity.mLauncher){
+                case BUBBLES:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_bubble);
+                    break;
+                case FEDIVERSE:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_fediverse);
+                    break;
+                case HERO:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_hero);
+                    break;
+                case ATOM:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_atom);
+                    break;
+                case BRAINCRASH:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_braincrash);
+                    break;
+                default:
+                    main_logo.setImageResource(R.drawable.fedilab_logo_bubble);
+            }
+
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
             //Manage instances
             info_instance.setOnClickListener(new View.OnClickListener() {
