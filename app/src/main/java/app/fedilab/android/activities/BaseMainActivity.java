@@ -934,7 +934,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         tabLayout.getTabAt(0).select();
         */
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -949,7 +949,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     return false;
                 }
             });
-        } else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+        } else {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -2608,23 +2608,15 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     public void manageFloatingButton(boolean display) {
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            if (display) {
-                tootShow();
-            } else {
-                toot.hide();
-            }
+        if (display) {
+            tootShow();
         } else {
             toot.hide();
         }
     }
 
     public void tootShow() {
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            toot.show();
-        } else {
-            toot.hide();
-        }
+        toot.show();
     }
 
 

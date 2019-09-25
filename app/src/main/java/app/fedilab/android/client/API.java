@@ -1190,11 +1190,6 @@ public class API {
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s", accountId)), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            if (account.getSocial().equals("PLEROMA") && accountId.equals(userId)) {
-                isPleromaAdmin(account.getAcct());
-            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
