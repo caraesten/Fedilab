@@ -1075,6 +1075,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                             bundle = new Bundle();
                             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                            bundle.putString("instanceType", "PIXELFED");
                             bundle.putString("targetedid", account.getId());
                             displayStatusFragment.setArguments(bundle);
                             return displayStatusFragment;
