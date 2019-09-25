@@ -57,7 +57,7 @@ import static app.fedilab.android.helper.Helper.initNetCipher;
  */
 
 @AcraNotification(
-        resIcon = R.mipmap.ic_launcher, resTitle = R.string.crash_title, resChannelName = R.string.set_crash_reports, resText = R.string.crash_message)
+        resIcon = R.mipmap.ic_launcher_bubbles, resTitle = R.string.crash_title, resChannelName = R.string.set_crash_reports, resText = R.string.crash_message)
 
 public class MainApplication extends MultiDexApplication {
 

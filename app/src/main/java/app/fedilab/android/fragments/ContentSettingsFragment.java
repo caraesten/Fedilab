@@ -1068,6 +1068,22 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
         final SwitchCompat set_share_details = rootView.findViewById(R.id.set_share_details);
         set_share_details.setChecked(share_details);
@@ -2418,7 +2434,82 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
+        ImageButton btn_select_icon = rootView.findViewById(R.id.btn_select_icon);
+        btn_select_icon.setOnClickListener(v -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+            View icon_selector = inflater.inflate(R.layout.dialog_icon_selector, null);
+            dialogBuilder.setView(icon_selector);
+            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dialogBuilder.setCancelable(true);
+            AlertDialog icon_selector_dialog = dialogBuilder.create();
+            icon_selector_dialog.show();
+
+            icon_selector.findViewById(R.id.icon_bubbles).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"Bubbles");
+                icon_selector_dialog.dismiss();
+            });
+
+            icon_selector.findViewById(R.id.icon_fediverse).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"Fediverse");
+                icon_selector_dialog.dismiss();
+            });
+
+            icon_selector.findViewById(R.id.icon_hero).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"Hero");
+                icon_selector_dialog.dismiss();
+            });
+
+            icon_selector.findViewById(R.id.icon_atom).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"Atom");
+                icon_selector_dialog.dismiss();
+            });
+
+            icon_selector.findViewById(R.id.icon_braincrash).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"BrainCrash");
+                icon_selector_dialog.dismiss();
+            });
+
+        });
+
         return rootView;
+    }
+
+    private void hideAllIcons(Context context) {
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Bubbles"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Fediverse"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Hero"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Atom"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.BrainCrash"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+    }
+
+    private void setIcon(Context context, String iconName) {
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity." + iconName),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
     }
 
     @Override

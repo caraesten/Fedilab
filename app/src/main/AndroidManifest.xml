@@ -44,11 +44,11 @@
         android:allowBackup="false"
         tools:replace="android:allowBackup"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_bubbles"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:hardwareAccelerated="true"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_bubbles_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark">
 
@@ -108,7 +108,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeDark_NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -152,6 +151,72 @@
                 <data android:pathPattern=".*\\.fedilab" />
             </intent-filter>
         </activity>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Bubbles"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher_bubbles"
+            android:roundIcon="@mipmap/ic_launcher_bubbles_round"
+            android:targetActivity=".activities.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Fediverse"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_fediverse"
+            android:roundIcon="@mipmap/ic_launcher_fediverse_round"
+            android:targetActivity=".activities.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Hero"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_hero"
+            android:roundIcon="@mipmap/ic_launcher_hero_round"
+            android:targetActivity=".activities.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Atom"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_atom"
+            android:roundIcon="@mipmap/ic_launcher_atom_round"
+            android:targetActivity=".activities.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.BrainCrash"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_crash"
+            android:roundIcon="@mipmap/ic_launcher_crash_round"
+            android:targetActivity=".activities.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name="app.fedilab.android.activities.MastodonRegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
