@@ -3585,7 +3585,7 @@ public class API {
         params.put("resolve", "true");
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/search"), 10, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUr2l("/search"), 10, params, prefKeyOauthTokenT);
             results = parseResultsResponse(new JSONObject(response));
             apiResponse.setResults(results);
         } catch (HttpsConnection.HttpsConnectionException e) {
