@@ -381,7 +381,7 @@
     <string name="action_search">Suche</string>
     <string name="set_capitalize">Ersten Buchstaben bei Antworten groß schreiben</string>
     <string name="set_resize_picture">Bildgröße verändern</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Videogröße ändern</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push Benachrichtigungen</string>
     <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest. Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.    </string>
@@ -1100,7 +1100,9 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="no_live_indication">Benachrichtigungen werden alle 15 Minuten abgerufen.</string>
     <string name="action_add_notes">Notizen hinzufügen</string>
     <string name="note_for_account">Notizen für das Konto</string>
-    <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
-    <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
-    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
+    <string name="set_resize_picture_indication">Erlauben es, große Fotos in kleinere Bilder mit sehr weniger oder vernachlässigbaren Verlust der Qualität des Bildes zu komprimieren.</string>
+    <string name="set_resize_video_indication">Erlaube das Komprimieren von Videos während die Qualität erhalten bleibt.</string>
+    <string name="please_wait_compression">Die App komprimiert die Medien, dies könnte länger dauern…</string>
+    <string name="change_app_icon_experimental">Change app icon</string>
+    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
 </resources>
