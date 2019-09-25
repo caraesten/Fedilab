@@ -125,6 +125,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
     private type type;
     private Context context;
+    private AsyncTask asyncTask;
 
     @Override
     public void onRetrieveRemoteAccount(Results results) {
@@ -142,7 +143,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     translatorManager.notifyDataSetChanged();
                     break;
             }
-            new RetrieveRelationshipAsyncTask(context, account.getId(), ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveRelationshipAsyncTask(context, account.getId(), ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -181,6 +182,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
     private static final int ACTIVITY_CHOOSE_SOUND = 412;
     int count6 = 0;
     int count7 = 0;
+    int count8 = 0;
+    int count9 = 0;
     private int style;
 
     public static ContentSettingsFragment newInstance(int resId) {
@@ -414,42 +417,55 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             new DownloadTrackingDomainsAsyncTask(getActivity().getApplicationContext(), update_tracking_domains).execute();
         });
 
-        //Manage download of attachments
-        RadioGroup radioGroup = rootView.findViewById(R.id.set_attachment_group);
+
+        Spinner set_attachment_group = rootView.findViewById(R.id.set_attachment_group);
+        String[] attachment_labels = {context.getString(R.string.set_attachment_always), context.getString(R.string.set_attachment_wifi), context.getString(R.string.set_attachment_ask)};
+        ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_dropdown_item,attachment_labels );
+        set_attachment_group.setAdapter(adapterAttachment);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         switch (attachmentAction) {
             case Helper.ATTACHMENT_ALWAYS:
-                radioGroup.check(R.id.set_attachment_always);
+                set_attachment_group.setSelection(0);
                 break;
             case Helper.ATTACHMENT_WIFI:
-                radioGroup.check(R.id.set_attachment_wifi);
+                set_attachment_group.setSelection(1);
                 break;
             case Helper.ATTACHMENT_ASK:
-                radioGroup.check(R.id.set_attachment_ask);
+                set_attachment_group.setSelection(2);
                 break;
         }
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+        set_attachment_group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.set_attachment_always:
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                        editor.apply();
-                        break;
-                    case R.id.set_attachment_wifi:
-                        editor = sharedpreferences.edit();
-                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_WIFI);
-                        editor.apply();
-                        break;
-                    case R.id.set_attachment_ask:
-                        editor = sharedpreferences.edit();
-                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ASK);
-                        editor.apply();
-                        break;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (count9 > 0) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        case 0:
+                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_WIFI);
+                            editor.apply();
+                            break;
+                        case 2:
+                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ASK);
+                            editor.apply();
+                            break;
+                    }
                 }
+                count9++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
+
 
 
         int videoMode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
@@ -1038,55 +1054,56 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
+
+        Spinner set_mode = rootView.findViewById(R.id.set_mode);
+        String[] mode_labels = {context.getString(R.string.set_normal), context.getString(R.string.set_compact), context.getString(R.string.set_console)};
+        ArrayAdapter<String> adapterMode = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_dropdown_item,mode_labels );
+        set_mode.setAdapter(adapterMode);
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
-        RadioGroup set_mode = rootView.findViewById(R.id.set_mode);
+
         if (compact_mode) {
-            set_mode.check(R.id.set_compact_mode);
+            set_mode.setSelection(1);
         } else if (console_mode) {
-            set_mode.check(R.id.set_console_mode);
+            set_mode.setSelection(2);
         } else {
-            set_mode.check(R.id.set_normal_mode);
+            set_mode.setSelection(0);
         }
-        set_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+        set_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.set_compact_mode:
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putBoolean(Helper.SET_COMPACT_MODE, true);
-                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
-                        editor.apply();
-                        break;
-                    case R.id.set_console_mode:
-                        editor = sharedpreferences.edit();
-                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
-                        editor.putBoolean(Helper.SET_CONSOLE_MODE, true);
-                        editor.apply();
-                        break;
-                    case R.id.set_normal_mode:
-                        editor = sharedpreferences.edit();
-                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
-                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
-                        editor.apply();
-                        break;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (count8 > 0) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        case 0:
+                            editor = sharedpreferences.edit();
+                            editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                            editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putBoolean(Helper.SET_COMPACT_MODE, true);
+                            editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                            editor.apply();
+                            break;
+                        case 2:
+                            editor = sharedpreferences.edit();
+                            editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                            editor.putBoolean(Helper.SET_CONSOLE_MODE, true);
+                            editor.apply();
+                            break;
+                    }
                 }
+                count8++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2318,7 +2335,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         lv_translator_manager.setAdapter(translatorManager);
 
         if( type == LANGUAGE) {
-            new RetrieveRemoteDataAsyncTask(context, "ButterflyOfFire", "mstdn.fr", ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveRemoteDataAsyncTask(context, "ButterflyOfFire", "mstdn.fr", ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
@@ -2548,7 +2565,13 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         this.context = context;
     }
 
-
+    public void onDestroy() {
+        super.onDestroy();
+        if( type == LANGUAGE) {
+            if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
+                asyncTask.cancel(true);
+        }
+    }
 
     //From: https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -2636,6 +2659,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         }
         return null;
     }
+
+
 
     /**
      * @param uri The Uri to check.

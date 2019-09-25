@@ -1409,37 +1409,24 @@
                     android:visibility="gone">
 
                     <!-- COMPACT MODE  -->
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_mode"
-                        android:textSize="16sp" />
-
-                    <RadioGroup
-                        android:id="@+id/set_mode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/set_normal_mode"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_normal" />
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/set_mode"
+                            android:textSize="16sp" />
 
-                        <RadioButton
-                            android:id="@+id/set_compact_mode"
+                        <Spinner
+                            android:id="@+id/set_mode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_compact" />
-
-                        <RadioButton
-                            android:id="@+id/set_console_mode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_console" />
-                    </RadioGroup>
+                            android:entries="@array/led_colours" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1729,38 +1716,25 @@
                     </LinearLayout>
 
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:text="@string/set_attachment_action"
-                        android:textSize="16sp" />
-
-                    <RadioGroup
-                        android:id="@+id/set_attachment_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/set_attachment_always"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_attachment_always" />
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/set_attachment_action"
+                            android:textSize="16sp" />
 
-                        <RadioButton
-                            android:id="@+id/set_attachment_wifi"
+                        <Spinner
+                            android:id="@+id/set_attachment_group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_attachment_wifi" />
+                            android:entries="@array/led_colours" />
+                    </LinearLayout>
 
-                        <RadioButton
-                            android:id="@+id/set_attachment_ask"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_attachment_ask" />
-                    </RadioGroup>
 
                     <LinearLayout
                         android:layout_width="match_parent"

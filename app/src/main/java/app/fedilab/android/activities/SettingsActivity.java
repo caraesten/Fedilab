@@ -35,8 +35,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 import app.fedilab.android.R;
 import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.helper.Helper;
@@ -145,8 +143,6 @@ public class SettingsActivity extends BaseActivity  {
     }
 
 
-
-
     private class SettingsPagerAdapter extends FragmentStatePagerAdapter {
 
         SettingsPagerAdapter(FragmentManager fm) {
@@ -197,9 +193,6 @@ public class SettingsActivity extends BaseActivity  {
         }
     }
 
-    public void setActionBarTitle(String title) {
-        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-    }
 
     @Override
     public void onDestroy() {
