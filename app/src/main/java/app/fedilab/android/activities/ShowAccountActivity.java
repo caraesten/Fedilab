@@ -352,6 +352,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         retrieveRelationship = new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+        if (account.getId() != null && account.getId().equals(userId) && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED)) {
+            account_follow.setVisibility(View.GONE);
+            header_edit_profile.setVisibility(View.VISIBLE);
+            header_edit_profile.bringToFront();
+        }
+
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
@@ -1018,11 +1024,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
         }
-        if (account.getId() != null && account.getId().equals(userId) && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
-            account_follow.setVisibility(View.GONE);
-            header_edit_profile.setVisibility(View.VISIBLE);
-            header_edit_profile.bringToFront();
-        } else if (relationship.isBlocking()) {
+        if (relationship.isBlocking()) {
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);

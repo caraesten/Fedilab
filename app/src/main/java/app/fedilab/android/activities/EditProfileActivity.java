@@ -89,6 +89,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
 
     private EditText set_profile_name, set_profile_description;
+    private LinearLayout custom_fields_container;
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
     private TextView set_header_picture_overlay;
@@ -159,8 +160,9 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
 
 
-        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
+        custom_fields_container = findViewById(R.id.custom_fields_container);
         set_profile_name = findViewById(R.id.set_profile_name);
         set_profile_description = findViewById(R.id.set_profile_description);
         set_profile_picture = findViewById(R.id.set_profile_picture);
@@ -180,6 +182,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         } else {
             set_lock_account.setVisibility(View.GONE);
             set_sensitive_content.setVisibility(View.GONE);
+        }
+
+        if(account.getSocial().toUpperCase().equals("MASTODON")){
+            custom_fields_container.setVisibility(View.VISIBLE);
         }
 
         set_profile_save.setEnabled(false);
