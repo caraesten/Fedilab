@@ -1312,7 +1312,7 @@ public class Helper {
                                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                 Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                                 notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                                        R.mipmap.ic_launcher), NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                        R.mipmap.ic_launcher_bubbles), NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                                 Toasty.success(context, context.getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
                                 return false;
                             }
@@ -4393,7 +4393,7 @@ public class Helper {
                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                     Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                            R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            R.mipmap.ic_launcher_bubbles), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                 }
             }
 
@@ -4598,7 +4598,7 @@ public class Helper {
                                     String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
                                     Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                                     Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                                            R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
+                                            R.mipmap.ic_launcher_bubbles), Helper.NotifType.STORE, context.getString(R.string.muted_instance_exported), context.getString(R.string.download_from, backupDBPath));
                                 }
                             }.start();
                         }
