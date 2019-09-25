@@ -381,7 +381,7 @@
     <string name="action_search">Ara</string>
     <string name="set_capitalize">Cevaplarda ilk harf büyük olsun</string>
     <string name="set_resize_picture">Resimleri yeniden boyutlandır</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Videoları yeniden boyutlandır</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Anlık Bildirimler</string>
     <string name="settings_popup_message">Lütfen, almak istediğiniz bildirimleri onaylayın.
@@ -404,7 +404,7 @@
     <string name="action_sync">Eşitle</string>
     <string name="action_filter">Filtrele</string>
     <string name="owner_cached_toots">Senin toot\'ların</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Bildirimlerin</string>
     <string name="v_public">Herkese Açık</string>
     <string name="v_unlisted">Listelenmiyor</string>
     <string name="v_private">Özel</string>
