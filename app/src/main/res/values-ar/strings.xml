@@ -1135,6 +1135,6 @@
     <string name="set_resize_picture_indication">يسمح بضغط الصور الكبيرة إلى حجم أصغر مع الحفاظ على جودتها.</string>
     <string name="set_resize_video_indication">يسمح بضغط الفيديوهات مع الحفاظ على جودتها.</string>
     <string name="please_wait_compression">إنّ التطبيق يقوم بضغط الوسائط حاليا ، قد تأخذ العملية شيئا مِن الوقت…</string>
-    <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="change_app_icon_experimental">تغيير أيقونة التطبيق</string>
+    <string name="click_to_change_the_app_icon">اضغط لتغيير أيقونة التطبيق</string>
 </resources>
