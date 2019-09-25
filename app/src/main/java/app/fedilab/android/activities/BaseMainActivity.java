@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDatabase;
@@ -196,6 +197,14 @@ public abstract class BaseMainActivity extends BaseActivity
     public static String regex_home, regex_local, regex_public;
     public static boolean show_boosts, show_replies, show_art_nsfw;
 
+    enum iconLauncher{
+        BUBBLES,
+        FEDIVERSE,
+        HERO,
+        ATOM,
+        BRAINCRASH
+    }
+    public static iconLauncher mLauncher = iconLauncher.BUBBLES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +217,42 @@ public abstract class BaseMainActivity extends BaseActivity
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+        Intent intent = getIntent();
+        PackageManager pm = getPackageManager();
+        try {
+            if (intent != null && intent.getComponent() != null) {
+                ActivityInfo ai = pm.getActivityInfo(intent.getComponent(), PackageManager.GET_META_DATA);
+                String icon;
+                Bundle b = ai.metaData;
+                if (b != null) {
+                    icon = b.getString("icon");
+                    if (icon != null) {
+                        switch (icon) {
+                            case "bubbles":
+                                mLauncher = iconLauncher.BUBBLES;
+                                break;
+                            case "fediverse":
+                                mLauncher = iconLauncher.FEDIVERSE;
+                                break;
+                            case "hero":
+                                mLauncher = iconLauncher.HERO;
+                                break;
+                            case "atom":
+                                mLauncher = iconLauncher.ATOM;
+                                break;
+                            case "braincrash":
+                                mLauncher = iconLauncher.BRAINCRASH;
+                                break;
+                            default:
+                                mLauncher = iconLauncher.BUBBLES;
+                        }
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         if (account == null) {
             Helper.logout(getApplicationContext());
             Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);

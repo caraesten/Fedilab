@@ -158,7 +158,7 @@
             android:icon="@mipmap/ic_launcher_bubbles"
             android:roundIcon="@mipmap/ic_launcher_bubbles_round"
             android:targetActivity=".activities.MainActivity">
-
+            <meta-data android:name="icon" android:value="bubbles" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -171,7 +171,7 @@
             android:icon="@mipmap/ic_launcher_fediverse"
             android:roundIcon="@mipmap/ic_launcher_fediverse_round"
             android:targetActivity=".activities.MainActivity">
-
+            <meta-data android:name="icon" android:value="fediverse" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -184,7 +184,7 @@
             android:icon="@mipmap/ic_launcher_hero"
             android:roundIcon="@mipmap/ic_launcher_hero_round"
             android:targetActivity=".activities.MainActivity">
-
+            <meta-data android:name="icon" android:value="hero" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -197,7 +197,7 @@
             android:icon="@mipmap/ic_launcher_atom"
             android:roundIcon="@mipmap/ic_launcher_atom_round"
             android:targetActivity=".activities.MainActivity">
-
+            <meta-data android:name="icon" android:value="atom" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -210,7 +210,7 @@
             android:icon="@mipmap/ic_launcher_crash"
             android:roundIcon="@mipmap/ic_launcher_crash_round"
             android:targetActivity=".activities.MainActivity">
-
+            <meta-data android:name="icon" android:value="braincrash" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

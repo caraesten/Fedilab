@@ -1177,9 +1177,29 @@ public class Helper {
                 channelId = "channel_boost";
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.fedilab_notification_icon)
-                .setTicker(message)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId);
+
+        switch (BaseMainActivity.mLauncher){
+            case BUBBLES:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+                break;
+            case FEDIVERSE:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
+                break;
+            case HERO:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
+                break;
+            case ATOM:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
+                break;
+            case BRAINCRASH:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
+                break;
+            default:
+                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+        }
+
+        notificationBuilder.setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
         if (notifType == MENTION) {

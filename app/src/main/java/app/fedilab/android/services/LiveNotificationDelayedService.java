@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Objects;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -139,10 +140,28 @@ public class LiveNotificationDelayedService extends Service {
                     }
                 }
             }
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(R.drawable.fedilab_notification_icon)
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID).
+                    setContentTitle(getString(R.string.top_notification));
+            switch (BaseMainActivity.mLauncher){
+                case BUBBLES:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+                    break;
+                case FEDIVERSE:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
+                    break;
+                case HERO:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
+                    break;
+                case ATOM:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
+                    break;
+                case BRAINCRASH:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
+                    break;
+                default:
+                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+            }
+            android.app.Notification notification = notificationBuilder.setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notification);
         }
@@ -221,10 +240,28 @@ public class LiveNotificationDelayedService extends Service {
                         "Live notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-                android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setSmallIcon(R.drawable.fedilab_notification_icon)
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setContentTitle(getString(R.string.top_notification));
+                switch (BaseMainActivity.mLauncher){
+                    case BUBBLES:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+                        break;
+                    case FEDIVERSE:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
+                        break;
+                    case HERO:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
+                        break;
+                    case ATOM:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
+                        break;
+                    case BRAINCRASH:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
+                        break;
+                    default:
+                        notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
+                }
+                android.app.Notification notificationChannel = notificationBuilder.setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
                 startForeground(1, notificationChannel);
             }
