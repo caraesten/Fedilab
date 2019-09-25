@@ -62,6 +62,7 @@ import static app.fedilab.android.helper.Helper.NOTIFICATION_INTENT;
 import static app.fedilab.android.helper.Helper.PREF_INSTANCE;
 import static app.fedilab.android.helper.Helper.PREF_KEY_ID;
 import static app.fedilab.android.helper.Helper.canNotify;
+import static app.fedilab.android.helper.Helper.getMainLogo;
 import static app.fedilab.android.helper.Helper.notify_user;
 
 
@@ -293,30 +294,8 @@ public class NotificationsSyncJob extends Job {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
 
-                                        int logo_icon = R.drawable.fedilab_logo_bubble;
-                                        switch (BaseMainActivity.mLauncher){
-                                            case BUBBLES:
-                                                logo_icon = R.drawable.fedilab_logo_bubble;
-                                                break;
-                                            case FEDIVERSE:
-                                                logo_icon = R.drawable.fedilab_logo_fediverse;
-                                                break;
-                                            case HERO:
-                                                logo_icon = R.drawable.fedilab_logo_hero;
-                                                break;
-                                            case ATOM:
-                                                logo_icon = R.drawable.fedilab_logo_atom;
-                                                break;
-                                            case BRAINCRASH:
-                                                logo_icon = R.drawable.fedilab_logo_braincrash;
-                                                break;
-                                            default:
-                                                logo_icon = R.drawable.fedilab_logo_bubble;
-                                        }
-
-
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
-                                                logo_icon), finalNotifType, finalTitle, message);
+                                                getMainLogo(getContext())), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

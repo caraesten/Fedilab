@@ -82,6 +82,8 @@ import app.fedilab.android.activities.MainActivity;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
+import static app.fedilab.android.helper.Helper.getMainLogo;
+import static app.fedilab.android.helper.Helper.getNotificationIcon;
 
 
 /**
@@ -157,30 +159,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 }
             }
 
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle(getString(R.string.top_notification));
-
-            switch (BaseMainActivity.mLauncher){
-                case BUBBLES:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-                    break;
-                case FEDIVERSE:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
-                    break;
-                case HERO:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
-                    break;
-                case ATOM:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
-                    break;
-                case BRAINCRASH:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
-                    break;
-                default:
-                    notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-            }
-
-            android.app.Notification notification = notificationBuilder.setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notification);
         }
@@ -320,28 +302,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                 "Live notifications",
                                 NotificationManager.IMPORTANCE_DEFAULT);
                         ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                                .setContentTitle(getString(R.string.top_notification));
-                        switch (BaseMainActivity.mLauncher){
-                            case BUBBLES:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-                                break;
-                            case FEDIVERSE:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
-                                break;
-                            case HERO:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
-                                break;
-                            case ATOM:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
-                                break;
-                            case BRAINCRASH:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
-                                break;
-                            default:
-                                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-                        }
-                        android.app.Notification notificationChannel = notificationBuilder.setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+                        android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
+                                .setContentTitle(getString(R.string.top_notification))
+                                .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
                         startForeground(1, notificationChannel);
                     }
@@ -476,28 +440,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                        int logo_icon = R.drawable.fedilab_logo_bubble;
-                                                        switch (BaseMainActivity.mLauncher){
-                                                            case BUBBLES:
-                                                                logo_icon = R.drawable.fedilab_logo_bubble;
-                                                                break;
-                                                            case FEDIVERSE:
-                                                                logo_icon = R.drawable.fedilab_logo_fediverse;
-                                                                break;
-                                                            case HERO:
-                                                                logo_icon = R.drawable.fedilab_logo_hero;
-                                                                break;
-                                                            case ATOM:
-                                                                logo_icon = R.drawable.fedilab_logo_atom;
-                                                                break;
-                                                            case BRAINCRASH:
-                                                                logo_icon = R.drawable.fedilab_logo_braincrash;
-                                                                break;
-                                                            default:
-                                                                logo_icon = R.drawable.fedilab_logo_bubble;
-                                                        }
                                                         Helper.notify_user(getApplicationContext(), account, intent, BitmapFactory.decodeResource(getResources(),
-                                                                logo_icon), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                                                getMainLogo(getApplicationContext())), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
                                                         return false;
                                                     }
                                                 })

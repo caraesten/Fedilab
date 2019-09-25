@@ -210,6 +210,7 @@ import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
+import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.sqlite.MainMenuDAO;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
@@ -355,6 +356,7 @@ public class Helper {
     public static final String SET_DISABLE_ANIMATED_EMOJI = "set_disable_animated_emoji";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_WYSIWYG = "set_wysiwyg";
+    public static final String LOGO_LAUNCHER = "logo_launcher";
     public static final String SET_PICTURE_COMPRESSED = "set_picture_compressed";
     public static final String SET_VIDEO_COMPRESSED = "set_picture_compressed";
     public static final String SET_FORWARD_TAGS_IN_REPLY = "set_forward_tags_in_reply";
@@ -1177,29 +1179,8 @@ public class Helper {
                 channelId = "channel_boost";
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId);
-
-        switch (BaseMainActivity.mLauncher){
-            case BUBBLES:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-                break;
-            case FEDIVERSE:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_fediverse);
-                break;
-            case HERO:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_hero);
-                break;
-            case ATOM:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_atom);
-                break;
-            case BRAINCRASH:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_crash);
-                break;
-            default:
-                notificationBuilder.setSmallIcon(R.drawable.ic_plain_bubbles);
-        }
-
-        notificationBuilder.setTicker(message)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(getNotificationIcon(context)).setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
         if (notifType == MENTION) {
@@ -1742,9 +1723,47 @@ public class Helper {
             changeAccount.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
         activity.finish();
         activity.startActivity(changeAccount);
-
-
     }
+
+
+    public static int getNotificationIcon(Context context){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String logo = sharedpreferences.getString(Helper.LOGO_LAUNCHER, "bubbles");
+        switch (logo) {
+            case "bubbles":
+                 return R.drawable.ic_plain_bubbles;
+            case "fediverse":
+                return R.drawable.ic_plain_fediverse;
+            case "hero":
+                return R.drawable.ic_plain_hero;
+            case "atom":
+                return R.drawable.ic_plain_atom;
+            case "braincrash":
+                return R.drawable.ic_plain_crash;
+            default:
+                return R.drawable.ic_plain_bubbles;
+        }
+    }
+
+    public static int getMainLogo(Context context){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String logo = sharedpreferences.getString(Helper.LOGO_LAUNCHER, "bubbles");
+        switch (logo) {
+            case "bubbles":
+                return R.drawable.fedilab_logo_bubbles;
+            case "fediverse":
+                return R.drawable.fedilab_logo_fediverse;
+            case "hero":
+                return R.drawable.fedilab_logo_hero;
+            case "atom":
+                return R.drawable.fedilab_logo_atom;
+            case "braincrash":
+                return R.drawable.fedilab_logo_crash;
+            default:
+                return R.drawable.fedilab_logo_bubbles;
+        }
+    }
+
 
 
     @SuppressWarnings("SameParameterValue")

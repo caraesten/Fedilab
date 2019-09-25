@@ -189,28 +189,8 @@ public class BackupStatusService extends IntentService {
             Uri uri = Uri.parse("file://" + fullPath);
             intentOpen.setDataAndType(uri, "text/csv");
             String title = getString(R.string.data_export_toots, account.getAcct());
-            int logo_icon = R.drawable.fedilab_logo_bubble;
-            switch (BaseMainActivity.mLauncher){
-                case BUBBLES:
-                    logo_icon = R.drawable.fedilab_logo_bubble;
-                    break;
-                case FEDIVERSE:
-                    logo_icon = R.drawable.fedilab_logo_fediverse;
-                    break;
-                case HERO:
-                    logo_icon = R.drawable.fedilab_logo_hero;
-                    break;
-                case ATOM:
-                    logo_icon = R.drawable.fedilab_logo_atom;
-                    break;
-                case BRAINCRASH:
-                    logo_icon = R.drawable.fedilab_logo_braincrash;
-                    break;
-                default:
-                    logo_icon = R.drawable.fedilab_logo_bubble;
-            }
             Helper.notify_user(getApplicationContext(), account, intentOpen, BitmapFactory.decodeResource(getResources(),
-                    logo_icon), Helper.NotifType.BACKUP, title, message);
+                    Helper.getMainLogo(getApplicationContext())), Helper.NotifType.BACKUP, title, message);
         } catch (Exception e) {
             e.printStackTrace();
             message = getString(R.string.data_export_error, account.getAcct());

@@ -246,6 +246,9 @@ public abstract class BaseMainActivity extends BaseActivity
                             default:
                                 mLauncher = iconLauncher.BUBBLES;
                         }
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LOGO_LAUNCHER, icon);
+                        editor.commit();
                     }
                 }
             }
