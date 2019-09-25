@@ -325,10 +325,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (lastNotification.containsKey(key) && notification.getId().compareTo(Objects.requireNonNull(lastNotification.get(key))) <= 0) {
                         canNotify = false;
                     }
+                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                    if (notification.getId().compareTo(Objects.requireNonNull(lastNotif)) <= 0) {
+                        canNotify = false;
+                    }
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
                     if (!allowStream) {
                         canNotify = false;
                     }
+
+
                     if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
                         lastNotification.put(key, notification.getId());
                         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
