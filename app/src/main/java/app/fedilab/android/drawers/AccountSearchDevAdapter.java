@@ -112,7 +112,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }
 
 
-        if (!account.getSocial().contains("OPENCOLLECTIVE")) {
+        if (account.getSocial() == null || !account.getSocial().contains("OPENCOLLECTIVE")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
                 holder.account_un.setText(String.format("@%s", account.getAcct()));
@@ -137,14 +137,14 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             Glide.with(holder.account_pp.getContext())
                     .load(account.getAvatar())
                     .into(holder.account_pp);
-        } else if (account.getSocial().contains("OPENCOLLECTIVE")) {
+        } else if (account.getSocial() != null && account.getSocial().contains("OPENCOLLECTIVE")) {
             Glide.with(holder.account_pp.getContext())
                     .load(R.drawable.missing)
                     .into(holder.account_pp);
         }
 
 
-        if (!account.getSocial().contains("OPENCOLLECTIVE")) {
+        if (account.getSocial() == null || !account.getSocial().contains("OPENCOLLECTIVE")) {
 
             holder.account_follow.setOnClickListener(new View.OnClickListener() {
                 @Override
