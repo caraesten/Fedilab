@@ -1113,6 +1113,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_resize_picture_indication">Permet de comprimer de grandes photos en photos plus petites avec une perte de qualité d\'image très petite ou négligeable.</string>
     <string name="set_resize_video_indication">Permet de compresser les vidéos tout en préservant leur qualité.</string>
     <string name="please_wait_compression">L\'application est en train de compresser le média, cela peut être assez long…</string>
-    <string name="change_app_icon_experimental">Modifier l\'icône de l\'application</string>
-    <string name="click_to_change_the_app_icon">Cliquez pour modifier l\'icône de l\'application</string>
+    <string name="change_app_icon_experimental">Changer l’icône de l’application</string>
+    <string name="click_to_change_the_app_icon">Cliquez pour changer l’icône de l’application</string>
 </resources>
