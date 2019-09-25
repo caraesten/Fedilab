@@ -1192,6 +1192,7 @@ public class API {
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -3437,7 +3438,8 @@ public class API {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
         StringBuilder parameters = new StringBuilder();
-        if (type == DisplayNotificationsFragment.Type.ALL) {
+        //TODO: If pixelfed supports exclude_types this condition needs to be changed
+        if (type == DisplayNotificationsFragment.Type.ALL && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             if (display) {
                 notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
                 notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);

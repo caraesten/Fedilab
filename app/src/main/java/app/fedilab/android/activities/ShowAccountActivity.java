@@ -1064,10 +1064,19 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             switch (position) {
                 case 0:
                     if (!peertubeAccount) {
-                        TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                        bundle.putString("targetedid", account.getId());
-                        tabLayoutTootsFragment.setArguments(bundle);
-                        return tabLayoutTootsFragment;
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                            TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
+                            bundle.putString("targetedid", account.getId());
+                            tabLayoutTootsFragment.setArguments(bundle);
+                            return tabLayoutTootsFragment;
+                        }else{
+                            DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                            bundle = new Bundle();
+                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                            bundle.putString("targetedid", account.getId());
+                            displayStatusFragment.setArguments(bundle);
+                            return displayStatusFragment;
+                        }
                     } else {
                         DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                         bundle = new Bundle();
