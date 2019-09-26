@@ -1117,5 +1117,5 @@
     <string name="set_resize_video_indication">Tillad komprimering af videoer med bevarelse af deres kvalitet.</string>
     <string name="please_wait_compression">Appen komprimere medier, det kan være ganske længe…</string>
     <string name="change_app_icon_experimental">Skift app-ikon</string>
-    <string name="click_to_change_the_app_icon">Tryk hér for at sikfteapp-ikonet</string>
+    <string name="click_to_change_the_app_icon">Tryk hér for at sikfte app-ikonet</string>
 </resources>
