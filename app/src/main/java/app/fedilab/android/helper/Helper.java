@@ -1144,39 +1144,39 @@ public class Helper {
 
         switch (notifType) {
             case BOOST:
-                channelId = "channel_boost" + account.getAcct() + "@" + account.getInstance();
+                channelId = "channel_boost_new" + account.getAcct() + "@" + account.getInstance();
                 channelTitle = context.getString(R.string.channel_notif_boost);
                 break;
             case FAV:
-                channelId = "channel_fav";
+                channelId = "channel_fav_new";
                 channelTitle = context.getString(R.string.channel_notif_fav);
                 break;
             case FOLLLOW:
-                channelId = "channel_follow";
+                channelId = "channel_follow_new";
                 channelTitle = context.getString(R.string.channel_notif_follow);
                 break;
             case MENTION:
-                channelId = "channel_mention";
+                channelId = "channel_mention_new";
                 channelTitle = context.getString(R.string.channel_notif_mention);
                 break;
             case POLL:
-                channelId = "channel_poll";
+                channelId = "channel_poll_new";
                 channelTitle = context.getString(R.string.channel_notif_poll);
                 break;
             case BACKUP:
-                channelId = "channel_backup";
+                channelId = "channel_backup_new";
                 channelTitle = context.getString(R.string.channel_notif_backup);
                 break;
             case STORE:
-                channelId = "channel_store";
+                channelId = "channel_store_new";
                 channelTitle = context.getString(R.string.channel_notif_media);
                 break;
             case TOOT:
-                channelId = "channel_toot";
+                channelId = "channel_toot_new";
                 channelTitle = context.getString(R.string.channel_notif_toot);
                 break;
             default:
-                channelId = "channel_boost";
+                channelId = "channel_boost_new";
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)

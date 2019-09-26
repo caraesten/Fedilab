@@ -161,7 +161,7 @@ public class LiveNotificationDelayedService extends Service {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
                     NotificationManager.IMPORTANCE_DEFAULT);
-
+            channel.setShowBadge(false);
             ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
@@ -227,6 +227,7 @@ public class LiveNotificationDelayedService extends Service {
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                         "Live notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setShowBadge(false);
                 ((NotificationManager) Objects.requireNonNull(contextWeakReference.get().getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
                 android.app.Notification notificationChannel = new NotificationCompat.Builder(contextWeakReference.get(), CHANNEL_ID)
                         .setContentTitle(contextWeakReference.get().getString(R.string.top_notification))
