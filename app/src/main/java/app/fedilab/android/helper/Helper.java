@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.FragmentManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -1144,39 +1145,39 @@ public class Helper {
 
         switch (notifType) {
             case BOOST:
-                channelId = "channel_boost_new" + account.getAcct() + "@" + account.getInstance();
+                channelId = "channel_boost" + account.getAcct() + "@" + account.getInstance();
                 channelTitle = context.getString(R.string.channel_notif_boost);
                 break;
             case FAV:
-                channelId = "channel_fav_new";
+                channelId = "channel_fav";
                 channelTitle = context.getString(R.string.channel_notif_fav);
                 break;
             case FOLLLOW:
-                channelId = "channel_follow_new";
+                channelId = "channel_follow";
                 channelTitle = context.getString(R.string.channel_notif_follow);
                 break;
             case MENTION:
-                channelId = "channel_mention_new";
+                channelId = "channel_mention";
                 channelTitle = context.getString(R.string.channel_notif_mention);
                 break;
             case POLL:
-                channelId = "channel_poll_new";
+                channelId = "channel_poll";
                 channelTitle = context.getString(R.string.channel_notif_poll);
                 break;
             case BACKUP:
-                channelId = "channel_backup_new";
+                channelId = "channel_backup";
                 channelTitle = context.getString(R.string.channel_notif_backup);
                 break;
             case STORE:
-                channelId = "channel_store_new";
+                channelId = "channel_store";
                 channelTitle = context.getString(R.string.channel_notif_media);
                 break;
             case TOOT:
-                channelId = "channel_toot_new";
+                channelId = "channel_toot";
                 channelTitle = context.getString(R.string.channel_notif_toot);
                 break;
             default:
-                channelId = "channel_boost_new";
+                channelId = "channel_boost";
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
@@ -1250,6 +1251,16 @@ public class Helper {
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
+
+        Notification summaryNotification =
+                new NotificationCompat.Builder(context, channelId)
+                        .setContentTitle(account.getAcct()+"@"+account.getInstance())
+                        .setContentText(channelTitle)
+                        .setSmallIcon(getNotificationIcon(context))
+                        .setGroup(account.getAcct() + "@" + account.getInstance())
+                        .setGroupSummary(true)
+                        .build();
+        notificationManager.notify(0, summaryNotification);
     }
 
 

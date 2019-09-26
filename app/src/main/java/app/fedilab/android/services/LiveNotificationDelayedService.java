@@ -53,6 +53,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -87,9 +89,11 @@ public class LiveNotificationDelayedService extends Service {
     public static int eventsCount = 0;
     public static HashMap<String, String> since_ids = new HashMap<>();
     private boolean fetch;
+    private LiveNotificationDelayedService liveNotificationDelayedService;
 
     public void onCreate() {
         super.onCreate();
+        liveNotificationDelayedService = this;
     }
 
     private void startStream() {
@@ -99,20 +103,25 @@ public class LiveNotificationDelayedService extends Service {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
             if (accountStreams != null) {
                 fetch = true;
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        for (final Account accountStream : accountStreams) {
-                            if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
-                                new Fetch(new WeakReference<>(getApplicationContext()), accountStream).execute();
-                            }
-                        }
-                        fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                        if (!fetch) {
-                            handler.removeMessages(0);
-                        }
-                    }
-                }, 30000);
+                Timer t = new Timer();
+                t.scheduleAtFixedRate(new TimerTask() {
+
+                      @Override
+                      public void run() {
+                          for (final Account accountStream : accountStreams) {
+                              if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
+                                  new Fetch(new WeakReference<>(liveNotificationDelayedService), accountStream).execute();
+                              }
+                          }
+                          fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                          if( !fetch){
+                              t.cancel();
+                          }
+                      }
+
+                    },
+                    0,
+                    30000);
             }
         }
     }
@@ -122,9 +131,9 @@ public class LiveNotificationDelayedService extends Service {
 
         private Account accountFetch;
         private  String key, last_notifid;
-        private WeakReference<Context> contextWeakReference;
+        private WeakReference<LiveNotificationDelayedService> contextWeakReference;
 
-        Fetch(WeakReference<Context> contextWeakReference, Account account){
+        Fetch(WeakReference<LiveNotificationDelayedService> contextWeakReference, Account account){
             this.accountFetch = account;
             this.contextWeakReference =contextWeakReference;
             key = account.getAcct() + "@" + account.getInstance();
@@ -136,11 +145,13 @@ public class LiveNotificationDelayedService extends Service {
 
         @Override
         protected APIResponse doInBackground(Void... params) {
+
             return new API(this.contextWeakReference.get(), accountFetch.getInstance(), accountFetch.getToken()).getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
         }
 
         @Override
         protected void onPostExecute(APIResponse apiResponse) {
+
             if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
                 since_ids.put(key, apiResponse.getNotifications().get(0).getId());
                 for (Notification notification : apiResponse.getNotifications()) {
@@ -161,7 +172,7 @@ public class LiveNotificationDelayedService extends Service {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
                     NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setShowBadge(false);
+
             ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
@@ -214,7 +225,7 @@ public class LiveNotificationDelayedService extends Service {
     }
 
 
-    private static void onRetrieveStreaming(WeakReference<Context> contextWeakReference, Account account, Notification notification) {
+    private static void onRetrieveStreaming(WeakReference<LiveNotificationDelayedService> contextWeakReference, Account account, Notification notification) {
 
         Bundle b = new Bundle();
         boolean canSendBroadCast = true;
@@ -227,7 +238,6 @@ public class LiveNotificationDelayedService extends Service {
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                         "Live notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
-                channel.setShowBadge(false);
                 ((NotificationManager) Objects.requireNonNull(contextWeakReference.get().getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
                 android.app.Notification notificationChannel = new NotificationCompat.Builder(contextWeakReference.get(), CHANNEL_ID)
                         .setContentTitle(contextWeakReference.get().getString(R.string.top_notification))
@@ -336,39 +346,32 @@ public class LiveNotificationDelayedService extends Service {
                         intent.putExtra(Helper.INTENT_TARGETED_ACCOUNT, targeted_account);
                     }
                     final String finalMessage = message;
-                    Handler mainHandler = new Handler(Looper.getMainLooper());
                     Helper.NotifType finalNotifType = notifType;
-                    Runnable myRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            if (finalMessage != null) {
-                                Glide.with(contextWeakReference.get())
-                                        .asBitmap()
-                                        .load(notification.getAccount().getAvatar())
-                                        .listener(new RequestListener<Bitmap>() {
-                                            @Override
-                                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                                return false;
-                                            }
+                    if (finalMessage != null) {
+                        Glide.with(contextWeakReference.get())
+                                .asBitmap()
+                                .load(notification.getAccount().getAvatar())
+                                .listener(new RequestListener<Bitmap>() {
+                                    @Override
+                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
 
-                                            @Override
-                                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                Helper.notify_user(contextWeakReference.get(), account, intent, BitmapFactory.decodeResource(contextWeakReference.get().getResources(),
-                                                        getMainLogo(contextWeakReference.get())), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
-                                                return false;
-                                            }
-                                        })
-                                        .into(new SimpleTarget<Bitmap>() {
-                                            @Override
-                                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                        Helper.notify_user(contextWeakReference.get(), account, intent, BitmapFactory.decodeResource(contextWeakReference.get().getResources(),
+                                                getMainLogo(contextWeakReference.get())), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                        return false;
+                                    }
+                                })
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
 
-                                                Helper.notify_user(contextWeakReference.get(), account, intent, resource, finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
-                                            }
-                                        });
-                            }
-                        }
-                    };
-                    mainHandler.post(myRunnable);
+                                        Helper.notify_user(contextWeakReference.get(), account, intent, resource, finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                    }
+                                });
+                    }
                 }
             }
 
@@ -384,6 +387,7 @@ public class LiveNotificationDelayedService extends Service {
                 editor.apply();
             }
         } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
     }
 

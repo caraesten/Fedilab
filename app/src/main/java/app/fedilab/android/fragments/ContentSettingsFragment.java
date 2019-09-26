@@ -1944,7 +1944,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_boost_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_boost");
                     startActivity(intent);
                 }
             });
@@ -1954,7 +1954,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_fav_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_fav");
                     startActivity(intent);
                 }
             });
@@ -1964,7 +1964,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_follow_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_follow");
                     startActivity(intent);
                 }
             });
@@ -1974,7 +1974,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention");
                     startActivity(intent);
                 }
             });
@@ -1984,7 +1984,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_poll_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_poll");
                     startActivity(intent);
                 }
             });
@@ -1994,7 +1994,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_backup_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_backup");
                     startActivity(intent);
                 }
             });
@@ -2004,7 +2004,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_store_new");
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_store");
                     startActivity(intent);
                 }
             });
