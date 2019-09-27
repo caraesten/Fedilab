@@ -2626,8 +2626,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
 
-                    if (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS) {
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED || (quick_reply && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS)) {
 
+                        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+                            holder.quick_reply_switch_to_full.setVisibility(View.GONE);
+                        }
                         if (context instanceof BaseMainActivity) {
                             FloatingActionButton toot = ((BaseMainActivity) context).findViewById(R.id.toot);
                             if (toot != null) {

@@ -15,6 +15,7 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -76,6 +77,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 
+import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask.Type.PF_REPLIES;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
@@ -321,6 +323,17 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         }
                     }
                 }
+            });
+
+            holder.pf_date.setOnClickListener(view ->{
+                Intent intent = new Intent(context, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                if (status.getReblog() == null)
+                    b.putParcelable("status", status);
+                else
+                    b.putParcelable("status", status.getReblog());
+                intent.putExtras(b);
+                context.startActivity(intent);
             });
 
 
