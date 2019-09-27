@@ -318,8 +318,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.pf_fav.setColors(R.color.pixelfed_like, R.color.pixelfed_like);
 
             holder.pf_share.pressOnTouch(false);
-            holder.pf_share.setActiveImage(R.drawable.ic_pixelfed_share);
-            holder.pf_share.setInactiveImage(R.drawable.ic_pixelfed_share);
+            holder.pf_share.setActiveImage(R.drawable.ic_repeat_boost);
+            holder.pf_share.setInactiveImage(R.drawable.ic_repeat_boost);
             holder.pf_share.setDisableCircle(true);
             holder.pf_share.setActiveImageTint(R.color.boost_icon);
             holder.pf_share.setColors(R.color.boost_icon, R.color.boost_icon);
