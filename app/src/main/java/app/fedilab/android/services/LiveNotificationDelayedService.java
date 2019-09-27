@@ -90,7 +90,7 @@ public class LiveNotificationDelayedService extends Service {
     public static HashMap<String, String> since_ids = new HashMap<>();
     private boolean fetch;
     private LiveNotificationDelayedService liveNotificationDelayedService;
-
+    private static Timer t;
     public void onCreate() {
         super.onCreate();
         liveNotificationDelayedService = this;
@@ -103,13 +103,16 @@ public class LiveNotificationDelayedService extends Service {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
             if (accountStreams != null) {
                 fetch = true;
-                Timer t = new Timer();
+                if( t != null){
+                    t.cancel();
+                }
+                t = new Timer();
                 t.scheduleAtFixedRate(new TimerTask() {
 
                       @Override
                       public void run() {
                           for (final Account accountStream : accountStreams) {
-                              if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
+                              if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA") || accountStream.getSocial().equals("PIXELFED")) {
                                   new Fetch(new WeakReference<>(liveNotificationDelayedService), accountStream).execute();
                               }
                           }
