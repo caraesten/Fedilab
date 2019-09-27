@@ -106,6 +106,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         PF_LOCAL,
         PF_DISCOVER,
         PF_NOTIFICATION,
+        PF_REPLIES,
 
 
         GNU_HOME,
@@ -442,6 +443,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case PF_HOME:
                 api = new API(this.contextReference.get());
                 apiResponse = api.getHomeTimeline(max_id);
+                break;
+            case PF_REPLIES:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getReplies(targetedID, max_id);
+                apiResponse.setTargetedId(targetedID);
                 break;
             case PF_LOCAL:
                 api = new API(this.contextReference.get());

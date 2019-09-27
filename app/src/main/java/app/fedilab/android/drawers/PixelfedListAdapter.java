@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,6 +60,7 @@ import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
@@ -73,6 +76,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 
+import static app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask.Type.PF_REPLIES;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
@@ -80,7 +84,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 14/01/2019.
  * Adapter for pixelfed drawer
  */
-public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
+public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -93,7 +97,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         super();
         this.statuses = statuses;
         this.type = type;
-
         pixelfedListAdapter = this;
     }
 
@@ -124,6 +127,32 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         notifyStatusChanged(modifiedStatus.get(0));
     }
 
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse) {
+        if (apiResponse.getError() != null) {
+            if (apiResponse.getError().getError() != null)
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            return;
+        }
+        List<Status> statuses;
+        String targetedId = apiResponse.getTargetedId();
+        if (apiResponse.getResults() != null && apiResponse.getResults().getStatuses() != null)
+            statuses = apiResponse.getResults().getStatuses();
+        else
+            statuses = apiResponse.getStatuses();
+        for(Status tl: this.statuses){
+            if( tl.equals(targetedId)){
+                tl.setComments(statuses);
+                tl.setCommentsShown(true);
+                notifyStatusChanged(tl);
+                break;
+            }
+        }
+
+    }
+
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder {
         ViewHolderEmpty(View itemView) {
@@ -143,7 +172,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
         LinearLayout pf_bottom_container;
-
+        FrameLayout pixelfed_comments;
+        RecyclerView lv_comments;
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -157,6 +187,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             pf_share = itemView.findViewById(R.id.pf_share);
             pf_cardview = itemView.findViewById(R.id.pf_cardview);
             pf_bottom_container = itemView.findViewById(R.id.pf_bottom_container);
+            pixelfed_comments =  itemView.findViewById(R.id.pixelfed_comments);
+            lv_comments =  itemView.findViewById(R.id.lv_comments);
         }
     }
 
@@ -212,6 +244,14 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(270)))
                         .into(holder.pf_pp);
 
+
+            if( status.isCommentsShown()){
+                holder.pixelfed_comments.setVisibility(View.VISIBLE);
+                StatusListAdapter statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.PUBLIC,null, false, status.getComments());
+                holder.lv_comments.setAdapter(statusListAdapter);
+            }else{
+                holder.pixelfed_comments.setVisibility(View.GONE);
+            }
             boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
             if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
                 GlideApp.with(context)
@@ -272,11 +312,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                         CrossActions.doCrossConversation(context, status);
                     } else {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        b.putParcelable("status", status);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        if( status.isCommentsFetched()){
+                            status.setCommentsShown(!status.isCommentsShown());
+                            notifyStatusChanged(status);
+                        }else{
+                            status.setCommentsFetched(true);
+                            new RetrieveFeedsAsyncTask(context, PF_REPLIES, status.getId(), null, false, false, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                     }
                 }
             });

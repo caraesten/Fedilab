@@ -171,6 +171,9 @@ public class Status implements Parcelable {
     private int viewType;
     private boolean isFocused = false;
     private long db_id;
+    private boolean commentsShown = false;
+    private boolean commentsFetched = false;
+    private List<Status> comments = new ArrayList<>();
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -1777,5 +1780,29 @@ public class Status implements Parcelable {
 
     public void setDb_id(long db_id) {
         this.db_id = db_id;
+    }
+
+    public boolean isCommentsShown() {
+        return commentsShown;
+    }
+
+    public void setCommentsShown(boolean commentsShown) {
+        this.commentsShown = commentsShown;
+    }
+
+    public boolean isCommentsFetched() {
+        return commentsFetched;
+    }
+
+    public void setCommentsFetched(boolean commentsFetched) {
+        this.commentsFetched = commentsFetched;
+    }
+
+    public List<Status> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Status> comments) {
+        this.comments = comments;
     }
 }

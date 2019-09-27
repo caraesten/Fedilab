@@ -50,6 +50,7 @@ public class APIResponse {
     private List<Conversation> conversations = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private String targetedId = null;
     private Results results = null;
     private List<HowToVideo> howToVideos = null;
     private List<Peertube> peertubes = null;
@@ -267,5 +268,13 @@ public class APIResponse {
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    public String getTargetedId() {
+        return targetedId;
+    }
+
+    public void setTargetedId(String targetedId) {
+        this.targetedId = targetedId;
     }
 }
