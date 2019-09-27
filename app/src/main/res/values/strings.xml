@@ -1226,4 +1226,5 @@
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
     <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="post">Post</string>
 </resources>

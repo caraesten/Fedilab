@@ -26,13 +26,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,8 +58,11 @@ import com.varunest.sparkbutton.SparkButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.TootActivity;
+import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
@@ -61,7 +70,12 @@ import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
+import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
+import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
@@ -77,6 +91,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 
+import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask.Type.PF_REPLIES;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -86,7 +101,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 14/01/2019.
  * Adapter for pixelfed drawer
  */
-public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveFeedsInterface {
+public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveFeedsInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -94,6 +109,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
     private RetrieveFeedsAsyncTask.Type type;
+    private MastalabAutoCompleteTextView comment_content;
+    private String in_reply_to_status;
+    private String visibility;
+    private int theme;
 
     public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses) {
         super();
@@ -155,6 +174,26 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     }
 
+    @Override
+    public void onPostStatusAction(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onRetrieveSearch(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onRetrieveContact(APIResponse apiResponse) {
+
+    }
+
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder {
         ViewHolderEmpty(View itemView) {
@@ -176,6 +215,15 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         LinearLayout pf_bottom_container;
         FrameLayout pixelfed_comments;
         RecyclerView lv_comments;
+
+        ConstraintLayout quick_reply_container;
+        MastalabAutoCompleteTextView quick_reply_text;
+        ImageView quick_reply_switch_to_full;
+        TextView toot_space_left;
+        ImageView quick_reply_emoji;
+        Button quick_reply_button;
+        ImageView quick_reply_privacy;
+
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -191,6 +239,14 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             pf_bottom_container = itemView.findViewById(R.id.pf_bottom_container);
             pixelfed_comments =  itemView.findViewById(R.id.pixelfed_comments);
             lv_comments =  itemView.findViewById(R.id.lv_comments);
+            quick_reply_container = itemView.findViewById(R.id.quick_reply_container);
+
+            quick_reply_text = itemView.findViewById(R.id.quick_reply_text);
+            quick_reply_switch_to_full = itemView.findViewById(R.id.quick_reply_switch_to_full);
+            toot_space_left = itemView.findViewById(R.id.toot_space_left);
+            quick_reply_emoji = itemView.findViewById(R.id.quick_reply_emoji);
+            quick_reply_button = itemView.findViewById(R.id.quick_reply_button);
+            quick_reply_privacy = itemView.findViewById(R.id.quick_reply_privacy);
         }
     }
 
@@ -306,22 +362,146 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     context.startActivity(intent);
                 }
             });
+
+
+            holder.quick_reply_switch_to_full.setVisibility(View.GONE);
+            holder.toot_space_left.setVisibility(View.GONE);
+            holder.quick_reply_emoji.setVisibility(View.GONE);
+            holder.quick_reply_privacy.setVisibility(View.GONE);
+
+            holder.quick_reply_button.setOnClickListener(view -> {
+                sendToot(null);
+                status.setShortReply(false);
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
+            });
+            theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            holder.quick_reply_container.setVisibility(View.VISIBLE);
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.pf_date.setText(Helper.dateToString(status.getCreated_at()));
+            holder.quick_reply_text.setHint(R.string.leave_a_comment);
+            holder.quick_reply_button.setText(R.string.post);
             holder.pf_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    status.setCommentsShown(!status.isCommentsShown());
+                    in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
                     if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                         CrossActions.doCrossConversation(context, status);
                     } else {
                         if( status.isCommentsFetched()){
-                            status.setCommentsShown(!status.isCommentsShown());
                             notifyStatusChanged(status);
                         }else{
                             status.setCommentsFetched(true);
                             new RetrieveFeedsAsyncTask(context, PF_REPLIES, status.getId(), null, false, false, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
+
+                    if ( status.isCommentsShown()) {
+                        holder.quick_reply_text.requestFocus();
+                        EditText content_cw = new EditText(context);
+                        content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
+                        TootActivity.manageMentions(context, social, userId,
+                                holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
+                        TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
+
+                        comment_content = holder.quick_reply_text;
+                        int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+                        comment_content.setInputType(newInputType);
+                        in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
+                        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                            changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
+                            changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
+                            changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
+                            changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
+                            changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
+                            changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.dark_text);
+                            if (theme == Helper.THEME_DARK) {
+                                holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background);
+                                changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
+                            } else {
+                                holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_black);
+                                changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
+                            }
+                        } else {
+                            holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_light);
+                            changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
+                            changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
+                            changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
+                            changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
+                            changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
+                            changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.black);
+
+                        }
+
+                        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+
+                        String defaultVisibility = account.isLocked() ? "private" : "public";
+                        String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+                        int initialTootVisibility = 0;
+                        int ownerTootVisibility = 0;
+                        switch (status.getReblog() != null ? status.getReblog().getVisibility() : status.getVisibility()) {
+                            case "public":
+                                initialTootVisibility = 4;
+                                break;
+                            case "unlisted":
+                                initialTootVisibility = 3;
+                                break;
+                            case "private":
+                                visibility = "private";
+                                initialTootVisibility = 2;
+                                break;
+                            case "direct":
+                                visibility = "direct";
+                                initialTootVisibility = 1;
+                                break;
+                        }
+                        switch (settingsVisibility) {
+                            case "public":
+                                ownerTootVisibility = 4;
+                                break;
+                            case "unlisted":
+                                ownerTootVisibility = 3;
+                                break;
+                            case "private":
+                                visibility = "private";
+                                ownerTootVisibility = 2;
+                                break;
+                            case "direct":
+                                visibility = "direct";
+                                ownerTootVisibility = 1;
+                                break;
+                        }
+                        int tootVisibility;
+                        if (ownerTootVisibility >= initialTootVisibility) {
+                            tootVisibility = initialTootVisibility;
+                        } else {
+                            tootVisibility = ownerTootVisibility;
+                        }
+                        switch (tootVisibility) {
+                            case 4:
+                                visibility = "public";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                break;
+                            case 3:
+                                visibility = "unlisted";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                break;
+                            case 2:
+                                visibility = "private";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                break;
+                            case 1:
+                                visibility = "direct";
+                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                break;
+                        }
+                        holder.quick_reply_text.addTextChangedListener(textWatcher);
+
+                    }
+                    notifyStatusChanged(status);
                 }
             });
 
@@ -341,7 +521,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.pf_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             else
                 holder.pf_username.setText(status.getAccount().getUsername());
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
 
             if (theme == Helper.THEME_BLACK) {
@@ -434,6 +614,34 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     }
 
+
+    private void sendToot(String content_type) {
+
+        if (comment_content.getText() == null) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (comment_content.getText().toString().trim().length() == 0) {
+            Toasty.error(context, context.getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        String tootContent;
+        tootContent = comment_content.getText().toString().trim();
+        Status toot = new Status();
+        if (content_type != null)
+            toot.setContentType(content_type);
+        toot.setSensitive(false);
+        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+        toot.setVisibility(visibility);
+        toot.setIn_reply_to_id(in_reply_to_status);
+        toot.setContent(tootContent);
+        new PostStatusAsyncTask(context, social, account, toot, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
