@@ -447,7 +447,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.pixelfed_comments.setVisibility(View.GONE);
             }
             if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
-                SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>(context), false, status.getMedia_attachments());
+                SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>((Activity)context), false, status.getMedia_attachments());
                 holder.imageSlider.setSliderAdapter(sliderAdapter);
                 holder.imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
                 holder.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);

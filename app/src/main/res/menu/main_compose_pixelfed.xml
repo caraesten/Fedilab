@@ -7,11 +7,6 @@
         android:icon="@drawable/ic_photo_camera"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_contacts"
-        android:title="@string/contact"
-        android:icon="@drawable/ic_contacts"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_store"
         android:title="@string/save"
         android:icon="@drawable/ic_save_white"
