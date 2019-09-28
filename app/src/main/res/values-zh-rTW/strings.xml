@@ -1112,4 +1112,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="please_wait_compression">應用程式正在壓縮媒體，可能會很久……</string>
     <string name="change_app_icon_experimental">變更應用程式圖示</string>
     <string name="click_to_change_the_app_icon">點擊以變更應用程式圖示</string>
+    <string name="post">Post</string>
+    <string name="post_visibility_tilte">Visibility of the post</string>
+    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
+    <string name="upload_media">Upload media</string>
 </resources>
