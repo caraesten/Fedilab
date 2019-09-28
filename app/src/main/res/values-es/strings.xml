@@ -1112,4 +1112,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="please_wait_compression">La aplicación está comprimiendo el archivo multimedia, puede tardar un rato…</string>
     <string name="change_app_icon_experimental">Cambio de icono de la aplicación</string>
     <string name="click_to_change_the_app_icon">Pulsa para cambiar el icono de la aplicación</string>
+    <string name="post">Post</string>
+    <string name="post_visibility_tilte">Visibility of the post</string>
+    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
+    <string name="upload_media">Upload media</string>
 </resources>
