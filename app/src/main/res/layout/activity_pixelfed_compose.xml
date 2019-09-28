@@ -21,7 +21,7 @@
     android:fillViewport="true"
     app:ignore="NamespaceTypo">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         <LinearLayout
             android:id="@+id/pickup_picture"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="300dp"
             android:gravity="center"
             android:orientation="vertical"
             >
@@ -52,13 +52,45 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_photo_indication_pixelfed"/>
         </LinearLayout>
-
+        <com.smarteist.autoimageslider.SliderView
+            android:visibility="gone"
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="false" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:minHeight="30dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+                <Button
+                    android:id="@+id/upload_media"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center"
+                    android:text="@string/upload_media" />
+        </LinearLayout>
         <ScrollView
             android:id="@+id/composer_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/bottom_bar_tooting"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
@@ -73,7 +105,7 @@
                 android:gravity="top|start"
                 android:hint="@string/toot_placeholder"
                 android:inputType="textMultiLine|textCapSentences"
-                android:minLines="4" />
+                android:minLines="6" />
         </ScrollView>
 
 
@@ -81,7 +113,6 @@
             android:id="@+id/bottom_bar_tooting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -142,21 +173,6 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/toot_picture"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/toot_select_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_insert_photo" />
-
-
-
-                <ImageButton
                     android:id="@+id/toot_visibility"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
@@ -212,5 +228,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/toot_sensitive" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

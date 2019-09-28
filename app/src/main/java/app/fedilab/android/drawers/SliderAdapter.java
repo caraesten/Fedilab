@@ -40,10 +40,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     private ArrayList<Attachment> attachments;
     private WeakReference<Context> contextWeakReference;
+    private boolean canDelete;
 
-    SliderAdapter(WeakReference<Context> contextWeakReference, ArrayList<Attachment> attachments) {
+    public SliderAdapter(WeakReference<Context> contextWeakReference, boolean delete, ArrayList<Attachment> attachments) {
         this.attachments = attachments;
         this.contextWeakReference = contextWeakReference;
+        this.canDelete = delete;
     }
 
     @Override

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_photo_camera"
+        android:title="@string/camera"
+        android:icon="@drawable/ic_photo_camera"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_contacts"
+        android:title="@string/contact"
+        android:icon="@drawable/ic_contacts"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_store"
+        android:title="@string/save"
+        android:icon="@drawable/ic_save_white"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_restore"
+        android:title="@string/restore"
+        android:icon="@drawable/ic_restore"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_schedule"
+        android:title="@string/schedule"
+        android:icon="@drawable/ic_schedule"
+        app:showAsAction="never" />
+</menu>

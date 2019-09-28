@@ -982,20 +982,30 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.getTabAt(0).select();
         */
         if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            toot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), TootActivity.class);
-                    startActivity(intent);
-                }
-            });
-            toot.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
-                    return false;
-                }
-            });
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                toot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                toot.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
+                        return false;
+                    }
+                });
+            }else{
+                toot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), PixelfedComposeActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
         } else {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
