@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="top|start"
-                android:hint="@string/toot_placeholder"
+                android:hint="@string/pixelfed_compose_placeholder"
                 android:inputType="textMultiLine|textCapSentences"
                 android:minLines="6" />
         </ScrollView>

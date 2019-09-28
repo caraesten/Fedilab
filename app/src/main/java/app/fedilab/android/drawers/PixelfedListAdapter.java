@@ -459,7 +459,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             holder.quick_reply_container.setVisibility(View.VISIBLE);
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-            holder.pf_date.setText(Helper.dateToString(status.getCreated_at()));
+            holder.pf_date.setText(Helper.longDateToString(status.getCreated_at()));
             holder.quick_reply_text.setHint(R.string.leave_a_comment);
             holder.quick_reply_button.setText(R.string.post);
             holder.pf_comment.setOnClickListener(new View.OnClickListener() {

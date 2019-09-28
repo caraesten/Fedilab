@@ -812,6 +812,17 @@ public class Helper {
     }
 
     /**
+     * Convert a date in String
+     *
+     * @param date Date
+     * @return String
+     */
+    public static String longDateToString(Date date) {
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT, Locale.getDefault());
+        return df.format(date);
+    }
+
+    /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
      *
      * @param date Date
