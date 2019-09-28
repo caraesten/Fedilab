@@ -30,34 +30,33 @@
         android:paddingTop="@dimen/toot_padding"
         android:paddingRight="@dimen/toot_padding"
         android:paddingBottom="@dimen/toot_padding">
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/warning_message"
-            android:text="@string/reply_might_be_useless"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:id="@+id/pickup_picture"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
             android:gravity="center"
-            android:background="@drawable/red_border"
-            android:textColor="@color/red_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/toot_cw_content"
-            android:layout_below="@+id/warning_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:animateLayoutChanges="true"
-            android:hint="@string/toot_cw_placeholder"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            >
+            <TextView
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_photo_pixelfed"/>
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_photo_indication_pixelfed"/>
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/composer_container"
-            android:layout_below="@+id/toot_cw_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/bottom_bar_tooting"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="0dp"
@@ -77,48 +76,6 @@
                 android:minLines="4" />
         </ScrollView>
 
-        <HorizontalScrollView
-            android:id="@+id/toolbar_scrollview"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#e6e6e6"
-            android:scrollbars="none">
-
-            <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
-        </HorizontalScrollView>
-
-        <ScrollView
-            android:id="@+id/wysiwyg_container"
-            android:visibility="gone"
-            android:layout_below="@+id/toolbar_scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_bar_tooting"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            android:fillViewport="true">
-
-            <com.github.irshulx.Editor
-                android:layout_width="match_parent"
-                android:id="@+id/editor"
-                app:render_type="Editor"
-                android:hint="@string/toot_placeholder"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="100dp" />
-        </ScrollView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
-            android:id="@+id/suggestions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/bottom_bar_tooting"
@@ -152,22 +109,6 @@
                     android:textSize="12sp" />
             </RelativeLayout>
 
-            <HorizontalScrollView
-                android:id="@+id/picture_scrollview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/toot_picture_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:maxHeight="100dp"
-                    android:orientation="horizontal"
-                    android:padding="5dp"></LinearLayout>
-            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,19 +154,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_insert_photo" />
 
-                <ImageButton
-                    android:id="@+id/poll_action"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/poll"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_view_list_poll"
-                    android:visibility="gone" />
+
 
                 <ImageButton
                     android:id="@+id/toot_visibility"
@@ -236,21 +165,10 @@
                     android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:background="@color/transparent"
-                    android:contentDescription="@string/toot_visibility_tilte"
+                    android:contentDescription="@string/post_visibility_tilte"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_public" />
 
-                <Button
-                    android:id="@+id/toot_cw"
-                    android:layout_width="40dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:text="@string/cw"
-                    android:textSize="20sp" />
 
                 <ImageButton
                     android:id="@+id/toot_emoji"
@@ -284,7 +202,7 @@
                     android:layout_gravity="end"
                     android:gravity="center"
                     android:padding="0dp"
-                    android:text="@string/toot_it" />
+                    android:text="@string/post" />
 
             </LinearLayout>
 
@@ -292,8 +210,7 @@
                 android:id="@+id/toot_sensitive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/toot_sensitive"
-                android:visibility="gone" />
+                android:text="@string/toot_sensitive" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
