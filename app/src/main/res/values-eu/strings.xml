@@ -1121,4 +1121,5 @@
     <string name="add_photo_pixelfed">Sakatu hemen argazkian gehitzeko</string>
     <string name="add_photo_indication_pixelfed">Onartutako formatuak: jpeg, png, gif  \n\nGehieneko fitxategiaren tamaina: 15 MB  \n\nAlbumek 4 argazki edo bideo bildu itzakete</string>
     <string name="upload_media">Igo multimedia</string>
+    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
 </resources>
