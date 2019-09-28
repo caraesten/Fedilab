@@ -148,8 +148,11 @@ public class LiveNotificationDelayedService extends Service {
 
         @Override
         protected APIResponse doInBackground(Void... params) {
-
-            return new API(this.contextWeakReference.get(), accountFetch.getInstance(), accountFetch.getToken()).getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+            APIResponse apiResponse = null;
+            try{
+                apiResponse = new API(this.contextWeakReference.get(), accountFetch.getInstance(), accountFetch.getToken()).getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+            }catch (Exception ignored){ }
+            return apiResponse;
         }
 
         @Override
