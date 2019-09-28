@@ -381,7 +381,7 @@
     <string name="action_search">Ara</string>
     <string name="set_capitalize">Cevaplarda ilk harf büyük olsun</string>
     <string name="set_resize_picture">Resimleri yeniden boyutlandır</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Videoları yeniden boyutlandır</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Anlık Bildirimler</string>
     <string name="settings_popup_message">Lütfen, almak istediğiniz bildirimleri onaylayın.
@@ -404,7 +404,7 @@
     <string name="action_sync">Eşitle</string>
     <string name="action_filter">Filtrele</string>
     <string name="owner_cached_toots">Senin toot\'ların</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Bildirimlerin</string>
     <string name="v_public">Herkese Açık</string>
     <string name="v_unlisted">Listelenmiyor</string>
     <string name="v_private">Özel</string>
@@ -1111,4 +1111,10 @@
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
     <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="post">Post</string>
+    <string name="post_visibility_tilte">Visibility of the post</string>
+    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
+    <string name="upload_media">Upload media</string>
+    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
 </resources>
