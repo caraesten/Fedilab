@@ -56,8 +56,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.varunest.sparkbutton.SparkButton;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -339,7 +343,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder {
-        ImageView art_media, pf_pp, pf_comment;
+        SliderView imageSlider;
+        ImageView pf_pp, pf_comment;
         SparkButton pf_fav, pf_share;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
@@ -357,7 +362,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
         ViewHolderPixelfed(View itemView) {
             super(itemView);
-            art_media = itemView.findViewById(R.id.art_media);
+            imageSlider = itemView.findViewById(R.id.imageSlider);
             pf_pp = itemView.findViewById(R.id.pf_pp);
             pf_username = itemView.findViewById(R.id.pf_username);
             pf_likes = itemView.findViewById(R.id.pf_likes);
@@ -441,25 +446,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             }else{
                 holder.pixelfed_comments.setVisibility(View.GONE);
             }
-            boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
-            if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
-                GlideApp.with(context)
-                        .asBitmap()
-                        .load(status.getMedia_attachments().get(0).getPreview_url())
-                        .listener(new RequestListener<Bitmap>() {
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                if (status.isSensitive())
-                                    notifyStatusChanged(status);
-                                return false;
-                            }
+            if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
+                SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>(context), status.getMedia_attachments());
+                holder.imageSlider.setSliderAdapter(sliderAdapter);
+                holder.imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+                holder.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                return false;
-                            }
-                        })
-                        .into(holder.art_media);
+            }
 
             holder.pf_likes.setText(context.getResources().getQuantityString(R.plurals.likes, status.getFavourites_count(), status.getFavourites_count()));
             holder.pf_pp.setOnClickListener(new View.OnClickListener() {
@@ -477,22 +470,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 }
             });
 
-            holder.art_media.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MediaActivity.class);
-                    Bundle b = new Bundle();
-                    ArrayList<Attachment> attachments = new ArrayList<>();
-                    if (status.getArt_attachment() != null)
-                        attachments.add(status.getArt_attachment());
-                    else if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
-                        attachments.add(status.getMedia_attachments().get(0));
-                    intent.putParcelableArrayListExtra("mediaArray", attachments);
-                    b.putInt("position", 0);
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-            });
 
 
             holder.quick_reply_switch_to_full.setVisibility(View.GONE);
@@ -504,6 +481,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 sendToot(null);
                 status.setShortReply(false);
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
             });
             theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
