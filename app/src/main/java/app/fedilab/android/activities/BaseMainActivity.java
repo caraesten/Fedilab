@@ -707,6 +707,8 @@ public abstract class BaseMainActivity extends BaseActivity
                     displayStatusFragment.scrollToTop();
                 }
             });
+
+            tabLayout.getTabAt(0).select();
         }
 
         if (theme == Helper.THEME_DARK) {
@@ -1431,7 +1433,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private void manageTimelineList(boolean displayed) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean display_timeline_in_list = sharedpreferences.getBoolean(Helper.SET_DISPLAY_TIMELINE_IN_LIST, false);
-        if (!display_timeline_in_list) {
+        if (!display_timeline_in_list || social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             display_timeline.setVisibility(View.GONE);
         } else {
             if (displayed) {
