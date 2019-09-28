@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,11 +64,13 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     private ArrayList<Attachment> attachments;
     private WeakReference<Activity> contextWeakReference;
     private boolean canDelete;
+    private SliderAdapter sliderAdapter;
 
     public SliderAdapter(WeakReference<Activity> contextWeakReference, boolean delete, ArrayList<Attachment> attachments) {
         this.attachments = attachments;
         this.contextWeakReference = contextWeakReference;
         this.canDelete = delete;
+        this.sliderAdapter = this;
     }
 
     @Override
@@ -83,6 +86,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.textViewDescription.setText(String.format("%s/%s", (position + 1), attachments.size()));
         }
 
+        Log.v(Helper.TAG,"url: " + attachments.get(position).getPreview_url() );
         Glide.with(viewHolder.imageViewBackground.getContext())
                 .load(attachments.get(position).getPreview_url())
                 .into(viewHolder.imageViewBackground);
@@ -172,6 +176,42 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
 
 
+    /**
+     * Removes a media
+     *
+     * @param position int
+     */
+    private void showRemove(final int position) {
+
+        SharedPreferences sharedpreferences = contextWeakReference.get().getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK) {
+            style = R.style.DialogBlack;
+        } else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder dialog = new AlertDialog.Builder(contextWeakReference.get(), style);
+
+        dialog.setMessage(R.string.toot_delete_media);
+        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                attachments.remove(attachments.get(position));
+                sliderAdapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     @Override
     public int getCount() {

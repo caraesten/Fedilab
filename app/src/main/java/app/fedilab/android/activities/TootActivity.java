@@ -1458,7 +1458,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     static class asyncPicture extends AsyncTask<Void, Void, Void> {
 
-        ByteArrayInputStream bs;
+        String commpressedFilePath;
         WeakReference<Activity> activityWeakReference;
         android.net.Uri uriFile;
         boolean error = false;
@@ -1490,7 +1490,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             if (error) {
                 return null;
             }
-            bs = Helper.compressImage(activityWeakReference.get(), uriFile);
+            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
             return null;
         }
 
@@ -1499,8 +1499,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
             activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
             if (!error) {
-                if (bs == null)
-                    return;
+                if( commpressedFilePath != null){
+                    uriFile = Uri.fromFile(new File(commpressedFilePath));
+                }
                 ImageButton toot_picture;
                 Button toot_it;
                 LinearLayout toot_picture_container;

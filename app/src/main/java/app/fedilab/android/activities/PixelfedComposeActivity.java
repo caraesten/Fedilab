@@ -38,10 +38,8 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,7 +53,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,7 +65,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -126,7 +122,6 @@ import app.fedilab.android.asynctasks.RetrieveEmojiAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveSearchAccountsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -325,7 +320,10 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         attachments = new ArrayList<>();
         imageSlider = findViewById(R.id.imageSlider);
         sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
+        imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         imageSlider.setSliderAdapter(sliderAdapter);
+
         upload_media = findViewById(R.id.upload_media);
         toot_space_left = findViewById(R.id.toot_space_left);
         toot_visibility = findViewById(R.id.toot_visibility);
@@ -353,9 +351,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         } else {
             toot_emoji.setVisibility(View.GONE);
         }
-
-        ScrollView composer_container = findViewById(R.id.composer_container);
-
 
 
         Bundle b = getIntent().getExtras();
@@ -418,9 +413,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
 
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
-
-
-
 
 
 
@@ -607,7 +599,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                             if (s.toString().contains(fedilabHugsTrigger)) {
                                 newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
                                 int currentLength = countLength(social, toot_content);
-                                int toFill = 500 - currentLength;
+                                int toFill = 150 - currentLength;
                                 if (toFill <= 0) {
                                     return;
                                 }
@@ -806,49 +798,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             }
             index++;
         }
-
         if (!alreadyAdded) {
-            String url = attachment.getPreview_url();
-            if (url == null || url.trim().equals(""))
-                url = attachment.getUrl();
-            final ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setId(Integer.parseInt(attachment.getId()));
-            Glide.with(imageView.getContext())
-                    .asBitmap()
-                    .load(url)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
-                        }
-                    });
-
-
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-            if (show_media_urls ) {
-                //Adds the shorter text_url of attachment at the end of the toot 
-                int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(String.format("%s\n\n%s", toot_content.getText().toString(), attachment.getText_url()));
-                toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
-                //Moves the cursor
-                toot_content.setSelection(selectionBefore);
-            }
-            imageView.setTag(attachment.getId());
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    showRemove(imageView.getId());
-                    return false;
-                }
-            });
-            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-
             attachments.add(attachment);
             sliderAdapter.notifyDataSetChanged();
-            imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
-            imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-
             imageSlider.setVisibility(View.VISIBLE);
             pickup_picture.setVisibility(View.GONE);
             upload_media.setVisibility(View.VISIBLE);
@@ -869,15 +821,11 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // We have the permission.
-                    pickup_picture.callOnClick();
-                }
-                break;
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // We have the permission.
+                upload_media.callOnClick();
             }
         }
     }
@@ -1037,7 +985,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
     static class asyncPicture extends AsyncTask<Void, Void, Void> {
 
-        ByteArrayInputStream bs;
+        String commpressedFilePath = null;
         WeakReference<Activity> activityWeakReference;
         Uri uriFile;
         boolean error = false;
@@ -1069,7 +1017,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             if (error) {
                 return null;
             }
-            bs = Helper.compressImage(activityWeakReference.get(), uriFile);
+            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
             return null;
         }
 
@@ -1077,8 +1025,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         protected void onPostExecute(Void result) {
             activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
             if (!error) {
-                if (bs == null)
-                    return;
+                if( commpressedFilePath != null){
+                    uriFile = Uri.fromFile(new File(commpressedFilePath));
+                }
                 Button upload_media = this.activityWeakReference.get().findViewById(R.id.upload_media);
                 Button toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
                 upload_media.setEnabled(false);
@@ -1087,13 +1036,13 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
-                upload(activityWeakReference.get(), social, uriFile, filename, uploadReceiver);
+                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
             }
         }
     }
 
 
-    static private void upload(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         String uploadId = UUID.randomUUID().toString();
         if (uploadReceiver != null) {
             uploadReceiver.setUploadID(uploadId);
@@ -1154,12 +1103,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             uploadConfig.getProgress().message = activity.getString(R.string.uploading);
             uploadConfig.getCompleted().autoClear = true;
             MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
-            if (token != null && !token.startsWith("Basic "))
-                request.addHeader("Authorization", "Bearer " + token);
-            else if (token != null && token.startsWith("Basic "))
-                request.addHeader("Authorization", token);
+            request.addHeader("Authorization", "Bearer " + token);
             request.setNotificationConfig(uploadConfig);
-            request.addFileToUpload(uri.toString().replace("file://", ""), "media");
+            request.addFileToUpload(uri.toString().replace("file://", ""), "file");
             request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
                     .startUpload();
         } catch (MalformedURLException e) {
@@ -1380,8 +1326,8 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
         Status toot = new Status();
         toot.setSensitive(isSensitive);
-
         toot.setVisibility(visibility);
+        toot.setMedia_attachments(attachments);
         toot.setContent(tootContent);
         if (timestamp == null)
             if (scheduledstatus == null)
@@ -1467,7 +1413,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             String filename = FileNameCleaner.cleanFileName(url);
             upload_media.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(PixelfedComposeActivity.this, social, uri, filename, uploadReceiver);
+            upload(PixelfedComposeActivity.this, uri, filename, uploadReceiver);
         }
     }
 
@@ -1492,58 +1438,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
 
-
-
-    /**
-     * Removes a media
-     *
-     * @param viewId String
-     */
-    private void showRemove(final int viewId) {
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
-
-        dialog.setMessage(R.string.toot_delete_media);
-        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                View namebar = findViewById(viewId);
-                for (Attachment attachment : attachments) {
-                    if (Integer.valueOf(attachment.getId()) == viewId) {
-                        attachments.remove(attachment);
-                        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
-                        if (show_media_urls) {
-                            //Clears the text_url at the end of the toot  for this attachment
-                            int selectionBefore = toot_content.getSelectionStart();
-                            toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
-                            toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
-                            //Moves the cursor
-                            if (selectionBefore >= 0 && selectionBefore < toot_content.length())
-                                toot_content.setSelection(selectionBefore);
-                        }
-                        ((ViewGroup) namebar.getParent()).removeView(namebar);
-                        break;
-                    }
-                }
-                dialog.dismiss();
-                if (attachments.size() == 0) {
-                    toot_sensitive.setVisibility(View.GONE);
-                    isSensitive = false;
-                    toot_sensitive.setChecked(false);
-                }
-                upload_media.setEnabled(true);
-            }
-        });
-        dialog.show();
-
-    }
 
 
     private void tootVisibilityDialog() {
@@ -1972,7 +1866,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        showRemove(imageView.getId());
+
                         return false;
                     }
                 });
@@ -2045,7 +1939,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
             else
-                //noinspection deprecation
                 content = Html.fromHtml(content).toString();
         }
         if (attachments != null && attachments.size() > 0) {
@@ -2077,7 +1970,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        showRemove(imageView.getId());
+
                         return false;
                     }
                 });
@@ -2137,7 +2030,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         if (!forced) {
             if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) )
                 return;
-            if (initialContent.trim().equals(currentContent))
+            if (initialContent == null || initialContent.trim().equals(currentContent))
                 return;
         }
         Status toot = new Status();

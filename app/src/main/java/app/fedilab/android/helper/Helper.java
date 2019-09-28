@@ -3470,6 +3470,58 @@ public class Helper {
     }
 
 
+    public static String compressImagePath(Context context, android.net.Uri uriFile) {
+
+        ContentResolver cr = context.getContentResolver();
+        String mime = cr.getType(uriFile);
+        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath()+"/compress");
+        if (!destinationDirectory.exists()) {
+            destinationDirectory.mkdirs();
+        }
+        if (mime == null || mime.toLowerCase().contains("image")) {
+            ExifInterface exif = null;
+            try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
+                assert inputStream != null;
+                exif = new ExifInterface(inputStream);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Matrix matrix;
+            if (exif != null) {
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int rotationDegree = 0;
+                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                    rotationDegree = 90;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                    rotationDegree = 180;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                    rotationDegree = 270;
+                }
+                matrix = new Matrix();
+                if (rotation != 0f) {
+                    matrix.preRotate(rotationDegree);
+                }
+            }
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
+            if( compressed) {
+                try {
+                    return SiliCompressor.with(context).compress(uriFile.toString(), destinationDirectory);
+                }catch (Exception ignored){}
+            }
+        } else {
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean compressed = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
+            if( compressed) {
+                try {
+                    return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/");
+                } catch (Exception ignored) { }
+            }
+        }
+        return null;
+    }
+
+
     public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile) {
 
         ContentResolver cr = context.getContentResolver();
