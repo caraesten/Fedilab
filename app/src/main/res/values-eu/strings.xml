@@ -381,7 +381,7 @@
     <string name="action_search">Bilatu</string>
     <string name="set_capitalize">Lehen letra maiuskulaz erantzunetan</string>
     <string name="set_resize_picture">Aldatu irudien tamaina</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Aldatu tamaina bideoei</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push jakinarazpenak</string>
     <string name="settings_popup_message">        Berretsi jaso nahi dituzun push jakinarazpenak.
@@ -1092,9 +1092,9 @@
     <string name="top_notification_message">%2$s gertaera dituzten %1$s kontuentzat</string>
     <string name="set_allow_live_notifications">Live notifications for %1$s</string>
     <string name="set_allow_live_notifications_indication">Live notifications will be enabled for this account.</string>
-    <string name="set_clear_cache_exit">Garbitu cachea irtetzean</string>
+    <string name="set_clear_cache_exit">Garbitu cachea irtetean</string>
     <string name="set_clear_cache_exit_indication">Cachea (multimedia, mezuak, barneko nabigatzailearen datuak) automatikoki ezabatuko da aplikaziotik irtetean.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
+    <string name="unfollow_confirm">Kontu hau jarraitzeari utzi nahi diozu?</string>
     <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
     <string name="set_invidious">Replace Youtube with Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
@@ -1114,6 +1114,6 @@
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
-    <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="change_app_icon_experimental">Aldatu aplikazioaren ikonoa</string>
+    <string name="click_to_change_the_app_icon">Sakatu aplikazioaren ikonoa aldatzeko</string>
 </resources>
