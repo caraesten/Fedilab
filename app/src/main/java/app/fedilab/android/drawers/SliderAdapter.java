@@ -25,7 +25,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.textViewDescription.setText(String.format("%s/%s", (position + 1), attachments.size()));
         }
 
-        Log.v(Helper.TAG,"url: " + attachments.get(position).getPreview_url() );
         Glide.with(viewHolder.imageViewBackground.getContext())
                 .load(attachments.get(position).getPreview_url())
                 .into(viewHolder.imageViewBackground);

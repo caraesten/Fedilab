@@ -14,12 +14,13 @@ package app.fedilab.android.client;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.content.Context;
+
 
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.AccountAdmin;
+import app.fedilab.android.client.Entities.Context;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
@@ -46,7 +47,6 @@ public class APIResponse {
 
     private List<Account> accounts = null;
     private List<Status> statuses = null;
-    private List<Context> contexts = null;
     private List<Conversation> conversations = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
@@ -69,6 +69,7 @@ public class APIResponse {
     private List<InstanceReg> instanceRegs = null;
     private List<AccountAdmin> accountAdmins = null;
     private List<Report> reports = null;
+    private Context context = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -84,14 +85,6 @@ public class APIResponse {
 
     public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
-    }
-
-    public List<Context> getContexts() {
-        return contexts;
-    }
-
-    public void setContexts(List<Context> contexts) {
-        this.contexts = contexts;
     }
 
     public List<Notification> getNotifications() {
@@ -276,5 +269,13 @@ public class APIResponse {
 
     public void setTargetedId(String targetedId) {
         this.targetedId = targetedId;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

@@ -1839,41 +1839,19 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 content = Html.fromHtml(content).toString();
         }
         if (attachments != null && attachments.size() > 0) {
-            int i = 0;
-            for (final Attachment attachment : attachments) {
-                String url = attachment.getPreview_url();
-                if (url == null || url.trim().equals(""))
-                    url = attachment.getUrl();
-                final ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setId(Integer.parseInt(attachment.getId()));
-
-                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                imParams.setMargins(20, 5, 20, 5);
-                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                imageView.setAdjustViewBounds(true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
-                Glide.with(imageView.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                imageView.setImageBitmap(resource);
-                            }
-                        });
-                imageView.setTag(attachment.getId());
-                imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-
-                        return false;
-                    }
-                });
-                if (attachments.size() < max_media_count)
-                    upload_media.setEnabled(true);
-                toot_sensitive.setVisibility(View.VISIBLE);
-                i++;
+            sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
+            imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+            imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            imageSlider.setSliderAdapter(sliderAdapter);
+            imageSlider.setVisibility(View.VISIBLE);
+            pickup_picture.setVisibility(View.GONE);
+            upload_media.setVisibility(View.VISIBLE);
+            if (attachments.size() < max_media_count)
+                upload_media.setEnabled(true);
+            toot_it.setEnabled(true);
+            toot_sensitive.setVisibility(View.VISIBLE);
+            if (account.isSensitive()) {
+                toot_sensitive.setChecked(true);
             }
         } else {
             imageSlider.setVisibility(View.GONE);

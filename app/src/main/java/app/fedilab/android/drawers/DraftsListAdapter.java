@@ -36,6 +36,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.PixelfedComposeActivity;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.Sqlite;
@@ -173,7 +176,12 @@ public class DraftsListAdapter extends BaseAdapter {
             holder.drafts_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentToot = new Intent(context, TootActivity.class);
+                    Intent intentToot;
+                    if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                        intentToot = new Intent(context, TootActivity.class);
+                    }else {
+                        intentToot = new Intent(context, PixelfedComposeActivity.class);
+                    }
                     Bundle b = new Bundle();
                     b.putLong("restored", draft.getId());
                     intentToot.putExtras(b);

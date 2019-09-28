@@ -35,7 +35,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

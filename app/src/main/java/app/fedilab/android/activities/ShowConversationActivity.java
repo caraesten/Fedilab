@@ -43,6 +43,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Context;
 import app.fedilab.android.client.Entities.Error;
@@ -349,28 +350,32 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     }
 
     @Override
-    public void onRetrieveContext(Context context, Error error) {
+    public void onRetrieveContext(APIResponse apiResponse) {
         swipeRefreshLayout.setRefreshing(false);
-        if (error != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            if( apiResponse.getError().getError() != null) {
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            }
             return;
         }
-        if (context.getAncestors() == null) {
+        if (apiResponse.getContext() == null || apiResponse.getContext().getAncestors() == null) {
             return;
         }
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            statusListAdapter.setConversationPosition(context.getAncestors().size());
+            statusListAdapter.setConversationPosition(apiResponse.getContext().getAncestors().size());
             if (!expanded) {
-                if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                    statuses.addAll(0, context.getAncestors());
-                    statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size());
+                if (apiResponse.getContext().getAncestors() != null && apiResponse.getContext().getAncestors().size() > 0) {
+                    statuses.addAll(0, apiResponse.getContext().getAncestors());
+                    statusListAdapter.notifyItemRangeInserted(0, apiResponse.getContext().getAncestors().size());
                 }
-                if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                    statuses.addAll(context.getAncestors().size() + 1, context.getDescendants());
-                    statusListAdapter.notifyItemRangeChanged(context.getAncestors().size() + 1, context.getDescendants().size());
+                if (apiResponse.getContext().getDescendants() != null && apiResponse.getContext().getDescendants().size() > 0) {
+                    statuses.addAll(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants());
+                    statusListAdapter.notifyItemRangeChanged(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants().size());
                 }
             } else {
-                List<Status> statusesTemp = context.getDescendants();
+                List<Status> statusesTemp = apiResponse.getContext().getDescendants();
                 int i = 1;
                 int position = 0;
                 for (Status status : statusesTemp) {
@@ -382,22 +387,22 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     }
                     i++;
                 }
-                statusListAdapter.notifyItemRangeChanged(1, context.getDescendants().size());
+                statusListAdapter.notifyItemRangeChanged(1, apiResponse.getContext().getDescendants().size());
                 lv_status.scrollToPosition(position);
             }
         } else {
             int i = 0;
-            if (context.getAncestors() != null && context.getAncestors().size() > 1) {
+            if (apiResponse.getContext().getAncestors() != null && apiResponse.getContext().getAncestors().size() > 1) {
                 statuses = new ArrayList<>();
                 statuses.clear();
-                for (Status status : context.getAncestors()) {
+                for (Status status : apiResponse.getContext().getAncestors()) {
                     if (detailsStatus.equals(status)) {
                         break;
                     }
                     i++;
                 }
                 boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-                for (Status status : context.getAncestors()) {
+                for (Status status : apiResponse.getContext().getAncestors()) {
                     statuses.add(0, status);
                 }
                 statusListAdapter = new StatusListAdapter((statuses.size() - 1 - i), null, isOnWifi, statuses);

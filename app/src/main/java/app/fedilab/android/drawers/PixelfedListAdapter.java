@@ -20,12 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
@@ -33,8 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Half;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +45,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -71,7 +63,6 @@ import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Notification;
@@ -90,12 +81,10 @@ import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
@@ -108,7 +97,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 14/01/2019.
  * Adapter for pixelfed drawer
  */
-public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveFeedsInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface, OnRetrieveContextInterface {
+public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface, OnRetrieveContextInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -150,31 +139,12 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
     @Override
-    public void onRetrieveContext(app.fedilab.android.client.Entities.Context context, Error error) {
-        if (context == null || context.getDescendants().size() == 0) {
+    public void onRetrieveContext(APIResponse apiResponse) {
+        if (apiResponse.getError() != null ) {
             return;
         }
-        List<Status> modifiedStatus = context.getDescendants();
-        notifyStatusChanged(modifiedStatus.get(0));
-    }
-
-
-
-    @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
-        if (apiResponse.getError() != null) {
-            if (apiResponse.getError().getError() != null)
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            else
-                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            return;
-        }
-        List<Status> statuses;
+        List<Status> statuses = apiResponse.getContext().getDescendants();
         String targetedId = apiResponse.getTargetedId();
-        if (apiResponse.getResults() != null && apiResponse.getResults().getStatuses() != null)
-            statuses = apiResponse.getResults().getStatuses();
-        else
-            statuses = apiResponse.getStatuses();
         for(Status tl: this.statuses){
             if( tl.getId().equals(targetedId)){
                 tl.setComments(statuses);
@@ -183,8 +153,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 break;
             }
         }
-
     }
+
+
+
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
@@ -756,7 +728,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if (error != null) {
             Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
             return;

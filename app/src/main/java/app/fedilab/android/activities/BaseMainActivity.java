@@ -982,8 +982,7 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.getTabAt(0).select();
         */
         if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            //TODO: replace == with !=
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                 toot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -15,13 +15,12 @@
 package app.fedilab.android.interfaces;
 
 
-import app.fedilab.android.client.Entities.Context;
-import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.APIResponse;
 
 /**
  * Created by Thomas on 04/05/2017.
  * Interface when a context for a status has been retrieved
  */
 public interface OnRetrieveContextInterface {
-    void onRetrieveContext(Context context, Error error);
+    void onRetrieveContext(APIResponse apiResponse);
 }
