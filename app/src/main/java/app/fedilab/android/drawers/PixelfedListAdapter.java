@@ -33,10 +33,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Half;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -60,6 +63,7 @@ import java.util.List;
 
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -72,6 +76,7 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveContextInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
@@ -89,11 +94,9 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
-import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.social;
-import static app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask.Type.PF_REPLIES;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
@@ -101,7 +104,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 14/01/2019.
  * Adapter for pixelfed drawer
  */
-public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveFeedsInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface {
+public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveFeedsInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface, OnRetrieveContextInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -113,6 +116,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private String in_reply_to_status;
     private String visibility;
     private int theme;
+    private long currentToId = -1;
+    private Status tootReply;
 
     public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses) {
         super();
@@ -139,14 +144,17 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             return null;
     }
 
+
     @Override
-    public void onRetrieveReplies(APIResponse apiResponse) {
-        if (apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0) {
+    public void onRetrieveContext(app.fedilab.android.client.Entities.Context context, Error error) {
+        if (context == null || context.getDescendants().size() == 0) {
             return;
         }
-        List<Status> modifiedStatus = apiResponse.getStatuses();
+        List<Status> modifiedStatus = context.getDescendants();
         notifyStatusChanged(modifiedStatus.get(0));
     }
+
+
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
@@ -164,7 +172,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         else
             statuses = apiResponse.getStatuses();
         for(Status tl: this.statuses){
-            if( tl.equals(targetedId)){
+            if( tl.getId().equals(targetedId)){
                 tl.setComments(statuses);
                 tl.setCommentsShown(true);
                 notifyStatusChanged(tl);
@@ -176,22 +184,145 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
+        if (apiResponse.getError() != null) {
+            if (apiResponse.getError().getError().contains("422")) {
+                Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
 
-    }
-
-    @Override
-    public void onRetrieveSearch(APIResponse apiResponse) {
+        comment_content = null;
+        tootReply = null;
+        currentToId = -1;
+        if (apiResponse.getError() == null) {
+            boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
+            if (display_confirm) {
+                Toasty.success(context, context.getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            if (apiResponse.getError().getStatusCode() == -33)
+                Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
+        }
+        //For conversation
+        if (context instanceof ShowConversationActivity) {
+            ((ShowConversationActivity) context).addStatuses(apiResponse.getStatuses().get(0));
+        }
 
     }
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        if (apiResponse.getError() != null)
+            return;
 
+        final List<Account> accounts = apiResponse.getAccounts();
+        if (accounts != null && accounts.size() > 0) {
+            int currentCursorPosition = comment_content.getSelectionStart();
+            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
+            comment_content.setThreshold(1);
+            comment_content.setAdapter(accountsListAdapter);
+            final String oldContent = comment_content.getText().toString();
+            if (oldContent.length() >= currentCursorPosition) {
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                if (searchA.length > 0) {
+                    final String search = searchA[searchA.length - 1];
+                    comment_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Account account = accounts.get(position);
+                            String deltaSearch = "";
+                            int searchLength = 15;
+                            if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                                searchLength = currentCursorPosition;
+                            }
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace("@" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += "@" + account.getAcct() + " ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length())
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            comment_content.setText(newContent);
+                            comment_content.setSelection(newPosition);
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, new ArrayList<>());
+                            comment_content.setThreshold(1);
+                            comment_content.setAdapter(accountsListAdapter);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     @Override
     public void onRetrieveContact(APIResponse apiResponse) {
 
+    }
+
+    @Override
+    public void onRetrieveSearch(APIResponse apiResponse) {
+        if (apiResponse == null || apiResponse.getResults() == null || comment_content == null)
+            return;
+        app.fedilab.android.client.Entities.Results results = apiResponse.getResults();
+        int currentCursorPosition = comment_content.getSelectionStart();
+        final List<String> tags = results.getHashtags();
+
+        if (tags != null && tags.size() > 0) {
+            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, tags);
+            comment_content.setThreshold(1);
+            comment_content.setAdapter(tagsSearchAdapter);
+            final String oldContent = comment_content.getText().toString();
+            if (oldContent.length() < currentCursorPosition)
+                return;
+            String[] searchA = oldContent.substring(0, currentCursorPosition).split("#");
+            if (searchA.length < 1)
+                return;
+            final String search = searchA[searchA.length - 1];
+            comment_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (position >= tags.size())
+                        return;
+                    String tag = tags.get(position);
+                    String deltaSearch = "";
+                    int searchLength = 15;
+                    if (currentCursorPosition < 15) { //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }
+                    if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                    else {
+                        if (currentCursorPosition >= oldContent.length())
+                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                    }
+
+                    if (!search.equals(""))
+                        deltaSearch = deltaSearch.replace("#" + search, "");
+                    String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                    newContent += deltaSearch;
+                    newContent += "#" + tag + " ";
+                    int newPosition = newContent.length();
+                    if (currentCursorPosition < oldContent.length())
+                        newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                    comment_content.setText(newContent);
+                    comment_content.setSelection(newPosition);
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(context, new ArrayList<>());
+                    comment_content.setThreshold(1);
+                    comment_content.setAdapter(tagsSearchAdapter);
+                }
+            });
+        }
     }
 
 
@@ -393,7 +524,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                             notifyStatusChanged(status);
                         }else{
                             status.setCommentsFetched(true);
-                            new RetrieveFeedsAsyncTask(context, PF_REPLIES, status.getId(), null, false, false, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new RetrieveContextAsyncTask(context, false, false, status.getId(),PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
 
@@ -409,6 +540,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
                         comment_content.setInputType(newInputType);
                         in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
+                        tootReply = status;
                         if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
                             changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
                             changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);

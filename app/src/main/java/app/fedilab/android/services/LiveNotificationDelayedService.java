@@ -97,8 +97,7 @@ public class LiveNotificationDelayedService extends Service {
         liveNotificationDelayedService = this;
     }
 
-    private void startStream() {
-        Log.v(Helper.TAG,"startStream");
+    private void startStream() { ;
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED) {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
