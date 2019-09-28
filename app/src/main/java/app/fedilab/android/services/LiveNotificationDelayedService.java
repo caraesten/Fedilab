@@ -35,6 +35,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,7 +98,7 @@ public class LiveNotificationDelayedService extends Service {
     }
 
     private void startStream() {
-
+        Log.v(Helper.TAG,"startStream");
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED) {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
@@ -105,10 +106,11 @@ public class LiveNotificationDelayedService extends Service {
                 fetch = true;
                 if( t != null){
                     t.cancel();
+                    t.purge();
+                    t = null;
                 }
                 t = new Timer();
                 t.scheduleAtFixedRate(new TimerTask() {
-
                       @Override
                       public void run() {
                           for (final Account accountStream : accountStreams) {
@@ -121,7 +123,6 @@ public class LiveNotificationDelayedService extends Service {
                               t.cancel();
                           }
                       }
-
                     },
                     0,
                     30000);
