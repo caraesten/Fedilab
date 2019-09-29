@@ -1116,9 +1116,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="change_app_icon_experimental">Changer l’icône de l’application</string>
     <string name="click_to_change_the_app_icon">Cliquez pour changer l’icône de l’application</string>
     <string name="post">Post</string>
-    <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="post_visibility_tilte">Visibilité du post</string>
+    <string name="add_photo_pixelfed">Cliquez ici pour ajouter des photos</string>
+    <string name="add_photo_indication_pixelfed">Formats acceptés: jpeg, png, gif \n\nTaille de fichier maximum: 15 MB \n\nLes albums peuvent contenir jusqu\'à 4 photos ou vidéos</string>
+    <string name="upload_media">Téléverser un média</string>
+    <string name="pixelfed_compose_placeholder">Ajouter une légende optionnelle</string>
 </resources>

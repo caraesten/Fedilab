@@ -1138,9 +1138,9 @@
     <string name="change_app_icon_experimental">تغيير أيقونة التطبيق</string>
     <string name="click_to_change_the_app_icon">اضغط لتغيير أيقونة التطبيق</string>
     <string name="post">Post</string>
-    <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="post_visibility_tilte">طريقة نشر التبويق</string>
+    <string name="add_photo_pixelfed">اضغط هنا لإضافة صور</string>
+    <string name="add_photo_indication_pixelfed">صيغ الملفات المقبولة: jpeg ، png ، gif  \n\n حجم الملف الأقصى: 15 MB  \n\n يمكن للألبومات أن تحتوي على ما يصل إلى 4 صور أو مقاطع فيديو</string>
+    <string name="upload_media">حمّل وسائطًا</string>
+    <string name="pixelfed_compose_placeholder">أضف نصًّا توضيحيا</string>
 </resources>
