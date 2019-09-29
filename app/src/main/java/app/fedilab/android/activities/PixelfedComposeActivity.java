@@ -787,6 +787,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
 
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
+
         Attachment attachment;
         attachment = API.parseAttachmentResponse(response);
         boolean alreadyAdded = false;
@@ -797,6 +798,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 break;
             }
             index++;
+        }
+        if( attachment.getPreview_url().contains("no-preview.png") && successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0){
+            attachment.setPreview_url(successfullyUploadedFiles.get(0));
         }
         if (!alreadyAdded) {
             attachments.add(attachment);
