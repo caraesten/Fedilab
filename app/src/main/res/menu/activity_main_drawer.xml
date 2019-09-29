@@ -114,36 +114,18 @@
             android:id="@+id/nav_pixelfed_comm">
             <menu>
                 <group android:checkableBehavior="single">
-                    <!--
                     <item
-                        android:id="@+id/nav_peertube_fav"
-                        android:icon="@drawable/ic_favorite_peertube_full"
-                        android:title="@string/peertube_favorites" />
-                        -->
-                    <!--
+                        android:id="@+id/nav_pixelfed_scheduled"
+                        android:icon="@drawable/ic_schedule"
+                        android:title="@string/scheduled_toots" />
                     <item
-                        android:id="@+id/nav_my_photo"
-                        android:icon="@drawable/ic_pixelfed_media"
-                        android:title="@string/my_pictures" />
--->
-                    <item
-                        android:id="@+id/nav_pixelfed_favorites"
-                        android:icon="@drawable/ic_pixelfed_favorite"
-                        android:title="@string/favorites_menu" />
+                        android:id="@+id/nav_pixelfed_drafts"
+                        android:icon="@drawable/ic_save_white"
+                        android:title="@string/drafts" />
                     <item
                         android:id="@+id/nav_pixelfed_blocked"
                         android:icon="@drawable/ic_block"
                         android:title="@string/blocked_menu" />
-                    <item
-                        android:id="@+id/nav_pixelfed_muted"
-                        android:icon="@drawable/ic_volume_mute"
-                        android:title="@string/muted_menu" />
-                    <!--
-                    <item
-                        android:id="@+id/nav_pixelfed_settings"
-                        android:icon="@drawable/ic_settings"
-                        android:title="@string/settings" />
-                    -->
                 </group>
             </menu>
         </item>

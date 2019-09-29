@@ -1600,9 +1600,9 @@ public class Helper {
             MenuItem itemCom = menu.findItem(R.id.nav_main_com);
             if (itemCom != null)
                 itemCom.setVisible(false);
-            MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
+            /*MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
             if (itemOpt != null)
-                itemOpt.setVisible(false);
+                itemOpt.setVisible(false);*/
             MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
             if (itemPCom != null)
                 itemPCom.setVisible(false);

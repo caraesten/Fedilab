@@ -1879,7 +1879,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
         delete_instance.setVisibility(View.GONE);
         appBar.setExpanded(true);
-        if (id != R.id.nav_drafts && id != R.id.nav_bookmarks && id != R.id.nav_peertube) {
+        if (id != R.id.nav_drafts && id != R.id.nav_pixelfed_drafts && id != R.id.nav_bookmarks && id != R.id.nav_peertube) {
             delete_all.hide();
         } else {
             delete_all.show();
@@ -1903,7 +1903,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayPeertubeNotificationsFragment, fragmentTag).commit();
 
-        } else if (id == R.id.nav_favorites || id == R.id.nav_pixelfed_favorites) {
+        } else if (id == R.id.nav_favorites) {
             toot.hide();
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
@@ -1964,7 +1964,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "HOW_TO_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayHowToFragment, fragmentTag).commit();
-        } else if (id == R.id.nav_muted || id == R.id.nav_pixelfed_muted) {
+        } else if (id == R.id.nav_muted ) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.MUTED);
@@ -1972,13 +1972,13 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "MUTED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
-        } else if (id == R.id.nav_scheduled) {
+        } else if (id == R.id.nav_scheduled || id == R.id.nav_pixelfed_scheduled) {
             tootShow();
             TabLayoutScheduleFragment tabLayoutScheduleFragment = new TabLayoutScheduleFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutScheduleFragment, fragmentTag).commit();
-        } else if (id == R.id.nav_drafts) {
+        } else if (id == R.id.nav_drafts || id == R.id.nav_pixelfed_drafts) {
             DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
