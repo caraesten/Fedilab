@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
@@ -72,7 +73,6 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveContextInterface;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -144,14 +144,17 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             return;
         }
         List<Status> statuses = apiResponse.getContext().getDescendants();
+
         String targetedId = apiResponse.getTargetedId();
+        int position = 0;
         for(Status tl: this.statuses){
             if( tl.getId().equals(targetedId)){
-                tl.setComments(statuses);
-                tl.setCommentsShown(true);
-                notifyStatusChanged(tl);
+                this.statuses.get(position).setCommentsFetched(true);
+                this.statuses.get(position).setComments(statuses);
+                notifyStatusChanged(this.statuses.get(position));
                 break;
             }
+            position++;
         }
     }
 
@@ -183,10 +186,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             if (apiResponse.getError().getStatusCode() == -33)
                 Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
-        //For conversation
-        if (context instanceof ShowConversationActivity) {
-            ((ShowConversationActivity) context).addStatuses(apiResponse.getStatuses().get(0));
-        }
+
 
     }
 
@@ -321,7 +321,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
         LinearLayout pf_bottom_container;
-        FrameLayout pixelfed_comments;
+        LinearLayout pixelfed_comments;
         RecyclerView lv_comments;
 
         ConstraintLayout quick_reply_container;
@@ -411,13 +411,143 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         .into(holder.pf_pp);
 
 
-            if( status.isCommentsShown()){
+
+
+
+            if (status.isShortReply()) {
+                holder.quick_reply_container.setVisibility(View.VISIBLE);
                 holder.pixelfed_comments.setVisibility(View.VISIBLE);
-                StatusListAdapter statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.PUBLIC,null, false, status.getComments());
-                holder.lv_comments.setAdapter(statusListAdapter);
-            }else{
+                holder.quick_reply_switch_to_full.setVisibility(View.GONE);
+                in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
+                for (Status s : statuses) {
+                    if (s.isShortReply() && !s.getId().equals(status.getId())) {
+                        s.setShortReply(false);
+                        notifyStatusChanged(s);
+                    }
+                }
+                if( status.isCommentsFetched()){
+                    StatusListAdapter statusListAdapter = new StatusListAdapter(0, status.getId(), true, status.getComments());
+                    final LinearLayoutManager mLayoutManager;
+                    mLayoutManager = new LinearLayoutManager(context);
+                    holder.lv_comments.setLayoutManager(mLayoutManager);
+                    holder.lv_comments.setAdapter(statusListAdapter);
+                }else{
+                    status.setCommentsFetched(true);
+                    new RetrieveContextAsyncTask(context, false, false, status.getId(),PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+
+                holder.quick_reply_text.requestFocus();
+                EditText content_cw = new EditText(context);
+                content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
+                TootActivity.manageMentions(context, social, userId,
+                        holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
+                TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
+                comment_content = holder.quick_reply_text;
+                int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+                comment_content.setInputType(newInputType);
+                in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
+                tootReply = status;
+                if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
+                    changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
+                    changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.dark_text);
+                    if (theme == Helper.THEME_DARK) {
+                        holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background);
+                        changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
+                    } else {
+                        holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_black);
+                        changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
+                    }
+                } else {
+                    holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_light);
+                    changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
+                    changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.black);
+
+                }
+
+                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+
+                String defaultVisibility = account.isLocked() ? "private" : "public";
+                String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+                int initialTootVisibility = 0;
+                int ownerTootVisibility = 0;
+                switch (status.getReblog() != null ? status.getReblog().getVisibility() : status.getVisibility()) {
+                    case "public":
+                        initialTootVisibility = 4;
+                        break;
+                    case "unlisted":
+                        initialTootVisibility = 3;
+                        break;
+                    case "private":
+                        visibility = "private";
+                        initialTootVisibility = 2;
+                        break;
+                    case "direct":
+                        visibility = "direct";
+                        initialTootVisibility = 1;
+                        break;
+                }
+                switch (settingsVisibility) {
+                    case "public":
+                        ownerTootVisibility = 4;
+                        break;
+                    case "unlisted":
+                        ownerTootVisibility = 3;
+                        break;
+                    case "private":
+                        visibility = "private";
+                        ownerTootVisibility = 2;
+                        break;
+                    case "direct":
+                        visibility = "direct";
+                        ownerTootVisibility = 1;
+                        break;
+                }
+                int tootVisibility;
+                if (ownerTootVisibility >= initialTootVisibility) {
+                    tootVisibility = initialTootVisibility;
+                } else {
+                    tootVisibility = ownerTootVisibility;
+                }
+                switch (tootVisibility) {
+                    case 4:
+                        visibility = "public";
+                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                        break;
+                    case 3:
+                        visibility = "unlisted";
+                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                        break;
+                    case 2:
+                        visibility = "private";
+                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                        break;
+                    case 1:
+                        visibility = "direct";
+                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                        break;
+                }
+                holder.quick_reply_text.addTextChangedListener(textWatcher);
+
+            } else {
+                holder.quick_reply_container.setVisibility(View.GONE);
+                holder.pixelfed_comments.setVisibility(View.GONE);
+                holder.quick_reply_container.setVisibility(View.GONE);
                 holder.pixelfed_comments.setVisibility(View.GONE);
             }
+
+
+
+
             if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
                 SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>((Activity)context), false, status.getMedia_attachments());
                 holder.imageSlider.setSliderAdapter(sliderAdapter);
@@ -450,11 +580,12 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.quick_reply_privacy.setVisibility(View.GONE);
 
             holder.quick_reply_button.setOnClickListener(view -> {
-                sendToot(null);
-                status.setShortReply(false);
+                sendToot();
+                //status.setShortReply(false);
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
+                notifyStatusChanged(status);
             });
             theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             holder.quick_reply_container.setVisibility(View.VISIBLE);
@@ -465,123 +596,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.pf_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    status.setCommentsShown(!status.isCommentsShown());
-                    in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
-                    if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-                        CrossActions.doCrossConversation(context, status);
-                    } else {
-                        if( status.isCommentsFetched()){
-                            notifyStatusChanged(status);
-                        }else{
-                            status.setCommentsFetched(true);
-                            new RetrieveContextAsyncTask(context, false, false, status.getId(),PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }
-                    }
-
-                    if ( status.isCommentsShown()) {
-                        holder.quick_reply_text.requestFocus();
-                        EditText content_cw = new EditText(context);
-                        content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
-                        TootActivity.manageMentions(context, social, userId,
-                                holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
-                        TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
-
-                        comment_content = holder.quick_reply_text;
-                        int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-                        comment_content.setInputType(newInputType);
-                        in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
-                        tootReply = status;
-                        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-                            changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
-                            changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
-                            changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
-                            changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
-                            changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
-                            changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.dark_text);
-                            if (theme == Helper.THEME_DARK) {
-                                holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background);
-                                changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
-                            } else {
-                                holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_black);
-                                changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
-                            }
-                        } else {
-                            holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_light);
-                            changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
-                            changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
-                            changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
-                            changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
-                            changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
-                            changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.black);
-
-                        }
-
-                        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-
-                        String defaultVisibility = account.isLocked() ? "private" : "public";
-                        String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
-                        int initialTootVisibility = 0;
-                        int ownerTootVisibility = 0;
-                        switch (status.getReblog() != null ? status.getReblog().getVisibility() : status.getVisibility()) {
-                            case "public":
-                                initialTootVisibility = 4;
-                                break;
-                            case "unlisted":
-                                initialTootVisibility = 3;
-                                break;
-                            case "private":
-                                visibility = "private";
-                                initialTootVisibility = 2;
-                                break;
-                            case "direct":
-                                visibility = "direct";
-                                initialTootVisibility = 1;
-                                break;
-                        }
-                        switch (settingsVisibility) {
-                            case "public":
-                                ownerTootVisibility = 4;
-                                break;
-                            case "unlisted":
-                                ownerTootVisibility = 3;
-                                break;
-                            case "private":
-                                visibility = "private";
-                                ownerTootVisibility = 2;
-                                break;
-                            case "direct":
-                                visibility = "direct";
-                                ownerTootVisibility = 1;
-                                break;
-                        }
-                        int tootVisibility;
-                        if (ownerTootVisibility >= initialTootVisibility) {
-                            tootVisibility = initialTootVisibility;
-                        } else {
-                            tootVisibility = ownerTootVisibility;
-                        }
-                        switch (tootVisibility) {
-                            case 4:
-                                visibility = "public";
-                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
-                                break;
-                            case 3:
-                                visibility = "unlisted";
-                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
-                                break;
-                            case 2:
-                                visibility = "private";
-                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
-                                break;
-                            case 1:
-                                visibility = "direct";
-                                holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
-                                break;
-                        }
-                        holder.quick_reply_text.addTextChangedListener(textWatcher);
-
+                    status.setShortReply(!status.isShortReply());
+                    if( !status.isShortReply()){
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        assert imm != null;
+                        imm.hideSoftInputFromWindow(holder.quick_reply_text.getWindowToken(), 0);
                     }
                     notifyStatusChanged(status);
                 }
@@ -697,7 +716,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
-    private void sendToot(String content_type) {
+    private void sendToot() {
 
         if (comment_content.getText() == null) {
             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -713,8 +732,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         String tootContent;
         tootContent = comment_content.getText().toString().trim();
         Status toot = new Status();
-        if (content_type != null)
-            toot.setContentType(content_type);
         toot.setSensitive(false);
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
@@ -767,17 +784,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     else
                         status.setPinned(false);
                     pixelfedListAdapter.notifyItemChanged(position);
-                    break;
-                }
-                position++;
-            }
-        }
-        if (statusAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
-            int position = 0;
-            for (Status status : statuses) {
-                if (status.getId().equals(targetedId)) {
-                    statuses.remove(status);
-                    pixelfedListAdapter.notifyItemRemoved(position);
                     break;
                 }
                 position++;

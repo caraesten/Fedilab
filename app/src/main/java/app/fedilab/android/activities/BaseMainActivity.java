@@ -281,6 +281,8 @@ public abstract class BaseMainActivity extends BaseActivity
         countNewStatus = 0;
         countNewNotifications = 0;
 
+        //TODO: remove that line
+        social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
 
         regex_home = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
         regex_local = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);

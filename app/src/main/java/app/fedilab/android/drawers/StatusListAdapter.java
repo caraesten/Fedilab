@@ -861,8 +861,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return HIDDEN_STATUS;
         if (statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
-        else
-            return statuses.get(position).getViewType();
+        else {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                return COMPACT_STATUS;
+            }else {
+                return statuses.get(position).getViewType();
+            }
+        }
     }
 
     @NonNull

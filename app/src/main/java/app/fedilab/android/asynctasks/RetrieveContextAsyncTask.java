@@ -54,6 +54,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         apiResponse = new APIResponse();
+        apiResponse.setTargetedId(this.statusId);
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             API api = new API(this.contextReference.get());
             statusContext = api.getStatusContext(statusId);

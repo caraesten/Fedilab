@@ -171,7 +171,6 @@ public class Status implements Parcelable {
     private int viewType;
     private boolean isFocused = false;
     private long db_id;
-    private boolean commentsShown = false;
     private boolean commentsFetched = false;
     private List<Status> comments = new ArrayList<>();
 
@@ -1782,13 +1781,6 @@ public class Status implements Parcelable {
         this.db_id = db_id;
     }
 
-    public boolean isCommentsShown() {
-        return commentsShown;
-    }
-
-    public void setCommentsShown(boolean commentsShown) {
-        this.commentsShown = commentsShown;
-    }
 
     public boolean isCommentsFetched() {
         return commentsFetched;

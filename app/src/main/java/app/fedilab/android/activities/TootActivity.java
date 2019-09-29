@@ -3553,13 +3553,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int cursorReply = 0;
+
         if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
             contentView.setText(String.format("@%s", tootReply.getAccount().getAcct()));
             mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
             //Evaluate the cursor position => mention length + 1 char for carriage return
             cursorReply = contentView.getText().toString().length() + 1;
         }
-
         if (tootReply.getMentions() != null) {
             //Put other accounts mentioned at the bottom
             boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
