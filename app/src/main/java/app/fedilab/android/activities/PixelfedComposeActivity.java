@@ -40,7 +40,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -574,7 +573,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         final int[] searchLength = {searchDeep};
         TextWatcher textw = null;
         TextWatcher finalTextw = textw;
-        Log.v(Helper.TAG,"finalTextw: " + finalTextw);
         textw = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -588,7 +586,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             @Override
             public void afterTextChanged(Editable s) {
 
-                Log.v(Helper.TAG,"s: " + s);
                 if (autocomplete) {
                     toot_content.removeTextChangedListener(finalTextw);
                     Thread thread = new Thread() {
@@ -692,7 +689,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
                 int totalChar = countLength(social, toot_content);
                 toot_space_left.setText(String.valueOf(totalChar));
-                Log.v(Helper.TAG,"totalChar: " + totalChar);
                 if (currentCursorPosition[0] - (searchLength[0] - 1) < 0 || currentCursorPosition[0] == 0 || currentCursorPosition[0] > s.toString().length())
                     return;
 
@@ -716,8 +712,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 if( searchInArray.length < 1){
                     return;
                 }
-
-                Log.v(Helper.TAG,"last " + searchInArray.length);
                 String searchIn = searchInArray[searchInArray.length-1];
                 Matcher m, mt;
                 m = sPattern.matcher(searchIn);

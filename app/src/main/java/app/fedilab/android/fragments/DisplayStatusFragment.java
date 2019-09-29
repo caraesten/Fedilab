@@ -195,7 +195,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         //For Home timeline, fetch stored values for bookmark and last read toot
-        if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
             initialBookMark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, null);
             initialBookMarkDate = Helper.stringToDate(context, sharedpreferences.getString(Helper.BOOKMARK_DATE + userId + instance, null));
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
@@ -266,7 +266,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             };
             LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
 
-            if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.LOCAL || type == RetrieveFeedsAsyncTask.Type.PUBLIC) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME || type == RetrieveFeedsAsyncTask.Type.LOCAL || type == RetrieveFeedsAsyncTask.Type.PUBLIC) {
 
                 if (receive_data != null)
                     LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
@@ -285,7 +285,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if (type == RetrieveFeedsAsyncTask.Type.PUBLIC)
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
-            else if (type == RetrieveFeedsAsyncTask.Type.HOME)
+            else if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
             else if (type == RetrieveFeedsAsyncTask.Type.LOCAL)
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
@@ -318,7 +318,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             nextElementLoader.setVisibility(View.GONE);
                         }
                     }
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
+                    if ((type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
                         Date bookmarkL = statuses.get(firstVisibleItem).getCreated_at();
                         updatedBookMark = statuses.get(firstVisibleItem).getId();
                         updatedBookMarkDate = statuses.get(firstVisibleItem).getCreated_at();
@@ -335,7 +335,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                    if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                         MainActivity.countNewStatus = 0;
                     isSwipped = true;
                     if (type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
@@ -416,7 +416,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.clearAnimation();
         }
         //Store bookmark on pause
-        if (context instanceof BaseMainActivity && type == RetrieveFeedsAsyncTask.Type.HOME) {
+        if (context instanceof BaseMainActivity && (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             if (updatedBookMark != null)
                 editor.putString(Helper.BOOKMARK_ID + userId + instance, updatedBookMark);
@@ -578,8 +578,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             //First toot are loaded as soon as the bookmark has been retrieved
             //Only for the Home timeline
-
-            if (type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded) {
+            if ((type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) && !firstTootsLoaded) {
                 boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                 if (remember_position_home)
                     asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
@@ -631,7 +630,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             tempTootResult.add(status);
             if (tempTootResult.size() > 0)
                 status = tempTootResult.get(0);
-            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
 
                 //Makes sure the status is not already displayed
                 if (!statuses.contains(status)) {
@@ -676,7 +675,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onResume();
         swipeRefreshLayout.setEnabled(true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
             if (getUserVisibleHint()) {
                 if (statuses != null && statuses.size() > 0 && asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
                     retrieveMissingToots(statuses.get(0).getId());
@@ -738,7 +737,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      */
     private void retrieveMissingToots(String sinceId) {
 
-        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+        if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
         if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).execute();
@@ -780,7 +779,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         int liveNotifications = Helper.liveNotifType(context);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
             if (visible) {
                 if (statuses != null && statuses.size() > 0) {
                     retrieveMissingToots(statuses.get(0).getId());
@@ -918,7 +917,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if (this.statuses != null) {
-                    if (type != RetrieveFeedsAsyncTask.Type.HOME) {
+                    if (type != RetrieveFeedsAsyncTask.Type.HOME && type != RetrieveFeedsAsyncTask.Type.PF_HOME) {
                         if (tagTimeline != null && instanceType.equals("ART") && !tagTimeline.isNSFW()) {
                             if (!statuses.get(i).isSensitive()) {
                                 this.statuses.add(0, statuses.get(i));
@@ -949,7 +948,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             else if (artListAdapter != null && instanceType.equals("ART"))
                 artListAdapter.notifyItemRangeInserted(0, inserted);
             try {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                     ((MainActivity) context).updateHomeCounter();
                 else {
                     if (type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
@@ -969,7 +968,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveFeedsAfterBookmark(APIResponse apiResponse) {
 
-        if (statusListAdapter == null)
+        if (statusListAdapter == null && pixelfedListAdapter == null)
             return;
         if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
             if (apiResponse == null)
@@ -997,14 +996,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Put the toot at its place in the list (id desc)
             if (!apiResponse.isFetchmore() && this.statuses.size() > 0 && !this.statuses.contains(tmpStatus) && tmpStatus.getCreated_at() != null && this.statuses.get(0).getCreated_at() != null && tmpStatus.getCreated_at().after(this.statuses.get(0).getCreated_at())) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
-                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate)) {
+                if ((type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate)) {
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }
                 tmpStatuses.add(tmpStatus);
             } else if (apiResponse.isFetchmore() && !this.statuses.contains(tmpStatus)) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
-                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate)) {
+                if ((type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate)) {
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }
@@ -1030,7 +1029,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             StatusListAdapter.fetch_all_more = false;
         }
         this.statuses.addAll(position, tmpStatuses);
-        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+        if( statusListAdapter != null)
+            statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+        if( pixelfedListAdapter != null)
+            pixelfedListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
         boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
         if (position > 0 && display_content_after_fetch_more)
             lv_status.scrollToPosition(position + tmpStatuses.size());
@@ -1042,7 +1044,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     //Update last read toots value when pressing tab button
     public void updateLastReadToot() {
-        if (type == RetrieveFeedsAsyncTask.Type.HOME && this.statuses != null && this.statuses.size() > 0) {
+        if ((type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) && this.statuses != null && this.statuses.size() > 0) {
             lastReadToot = this.statuses.get(0).getId();
         }
     }
@@ -1077,7 +1079,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             new ManageListsAsyncTask(context, targetedId, max_id, null, DisplayStatusFragment.this).execute();
         } else {
             if (!pagination) {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
                     if (context instanceof BaseMainActivity) {
                         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                         if (remember_position_home)
@@ -1089,7 +1091,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).execute();
                 }
             } else {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).execute();
                 } else {//Most classical search will be done by this call for pagination
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).execute();
@@ -1148,7 +1150,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         if (instanceType == null || !instanceType.equals("PEERTUBE")) {
-            if (type == RetrieveFeedsAsyncTask.Type.HOME)
+            if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                 MainActivity.countNewStatus = 0;
             isSwipped = true;
             int lenght = statuses.size();
