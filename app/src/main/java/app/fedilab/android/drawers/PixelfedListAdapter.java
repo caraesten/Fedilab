@@ -64,6 +64,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
@@ -433,7 +434,17 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         .into(holder.pf_pp);
 
 
-
+            holder.art_media.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MediaActivity.class);
+                    Bundle b = new Bundle();
+                    intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                    b.putInt("position", 0);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
 
             holder.quick_reply_switch_to_full.setVisibility(View.GONE);
             if (status.isShortReply()) {
