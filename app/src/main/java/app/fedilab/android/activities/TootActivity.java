@@ -3600,6 +3600,36 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
+
+    public static String manageMentions(Context context, String userIdReply, Status tootReply) {
+        String contentView = "";
+        //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+        ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+
+        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
+            contentView = String.format("@%s", tootReply.getAccount().getAcct());
+            mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
+            //Evaluate the cursor position => mention length + 1 char for carriage return
+        }
+        if (tootReply.getMentions() != null) {
+            //Put other accounts mentioned at the bottom
+            contentView = String.format("%s", (contentView + " "));
+            for (Mention mention : tootReply.getMentions()) {
+                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                    mentionedAccountsAdded.add(mention.getAcct());
+                    String tootTemp = String.format("@%s ", mention.getAcct());
+                    contentView = String.format("%s ", (contentView + tootTemp.trim()));
+                }
+            }
+            contentView = contentView.trim();
+            if (contentView.startsWith("@")) {
+                contentView += " ";
+            }
+        }
+        return contentView;
+    }
+
     private void displayPollPopup() {
         AlertDialog.Builder alertPoll = new AlertDialog.Builder(TootActivity.this, style);
         alertPoll.setTitle(R.string.create_poll);

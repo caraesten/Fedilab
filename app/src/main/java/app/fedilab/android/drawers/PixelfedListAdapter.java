@@ -446,22 +446,26 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     mLayoutManager = new LinearLayoutManager(context);
                     holder.lv_comments.setLayoutManager(mLayoutManager);
                     holder.lv_comments.setAdapter(statusListAdapter);
+                    mLayoutManager.scrollToPositionWithOffset(i, 0);
                 }else{
                     status.setCommentsFetched(true);
                     new RetrieveContextAsyncTask(context, false, false, status.getId(),PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
-                holder.quick_reply_text.requestFocus();
                 EditText content_cw = new EditText(context);
                 content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
-                TootActivity.manageMentions(context, social, userId,
-                        holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
+                String content = TootActivity.manageMentions(context, userId,status.getReblog() != null ? status.getReblog() : status);
                 TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
+                holder.quick_reply_text.setText(content);
                 comment_content = holder.quick_reply_text;
+                holder.quick_reply_text.setFocusable(true);
+                holder.quick_reply_text.requestFocus();
+                holder.quick_reply_text.setSelection(content.length()); //Put cursor at the end
                 int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
                 comment_content.setInputType(newInputType);
                 in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
                 tootReply = status;
+
                 if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
                     changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
                     changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
