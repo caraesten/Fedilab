@@ -102,28 +102,28 @@ public class LiveNotificationDelayedService extends Service {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
             if (accountStreams != null) {
                 fetch = true;
-                if( t != null){
-                    t.cancel();
-                    t.purge();
-                    t = null;
-                }
-                t = new Timer();
-                t.scheduleAtFixedRate(new TimerTask() {
-                      @Override
-                      public void run() {
-                          for (final Account accountStream : accountStreams) {
-                              if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA") || accountStream.getSocial().equals("PIXELFED")) {
-                                  new Fetch(new WeakReference<>(liveNotificationDelayedService), accountStream).execute();
+                if( t == null) {
+                    t = new Timer();
+                    t.scheduleAtFixedRate(new TimerTask() {
+                          @Override
+                          public void run() {
+                              for (final Account accountStream : accountStreams) {
+                                  if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA") || accountStream.getSocial().equals("PIXELFED")) {
+                                      new Fetch(new WeakReference<>(liveNotificationDelayedService), accountStream).execute();
+                                  }
+                              }
+                              fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                              if (!fetch) {
+                                  t.cancel();
+                                  t.purge();
+                                  t = null;
+                                  stopSelf();
                               }
                           }
-                          fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                          if( !fetch){
-                              t.cancel();
-                          }
-                      }
-                    },
-                    0,
-                    30000);
+                      },
+                0,
+                60000);
+                }
             }
         }
     }
