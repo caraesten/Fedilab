@@ -20,10 +20,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
@@ -46,9 +48,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -68,6 +74,7 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
@@ -330,7 +337,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder {
         SliderView imageSlider;
-        ImageView pf_pp, pf_comment;
+        ImageView art_media, pf_pp, pf_comment;
         SparkButton pf_fav, pf_share;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
@@ -348,6 +355,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
         ViewHolderPixelfed(View itemView) {
             super(itemView);
+            art_media = itemView.findViewById(R.id.art_media);
             imageSlider = itemView.findViewById(R.id.imageSlider);
             pf_pp = itemView.findViewById(R.id.pf_pp);
             pf_username = itemView.findViewById(R.id.pf_username);
@@ -553,12 +561,20 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
 
-            if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
+            if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 1){
                 SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>((Activity)context), false, status.getMedia_attachments());
                 holder.imageSlider.setSliderAdapter(sliderAdapter);
                 holder.imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
                 holder.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-
+                holder.art_media.setVisibility(View.GONE);
+                holder.imageSlider.setVisibility(View.VISIBLE);
+            }else if(status.getMedia_attachments() != null ){
+                holder.art_media.setVisibility(View.VISIBLE);
+                holder.imageSlider.setVisibility(View.GONE);
+                GlideApp.with(context)
+                        .asBitmap()
+                        .load(status.getMedia_attachments().get(0).getPreview_url())
+                        .into(holder.art_media);
             }
 
             holder.pf_likes.setText(context.getResources().getQuantityString(R.plurals.likes, status.getFavourites_count(), status.getFavourites_count()));

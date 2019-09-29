@@ -56,6 +56,7 @@
         </LinearLayout>
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/imageSlider"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:sliderAnimationDuration="1000"
@@ -72,6 +73,14 @@
             app:sliderIndicatorUnselectedColor="#FFF"
             app:sliderScrollTimeInSec="1"
             app:sliderStartAutoCycle="false" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/art_media"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
