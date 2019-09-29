@@ -1119,9 +1119,9 @@
     <string name="change_app_icon_experimental">Skift app-ikon</string>
     <string name="click_to_change_the_app_icon">Tryk hér for at sikfte app-ikonet</string>
     <string name="post">Post</string>
-    <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="post_visibility_tilte">Indlæggets synlighed</string>
+    <string name="add_photo_pixelfed">Tryk hér for at tilføje fotos</string>
+    <string name="add_photo_indication_pixelfed">Gyldige formater: Jpeg, png, gif\n\nMaks. filstørrelse: 15 MB\n\nAlbum kan indeholde op til 4 fotos eller videoer</string>
+    <string name="upload_media">Upload medier</string>
+    <string name="pixelfed_compose_placeholder">Tilføj en valgfri billedtekst</string>
 </resources>
