@@ -40,6 +40,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -529,8 +530,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
 
         TextWatcher textWatcher = initializeTextWatcher(getApplicationContext(), social, toot_content, toot_space_left, pp_actionBar, pp_progress, PixelfedComposeActivity.this, PixelfedComposeActivity.this, PixelfedComposeActivity.this);
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-            toot_content.addTextChangedListener(textWatcher);
+        toot_content.addTextChangedListener(textWatcher);
 
 
         if (scheduledstatus != null)
@@ -574,6 +574,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         final int[] searchLength = {searchDeep};
         TextWatcher textw = null;
         TextWatcher finalTextw = textw;
+        Log.v(Helper.TAG,"finalTextw: " + finalTextw);
         textw = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -586,6 +587,8 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                Log.v(Helper.TAG,"s: " + s);
                 if (autocomplete) {
                     toot_content.removeTextChangedListener(finalTextw);
                     Thread thread = new Thread() {
@@ -601,8 +604,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                                 if (toFill <= 0) {
                                     return;
                                 }
-
-
                                 StringBuilder hugs = new StringBuilder();
                                 for (int i = 0; i < toFill; i++) {
                                     hugs.append(new String(Character.toChars(0x1F917)));
@@ -691,6 +692,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
                 int totalChar = countLength(social, toot_content);
                 toot_space_left.setText(String.valueOf(totalChar));
+                Log.v(Helper.TAG,"totalChar: " + totalChar);
                 if (currentCursorPosition[0] - (searchLength[0] - 1) < 0 || currentCursorPosition[0] == 0 || currentCursorPosition[0] > s.toString().length())
                     return;
 
@@ -714,6 +716,8 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                 if( searchInArray.length < 1){
                     return;
                 }
+
+                Log.v(Helper.TAG,"last " + searchInArray.length);
                 String searchIn = searchInArray[searchInArray.length-1];
                 Matcher m, mt;
                 m = sPattern.matcher(searchIn);

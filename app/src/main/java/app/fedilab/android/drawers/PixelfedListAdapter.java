@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.activities.MediaActivity;
+import app.fedilab.android.activities.PixelfedComposeActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
@@ -466,7 +467,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 EditText content_cw = new EditText(context);
                 content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
                 String content = TootActivity.manageMentions(context, userId,status.getReblog() != null ? status.getReblog() : status);
-                TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
+                TextWatcher textWatcher = PixelfedComposeActivity.initializeTextWatcher(context, social, holder.quick_reply_text, holder.toot_space_left, null, null, PixelfedListAdapter.this, PixelfedListAdapter.this, PixelfedListAdapter.this);
+                holder.quick_reply_text.addTextChangedListener(textWatcher);
                 holder.quick_reply_text.setText(content);
                 comment_content = holder.quick_reply_text;
                 holder.quick_reply_text.setFocusable(true);
@@ -566,7 +568,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
                         break;
                 }
-                holder.quick_reply_text.addTextChangedListener(textWatcher);
 
             } else {
                 holder.quick_reply_container.setVisibility(View.GONE);
