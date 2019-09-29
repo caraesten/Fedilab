@@ -72,7 +72,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).getRealNodeInfo(this.instance);
-            if (info != null)
+            if (info != null && info.getName() != null && account != null)
                 account.setSocial(info.getName().toUpperCase());
         } else if (social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
