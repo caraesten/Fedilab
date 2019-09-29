@@ -134,7 +134,9 @@ public class LiveNotificationDelayedService extends Service {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
             if (accountStreams != null) {
                 fetch = true;
-
+                if( t == null){
+                    t = new Timer();
+                }
                 t.scheduleAtFixedRate(new TimerTask() {
                       @Override
                       public void run() {
