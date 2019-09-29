@@ -88,7 +88,9 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse.setError(error);
             }
         }
-
+        if( status.getIn_reply_to_id() != null){
+            apiResponse.setTargetedId(status.getIn_reply_to_id());
+        }
 
         return null;
     }

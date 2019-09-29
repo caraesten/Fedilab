@@ -187,6 +187,20 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
 
+        if( apiResponse.getTargetedId() != null && apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+            int position = 0;
+            for(Status tl: this.statuses){
+                if( tl.getId().equals(apiResponse.getTargetedId())){
+                    List<Status> comments = this.statuses.get(position).getComments();
+                    comments.add(comments.size(), apiResponse.getStatuses().get(0));
+                    this.statuses.get(position).setComments(comments);
+                    notifyStatusChanged(this.statuses.get(position));
+                    break;
+                }
+                position++;
+            }
+        }
+
 
     }
 
@@ -413,18 +427,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
 
-
+            holder.quick_reply_switch_to_full.setVisibility(View.GONE);
             if (status.isShortReply()) {
                 holder.quick_reply_container.setVisibility(View.VISIBLE);
                 holder.pixelfed_comments.setVisibility(View.VISIBLE);
-                holder.quick_reply_switch_to_full.setVisibility(View.GONE);
                 in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
-                for (Status s : statuses) {
-                    if (s.isShortReply() && !s.getId().equals(status.getId())) {
-                        s.setShortReply(false);
-                        notifyStatusChanged(s);
-                    }
-                }
                 if( status.isCommentsFetched()){
                     StatusListAdapter statusListAdapter = new StatusListAdapter(0, status.getId(), true, status.getComments());
                     final LinearLayoutManager mLayoutManager;
@@ -541,8 +548,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             } else {
                 holder.quick_reply_container.setVisibility(View.GONE);
                 holder.pixelfed_comments.setVisibility(View.GONE);
-                holder.quick_reply_container.setVisibility(View.GONE);
-                holder.pixelfed_comments.setVisibility(View.GONE);
             }
 
 
@@ -588,7 +593,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 notifyStatusChanged(status);
             });
             theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            holder.quick_reply_container.setVisibility(View.VISIBLE);
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.pf_date.setText(Helper.longDateToString(status.getCreated_at()));
             holder.quick_reply_text.setHint(R.string.leave_a_comment);
@@ -596,7 +600,14 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.pf_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    status.setShortReply(!status.isShortReply());
+                    boolean currentValue = status.isShortReply();
+                    for (Status s : statuses) {
+                        if (s.isShortReply() && !s.getId().equals(status.getId())) {
+                            s.setShortReply(false);
+                            notifyStatusChanged(s);
+                        }
+                    }
+                    status.setShortReply(!currentValue);
                     if( !status.isShortReply()){
                         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                         assert imm != null;

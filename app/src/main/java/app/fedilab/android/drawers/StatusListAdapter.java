@@ -862,7 +862,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if (statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
         else {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
                 return COMPACT_STATUS;
             }else {
                 return statuses.get(position).getViewType();
@@ -917,6 +917,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status.setItemViewType(viewHolder.getItemViewType());
 
 
+
+
+
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
             boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
@@ -961,7 +964,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
+                if (theme == Helper.THEME_DARK) {
+                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                    holder.main_container.setAlpha(.5f);
+                } else if (theme == Helper.THEME_BLACK) {
+                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
+                    holder.main_container.setAlpha(.5f);
+                } else {
+                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
+                    holder.main_container.setAlpha(.5f);
+                }
+            }
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 holder.rated.setVisibility(View.GONE);
