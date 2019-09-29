@@ -122,6 +122,7 @@ import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Card;
+import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.ManageTimelines;
@@ -964,7 +965,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT && !(context instanceof ShowConversationActivity)) {
                 if (theme == Helper.THEME_DARK) {
                     holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
                     holder.main_container.setAlpha(.5f);
