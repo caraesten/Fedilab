@@ -85,6 +85,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.textViewDescription.setText(String.format("%s/%s", (position + 1), attachments.size()));
         }
 
+        if( canDelete){
+            viewHolder.delete_media.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.delete_media.setVisibility(View.GONE);
+        }
+
         Glide.with(viewHolder.imageViewBackground.getContext())
                 .load(attachments.get(position).getPreview_url())
                 .into(viewHolder.imageViewBackground);
@@ -108,6 +114,10 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 public void onClick(View v) {
                     showAddDescription(attachments.get(position));
                 }
+            });
+
+            viewHolder.delete_media.setOnClickListener(view ->{
+                showRemove(position);
             });
         }
 
@@ -205,6 +215,9 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             public void onClick(DialogInterface dialog, int which) {
                 attachments.remove(attachments.get(position));
                 sliderAdapter.notifyDataSetChanged();
+                if( contextWeakReference.get() instanceof PixelfedComposeActivity){
+                    ((PixelfedComposeActivity) contextWeakReference.get()).redraw();
+                }
                 dialog.dismiss();
             }
         });
@@ -229,13 +242,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
-        ImageView imageViewBackground;
+        ImageView imageViewBackground, delete_media;
         TextView textViewDescription;
 
         SliderAdapterVH(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
             textViewDescription = itemView.findViewById(R.id.tv_auto_image_slider);
+            delete_media = itemView.findViewById(R.id.delete_media);
         }
     }
 }

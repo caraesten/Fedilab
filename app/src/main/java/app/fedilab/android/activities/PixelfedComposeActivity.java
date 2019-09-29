@@ -182,7 +182,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     private ImageView pp_actionBar;
     private ProgressBar pp_progress;
     private Toast mToast;
-    private LinearLayout drawer_layout;
     private TextView toot_space_left;
     private String initialContent;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
@@ -323,7 +322,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
         imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         imageSlider.setSliderAdapter(sliderAdapter);
-
         upload_media = findViewById(R.id.upload_media);
         toot_space_left = findViewById(R.id.toot_space_left);
         toot_visibility = findViewById(R.id.toot_visibility);
@@ -335,7 +333,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         //There is no media the button is hidden
         upload_media.setVisibility(View.INVISIBLE);
         toot_sensitive = findViewById(R.id.toot_sensitive);
-        drawer_layout = findViewById(R.id.drawer_layout);
+        LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
 
         isScheduled = false;
@@ -815,6 +813,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             if (account.isSensitive()) {
                 toot_sensitive.setChecked(true);
             }
+            imageSlider.setCurrentPagePosition(imageSlider.getChildCount());
         } else {
             if (attachments.size() > index && attachment.getDescription() != null) {
                 attachments.get(index).setDescription(attachment.getDescription());
@@ -1906,6 +1905,18 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
 
+    public void redraw(){
+        int position = imageSlider.getCurrentPagePosition();
+        if( position > attachments.size()){
+            position = attachments.size();
+        }
+        sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
+        imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        imageSlider.setSliderAdapter(sliderAdapter);
+        imageSlider.setCurrentPagePosition(position);
+    }
+
     private void restoreServerSchedule(Status status) {
 
         attachments = status.getMedia_attachments();
@@ -2080,6 +2091,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
         }
     }
+
 
 
     @Override
