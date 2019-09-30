@@ -1121,5 +1121,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="add_photo_indication_pixelfed">Formats acceptés: jpeg, png, gif \n\nTaille de fichier maximum: 15 MB \n\nLes albums peuvent contenir jusqu\'à 4 photos ou vidéos</string>
     <string name="upload_media">Téléverser un média</string>
     <string name="pixelfed_compose_placeholder">Ajouter une légende optionnelle</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">L\'application à reçu un message d\'erreur très long de l\'API %1$s</string>
 </resources>
