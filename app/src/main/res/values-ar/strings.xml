@@ -1143,4 +1143,5 @@
     <string name="add_photo_indication_pixelfed">صيغ الملفات المقبولة: jpeg ، png ، gif  \n\n حجم الملف الأقصى: 15 MB  \n\n يمكن للألبومات أن تحتوي على ما يصل إلى 4 صور أو مقاطع فيديو</string>
     <string name="upload_media">حمّل وسائطًا</string>
     <string name="pixelfed_compose_placeholder">أضف نصًّا توضيحيا</string>
+    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
 </resources>
