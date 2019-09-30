@@ -1122,4 +1122,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
 </resources>

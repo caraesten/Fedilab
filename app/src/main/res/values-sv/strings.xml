@@ -1118,10 +1118,11 @@
     <string name="please_wait_compression">Appen komprimerar media, det kan ta en stund…</string>
     <string name="change_app_icon_experimental">Ändra app-ikonen</string>
     <string name="click_to_change_the_app_icon">Klicka här för att ändra app-ikonen</string>
-    <string name="post">Post</string>
-    <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="post">Posta</string>
+    <string name="post_visibility_tilte">Synlighet för posten</string>
+    <string name="add_photo_pixelfed">Klicka här för att lägga till foton</string>
+    <string name="add_photo_indication_pixelfed">Accepterade format: jpeg, png, gif  \n\nMax filstorlek: 15 MB  \n\nAlbum kan ha upp till 4 foton eller videor</string>
+    <string name="upload_media">Ladda upp media</string>
+    <string name="pixelfed_compose_placeholder">Lägg till en valfri beskrivning</string>
+    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
 </resources>

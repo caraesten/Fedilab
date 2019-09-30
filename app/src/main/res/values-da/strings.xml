@@ -1124,4 +1124,5 @@
     <string name="add_photo_indication_pixelfed">Gyldige formater: Jpeg, png, gif\n\nMaks. filstørrelse: 15 MB\n\nAlbum kan indeholde op til 4 fotos eller videoer</string>
     <string name="upload_media">Upload medier</string>
     <string name="pixelfed_compose_placeholder">Tilføj en valgfri billedtekst</string>
+    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
 </resources>
