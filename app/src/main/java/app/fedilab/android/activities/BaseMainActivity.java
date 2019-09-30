@@ -699,8 +699,13 @@ public abstract class BaseMainActivity extends BaseActivity
                                 icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
                         if (viewPager.getAdapter() != null) {
                             Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
+                            if( fragment instanceof DisplayStatusFragment) {
+                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                                displayStatusFragment.scrollToTop();
+                            }else if(fragment instanceof  DisplayNotificationsFragment){
+                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                                displayNotificationsFragment.scrollToTop();
+                            }
                         }
                     }
                 }

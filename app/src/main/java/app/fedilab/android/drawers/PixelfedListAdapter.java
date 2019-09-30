@@ -587,9 +587,15 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             }else if(status.getMedia_attachments() != null ){
                 holder.art_media.setVisibility(View.VISIBLE);
                 holder.imageSlider.setVisibility(View.GONE);
+                String url;
+                if(status.getMedia_attachments().get(0).getPreview_url().endsWith("no-preview.png") ){
+                    url = status.getMedia_attachments().get(0).getUrl();
+                }else{
+                    url = status.getMedia_attachments().get(0).getPreview_url();
+                }
                 GlideApp.with(context)
                         .asBitmap()
-                        .load(status.getMedia_attachments().get(0).getPreview_url())
+                        .load(url)
                         .into(holder.art_media);
             }
 
