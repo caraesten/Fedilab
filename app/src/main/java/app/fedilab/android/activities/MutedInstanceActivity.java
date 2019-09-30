@@ -387,7 +387,11 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if (error != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            if(error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         Helper.manageMessageStatusCode(MutedInstanceActivity.this, statusCode, statusAction);

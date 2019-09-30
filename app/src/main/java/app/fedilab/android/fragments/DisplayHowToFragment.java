@@ -94,7 +94,11 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
     public void onRetrieveHowTo(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if(apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         List<HowToVideo> howToVideos = apiResponse.getHowToVideos();

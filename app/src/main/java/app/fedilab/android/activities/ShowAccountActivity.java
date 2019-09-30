@@ -1000,7 +1000,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onRetrieveRelationship(Relationship relationship, Error error) {
 
         if (error != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            if(error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         this.relationship = relationship;
@@ -1613,7 +1617,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         if (error != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            if(error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         if (addToList != null) {
@@ -1642,7 +1650,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             if (error == null)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+                if(error.getError().length() < 100) {
+                    Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             return;
         }
         this.account = account;

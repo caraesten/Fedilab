@@ -319,7 +319,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if(apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
 
@@ -342,7 +346,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                 playlistAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
             } else {
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             }
         } else if (actionType == ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST) {
             if (this.playlists.size() == 0)
@@ -365,7 +373,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if (apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0) {
             if (apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             else
                 Toasty.error(context, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;

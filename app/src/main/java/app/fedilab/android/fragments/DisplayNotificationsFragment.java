@@ -305,7 +305,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if (apiResponse.getError() != null) {
 
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if(apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;

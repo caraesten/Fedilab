@@ -168,7 +168,11 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            if(error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            }else{
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         lv_search.setVisibility(View.VISIBLE);

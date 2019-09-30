@@ -487,8 +487,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (this.peertubes == null || this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            else
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            else {
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
+            }
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
             return;
@@ -974,7 +979,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
             return;
@@ -1108,7 +1117,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
             if (!apiResponse.getError().getError().startsWith("404 -"))
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             swipeRefreshLayout.setRefreshing(false);
             isSwipped = false;
             flag_loading = false;
