@@ -16,35 +16,46 @@ package app.fedilab.android.drawers;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +66,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.github.stom79.mytransl.MyTransL;
+import com.github.stom79.mytransl.client.HttpsConnectionException;
+import com.github.stom79.mytransl.client.Results;
+import com.github.stom79.mytransl.translate.Translate;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -62,11 +77,19 @@ import com.varunest.sparkbutton.SparkButton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.CustomSharingActivity;
 import app.fedilab.android.activities.MediaActivity;
+import app.fedilab.android.activities.OwnerNotificationChartsActivity;
 import app.fedilab.android.activities.PixelfedComposeActivity;
 import app.fedilab.android.activities.TootActivity;
+import app.fedilab.android.activities.TootInfoActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
 import app.fedilab.android.client.API;
@@ -82,11 +105,15 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveContextInterface;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearcAccountshInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
+import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
+import app.fedilab.android.sqlite.StatusStoredDAO;
+import app.fedilab.android.sqlite.TempMuteDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -98,6 +125,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
 import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
@@ -106,7 +134,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
  * Created by Thomas on 14/01/2019.
  * Adapter for pixelfed drawer
  */
-public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface, OnRetrieveContextInterface {
+public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveSearcAccountshInterface, OnRetrieveContextInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -120,6 +148,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private int theme;
     private long currentToId = -1;
     private Status tootReply;
+    private boolean redraft = false;
+    private Status toot;
 
     public PixelfedListAdapter(RetrieveFeedsAsyncTask.Type type, List<Status> statuses) {
         super();
@@ -324,6 +354,22 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse) {
+        if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0) {
+
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            long id = new StatusStoredDAO(context, db).insertStatus(toot, apiResponse.getStatuses().get(0));
+            Intent intentToot = new Intent(context, PixelfedComposeActivity.class);
+            Bundle b = new Bundle();
+            b.putLong("restored", id);
+            b.putBoolean("removed", true);
+            intentToot.putExtras(b);
+            context.startActivity(intentToot);
+        }
+
+    }
+
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder {
         ViewHolderEmpty(View itemView) {
@@ -349,7 +395,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
         ConstraintLayout quick_reply_container;
         MastalabAutoCompleteTextView quick_reply_text;
-        ImageView quick_reply_switch_to_full;
+        ImageView quick_reply_switch_to_full, status_more;
         TextView toot_space_left;
         ImageView quick_reply_emoji;
         Button quick_reply_button;
@@ -372,7 +418,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             pixelfed_comments =  itemView.findViewById(R.id.pixelfed_comments);
             lv_comments =  itemView.findViewById(R.id.lv_comments);
             quick_reply_container = itemView.findViewById(R.id.quick_reply_container);
-
+            status_more = itemView.findViewById(R.id.status_more);
             quick_reply_text = itemView.findViewById(R.id.quick_reply_text);
             quick_reply_switch_to_full = itemView.findViewById(R.id.quick_reply_switch_to_full);
             toot_space_left = itemView.findViewById(R.id.toot_space_left);
@@ -478,7 +524,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 comment_content.setInputType(newInputType);
                 in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
                 tootReply = status;
-
+                theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
                     changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
                     changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
@@ -630,7 +676,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
                 notifyStatusChanged(status);
             });
-            theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.pf_date.setText(Helper.longDateToString(status.getCreated_at()));
             holder.quick_reply_text.setHint(R.string.leave_a_comment);
@@ -654,6 +700,330 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     notifyStatusChanged(status);
                 }
             });
+
+
+            final View attached = holder.status_more;
+            holder.status_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, attached);
+                    final boolean isOwner = status.getReblog() != null ? status.getReblog().getAccount().getId().equals(userId) : status.getAccount().getId().equals(userId);
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_toot, popup.getMenu());
+                    if (status.getVisibility().equals("private") || status.getVisibility().equals("direct")) {
+                        popup.getMenu().findItem(R.id.action_mention).setVisible(false);
+                    }
+                    if (status.isBookmarked())
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
+                    else
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
+                    if (status.isMuted())
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.unmute_conversation);
+                    else
+                        popup.getMenu().findItem(R.id.action_mute_conversation).setTitle(R.string.mute_conversation);
+
+
+                    final String[] stringArrayConf;
+                    if (status.getVisibility().equals("direct") || (status.getVisibility().equals("private") && !isOwner))
+                        popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
+                    if (isOwner) {
+                        popup.getMenu().findItem(R.id.action_block).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                        stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                        if (social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                            popup.getMenu().findItem(R.id.action_stats).setVisible(false);
+                        }
+                    } else {
+                        popup.getMenu().findItem(R.id.action_stats).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
+                        //popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                        //Same instance
+                        if (status.getAccount().getAcct().split("@").length < 2)
+                            popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                        stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
+                    }
+                    //TODO: fix and display that feature
+                    popup.getMenu().findItem(R.id.action_admin).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_mention).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_copy).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_stats).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_translate).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_bookmark).setVisible(false);
+
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK) {
+                        style = R.style.DialogBlack;
+                    } else {
+                        style = R.style.Dialog;
+                    }
+
+                    boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
+                    if (custom_sharing && status.getVisibility().equals("public"))
+                        popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
+                    MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            AlertDialog.Builder builderInner;
+                            final API.StatusAction doAction;
+                            switch (item.getItemId()) {
+                                case R.id.action_redraft:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[1]);
+                                    redraft = true;
+                                    doAction = API.StatusAction.UNSTATUS;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                    else
+                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                    break;
+                                case R.id.action_schedule_boost:
+                                    scheduleBoost(status);
+                                    return true;
+                                case R.id.action_info:
+                                    tootInformation(status);
+                                    return true;
+                                case R.id.action_open_browser:
+                                    Helper.openBrowser(context, status.getReblog() != null ? status.getReblog().getUrl() : status.getUrl());
+                                    return true;
+                                case R.id.action_remove:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[0]);
+                                    doAction = API.StatusAction.UNSTATUS;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                    else
+                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                    break;
+                                case R.id.action_block_domain:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[3]);
+                                    doAction = API.StatusAction.BLOCK_DOMAIN;
+                                    String domain = status.getAccount().getAcct().split("@")[1];
+                                    builderInner.setMessage(context.getString(R.string.block_domain_confirm_message, domain));
+                                    break;
+                                case R.id.action_mute:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[0]);
+                                    builderInner.setMessage(status.getAccount().getAcct());
+                                    doAction = API.StatusAction.MUTE;
+                                    break;
+                                case R.id.action_mute_conversation:
+                                    if (status.isMuted())
+                                        doAction = API.StatusAction.UNMUTE_CONVERSATION;
+                                    else
+                                        doAction = API.StatusAction.MUTE_CONVERSATION;
+
+                                    new PostActionAsyncTask(context, doAction, status.getId(), PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    return true;
+                                case R.id.action_bookmark:
+                                    if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                                        status.setBookmarked(!status.isBookmarked());
+                                        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        try {
+                                            if (status.isBookmarked()) {
+                                                new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                                Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
+                                            } else {
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
+                                            }
+                                            notifyStatusChanged(status);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                                        }
+                                    } else {
+                                        int position = 0;
+                                        for (Status statustmp : statuses) {
+                                            if (statustmp.getId().equals(status.getId())) {
+                                                statuses.remove(status);
+                                                pixelfedListAdapter.notifyItemRemoved(position);
+                                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
+                                                break;
+                                            }
+                                            position++;
+                                        }
+                                    }
+                                    return true;
+                                case R.id.action_timed_mute:
+                                    timedMuteAction(status);
+                                    return true;
+                                case R.id.action_block:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[1]);
+                                    doAction = API.StatusAction.BLOCK;
+                                    break;
+                                case R.id.action_translate:
+                                    int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                                    if (translator == Helper.TRANS_NONE)
+                                        Toasty.info(context, R.string.toast_error_translations_disabled, Toast.LENGTH_SHORT).show();
+                                    else
+                                        translateToot(status);
+                                    return true;
+                                case R.id.action_report:
+                                    builderInner = new AlertDialog.Builder(context, style);
+                                    builderInner.setTitle(stringArrayConf[2]);
+                                    doAction = API.StatusAction.REPORT;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                    else
+                                        //noinspection deprecation
+                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                    break;
+                                case R.id.action_copy_link:
+                                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+                                    ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getReblog() != null ? status.getReblog().getUrl() : status.getUrl());
+                                    if (clipboard != null) {
+                                        clipboard.setPrimaryClip(clip);
+                                        Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
+                                    }
+                                    return true;
+                                case R.id.action_share:
+                                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                    String url;
+
+                                    if (status.getReblog() != null) {
+                                        if (status.getReblog().getUri().startsWith("http"))
+                                            url = status.getReblog().getUri();
+                                        else
+                                            url = status.getReblog().getUrl();
+                                    } else {
+                                        if (status.getUri().startsWith("http"))
+                                            url = status.getUri();
+                                        else
+                                            url = status.getUrl();
+                                    }
+                                    String extra_text;
+                                    boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+                                    if (share_details) {
+                                        extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
+                                        if (extra_text.split("@").length == 1)
+                                            extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                                        else
+                                            extra_text = "@" + extra_text;
+                                        extra_text += " " + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                                        final String contentToot;
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                            contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                                        else
+                                            //noinspection deprecation
+                                            contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent()).toString();
+                                        extra_text += contentToot;
+                                    } else {
+                                        extra_text = url;
+                                    }
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                                    sendIntent.setType("text/plain");
+                                    context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                    return true;
+                                default:
+                                    return true;
+                            }
+
+                            //Text for report
+                            EditText input = null;
+                            if (doAction == API.StatusAction.REPORT) {
+                                input = new EditText(context);
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                                input.setLayoutParams(lp);
+                                builderInner.setView(input);
+                            }
+                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            final EditText finalInput = input;
+                            builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (doAction == API.StatusAction.UNSTATUS) {
+                                        String targetedId = status.getId();
+                                        new PostActionAsyncTask(context, doAction, targetedId, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        if (redraft) {
+                                            if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")) {
+                                                toot = new Status();
+                                                toot.setIn_reply_to_id(status.getIn_reply_to_id());
+                                                toot.setSensitive(status.isSensitive());
+                                                toot.setMedia_attachments(status.getMedia_attachments());
+                                                if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
+                                                    toot.setSpoiler_text(status.getSpoiler_text().trim());
+                                                toot.setContent(status.getContent());
+                                                toot.setVisibility(status.getVisibility());
+                                                if (status.getPoll() != null) {
+                                                    toot.setPoll(status.getPoll());
+                                                } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
+                                                    toot.setPoll(status.getPoll());
+                                                }
+                                                new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                            } else {
+                                                toot = new Status();
+                                                toot.setSensitive(status.isSensitive());
+                                                toot.setMedia_attachments(status.getMedia_attachments());
+                                                if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
+                                                    toot.setSpoiler_text(status.getSpoiler_text().trim());
+                                                toot.setVisibility(status.getVisibility());
+                                                toot.setContent(status.getContent());
+                                                if (status.getPoll() != null) {
+                                                    toot.setPoll(status.getPoll());
+                                                } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
+                                                    toot.setPoll(status.getPoll());
+                                                }
+                                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                                long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
+                                                Intent intentToot = new Intent(context, PixelfedComposeActivity.class);
+                                                Bundle b = new Bundle();
+                                                b.putLong("restored", id);
+                                                b.putBoolean("removed", true);
+                                                intentToot.putExtras(b);
+                                                context.startActivity(intentToot);
+                                            }
+                                        }
+                                    } else if (doAction == API.StatusAction.REPORT) {
+                                        String comment = null;
+                                        if (finalInput.getText() != null)
+                                            comment = finalInput.getText().toString();
+                                        new PostActionAsyncTask(context, doAction, status.getId(), status, comment, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    } else {
+                                        String targetedId;
+                                        if (item.getItemId() == R.id.action_block_domain) {
+                                            targetedId = status.getAccount().getAcct().split("@")[1];
+                                        } else {
+                                            targetedId = status.getAccount().getId();
+                                        }
+                                        new PostActionAsyncTask(context, doAction, targetedId, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    }
+                                    dialog.dismiss();
+                                }
+                            });
+                            builderInner.show();
+                            return true;
+                        }
+                    });
+                    popup.show();
+                }
+            });
+
+
+
 
             holder.pf_date.setOnClickListener(view ->{
                 Intent intent = new Intent(context, ShowConversationActivity.class);
@@ -679,17 +1049,20 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.pf_share.setInActiveImageTint(R.color.action_black);
                 Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_black);
                 Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_black);
+                Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
             } else if (theme == Helper.THEME_DARK) {
                 holder.pf_fav.setInActiveImageTint(R.color.action_dark);
                 holder.pf_share.setInActiveImageTint(R.color.action_dark);
                 Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_dark);
+                Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
                 Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_dark);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1_));
             } else {
                 holder.pf_fav.setInActiveImageTint(R.color.action_light);
                 holder.pf_share.setInActiveImageTint(R.color.action_light);
                 Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_light);
+                Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
                 Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_light);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
             }
@@ -762,6 +1135,85 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             });
         }
 
+
+
+    }
+
+
+    private void translateToot(Status status) {
+        //Manages translations
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+        MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
+        String api_key = null;
+
+
+        if (trans == Helper.TRANS_YANDEX) {
+            et = MyTransL.translatorEngine.YANDEX;
+        } else if (trans == Helper.TRANS_DEEPL) {
+            et = MyTransL.translatorEngine.DEEPL;
+        }
+        final MyTransL myTransL = MyTransL.getInstance(et);
+        myTransL.setObfuscation(true);
+        if (trans == Helper.TRANS_YANDEX) {
+            api_key = sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, Helper.YANDEX_KEY);
+            myTransL.setYandexAPIKey(api_key);
+        } else if (trans == Helper.TRANS_DEEPL) {
+            api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
+            myTransL.setDeeplAPIKey(api_key);
+        }
+
+
+        if (!status.isTranslated()) {
+            String statusToTranslate;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent()).toString();
+            //TODO: removes the replaceAll once fixed with the lib
+            myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
+                @Override
+                public void onSuccess(Translate translate) {
+                    if (translate.getTranslatedContent() != null) {
+                        status.setTranslated(true);
+                        status.setTranslationShown(true);
+                        status.setContentTranslated(translate.getTranslatedContent());
+                        Status.transformTranslation(context, status);
+                        Status.makeEmojisTranslation(context, PixelfedListAdapter.this, status);
+                        notifyStatusChanged(status);
+                    } else {
+                        Toasty.error(context, context.getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFail(HttpsConnectionException e) {
+                    e.printStackTrace();
+                    Toasty.error(context, context.getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            status.setTranslationShown(!status.isTranslationShown());
+            notifyStatusChanged(status);
+        }
+    }
+
+
+    private void tootInformation(Status status) {
+        Intent intent = new Intent(context, TootInfoActivity.class);
+        Bundle b = new Bundle();
+        if (status.getReblog() != null) {
+            b.putString("toot_id", status.getReblog().getId());
+            b.putInt("toot_reblogs_count", status.getReblog().getReblogs_count());
+            b.putInt("toot_favorites_count", status.getReblog().getFavourites_count());
+        } else {
+            b.putString("toot_id", status.getId());
+            b.putInt("toot_reblogs_count", status.getReblogs_count());
+            b.putInt("toot_favorites_count", status.getFavourites_count());
+        }
+        intent.putExtras(b);
+        context.startActivity(intent);
     }
 
 
@@ -838,6 +1290,208 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 position++;
             }
         }
+    }
+
+
+
+    private void timedMuteAction(Status status) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK) {
+            style = R.style.DialogBlack;
+        } else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.datetime_picker, new LinearLayout(context), false);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog alertDialog = dialogBuilder.create();
+        final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
+        final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
+        timePicker.setIs24HourView(true);
+        Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
+        final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
+        final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);
+        final ImageButton date_time_set = dialogView.findViewById(R.id.date_time_set);
+
+        //Buttons management
+        date_time_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        date_time_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePicker.setVisibility(View.GONE);
+                timePicker.setVisibility(View.VISIBLE);
+                date_time_previous.setVisibility(View.VISIBLE);
+                date_time_next.setVisibility(View.GONE);
+                date_time_set.setVisibility(View.VISIBLE);
+            }
+        });
+        date_time_previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePicker.setVisibility(View.VISIBLE);
+                timePicker.setVisibility(View.GONE);
+                date_time_previous.setVisibility(View.GONE);
+                date_time_next.setVisibility(View.VISIBLE);
+                date_time_set.setVisibility(View.GONE);
+            }
+        });
+        date_time_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour, minute;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    hour = timePicker.getHour();
+                    minute = timePicker.getMinute();
+                } else {
+                    //noinspection deprecation
+                    hour = timePicker.getCurrentHour();
+                    //noinspection deprecation
+                    minute = timePicker.getCurrentMinute();
+                }
+                Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                        datePicker.getMonth(),
+                        datePicker.getDayOfMonth(),
+                        hour,
+                        minute);
+                long time = calendar.getTimeInMillis();
+                if ((time - new Date().getTime()) < 60000) {
+                    Toasty.error(context, context.getString(R.string.timed_mute_date_error), Toast.LENGTH_LONG).show();
+                } else {
+                    //Store the toot as draft first
+                    String targeted_id = status.getAccount().getId();
+                    Date date_mute = new Date(time);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                    new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
+                    if (mutedAccount != null && !mutedAccount.contains(account.getId()))
+                        mutedAccount.add(targeted_id);
+                    else if (mutedAccount == null) {
+                        mutedAccount = new ArrayList<>();
+                        mutedAccount.add(targeted_id);
+                    }
+                    Toasty.success(context, context.getString(R.string.timed_mute_date, status.getAccount().getAcct(), Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
+                    alertDialog.dismiss();
+                    send_delete_statuses(targeted_id);
+                }
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void send_delete_statuses(String targetedId) {
+        //Delete in the current timeline
+        List<Status> statusesToRemove = new ArrayList<>();
+        for (Status status : statuses) {
+            if (status.getAccount().getId().equals(targetedId))
+                statusesToRemove.add(status);
+        }
+        statuses.removeAll(statusesToRemove);
+        pixelfedListAdapter.notifyDataSetChanged();
+        //Send an intent to delete in every timelines
+        Bundle b = new Bundle();
+        b.putString("receive_action", targetedId);
+        Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+        intentBC.putExtras(b);
+    }
+
+
+    private void scheduleBoost(Status status) {
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK) {
+            style = R.style.DialogBlack;
+        } else {
+            style = R.style.Dialog;
+        }
+
+        AlertDialog.Builder dialogBuilderBoost = new AlertDialog.Builder(context, style);
+        LayoutInflater inflaterBoost = ((Activity) context).getLayoutInflater();
+        View dialogViewBoost = inflaterBoost.inflate(R.layout.datetime_picker, new LinearLayout(context), false);
+        dialogBuilderBoost.setView(dialogViewBoost);
+        final AlertDialog alertDialogBoost = dialogBuilderBoost.create();
+
+        final DatePicker datePickerBoost = dialogViewBoost.findViewById(R.id.date_picker);
+        final TimePicker timePickerBoost = dialogViewBoost.findViewById(R.id.time_picker);
+        timePickerBoost.setIs24HourView(true);
+        Button date_time_cancelBoost = dialogViewBoost.findViewById(R.id.date_time_cancel);
+        final ImageButton date_time_previousBoost = dialogViewBoost.findViewById(R.id.date_time_previous);
+        final ImageButton date_time_nextBoost = dialogViewBoost.findViewById(R.id.date_time_next);
+        final ImageButton date_time_setBoost = dialogViewBoost.findViewById(R.id.date_time_set);
+
+        //Buttons management
+        date_time_cancelBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialogBoost.dismiss();
+            }
+        });
+        date_time_nextBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerBoost.setVisibility(View.GONE);
+                timePickerBoost.setVisibility(View.VISIBLE);
+                date_time_previousBoost.setVisibility(View.VISIBLE);
+                date_time_nextBoost.setVisibility(View.GONE);
+                date_time_setBoost.setVisibility(View.VISIBLE);
+            }
+        });
+        date_time_previousBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerBoost.setVisibility(View.VISIBLE);
+                timePickerBoost.setVisibility(View.GONE);
+                date_time_previousBoost.setVisibility(View.GONE);
+                date_time_nextBoost.setVisibility(View.VISIBLE);
+                date_time_setBoost.setVisibility(View.GONE);
+            }
+        });
+        date_time_setBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour, minute;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    hour = timePickerBoost.getHour();
+                    minute = timePickerBoost.getMinute();
+                } else {
+                    //noinspection deprecation
+                    hour = timePickerBoost.getCurrentHour();
+                    //noinspection deprecation
+                    minute = timePickerBoost.getCurrentMinute();
+                }
+                Calendar calendar = new GregorianCalendar(datePickerBoost.getYear(),
+                        datePickerBoost.getMonth(),
+                        datePickerBoost.getDayOfMonth(),
+                        hour,
+                        minute);
+                long time = calendar.getTimeInMillis();
+                if ((time - new Date().getTime()) < 60000) {
+                    Toasty.warning(context, context.getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
+                } else {
+                    //Schedules the toot
+                    ScheduledBoostsSyncJob.schedule(context, status, time);
+                    //Clear content
+                    Toasty.info(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
+                    alertDialogBoost.dismiss();
+                }
+            }
+        });
+        alertDialogBoost.show();
     }
 
     public void notifyStatusChanged(Status status) {

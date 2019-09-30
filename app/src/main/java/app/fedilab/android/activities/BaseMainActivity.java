@@ -1989,7 +1989,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
             toot.hide();
-        } else if (id == R.id.nav_bookmarks) {
+        } else if (id == R.id.nav_bookmarks /*|| id == R.id.nav_pixelfed_bookmarks*/) {
             DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
