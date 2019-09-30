@@ -1125,4 +1125,5 @@
     <string name="add_photo_indication_pixelfed">Formatos admitidos: jpeg, png, gif \n\nTamaño Máx.: 15 MB \n\nOs álbumes poder ter ate 4 fotos ou vídeos</string>
     <string name="upload_media">Subir medios</string>
     <string name="pixelfed_compose_placeholder">Engadir lenda de xeito optativo</string>
+    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
 </resources>
