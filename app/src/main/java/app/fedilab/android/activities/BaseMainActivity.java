@@ -650,6 +650,7 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+            toot.setImageResource(R.drawable.ic_add_a_photo_pixelfed);
             adapter = new PagerAdapter
                     (getSupportFragmentManager(), tabLayout.getTabCount());
             viewPager.setAdapter(adapter);
@@ -1913,6 +1914,9 @@ public abstract class BaseMainActivity extends BaseActivity
             toot.hide();
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+                bundle.putString("instanceType", "PIXELFED");
+            }
             statusFragment.setArguments(bundle);
             fragmentTag = "FAVOURITES";
             fragmentManager.beginTransaction()
