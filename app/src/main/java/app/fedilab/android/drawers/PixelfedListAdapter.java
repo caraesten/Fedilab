@@ -742,8 +742,15 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         //popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         //Same instance
-                        if (status.getAccount().getAcct().split("@").length < 2)
+
+                        if (status.getAccount().getAcct().split("@").length < 2) {
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                        }else{
+                            String instanceAccount = status.getAccount().getAcct().split("@")[1];
+                            if( Helper.getLiveInstance(context).compareTo(instanceAccount) == 0){
+                                popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+                            }
+                        }
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
                     }
                     //TODO: fix and display that feature
@@ -754,7 +761,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                     popup.getMenu().findItem(R.id.action_translate).setVisible(false);
                     popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                    popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                     popup.getMenu().findItem(R.id.action_bookmark).setVisible(false);
 
                     final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);

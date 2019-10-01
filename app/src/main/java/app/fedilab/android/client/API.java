@@ -5032,8 +5032,17 @@ public class API {
 
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
-            status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
-            status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
+            if( !resobj.isNull("favourites_count") ) {
+                status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
+            }else{
+                status.setFavourites_count(0);
+            }
+            if( !resobj.isNull("reblogs_count") ) {
+                status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
+            }else{
+                status.setReblogs_count(0);
+            }
+
             try {
                 status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
             } catch (Exception e) {
