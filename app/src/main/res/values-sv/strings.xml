@@ -1124,5 +1124,5 @@
     <string name="add_photo_indication_pixelfed">Accepterade format: jpeg, png, gif  \n\nMax filstorlek: 15 MB  \n\nAlbum kan ha upp till 4 foton eller videor</string>
     <string name="upload_media">Ladda upp media</string>
     <string name="pixelfed_compose_placeholder">Lägg till en valfri beskrivning</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">Appen mottog ett väldigt långt felmeddelande från API:et %1$s</string>
 </resources>
