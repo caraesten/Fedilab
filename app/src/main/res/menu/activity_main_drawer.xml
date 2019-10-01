@@ -122,12 +122,10 @@
                         android:id="@+id/nav_pixelfed_drafts"
                         android:icon="@drawable/ic_save_white"
                         android:title="@string/drafts" />
-                    <!--
                     <item
                         android:id="@+id/nav_pixelfed_bookmarks"
                         android:icon="@drawable/ic_bookmark_menu"
                         android:title="@string/bookmarks" />
-                        -->
                     <item
                         android:id="@+id/nav_pixelfed_blocked"
                         android:icon="@drawable/ic_block"

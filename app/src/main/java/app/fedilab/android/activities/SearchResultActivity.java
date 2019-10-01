@@ -141,9 +141,13 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearch(APIResponse apiResponse) {
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            if (apiResponse.getError().getError() != null)
-                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            else
+            if (apiResponse.getError().getError() != null) {
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
+            }else
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }

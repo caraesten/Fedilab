@@ -159,6 +159,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
 
+
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -207,7 +209,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
+                if(apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toasty.error(context, context.getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
                 return;
             }
         }
@@ -742,10 +748,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         //popup.getMenu().findItem(R.id.action_mute_conversation).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         //Same instance
-
                         if (status.getAccount().getAcct().split("@").length < 2) {
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
-                        }else{
+                        }else{  //Both accounts have an instance in acct (pixelfed fix)
                             String instanceAccount = status.getAccount().getAcct().split("@")[1];
                             if( Helper.getLiveInstance(context).compareTo(instanceAccount) == 0){
                                 popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
@@ -761,7 +766,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     popup.getMenu().findItem(R.id.action_stats).setVisible(false);
                     popup.getMenu().findItem(R.id.action_translate).setVisible(false);
                     popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                    popup.getMenu().findItem(R.id.action_bookmark).setVisible(false);
 
                     final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                     int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -777,7 +781,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
                     if (custom_sharing && status.getVisibility().equals("public"))
                         popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
-                    MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
+                    if (status.isBookmarked())
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
+                    else
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builderInner;

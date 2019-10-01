@@ -103,6 +103,7 @@ import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayBookmarksFragment;
+import app.fedilab.android.fragments.DisplayBookmarksPixelfedFragment;
 import app.fedilab.android.fragments.DisplayDraftsFragment;
 import app.fedilab.android.fragments.DisplayFavoritesPeertubeFragment;
 import app.fedilab.android.fragments.DisplayFiltersFragment;
@@ -1989,13 +1990,19 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
             toot.hide();
-        } else if (id == R.id.nav_bookmarks /*|| id == R.id.nav_pixelfed_bookmarks*/) {
+        } else if (id == R.id.nav_bookmarks ) {
             DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.hide();
-        } else if (id == R.id.nav_peertube) {
+        } else if (id == R.id.nav_pixelfed_bookmarks) {
+            DisplayBookmarksPixelfedFragment displayBookmarksPixelfedFragment = new DisplayBookmarksPixelfedFragment();
+            fragmentTag = "BOOKMARKS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayBookmarksPixelfedFragment, fragmentTag).commit();
+            toot.hide();
+        }else if (id == R.id.nav_peertube) {
             DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
             fragmentTag = "BOOKMARKS_PEERTUBE";
             fragmentManager.beginTransaction()
