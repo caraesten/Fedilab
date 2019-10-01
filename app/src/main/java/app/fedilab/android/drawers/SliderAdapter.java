@@ -98,6 +98,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         }
         Glide.with(viewHolder.imageViewBackground.getContext())
                 .load(url)
+                .thumbnail(0.1f)
                 .into(viewHolder.imageViewBackground);
         viewHolder.imageViewBackground.setContentDescription(attachments.get(position).getDescription());
         if( !this.canDelete) {

@@ -59,13 +59,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.RequestOptions;;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -82,10 +78,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import app.fedilab.android.activities.AccountReportActivity;
-import app.fedilab.android.activities.CustomSharingActivity;
 import app.fedilab.android.activities.MediaActivity;
-import app.fedilab.android.activities.OwnerNotificationChartsActivity;
 import app.fedilab.android.activities.PixelfedComposeActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.activities.TootInfoActivity;
@@ -99,7 +92,6 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
@@ -406,7 +398,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         ImageView quick_reply_emoji;
         Button quick_reply_button;
         ImageView quick_reply_privacy;
-
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -645,9 +636,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 }else{
                     url = status.getMedia_attachments().get(0).getPreview_url();
                 }
-                GlideApp.with(context)
+                Glide.with(holder.itemView.getContext())
                         .asBitmap()
                         .load(url)
+                        .thumbnail(0.1f)
                         .into(holder.art_media);
             }
 
