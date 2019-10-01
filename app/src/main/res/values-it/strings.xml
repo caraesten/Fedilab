@@ -1124,5 +1124,5 @@
     <string name="add_photo_indication_pixelfed">Formati Accettati: jpeg, png, gif  \n\nDimensione massima del file: 15 MB  \n\nGli album possono contenere fino a 4 foto o video</string>
     <string name="upload_media">Carica media</string>
     <string name="pixelfed_compose_placeholder">Aggiungi una didascalia opzionale</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">L\'app ha ricevuto un messaggio di errore molto lungo dall\'API %1$s</string>
 </resources>

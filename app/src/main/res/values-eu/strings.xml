@@ -1122,5 +1122,5 @@
     <string name="add_photo_indication_pixelfed">Onartutako formatuak: jpeg, png, gif  \n\nGehieneko fitxategiaren tamaina: 15 MB  \n\nAlbumek 4 argazki edo bideo bildu itzakete</string>
     <string name="upload_media">Igo multimedia</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">Aplikazioak errore mezu oso luze bat jaso du %1$s APItik</string>
 </resources>
