@@ -90,9 +90,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         }else{
             viewHolder.delete_media.setVisibility(View.GONE);
         }
-
+        String url;
+        if(attachments.get(position).getPreview_url().endsWith("no-preview.png") ){
+            url = attachments.get(position).getUrl();
+        }else{
+            url = attachments.get(position).getPreview_url();
+        }
         Glide.with(viewHolder.imageViewBackground.getContext())
-                .load(attachments.get(position).getPreview_url())
+                .load(url)
                 .into(viewHolder.imageViewBackground);
         viewHolder.imageViewBackground.setContentDescription(attachments.get(position).getDescription());
         if( !this.canDelete) {
