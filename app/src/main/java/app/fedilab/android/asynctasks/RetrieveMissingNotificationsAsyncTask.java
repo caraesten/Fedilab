@@ -56,6 +56,11 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         APIResponse apiResponse = api.getNotificationsSince(type, since_id, 40, false);
+        if( apiResponse == null){
+            error = new Error();
+            error.setError("");
+            return null;
+        }
         error = apiResponse.getError();
         since_id = apiResponse.getSince_id();
         notifications = apiResponse.getNotifications();

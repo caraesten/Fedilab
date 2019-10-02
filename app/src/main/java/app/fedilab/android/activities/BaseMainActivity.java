@@ -1439,7 +1439,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 new TimelineCacheDAO(BaseMainActivity.this, db).removeAfterDate(dateString);
             }
         });
-
+        if (Helper.isLoggedIn(getApplicationContext())) {
+            new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         mutedAccount = new TempMuteDAO(getApplicationContext(), db).getAllTimeMuted(account);
 
     }
@@ -1746,9 +1748,9 @@ public abstract class BaseMainActivity extends BaseActivity
         LiveNotificationService.liveNotifBadge = 0;
         ShortcutBadger.removeCount(getApplicationContext());
         //Proceeds to update of the authenticated account
-        if (Helper.isLoggedIn(getApplicationContext())) {
+        /*if (Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+        }*/
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         String datestr = sharedpreferences.getString(Helper.HOME_LAST_READ + userId + instance, null);
 
