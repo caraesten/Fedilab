@@ -19,7 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
+import android.util.Log;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -730,12 +730,13 @@ public class API {
                 if (nodeInfos.size() > 0) {
                     NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
                     response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
+                    Log.v(Helper.TAG,response);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
                     String name = null;
                     if (resobj.has("metadata") && resobj.getJSONObject("metadata").has("features")) {
                         JSONArray features = resobj.getJSONObject("metadata").getJSONArray("features");
-                        if (features != null && features.length() > 0) {
+                        if (!resobj.getJSONObject("metadata").isNull("features") && features.length() > 0) {
                             for (int counter = 0; counter < features.length(); counter++) {
                                 if (features.getString(counter).toUpperCase().equals("MASTODON_API")) {
                                     name = "MASTODON";
@@ -745,9 +746,9 @@ public class API {
                         }
                     }
                     if (name == null) {
-                        name = jsonObject.getString("name").toUpperCase();
-                        if (jsonObject.getString("name") != null) {
-                            switch (jsonObject.getString("name").toUpperCase()) {
+                        if ( !jsonObject.isNull("name") ) {
+                            name = jsonObject.getString("name").toUpperCase();
+                            switch (name) {
                                 case "PLEROMA":
                                     name = "MASTODON";
                                     break;
@@ -760,6 +761,7 @@ public class API {
                             }
                         }
                     }
+                    Log.v(Helper.TAG,"name: " + name);
                     instanceNodeInfo.setName(name);
                     instanceNodeInfo.setVersion(jsonObject.getString("version"));
                     instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
@@ -6344,6 +6346,9 @@ public class API {
 
     private void setDefaultError(Exception e) {
         APIError = new Error();
+        if( apiResponse == null){
+            apiResponse = new APIResponse();
+        }
         if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
             APIError.setError(e.getLocalizedMessage());
         else if (e.getMessage() != null && e.getMessage().trim().length() > 0)

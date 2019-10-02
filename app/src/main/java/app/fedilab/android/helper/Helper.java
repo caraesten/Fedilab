@@ -1240,7 +1240,7 @@ public class Helper {
                 channel.enableVibration(true);
                 channel.setLightColor(ledColour);
             } else {
-                channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
+                channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
                 String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.boop);
                 AudioAttributes audioAttributes = new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
