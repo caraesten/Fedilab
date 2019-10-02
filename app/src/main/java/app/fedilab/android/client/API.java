@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -730,7 +729,6 @@ public class API {
                 if (nodeInfos.size() > 0) {
                     NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
                     response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
-                    Log.v(Helper.TAG,response);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
                     String name = null;
@@ -761,10 +759,11 @@ public class API {
                             }
                         }
                     }
-                    Log.v(Helper.TAG,"name: " + name);
                     instanceNodeInfo.setName(name);
                     instanceNodeInfo.setVersion(jsonObject.getString("version"));
-                    instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
+                    if( resobj.has("openRegistrations")) {
+                        instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
+                    }
                 }
             } catch (JSONException e) {
                 setDefaultError(e);
