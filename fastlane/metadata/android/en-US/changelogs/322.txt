@@ -1,0 +1,6 @@
+Welcome to Pixelfed inside the app with a dedicated layout.
+
+In-app features available:
+- Bookmarks, timed mute, schedule posts, drafts, scheduled boosts, export/import blocked domains.
+
+Deep work for making a dedicated application for Pixelfed. Contact me for bugs/improvements.
