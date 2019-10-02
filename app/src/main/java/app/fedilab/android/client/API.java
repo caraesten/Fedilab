@@ -4845,7 +4845,7 @@ public class API {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
                 Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
-                if (alreadyCached == null) {
+                if (alreadyCached == null && account !=null && account.getId() != null && account.getInstance() != null) {
                     new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString(), account.getId(), account.getInstance());
                 }
                 i++;
