@@ -6,7 +6,17 @@
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="300dp">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        >
+        <ImageView
+            android:id="@+id/back_ground_image"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/instance_container"
         android:visibility="gone"
@@ -98,15 +108,5 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.2"
-        >
-        <ImageView
-            android:id="@+id/back_ground_image"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+
 </RelativeLayout>
