@@ -34,11 +34,13 @@ import androidx.core.content.ContextCompat;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +50,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -69,7 +72,9 @@ public class InstanceHealthActivity extends BaseActivity {
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
     private String instance;
-    private LinearLayout container, instance_container;
+    private RelativeLayout container;
+    private LinearLayout instance_container;
+    private ImageView back_ground_image;
     private RelativeLayout loader;
 
     @Override
@@ -80,19 +85,23 @@ public class InstanceHealthActivity extends BaseActivity {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC3__));
                 break;
             case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
                 break;
             case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.black_3));
                 break;
             default:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
         }
         setContentView(R.layout.activity_instance_social);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Bundle b = getIntent().getExtras();
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -109,7 +118,7 @@ public class InstanceHealthActivity extends BaseActivity {
         container = findViewById(R.id.container);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
-
+        back_ground_image = findViewById(R.id.back_ground_image);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,6 +164,7 @@ public class InstanceHealthActivity extends BaseActivity {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
                     final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                    Log.v(Helper.TAG,"response: " + response);
                     if (response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
@@ -164,24 +174,7 @@ public class InstanceHealthActivity extends BaseActivity {
                                 Glide.with(getApplicationContext())
                                         .asBitmap()
                                         .load(instanceSocial.getThumbnail())
-                                        .into(new SimpleTarget<Bitmap>() {
-                                            @Override
-                                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                                Canvas canvas = new Canvas(mutableBitmap);
-                                                Paint p = new Paint(Color.BLACK);
-                                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                                p.setColorFilter(filter);
-                                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                                BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                                    container.setBackground(background);
-                                                } else {
-                                                    container.setBackgroundDrawable(background);
-                                                }
-                                            }
-                                        });
+                                        .into(back_ground_image);
                             name.setText(instanceSocial.getName());
                             if (instanceSocial.isUp()) {
                                 up.setText("Is up!");

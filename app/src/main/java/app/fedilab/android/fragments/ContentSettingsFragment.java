@@ -77,6 +77,7 @@ import java.util.Set;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.LiveNotificationSettingsAccountsActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
@@ -1724,6 +1725,12 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
+        final ImageButton set_allow_live_notifications_others = rootView.findViewById(R.id.set_allow_live_notifications_others);
+        set_allow_live_notifications_others.setOnClickListener(view -> {
+            Intent intent = new Intent(context, LiveNotificationSettingsAccountsActivity.class);
+            startActivity(intent);
+        });
+
         boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
         final CheckBox set_trans_forced = rootView.findViewById(R.id.set_trans_forced);
         set_trans_forced.setChecked(trans_forced);
@@ -1920,6 +1927,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         final Button sound_backup = rootView.findViewById(R.id.sound_backup);
         final Button sound_media = rootView.findViewById(R.id.sound_media);
         final ImageButton set_hide_status_bar = rootView.findViewById(R.id.set_hide_status_bar);
+
         Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);

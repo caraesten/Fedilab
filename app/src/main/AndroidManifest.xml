@@ -444,6 +444,12 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name" />
         <activity
+            android:name="app.fedilab.android.activities.LiveNotificationSettingsAccountsActivity"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name" />
+        <activity
             android:name="app.fedilab.android.activities.MutedInstanceActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

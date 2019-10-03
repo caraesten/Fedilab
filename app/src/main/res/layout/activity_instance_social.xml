@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     tools:context="app.fedilab.android.activities.InstanceHealthActivity"
-    android:layout_margin="@dimen/fab_margin"
     android:id="@+id/container"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="300dp">
 
     <LinearLayout
         android:id="@+id/instance_container"
         android:visibility="gone"
+        android:layout_margin="@dimen/fab_margin"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,7 +18,7 @@
         <TextView
             android:id="@+id/name"
             android:textSize="20sp"
-            android:textColor="@color/titleb"
+            android:textColor="@color/mastodonC3"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -80,7 +79,7 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="@string/close"
-            android:textColor="@color/buttonb"
+            android:textColor="@color/mastodonC4"
             style="?attr/borderlessColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -90,6 +89,7 @@
         android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center">
 
         <ProgressBar
@@ -97,4 +97,16 @@
             android:layout_height="wrap_content"
             android:indeterminate="true" />
     </RelativeLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        >
+        <ImageView
+            android:id="@+id/back_ground_image"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+</RelativeLayout>

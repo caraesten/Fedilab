@@ -4486,7 +4486,9 @@ public class API {
 
             instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
             instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
-            instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
+            if( !resobj.isNull("added_at")) {
+                instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
+            }
             instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
             instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
 
