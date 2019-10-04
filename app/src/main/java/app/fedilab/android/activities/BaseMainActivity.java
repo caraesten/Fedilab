@@ -836,7 +836,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 query = query.replaceAll("^#+", "");
                 //It's not a peertube search
                 //Peertube search
-                if (tabLayout != null && timelines != null && (timelines.get(tabLayout.getSelectedTabPosition()).getType() == ManageTimelines.Type.PEERTUBE || (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null && timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))) {
+                if (tabLayout != null && timelines != null && timelines.size() > tabLayout.getSelectedTabPosition() &&
+                        (timelines.get(tabLayout.getSelectedTabPosition()).getType() == ManageTimelines.Type.PEERTUBE ||
+                        (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null &&
+                         timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))) {
                     DisplayStatusFragment statusFragment;
                     Bundle bundle = new Bundle();
                     statusFragment = new DisplayStatusFragment();

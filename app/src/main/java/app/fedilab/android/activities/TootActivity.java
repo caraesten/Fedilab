@@ -592,7 +592,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             restored = b.getLong("restored", -1);
         }
         if (tootReply != null) {
-            if (tootReply.getAccount().getMoved_to_account() != null) {
+            if (tootReply.getAccount() != null && tootReply.getAccount().getMoved_to_account() != null) {
                 warning_message.setVisibility(View.VISIBLE);
             }
             new RetrieveRelationshipAsyncTask(getApplicationContext(), tootReply.getAccount().getId(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
