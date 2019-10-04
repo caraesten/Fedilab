@@ -2153,7 +2153,7 @@ public class PeertubeAPI {
         Account account = new Account();
         try {
             account.setId(accountObject.get("id").toString());
-            account.setUuid(accountObject.get("uuid").toString());
+            account.setUuid(accountObject.get("id").toString());
             account.setUsername(accountObject.get("name").toString());
             account.setAcct(accountObject.get("name").toString() + "@" + accountObject.get("host"));
             account.setDisplay_name(accountObject.get("name").toString());
