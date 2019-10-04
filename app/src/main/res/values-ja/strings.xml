@@ -731,7 +731,7 @@
     <string name="toots_server">トゥート(サーバー)</string>
     <string name="toots_client">トゥート(端末)</string>
     <string name="modify">変更</string>
-    <string name="set_display_content_after_fetch_more">新しいトゥートを「もっと表示」ボタンの上に表示する</string>
+    <string name="set_display_content_after_fetch_more">新しいトゥートを「もっと見る」ボタンの上に表示する</string>
     <string name="settings_category_label_confirmations">確認</string>
     <string name="settings_category_label_timelines">タイムライン</string>
     <string name="settings_category_label_notification">通知サービス</string>
@@ -1090,7 +1090,7 @@
     <string name="set_nitter">TwitterをNitterに置き換える</string>
     <string name="set_nitter_indication">Nitterはプライバシーに重点を置いたオープンソースのTwitter代替フロントエンドです。</string>
     <string name="set_nitter_host">カスタムホストを入力してください。空欄にするとnitter.netが使用されます。</string>
-    <string name="set_hide_status_bar">Fedilab通知バーを非表示にする</string>
+    <string name="set_hide_status_bar">通知バーからFedilabを非表示にする</string>
     <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
     <string name="set_live_type_title">通知を遅らせる</string>
     <string name="set_live_type_indication">通知は30秒ごとに遅延が発生します。バッテリーの持ちが改善します。</string>
@@ -1104,11 +1104,11 @@
     <string name="please_wait_compression">メディアを圧縮しています、これには時間がかかることがあります…</string>
     <string name="change_app_icon_experimental">アプリアイコンを変更する</string>
     <string name="click_to_change_the_app_icon">タップしてアプリアイコンを変更する</string>
-    <string name="post">Post</string>
-    <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="post">投稿</string>
+    <string name="post_visibility_tilte">投稿の公開範囲</string>
+    <string name="add_photo_pixelfed">ここをタップして写真を追加する</string>
+    <string name="add_photo_indication_pixelfed">利用可能なフォーマット:  jpeg, png, gif  \n\n最大ファイルサイズ: 15MB \n\nアルバムには最大で4個の写真または動画を含めることができます</string>
+    <string name="upload_media">メディアをアップロード</string>
+    <string name="pixelfed_compose_placeholder">オプションの説明を追加する</string>
+    <string name="long_api_error">このアプリは%1$sAPIから非常に長いエラーメッセージを受け取りました</string>
 </resources>
