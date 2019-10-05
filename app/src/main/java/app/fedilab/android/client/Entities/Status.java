@@ -987,7 +987,7 @@ public class Status implements Parcelable {
                                                                  intent.putExtras(b);
                                                                  context.startActivity(intent);
                                                              } else {
-                                                                 if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                                                 if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
                                                                      finalUrl = "http://" + url;
                                                                  Helper.openBrowser(context, finalUrl);
                                                              }
@@ -1116,7 +1116,7 @@ public class Status implements Parcelable {
                                                   @Override
                                                   public void onClick(@NonNull View textView) {
                                                       String finalUrl = url;
-                                                      if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                                      if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
                                                           finalUrl = "http://" + url;
                                                       Helper.openBrowser(context, finalUrl);
                                                   }

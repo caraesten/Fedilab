@@ -163,7 +163,7 @@ public class WebviewActivity extends BaseActivity {
                 }
             }
         });
-        if (!url.startsWith("http://") && !url.startsWith("https://"))
+        if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
             url = "http://" + url;
         if (trackingDomains == null) {
             AsyncTask.execute(new Runnable() {

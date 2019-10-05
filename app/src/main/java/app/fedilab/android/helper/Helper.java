@@ -3428,7 +3428,7 @@ public class Helper {
             Intent intent = new Intent(context, WebviewActivity.class);
             Bundle b = new Bundle();
             String finalUrl = url;
-            if (!url.startsWith("http://") && !url.startsWith("https://"))
+            if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
                 finalUrl = "http://" + url;
             b.putString("url", finalUrl);
             intent.putExtras(b);

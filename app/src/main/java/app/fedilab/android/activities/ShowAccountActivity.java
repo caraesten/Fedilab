@@ -429,7 +429,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!accountUrl.startsWith("http://") && !accountUrl.startsWith("https://"))
+                if (!accountUrl.toLowerCase().startsWith("http://") && !accountUrl.toLowerCase().startsWith("https://"))
                     accountUrl = "http://" + accountUrl;
                 Helper.openBrowser(ShowAccountActivity.this, accountUrl);
             }
@@ -1458,7 +1458,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         return true;
                     case R.id.action_open_browser:
                         if (accountUrl != null) {
-                            if (!accountUrl.startsWith("http://") && !accountUrl.startsWith("https://"))
+                            if (!accountUrl.toLowerCase().startsWith("http://") && !accountUrl.toLowerCase().startsWith("https://"))
                                 accountUrl = "http://" + accountUrl;
                             Helper.openBrowser(ShowAccountActivity.this, accountUrl);
                         }
