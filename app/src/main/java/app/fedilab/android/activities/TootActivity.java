@@ -1155,6 +1155,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         boolean alreadyAdded = false;
         int index = 0;
+        if( attachments == null ){
+            attachments = new ArrayList<>();
+        }
         for (Attachment attach_ : attachments) {
             if (attach_.getId().equals(attachment.getId())) {
                 alreadyAdded = true;
