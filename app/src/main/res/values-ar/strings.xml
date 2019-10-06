@@ -1144,4 +1144,6 @@
     <string name="upload_media">حمّل وسائطًا</string>
     <string name="pixelfed_compose_placeholder">أضف نصًّا توضيحيا</string>
     <string name="long_api_error">لقد تلقى التطبيق رسالة خطأ طويلة مِن API %1$s</string>
+    <string name="message_preview">Message preview</string>
+    <string name="report_mention">Add mentions in each message</string>
 </resources>
