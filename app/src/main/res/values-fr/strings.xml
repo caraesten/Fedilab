@@ -1122,6 +1122,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="upload_media">Téléverser un média</string>
     <string name="pixelfed_compose_placeholder">Ajouter une légende optionnelle</string>
     <string name="long_api_error">L’application a reçu un très long message d’erreur de l’API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Aperçu du message</string>
+    <string name="report_mention">Ajouter les mentions dans chaque message</string>
 </resources>
