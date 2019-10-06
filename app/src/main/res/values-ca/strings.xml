@@ -1117,6 +1117,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="upload_media">Carregar mèdia</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
     <string name="long_api_error">L\'aplicació ha rebut un missatge d\'error molt llarg des de l\'API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Previsualització de missatge</string>
+    <string name="report_mention">Afegeix mencions en cada missatge</string>
 </resources>
