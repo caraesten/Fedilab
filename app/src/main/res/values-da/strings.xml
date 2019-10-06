@@ -1118,7 +1118,7 @@
     <string name="please_wait_compression">Appen komprimere medier, det kan være ganske længe…</string>
     <string name="change_app_icon_experimental">Skift app-ikon</string>
     <string name="click_to_change_the_app_icon">Tryk hér for at sikfte app-ikonet</string>
-    <string name="post">Post</string>
+    <string name="post">Post nu</string>
     <string name="post_visibility_tilte">Indlæggets synlighed</string>
     <string name="add_photo_pixelfed">Tryk hér for at tilføje fotos</string>
     <string name="add_photo_indication_pixelfed">Gyldige formater: Jpeg, png, gif\n\nMaks. filstørrelse: 15 MB\n\nAlbum kan indeholde op til 4 fotos eller videoer</string>
