@@ -68,7 +68,7 @@
     <string name="show_replies">Montri la respondojn</string>
     <string name="action_open_in_web">Malfermu en retumilo</string>
     <string name="translate">Traduki</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Bonvolu, atendu kelkajn sekundojn antaŭ ol fari ĉi-tiun agon.</string>
     <!--- Menu -->
     <string name="home_menu">Hejmo</string>
     <string name="local_menu">Loka templinio</string>
@@ -93,7 +93,7 @@
     <string name="click_to_change">Click on the path to change it</string>
     <string name="failed">Fiaskis!</string>
     <string name="scheduled_toots">Planita hupoj</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">Subaj informoj povas nekomplete prezenti la profilon de la uzanto.</string>
     <string name="insert_emoji">Enmeti emoĝion</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
@@ -103,11 +103,11 @@
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_by">Diskonigita de %1$s</string>
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
+    <string name="reblog_remove">Nuligi diskonigon?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
     <string name="more_action_1">Silentigi</string>
