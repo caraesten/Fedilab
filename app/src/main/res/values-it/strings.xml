@@ -1125,4 +1125,6 @@
     <string name="upload_media">Carica media</string>
     <string name="pixelfed_compose_placeholder">Aggiungi una didascalia opzionale</string>
     <string name="long_api_error">L\'app ha ricevuto un messaggio di errore molto lungo dall\'API %1$s</string>
+    <string name="message_preview">Message preview</string>
+    <string name="report_mention">Add mentions in each message</string>
 </resources>

@@ -1119,4 +1119,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="upload_media">上傳媒體</string>
     <string name="pixelfed_compose_placeholder">新增可選的選項</string>
     <string name="long_api_error">應用程式從 API %1$s 收到非常長的錯誤訊息</string>
+    <string name="message_preview">Message preview</string>
+    <string name="report_mention">Add mentions in each message</string>
 </resources>

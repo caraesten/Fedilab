@@ -1114,12 +1114,14 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_resize_video_indication">Permet de compresser les vidéos tout en préservant leur qualité.</string>
     <string name="please_wait_compression">L\'application est en train de compresser le média, cela peut être assez long…</string>
     <string name="change_app_icon_experimental">Changer l’icône de l’application</string>
-    <string name="click_to_change_the_app_icon">Cliquez pour changer l’icône de l’application</string>
-    <string name="post">Post</string>
+    <string name="click_to_change_the_app_icon">Appuyez pour changer l’icône de l’application</string>
+    <string name="post">Poster</string>
     <string name="post_visibility_tilte">Visibilité du post</string>
-    <string name="add_photo_pixelfed">Cliquez ici pour ajouter des photos</string>
-    <string name="add_photo_indication_pixelfed">Formats acceptés: jpeg, png, gif \n\nTaille de fichier maximum: 15 MB \n\nLes albums peuvent contenir jusqu\'à 4 photos ou vidéos</string>
+    <string name="add_photo_pixelfed">Appuyez ici pour ajouter des photos</string>
+    <string name="add_photo_indication_pixelfed">Formats acceptés: jpeg, png, gif \n\nTaille maximale du fichier : 15 Mo \n\nLes albums peuvent contenir jusqu’à 4 photos ou vidéos</string>
     <string name="upload_media">Téléverser un média</string>
     <string name="pixelfed_compose_placeholder">Ajouter une légende optionnelle</string>
-    <string name="long_api_error">L\'application a reçu un très long message d\'erreur de l\'API %1$s</string>
+    <string name="long_api_error">L’application a reçu un très long message d’erreur de l’API %1$s</string>
+    <string name="message_preview">Aperçu du message</string>
+    <string name="report_mention">Ajouter les mentions dans chaque message</string>
 </resources>
