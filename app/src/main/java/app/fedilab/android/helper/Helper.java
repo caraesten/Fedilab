@@ -3791,30 +3791,33 @@ public class Helper {
      * @param maxChars int the max chars per toot (minus 10 to write the page: 1/x, 2/x etc.)
      * @return ArrayList<String> split toot
      */
-    public static ArrayList<String> splitToots(String content, int maxChars) {
+    public static ArrayList<String> splitToots(String content, int maxChars, boolean reportMentions) {
         String[] splitContent = content.split("\\s");
 
 
         ArrayList<String> mentions = new ArrayList<>();
-        Matcher matcher = mentionLongPattern.matcher(content);
-        while (matcher.find()) {
-            String mentionLong = matcher.group(1);
-            if (!mentions.contains(mentionLong)) {
-                mentions.add(mentionLong);
-            }
-        }
-        matcher = mentionPattern.matcher(content);
-        while (matcher.find()) {
-            String mention = matcher.group(1);
-            if (!mentions.contains(mention)) {
-                mentions.add(mention);
-            }
-        }
+        int mentionLength = 0;
         StringBuilder mentionString = new StringBuilder();
-        for (String mention : mentions) {
-            mentionString.append(mention).append(" ");
+        if( reportMentions) {
+            Matcher matcher = mentionLongPattern.matcher(content);
+            while (matcher.find()) {
+                String mentionLong = matcher.group(1);
+                if (!mentions.contains(mentionLong)) {
+                    mentions.add(mentionLong);
+                }
+            }
+            matcher = mentionPattern.matcher(content);
+            while (matcher.find()) {
+                String mention = matcher.group(1);
+                if (!mentions.contains(mention)) {
+                    mentions.add(mention);
+                }
+            }
+            for (String mention : mentions) {
+                mentionString.append(mention).append(" ");
+            }
+            mentionLength = mentionString.length() + 1;
         }
-        int mentionLength = mentionString.length() + 1;
         int maxCharsPerMessage = (maxChars - 10) - mentionLength;
         int totalCurrent = 0;
         ArrayList<String> reply = new ArrayList<>();

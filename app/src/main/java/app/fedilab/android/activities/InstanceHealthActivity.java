@@ -34,7 +34,6 @@ import androidx.core.content.ContextCompat;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,7 +163,6 @@ public class InstanceHealthActivity extends BaseActivity {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
                     final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                    Log.v(Helper.TAG,"response: " + response);
                     if (response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {

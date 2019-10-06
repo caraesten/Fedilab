@@ -35,6 +35,7 @@ import android.os.Environment;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -69,6 +70,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -518,13 +520,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
 
-        int cwSize = toot_cw_content.getText().toString().trim().length();
-        int size = toot_content.getText().toString().trim().length() + cwSize;
+
 
         if (split_toot && splitToot != null && stepSpliToot < splitToot.size()) {
             String tootContent = splitToot.get(stepSpliToot);
@@ -4102,21 +4102,84 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+
+
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
-
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
         String tootContent;
         if (toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0)
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
+
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
             tootContent = toot_content.getText().toString().trim();
+            createAndSendToot(tootContent, content_type, userId, instance);
         } else {
-            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             tootContent = splitToot.get(0);
             stepSpliToot = 1;
+            int style;
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
+            AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
+            builderInner.setTitle(R.string.message_preview);
+
+            View preview = ((Activity) context).getLayoutInflater().inflate(R.layout.popup_message_preview, new LinearLayout(context), false);
+            builderInner.setView(preview);
+
+            //Text for report
+            final TextView textView = preview.findViewById(R.id.preview);
+            textView.setText("");
+            final SwitchCompat report_mention = preview.findViewById(R.id.report_mention);
+            int finalSplit_toot_size = split_toot_size;
+            report_mention.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    splitToot = Helper.splitToots(toot_content.getText().toString().trim(), finalSplit_toot_size, isChecked);
+                    textView.setText("");
+                    int inc = 0;
+                    for(String prev: splitToot){
+                        if( inc < splitToot.size()-1) {
+                            textView.setText(textView.getText() + prev + "\n----------\n");
+                        }
+                    }
+                }
+            });
+            int inc = 0;
+            for(String prev: splitToot){
+                if( inc < splitToot.size()-1) {
+                    textView.setText(textView.getText() + prev + "\n----------\n");
+                }
+            }
+
+            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    createAndSendToot(tootContent, content_type, userId, instance);
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builderInner.create();
+            alertDialog.show();
         }
+
+    }
+
+
+    private void createAndSendToot(String tootContent, String content_type, String userId, String instance){
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -4131,6 +4194,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
+
 
     private void bookmark(Status status) {
         if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {

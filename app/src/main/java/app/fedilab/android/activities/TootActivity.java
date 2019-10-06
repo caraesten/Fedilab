@@ -42,6 +42,7 @@ import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -173,6 +174,7 @@ import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.CustomEmojiAdapter;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
+import app.fedilab.android.drawers.SliderAdapter;
 import app.fedilab.android.drawers.SuggestionsAdapter;
 import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
@@ -2217,9 +2219,59 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             createAndSendToot(tootContent, content_type, timestamp);
         } else {
-            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
             tootContent = splitToot.get(0);
             stepSpliToot = 1;
+
+
+
+            AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
+            builderInner.setTitle(R.string.message_preview);
+
+            View preview = getLayoutInflater().inflate(R.layout.popup_message_preview, new LinearLayout(getApplicationContext()), false);
+            builderInner.setView(preview);
+
+            //Text for report
+            final TextView textView = preview.findViewById(R.id.preview);
+            textView.setText("");
+            final SwitchCompat report_mention = preview.findViewById(R.id.report_mention);
+            int finalSplit_toot_size = split_toot_size;
+            report_mention.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    splitToot = Helper.splitToots(toot_content.getText().toString().trim(), finalSplit_toot_size, isChecked);
+                    textView.setText("");
+                    int inc = 0;
+                    for(String prev: splitToot){
+                        if( inc < splitToot.size()-1) {
+                            textView.setText(textView.getText() + prev + "\n----------\n");
+                        }
+                    }
+                }
+            });
+            int inc = 0;
+            for(String prev: splitToot){
+                if( inc < splitToot.size()-1) {
+                    textView.setText(textView.getText() + prev + "\n----------\n");
+                }
+            }
+
+            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    toot_it.setEnabled(true);
+                    dialog.dismiss();
+                }
+            });
+            builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    createAndSendToot(tootContent, content_type, timestamp);
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builderInner.create();
+            alertDialog.show();
         }
 
 
@@ -2628,10 +2680,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
-        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
-
-        int cwSize = toot_cw_content.getText().toString().trim().length();
-        int size = toot_content.getText().toString().trim().length() + cwSize;
 
         if (split_toot && splitToot != null && stepSpliToot < splitToot.size()) {
             String tootContent = splitToot.get(stepSpliToot);
