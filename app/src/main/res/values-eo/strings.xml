@@ -108,8 +108,8 @@
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Nuligi diskonigon?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="pin_add">Aplingi ĉi-tiu hup?</string>
+    <string name="pin_remove">Malaplingi ĉi-tiu hup?</string>
     <string name="more_action_1">Silentigi</string>
     <string name="more_action_2">Bloki</string>
     <string name="more_action_3">Raporti</string>
@@ -260,9 +260,9 @@
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_pin">La hup estis alpinglita!</string>
+    <string name="toast_unpin">La hup estis malalpinglita!</string>
+    <string name="toast_error">Ups ! Eraro okazis!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -395,8 +395,8 @@
     <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_header_custom_sharing">Titolo</string>
+    <string name="title_hint_custom_sharing">Titolo&#8230;</string>
     <string name="description_header_custom_sharing">Priskribo</string>
     <string name="description_hint_custom_sharing">Priskribo&#8230;</string>
     <string name="keywords_header_custom_sharing">Ŝlosilvortoj</string>
@@ -405,14 +405,14 @@
     <string name="action_sync">Sinkronigadi</string>
     <string name="action_filter">Filtrili</string>
     <string name="owner_cached_toots">Via listoj</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Via sciigoj</string>
     <string name="v_public">Publika</string>
     <string name="v_unlisted">Nelistigita</string>
     <string name="v_private">Privata</string>
     <string name="v_direct">Rekta</string>
-    <string name="v_keywords">Some keywords…</string>
+    <string name="v_keywords">Kelkaj ŝlosilvortoj…</string>
     <string name="show_media">Montri aŭdvidaĵoj</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">Montri aplingitaj</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_notifications">Backup notifications for %1$s</string>
@@ -431,7 +431,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Permesoj:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -439,7 +439,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">API permesoj:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -463,18 +463,18 @@
     <string name="delete">Forigi</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Listoj</string>
+    <string name="action_lists_confirm_delete">Ĉu vi certas, ke vi volas porĉiame forigi ĉi tiun liston?</string>
     <string name="action_lists_empty_content">Ankoraŭ estas nenio en ĉi tiu listo. Kiam membroj de ĉi tiu listo afiŝos novajn mesaĝojn, ili aperos ĉi tie.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_add_to">Aldoni al la listo</string>
+    <string name="action_lists_remove_from">Forigi el listo</string>
+    <string name="action_lists_create">Aldoni al la listo</string>
+    <string name="action_lists_delete">Forigi la liston</string>
+    <string name="action_lists_update">Redakti la liston</string>
+    <string name="action_lists_title_placeholder">Nova listo titolo</string>
+    <string name="action_lists_search_users">Serĉi homojn ke vi sekvas</string>
     <string name="action_lists_owner">Via listoj</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_add_user">La konto estis aldonita al la listo!</string>
     <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
