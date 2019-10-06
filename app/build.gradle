@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 322
-        versionName "2.20.1"
+        versionCode 323
+        versionName "2.21.0"
         multiDexEnabled true
         renderscriptTargetApi 28 as int
         renderscriptSupportModeEnabled true

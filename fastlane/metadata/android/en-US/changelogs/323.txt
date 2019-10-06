@@ -1,0 +1,9 @@
+Added
+- Preview for the automatic split feature (mentions in each message can be added/removed in a simple click)
+
+Changed
+- Improvement with delayed notifications
+
+Fixed
+- Peertube connection
+- Fix some crashes
