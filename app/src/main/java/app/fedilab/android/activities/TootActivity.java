@@ -2215,11 +2215,17 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             } else {
                 tootContent = wysiwyg.getContentAsHTML();
             }
+            createAndSendToot(tootContent, content_type, timestamp);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
             tootContent = splitToot.get(0);
             stepSpliToot = 1;
         }
+
+
+    }
+
+    private void createAndSendToot(String tootContent, String content_type, String timestamp){
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -2257,7 +2263,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot.setScheduled_at(timestamp);
             new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-
     }
 
 
