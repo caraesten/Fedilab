@@ -1132,4 +1132,6 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="message_preview">Message preview</string>
+    <string name="report_mention">Add mentions in each message</string>
 </resources>
