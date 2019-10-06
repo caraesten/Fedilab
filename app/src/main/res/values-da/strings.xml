@@ -1125,6 +1125,6 @@
     <string name="upload_media">Upload medier</string>
     <string name="pixelfed_compose_placeholder">Tilføj en valgfri billedtekst</string>
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Beskedforhåndsvisning</string>
+    <string name="report_mention">Tilføj omtaler i hver besked</string>
 </resources>
