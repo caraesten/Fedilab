@@ -545,16 +545,23 @@ public class LoginActivity extends BaseActivity {
                     } catch (final Exception e) {
                         e.printStackTrace();
 
-
                         runOnUiThread(new Runnable() {
                             public void run() {
 
                                 String message;
-                                if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
-                                    message = e.getLocalizedMessage();
-                                else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
-                                    message = e.getMessage();
-                                else
+                                if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0) {
+                                    if(e.getLocalizedMessage().length() < 100) {
+                                        message = e.getLocalizedMessage();
+                                    }else{
+                                        message = getString(R.string.long_api_error,"\ud83d\ude05");
+                                    }
+                                }else if (e.getMessage() != null && e.getMessage().trim().length() > 0) {
+                                    if(e.getLocalizedMessage().length() < 100) {
+                                        message = e.getMessage();
+                                    }else{
+                                        message = getString(R.string.long_api_error,"\ud83d\ude05");
+                                    }
+                                }else
                                     message = getString(R.string.client_error);
                                 Toasty.error(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
