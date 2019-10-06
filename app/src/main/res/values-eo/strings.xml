@@ -32,23 +32,23 @@
     <string name="no_result">Neniu rezultoj!</string>
     <string name="instance">Servilo</string>
     <string name="instance_example">Servilo: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">Nun laboras kun la konto %1$s</string>
     <string name="add_account">Aldoni konton</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard">La enhavo de la hup estis kopiita al la tondujo</string>
+    <string name="clipboard_url">La URL de la hup estis kopiita al la tondujo</string>
     <string name="change">Ŝangi</string>
     <string name="choose_picture">Elekti bildon…</string>
     <string name="clear">Pura</string>
     <string name="microphone">Mikrofono</string>
     <string name="camera">Fotilo</string>
     <string name="speech_prompt">Bonvolu, diri ion</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+    <string name="speech_not_supported">Pardonu! Via aparato ne subtenas voĉan enigon!</string>
     <string name="delete_all">Forigu ĉiujn</string>
     <string name="translate_toot">Traduki tiun Aplikaĵon.</string>
     <string name="schedule">Plano</string>
-    <string name="text_size">Text and icon sizes</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
+    <string name="text_size">Teksto kaj ikono grandecoj</string>
+    <string name="text_size_change">Ŝanĝi la nunan tekstan grandecon:</string>
+    <string name="icon_size_change">Ŝanĝi la nunan ikonan grandecon:</string>
     <string name="next">Sekva</string>
     <string name="previous">Antaŭa</string>
     <string name="open_with">Malfermi per</string>
