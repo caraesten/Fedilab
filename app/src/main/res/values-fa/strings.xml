@@ -123,11 +123,11 @@
         <item>Mute this account?</item>
         <item>این حساب مسدود شود؟</item>
         <item>این بوق گزارش شود؟</item>
-        <item>Block this domain?</item>
+        <item>این دامنه مسدود شود؟</item>
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
+        <item>اعلان</item>
         <item>Silent</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
