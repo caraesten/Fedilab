@@ -79,20 +79,20 @@
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
     <string name="remote_follow_menu">Remote follow</string>
-    <string name="notifications">Notifications</string>
-    <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="notifications">اعلان‌ها</string>
+    <string name="follow_request">درخواست پیگیری</string>
+    <string name="optimization">بهینه‌سازی</string>
+    <string name="settings">تنظیمات</string>
+    <string name="profile">نمایه</string>
+    <string name="make_a_choice">چه کار می‌خواهید بکنید؟</string>
+    <string name="delete_account_title">حذف یک حساب</string>
+    <string name="delete_account_message" formatted="false">حذف حساب %1$s از برنامه؟</string>
+    <string name="send_email">فرستادن یک رایانامه</string>
+    <string name="choose_file">لطفا پرونده‌ای را انتخاب کنید</string>
+    <string name="choose_file_error">هیچ مرورگر پرونده‌ای یافت نشد!</string>
+    <string name="click_to_change">برای تغییر مسیر، روی آن کلیک کنید</string>
+    <string name="failed">ناموفق!</string>
+    <string name="scheduled_toots">بوق‌های زمان‌بندی شده</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
@@ -1125,6 +1125,6 @@
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">پیش‌نمایش پیام</string>
+    <string name="report_mention">افزودن اشاره‌ها در هر پیام</string>
 </resources>
