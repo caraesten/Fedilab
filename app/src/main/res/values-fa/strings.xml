@@ -93,36 +93,36 @@
     <string name="click_to_change">برای تغییر مسیر، روی آن کلیک کنید</string>
     <string name="failed">ناموفق!</string>
     <string name="scheduled_toots">بوق‌های زمان‌بندی شده</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="disclaimer_full">اطلاعات زیر ممکن است نمایه کاربر را کامل منعکس نکند.</string>
+    <string name="insert_emoji">درج شکلک</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">اعلان‌های زنده</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="no_status">بوقی برای نمایش نیست</string>
+    <string name="fav_added">این بوق به پسندیده‌ها اضافه شد</string>
+    <string name="fav_removed">این بوق از پسندیده‌ها حذف شد!</string>
+    <string name="reblog_added">این بوق تقویت شد!</string>
+    <string name="reblog_removed">این بوق دیگر تقویت نشده است!</string>
+    <string name="reblog_by">تقویت شده توسط %1$s</string>
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="reblog_add">این بوق تقویت شود؟</string>
+    <string name="reblog_remove">تقویت این بوق حذف شود؟</string>
+    <string name="pin_add">این بوق سنجاق شود؟</string>
+    <string name="pin_remove">سنجاق این بوق برداشته شود؟</string>
     <string name="more_action_1">بی‌صدا</string>
     <string name="more_action_2">مسدود کردن</string>
     <string name="more_action_3">گزارش</string>
     <string name="more_action_4">حذف</string>
     <string name="more_action_5">رونوشت‌</string>
     <string name="more_action_6">به‌اشتراک‌گذاری</string>
-    <string name="more_action_7">Mention</string>
+    <string name="more_action_7">اشاره</string>
     <string name="more_action_8">بی‌صدا کردن زمان‌دار</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">حذف و بازنویسی</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
         <item>این حساب مسدود شود؟</item>
-        <item>Report this toot?</item>
+        <item>این بوق گزارش شود؟</item>
         <item>Block this domain?</item>
         <item>Unmute this account?</item>
     </string-array>
