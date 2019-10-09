@@ -123,7 +123,7 @@
         <item>Mute this account?</item>
         <item>Bloki ĉi-tiun konton?</item>
         <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Blokiti domajno?</item>
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
@@ -131,7 +131,7 @@
         <item>Silenta</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
+        <item>Forigi ĉi-tiun hup?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
@@ -198,7 +198,7 @@
     <string name="conversation">Konversacioj</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_follow_request">Ne sekva peton</string>
     <string name="status_cnt">Tootoj \n %1$s</string>
     <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Sekvante \n %1$s</string>
@@ -256,7 +256,7 @@
     <string name="toast_unfollow">La konto estas ne plu sekvas!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
+    <string name="toast_favourite">La hup estis aldonita al ŝatolistoj!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
@@ -313,7 +313,7 @@
     <string name="settings_title_profile">Redakti profilon</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">Biografio…</string>
     <string name="set_lock_account">Ŝlosi konton</string>
     <string name="set_save_changes">Konservi ŝanĝojn</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
@@ -505,7 +505,7 @@
     <string name="poxy_port">Pordo</string>
     <string name="poxy_login">Ensaluti</string>
     <string name="poxy_password">Pasvorto</string>
-    <string name="set_theme">Theme:</string>
+    <string name="set_theme">Temo:</string>
     <string name="set_compact_mode">Kompakta modo</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
@@ -548,8 +548,8 @@
     <string name="filter_expire">Expire after</string>
     <string name="add_new_filter">Add New Filter</string>
     <string name="action_filter_delete">Forigi filtrilon?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
+    <string name="action_update_filter">Ĝisdatigo filtrilo</string>
+    <string name="action_filter_create">Krei filtrilon</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">Sekvi</string>
@@ -562,14 +562,14 @@
     <string name="adding_account_list_trunk">Aldoni kontojn al la listo</string>
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="about_trunk">Kiu sekvi</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Konto(j) ne povas esti sekvita</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
+    <string name="channel_notif_boost">Nova Hup</string>
     <string name="channel_notif_fav">Nova Steluma</string>
     <string name="channel_notif_mention">Novaj mencioj</string>
     <string name="channel_notif_poll">Voĉdonado Finiĝis</string>
@@ -582,7 +582,7 @@
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
+    <string name="unblock_domain_confirm">Malbloki domajno</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
     <string name="blocked_domains">Blokita domajnoj</string>
@@ -599,7 +599,7 @@
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Peertube ŝatolistoj</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
