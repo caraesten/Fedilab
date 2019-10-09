@@ -163,20 +163,20 @@
     <string name="toot_select_image">Elekti aŭdovidaĵon</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
     <string name="toot_delete_media">Forigi ĉi tiun aŭdovidaĵon?</string>
-    <string name="toot_error_no_content">Via tooto estas malplena!</string>
-    <string name="toot_visibility_tilte">Videbleco de la hup</string>
+    <string name="toot_error_no_content">Via mesaĝo estas malplena!</string>
+    <string name="toot_visibility_tilte">Videbleco de la mesaĝo</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">La toot estis sendita!</string>
+    <string name="toot_sent">La mesaĝo estis sendita!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Tikla enhavo?</string>
     <string-array name="toot_visibility">
-        <item>Publika: afiŝi en publikaj tempolinioj</item>
+        <item>Afiŝi en publikaj tempolinioj</item>
         <item>Ne afiŝi en publikaj tempolinioj</item>
         <item>Afiŝi nur al sekvantoj</item>
         <item>Afiŝi nur al menciitaj uzantoj</item>
     </string-array>
     <string name="no_draft">Neniu malnetoj!</string>
-    <string name="choose_toot">Elekti hup</string>
+    <string name="choose_toot">Elekti mesaĝo</string>
     <string name="choose_accounts">Elekti kontojn</string>
     <string name="select_accounts">Elekti kelkaj kontoj</string>
     <string name="remove_draft">Forigi malneto?</string>
@@ -186,31 +186,31 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Evoluigado:</string>
+    <string name="about_developer">Programistoj:</string>
     <string name="about_license">Permesilo: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kodo: </string>
-    <string name="about_yandex">Traduko de toots:</string>
+    <string name="about_yandex">Traduka de mesaĝoj:</string>
     <string name="about_thekinrar">Serĉi instencoj:</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Konversacioj</string>
+    <string name="conversation">Konversacio</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
     <string name="no_follow_request">Ne sekva peton</string>
-    <string name="status_cnt">Tootoj \n %1$s</string>
+    <string name="status_cnt">Mesaĝoj \n %1$s</string>
     <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Sekvante \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Rajtigi</string>
+    <string name="authorize">Akcepti</string>
     <string name="reject">Malakcepti</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Forigi planita toot?</string>
+    <string name="remove_scheduled">Forigi planita mesaĝo?</string>
     <string name="media_count">Aŭdvidaĵo %d</string>
-    <string name="toot_scheduled">La toot estis planita!</string>
+    <string name="toot_scheduled">La mesaĝo estis planita!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
@@ -369,13 +369,13 @@
         <item>Blanka</item>
     </string-array>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Sekvi</string>
-    <string name="action_unfollow">Malsekvi</string>
-    <string name="action_block">Bloki</string>
-    <string name="action_unblock">Malbloki</string>
-    <string name="action_mute">Silentigi</string>
+    <string name="action_follow">Sekvu</string>
+    <string name="action_unfollow">Malsekvu</string>
+    <string name="action_block">Bloku</string>
+    <string name="action_unblock">Malbloku</string>
+    <string name="action_mute">Silentigu</string>
     <string name="action_no_action">Neniu ago</string>
-    <string name="action_unmute">Malsilentigi</string>
+    <string name="action_unmute">Malsilentigu</string>
     <string name="request_sent">Peto sendita</string>
     <string name="followed_by">Sekvas vin</string>
     <string name="action_search">Serĉi</string>
@@ -404,7 +404,7 @@
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinkronigadi</string>
     <string name="action_filter">Filtrili</string>
-    <string name="owner_cached_toots">Via listoj</string>
+    <string name="owner_cached_toots">Via mesaĝoj</string>
     <string name="owner_cached_notifications">Via sciigoj</string>
     <string name="v_public">Publika</string>
     <string name="v_unlisted">Nelistigita</string>
