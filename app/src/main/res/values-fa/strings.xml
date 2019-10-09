@@ -127,7 +127,7 @@
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>اعلان</item>
+        <item>با اعلان</item>
         <item>Silent</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
