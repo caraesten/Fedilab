@@ -203,7 +203,8 @@ public abstract class BaseMainActivity extends BaseActivity
         FEDIVERSE,
         HERO,
         ATOM,
-        BRAINCRASH
+        BRAINCRASH,
+        MASTALAB
     }
     public static iconLauncher mLauncher = iconLauncher.BUBBLES;
 

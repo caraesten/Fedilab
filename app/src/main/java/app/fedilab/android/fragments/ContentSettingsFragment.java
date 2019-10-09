@@ -113,6 +113,7 @@ import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.BRAIN
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.BUBBLES;
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.FEDIVERSE;
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.HERO;
+import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.MASTALAB;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
@@ -2534,6 +2535,16 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 icon_selector_dialog.dismiss();
             });
 
+            icon_selector.findViewById(R.id.icon_mastalab).setOnClickListener(v1 -> {
+                hideAllIcons(context);
+                setIcon(context,"Mastalab");
+                SharedPreferences.Editor editor2 = sharedpreferences.edit();
+                editor2.putString(Helper.LOGO_LAUNCHER, "mastalab");
+                editor2.apply();
+                BaseMainActivity.mLauncher = MASTALAB;
+                icon_selector_dialog.dismiss();
+            });
+
         });
 
         return rootView;
@@ -2558,6 +2569,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         context.getPackageManager().setComponentEnabledSetting(
                 new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.BrainCrash"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+
+        context.getPackageManager().setComponentEnabledSetting(
+                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Mastalab"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
     }
 
