@@ -1458,7 +1458,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(TootActivity.this);
             uploadReceiver.register(this);
         }
-        new asyncPicture(activity, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new asyncPicture(activity, account, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     static class asyncPicture extends AsyncTask<Void, Void, Void> {
@@ -1470,13 +1470,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         UploadServiceSingleBroadcastReceiver uploadReceiver;
         String filename;
         UpdateAccountInfoAsyncTask.SOCIAL social;
+        private Account account;
 
-        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        asyncPicture(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
             this.uploadReceiver = uploadReceiver;
             this.filename = filename;
             this.social = social;
+            this.account = account;
         }
 
         @Override
@@ -1522,13 +1524,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 }
                 filesMap.put(filename, uriFile);
 
-                upload(activityWeakReference.get(), social, uriFile, filename, uploadReceiver);
+                upload(activityWeakReference.get(), account, social, uriFile, filename, uploadReceiver);
             }
         }
     }
 
 
-    static private void upload(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+    static private void upload(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         String uploadId = UUID.randomUUID().toString();
         if (uploadReceiver != null) {
             uploadReceiver.setUploadID(uploadId);
@@ -1579,14 +1581,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         try {
             final String fileName = FileNameCleaner.cleanFileName(fname);
             SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME + Helper.getLiveInstance(activity), "https");
-            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME +account.getInstance(), "https");
+            String token = account.getToken();
+
             int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
-            String url = null;
+            String url;
             if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/v1/media";
+                url = scheme + "://" + account.getInstance() + "/api/v1/media";
             } else {
-                url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/media/upload.json";
+                url = scheme + "://" + account.getInstance() + "/api/media/upload.json";
             }
             UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
             uploadConfig
@@ -2427,7 +2430,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(TootActivity.this, social, uri, filename, uploadReceiver);
+            upload(TootActivity.this, account, social, uri, filename, uploadReceiver);
         }
     }
 
