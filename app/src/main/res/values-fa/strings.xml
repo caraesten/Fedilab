@@ -79,71 +79,71 @@
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
     <string name="remote_follow_menu">Remote follow</string>
-    <string name="notifications">Notifications</string>
-    <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="notifications">اعلان‌ها</string>
+    <string name="follow_request">درخواست پیگیری</string>
+    <string name="optimization">بهینه‌سازی</string>
+    <string name="settings">تنظیمات</string>
+    <string name="profile">نمایه</string>
+    <string name="make_a_choice">چه کار می‌خواهید بکنید؟</string>
+    <string name="delete_account_title">حذف یک حساب</string>
+    <string name="delete_account_message" formatted="false">حذف حساب %1$s از برنامه؟</string>
+    <string name="send_email">فرستادن یک رایانامه</string>
+    <string name="choose_file">لطفا پرونده‌ای را انتخاب کنید</string>
+    <string name="choose_file_error">هیچ مرورگر پرونده‌ای یافت نشد!</string>
+    <string name="click_to_change">برای تغییر مسیر، روی آن کلیک کنید</string>
+    <string name="failed">ناموفق!</string>
+    <string name="scheduled_toots">بوق‌های زمان‌بندی شده</string>
+    <string name="disclaimer_full">اطلاعات زیر ممکن است نمایه کاربر را کامل منعکس نکند.</string>
+    <string name="insert_emoji">درج شکلک</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">اعلان‌های زنده</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="no_status">بوقی برای نمایش نیست</string>
+    <string name="fav_added">این بوق به پسندیده‌ها اضافه شد</string>
+    <string name="fav_removed">این بوق از پسندیده‌ها حذف شد!</string>
+    <string name="reblog_added">این بوق تقویت شد!</string>
+    <string name="reblog_removed">این بوق دیگر تقویت نشده است!</string>
+    <string name="reblog_by">تقویت شده توسط %1$s</string>
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="reblog_add">این بوق تقویت شود؟</string>
+    <string name="reblog_remove">تقویت این بوق حذف شود؟</string>
+    <string name="pin_add">این بوق سنجاق شود؟</string>
+    <string name="pin_remove">سنجاق این بوق برداشته شود؟</string>
     <string name="more_action_1">بی‌صدا</string>
     <string name="more_action_2">مسدود کردن</string>
     <string name="more_action_3">گزارش</string>
     <string name="more_action_4">حذف</string>
     <string name="more_action_5">رونوشت‌</string>
     <string name="more_action_6">به‌اشتراک‌گذاری</string>
-    <string name="more_action_7">Mention</string>
+    <string name="more_action_7">اشاره</string>
     <string name="more_action_8">بی‌صدا کردن زمان‌دار</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">حذف و بازنویسی</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
         <item>این حساب مسدود شود؟</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>این بوق گزارش شود؟</item>
+        <item>این دامنه مسدود شود؟</item>
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>با اعلان</item>
+        <item>بی اعلان</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>این بوق پاک شود؟</item>
+        <item>این بوق پاک و بازنویسی شود؟</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d پاسخ</item>
+        <item quantity="other">%d پاسخ</item>
     </plurals>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
+    <string name="bookmarks">نشانک‌ها</string>
+    <string name="bookmark_add">افزودن به نشانک‌ها</string>
+    <string name="bookmark_remove">حذف نشانک</string>
     <string name="bookmarks_empty">No bookmarks to display</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="status_unbookmarked">مطلب از نشانک‌ها حذف شد!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -180,7 +180,7 @@
     <string name="choose_accounts">Choose an account</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
+    <string name="show_reply">Tap on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
     <string name="instance_no_description">No description available!</string>
@@ -216,7 +216,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Tap here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
     <string name="notif_mention">mentioned you</string>
@@ -487,7 +487,7 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on FramaGit at https://framagit.org/tom79/fedilab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
+    <string name="media_ready">Media has been loaded. Tap here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
     <string name="data_export">Export statuses</string>
@@ -532,7 +532,7 @@
     <string name="toast_hide_boost">Boosts are now hidden!</string>
     <string name="direct_message">Direct message</string>
     <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">No filters to display. You can create one by tapping on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
@@ -560,8 +560,8 @@
     <string name="add_account_list_trunk">Adding accounts to the list</string>
     <string name="account_added_list_trunk">Accounts were added to the list</string>
     <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="action_list_add">You have not created a list yet. Tap on the \"+\" button to add a new one.</string>
+    <string name="action_remote_instance_add">You don\'t follow any remote instances. Tap on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
@@ -601,7 +601,7 @@
     <string name="pickup_resolution">Pick up a resolution</string>
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+    <string name="bookmark_remove_peertube">این ویدیو از نشانک‌ها پاک شده است!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
     <string name="channel">Channel</string>
     <string name="no_peertube_channels">No Peertube channels</string>
@@ -726,7 +726,7 @@
     <string name="toast_cancelled">Upload cancelled!</string>
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="video_uploaded_action">Tap here to edit the video data.</string>
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
@@ -846,7 +846,7 @@
     <string name="display_name">Display name</string>
     <string name="privacy">Privacy</string>
     <string name="create">Create</string>
-    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
@@ -896,7 +896,7 @@
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
-    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
     <string name="users">%1$s users</string>
     <string name="password_confirm">Confirm password</string>
     <string name="agreement_check">I agree to %1$s and %2$s</string>
@@ -989,7 +989,7 @@
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
@@ -1105,7 +1105,7 @@
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
     <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
     <string name="live_delayed">Live notifications delayed</string>
@@ -1117,14 +1117,14 @@
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="click_to_change_the_app_icon">Tap to change the app icon</string>
     <string name="post">Post</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_pixelfed">Tap here to add photos</string>
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">پیش‌نمایش پیام</string>
+    <string name="report_mention">افزودن اشاره‌ها در هر پیام</string>
 </resources>

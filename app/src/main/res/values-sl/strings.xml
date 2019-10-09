@@ -854,7 +854,7 @@
     <string name="display_name">Prikazno ime</string>
     <string name="privacy">Zasebnost</string>
     <string name="create">Ustvari</string>
-    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
@@ -904,7 +904,7 @@
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
-    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
     <string name="users">%1$s users</string>
     <string name="password_confirm">Confirm password</string>
     <string name="agreement_check">I agree to %1$s and %2$s</string>
@@ -997,7 +997,7 @@
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
@@ -1115,7 +1115,7 @@
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
     <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
     <string name="live_delayed">Live notifications delayed</string>
@@ -1127,10 +1127,10 @@
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="click_to_change_the_app_icon">Tap to change the app icon</string>
     <string name="post">Post</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_pixelfed">Tap here to add photos</string>
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
