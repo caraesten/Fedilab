@@ -99,7 +99,7 @@
     <string name="live_notif">Puŝsciigoj</string>
     <!-- Status -->
     <string name="no_status">Neniu hup por montri</string>
-    <string name="fav_added">La hup estis aldonita al ŝatolistoj</string>
+    <string name="fav_added">La hup estis aldonita al stelumoj</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
@@ -256,7 +256,7 @@
     <string name="toast_unfollow">La konto estas ne plu sekvas!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">La hup estis aldonita al ŝatolistoj!</string>
+    <string name="toast_favourite">La hup estis aldonita al stelumoj!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
@@ -456,11 +456,11 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">Dankon al:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Serĉi</string>
-    <string name="delete">Forigi</string>
+    <string name="delete">Forigu</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
     <string name="action_lists">Listoj</string>
@@ -599,7 +599,7 @@
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube ŝatolistoj</string>
+    <string name="peertube_favorites">Peertube stelumoj</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
@@ -733,7 +733,7 @@
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn</string>
+    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn stelumej</string>
     <string name="leave_a_comment">Lasi komenton</string>
     <string name="share">Share</string>
     <string name="my_pictures">Miaj Bildoj</string>
@@ -1025,7 +1025,7 @@
     <string name="action_stats">Statistics</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
-    <string name="number_favourites">Number of favourites</string>
+    <string name="number_favourites">Nombro de stelumoj</string>
     <string name="number_mentions">Number of mentions</string>
     <string name="number_follows">Number of follows</string>
     <string name="number_polls">Number of polls</string>
