@@ -274,6 +274,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
     }
 
     public StatusListAdapter(TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
@@ -286,6 +290,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         redraft = false;
         this.tagTimeline = tagTimeline;
         lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
     }
 
     public StatusListAdapter(int position, String targetedId, boolean isOnWifi, List<Status> statuses) {
@@ -297,6 +305,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
 
     }
 
