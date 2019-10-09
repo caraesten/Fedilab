@@ -827,7 +827,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShowAccountActivity.this, MediaActivity.class);
+                Intent intent = new Intent(ShowAccountActivity.this, SlideMediaActivity.class);
                 Bundle b = new Bundle();
                 Attachment attachment = new Attachment();
                 attachment.setDescription(account.getAcct());

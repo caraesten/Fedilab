@@ -32,9 +32,11 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +77,7 @@ import java.util.TimerTask;
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.OwnerNotificationChartsActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -1380,12 +1383,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, MediaActivity.class);
+                        Intent intent = new Intent(context, SlideMediaActivity.class);
                         Bundle b = new Bundle();
                         intent.putParcelableArrayListExtra("mediaArray", notification.getStatus().getMedia_attachments());
                         b.putInt("position", finalPosition);
                         intent.putExtras(b);
-                        context.startActivity(intent);
+                        ViewCompat.setTransitionName(v, notification.getStatus().getMedia_attachments().get(0).getUrl());
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, notification.getStatus().getMedia_attachments().get(0).getUrl());
+                        context.startActivity(intent, options.toBundle());
                     }
                 });
                 i++;

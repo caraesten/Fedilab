@@ -33,8 +33,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -80,6 +82,7 @@ import java.util.List;
 
 import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.PixelfedComposeActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.activities.TootInfoActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
@@ -481,12 +484,14 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.art_media.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, MediaActivity.class);
+                    Intent intent = new Intent(context, SlideMediaActivity.class);
                     Bundle b = new Bundle();
                     intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
                     b.putInt("position", 0);
                     intent.putExtras(b);
-                    context.startActivity(intent);
+                    ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
+                    context.startActivity(intent, options.toBundle());
                 }
             });
 

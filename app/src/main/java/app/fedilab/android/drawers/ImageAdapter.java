@@ -14,11 +14,14 @@ package app.fedilab.android.drawers;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -31,6 +34,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.R;
@@ -79,7 +83,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MediaActivity.class);
+                Intent intent = new Intent(context, SlideMediaActivity.class);
                 Bundle b = new Bundle();
                 ArrayList<Attachment> attachmentsTmp = new ArrayList<>();
                 for (Status status1 : statuses) {
@@ -88,7 +92,9 @@ public class ImageAdapter extends RecyclerView.Adapter {
                 intent.putParcelableArrayListExtra("mediaArray", attachmentsTmp);
                 b.putInt("position", (viewHolder.getAdapterPosition() + 1));
                 intent.putExtras(b);
-                context.startActivity(intent);
+                ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
+                context.startActivity(intent, options.toBundle());
             }
         });
         holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {

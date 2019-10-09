@@ -15,6 +15,7 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Attachment;
@@ -203,7 +207,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
             holder.art_media.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, MediaActivity.class);
+                    Intent intent = new Intent(context, SlideMediaActivity.class);
                     Bundle b = new Bundle();
                     ArrayList<Attachment> attachments = new ArrayList<>();
                     if (status.getArt_attachment() != null)
@@ -213,7 +217,9 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", 0);
                     intent.putExtras(b);
-                    context.startActivity(intent);
+                    ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
+                    context.startActivity(intent, options.toBundle());
                 }
             });
             holder.art_author.setOnClickListener(new View.OnClickListener() {

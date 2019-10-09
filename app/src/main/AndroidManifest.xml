@@ -314,6 +314,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true" />
         <activity
+            android:name="app.fedilab.android.activities.SlideMediaActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Transparent"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:noHistory="true" />
+        <activity
             android:name="app.fedilab.android.activities.SearchResultActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

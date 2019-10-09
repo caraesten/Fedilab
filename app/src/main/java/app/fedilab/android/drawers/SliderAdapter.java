@@ -36,6 +36,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -49,6 +50,7 @@ import java.util.List;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.PixelfedComposeActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
@@ -105,13 +107,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(contextWeakReference.get(), MediaActivity.class);
+                    Intent intent = new Intent(contextWeakReference.get(), SlideMediaActivity.class);
                     Bundle b = new Bundle();
 
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", (position + 1));
                     intent.putExtras(b);
-                    contextWeakReference.get().startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) contextWeakReference.get(), v, attachments.get(0).getUrl());
+                    contextWeakReference.get().startActivity(intent, options.toBundle());
                 }
             });
         }else{

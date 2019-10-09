@@ -38,9 +38,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -116,6 +118,7 @@ import java.util.regex.Pattern;
 
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.activities.OwnerNotificationChartsActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.asynctasks.PostStatusAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipQuickReplyAsyncTask;
 import app.fedilab.android.client.API;
@@ -3785,12 +3788,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if (attachment.getType().equals("web")) {
                                 Helper.openBrowser(context, attachment.getUrl());
                             } else {
-                                Intent intent = new Intent(context, MediaActivity.class);
+                                Intent intent = new Intent(context, SlideMediaActivity.class);
                                 Bundle b = new Bundle();
                                 intent.putParcelableArrayListExtra("mediaArray", attachmentArrayList);
                                 b.putInt("position", finalPosition);
                                 intent.putExtras(b);
-                                context.startActivity(intent);
+                                ViewCompat.setTransitionName(v, attachment.getUrl());
+                                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, attachment.getUrl());
+                                context.startActivity(intent, options.toBundle());
                             }
                         } else {
                             status.setAttachmentShown(true);
