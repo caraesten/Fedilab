@@ -23,36 +23,36 @@
     <string name="password">Pasvorto</string>
     <string name="email">Retpoŝto</string>
     <string name="accounts">Kontaj</string>
-    <string name="toots">Tootoj</string>
+    <string name="toots">Mesaĝoj</string>
     <string name="tags">Etikedoj</string>
     <string name="token">Ĵetono</string>
     <string name="save">Konservu</string>
-    <string name="restore">Restarigi</string>
+    <string name="restore">Restarigu</string>
     <string name="two_factor_authentification">Dufaktora aŭtentigo?</string>
     <string name="no_result">Neniu rezultoj!</string>
-    <string name="instance">Servilo</string>
-    <string name="instance_example">Servilo: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="instance">Instanco</string>
+    <string name="instance_example">Instanco: mastodon.social</string>
+    <string name="toast_account_changed" formatted="false">Nun laboras kun la konto %1$s</string>
     <string name="add_account">Aldoni konton</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard">La enhavo de la hup estis kopiita al la tondujo</string>
+    <string name="clipboard_url">La URL de la hup estis kopiita al la tondujo</string>
     <string name="change">Ŝangi</string>
     <string name="choose_picture">Elekti bildon…</string>
     <string name="clear">Pura</string>
     <string name="microphone">Mikrofono</string>
     <string name="camera">Fotilo</string>
     <string name="speech_prompt">Bonvolu, diri ion</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+    <string name="speech_not_supported">Pardonu! Via aparato ne subtenas voĉan enigon!</string>
     <string name="delete_all">Forigu ĉiujn</string>
-    <string name="translate_toot">Traduki tiun Aplikaĵon.</string>
+    <string name="translate_toot">Traduki tiun Mesaĝon.</string>
     <string name="schedule">Plano</string>
-    <string name="text_size">Text and icon sizes</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
+    <string name="text_size">Teksto kaj ikono grandecoj</string>
+    <string name="text_size_change">Ŝanĝi la nunan tekstan grandecon:</string>
+    <string name="icon_size_change">Ŝanĝi la nunan ikonan grandecon:</string>
     <string name="next">Sekva</string>
     <string name="previous">Antaŭa</string>
     <string name="open_with">Malfermi per</string>
-    <string name="validate">Validigi</string>
+    <string name="validate">Validigu</string>
     <string name="media">Aŭdovidaĵoj</string>
     <string name="share_with">Konigi kun</string>
     <string name="shared_via">Komuna tra Fedilab</string>
@@ -68,7 +68,7 @@
     <string name="show_replies">Montri la respondojn</string>
     <string name="action_open_in_web">Malfermu en retumilo</string>
     <string name="translate">Traduki</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Bonvolu, atendu kelkajn sekundojn antaŭ ol fari ĉi-tiun agon.</string>
     <!--- Menu -->
     <string name="home_menu">Hejmo</string>
     <string name="local_menu">Loka templinio</string>
@@ -90,26 +90,26 @@
     <string name="send_email">Sendi per retmesaĝo</string>
     <string name="choose_file">Bonvolu elekti dosieron</string>
     <string name="choose_file_error">Neniu dosiero esploristo trovis!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="click_to_change">Tap on the path to change it</string>
     <string name="failed">Fiaskis!</string>
     <string name="scheduled_toots">Planita hupoj</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">Subaj informoj povas nekomplete prezenti la profilon de la uzanto.</string>
     <string name="insert_emoji">Enmeti emoĝion</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">Puŝsciigoj</string>
     <!-- Status -->
     <string name="no_status">Neniu hup por montri</string>
-    <string name="fav_added">La hup estis aldonita al ŝatolistoj</string>
+    <string name="fav_added">La hup estis aldonita al stelumoj</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_by">Diskonigita de %1$s</string>
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="reblog_remove">Nuligi diskonigon?</string>
+    <string name="pin_add">Aplingi ĉi-tiu hup?</string>
+    <string name="pin_remove">Malaplingi ĉi-tiu hup?</string>
     <string name="more_action_1">Silentigi</string>
     <string name="more_action_2">Bloki</string>
     <string name="more_action_3">Raporti</string>
@@ -121,9 +121,9 @@
     <string name="more_action_9">Forigi kaj reskribi</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
-        <item>Block this account?</item>
+        <item>Bloki ĉi-tiun konton?</item>
         <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Blokiti domajno?</item>
         <item>Unmute this account?</item>
     </string-array>
     <string-array name="action_notification">
@@ -131,7 +131,7 @@
         <item>Silenta</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
+        <item>Forigi ĉi-tiun hup?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
@@ -139,7 +139,7 @@
         <item quantity="other">%d respondoj</item>
     </plurals>
     <string name="bookmarks">Legosignoj</string>
-    <string name="bookmark_add">Aldoni legosignon</string>
+    <string name="bookmark_add">Aldonu legosignon</string>
     <string name="bookmark_remove">Forigu legosignon</string>
     <string name="bookmarks_empty">Neniu legosignojn por montri</string>
     <string name="status_bookmarked">Statuso estis aldonita al legosignoj!</string>
@@ -155,68 +155,68 @@
     <string name="toot_it">HUP!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">ea</string>
-    <string name="toot_title">Skribi hup</string>
-    <string name="toot_title_reply">Respondi hup</string>
+    <string name="toot_title">Skribi mesaĝo</string>
+    <string name="toot_title_reply">Respondi mesaĝon</string>
     <string name="queet_title">Skribi queet</string>
     <string name="queet_title_reply">Respondi queet</string>
     <string name="toot_no_space">Vi atingis la 500 karakteroj permesis!</string>
     <string name="toot_select_image">Elekti aŭdovidaĵon</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
     <string name="toot_delete_media">Forigi ĉi tiun aŭdovidaĵon?</string>
-    <string name="toot_error_no_content">Via tooto estas malplena!</string>
-    <string name="toot_visibility_tilte">Videbleco de la hup</string>
+    <string name="toot_error_no_content">Via mesaĝo estas malplena!</string>
+    <string name="toot_visibility_tilte">Videbleco de la mesaĝo</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">La toot estis sendita!</string>
+    <string name="toot_sent">La mesaĝo estis sendita!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Tikla enhavo?</string>
     <string-array name="toot_visibility">
-        <item>Publika: afiŝi en publikaj tempolinioj</item>
+        <item>Afiŝi en publikaj tempolinioj</item>
         <item>Ne afiŝi en publikaj tempolinioj</item>
         <item>Afiŝi nur al sekvantoj</item>
         <item>Afiŝi nur al menciitaj uzantoj</item>
     </string-array>
     <string name="no_draft">Neniu malnetoj!</string>
-    <string name="choose_toot">Elekti hup</string>
+    <string name="choose_toot">Elekti mesaĝo</string>
     <string name="choose_accounts">Elekti kontojn</string>
     <string name="select_accounts">Elekti kelkaj kontoj</string>
     <string name="remove_draft">Forigi malneto?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
+    <string name="show_reply">Tap on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Evoluigado:</string>
+    <string name="about_developer">Programistoj:</string>
     <string name="about_license">Permesilo: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kodo: </string>
-    <string name="about_yandex">Traduko de toots:</string>
+    <string name="about_yandex">Traduka de mesaĝoj:</string>
     <string name="about_thekinrar">Serĉi instencoj:</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Konversacioj</string>
+    <string name="conversation">Konversacio</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Tootoj \n %1$s</string>
+    <string name="no_follow_request">Ne sekva peton</string>
+    <string name="status_cnt">Mesaĝoj \n %1$s</string>
     <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Sekvante \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Rajtigi</string>
+    <string name="authorize">Akcepti</string>
     <string name="reject">Malakcepti</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Forigi planita toot?</string>
+    <string name="remove_scheduled">Forigi planita mesaĝo?</string>
     <string name="media_count">Aŭdvidaĵo %d</string>
-    <string name="toot_scheduled">La toot estis planita!</string>
+    <string name="toot_scheduled">La mesaĝo estis planita!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Tap here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
     <string name="notif_mention">%s menciis vin</string>
@@ -233,11 +233,11 @@
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d ŝato</item>
+        <item quantity="other">%d ŝatoj</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
+    <string name="delete_notification_ask">Forigi sciigo?</string>
+    <string name="delete_notification_ask_all">Forigi sciigoj?</string>
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
@@ -253,16 +253,16 @@
     <string name="toast_mute">La konto estis silentigita!</string>
     <string name="toast_unmute">La konto ne plu silentigita!</string>
     <string name="toast_follow">La konto estis sekvita!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
+    <string name="toast_unfollow">La konto estas ne plu sekvas!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
+    <string name="toast_favourite">La hup estis aldonita al stelumoj!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_pin">La hup estis alpinglita!</string>
+    <string name="toast_unpin">La hup estis malalpinglita!</string>
+    <string name="toast_error">Ups ! Eraro okazis!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -313,7 +313,7 @@
     <string name="settings_title_profile">Redakti profilon</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">Biografio…</string>
     <string name="set_lock_account">Ŝlosi konton</string>
     <string name="set_save_changes">Konservi ŝanĝojn</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
@@ -325,13 +325,13 @@
     <string name="settings_time_to">kaj</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
     <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
+    <string name="settings_hour_init">Komenca tempo</string>
+    <string name="settings_hour_end">Malkomenca tempo</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="use_cookies">Permesi tria-partiaj kuketojn</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="settings_menu_tabs">
         <item>Langetoj</item>
@@ -369,13 +369,13 @@
         <item>Blanka</item>
     </string-array>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Sekvi</string>
-    <string name="action_unfollow">Malsekvi</string>
-    <string name="action_block">Bloki</string>
-    <string name="action_unblock">Malbloki</string>
-    <string name="action_mute">Silentigi</string>
+    <string name="action_follow">Sekvu</string>
+    <string name="action_unfollow">Malsekvu</string>
+    <string name="action_block">Bloku</string>
+    <string name="action_unblock">Malbloku</string>
+    <string name="action_mute">Silentigu</string>
     <string name="action_no_action">Neniu ago</string>
-    <string name="action_unmute">Malsilentigi</string>
+    <string name="action_unmute">Malsilentigu</string>
     <string name="request_sent">Peto sendita</string>
     <string name="followed_by">Sekvas vin</string>
     <string name="action_search">Serĉi</string>
@@ -383,7 +383,7 @@
     <string name="set_resize_picture">Resize pictures</string>
     <string name="set_resize_video">Resize videos</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
+    <string name="settings_popup_title">Puŝsciigoj</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
@@ -395,8 +395,8 @@
     <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_header_custom_sharing">Titolo</string>
+    <string name="title_hint_custom_sharing">Titolo&#8230;</string>
     <string name="description_header_custom_sharing">Priskribo</string>
     <string name="description_hint_custom_sharing">Priskribo&#8230;</string>
     <string name="keywords_header_custom_sharing">Ŝlosilvortoj</string>
@@ -404,15 +404,15 @@
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinkronigadi</string>
     <string name="action_filter">Filtrili</string>
-    <string name="owner_cached_toots">Via listoj</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_toots">Via mesaĝoj</string>
+    <string name="owner_cached_notifications">Via sciigoj</string>
     <string name="v_public">Publika</string>
     <string name="v_unlisted">Nelistigita</string>
     <string name="v_private">Privata</string>
     <string name="v_direct">Rekta</string>
-    <string name="v_keywords">Some keywords…</string>
+    <string name="v_keywords">Kelkaj ŝlosilvortoj…</string>
     <string name="show_media">Montri aŭdvidaĵoj</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">Montri aplingitaj</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_notifications">Backup notifications for %1$s</string>
@@ -431,7 +431,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Permesoj:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -439,7 +439,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">API permesoj:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -456,25 +456,25 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">Dankon al:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Serĉi</string>
-    <string name="delete">Forigi</string>
+    <string name="delete">Forigu</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Listoj</string>
+    <string name="action_lists_confirm_delete">Ĉu vi certas, ke vi volas porĉiame forigi ĉi tiun liston?</string>
     <string name="action_lists_empty_content">Ankoraŭ estas nenio en ĉi tiu listo. Kiam membroj de ĉi tiu listo afiŝos novajn mesaĝojn, ili aperos ĉi tie.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_add_to">Aldoni al la listo</string>
+    <string name="action_lists_remove_from">Forigi el listo</string>
+    <string name="action_lists_create">Aldoni al la listo</string>
+    <string name="action_lists_delete">Forigi la liston</string>
+    <string name="action_lists_update">Redakti la liston</string>
+    <string name="action_lists_title_placeholder">Nova listo titolo</string>
+    <string name="action_lists_search_users">Serĉi homojn ke vi sekvas</string>
     <string name="action_lists_owner">Via listoj</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
+    <string name="action_lists_add_user">La konto estis aldonita al la listo!</string>
     <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
@@ -487,7 +487,7 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on FramaGit at https://framagit.org/tom79/fedilab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
+    <string name="media_ready">Media has been loaded. Tap here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
     <string name="data_export">Export statuses</string>
@@ -505,7 +505,7 @@
     <string name="poxy_port">Pordo</string>
     <string name="poxy_login">Ensaluti</string>
     <string name="poxy_password">Pasvorto</string>
-    <string name="set_theme">Theme:</string>
+    <string name="set_theme">Temo:</string>
     <string name="set_compact_mode">Kompakta modo</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
@@ -521,18 +521,18 @@
     <string name="action_partnership">Partnerecoj</string>
     <string name="neutral_menu_information">Informaĵo</string>
     <string name="hide_boost">Hide boosts from %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
+    <string name="endorse">Montri en profilo</string>
+    <string name="hide_everything">Kaŝi ĉion de %s</string>
+    <string name="show_boost">Montri diskonigojn de %s</string>
+    <string name="unendorse">Ne montri en profilo</string>
+    <string name="show_everything">Malkaŝi ĉion de %s</string>
     <string name="toast_endorse">The account is now featured on profile</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
     <string name="direct_message">Rekte mesaĝi</string>
     <string name="filters">Filtriloj</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">No filters to display. You can create one by tapping on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Hejma templinio</string>
     <string name="context_public">Publikaj templinioj</string>
@@ -548,32 +548,32 @@
     <string name="filter_expire">Expire after</string>
     <string name="add_new_filter">Add New Filter</string>
     <string name="action_filter_delete">Forigi filtrilon?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
+    <string name="action_update_filter">Ĝisdatigo filtrilo</string>
+    <string name="action_filter_create">Krei filtrilon</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">Sekvi</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
-    <string name="follow_trunk">%s is followed!</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="select_all">Elekti ĉion</string>
+    <string name="unselect_all">Malelekti ĉion</string>
+    <string name="follow_trunk">%s estas sekvita!</string>
+    <string name="create_list_trunk">Krei la listo %s</string>
+    <string name="add_account_list_trunk">Aldoni kontojn al la listo</string>
+    <string name="account_added_list_trunk">La kontoj estis aldonita al la listo</string>
+    <string name="adding_account_list_trunk">Aldoni kontojn al la listo</string>
+    <string name="action_list_add">You have not created a list yet. Tap on the \"+\" button to add a new one.</string>
+    <string name="action_remote_instance_add">You don\'t follow any remote instances. Tap on the \"+\" button to add a new one.</string>
+    <string name="about_trunk">Kiu sekvi</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Konto(j) ne povas esti sekvita</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
+    <string name="channel_notif_boost">Nova Hup</string>
     <string name="channel_notif_fav">Nova Steluma</string>
     <string name="channel_notif_mention">Novaj mencioj</string>
     <string name="channel_notif_poll">Voĉdonado Finiĝis</string>
-    <string name="channel_notif_toot">New Toot</string>
+    <string name="channel_notif_toot">Nova Hup</string>
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Change notification sound</string>
@@ -582,7 +582,7 @@
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
+    <string name="unblock_domain_confirm">Malbloki domajno</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
     <string name="blocked_domains">Blokita domajnoj</string>
@@ -599,7 +599,7 @@
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Peertube stelumoj</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
@@ -607,41 +607,41 @@
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
+    <string name="no_lists">Neniu listoj</string>
     <string name="videos">Videoj</string>
     <string name="channels">Kanaloj</string>
-    <string name="set_display_emoji">Use Emoji One</string>
+    <string name="set_display_emoji">Uzi Emoji One</string>
     <string name="information">Informaĵo</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_display_video_preview">Display video previews</string>
     <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
+    <string name="action_bug_report">Cimraporto</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Ŝanĝi lingvon</string>
+    <string name="default_language">Defaŭlta lingvon</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="display_toot_truncate">Montri pli</string>
+    <string name="hide_toot_truncate">Montri malpli</string>
     <string name="manage_tags">Manage tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Montri Arta tempolinio</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Malfermu menuon</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Reen</string>
     <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
+    <string name="profile_picture">Profilbildo</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Add new</string>
@@ -649,21 +649,21 @@
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Aktualigi</string>
     <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
+    <string name="remove_account">Forigi konton</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
     <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="new_toot">Nova Hup</string>
+    <string name="card_view_image">Bildo de la karto</string>
     <string name="hide_media">Kaŝi aŭdovidaĵojn</string>
-    <string name="favicon">Favicon</string>
+    <string name="favicon">Piktogramo</string>
     <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
+        <item>Neniam</item>
+        <item>30 minutoj</item>
+        <item>1 horo</item>
+        <item>6 horoj</item>
+        <item>12 horoj</item>
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
@@ -700,52 +700,52 @@
     <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
+    <string name="subscriptions">Abonoj</string>
+    <string name="overview">Superrigardo</string>
+    <string name="trending">Aktualaĵoj</string>
+    <string name="recently_added">Ĵus aldonita</string>
+    <string name="local">Loka</string>
+    <string name="upload_video">Alŝuti</string>
+    <string name="reply">Respondi</string>
+    <string name="delete_comment">Forigi komenton</string>
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <string name="fullscreen">Full screen video</string>
     <string name="set_video_mode">Mode for videos</string>
     <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="my_videos">Mia videoj</string>
+    <string name="title">Titolo</string>
+    <string name="categories">Kategorioj</string>
+    <string name="license">Permesilo</string>
+    <string name="category">Kategorio</string>
+    <string name="language">Lingvo</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
-    <string name="description">Description</string>
+    <string name="description">Priskribo</string>
     <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
+    <string name="toast_cancelled">Alŝuto nuligita!</string>
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="video_uploaded_action">Tap here to edit the video data.</string>
+    <string name="delete_video">Forigi video</string>
+    <string name="delete_video_confirmation">Ĉu vi certas, ke vi volas forigi ĉi tiun filmeton?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn</string>
-    <string name="leave_a_comment">Leave a comment</string>
+    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn stelumej</string>
+    <string name="leave_a_comment">Lasi komenton</string>
     <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="my_pictures">Miaj Bildoj</string>
     <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="device_schedule">De aparato</string>
+    <string name="server_schedule">De servilo</string>
+    <string name="toots_server">Hupoj (Servilo)</string>
+    <string name="toots_client">Hupoj (Aparato)</string>
+    <string name="modify">Ŝanĝi</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_confirmations">Konfirmoj</string>
+    <string name="settings_category_label_timelines">Tempolinioj</string>
     <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Interface</string>
     <string name="settings_category_label_hiddencontent">Hidden content</string>
@@ -775,18 +775,18 @@
     <string name="all">All</string>
     <string name="about_opencollective">Support the app</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Normal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
+    <string name="copy_link">Kopii ligilon</string>
+    <string name="connect_instance">Konekti</string>
+    <string name="set_normal">Normale</string>
+    <string name="set_compact">Kompakta</string>
+    <string name="set_console">Konzolo</string>
     <string name="set_mode">Set display mode</string>
     <string name="set_security_provider">Patch the Security Provider</string>
     <string name="update_tracking_domains">Update tracking domains</string>
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <string name="calls_blocked">http calls blocked by the application</string>
     <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Sendi</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
     <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
@@ -794,36 +794,36 @@
     <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
     <!-- end languages -->
-    <string name="poll">Poll</string>
-    <string name="polls">Polls</string>
-    <string name="create_poll">Create a poll</string>
-    <string name="poll_choice_1">Choice 1</string>
-    <string name="poll_choice_2">Choice 2</string>
-    <string name="poll_choice_s">Choice %d</string>
-    <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
-    <string name="done">Done</string>
+    <string name="poll">Baloto</string>
+    <string name="polls">Balotoj</string>
+    <string name="create_poll">Krei Baloto</string>
+    <string name="poll_choice_1">Elekta 1</string>
+    <string name="poll_choice_2">Elekta 2</string>
+    <string name="poll_choice_s">Elekta %d</string>
+    <string name="poll_invalid_choices">Vi bezonas du elektoj malpleje por la baloto!</string>
+    <string name="done">Farite</string>
     <string name="poll_finish_at">end at %s</string>
     <string name="refresh_poll">Refresh poll</string>
-    <string name="vote">Vote</string>
+    <string name="vote">Voĉdoni</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll">Partoprenita balotenketo finiĝis</string>
     <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_categories">Kategorioj</string>
+    <string name="settings_category_notif_news">Novaĵoj</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_advanced">Altnivela</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
+    <string name="move_timeline">Movi templinio</string>
+    <string name="hide_timeline">Kaŝi templinio</string>
+    <string name="reorder_timelines">Reordigi templinioj</string>
     <string name="reorder_list_deleted">List permanently deleted</string>
     <string name="reorder_instance_removed">Followed instance removed</string>
     <string name="reorder_tag_removed">Pinned tag removed</string>
-    <string name="undo">Undo</string>
+    <string name="undo">Rezigni</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
     <string name="action_reorder_timeline">Reorder timelines</string>
     <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
@@ -846,28 +846,28 @@
     <string name="display_name">Display name</string>
     <string name="privacy">Privacy</string>
     <string name="create">Create</string>
-    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
     <string name="edit_media">Redakti aŭdvidaĵo</string>
-    <string name="redo">redo</string>
-    <string name="gallery">Gallery</string>
+    <string name="redo">refari</string>
+    <string name="gallery">Galerio</string>
     <string name="label_emoji">Emoĝio</string>
-    <string name="label_sticker">Sticker</string>
-    <string name="label_eraser">Eraser</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
+    <string name="label_sticker">Glumarko</string>
+    <string name="label_eraser">Skrapileto</string>
+    <string name="label_text">Teksto</string>
+    <string name="label_filter">Filtrilo</string>
+    <string name="label_adjust">Alĝustigi</string>
     <string name="label_brush">Brush</string>
     <string name="confirm_exit_editing">Are you sure you want to exit without saving the image?</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Nuligi</string>
     <string name="saving">Saving…</string>
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
+    <string name="opacity">Opakeco</string>
+    <string name="label_crop">Stuci</string>
     <string name="set_photo_editor">Enable photo editor</string>
     <string name="add_poll_item">Add a poll item</string>
     <string name="remove_poll_item">Remove last poll item</string>
@@ -885,21 +885,21 @@
     <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <string name="category_general">General</string>
     <string name="category_regional">Regional</string>
-    <string name="category_art">Art</string>
-    <string name="category_journalism">Journalism</string>
-    <string name="category_activism">Activism</string>
-    <string name="category_games">Gaming</string>
-    <string name="category_tech">Technology</string>
+    <string name="category_art">Arto</string>
+    <string name="category_journalism">Ĵurnalismo</string>
+    <string name="category_activism">Aktivismo</string>
+    <string name="category_games">Videoludado</string>
+    <string name="category_tech">Teknologio</string>
     <string name="category_adult">Adult content</string>
     <string name="category_furry">Furry</string>
     <string name="category_food">Food</string>
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
-    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
     <string name="users">%1$s users</string>
-    <string name="password_confirm">Confirm password</string>
-    <string name="agreement_check">I agree to %1$s and %2$s</string>
+    <string name="password_confirm">Konfirmi la pasvorton</string>
+    <string name="agreement_check">Mi konsentas %1$s kaj %2$s</string>
     <string name="server_rules">server rules</string>
     <string name="tos">terms of service</string>
     <string name="sign_up">Sign up</string>
@@ -930,40 +930,40 @@
     <string name="active">Active</string>
     <string name="pending">Pending</string>
     <string name="disabled">Disabled</string>
-    <string name="silenced">Silenced</string>
-    <string name="suspended">Suspended</string>
-    <string name="permissions">Permissions</string>
-    <string name="email_status">Email status</string>
+    <string name="silenced">Silenta</string>
+    <string name="suspended">Paŭzita</string>
+    <string name="permissions">Permesoj</string>
+    <string name="email_status">Retpoŝto statuso</string>
     <string name="login_status">Login status</string>
-    <string name="joined">Joined</string>
+    <string name="joined">Membriĝis</string>
     <string name="recent_ip">Most recent IP</string>
-    <string name="warn">Warn</string>
-    <string name="disable">Disable</string>
-    <string name="silence">Silence</string>
+    <string name="warn">Averti</string>
+    <string name="disable">Malŝalti</string>
+    <string name="silence">Silentigi</string>
     <string name="email_user">Notify the user per e-mail</string>
     <string name="perform_action">Perform action</string>
     <string name="custom_warning">Custom warning</string>
-    <string name="user">User</string>
-    <string name="moderator">Moderator</string>
-    <string name="administrator">Administrator</string>
-    <string name="confirmed">Confirmed</string>
-    <string name="unconfirmed">Not confirmed</string>
+    <string name="user">Uzanto</string>
+    <string name="moderator">Kontrolanto</string>
+    <string name="administrator">Administrado</string>
+    <string name="confirmed">Konfirmita</string>
+    <string name="unconfirmed">Ne konfirmita</string>
     <string name="list_reported_statuses">Reported statuses</string>
-    <string name="account">Account</string>
-    <string name="unsilence">Undo silence</string>
+    <string name="account">Konto</string>
+    <string name="unsilence">Malfari silentigi</string>
     <string name="undisable">Undo disable</string>
-    <string name="suspend">Suspend</string>
-    <string name="unsuspend">Undo suspend</string>
-    <string name="account_silenced">The account is silenced!</string>
-    <string name="account_unsilenced">The account is no longer silenced!</string>
-    <string name="account_suspended">The account is suspended!</string>
-    <string name="account_unsuspended">The account is no longer suspended!</string>
+    <string name="suspend">Paŭziti</string>
+    <string name="unsuspend">Malfari Paŭziti</string>
+    <string name="account_silenced">La konto estas silentigita!</string>
+    <string name="account_unsilenced">La konto ne plu silentigitas!</string>
+    <string name="account_suspended">La konto paŭzitas!</string>
+    <string name="account_unsuspended">La konto ne plu paŭzitas!</string>
     <string name="account_disabled">The account is disabled!</string>
     <string name="account_undisabled">The account is no longer disabled!</string>
     <string name="account_warned">The account has been warned!</string>
     <string name="set_display_admin_menu">Display the admin menu</string>
     <string name="set_display_admin_toot">Display the admin feature in statuses</string>
-    <string name="allow">Allow</string>
+    <string name="allow">Permesu</string>
     <string name="account_approved">The account is approved!</string>
     <string name="account_rejected">The account is rejected!</string>
     <string name="assign_to_me">Assign to me</string>
@@ -974,7 +974,7 @@
     <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <string name="audio">The application needs to access audio recording</string>
     <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
-    <string name="voice_message">Voice message</string>
+    <string name="voice_message">Voĉmesaĝo</string>
     <string name="set_quick_reply">Enable quick reply</string>
     <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
     <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
@@ -989,7 +989,7 @@
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
@@ -1025,7 +1025,7 @@
     <string name="action_stats">Statistics</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
-    <string name="number_favourites">Number of favourites</string>
+    <string name="number_favourites">Nombro de stelumoj</string>
     <string name="number_mentions">Number of mentions</string>
     <string name="number_follows">Number of follows</string>
     <string name="number_polls">Number of polls</string>
@@ -1105,7 +1105,7 @@
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
     <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
     <string name="live_delayed">Live notifications delayed</string>
@@ -1117,10 +1117,10 @@
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="click_to_change_the_app_icon">Tap to change the app icon</string>
     <string name="post">Post</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_pixelfed">Tap here to add photos</string>
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>

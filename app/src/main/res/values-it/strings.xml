@@ -1118,13 +1118,13 @@
     <string name="please_wait_compression">L\'app sta comprimendo il media, può volerci un po\'…</string>
     <string name="change_app_icon_experimental">Cambia icona dell\'app</string>
     <string name="click_to_change_the_app_icon">Clicca per cambiare l\'icona dell\'app</string>
-    <string name="post">Post</string>
+    <string name="post">Pubblica</string>
     <string name="post_visibility_tilte">Visibilità del post</string>
     <string name="add_photo_pixelfed">Clicca qui per aggiungere foto</string>
     <string name="add_photo_indication_pixelfed">Formati Accettati: jpeg, png, gif  \n\nDimensione massima del file: 15 MB  \n\nGli album possono contenere fino a 4 foto o video</string>
     <string name="upload_media">Carica media</string>
     <string name="pixelfed_compose_placeholder">Aggiungi una didascalia opzionale</string>
     <string name="long_api_error">L\'app ha ricevuto un messaggio di errore molto lungo dall\'API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Anteprima messaggio</string>
+    <string name="report_mention">Aggiungi menzioni in ogni messaggio</string>
 </resources>
