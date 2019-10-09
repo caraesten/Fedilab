@@ -1762,6 +1762,8 @@ public class Helper {
                 return R.drawable.ic_plain_atom;
             case "braincrash":
                 return R.drawable.ic_plain_crash;
+            case "mastalab":
+                return R.drawable.ic_plain_mastalab;
             default:
                 return R.drawable.ic_plain_bubbles;
         }
@@ -1781,6 +1783,8 @@ public class Helper {
                 return R.drawable.fedilab_logo_atom;
             case "braincrash":
                 return R.drawable.fedilab_logo_crash;
+            case "mastalab":
+                return R.drawable.fedilab_logo_mastalab;
             default:
                 return R.drawable.fedilab_logo_bubbles;
         }

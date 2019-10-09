@@ -217,6 +217,20 @@
             </intent-filter>
         </activity-alias>
 
+        <activity-alias
+            android:name=".activities.MainActivity.Mastalab"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_mastalab"
+            android:roundIcon="@mipmap/ic_launcher_mastalab_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data android:name="icon" android:value="mastalab" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+
         <activity
             android:name="app.fedilab.android.activities.MastodonRegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
