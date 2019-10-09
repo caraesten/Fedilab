@@ -1126,6 +1126,6 @@
     <string name="upload_media">Subir medios</string>
     <string name="pixelfed_compose_placeholder">Engadir lenda de xeito optativo</string>
     <string name="long_api_error">A app recibeu un mensaxe de fallo moi longa desde API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Vista previa</string>
+    <string name="report_mention">Engadir mencións en cada mensaxe</string>
 </resources>
