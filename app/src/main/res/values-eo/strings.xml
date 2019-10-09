@@ -96,7 +96,7 @@
     <string name="disclaimer_full">Subaj informoj povas nekomplete prezenti la profilon de la uzanto.</string>
     <string name="insert_emoji">Enmeti emoĝion</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">Puŝsciigoj</string>
     <!-- Status -->
     <string name="no_status">Neniu hup por montri</string>
     <string name="fav_added">La hup estis aldonita al ŝatolistoj</string>
@@ -121,7 +121,7 @@
     <string name="more_action_9">Forigi kaj reskribi</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
-        <item>Block this account?</item>
+        <item>Bloki ĉi-tiun konton?</item>
         <item>Report this toot?</item>
         <item>Block this domain?</item>
         <item>Unmute this account?</item>
