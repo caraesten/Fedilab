@@ -857,8 +857,18 @@ public class Status implements Parcelable {
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View textView) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twittername.substring(1).replace("@twitter.com", "")));
-                        context.startActivity(intent);
+                        Intent intent;
+                        boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+                        if (nitter) {
+                            String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+                            String url = "https://" + nitterHost + "/" + twittername.substring(1).replace("@twitter.com", "");
+                            Helper.openBrowser(context, url);
+                        }else{
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twittername.substring(1).replace("@twitter.com", "")));
+                            context.startActivity(intent);
+                        }
+
+
                     }
 
                     @Override
