@@ -720,7 +720,6 @@ public class Helper {
             editor.commit();
             Intent changeAccount = new Intent(activity, MainActivity.class);
             changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            activity.finish();
             activity.startActivity(changeAccount);
         }
 
@@ -1743,7 +1742,6 @@ public class Helper {
         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         if (notificationIntent)
             changeAccount.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
-        activity.finish();
         activity.startActivity(changeAccount);
     }
 
@@ -2147,7 +2145,6 @@ public class Helper {
                                         Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
                                     Intent changeAccount = new Intent(activity, MainActivity.class);
                                     changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    activity.finish();
                                     activity.startActivity(changeAccount);
                                 } else { //The account was logged out
                                     Intent intent = new Intent(activity, LoginActivity.class);
@@ -2206,7 +2203,6 @@ public class Helper {
                                         editor.commit();
                                         Intent changeAccount = new Intent(activity, MainActivity.class);
                                         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        activity.finish();
                                         activity.startActivity(changeAccount);
                                     } else { //The account was logged out
                                         Intent intent = new Intent(activity, LoginActivity.class);
