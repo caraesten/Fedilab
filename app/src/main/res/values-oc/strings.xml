@@ -90,7 +90,7 @@
     <string name="send_email">Send an email</string>
     <string name="choose_file">Please select a file</string>
     <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="click_to_change">Tap on the path to change it</string>
     <string name="failed">Failed!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
@@ -180,7 +180,7 @@
     <string name="choose_accounts">Choose an account</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
+    <string name="show_reply">Tap on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
     <string name="instance_no_description">No description available!</string>
@@ -216,7 +216,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Tap here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
     <string name="notif_mention">mentioned you</string>
@@ -487,7 +487,7 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on FramaGit at https://framagit.org/tom79/fedilab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
+    <string name="media_ready">Media has been loaded. Tap here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
     <string name="data_export">Export statuses</string>
@@ -532,7 +532,7 @@
     <string name="toast_hide_boost">Boosts are now hidden!</string>
     <string name="direct_message">Direct message</string>
     <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">No filters to display. You can create one by tapping on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
@@ -560,8 +560,8 @@
     <string name="add_account_list_trunk">Adding accounts to the list</string>
     <string name="account_added_list_trunk">Accounts were added to the list</string>
     <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="action_list_add">You have not created a list yet. Tap on the \"+\" button to add a new one.</string>
+    <string name="action_remote_instance_add">You don\'t follow any remote instances. Tap on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
@@ -673,7 +673,7 @@
     </string>
     <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Last step is to enter your password and tap on Login.
     </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
@@ -726,7 +726,7 @@
     <string name="toast_cancelled">Upload cancelled!</string>
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="video_uploaded_action">Tap here to edit the video data.</string>
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
@@ -846,7 +846,7 @@
     <string name="display_name">Display name</string>
     <string name="privacy">Privacy</string>
     <string name="create">Create</string>
-    <string name="action_playlist_add">You don\'t have any playlists. Click on the \"+\" icon to add a new playlist</string>
+    <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
@@ -896,7 +896,7 @@
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
-    <string name="pickup_instance_category">Choose an instance by picking up a category, then click on a check button.</string>
+    <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
     <string name="users">%1$s users</string>
     <string name="password_confirm">Confirm password</string>
     <string name="agreement_check">I agree to %1$s and %2$s</string>
@@ -915,7 +915,7 @@
     <string name="account_created">Account created!</string>
     <string name="account_created_message">        Your account has been created!\n\n
         Think to validate your email within the 48 next hours.\n\n
-        You can now connect your account by writing <b>%1$s</b> in the first field and click on <b>Connect</b>.\n\n
+        You can now connect your account by writing <b>%1$s</b> in the first field and tap on <b>Connect</b>.\n\n
         <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
     </string>
     <string name="save_draft">Save the message in drafts?</string>
@@ -989,7 +989,7 @@
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
     <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
-    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once clicking the fetch more button</string>
+    <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
@@ -1105,7 +1105,7 @@
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Enable delayed notifications</string>
     <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
     <string name="live_delayed">Live notifications delayed</string>
@@ -1117,10 +1117,10 @@
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
-    <string name="click_to_change_the_app_icon">Click to change the app icon</string>
+    <string name="click_to_change_the_app_icon">Tap to change the app icon</string>
     <string name="post">Post</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
-    <string name="add_photo_pixelfed">Click here to add photos</string>
+    <string name="add_photo_pixelfed">Tap here to add photos</string>
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
