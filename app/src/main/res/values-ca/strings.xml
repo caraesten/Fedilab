@@ -1097,7 +1097,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_nitter_indication">Nitter és una alternativa de codi obert que fa de frontal per Twitter i protegeix la privacitat.</string>
     <string name="set_nitter_host">Introdueix aquí el teu hoste personalitzat o deixa-ho en blanc i s\'usarà nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, click on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
     <string name="set_live_type_title">Activa l\'ajornament de notificacions</string>
     <string name="set_live_type_indication">S\'ajornaran les notificacions cada 30 segons. Això permet gastar menys la pila.</string>
     <string name="live_delayed">Notificacions ajornades</string>
