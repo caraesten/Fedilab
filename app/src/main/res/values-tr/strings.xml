@@ -575,24 +575,24 @@
     <string name="set_enable_time_slot">Zaman dilimini etkinleştir</string>
     <string name="how_to_videos">Nasıl Yapılır Videoları</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="no_blocked_domain">Engellenen alan adı yok!</string>
+    <string name="unblock_domain_confirm">Alan adının engelini kaldır</string>
+    <string name="unblock_domain_confirm_message">%s\'in engelini kaldırmaktan emin misiniz?</string>
+    <string name="block_domain_confirm_message">%s\'in engellemekten emin misiniz?\n\nBu etki alanından herhangi bir içeriği herhangi bir genel zaman çizelgesinde veya bildirimlerinizde göremezsiniz. Bu alan adındaki takipçileriniz kaldırılacak.</string>
+    <string name="blocked_domains">Engellenen alan adları</string>
+    <string name="block_domain">Alan adını engelle</string>
+    <string name="toast_block_domain">Alan adı engellendi</string>
+    <string name="toast_unblock_domain">Alan adı artık engelli değil!</string>
+    <string name="retrieve_remote_status">Uzak durum alınıyor</string>
+    <string name="comment">Yorum</string>
+    <string name="peertube_instance">Peertube örneği</string>
+    <string name="set_display_direct">Özel mesajların zaman çizelgesini göster</string>
+    <string name="no_comments">Sağ üstteki buton ile bu videoya ilk yorum yapan siz olun!</string>
+    <string name="number_view_video">%s izleme</string>
+    <string name="duration_video">Süre: %s</string>
+    <string name="add_remote_instance">Örnek ekle</string>
+    <string name="comment_no_allowed_peertube">Bu videoda yorumlar etkin değil!</string>
+    <string name="pickup_resolution">Bir çözünürlük seçin</string>
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
@@ -640,26 +640,26 @@
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="emoji_picker">Emoji seçici</string>
+    <string name="refresh">Yenile</string>
+    <string name="expand_conversation">Sohbeti genişlet</string>
+    <string name="remove_account">Hesap kaldır</string>
+    <string name="delete_domain">Engellenen alan adını sil</string>
+    <string name="custom_emoji_picker">Özel emoji seçici</string>
+    <string name="play_video">Videoyu oynat</string>
+    <string name="new_toot">Yeni toot</string>
+    <string name="card_view_image">Kartın görüntüsü</string>
+    <string name="hide_media">Medyayı gizle</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Add description for media (for the visually impaired)</string>
+    <string name="media_description">Medya için açıklama ekleyin (görme engelliler için)</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Asla</item>
+        <item>30 dakika</item>
+        <item>1 saat</item>
+        <item>6 saat</item>
+        <item>12 saat</item>
+        <item>1 gün</item>
+        <item>1 hafta</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -668,7 +668,7 @@
     <string name="showcase_uid">        Bu alana, Mastodon hesabına bağlantılı olan e-posta adresini yaz.
     </string>
     <string name="showcase_pwd">        Son adım şifreni girmek ve Giriş Yap\'a tıklamaktır.    </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Daha fazla bilgi</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="languages">Diller</string>
