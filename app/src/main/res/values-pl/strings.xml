@@ -35,7 +35,7 @@
     <string name="toast_account_changed" formatted="false">Teraz pracuje z kontem %1$s</string>
     <string name="add_account">Dodaj konto</string>
     <string name="clipboard">Zawartość wpisu została skopiowana do schowka</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Zawartość wpisu została skopiowana do schowka</string>
     <string name="change">Zmień</string>
     <string name="choose_picture">Wybierz zdjęcie…</string>
     <string name="clear">Czyste</string>
@@ -124,7 +124,7 @@
         <item>Zablokować?</item>
         <item>Zgłosić ten wpis?</item>
         <item>Zablokować tę domenę?</item>
-        <item>Unmute this account?</item>
+        <item>Cofnąć wyciszenie tego konta?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Powiadomienie</item>
