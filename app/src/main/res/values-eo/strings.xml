@@ -530,7 +530,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Rekte mesaĝi</string>
+    <string name="direct_message">Rekte mesaĝu</string>
     <string name="filters">Filtriloj</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by tapping on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
@@ -552,7 +552,7 @@
     <string name="action_filter_create">Krei filtrilon</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Sekvi</string>
+    <string name="follow_account">Sekvu</string>
     <string name="select_all">Elekti ĉion</string>
     <string name="unselect_all">Malelekti ĉion</string>
     <string name="follow_trunk">%s estas sekvita!</string>
@@ -586,11 +586,11 @@
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
     <string name="blocked_domains">Blokita domajnoj</string>
-    <string name="block_domain">Blokiti domajno</string>
+    <string name="block_domain">Blokitu domajno</string>
     <string name="toast_block_domain">La domajno estas blokita</string>
     <string name="toast_unblock_domain">The domain is no longer blocked!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Komento</string>
+    <string name="comment">Komentu</string>
     <string name="peertube_instance">Peertube Instenco</string>
     <string name="set_display_direct">Display private messages timeline</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
@@ -647,7 +647,7 @@
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Aktualigi</string>
+    <string name="refresh">Aktualigu</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Forigi konton</string>
     <string name="delete_domain">Delete the blocked domain</string>
@@ -655,7 +655,7 @@
     <string name="play_video">Play video</string>
     <string name="new_toot">Nova Hup</string>
     <string name="card_view_image">Bildo de la karto</string>
-    <string name="hide_media">Kaŝi aŭdovidaĵojn</string>
+    <string name="hide_media">Kaŝu aŭdovidaĵojn</string>
     <string name="favicon">Piktogramo</string>
     <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
@@ -733,7 +733,7 @@
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Aldoni aŭdvidaĵojn stelumej</string>
+    <string name="add_image_to_favorite">Aldonu aŭdvidaĵojn stelumej</string>
     <string name="leave_a_comment">Lasi komenton</string>
     <string name="share">Share</string>
     <string name="my_pictures">Miaj Bildoj</string>
