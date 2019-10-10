@@ -1,0 +1,12 @@
+Added
+- Preview for the automatic split feature (mentions in each message can be added/removed in a simple click)
+
+Changed
+- Improvement with delayed notifications
+- Replace Twitter names with Nitter
+
+Fixed
+- Fix cross sharing issue with media
+- Improve account switching
+- Peertube connection
+- Fix some crashes
