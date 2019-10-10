@@ -16,15 +16,25 @@ package app.fedilab.android.activities;
 
 
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import android.widget.ImageButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -32,27 +42,33 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.gw.swipeback.SwipeBackLayout;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Attachment;
+import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
-
+import app.fedilab.android.interfaces.OnDownloadInterface;
 
 
 /**
- * Created by Thomas on 25/06/2017.
+ * Created by Thomas on 10/10/2019.
  * Media Activity
  */
 
-public class SlideMediaActivity extends BaseActivity  {
+public class SlideMediaActivity extends BaseActivity implements OnDownloadInterface {
 
     private ArrayList<Attachment> attachments;
     private int mediaPosition;
     private ViewPager mPager;
+    private long downloadID;
+    public SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +80,13 @@ public class SlideMediaActivity extends BaseActivity  {
         setContentView(R.layout.activity_media_pager);
         supportPostponeEnterTransition();
         supportStartPostponedEnterTransition();
-        CoordinatorLayout main_container_media = findViewById(R.id.main_container_media);
+        SwipeBackLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
         if (theme == Helper.THEME_LIGHT) {
-            main_container_media.setBackgroundResource(R.color.mastodonC2);
+            swipeBackLayout.setBackgroundResource(R.color.white);
         } else if (theme == Helper.THEME_BLACK) {
-            main_container_media.setBackgroundResource(R.color.black);
+            swipeBackLayout.setBackgroundResource(R.color.black);
         } else if (theme == Helper.THEME_DARK) {
-            main_container_media.setBackgroundResource(R.color.mastodonC1_);
+            swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
         }
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
         if (getIntent().getExtras() != null)
@@ -86,6 +102,104 @@ public class SlideMediaActivity extends BaseActivity  {
 
         mPager.setCurrentItem(mediaPosition-1);
 
+        registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        ImageButton media_save = findViewById(R.id.media_save);
+        ImageButton media_share = findViewById(R.id.media_share);
+        ImageButton media_close = findViewById(R.id.media_close);
+
+
+        media_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = mPager.getCurrentItem();
+                Attachment attachment = attachments.get(position);
+                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) { ;
+                    new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                } else {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                            downloadID = -1;
+                        }
+                    } else {
+                        Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                        downloadID = -1;
+                    }
+                }
+            }
+        });
+        media_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = mPager.getCurrentItem();
+                Attachment attachment = attachments.get(position);
+                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
+                    new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                } else {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                        }
+                    } else {
+                        downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                    }
+                }
+            }
+        });
+        media_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        mSwipeBackLayout = new SwipeBackLayout(SlideMediaActivity.this);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
+        mSwipeBackLayout.setMaskAlpha(125);
+        mSwipeBackLayout.setSwipeBackFactor(0.5f);
+        mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
+            @Override
+            public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
+            }
+
+            @Override
+            public void onViewSwipeFinished(View mView, boolean isEnd) {
+                if (isEnd){
+                    finish();
+                    overridePendingTransition(0, 0);
+                }
+            }
+        });
+
+        mSwipeBackLayout.attachToActivity(this);
+
+    }
+
+
+    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (downloadID == id) {
+                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                assert manager != null;
+                Uri uri = manager.getUriForDownloadedFile(downloadID);
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, R.string.share_with);
+                context.startActivity(shareIntent);
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(onDownloadComplete);
     }
 
     private MediaSliderFragment mCurrentFragment;
@@ -93,6 +207,16 @@ public class SlideMediaActivity extends BaseActivity  {
 
     public MediaSliderFragment getCurrentFragment() {
         return mCurrentFragment;
+    }
+
+    @Override
+    public void onDownloaded(String saveFilePath, String downloadUrl, Error error) {
+
+    }
+
+    @Override
+    public void onUpdateProgress(int progress) {
+
     }
 
     /**

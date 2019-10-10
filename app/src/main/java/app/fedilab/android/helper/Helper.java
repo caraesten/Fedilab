@@ -1106,6 +1106,35 @@ public class Helper {
         alert.show();
     }
 
+
+
+    /**
+     * Manage downloads with URLs
+     *
+     * @param context Context
+     * @param url     String download url
+     */
+    public static long manageDownloadsNoPopup(final Context context, final String url) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        final DownloadManager.Request request;
+        try {
+            request = new DownloadManager.Request(Uri.parse(url.trim()));
+        } catch (Exception e) {
+            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            return -1;
+        }
+        final String fileName = URLUtil.guessFileName(url, null, null);
+        request.allowScanningByMediaScanner();
+        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+        request.setDestinationInExternalPublicDir(myDir, fileName);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        assert dm != null;
+        return dm.enqueue(request);
+    }
+
+
     public static String getMimeType(String url) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);

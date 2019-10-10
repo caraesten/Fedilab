@@ -23,11 +23,8 @@ import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +37,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -64,37 +55,20 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.gw.swipeback.SwipeBackLayout;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.net.ssl.HttpsURLConnection;
-
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MediaActivity;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.Entities.Attachment;
-import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.client.TLSSocketFactory;
-import app.fedilab.android.drawers.ImageAdapter;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.interfaces.OnDownloadInterface;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
-import cafe.adriel.androidaudiorecorder.VisualizerHandler;
-import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -106,65 +80,30 @@ import static cafe.adriel.androidaudiorecorder.Util.getDarkerColor;
  * Created by Thomas on 09/10/2019.
  * Fragment to display media from SlideMediaActivity
  */
-public class MediaSliderFragment extends Fragment implements OnDownloadInterface, MediaPlayer.OnCompletionListener {
+public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompletionListener {
 
 
-    private boolean flag_loading;
+
     private Context context;
-    private AsyncTask<Void, Void, Void> asyncTask;
-    private String max_id;
-    private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
-    private boolean firstLoad;
-    private String targetedId;
-    private boolean showMediaOnly, showPinned, showReply;
-    boolean firstTootsLoaded;
-    private SharedPreferences sharedpreferences;
-    private ArrayList<Status> statuses;
-    private ImageAdapter gridAdaper;
-    private RecyclerView gridview;
     private int mediaPosition;
 
 
-
-    private WebView webview_video;
-    private ImageButton media_save, media_share, media_close;
-    private boolean scheduleHidden, scheduleHiddenDescription;
     private SimpleExoPlayer player;
-    private boolean isSHaring;
-    private String instance;
-    private RelativeLayout content_audio;
     private MediaPlayer playeraudio;
     private Timer timer;
     private int playerSecondsElapsed;
-    private static final Handler HANDLER = new Handler();
     private String url;
 
     private RelativeLayout loader;
-    private ArrayList<Attachment> attachments;
     private PhotoView imageView;
-    private SimpleExoPlayerView videoView;
-    private float downX;
-    private float downY;
-    static final int MIN_DISTANCE = 100;
-    private String finalUrlDownload;
-    private String preview_url;
-    private ImageView prev, next;
-    private boolean isControlElementShown = true;
-    private Bitmap downloadedImage;
-    private File fileVideo;
-    private TextView progress;
-    private ProgressBar pbar_inf;
     private TextView message_ready;
     private boolean canSwipe;
-    private TextView media_description;
     private Attachment attachment;
-    private float imageScale = 0;
-    private RelativeLayout action_bar_container;
-    private VisualizerHandler visualizerHandler;
     private TextView statusView;
     private TextView timerView;
     private ImageButton playView;
     private GLAudioVisualizationView visualizerView;
+
     public MediaSliderFragment() {
     }
 
@@ -180,74 +119,22 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
             attachment = bundle.getParcelable("attachment");
         }
         Log.v(Helper.TAG,mediaPosition + " -> " + attachment);
-        media_description = rootView.findViewById(R.id.media_description);
+        TextView media_description = rootView.findViewById(R.id.media_description);
         message_ready = rootView.findViewById(R.id.message_ready);
-        media_save = rootView.findViewById(R.id.media_save);
-        media_share = rootView.findViewById(R.id.media_share);
-        media_close = rootView.findViewById(R.id.media_close);
-        progress = rootView.findViewById(R.id.loader_progress);
-        webview_video = rootView.findViewById(R.id.webview_video);
-        content_audio = rootView.findViewById(R.id.content_audio);
-        media_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isSHaring = false;
-                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
-                    if (attachment != null) {
-                        progress.setText("0 %");
-                        progress.setVisibility(View.VISIBLE);
-                        new HttpsConnection(context, instance).download(attachment.getUrl(), MediaSliderFragment.this);
-                    }
-                } else {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions((Activity)context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-                        } else {
-                            Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, false);
-                        }
-                    } else {
-                        Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, false);
-                    }
-                }
-            }
-        });
-        media_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isSHaring = true;
-                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
-                    if (attachment != null) {
-                        progress.setText("0 %");
-                        progress.setVisibility(View.VISIBLE);
-                        new HttpsConnection(context, instance).download(attachment.getUrl(), MediaSliderFragment.this);
-                    }
-                } else {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions((Activity)context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-                        } else {
-                            Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, true);
-                        }
-                    } else {
-                        Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, true);
-                    }
-                }
-            }
-        });
-        media_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((Activity)context).finish();
-            }
-        });
-        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+
+        TextView progress = rootView.findViewById(R.id.loader_progress);
+        WebView webview_video = rootView.findViewById(R.id.webview_video);
+        RelativeLayout content_audio = rootView.findViewById(R.id.content_audio);
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         loader = rootView.findViewById(R.id.loader);
+        ImageView prev = rootView.findViewById(R.id.media_prev);
+        ImageView next = rootView.findViewById(R.id.media_next);
+
         imageView = rootView.findViewById(R.id.media_picture);
-        videoView = rootView.findViewById(R.id.media_video);
-        prev = rootView.findViewById(R.id.media_prev);
-        next = rootView.findViewById(R.id.media_next);
+        SimpleExoPlayerView videoView = rootView.findViewById(R.id.media_video);
         if (theme == Helper.THEME_BLACK) {
             changeDrawableColor(context, prev, R.color.dark_icon);
             changeDrawableColor(context, next, R.color.dark_icon);
@@ -275,17 +162,13 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
-                imageScale = imageView.getScale();
                 canSwipe = (imageView.getScale() == 1);
+                ((SlideMediaActivity)context).mSwipeBackLayout.isDisabled(imageView.getScale() != 1);
             }
         });
-        if (attachments != null && attachments.size() > 1) {
-            prev.setVisibility(View.VISIBLE);
-            next.setVisibility(View.VISIBLE);
-        }
-        pbar_inf = rootView.findViewById(R.id.pbar_inf);
+        ProgressBar pbar_inf = rootView.findViewById(R.id.pbar_inf);
         String type = attachment.getType();
-        preview_url = attachment.getPreview_url();
+        String preview_url = attachment.getPreview_url();
         if (type.equals("unknown")) {
             preview_url = attachment.getRemote_url();
             if (preview_url.endsWith(".png") || preview_url.endsWith(".jpg") || preview_url.endsWith(".jpeg") || preview_url.endsWith(".gif")) {
@@ -301,7 +184,7 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
             case "image":
                 pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);
-                fileVideo = null;
+                File fileVideo = null;
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
                 fileVideo = null;
@@ -323,7 +206,6 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
                                                     loader.setVisibility(View.GONE);
                                                     Bitmap imageCompressed = Helper.compressImageIfNeeded(context, resource);
                                                     if (imageView.getScale() < 1.1) {
-                                                        downloadedImage = resource;
                                                         imageView.setImageBitmap(imageCompressed);
                                                     } else {
                                                         message_ready.setVisibility(View.VISIBLE);
@@ -331,7 +213,6 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
                                                     message_ready.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View view) {
-                                                            downloadedImage = resource;
                                                             imageView.setImageBitmap(imageCompressed);
                                                             message_ready.setVisibility(View.GONE);
                                                         }
@@ -353,7 +234,7 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
                 try {
-                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(instance));
+                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory(Helper.getLiveInstance(context)));
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
@@ -485,9 +366,6 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
         playView.setImageResource(R.drawable.aar_ic_play);
 
         visualizerView.release();
-        if (visualizerHandler != null) {
-            visualizerHandler.stop();
-        }
 
         if (playeraudio != null) {
             try {
@@ -599,46 +477,10 @@ public class MediaSliderFragment extends Fragment implements OnDownloadInterface
         }
     }
 
-
-
-    @Override
-    public void onDownloaded(String path, String originUrl, Error error) {
-        if (path != null) {
-            File response = new File(path);
-            File dir = context.getCacheDir();
-            File from = new File(dir, response.getName());
-            File to = new File(dir, Helper.md5(originUrl) + ".mp4");
-            if (from.exists())
-                //noinspection ResultOfMethodCallIgnored
-                from.renameTo(to);
-            fileVideo = to;
-            downloadedImage = null;
-        }
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions((Activity)context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-            } else {
-                Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, isSHaring);
-            }
-        } else {
-            Helper.manageMoveFileDownload(context, preview_url, finalUrlDownload, downloadedImage, fileVideo, isSHaring);
-        }
-        if (progress != null)
-            progress.setVisibility(View.GONE);
-        if (loader != null)
-            loader.setVisibility(View.GONE);
-    }
-
-
     public boolean canSwipe(){
         return canSwipe;
     }
 
-    @Override
-    public void onUpdateProgress(int progressPercentage) {
-        progress.setText(String.format("%s%%", String.valueOf(progressPercentage)));
-        pbar_inf.setProgress(progressPercentage);
-    }
 
     @Override
     public void onCompletion(MediaPlayer mp) {

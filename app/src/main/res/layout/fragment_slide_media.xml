@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_container_media">
 
 
@@ -105,7 +105,8 @@
                 android:textSize="60sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="sans-serif-thin"
-                android:text="00:00:00" />
+                android:text="00:00:00"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -125,7 +126,8 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/aar_ic_play"
                 android:onClick="togglePlaying"
-                style="@style/Widget.AppCompat.Button.Borderless" />
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:contentDescription="@string/play_video" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -137,77 +139,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent_grey"
-        android:id="@+id/action_bar_container"
-        android:paddingTop="16dp">
 
-        <ImageButton
-            android:id="@+id/media_close"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/transparent"
-            android:contentDescription="@string/close"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_close"
-            app:layout_anchorGravity="top|left" />
-
-
-        <LinearLayout
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            app:layout_anchorGravity="top|left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/media_save"
-                android:scaleType="fitXY"
-                android:layout_marginStart="20dp"
-                android:background="@color/transparent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_save_white"
-                android:contentDescription="@string/download" />
-
-            <ImageButton
-                android:id="@+id/media_share"
-                app:layout_anchorGravity="top|left"
-                android:layout_marginStart="10dp"
-                android:background="@color/transparent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="10dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_share_media"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/share" />
-        </LinearLayout>
-    </RelativeLayout>
 
     <ImageView
         android:id="@+id/media_prev"
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
@@ -226,7 +164,6 @@
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
