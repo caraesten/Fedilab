@@ -155,12 +155,12 @@
     <string name="toot_cw_placeholder">Ostrzeżenie</string>
     <string name="toot_placeholder">Co Ci chodzi po głowie?</string>
     <string name="toot_it">Wyślij!</string>
-    <string name="queet_it">QUEET!</string>
+    <string name="queet_it">Wyślij!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Nowy wpis</string>
     <string name="toot_title_reply">Odpowiedz na wpis</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Nowy wpis</string>
+    <string name="queet_title_reply">Odpowiedz na wpis</string>
     <string name="toot_no_space">Osiągnąłeś limit 500 znaków!</string>
     <string name="toot_select_image">Wybierz zawartość</string>
     <string name="toot_select_image_error">Podczas wyboru zawartości wystąpił błąd!</string>
