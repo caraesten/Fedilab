@@ -19,6 +19,7 @@ package app.fedilab.android.activities;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -28,11 +29,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -51,6 +58,7 @@ import java.util.ArrayList;
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
@@ -74,9 +82,20 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_BLACK)
-            setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
+        switch (theme) {
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark);
+        }
         setContentView(R.layout.activity_media_pager);
         supportPostponeEnterTransition();
         supportStartPostponedEnterTransition();
@@ -88,10 +107,82 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         } else if (theme == Helper.THEME_DARK) {
             swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
         }
+
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            View view = inflater.inflate(R.layout.media_action_bar, new LinearLayout(getApplicationContext()), false);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            ImageView media_save = getSupportActionBar().getCustomView().findViewById(R.id.media_save);
+            ImageView media_share = getSupportActionBar().getCustomView().findViewById(R.id.media_share);
+            toolbar_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            media_save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = mPager.getCurrentItem();
+                    Attachment attachment = attachments.get(position);
+                    if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) { ;
+                        new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                                downloadID = -1;
+                            }
+                        } else {
+                            Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                            downloadID = -1;
+                        }
+                    }
+                }
+            });
+            media_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = mPager.getCurrentItem();
+                    Attachment attachment = attachments.get(position);
+                    if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
+                        new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                            }
+                        } else {
+                            downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                        }
+                    }
+                }
+            });
+            toolbar_title.setText("");
+            if (theme == Helper.THEME_LIGHT) {
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, SlideMediaActivity.this);
+            }
+        }
+
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
         if (getIntent().getExtras() != null)
             mediaPosition = getIntent().getExtras().getInt("position", 1);
-        gestureDetector = new GestureDetector(new SwipeDetector());
 
         if (attachments == null || attachments.size() == 0)
             finish();
@@ -103,59 +194,8 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         mPager.setCurrentItem(mediaPosition-1);
 
         registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        ImageButton media_save = findViewById(R.id.media_save);
-        ImageButton media_share = findViewById(R.id.media_share);
-        ImageButton media_close = findViewById(R.id.media_close);
 
 
-        media_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = mPager.getCurrentItem();
-                Attachment attachment = attachments.get(position);
-                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) { ;
-                    new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
-                } else {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-                        } else {
-                            Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                            downloadID = -1;
-                        }
-                    } else {
-                        Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                        downloadID = -1;
-                    }
-                }
-            }
-        });
-        media_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = mPager.getCurrentItem();
-                Attachment attachment = attachments.get(position);
-                if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
-                    new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
-                } else {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-                        } else {
-                            downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                        }
-                    } else {
-                        downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                    }
-                }
-            }
-        });
-        media_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         mSwipeBackLayout = new SwipeBackLayout(SlideMediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
@@ -191,7 +231,12 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, R.string.share_with);
-                context.startActivity(shareIntent);
+                ContentResolver cR = context.getContentResolver();
+                shareIntent.setType(cR.getType(uri));
+                try {
+                    startActivity(shareIntent);
+                }catch (Exception e){}
+                manager.remove(downloadID);
             }
         }
     };
@@ -253,54 +298,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         public int getCount() {
             return attachments.size();
         }
-    }
-
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    private GestureDetector gestureDetector;
-
-    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-            // Check movement along the Y-axis. If it exceeds SWIPE_MAX_OFF_PATH,
-            // then dismiss the swipe.
-            if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH)
-                return false;
-
-            // Swipe from left to right.
-            // The swipe needs to exceed a certain distance (SWIPE_MIN_DISTANCE)
-            // and a certain velocity (SWIPE_THRESHOLD_VELOCITY).
-            if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                if( mCurrentFragment.canSwipe()) {
-                    finish();
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-
-            return false;
-        }
-    }
-
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TouchEvent dispatcher.
-        if (gestureDetector != null) {
-            if (gestureDetector.onTouchEvent(ev))
-                // If the gestureDetector handles the event, a swipe has been
-                // executed and no more needs to be done.
-                return true;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
     }
 
 }
