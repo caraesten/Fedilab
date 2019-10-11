@@ -310,13 +310,13 @@
         <activity
             android:name="app.fedilab.android.activities.MediaActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Transparent"
+            android:theme="@style/TransparentDark"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true" />
         <activity
             android:name="app.fedilab.android.activities.SlideMediaActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Transparent"
+            android:theme="@style/TransparentDark"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true" />
         <activity

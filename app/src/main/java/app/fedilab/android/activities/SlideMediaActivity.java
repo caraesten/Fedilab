@@ -85,16 +85,16 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         super.onCreate(savedInstanceState);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.TransparentLight);
                 break;
             case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.TransparentDark);
                 break;
             case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
+                setTheme(R.style.TransparentBlack);
                 break;
             default:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
         supportPostponeEnterTransition();
