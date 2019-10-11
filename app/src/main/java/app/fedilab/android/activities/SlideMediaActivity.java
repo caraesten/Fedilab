@@ -28,12 +28,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,7 +75,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     private ViewPager mPager;
     private long downloadID;
     public SwipeBackLayout mSwipeBackLayout;
-
+    private boolean fullscreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -107,6 +105,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         } else if (theme == Helper.THEME_DARK) {
             swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
         }
+        fullscreen = false;
 
 
         if (getSupportActionBar() != null)
@@ -187,7 +186,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         if (attachments == null || attachments.size() == 0)
             finish();
         mPager = findViewById(R.id.media_viewpager);
-
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
@@ -219,6 +217,19 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP ) {
+            if (mCurrentFragment.canSwipe()) {
+                fullscreen = !fullscreen;
+                FullScreencall(fullscreen);
+                if (fullscreen) {
+                    hideSystemUI();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
 
     private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
@@ -279,8 +290,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             Bundle bundle = new Bundle();
             MediaSliderFragment mediaSliderFragment = new MediaSliderFragment();
             bundle.putInt("position", position);
-            Log.v(Helper.TAG,"position: " + position);
-            Log.v(Helper.TAG,"attachments.get(position): " + attachments.get(position));
             bundle.putParcelable("attachment", attachments.get(position));
             mediaSliderFragment.setArguments(bundle);
             return mediaSliderFragment;
@@ -300,4 +309,58 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         }
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        fullscreen = false;
+        FullScreencall(fullscreen);
+        if( fullscreen){
+            hideSystemUI();
+        }
+    }
+
+    public void FullScreencall(Boolean shouldFullscreen) {
+        if (Build.VERSION.SDK_INT < 19) {
+            View v = this.getWindow().getDecorView();
+            if (shouldFullscreen) {
+                v.setSystemUiVisibility(View.GONE);
+            } else {
+                v.setSystemUiVisibility(View.VISIBLE);
+            }
+        } else {
+            View decorView = getWindow().getDecorView();
+            if (shouldFullscreen) {
+                decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_IMMERSIVE
+                                // Set the content to appear under the system bars so that the
+                                // content doesn't resize when the system bars hide and show.
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                // Hide the nav bar and status bar
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            } else {
+                decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            }
+        }
+    }
+
+
+    public void hideSystemUI() {
+        View mDecorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mDecorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+    }
 }

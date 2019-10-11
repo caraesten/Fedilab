@@ -25,7 +25,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import org.jetbrains.annotations.NotNull;
-import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Timer;
@@ -118,7 +116,6 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             mediaPosition = bundle.getInt("position", 1);
             attachment = bundle.getParcelable("attachment");
         }
-        Log.v(Helper.TAG,mediaPosition + " -> " + attachment);
         TextView media_description = rootView.findViewById(R.id.media_description);
         message_ready = rootView.findViewById(R.id.message_ready);
 
@@ -164,6 +161,11 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1);
                 ((SlideMediaActivity)context).mSwipeBackLayout.isDisabled(imageView.getScale() != 1);
+                if( !canSwipe){
+                    ((SlideMediaActivity)context).hideSystemUI();
+                }else{
+                    ((SlideMediaActivity)context).FullScreencall(false);
+                }
             }
         });
         ProgressBar pbar_inf = rootView.findViewById(R.id.pbar_inf);
@@ -184,10 +186,8 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             case "image":
                 pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);
-                File fileVideo = null;
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
-                fileVideo = null;
                 if (!url.endsWith(".gif")) {
                     Glide.with(context)
                             .asBitmap()
@@ -287,9 +287,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 webview_video.setWebChromeClient(mastalabWebChromeClient);
                 webview_video.getSettings().setDomStorageEnabled(true);
                 webview_video.getSettings().setAppCacheEnabled(true);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
-                }
+                webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
                 webview_video.setWebViewClient(new MastalabWebViewClient((Activity)context));
                 webview_video.loadUrl(attachment.getUrl());
                 break;

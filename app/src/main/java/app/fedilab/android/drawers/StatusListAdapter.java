@@ -38,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -3795,7 +3796,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 intent.putExtras(b);
                                 ViewCompat.setTransitionName(v, attachment.getUrl());
                                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, attachment.getUrl());
-                                context.startActivity(intent, options.toBundle());
+                                ActivityCompat.startActivity(context, intent, options.toBundle());
                             }
                         } else {
                             status.setAttachmentShown(true);
