@@ -36,16 +36,11 @@ import net.gotev.uploadservice.UploadStatusDelegate;
 import org.apache.poi.util.IOUtils;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
@@ -70,20 +65,13 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.MediaActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.fragments.DisplayPlaylistsFragment;
+
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
-import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.Sqlite;
 
 
 /**
@@ -718,9 +706,9 @@ public class HttpsConnection {
                             while ((bytesRead = inputStream.read(buffer)) != -1) {
                                 outputStream.write(buffer, 0, bytesRead);
                                 downloadedFileSize += bytesRead;
-                                if (context instanceof MediaActivity) {
+                                if (context instanceof SlideMediaActivity) {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
-                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
                                             listener.onUpdateProgress(currentProgress > 0 ? currentProgress : 101);
                                         }
@@ -735,8 +723,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
@@ -750,8 +738,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
@@ -806,9 +794,9 @@ public class HttpsConnection {
                             while ((bytesRead = inputStream.read(buffer)) != -1) {
                                 outputStream.write(buffer, 0, bytesRead);
                                 downloadedFileSize += bytesRead;
-                                if (context instanceof MediaActivity) {
+                                if (context instanceof SlideMediaActivity) {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
-                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
                                             listener.onUpdateProgress(currentProgress > 0 ? currentProgress : 101);
                                         }
@@ -823,8 +811,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
@@ -838,8 +826,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }

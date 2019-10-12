@@ -16,7 +16,6 @@ package app.fedilab.android.drawers;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +35,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -45,10 +43,8 @@ import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.PixelfedComposeActivity;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.asynctasks.UpdateDescriptionAttachmentAsyncTask;

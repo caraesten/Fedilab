@@ -143,20 +143,16 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 public void onClick(View view) {
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
-                    if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) { ;
-                        new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
-                    } else {
-                        if (Build.VERSION.SDK_INT >= 23) {
-                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
-                            } else {
-                                Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                                downloadID = -1;
-                            }
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
                         } else {
                             Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
                             downloadID = -1;
                         }
+                    } else {
+                        Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                        downloadID = -1;
                     }
                 }
             });
@@ -202,7 +198,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         String description = attachments.get(mediaPosition-1).getDescription();
         handler = new Handler();
-        if( description != null && description.trim().length() > 0 ){
+        if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0 ){
             media_description.setText(description);
             media_description.setVisibility(View.VISIBLE);
 
@@ -226,7 +222,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                     handler.removeCallbacksAndMessages(null);
                 }
                 handler = new Handler();
-                if( description != null && description.trim().length() > 0 ){
+                if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0){
                    media_description.setText(description);
                    media_description.setVisibility(View.VISIBLE);
 
@@ -280,7 +276,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                             handler.removeCallbacksAndMessages(null);
                         }
                         handler = new Handler();
-                        if( description != null && description.trim().length() > 0 ){
+                        if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0){
                             media_description.setText(description);
                             media_description.setVisibility(View.VISIBLE);
 
