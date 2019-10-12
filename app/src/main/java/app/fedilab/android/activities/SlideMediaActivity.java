@@ -28,10 +28,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -222,10 +225,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         if (event.getAction() == MotionEvent.ACTION_UP ) {
             if (mCurrentFragment.canSwipe()) {
                 fullscreen = !fullscreen;
-                FullScreencall(fullscreen);
-                if (fullscreen) {
-                    hideSystemUI();
-                }
+                setFullscreen(fullscreen);
             }
         }
         return super.dispatchTouchEvent(event);
@@ -312,55 +312,39 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        fullscreen = false;
-        FullScreencall(fullscreen);
-        if( fullscreen){
-            hideSystemUI();
-        }
     }
 
-    public void FullScreencall(Boolean shouldFullscreen) {
-        if (Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
-            if (shouldFullscreen) {
-                v.setSystemUiVisibility(View.GONE);
-            } else {
-                v.setSystemUiVisibility(View.VISIBLE);
-            }
-        } else {
-            View decorView = getWindow().getDecorView();
-            if (shouldFullscreen) {
-                decorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_IMMERSIVE
-                                // Set the content to appear under the system bars so that the
-                                // content doesn't resize when the system bars hide and show.
-                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                // Hide the nav bar and status bar
-                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-            } else {
-                decorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            }
-        }
+    public boolean getFullScreen(){
+        return this.fullscreen;
     }
 
-
-    public void hideSystemUI() {
+    public void setFullscreen(boolean fullscreen)
+    {
+        this.fullscreen = fullscreen;
         View mDecorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (!fullscreen) {
             mDecorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                mDecorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+            }else{
+                mDecorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                           );
+            }
         }
     }
 }

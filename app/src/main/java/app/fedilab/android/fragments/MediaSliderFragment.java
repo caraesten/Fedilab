@@ -162,9 +162,13 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 canSwipe = (imageView.getScale() == 1);
                 ((SlideMediaActivity)context).mSwipeBackLayout.isDisabled(imageView.getScale() != 1);
                 if( !canSwipe){
-                    ((SlideMediaActivity)context).hideSystemUI();
+                    if( ! ((SlideMediaActivity)context).getFullScreen()) {
+                        ((SlideMediaActivity) context).setFullscreen(true);
+                    }
                 }else{
-                    ((SlideMediaActivity)context).FullScreencall(false);
+                    if( ((SlideMediaActivity)context).getFullScreen()) {
+                        ((SlideMediaActivity) context).setFullscreen(false);
+                    }
                 }
             }
         });
