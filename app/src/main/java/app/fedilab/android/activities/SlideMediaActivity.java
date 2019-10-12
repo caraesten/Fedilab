@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -211,10 +212,36 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
 
         slidrInterface = Slidr.attach(this, config);
-
+        setFullscreen(true);
     }
 
+    private float startX;
+    private float startY;
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
 
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startX = event.getX();
+                startY = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                float endX = event.getX();
+                float endY = event.getY();
+                if (isAClick(startX, endX, startY, endY)) {
+                    setFullscreen(!fullscreen);
+                }
+                break;
+        }
+      return super.dispatchTouchEvent(event);
+    }
+
+    private boolean isAClick(float startX, float endX, float startY, float endY) {
+        float differenceX = Math.abs(startX - endX);
+        float differenceY = Math.abs(startY - endY);
+        int CLICK_ACTION_THRESHOLD = 200;
+        return !(differenceX > CLICK_ACTION_THRESHOLD/* =5 */ || differenceY > CLICK_ACTION_THRESHOLD);
+    }
     private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
