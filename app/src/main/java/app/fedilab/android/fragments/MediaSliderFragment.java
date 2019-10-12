@@ -160,14 +160,16 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             @Override
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1);
-                ((SlideMediaActivity)context).mSwipeBackLayout.isDisabled(imageView.getScale() != 1);
+
                 if( !canSwipe){
                     if( ! ((SlideMediaActivity)context).getFullScreen()) {
                         ((SlideMediaActivity) context).setFullscreen(true);
+                        ((SlideMediaActivity) context).slidrInterface.lock();
                     }
                 }else{
                     if( ((SlideMediaActivity)context).getFullScreen()) {
                         ((SlideMediaActivity) context).setFullscreen(false);
+                        ((SlideMediaActivity) context).slidrInterface.unlock();
                     }
                 }
             }

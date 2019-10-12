@@ -113,8 +113,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", (position + 1));
                     intent.putExtras(b);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) contextWeakReference.get(), v, attachments.get(0).getUrl());
-                    contextWeakReference.get().startActivity(intent, options.toBundle());
+                    contextWeakReference.get().startActivity(intent);
                 }
             });
         }else{

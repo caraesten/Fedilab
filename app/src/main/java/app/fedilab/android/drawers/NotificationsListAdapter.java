@@ -1388,9 +1388,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         intent.putParcelableArrayListExtra("mediaArray", notification.getStatus().getMedia_attachments());
                         b.putInt("position", finalPosition);
                         intent.putExtras(b);
-                        ViewCompat.setTransitionName(v, notification.getStatus().getMedia_attachments().get(0).getUrl());
-                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, notification.getStatus().getMedia_attachments().get(0).getUrl());
-                        context.startActivity(intent, options.toBundle());
+                        context.startActivity(intent);
                     }
                 });
                 i++;

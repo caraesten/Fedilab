@@ -14,20 +14,16 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<com.gw.swipeback.SwipeBackLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
     android:id="@+id/swipeBackLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:directionMode="bottom"
-    app:isSwipeFromEdge="true"
-    app:maskAlpha="125"
-    app:swipeBackFactor="0.5">
-
+    >
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/media_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</com.gw.swipeback.SwipeBackLayout>
+        />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

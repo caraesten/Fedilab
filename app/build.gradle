@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 324
         versionName "2.21.1"
@@ -86,6 +86,7 @@ dependencies {
     implementation "com.google.guava:guava:$guavaLibraryVersion"
     implementation "com.github.chrisbanes:PhotoView:$photoViewLibraryVersion"
     implementation "com.github.stom79:SwipeBackLayout:$swipebackLibraryVersion"
+    implementation 'com.r0adkll:slidableactivity:2.1.0'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.5'
     implementation 'com.github.stom79:SparkButton:1.0.12'

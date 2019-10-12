@@ -25,22 +25,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -50,7 +48,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.gw.swipeback.SwipeBackLayout;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrInterface;
+import com.r0adkll.slidr.model.SlidrPosition;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,7 +60,6 @@ import java.util.ArrayList;
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
@@ -77,8 +77,10 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     private int mediaPosition;
     private ViewPager mPager;
     private long downloadID;
-    public SwipeBackLayout mSwipeBackLayout;
     private boolean fullscreen;
+    public SlidrInterface slidrInterface;
+    int flags;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -98,9 +100,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
-        supportPostponeEnterTransition();
-        supportStartPostponedEnterTransition();
-        SwipeBackLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
+        CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
         if (theme == Helper.THEME_LIGHT) {
             swipeBackLayout.setBackgroundResource(R.color.white);
         } else if (theme == Helper.THEME_BLACK) {
@@ -110,6 +110,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         }
         fullscreen = false;
 
+        flags = getWindow().getDecorView().getSystemUiVisibility();
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -197,39 +198,22 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
 
+        SlidrConfig config = new SlidrConfig.Builder()
+                                .sensitivity(1f)
+                                .scrimColor(Color.BLACK)
+                                .scrimStartAlpha(0.8f)
+                                .scrimEndAlpha(0f)
+                                .position(SlidrPosition.VERTICAL)
+                                .velocityThreshold(2400)
+                                .distanceThreshold(0.25f)
+                                .edgeSize(0.18f)
+                                .build();
 
-        mSwipeBackLayout = new SwipeBackLayout(SlideMediaActivity.this);
-        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
-        mSwipeBackLayout.setMaskAlpha(125);
-        mSwipeBackLayout.setSwipeBackFactor(0.5f);
-        mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
-            @Override
-            public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
-            }
 
-            @Override
-            public void onViewSwipeFinished(View mView, boolean isEnd) {
-                if (isEnd){
-                    finish();
-                    overridePendingTransition(0, 0);
-                }
-            }
-        });
-
-        mSwipeBackLayout.attachToActivity(this);
+        slidrInterface = Slidr.attach(this, config);
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP ) {
-            if (mCurrentFragment.canSwipe()) {
-                fullscreen = !fullscreen;
-                setFullscreen(fullscreen);
-            }
-        }
-        return super.dispatchTouchEvent(event);
-    }
 
     private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
@@ -246,11 +230,13 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 shareIntent.setType(cR.getType(uri));
                 try {
                     startActivity(shareIntent);
-                }catch (Exception e){}
+                }catch (Exception ignored){}
                 manager.remove(downloadID);
             }
         }
     };
+
+
 
     @Override
     public void onDestroy() {
@@ -323,10 +309,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         this.fullscreen = fullscreen;
         View mDecorView = getWindow().getDecorView();
         if (!fullscreen) {
-            mDecorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            mDecorView.setSystemUiVisibility(flags);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 mDecorView.setSystemUiVisibility(

@@ -3794,9 +3794,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 intent.putParcelableArrayListExtra("mediaArray", attachmentArrayList);
                                 b.putInt("position", finalPosition);
                                 intent.putExtras(b);
-                                ViewCompat.setTransitionName(v, attachment.getUrl());
-                                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, attachment.getUrl());
-                                ActivityCompat.startActivity(context, intent, options.toBundle());
+                                context.startActivity(intent);
                             }
                         } else {
                             status.setAttachmentShown(true);

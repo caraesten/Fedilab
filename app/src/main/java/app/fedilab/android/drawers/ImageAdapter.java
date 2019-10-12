@@ -14,14 +14,11 @@ package app.fedilab.android.drawers;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -38,7 +35,6 @@ import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.activities.ShowConversationActivity;
 
@@ -92,9 +88,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
                 intent.putParcelableArrayListExtra("mediaArray", attachmentsTmp);
                 b.putInt("position", (viewHolder.getAdapterPosition() + 1));
                 intent.putExtras(b);
-                ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
-                context.startActivity(intent, options.toBundle());
+                context.startActivity(intent);
             }
         });
         holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {

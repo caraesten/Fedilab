@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <attr format="reference" name="headerbg" />
     <attr format="reference" name="shapeBorder" />
     <attr format="reference" name="imgbd" />

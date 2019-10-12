@@ -15,7 +15,6 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,8 +22,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -54,7 +51,6 @@ import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MediaActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.interfaces.OnPostActionInterface;
@@ -217,9 +213,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", 0);
                     intent.putExtras(b);
-                    ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
-                    context.startActivity(intent, options.toBundle());
+                    context.startActivity(intent);
                 }
             });
             holder.art_author.setOnClickListener(new View.OnClickListener() {

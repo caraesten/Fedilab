@@ -489,9 +489,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
                     b.putInt("position", 0);
                     intent.putExtras(b);
-                    ViewCompat.setTransitionName(v, status.getMedia_attachments().get(0).getUrl());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, v, status.getMedia_attachments().get(0).getUrl());
-                    context.startActivity(intent, options.toBundle());
+                    context.startActivity(intent);
                 }
             });
 
