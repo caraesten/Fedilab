@@ -208,7 +208,7 @@
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Forigi planita mesaĝo?</string>
+    <string name="remove_scheduled">Forigi planita mesaĝon?</string>
     <string name="media_count">Aŭdvidaĵo %d</string>
     <string name="toot_scheduled">La mesaĝo estis planita!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
@@ -223,7 +223,7 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">%s eksekvis vin</string>
-    <string name="notif_pouet">Nova toot de %1$s</string>
+    <string name="notif_pouet">Nova mesaĝo de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="other">and %d other notifications</item>
@@ -243,7 +243,7 @@
     <!-- HEADER -->
     <string name="following">Sekvantaj</string>
     <string name="followers">Sekvitaj</string>
-    <string name="pinned_toots">Fiksita</string>
+    <string name="pinned_toots">Aplinglitaj</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="connect_error">Unable to connect to instance domain!</string>
