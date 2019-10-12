@@ -116,7 +116,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             mediaPosition = bundle.getInt("position", 1);
             attachment = bundle.getParcelable("attachment");
         }
-        TextView media_description = rootView.findViewById(R.id.media_description);
+
         message_ready = rootView.findViewById(R.id.message_ready);
 
         TextView progress = rootView.findViewById(R.id.loader_progress);

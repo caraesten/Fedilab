@@ -29,6 +29,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,6 +82,8 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     private boolean fullscreen;
     public SlidrInterface slidrInterface;
     int flags;
+    private TextView media_description;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
         }
         fullscreen = false;
-
+        media_description = findViewById(R.id.media_description);
         flags = getWindow().getDecorView().getSystemUiVisibility();
 
         if (getSupportActionBar() != null)
@@ -197,7 +200,48 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         mPager.setCurrentItem(mediaPosition-1);
 
         registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        String description = attachments.get(mediaPosition-1).getDescription();
+        handler = new Handler();
+        if( description != null && description.trim().length() > 0 ){
+            media_description.setText(description);
+            media_description.setVisibility(View.VISIBLE);
 
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    media_description.setVisibility(View.GONE);
+                }
+            }, 3000);
+
+        }else{
+            media_description.setVisibility(View.GONE);
+        }
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                String description = attachments.get(position).getDescription();
+                if( handler != null) {
+                    handler.removeCallbacksAndMessages(null);
+                }
+                handler = new Handler();
+                if( description != null && description.trim().length() > 0 ){
+                   media_description.setText(description);
+                   media_description.setVisibility(View.VISIBLE);
+
+                   handler.postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           media_description.setVisibility(View.GONE);
+                       }
+                   }, 3000);
+
+                }else{
+                   media_description.setVisibility(View.GONE);
+                }
+            }
+        });
 
         SlidrConfig config = new SlidrConfig.Builder()
                                 .sensitivity(1f)
@@ -230,6 +274,27 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 float endY = event.getY();
                 if (isAClick(startX, endX, startY, endY)) {
                     setFullscreen(!fullscreen);
+                    if( !fullscreen){
+                        String description = attachments.get(mPager.getCurrentItem()).getDescription();
+                        if( handler != null) {
+                            handler.removeCallbacksAndMessages(null);
+                        }
+                        handler = new Handler();
+                        if( description != null && description.trim().length() > 0 ){
+                            media_description.setText(description);
+                            media_description.setVisibility(View.VISIBLE);
+
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    media_description.setVisibility(View.GONE);
+                                }
+                            }, 3000);
+
+                        }else{
+                            media_description.setVisibility(View.GONE);
+                        }
+                    }
                 }
                 break;
         }
