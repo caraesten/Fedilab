@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -80,7 +81,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     private ViewPager mPager;
     private long downloadID;
     private boolean fullscreen;
-    public SlidrInterface slidrInterface;
+    private SlidrInterface slidrInterface;
     int flags;
     private TextView media_description;
     private Handler handler;
@@ -104,7 +105,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
-        CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
+        RelativeLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
         if (theme == Helper.THEME_LIGHT) {
             swipeBackLayout.setBackgroundResource(R.color.white);
         } else if (theme == Helper.THEME_BLACK) {
@@ -116,11 +117,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         media_description = findViewById(R.id.media_description);
         flags = getWindow().getDecorView().getSystemUiVisibility();
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -386,6 +383,14 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     @Override
     protected void onPostResume() {
         super.onPostResume();
+    }
+
+
+    public void enableSliding(boolean enable){
+        if (enable)
+            slidrInterface.unlock();
+        else
+            slidrInterface.lock();
     }
 
     public boolean getFullScreen(){

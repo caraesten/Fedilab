@@ -164,6 +164,9 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                     if( ! ((SlideMediaActivity)context).getFullScreen()) {
                         ((SlideMediaActivity) context).setFullscreen(true);
                     }
+                    ((SlideMediaActivity) context).enableSliding(false);
+                }else{
+                    ((SlideMediaActivity) context).enableSliding(true);
                 }
             }
         });

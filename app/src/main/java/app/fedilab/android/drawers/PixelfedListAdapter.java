@@ -481,7 +481,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     Intent intent = new Intent(context, SlideMediaActivity.class);
                     Bundle b = new Bundle();
                     intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
-                    b.putInt("position", 0);
+                    b.putInt("position", 1);
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

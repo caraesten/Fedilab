@@ -61,7 +61,6 @@ ext.evernoteLibraryVersion = '1.3.0-rc1'
 ext.gsonLibraryVersion = '2.8.2'
 ext.guavaLibraryVersion = '24.1-android'
 ext.photoViewLibraryVersion = '2.3.0'
-ext.swipebackLibraryVersion = '1.0.3'
 ext.ratethisappLibraryVersion = '1.2.0'
 ext.uploadServiceVersion = "3.5.2"
 ext.torrentstreamVersion = "2.5.0"

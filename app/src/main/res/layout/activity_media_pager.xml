@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:animateLayoutChanges="true"
     android:id="@+id/swipeBackLayout"
@@ -37,4 +37,4 @@
         android:padding="12dp"
         android:background="#AA000000"
         android:textColor="#ffffffff" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
