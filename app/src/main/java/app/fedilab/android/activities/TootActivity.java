@@ -3940,7 +3940,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         } else {
             currentContent = toot_content.getText().toString().trim();
         }
-        if (!forced) {
+        if (!forced && !removed) {
             if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
                 return;
             if (initialContent.trim().equals(currentContent))
