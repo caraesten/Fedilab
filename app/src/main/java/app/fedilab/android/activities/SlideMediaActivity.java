@@ -26,10 +26,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -86,6 +89,8 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     private TextView media_description;
     private Handler handler;
     private boolean swipeEnabled;
+    private int minTouch, maxTouch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -250,6 +255,13 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
         slidrInterface = Slidr.attach(SlideMediaActivity.this, config);
         setFullscreen(true);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int screenHeight = size.y;
+        minTouch = (int)(screenHeight * 0.1);
+        maxTouch = (int)(screenHeight * 0.9);
+
     }
 
     private float startX;
@@ -265,7 +277,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             case MotionEvent.ACTION_UP:
                 float endX = event.getX();
                 float endY = event.getY();
-                if (isAClick(startX, endX, startY, endY)) {
+                if (endY > minTouch && endY < maxTouch && isAClick(startX, endX, startY, endY)) {
                     setFullscreen(!fullscreen);
                     if( !fullscreen){
                         String description = attachments.get(mPager.getCurrentItem()).getDescription();
@@ -293,6 +305,15 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         }
       return super.dispatchTouchEvent(event);
     }
+
+    public void togglePlaying(View v) {
+
+        if( mCurrentFragment != null){
+            mCurrentFragment.togglePlaying(v);
+        }
+    }
+
+
 
     private boolean isAClick(float startX, float endX, float startY, float endY) {
         float differenceX = Math.abs(startX - endX);

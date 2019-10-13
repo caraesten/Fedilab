@@ -25,6 +25,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,6 +103,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
     private TextView timerView;
     private ImageButton playView;
     private GLAudioVisualizationView visualizerView;
+    private static final Handler HANDLER = new Handler();
 
     public MediaSliderFragment() {
     }
@@ -416,6 +418,22 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             return false;
         }
     }
+
+    public void togglePlaying(View v) {
+
+        HANDLER.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isPlaying()) {
+                    stopPlaying();
+                } else {
+                    startPlaying();
+                }
+            }
+        }, 100);
+    }
+
+
 
 
 
