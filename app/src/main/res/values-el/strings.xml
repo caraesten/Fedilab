@@ -1099,9 +1099,9 @@
     <string name="unfollow_confirm">Do you want to unfollow this account?</string>
     <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
     <string name="set_invidious">Αντικατάσταση του Youtube με το Invidio.us</string>
-    <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
-    <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
+    <string name="set_invidious_indication">Το Ινβίντιως είναι μία εναλλακτική διεπαφή για το Γιουτιούμπι</string>
+    <string name="set_invidious_host">Εισήγαγε έναν προσαρμοσμένο οικοδεσπότη· ή άφησέ το κενό, για να χρησιμοποιηθεί το invidio.us</string>
+    <string name="set_nitter">Αντικατάσταση του Twitter με το Nitter</string>
     <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
     <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
