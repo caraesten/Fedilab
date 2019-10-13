@@ -85,7 +85,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     int flags;
     private TextView media_description;
     private Handler handler;
-
+    private boolean swipeEnabled;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -105,7 +105,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
-        RelativeLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
+        CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
         if (theme == Helper.THEME_LIGHT) {
             swipeBackLayout.setBackgroundResource(R.color.white);
         } else if (theme == Helper.THEME_BLACK) {
@@ -117,7 +117,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         media_description = findViewById(R.id.media_description);
         flags = getWindow().getDecorView().getSystemUiVisibility();
 
-
+        swipeEnabled = true;
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -248,7 +248,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                                 .build();
 
 
-        slidrInterface = Slidr.attach(this, config);
+        slidrInterface = Slidr.attach(SlideMediaActivity.this, config);
         setFullscreen(true);
     }
 
@@ -387,10 +387,13 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
 
     public void enableSliding(boolean enable){
-        if (enable)
+        if (enable && !swipeEnabled) {
             slidrInterface.unlock();
-        else
+            swipeEnabled = true;
+        }else if( !enable && swipeEnabled) {
             slidrInterface.lock();
+            swipeEnabled = false;
+        }
     }
 
     public boolean getFullScreen(){
@@ -400,27 +403,39 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     public void setFullscreen(boolean fullscreen)
     {
         this.fullscreen = fullscreen;
-        View mDecorView = getWindow().getDecorView();
         if (!fullscreen) {
-            mDecorView.setSystemUiVisibility(flags);
+            showSystemUI();
+
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                mDecorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                                | View.SYSTEM_UI_FLAG_IMMERSIVE);
-            }else{
-                mDecorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                           );
-            }
+            hideSystemUI();
         }
+    }
+
+
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    // Shows the system bars by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 }

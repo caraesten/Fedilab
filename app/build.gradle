@@ -84,7 +84,7 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonLibraryVersion"
     implementation "com.google.guava:guava:$guavaLibraryVersion"
     implementation "com.github.chrisbanes:PhotoView:$photoViewLibraryVersion"
-    implementation 'com.r0adkll:slidableactivity:2.1.0'
+    implementation 'com.r0adkll:slidableactivity:2.0.6'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.5'
     implementation 'com.github.stom79:SparkButton:1.0.12'
