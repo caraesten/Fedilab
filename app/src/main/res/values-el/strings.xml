@@ -1033,9 +1033,9 @@
     <string name="number_statuses">Πλήθος καταστάσεων</string>
     <string name="statuses">Καταστάσεις</string>
     <string name="visibility">Αναγνωσιμότητα</string>
-    <string name="number_with_media">Number with media</string>
-    <string name="number_with_sensitive_media">Number with sensitive media</string>
-    <string name="number_with_cw">Number with CW</string>
+    <string name="number_with_media">Φέροντα πολυμέσα</string>
+    <string name="number_with_sensitive_media">Ευαίσθητου περιεχόμενου</string>
+    <string name="number_with_cw">Με Προειδοποίηση Περιεχόμενου</string>
     <string name="first_toot_date">Πρώτη κατάσταση</string>
     <string name="last_toot_date">Τελευταία κατάσταση</string>
     <string name="first_notification_date">First notification date</string>
@@ -1098,7 +1098,7 @@
     <string name="set_clear_cache_exit_indication">The cache (media, cached messages, data from the built-in browser) will be automatically cleared when leaving the application.</string>
     <string name="unfollow_confirm">Do you want to unfollow this account?</string>
     <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
-    <string name="set_invidious">Replace Youtube with Invidio.us</string>
+    <string name="set_invidious">Αντικατάσταση του Youtube με το Invidio.us</string>
     <string name="set_invidious_indication">Invidious is an alternative front-end to YouTube</string>
     <string name="set_invidious_host">Enter your custom host or leave blank for using invidio.us</string>
     <string name="set_nitter">Replace Twitter with Nitter</string>
