@@ -90,7 +90,6 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
                     case Helper.NOTIF_DELAYED:
                         streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
                         context.startService(streamingIntent);
-                        editor.apply();
                         break;
                     case Helper.NOTIF_NONE:
                         if (Build.VERSION.SDK_INT >= 26) {

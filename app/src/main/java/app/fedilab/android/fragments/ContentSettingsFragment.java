@@ -1715,14 +1715,25 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
                 }
-                boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-                if (liveNotifications) {
-                    Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationDelayedService.class);
-                    try {
-                        context.startService(streamingServiceIntent);
-                    } catch (Exception ignored) {
-                    }
+                if (set_allow_live_notifications.isChecked()) {
+                    LiveNotificationDelayedService.totalAccount++;
+                } else {
+                    LiveNotificationDelayedService.totalAccount--;
                 }
+                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                try {
+                    switch (Helper.liveNotifType(context)) {
+                        case Helper.NOTIF_LIVE:
+                            Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                            context.startService(streamingIntent);
+                            break;
+                        case Helper.NOTIF_DELAYED:
+                            streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
+                            context.startService(streamingIntent);
+                            break;
+                    }
+                } catch (Exception ignored) {}
+
             }
         });
 
