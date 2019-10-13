@@ -380,7 +380,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder {
         SliderView imageSlider;
-        ImageView art_media, pf_pp, pf_comment;
+        ImageView art_media, art_media_play, pf_pp, pf_comment;
         SparkButton pf_fav, pf_share;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
@@ -398,6 +398,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
+            art_media_play = itemView.findViewById(R.id.art_media_play);
             imageSlider = itemView.findViewById(R.id.imageSlider);
             pf_pp = itemView.findViewById(R.id.pf_pp);
             pf_username = itemView.findViewById(R.id.pf_username);
@@ -615,7 +616,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             }
 
 
-
+            holder.art_media_play.setVisibility(View.GONE);
 
             if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 1){
                 SliderAdapter sliderAdapter = new SliderAdapter(new WeakReference<>((Activity)context), false, status.getMedia_attachments());
@@ -627,6 +628,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             }else if(status.getMedia_attachments() != null ){
                 holder.art_media.setVisibility(View.VISIBLE);
                 holder.imageSlider.setVisibility(View.GONE);
+                if( status.getMedia_attachments().get(0).getType().toLowerCase().equals("video")){
+                    holder.art_media_play.setVisibility(View.VISIBLE);
+                }
                 String url;
                 if(status.getMedia_attachments().get(0).getPreview_url().endsWith("no-preview.png") ){
                     url = status.getMedia_attachments().get(0).getUrl();
