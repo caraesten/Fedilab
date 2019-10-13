@@ -57,10 +57,6 @@ public class LiveNotificationSettingsAccountsActivity extends BaseActivity {
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.mastodonC3__));
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.mastodonC1));
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.black_3));

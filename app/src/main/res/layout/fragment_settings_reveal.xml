@@ -808,7 +808,7 @@
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="end"
-                                android:contentDescription="@string/bookmark_add"
+                                android:contentDescription="@string/live_notif"
                                 android:padding="5dp"
                                 android:src="@drawable/ic_account_circle_acct" />
                         </LinearLayout>

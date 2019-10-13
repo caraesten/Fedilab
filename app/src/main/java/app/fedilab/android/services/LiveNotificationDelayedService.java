@@ -84,9 +84,12 @@ public class LiveNotificationDelayedService extends Service {
     public static HashMap<String, String> since_ids = new HashMap<>();
     private static Thread thread;
     private boolean fetch;
+    public boolean zeroAccounts;
+
 
     public void onCreate() {
         super.onCreate();
+
     }
 
     private void startStream() {
@@ -124,6 +127,7 @@ public class LiveNotificationDelayedService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        zeroAccounts = false;
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -142,13 +146,19 @@ public class LiveNotificationDelayedService extends Service {
                     }
                 }
             }
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setShowWhen(false)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(R.drawable.fedilab_notification_icon)
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+            if( totalAccount > 0) {
+                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setShowWhen(false)
+                        .setContentTitle(getString(R.string.top_notification))
+                        .setSmallIcon(R.drawable.fedilab_notification_icon)
+                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-            startForeground(1, notification);
+                startForeground(1, notification);
+            }else{
+                stopSelf();
+                zeroAccounts = true;
+                return START_NOT_STICKY;
+            }
         }
         startStream();
         return START_STICKY;
@@ -164,7 +174,9 @@ public class LiveNotificationDelayedService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        restart();
+        if( !zeroAccounts) {
+            restart();
+        }
     }
 
     private void restart() {

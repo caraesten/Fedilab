@@ -15,8 +15,11 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,9 @@ import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.services.LiveNotificationDelayedService;
+import app.fedilab.android.services.LiveNotificationService;
+import app.fedilab.android.services.StopLiveNotificationReceiver;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -73,6 +79,27 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
                     LiveNotificationDelayedService.totalAccount++;
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
+                }
+                int type = Helper.liveNotifType(context);
+                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                switch (type) {
+                    case Helper.NOTIF_LIVE:
+                        Intent streamingIntent = new Intent(context, LiveNotificationService.class);
+                        context.startService(streamingIntent);
+                        break;
+                    case Helper.NOTIF_DELAYED:
+                        streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
+                        context.startService(streamingIntent);
+                        editor.apply();
+                        break;
+                    case Helper.NOTIF_NONE:
+                        if (Build.VERSION.SDK_INT >= 26) {
+                            NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+                            if (notif != null) {
+                                notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
+                            }
+                        }
+                        break;
                 }
             }
         });

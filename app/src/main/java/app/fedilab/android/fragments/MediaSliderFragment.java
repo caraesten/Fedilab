@@ -26,7 +26,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +167,6 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                     if( ! ((SlideMediaActivity)context).getFullScreen()) {
                         ((SlideMediaActivity) context).setFullscreen(true);
                     }
-                    Log.v(Helper.TAG,"canSwipe! " + canSwipe);
                     ((SlideMediaActivity) context).enableSliding(false);
                 }else{
                     ((SlideMediaActivity) context).enableSliding(true);

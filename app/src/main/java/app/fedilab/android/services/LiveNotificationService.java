@@ -107,6 +107,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static int liveNotifBadge = 0;
+    public boolean zeroAccounts;
 
     public void onCreate() {
         super.onCreate();
@@ -140,6 +141,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if (intent == null || intent.getBooleanExtra("stop", false)) {
             stopSelf();
         }
+        zeroAccounts = false;
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -158,13 +160,18 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     }
                 }
             }
+            if( totalAccount > 0) {
+                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setContentTitle(getString(R.string.top_notification))
+                        .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-            startForeground(1, notification);
+                startForeground(1, notification);
+            }else{
+                zeroAccounts = true;
+                stopSelf();
+                return START_NOT_STICKY;
+            }
         }
         return START_STICKY;
     }
@@ -186,7 +193,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        restart();
+        if( !zeroAccounts) {
+            restart();
+        }
     }
 
     private void restart() {
