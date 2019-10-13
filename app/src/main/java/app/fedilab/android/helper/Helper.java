@@ -3856,12 +3856,12 @@ public class Helper {
                 totalCurrent += (splitContent[i].length() + 1);
             } else {
                 if (content.length() > totalCurrent && totalCurrent > 0) {
-                    String tempContent = content.substring(0, (totalCurrent - 1));
+                    String tempContent = content.substring(0, (totalCurrent));
                     content = content.substring(totalCurrent);
 
                     reply.add(index, tempContent);
                     index++;
-                    totalCurrent = 0;
+                    totalCurrent = splitContent[i].length() + 1;
                 }
             }
         }
