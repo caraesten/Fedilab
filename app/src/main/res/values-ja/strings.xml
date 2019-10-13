@@ -1111,6 +1111,6 @@
     <string name="upload_media">メディアをアップロード</string>
     <string name="pixelfed_compose_placeholder">オプションの説明を追加する</string>
     <string name="long_api_error">このアプリは%1$sAPIから非常に長いエラーメッセージを受け取りました</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">メッセージプレビュー</string>
+    <string name="report_mention">それぞれのメッセージにメンションを追加</string>
 </resources>

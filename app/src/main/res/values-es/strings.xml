@@ -1119,6 +1119,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="upload_media">Subir contenido multimedia</string>
     <string name="pixelfed_compose_placeholder">Añadir una descripción opcional</string>
     <string name="long_api_error">La aplicación recibió un mensaje de error muy largo de la API %1$s</string>
-    <string name="message_preview">Message preview</string>
-    <string name="report_mention">Add mentions in each message</string>
+    <string name="message_preview">Vista previa de mensaje</string>
+    <string name="report_mention">Añadir menciones en cada mensaje</string>
 </resources>
