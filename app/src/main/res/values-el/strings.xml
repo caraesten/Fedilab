@@ -986,8 +986,8 @@
     <string name="set_keep_background_process_indication">Όταν η εφαρμογή θα τρέχει στο παρασκήνιο, θα διατηρεί μία σύνδεση στο API που παρέχει τη ροή. Απενεργοποίησε αυτή την επιλογή, αν σε νοιάζει το πόσο θα κρατάει ημπαταρία σου.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Προβολή ενός Φενδιλάμπιου πλήκτρου κάτω από την εικόνα του προσώπου. Είναι μια συντόμευση, η οποία επιτρέπει την πρόσβαση σε λειτουργίες της εφαρμογής.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
+    <string name="set_quick_reply_indication">Επιτρέπει την άμεση απόκριση, στις χρονοστήλες, κάτω από τις καταστάσεις</string>
+    <string name="set_fit_preview_indication">Οι προεπισκοπήσεις δεν θα περικόπτονται στις χρονοστήλες</string>
     <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
