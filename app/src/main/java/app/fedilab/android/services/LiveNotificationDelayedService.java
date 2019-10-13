@@ -54,6 +54,7 @@ import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -324,7 +325,7 @@ public class LiveNotificationDelayedService extends Service {
                         default:
                     }
                     //Some others notification
-                    final Intent intent = new Intent(getApplicationContext(), BaseMainActivity.class);
+                    final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(Helper.INTENT_ACTION, Helper.NOTIFICATION_INTENT);
                     intent.putExtra(Helper.PREF_KEY_ID, account.getId());
