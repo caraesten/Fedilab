@@ -668,8 +668,8 @@
         <item>aste 1</item>
     </string-array>
     <string name="showcase_instance">        Eremu honetan, zure instantziaren hostalari izena idatzi behar duzu.\nAdibidez, zure kontua https://mastodon.eus helbidean sortu baduzu\nIdatzi <b>mastodon.eus</b> (https:// gabe)\n
-        Idazten hasi zaitezke eta izenak proposatuko zaizkizu.\n\n
-        ⚠ Hasi saioa botoiak instantzia baliogarria bada eta funtzionamenduan badago funtzionatuko du, bestela ez!
+       Idazten hasi zaitezke eta izenak proposatuko zaizkizu.\n\n
+       ⚠ Konektatu botoiak instantzia baliogarria bada eta martxan badago funtzionatuko du, bestela ez!
     </string>
     <string name="showcase_uid">        Eremu honetan, idatzi zure Mastodon kontura lotutako e-mail helbidea.
     </string>
