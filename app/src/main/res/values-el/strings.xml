@@ -381,7 +381,7 @@
     <string name="action_search">Αναζήτηση</string>
     <string name="set_capitalize">Το πρώτο γράμμα κεφαλαίο, στις απαντήσεις</string>
     <string name="set_resize_picture">Προσαρμογή των εικόνων</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Αλλαγή διαστάσεων των βίντεων</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Ειδοποιήσεις προωθήσεων</string>
     <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
@@ -963,7 +963,7 @@
     <string name="account_warned">Ο λογαριασμός έχει προειδοποιηθεί.</string>
     <string name="set_display_admin_menu">Προβολή του κατάλογου επιλογών του διαχειριστή</string>
     <string name="set_display_admin_toot">Προβολή των λειτουργιών διαχείρισης στις καταστάσεις</string>
-    <string name="allow">Allow</string>
+    <string name="allow">Να επιτρέπεται</string>
     <string name="account_approved">Ο λογαριασμός έχει εγκριθεί.</string>
     <string name="account_rejected">Ο λογαριασμός απορρίφθηκε.</string>
     <string name="assign_to_me">Ανάθεση σε εμένα</string>
@@ -1024,15 +1024,15 @@
     <string name="set_wysiwyg_indication">Όταν ενεργοποιηθεί. θα μπορείς να μορφοποιήσεις εύκολα τα κείμενά σου χρησιμοποιώντας εργαλεία.</string>
     <string name="action_stats">Στατιστικά</string>
     <string name="total_statuses">Σύνολο των καταστάσεων</string>
-    <string name="number_boosts">Number of boosts</string>
-    <string name="number_favourites">Number of favourites</string>
+    <string name="number_boosts">Πλήθος ενισχύσεων</string>
+    <string name="number_favourites">Πλήθος αγαπημένων</string>
     <string name="number_mentions">Number of mentions</string>
     <string name="number_follows">Number of follows</string>
-    <string name="number_polls">Number of polls</string>
-    <string name="number_replies">Number of replies</string>
-    <string name="number_statuses">Number of statuses</string>
-    <string name="statuses">Statuses</string>
-    <string name="visibility">Visibility</string>
+    <string name="number_polls">Πλήθος ψηφοφοριών</string>
+    <string name="number_replies">Πλήθος απαντήσεων</string>
+    <string name="number_statuses">Πλήθος καταστάσεων</string>
+    <string name="statuses">Καταστάσεις</string>
+    <string name="visibility">Αναγνωσιμότητα</string>
     <string name="number_with_media">Number with media</string>
     <string name="number_with_sensitive_media">Number with sensitive media</string>
     <string name="number_with_cw">Number with CW</string>
