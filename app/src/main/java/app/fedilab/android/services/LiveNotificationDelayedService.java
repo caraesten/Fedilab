@@ -84,13 +84,61 @@ public class LiveNotificationDelayedService extends Service {
     public static HashMap<String, String> since_ids = new HashMap<>();
     private static Thread thread;
     private boolean fetch;
-    public boolean zeroAccounts;
 
 
     public void onCreate() {
         super.onCreate();
+        if (Build.VERSION.SDK_INT >= 26) {
+            channel = new NotificationChannel(CHANNEL_ID,
+                    "Live notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT);
 
+            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+            totalAccount = 0;
+            for (Account account : accountStreams) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
+                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                    if (allowStream) {
+                        totalAccount++;
+                    }
+                }
+            }
+            if( totalAccount > 0) {
+                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(
+                        getApplicationContext(),
+                        0,
+                        myIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setShowWhen(false)
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(getString(R.string.top_notification))
+                        .setSmallIcon(R.drawable.fedilab_notification_icon)
+                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+                startForeground(1, notification);
+            }else{
+                stopSelf();
+            }
+        }
+        startStream();
     }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if( totalAccount > 0) {
+            return START_STICKY;
+        }
+        return START_NOT_STICKY;
+    }
+
+
+
 
     private void startStream() {
 
@@ -125,54 +173,6 @@ public class LiveNotificationDelayedService extends Service {
         }
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        zeroAccounts = false;
-        if (Build.VERSION.SDK_INT >= 26) {
-            channel = new NotificationChannel(CHANNEL_ID,
-                    "Live notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
-            totalAccount = 0;
-            for (Account account : accountStreams) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                    if (allowStream) {
-                        totalAccount++;
-                    }
-                }
-            }
-            if( totalAccount > 0) {
-
-                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(
-                        getApplicationContext(),
-                        0,
-                        myIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setShowWhen(false)
-                        .setContentIntent(pendingIntent)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setSmallIcon(R.drawable.fedilab_notification_icon)
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-                startForeground(1, notification);
-            }else{
-                stopSelf();
-                zeroAccounts = true;
-                return START_NOT_STICKY;
-            }
-        }
-        startStream();
-        return START_STICKY;
-    }
-
 
     @Nullable
     @Override
@@ -183,7 +183,7 @@ public class LiveNotificationDelayedService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        if( !zeroAccounts) {
+        if( totalAccount > 0) {
             restart();
         }
     }

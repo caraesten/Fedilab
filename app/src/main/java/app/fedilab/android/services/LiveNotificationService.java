@@ -107,7 +107,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static int liveNotifBadge = 0;
-    public boolean zeroAccounts;
 
     public void onCreate() {
         super.onCreate();
@@ -116,6 +115,42 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            channel = new NotificationChannel(CHANNEL_ID,
+                    "Live notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+            totalAccount = 0;
+            for (Account account : accountStreams) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                    if (allowStream) {
+                        totalAccount++;
+                    }
+                }
+            }
+            if( totalAccount > 0) {
+                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(
+                        getApplicationContext(),
+                        0,
+                        myIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setContentTitle(getString(R.string.top_notification))
+                        .setContentIntent(pendingIntent)
+                        .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+                startForeground(1, notification);
+            }else{
+                stopSelf();
+            }
+        }
     }
 
     private void startStream() {
@@ -141,46 +176,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if (intent == null || intent.getBooleanExtra("stop", false)) {
             stopSelf();
         }
-        zeroAccounts = false;
-        if (Build.VERSION.SDK_INT >= 26) {
-            channel = new NotificationChannel(CHANNEL_ID,
-                    "Live notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
-            totalAccount = 0;
-            for (Account account : accountStreams) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                    if (allowStream) {
-                        totalAccount++;
-                    }
-                }
-            }
-            if( totalAccount > 0) {
-                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(
-                        getApplicationContext(),
-                        0,
-                        myIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-                startForeground(1, notification);
-            }else{
-                zeroAccounts = true;
-                stopSelf();
-                return START_NOT_STICKY;
-            }
-        }
-        return START_STICKY;
+       if( totalAccount > 0) {
+           return START_STICKY;
+       }
+       return START_NOT_STICKY;
     }
 
     @Override
@@ -200,7 +199,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        if( !zeroAccounts) {
+        if( totalAccount > 0) {
             restart();
         }
     }
