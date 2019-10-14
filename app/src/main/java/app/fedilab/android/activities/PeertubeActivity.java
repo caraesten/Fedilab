@@ -99,6 +99,7 @@ import app.fedilab.android.interfaces.OnPlaylistActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import es.dmoral.toasty.Toasty;
@@ -180,7 +181,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_description = findViewById(R.id.peertube_description);
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
-        WebView webview_video = findViewById(R.id.webview_video);
+        CustomWebview webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
         write_comment_container = findViewById(R.id.write_comment_container);
         my_pp = findViewById(R.id.my_pp);

@@ -66,6 +66,7 @@ import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.TLSSocketFactory;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 
@@ -122,7 +123,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
         message_ready = rootView.findViewById(R.id.message_ready);
 
         TextView progress = rootView.findViewById(R.id.loader_progress);
-        WebView webview_video = rootView.findViewById(R.id.webview_video);
+        CustomWebview webview_video = rootView.findViewById(R.id.webview_video);
         RelativeLayout content_audio = rootView.findViewById(R.id.content_audio);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);

@@ -391,7 +391,7 @@
                     android:contentDescription="@string/play_video" />
             </RelativeLayout>
 
-            <WebView
+            <app.fedilab.android.webview.CustomWebview
                 android:visibility="gone"
                 android:id="@+id/status_cardview_webview"
                 android:layout_width="match_parent"
