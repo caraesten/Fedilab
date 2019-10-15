@@ -6,3 +6,9 @@ files:
      two_letters_code:
        zh-TW: zh-rTW
        zh-CN: zh-rCN
+  - source: /fastlane/metadata/android/en-US/full_description.txt
+    translation: /fastlane/metadata/android/%locale%/%original_file_name%
+    update_option: update_without_changes
+  - source: /fastlane/metadata/android/en-US/short_description
+    translation: /fastlane/metadata/android/%locale%/%original_file_name%
+    update_option: update_without_changes
