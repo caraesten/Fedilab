@@ -1,10 +1,10 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse, consisting of micro blogging, photo sharing and video hosting.
+Fedilab er en multifunktionel Android-klient beregnet til at tilgå det distribuerede Fediverse, bestående af mikro-blogging samt foto- og video-hosting.
 
-It supports:
-- Mastodon, Pleroma, Peertube, GNU Social, Friendica.
+Den understøtter:
+- Mastodon, Pleroma, Peertube, GNU Sociale, Friendica.
 
 
-The application has advanced features (especially for Pleroma and Mastodon):
+Appen har avancerede funktioner (især for Pleroma og Mastodon):
 
 - Multi-accounts support
 - Schedule messages from the device
