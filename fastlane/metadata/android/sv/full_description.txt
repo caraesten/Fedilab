@@ -11,7 +11,7 @@ Programmet har avancerade funktioner (särskilt för Pleroma och Mastodon):
 - Schemalägg boost
 - Bokmärk meddelanden
 - Följ och interagera med fjärrinstanser
-- Timed mute accounts
+Tidsinställ tystadekonton
 - Cross-konto åtgärder med ett långttryck
 - Översättningsfunktion
 - Konstidslinje
