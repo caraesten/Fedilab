@@ -1,1 +1,1 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse
+Felilab és un client Android muntifuncional per a l'accés al Fedivers distribuït
