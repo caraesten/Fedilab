@@ -7,12 +7,12 @@ Destekledikleri:
 Uygulama (özellikle Pleroma ve Mastodon için) gelişmiş özelliklere sahiptir:
 
 - Çoklu hesap desteği
-- Schedule messages from the device
-- Schedule boosts
-- Bookmark messages
-- Follow and interact with remote instances
-- Timed mute accounts
-- Cross account actions with a long press
-- Translation feature
-- Art timelines
-- Video timelines
+- Mesajları cihazdan zamanlayın
+- Yinelemeleri zamanlayın
+- Mesajları yer imlerine ekleyin
+- Uzak örnekleri takip edin ve etkileşime geçin
+- Hesapları sessize almayı zamanlayın
+- Uzun süreli basma ile çapraz hesap işlemleri
+- Çeviri özelliği
+- Sanatsal zaman çizelgeleri
+- Video zaman çizelgeleri
