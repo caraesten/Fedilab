@@ -381,7 +381,7 @@
     <string name="action_search">Søg</string>
     <string name="set_capitalize">Begyndelsesbogstav med stort for svar</string>
     <string name="set_resize_picture">Ændr billedstørrelse</string>
-    <string name="set_resize_video">Skalér video</string>
+    <string name="set_resize_video">Skalér videoer</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-notifikationer</string>
     <string name="settings_popup_message">        Bekræft de push-notifikationer, du ønsker at modtage.
@@ -1101,9 +1101,9 @@
     <string name="set_invidious">Udskift Youtube med Invidio.us</string>
     <string name="set_invidious_indication">Invidious er en alternativ front-end til YouTube</string>
     <string name="set_invidious_host">Angiv din tilpassede vært eller udfykd ikke for at benytte invidio.os</string>
-    <string name="set_nitter">Replace Twitter with Nitter</string>
-    <string name="set_nitter_indication">Nitter is an open source alternative Twitter front-end focused on privacy.</string>
-    <string name="set_nitter_host">Enter your custom host or leave blank for using nitter.net</string>
+    <string name="set_nitter">Erstat Twitter med Nitter</string>
+    <string name="set_nitter_indication">Nitter er en alternativ open source Twitter front-end med fokus på fortrolighed.</string>
+    <string name="set_nitter_host">Angiv din tilpassede vært eller udfykd ikke for at benytte nitter.net</string>
     <string name="set_hide_status_bar">Skjul Fedilab-notifikationsbjælke</string>
     <string name="set_hide_status_bar_indication">For at skjule den resterende notifikation på statusbjælken, så klik på øjeikonknappen og fjern derefter markeringen: \"Vises på statusbjælke\"</string>
     <string name="set_live_type_title">Aktivér udskudte notifikationer</string>
@@ -1124,7 +1124,7 @@
     <string name="add_photo_indication_pixelfed">Gyldige formater: Jpeg, png, gif\n\nMaks. filstørrelse: 15 MB\n\nAlbum kan indeholde op til 4 fotos eller videoer</string>
     <string name="upload_media">Upload medier</string>
     <string name="pixelfed_compose_placeholder">Tilføj en valgfri billedtekst</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">Appen har modtaget en meget lang fejlmeddelelse fra API\'en %1$s</string>
     <string name="message_preview">Beskedforhåndsvisning</string>
     <string name="report_mention">Tilføj omtaler i hver besked</string>
 </resources>
