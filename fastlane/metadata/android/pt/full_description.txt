@@ -1,0 +1,18 @@
+Fedilab é um cliente Android multifuncional para aceder o distribuído Fediverse, composto por microblogging, compartilha de fotos e hospedagem de vídeos.
+
+São suportados:
+- Mastodon, Pleroma, Peertube, GNU Social, Friendica.
+
+
+O aplicativo tem funcionalidades avançadas (especialmente para Pleroma e Mastodon):
+
+- Suporte a várias contas
+- Schedule messages from the device
+- Schedule boosts
+- Bookmark messages
+- Seguir e interagir com instâncias remotas
+- Timed mute accounts
+- Cross account actions with a long press
+- Translation feature
+- Art timelines
+- Video timelines

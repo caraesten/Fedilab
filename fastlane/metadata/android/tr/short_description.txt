@@ -1,0 +1,1 @@
+Fedilab dağıtılmış Fediverse'e erişmek için çok işlevli bir Android istemcisidir

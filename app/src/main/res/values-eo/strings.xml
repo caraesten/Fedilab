@@ -270,7 +270,7 @@
     <string name="toast_error_login">Ne povas ensaluti!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">La aŭdvidaĵo estis konservitaj!</string>
+    <string name="toast_saved">La aŭdvidaĵo estis konservita!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Malneto saviĝis!</string>

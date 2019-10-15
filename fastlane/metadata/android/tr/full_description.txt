@@ -1,0 +1,18 @@
+Fedilab, mikro blog, fotoğraf paylaşımı ve video barındırma içeren dağıtılmış Fediverse'e erişmek için çok işlevli bir Android istemcisidir.
+
+Destekledikleri:
+- Mastodon, Pleroma, Peertube, GNU Social, Friendica.
+
+
+Uygulama (özellikle Pleroma ve Mastodon için) gelişmiş özelliklere sahiptir:
+
+- Çoklu hesap desteği
+- Mesajları cihazdan zamanlayın
+- Yinelemeleri zamanlayın
+- Mesajları yer imlerine ekleyin
+- Uzak örnekleri takip edin ve etkileşime geçin
+- Hesapları sessize almayı zamanlayın
+- Uzun süreli basma ile çapraz hesap işlemleri
+- Çeviri özelliği
+- Sanatsal zaman çizelgeleri
+- Video zaman çizelgeleri
