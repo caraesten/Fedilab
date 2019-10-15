@@ -55,6 +55,7 @@ import app.fedilab.android.helper.CountDrawable;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.DomainBlockDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import app.fedilab.android.webview.ProxyHelper;
@@ -72,7 +73,7 @@ public class WebviewActivity extends BaseActivity {
     private String url;
     private String peertubeLinkToFetch;
     private boolean peertubeLink;
-    private WebView webView;
+    private CustomWebview webView;
     public static List<String> trackingDomains;
     private Menu defaultMenu;
     private MastalabWebViewClient mastalabWebViewClient;

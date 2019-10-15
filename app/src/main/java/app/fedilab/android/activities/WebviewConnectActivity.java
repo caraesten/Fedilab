@@ -48,6 +48,7 @@ import java.util.HashMap;
 
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
@@ -60,7 +61,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 public class WebviewConnectActivity extends BaseActivity {
 
 
-    private WebView webView;
+    private CustomWebview webView;
     private AlertDialog alert;
     private String clientId, clientSecret;
     private String instance;

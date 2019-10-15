@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
 public class ProxyHelper {
 
 
-    public static void setProxy(Context context, WebView webview, String host, int port, String applicationClassName) {
+    public static void setProxy(Context context, CustomWebview webview, String host, int port, String applicationClassName) {
 
         if (Build.VERSION.SDK_INT <= 18) {
             setProxyJB(webview, host, port);
@@ -44,7 +44,7 @@ public class ProxyHelper {
 
 
     @SuppressWarnings("all")
-    private static boolean setProxyICS(WebView webview, String host, int port) {
+    private static boolean setProxyICS(CustomWebview webview, String host, int port) {
         try {
             Class jwcjb = Class.forName("android.webkit.JWebCoreJavaBridge");
             Class params[] = new Class[1];
@@ -81,7 +81,7 @@ public class ProxyHelper {
      * Set Proxy for Android 4.1 - 4.3.
      */
     @SuppressWarnings("all")
-    private static boolean setProxyJB(WebView webview, String host, int port) {
+    private static boolean setProxyJB(CustomWebview webview, String host, int port) {
 
         try {
             Class wvcClass = Class.forName("android.webkit.WebViewClassic");
@@ -124,7 +124,7 @@ public class ProxyHelper {
     // from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
     @SuppressLint("NewApi")
     @SuppressWarnings("all")
-    private static void setProxyKKPlus(Context appContext, WebView webView, String host, int port, String applicationClassName) {
+    private static void setProxyKKPlus(Context appContext, CustomWebview webView, String host, int port, String applicationClassName) {
 
         System.setProperty("http.proxyHost", host);
         System.setProperty("http.proxyPort", port + "");

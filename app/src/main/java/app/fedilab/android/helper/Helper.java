@@ -215,6 +215,7 @@ import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.sqlite.MainMenuDAO;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
+import app.fedilab.android.webview.CustomWebview;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
@@ -2571,9 +2572,9 @@ public class Helper {
     }
 
 
-    public static WebView initializeWebview(Activity activity, int webviewId) {
+    public static CustomWebview initializeWebview(Activity activity, int webviewId) {
 
-        WebView webView = activity.findViewById(webviewId);
+        CustomWebview webView = activity.findViewById(webviewId);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
 

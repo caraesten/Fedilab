@@ -152,6 +152,7 @@ import app.fedilab.android.sqlite.StatusStoredDAO;
 import app.fedilab.android.sqlite.TempMuteDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
+import app.fedilab.android.webview.CustomWebview;
 import br.com.felix.horizontalbargraph.HorizontalBar;
 import br.com.felix.horizontalbargraph.model.BarItem;
 import es.dmoral.toasty.Toasty;
@@ -669,7 +670,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_cardview_image;
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
         FrameLayout status_cardview_video;
-        WebView status_cardview_webview;
+        CustomWebview status_cardview_webview;
         ImageView hide_preview, hide_preview_h;
         TextView status_toot_app;
         RelativeLayout webview_preview;

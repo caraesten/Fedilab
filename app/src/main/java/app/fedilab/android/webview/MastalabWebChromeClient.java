@@ -48,7 +48,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
 
     private ToggledFullscreenCallback toggledFullscreenCallback;
 
-    private WebView webView;
+    private CustomWebview webView;
     private View activityNonVideoView;
     private ViewGroup activityVideoView;
     private ProgressBar pbar;
@@ -60,7 +60,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
         void toggledFullscreen(boolean fullscreen);
     }
 
-    public MastalabWebChromeClient(Activity activity, WebView webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView) {
+    public MastalabWebChromeClient(Activity activity, CustomWebview webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView) {
         this.activity = activity;
         this.isVideoFullscreen = false;
         this.webView = webView;
