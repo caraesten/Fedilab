@@ -302,7 +302,13 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 }
                 break;
         }
-      return super.dispatchTouchEvent(event);
+        try {
+            return super.dispatchTouchEvent(event);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+
     }
 
     public void togglePlaying(View v) {
