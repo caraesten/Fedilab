@@ -12,7 +12,7 @@ Appen har avancerede funktioner (især for Pleroma og Mastodon):
 - Bogmærk beskeder
 - Følg og interagér med fjerninstanser
 - Gør konti tavse jf. tidsintervaller
-- Cross account actions with a long press
-- Translation feature
-- Art timelines
-- Video timelines
+- Krydskontohandlinger via et langt tryk
+- Oversættelsesfunktion
+- Kunsttidslinjer
+- Videotidslinjer
