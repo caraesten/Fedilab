@@ -4,7 +4,7 @@ It supports:
 - Mastodon, Pleroma, Peertube, GNU Social, Friendica.
 
 
-The application has advanced features (especially for Pleroma and Mastodon):
+The app has advanced features (especially for Pleroma and Mastodon):
 
 - Multi-accounts support
 - Schedule messages from the device
