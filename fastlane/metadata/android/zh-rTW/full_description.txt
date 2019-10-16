@@ -10,9 +10,9 @@ Fedilab 是一個可以存取分散式 Fediverse 的多功能 Android 客戶端�
 - 從裝置為訊息排程
 - 排程轉嘟
 - 將訊息加入書籤
-- Follow and interact with remote instances
-- Timed mute accounts
-- Cross account actions with a long press
-- Translation feature
-- Art timelines
-- Video timelines
+- 追蹤並與遠端站臺互動
+- 一定時間內靜音帳號
+- 長按進行跨帳號操作
+- 翻譯功能
+- 藝術時間軸
+- 影片時間軸
