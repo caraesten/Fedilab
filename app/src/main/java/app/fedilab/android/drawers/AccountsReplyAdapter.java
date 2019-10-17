@@ -15,6 +15,7 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;
@@ -45,22 +47,23 @@ import app.fedilab.android.activities.TootActivity;
 public class AccountsReplyAdapter extends BaseAdapter {
 
     private List<Account> accounts;
-    private LayoutInflater layoutInflater;
     private boolean[] checked;
-    private Context context;
+    private WeakReference<Activity> activityWeakReference;
 
-    public AccountsReplyAdapter(List<Account> accounts, boolean[] checked) {
+    public AccountsReplyAdapter(WeakReference<Activity> activityWeakReference, List<Account> accounts, boolean[] checked) {
         this.accounts = accounts;
         this.checked = checked;
+        this.activityWeakReference = activityWeakReference;
     }
 
-    public AccountsReplyAdapter(List<Account> accounts, List<Boolean> checked) {
+    public AccountsReplyAdapter(WeakReference<Activity> activityWeakReference, List<Account> accounts, List<Boolean> checked) {
         this.accounts = accounts;
         this.checked = new boolean[checked.size()];
         int index = 0;
         for (Boolean val : checked) {
             this.checked[index++] = val;
         }
+        this.activityWeakReference = activityWeakReference;
     }
 
     @Override
@@ -82,8 +85,7 @@ public class AccountsReplyAdapter extends BaseAdapter {
     @NonNull
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-        context = parent.getContext();
-        layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(activityWeakReference.get());
         final Account account = accounts.get(position);
         final ViewHolder holder;
         if (convertView == null) {
@@ -102,9 +104,10 @@ public class AccountsReplyAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 try {
-                    ((TootActivity) context).changeAccountReply(isChecked, "@" + account.getAcct());
+                    ((TootActivity) activityWeakReference.get()).changeAccountReply(isChecked, "@" + account.getAcct());
                     checked[position] = isChecked;
                 } catch (Exception ignored) {
+                    ignored.printStackTrace();
                 }
             }
         });

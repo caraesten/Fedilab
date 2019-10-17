@@ -1682,7 +1682,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
         this.loader.setVisibility(View.GONE);
-        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(this.contacts, this.checkedValues);
+        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(new WeakReference<>(PixelfedComposeActivity.this), this.contacts, this.checkedValues);
         this.lv_accounts_search.setAdapter(contactAdapter);
     }
 

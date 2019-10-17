@@ -58,6 +58,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -2895,7 +2896,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
         this.loader.setVisibility(View.GONE);
-        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(this.contacts, this.checkedValues);
+        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(new WeakReference<>(TootActivity.this),this.contacts, this.checkedValues);
         this.lv_accounts_search.setAdapter(contactAdapter);
     }
 
@@ -4029,7 +4030,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             i++;
         }
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
-        AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(accounts, checkedValues);
+        AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(new WeakReference<>(TootActivity.this), accounts, checkedValues);
         builderSingle.setTitle(getString(R.string.select_accounts)).setAdapter(accountsReplyAdapter, null);
         builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
@@ -4042,6 +4043,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
     public void changeAccountReply(boolean isChecked, String acct) {
+        Log.v(Helper.TAG,isChecked + " -> " + acct );
         if (isChecked) {
             if (!toot_content.getText().toString().contains(acct))
                 toot_content.setText(String.format("%s %s", acct, toot_content.getText()));
