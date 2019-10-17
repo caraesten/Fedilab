@@ -4351,6 +4351,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( statuses.get(i).isFocused()){
                         status.setFocused(true);
                     }
+                    if( statuses.get(i).isFetchMore()){
+                        status.setFetchMore(true);
+                    }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                     /*if( mRecyclerView != null) {
@@ -4378,6 +4381,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 try {
                     if( statuses.get(i).isFocused()){
                         status.setFocused(true);
+                    }
+                    if( statuses.get(i).isFetchMore()){
+                        status.setFetchMore(true);
                     }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
