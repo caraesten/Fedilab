@@ -154,8 +154,11 @@ public class LiveNotificationDelayedService extends Service {
                     @Override
                     public void run() {
                         while (fetch) {
+                            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
                             for (final Account accountStream : accountStreams) {
-                                if (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
+                                boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
+                                if (allowStream && (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA"))) {
                                     taks(accountStream);
                                 }
                             }
@@ -205,6 +208,7 @@ public class LiveNotificationDelayedService extends Service {
     private void taks(Account account) {
 
         if (account != null) {
+
             String key = account.getAcct() + "@" + account.getInstance();
 
             APIResponse apiResponse;

@@ -58,7 +58,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -4043,7 +4042,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
     public void changeAccountReply(boolean isChecked, String acct) {
-        Log.v(Helper.TAG,isChecked + " -> " + acct );
         if (isChecked) {
             if (!toot_content.getText().toString().contains(acct))
                 toot_content.setText(String.format("%s %s", acct, toot_content.getText()));
