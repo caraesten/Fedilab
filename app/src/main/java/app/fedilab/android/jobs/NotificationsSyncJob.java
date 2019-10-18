@@ -117,6 +117,10 @@ public class NotificationsSyncJob extends Job {
     private void callAsynchronousTask() {
         if (!canNotify(getContext()))
             return;
+        int liveNotifications = Helper.liveNotifType(getContext());
+        if( liveNotifications != Helper.NOTIF_NONE){
+            return;
+        }
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
