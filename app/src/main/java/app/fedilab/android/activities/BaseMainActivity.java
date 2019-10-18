@@ -1378,12 +1378,6 @@ public abstract class BaseMainActivity extends BaseActivity
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             editor.apply();
-                            if (Build.VERSION.SDK_INT >= 26) {
-                                NotificationManager notif = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-                                if (notif != null) {
-                                    notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
-                                }
-                            }
                             break;
                     }
                     switch (Helper.liveNotifType(getApplicationContext())){

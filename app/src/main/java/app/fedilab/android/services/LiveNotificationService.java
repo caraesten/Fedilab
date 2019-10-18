@@ -174,6 +174,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent == null || intent.getBooleanExtra("stop", false)) {
+            totalAccount = 0;
             stopSelf();
         }
        if( totalAccount > 0) {

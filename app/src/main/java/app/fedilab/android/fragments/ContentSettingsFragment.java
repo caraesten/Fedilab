@@ -1240,6 +1240,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
+                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                 if (isChecked) {
                     notification_settings.setVisibility(View.VISIBLE);
                     try {
@@ -1254,15 +1255,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                                 break;
                         }
                     } catch (Exception ignored) {}
-                }else {
-                    notification_settings.setVisibility(View.GONE);
-                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                    if (Build.VERSION.SDK_INT >= 26) {
-                        NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
-                        if (notif != null) {
-                            notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
-                        }
-                    }
                 }
             }
         });
@@ -1322,12 +1314,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.GONE);
                             editor.apply();
-                            if (Build.VERSION.SDK_INT >= 26) {
-                                NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
-                                if (notif != null) {
-                                    notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
-                                }
-                            }
                             break;
                     }
                     switch (Helper.liveNotifType(context)){

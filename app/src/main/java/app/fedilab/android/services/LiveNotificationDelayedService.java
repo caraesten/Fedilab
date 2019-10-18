@@ -131,6 +131,13 @@ public class LiveNotificationDelayedService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        if (intent == null || intent.getBooleanExtra("stop", false)) {
+            totalAccount = 0;
+            stopSelf();
+        }
+
         if( totalAccount > 0) {
             return START_STICKY;
         }

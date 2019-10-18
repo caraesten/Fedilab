@@ -91,14 +91,6 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
                         streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
                         context.startService(streamingIntent);
                         break;
-                    case Helper.NOTIF_NONE:
-                        if (Build.VERSION.SDK_INT >= 26) {
-                            NotificationManager notif = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
-                            if (notif != null) {
-                                notif.deleteNotificationChannel(LiveNotificationDelayedService.CHANNEL_ID);
-                            }
-                        }
-                        break;
                 }
             }
         });
