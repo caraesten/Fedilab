@@ -53,7 +53,6 @@ import java.util.List;
 import java.util.Objects;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
