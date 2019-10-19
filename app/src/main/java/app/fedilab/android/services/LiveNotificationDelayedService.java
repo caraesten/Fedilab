@@ -34,7 +34,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,6 +89,17 @@ public class LiveNotificationDelayedService extends Service {
 
     public void onCreate() {
         super.onCreate();
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        if (intent == null || intent.getBooleanExtra("stop", false)) {
+            totalAccount = 0;
+            stopSelf();
+        }
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -110,7 +120,7 @@ public class LiveNotificationDelayedService extends Service {
             }
 
         }
-        Log.v(Helper.TAG,"totalAccount -> " + totalAccount);
+
         if( totalAccount > 0) {
             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -131,17 +141,6 @@ public class LiveNotificationDelayedService extends Service {
             stopSelf();
         }
         startStream();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-
-        if (intent == null || intent.getBooleanExtra("stop", false)) {
-            totalAccount = 0;
-            stopSelf();
-        }
-
         if( totalAccount > 0) {
             return START_STICKY;
         }
@@ -163,18 +162,17 @@ public class LiveNotificationDelayedService extends Service {
                 for (final Account accountStream : accountStreams) {
                     String key = accountStream.getAcct() + "@" + accountStream.getInstance();
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
-                    Log.v(Helper.TAG,key + " -> " + allowStream);
                     if( !allowStream){
                         continue;
                     }
                     if(!sleeps.containsKey(key)) {
                         sleeps.put(key, 30000);
                     }
-
                     if( threads.containsKey(key) && threads.get(key) != null) {
                         thread = threads.get(key);
                         if (thread != null && !thread.isInterrupted()) {
                             thread.interrupt();
+                            threads.put(key, null);
                         }
                     }
                     thread = new Thread() {
@@ -189,14 +187,7 @@ public class LiveNotificationDelayedService extends Service {
                                     } catch (InterruptedException e) {
                                         SystemClock.sleep(sleeps.get(key));
                                     }
-                                }else{
-                                    try {
-                                        Thread.sleep(30000);
-                                    } catch (InterruptedException e) {
-                                        SystemClock.sleep(30000);
-                                    }
                                 }
-
                             }
                         }
                     };
@@ -245,8 +236,20 @@ public class LiveNotificationDelayedService extends Service {
         if( since_ids.containsKey(key) ){
             last_notifid = since_ids.get(key);
         }
+
         apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
-        if( apiResponse == null || apiResponse.getNotifications() == null || apiResponse.getNotifications().size() == 0){
+        if( apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
+            since_ids.put(key, apiResponse.getNotifications().get(0).getId());
+            for (Notification notification : apiResponse.getNotifications()) {
+                if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
+                    onRetrieveStreaming(account, notification);
+                    sleeps.put(key, 30000);
+                }else {
+                    break;
+                }
+            }
+
+        }else{
             if( sleeps.containsKey(key) && sleeps.get(key) != null){
                 int newWaitTime = sleeps.get(key) + 30000;
                 if( newWaitTime > 900000){
@@ -256,20 +259,6 @@ public class LiveNotificationDelayedService extends Service {
             }else{
                 sleeps.put(key, 60000);
             }
-        }else{
-            sleeps.put(key, 30000);
-        }
-        Log.v(Helper.TAG,key + " -> " + sleeps.get(key));
-        if( apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
-            since_ids.put(key, apiResponse.getNotifications().get(0).getId());
-            for (Notification notification : apiResponse.getNotifications()) {
-                if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
-                    onRetrieveStreaming(account, notification);
-                }else {
-                    break;
-                }
-            }
-
         }
     }
 
