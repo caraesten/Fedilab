@@ -160,7 +160,7 @@ public class LiveNotificationDelayedService extends Service {
             if (accountStreams != null) {
                 Thread thread;
                 for (final Account accountStream : accountStreams) {
-                    String key = accountStream.getAcct() + "@" + accountStream.getInstance();
+                    String key = accountStream.getUsername() + "@" + accountStream.getInstance();
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
                     if( !allowStream){
                         continue;
@@ -228,7 +228,7 @@ public class LiveNotificationDelayedService extends Service {
     }
 
     private void taks(Account account) {
-        String key = account.getAcct() + "@" + account.getInstance();
+        String key = account.getUsername() + "@" + account.getInstance();
         APIResponse apiResponse;
         API api;
         api = new API(getApplicationContext(), account.getInstance(), account.getToken());
@@ -238,6 +238,7 @@ public class LiveNotificationDelayedService extends Service {
         }
 
         apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+
         if( apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
             since_ids.put(key, apiResponse.getNotifications().get(0).getId());
             for (Notification notification : apiResponse.getNotifications()) {
@@ -245,10 +246,20 @@ public class LiveNotificationDelayedService extends Service {
                     onRetrieveStreaming(account, notification);
                     sleeps.put(key, 30000);
                 }else {
+                    if( apiResponse.getNotifications().size() == 1) { //TODO: use min id with Pixelfed when available for removing this fix.
+                        if (sleeps.containsKey(key) && sleeps.get(key) != null) {
+                            int newWaitTime = sleeps.get(key) + 30000;
+                            if (newWaitTime > 900000) {
+                                newWaitTime = 900000;
+                            }
+                            sleeps.put(key, newWaitTime);
+                        } else {
+                            sleeps.put(key, 60000);
+                        }
+                    }
                     break;
                 }
             }
-
         }else{
             if( sleeps.containsKey(key) && sleeps.get(key) != null){
                 int newWaitTime = sleeps.get(key) + 30000;

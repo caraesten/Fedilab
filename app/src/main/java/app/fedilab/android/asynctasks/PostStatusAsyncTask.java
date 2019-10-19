@@ -128,7 +128,11 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         };
         thread.start();
-        Helper.startSreaming(contextReference.get());
+        if( account != null) {
+            String key = account.getUsername() + "@" + account.getInstance();
+            Helper.sleeps.put(key, 30000);
+            Helper.startSreaming(contextReference.get());
+        }
     }
 
 }
