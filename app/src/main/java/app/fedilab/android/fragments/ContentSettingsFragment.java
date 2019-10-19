@@ -1240,22 +1240,10 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
-                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                 if (isChecked) {
                     notification_settings.setVisibility(View.VISIBLE);
-                    try {
-                        switch (Helper.liveNotifType(context)) {
-                            case Helper.NOTIF_LIVE:
-                                Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                                context.startService(streamingIntent);
-                                break;
-                            case Helper.NOTIF_DELAYED:
-                                streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                                context.startService(streamingIntent);
-                                break;
-                        }
-                    } catch (Exception ignored) {}
                 }
+                Helper.startSreaming(context);
             }
         });
 
@@ -1298,15 +1286,11 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.VISIBLE);
                             editor.apply();
-                            Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                            context.startService(streamingIntent);
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
                             live_notif_per_account.setVisibility(View.VISIBLE);
-                            streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                            context.startService(streamingIntent);
                             editor.apply();
                             break;
                         case Helper.NOTIF_NONE:
@@ -1316,6 +1300,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.apply();
                             break;
                     }
+                    Helper.startSreaming(context);
                     switch (Helper.liveNotifType(context)){
                         case Helper.NOTIF_LIVE:
                             set_live_type_indication.setText(R.string.live_notif_indication);
@@ -1706,19 +1691,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
                 }
-                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                try {
-                    switch (Helper.liveNotifType(context)) {
-                        case Helper.NOTIF_LIVE:
-                            Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                            context.startService(streamingIntent);
-                            break;
-                        case Helper.NOTIF_DELAYED:
-                            streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                            context.startService(streamingIntent);
-                            break;
-                    }
-                } catch (Exception ignored) {}
+                Helper.startSreaming(context);
 
             }
         });

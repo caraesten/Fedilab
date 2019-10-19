@@ -763,7 +763,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-            startSreaming();
+            Helper.startSreaming(BaseMainActivity.this);
         }
 
         if (hidde_menu != null)
@@ -2654,40 +2654,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
     }
 
-
-    public void startSreaming() {
-        int liveNotifications = Helper.liveNotifType(getApplicationContext());
-        switch (liveNotifications){
-            case Helper.NOTIF_LIVE:
-                ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-                assert manager != null;
-                for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                    if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
-                        return;
-                    }
-                }
-                try {
-                    Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-                    startService(streamingIntent);
-                } catch (Exception ignored) {
-                }
-                break;
-            case Helper.NOTIF_DELAYED:
-                manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-                assert manager != null;
-                for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                    if (LiveNotificationDelayedService.class.getName().equals(service.service.getClassName())) {
-                        return;
-                    }
-                }
-                try {
-                    Intent streamingIntent = new Intent(this, LiveNotificationDelayedService.class);
-                    startService(streamingIntent);
-                } catch (Exception ignored) {ignored.printStackTrace();
-                }
-                break;
-        }
-    }
 
     public void manageFloatingButton(boolean display) {
         if (display) {

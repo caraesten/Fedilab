@@ -34,6 +34,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,6 +66,7 @@ import app.fedilab.android.sqlite.Sqlite;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static app.fedilab.android.helper.Helper.getMainLogo;
+import static app.fedilab.android.helper.Helper.sleeps;
 
 
 /**
@@ -81,7 +83,8 @@ public class LiveNotificationDelayedService extends Service {
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static HashMap<String, String> since_ids = new HashMap<>();
-    private static Thread thread;
+    public static HashMap<String, Thread> threads = new HashMap<>();
+
     private boolean fetch;
 
 
@@ -107,6 +110,7 @@ public class LiveNotificationDelayedService extends Service {
             }
 
         }
+        Log.v(Helper.TAG,"totalAccount -> " + totalAccount);
         if( totalAccount > 0) {
             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -152,33 +156,53 @@ public class LiveNotificationDelayedService extends Service {
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED) {
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            fetch = true;
             if (accountStreams != null) {
-                if( thread != null && !thread.isInterrupted()){
-                    thread.interrupt();
-                }
-                fetch = true;
-                thread = new Thread() {
-                    @Override
-                    public void run() {
-                        while (fetch) {
-                            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                Thread thread;
+                for (final Account accountStream : accountStreams) {
+                    String key = accountStream.getAcct() + "@" + accountStream.getInstance();
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
+                    Log.v(Helper.TAG,key + " -> " + allowStream);
+                    if( !allowStream){
+                        continue;
+                    }
+                    if(!sleeps.containsKey(key)) {
+                        sleeps.put(key, 30000);
+                    }
 
-                            for (final Account accountStream : accountStreams) {
-                                boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
-                                if (allowStream && (accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA"))) {
-                                    taks(accountStream);
-                                }
-                            }
-                            fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                            try {
-                                Thread.sleep(60000);
-                            } catch (InterruptedException e) {
-                                SystemClock.sleep(60000);
-                            }
+                    if( threads.containsKey(key) && threads.get(key) != null) {
+                        thread = threads.get(key);
+                        if (thread != null && !thread.isInterrupted()) {
+                            thread.interrupt();
                         }
                     }
-                };
-                thread.start();
+                    thread = new Thread() {
+                        @Override
+                        public void run() {
+                            while (fetch) {
+                                taks(accountStream);
+                                fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                                if( sleeps.containsKey(key) && sleeps.get(key) != null){
+                                    try {
+                                        Thread.sleep(sleeps.get(key));
+                                    } catch (InterruptedException e) {
+                                        SystemClock.sleep(sleeps.get(key));
+                                    }
+                                }else{
+                                    try {
+                                        Thread.sleep(30000);
+                                    } catch (InterruptedException e) {
+                                        SystemClock.sleep(30000);
+                                    }
+                                }
+
+                            }
+                        }
+                    };
+                    thread.start();
+                    threads.put(key, thread);
+                }
             }
         }
     }
@@ -222,7 +246,21 @@ public class LiveNotificationDelayedService extends Service {
             last_notifid = since_ids.get(key);
         }
         apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
-        if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
+        if( apiResponse == null || apiResponse.getNotifications() == null || apiResponse.getNotifications().size() == 0){
+            if( sleeps.containsKey(key) && sleeps.get(key) != null){
+                int newWaitTime = sleeps.get(key) + 30000;
+                if( newWaitTime > 900000){
+                    newWaitTime = 900000;
+                }
+                sleeps.put(key, newWaitTime);
+            }else{
+                sleeps.put(key, 60000);
+            }
+        }else{
+            sleeps.put(key, 30000);
+        }
+        Log.v(Helper.TAG,key + " -> " + sleeps.get(key));
+        if( apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
             since_ids.put(key, apiResponse.getNotifications().get(0).getId());
             for (Notification notification : apiResponse.getNotifications()) {
                 if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {

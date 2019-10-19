@@ -80,18 +80,7 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
                 }
-                int type = Helper.liveNotifType(context);
-                context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                switch (type) {
-                    case Helper.NOTIF_LIVE:
-                        Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                        context.startService(streamingIntent);
-                        break;
-                    case Helper.NOTIF_DELAYED:
-                        streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                        context.startService(streamingIntent);
-                        break;
-                }
+                Helper.startSreaming(context);
             }
         });
     }
