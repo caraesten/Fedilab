@@ -106,25 +106,26 @@ public class LiveNotificationDelayedService extends Service {
                     }
                 }
             }
-            if( totalAccount > 0) {
-                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(
-                        getApplicationContext(),
-                        0,
-                        myIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
 
-                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setShowWhen(false)
-                        .setContentIntent(pendingIntent)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setSmallIcon(R.drawable.fedilab_notification_icon)
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+        }
+        if( totalAccount > 0) {
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    myIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
-                startForeground(1, notification);
-            }else{
-                stopSelf();
-            }
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setShowWhen(false)
+                    .setContentIntent(pendingIntent)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setSmallIcon(R.drawable.fedilab_notification_icon)
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+            startForeground(1, notification);
+        }else{
+            stopSelf();
         }
         startStream();
     }
@@ -213,29 +214,23 @@ public class LiveNotificationDelayedService extends Service {
     }
 
     private void taks(Account account) {
-
-        if (account != null) {
-
-            String key = account.getAcct() + "@" + account.getInstance();
-
-            APIResponse apiResponse;
-            API api;
-            api = new API(getApplicationContext(), account.getInstance(), account.getToken());
-            String last_notifid = null;
-            if( since_ids.containsKey(key) ){
-                last_notifid = since_ids.get(key);
-            }
-            apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
-            if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
-                since_ids.put(key, apiResponse.getNotifications().get(0).getId());
-                for (Notification notification : apiResponse.getNotifications()) {
-                    if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
-                        onRetrieveStreaming(account, notification);
-                    }else {
-                        break;
-                    }
+        String key = account.getAcct() + "@" + account.getInstance();
+        APIResponse apiResponse;
+        API api;
+        api = new API(getApplicationContext(), account.getInstance(), account.getToken());
+        String last_notifid = null;
+        if( since_ids.containsKey(key) ){
+            last_notifid = since_ids.get(key);
+        }
+        apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+        if( apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
+            since_ids.put(key, apiResponse.getNotifications().get(0).getId());
+            for (Notification notification : apiResponse.getNotifications()) {
+                if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
+                    onRetrieveStreaming(account, notification);
+                }else {
+                    break;
                 }
-
             }
 
         }

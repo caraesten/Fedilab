@@ -133,23 +133,23 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     }
                 }
             }
-            if( totalAccount > 0) {
-                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(
-                        getApplicationContext(),
-                        0,
-                        myIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+        }
+        if( totalAccount > 0) {
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    myIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-                startForeground(1, notification);
-            }else{
-                stopSelf();
-            }
+            startForeground(1, notification);
+        }else{
+            stopSelf();
         }
     }
 
@@ -237,9 +237,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(account.getInstance()).getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
+                } catch (KeyManagementException | NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
             }
