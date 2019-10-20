@@ -3574,7 +3574,10 @@ public class Helper {
                     int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                     int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                     retriever.release();
-                    int newHeight = height*DEFAULT_VIDEO_WIDTH/width;
+                    int newHeight = height;
+                    if( width > DEFAULT_VIDEO_WIDTH) {
+                        newHeight = height * DEFAULT_VIDEO_WIDTH / width;
+                    }
                     return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
                 } catch (Exception ignored) { }
             }
@@ -3652,8 +3655,6 @@ public class Helper {
                 }
                 byte[] data = bao.toByteArray();
                 bs = new ByteArrayInputStream(data);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -3668,8 +3669,10 @@ public class Helper {
                     int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                     int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                     retriever.release();
-                    int newHeight = height*DEFAULT_VIDEO_WIDTH/width;
-
+                    int newHeight = height;
+                    if( width > DEFAULT_VIDEO_WIDTH) {
+                        newHeight = height * DEFAULT_VIDEO_WIDTH / width;
+                    }
                     filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
 
                 } catch (URISyntaxException e) {
