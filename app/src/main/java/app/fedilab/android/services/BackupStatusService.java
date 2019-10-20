@@ -122,7 +122,11 @@ public class BackupStatusService extends IntentService {
                 List<Status> statuses = apiResponse.getStatuses();
                 if (statuses.size() > 0)
                     backupStatus.addAll(statuses);
-                SystemClock.sleep(500);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    SystemClock.sleep(2000);
+                }
             } while (max_id != null);
 
             String fileName = account.getAcct() + "@" + account.getInstance() + Helper.dateFileToString(getApplicationContext(), new Date()) + ".csv";

@@ -44,6 +44,8 @@ import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 
+import static app.fedilab.android.helper.Helper.sleeps;
+
 
 /**
  * Created by Thomas on 24/08/2019.
@@ -138,7 +140,11 @@ public class BackupNotificationInDataBaseService extends IntentService {
                     new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).insertNotification(tmpNotification, userId, instance);
                     backupNotifications.add(tmpNotification);
                 }
-                SystemClock.sleep(500);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    SystemClock.sleep(2000);
+                }
             } while (max_id != null && canContinue);
 
             if (backupNotifications.size() > 0) {
