@@ -4,7 +4,7 @@ Destekledikleri:
 - Mastodon, Pleroma, Peertube, GNU Social, Friendica.
 
 
-Uygulama (özellikle Pleroma ve Mastodon için) gelişmiş özelliklere sahiptir:
+The app has advanced features (especially for Pleroma and Mastodon):
 
 - Çoklu hesap desteği
 - Mesajları cihazdan zamanlayın
@@ -12,7 +12,7 @@ Uygulama (özellikle Pleroma ve Mastodon için) gelişmiş özelliklere sahiptir
 - Mesajları yer imlerine ekleyin
 - Uzak örnekleri takip edin ve etkileşime geçin
 - Hesapları sessize almayı zamanlayın
-- Uzun süreli basma ile çapraz hesap işlemleri
+- Cross-account actions with a long press
 - Çeviri özelliği
 - Sanatsal zaman çizelgeleri
 - Video zaman çizelgeleri
