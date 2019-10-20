@@ -4,7 +4,7 @@ Den stöder:
 - Mastodon, Pleroma, Peertube, GNU Social, Friendica.
 
 
-Programmet har avancerade funktioner (särskilt för Pleroma och Mastodon):
+The app has advanced features (especially for Pleroma and Mastodon):
 
 - Stöd för flera konton
 - Schemalägga meddelanden från enheten
@@ -12,7 +12,7 @@ Programmet har avancerade funktioner (särskilt för Pleroma och Mastodon):
 - Bokmärk meddelanden
 - Följ och interagera med fjärrinstanser
 Tidsinställ tystadekonton
-- Cross-konto åtgärder med ett långttryck
+- Cross-account actions with a long press
 - Översättningsfunktion
 - Konstidslinje
 - Videotidslinjer
