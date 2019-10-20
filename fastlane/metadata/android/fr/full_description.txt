@@ -4,7 +4,7 @@ Il prend en charge :
 - Mastodon, Pleroma, PeerTube, GNU Social et Friendica.
 
 
-L'application possède des fonctionnalités avancées (particulièrement pour Pleroma et Mastodon) :
+The app has advanced features (especially for Pleroma and Mastodon):
 
 - Support multicomptes
 - Planification de messages depuis l'application
@@ -12,7 +12,7 @@ L'application possède des fonctionnalités avancées (particulièrement pour Pl
 - Utilisation de signets
 - Abonnement et interaction avec des instances distantes
 - Possibilité de mettre des comptes temporairement en sourdine
-- Actions entre comptes grâce aux appuis longs
+- Cross-account actions with a long press
 - Option de traduction
 - Fils artistiques
 - Fils vidéos

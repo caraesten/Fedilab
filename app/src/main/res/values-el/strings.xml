@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Αποθήκευση αντίγραφου ασφαλείας για %1$s</string>
     <string name="data_backup_success">Έχουν εισαχθεί %1$s νέες φωνές</string>
     <string name="data_backup_notification_success">Έχουν εισαχθεί %1$s νέες ειδοποιήσεις</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>Καθόλου</item>
         <item>Μόνο</item>
@@ -1127,4 +1131,6 @@
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
     <string name="message_preview">Προεπισκόπηση του μηνύματος</string>
     <string name="report_mention">Add mentions in each message</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>

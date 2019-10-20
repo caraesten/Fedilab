@@ -413,6 +413,10 @@
     <string name="data_backup_notifications">%1$sのバックアップ通知</string>
     <string name="data_backup_success">%1$s 件の新しいトゥートをインポートしました</string>
     <string name="data_backup_notification_success">%1$s件の新しい通知をインポートしました</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>しない</item>
         <item>のみ</item>
@@ -1113,4 +1117,6 @@
     <string name="long_api_error">このアプリは%1$sAPIから非常に長いエラーメッセージを受け取りました</string>
     <string name="message_preview">メッセージプレビュー</string>
     <string name="report_mention">それぞれのメッセージにメンションを追加</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>

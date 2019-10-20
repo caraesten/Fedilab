@@ -4,7 +4,7 @@ Soporta:
 - Mastodon, Pleroma, Peertube, GNU Social, Friendica.
 
 
-A aplicación ten características avanzadas (especialmente para Pleroma e Mastodon):
+The app has advanced features (especially for Pleroma and Mastodon):
 
 - Soporte multi-conta
 - Mensaxes programadas desde o dispositivo
@@ -12,7 +12,7 @@ A aplicación ten características avanzadas (especialmente para Pleroma e Masto
 - Mensaxes marcadas
 - Seguimento e interacción con instancias remotas
 - Acalar contas de xeito temporal
-- Accións para varias contas mantendo premido
+- Cross-account actions with a long press
 - Tradución incluída
 - Liña temporal Artística
 - Liña temporal de Vídeos

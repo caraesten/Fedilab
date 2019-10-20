@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Backup notifiche per %1$s</string>
     <string name="data_backup_success">%1$s nuovi toot sono stati importati</string>
     <string name="data_backup_notification_success">%1$s nuove notifiche sono state importate</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>No</item>
         <item>Solo</item>
@@ -1127,4 +1131,6 @@
     <string name="long_api_error">L\'app ha ricevuto un messaggio di errore molto lungo dall\'API %1$s</string>
     <string name="message_preview">Anteprima messaggio</string>
     <string name="report_mention">Aggiungi menzioni in ogni messaggio</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>

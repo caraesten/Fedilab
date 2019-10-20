@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Egin %1$s(r)en jakinarazpenen babes-kopia</string>
     <string name="data_backup_success">%1$s toot inportatu dira</string>
     <string name="data_backup_notification_success">%1$s jakinarazpen berri inportatu dira</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>Ez</item>
         <item>Bakarrik</item>
@@ -1125,4 +1129,6 @@
     <string name="long_api_error">Aplikazioak errore mezu oso luze bat jaso du %1$s APItik</string>
     <string name="message_preview">Mezuaren aurrebista</string>
     <string name="report_mention">Gehitu aipamenak mezu bakoitzean</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>

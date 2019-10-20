@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Sauvegarde des notifications pour %1$s</string>
     <string name="data_backup_success">%1$s nouveaux pouets ont été importés</string>
     <string name="data_backup_notification_success">%1$s nouvelles notifications ont été importées</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>Non</item>
         <item>Seulement</item>
@@ -1124,4 +1128,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="long_api_error">L’application a reçu un très long message d’erreur de l’API %1$s</string>
     <string name="message_preview">Aperçu du message</string>
     <string name="report_mention">Ajouter les mentions dans chaque message</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>

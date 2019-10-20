@@ -101,12 +101,12 @@
     <string name="no_status">Neniu hup por montri</string>
     <string name="fav_added">La hup estis aldonita al stelumoj</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
+    <string name="reblog_added">La mesaĝon diskonigis!</string>
+    <string name="reblog_removed">La mesaĝon maldiskonigis!</string>
     <string name="reblog_by">Diskonigita de %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
+    <string name="favourite_add">Aldoni mesaĝon al vian stelumajn?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
+    <string name="reblog_add">Diskonigi ĉi-tiun mesaĝon?</string>
     <string name="reblog_remove">Nuligi diskonigon?</string>
     <string name="pin_add">Aplingi ĉi-tiu hup?</string>
     <string name="pin_remove">Malaplingi ĉi-tiu hup?</string>
@@ -120,7 +120,7 @@
     <string name="more_action_8">Timed mute</string>
     <string name="more_action_9">Forigi kaj reskribi</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
+        <item>Silentigi ĉi-tiun konton?</item>
         <item>Bloki ĉi-tiun konton?</item>
         <item>Report this toot?</item>
         <item>Blokiti domajno?</item>
@@ -183,7 +183,7 @@
     <string name="show_reply">Tap on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Neniu priskribo havebla!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
     <string name="about_developer">Programistoj:</string>
@@ -197,31 +197,31 @@
     <!-- Conversation -->
     <string name="conversation">Konversacio</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Neniu konto por montri</string>
     <string name="no_follow_request">Ne sekva peton</string>
     <string name="status_cnt">Mesaĝoj \n %1$s</string>
     <string name="following_cnt">Sekvante \n %1$s</string>
     <string name="followers_cnt">Sekvante \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
+    <string name="pins_cnt">Kovris \n %d</string>
     <string name="authorize">Akcepti</string>
     <string name="reject">Malakcepti</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
+    <string name="no_scheduled_toots">Neniu planitaj mesajoj por montri!</string>
+    <string name="no_scheduled_toots_indications">Skribi mesaĵo kaj tiam elekti <b>Horaro</b> de la pinta menuo.</string>
     <string name="remove_scheduled">Forigi planita mesaĝon?</string>
     <string name="media_count">Aŭdvidaĵo %d</string>
     <string name="toot_scheduled">La mesaĝo estis planita!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="toot_scheduled_date">La planita dato devas pli granda ol la nunhoro!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Tap here to unmute the account.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
+    <string name="no_notifications">Neniun sciigon por montri</string>
     <string name="notif_mention">%s menciis vin</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_reblog">{name} diskonigis vian mesaĝon</string>
+    <string name="notif_favourite">{name} stelumis vian mesaĝon</string>
     <string name="notif_follow">%s eksekvis vin</string>
     <string name="notif_pouet">Nova mesaĝo de %1$s</string>
     <plurals name="other_notifications">
@@ -259,7 +259,7 @@
     <string name="toast_favourite">La hup estis aldonita al stelumoj!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_unstatus">La mesaĝon forigitis!</string>
     <string name="toast_pin">La hup estis alpinglita!</string>
     <string name="toast_unpin">La hup estis malalpinglita!</string>
     <string name="toast_error">Ups ! Eraro okazis!</string>
@@ -268,10 +268,10 @@
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Ne povas ensaluti!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="toast_update_credential_ok">La profila datumoj estis savita!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">La aŭdvidaĵo estis konservita!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_error_translate">Eraro okazis dum traduktas!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Malneto saviĝis!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
@@ -291,7 +291,7 @@
     <string name="load_attachment_spoiler_less">Montru malpli…</string>
     <string name="load_sensitive_attachment">Tikla enhavo</string>
     <string name="set_display_reply">Montri antaŭa mesaĝo en respondoj</string>
-    <string name="set_display_local">Montri loka timeline</string>
+    <string name="set_display_local">Montri loka tempolinio</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Vojo: </string>
@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Nur</item>
@@ -851,7 +855,7 @@
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
-    <string name="edit_media">Redakti aŭdvidaĵo</string>
+    <string name="edit_media">Redaktu aŭdvidaĵo</string>
     <string name="redo">refari</string>
     <string name="gallery">Galerio</string>
     <string name="label_emoji">Emoĝio</string>
@@ -1127,4 +1131,6 @@
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
     <string name="message_preview">Message preview</string>
     <string name="report_mention">Add mentions in each message</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>
