@@ -414,6 +414,10 @@
     <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>No</item>
         <item>Hanya</item>
@@ -1124,4 +1128,6 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
     <string name="message_preview">Message preview</string>
     <string name="report_mention">Add mentions in each message</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>
