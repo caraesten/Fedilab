@@ -414,6 +414,10 @@
     <string name="data_backup_notifications">备份的通知 %1$s</string>
     <string name="data_backup_success">已导入 %1$s 的新嘟文</string>
     <string name="data_backup_notification_success">%1$s 新的通知已导入</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>否</item>
         <item>仅</item>
@@ -1122,4 +1126,6 @@
     <string name="long_api_error">应用程序收到了 API 的 %1$s 非常长的错误消息</string>
     <string name="message_preview">消息预览</string>
     <string name="report_mention">在每条消息中添加提及</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>
