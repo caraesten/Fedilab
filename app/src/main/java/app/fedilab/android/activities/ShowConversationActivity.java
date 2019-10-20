@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     private BroadcastReceiver receive_action;
     private String conversationId;
     private boolean spoilerShown, spoilerBehaviour;
+    private LinearLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +120,8 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         if (detailsStatus == null || detailsStatus.getId() == null)
             finish();
 
-
+        loader = findViewById(R.id.loader);
+        loader.setVisibility(View.VISIBLE);
         detailsStatus.setFocused(true);
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
@@ -352,6 +355,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     @Override
     public void onRetrieveContext(APIResponse apiResponse) {
         swipeRefreshLayout.setRefreshing(false);
+        loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
             if( apiResponse.getError().getError() != null) {
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();

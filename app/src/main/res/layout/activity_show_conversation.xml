@@ -48,6 +48,26 @@
                     android:scrollbars="none"
                     android:divider="@null" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="70dp"
+                android:orientation="horizontal"
+                android:id="@+id/loader">
+                <ProgressBar
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:indeterminate="true"
+                    />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:text="@string/fetch_conversation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
