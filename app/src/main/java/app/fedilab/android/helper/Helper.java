@@ -50,6 +50,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
+import android.media.MediaMetadataRetriever;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -546,6 +547,12 @@ public class Helper {
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
     private static final Pattern mentionSearchPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)");
     public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
+
+
+    //Default values
+    public final static int DEFAULT_VIDEO_WIDTH = 640;
+    public final static int DEFAULT_VIDEO_HEIGHT = 360;
+    public final static int DEFAULT_VIDEO_BITRATE = 450000;
 
     //Event Type
     public enum EventStreaming {
@@ -3562,7 +3569,13 @@ public class Helper {
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
             if( compressed) {
                 try {
-                    return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/");
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    retriever.setDataSource(getRealPathFromURI(context,uriFile));
+                    int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                    int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                    retriever.release();
+                    int newHeight = height*DEFAULT_VIDEO_WIDTH/width;
+                    return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
                 } catch (Exception ignored) { }
             }
         }
@@ -3650,7 +3663,14 @@ public class Helper {
             if( compressed) {
                 String filePath = null;
                 try {
-                    filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/");
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    retriever.setDataSource(getRealPathFromURI(context,uriFile));
+                    int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                    int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                    retriever.release();
+                    int newHeight = height*DEFAULT_VIDEO_WIDTH/width;
+
+                    filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
 
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
