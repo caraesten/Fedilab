@@ -369,11 +369,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 final Spinner filter_replies = dialogView.findViewById(R.id.filter_replies);
                 final Spinner filter_media = dialogView.findViewById(R.id.filter_media);
                 final Spinner filter_pinned = dialogView.findViewById(R.id.filter_pinned);
+                final Spinner filter_order = dialogView.findViewById(R.id.filter_order);
 
                 filter_boost.setSelection(filterToots.getBoosts().ordinal());
                 filter_replies.setSelection(filterToots.getReplies().ordinal());
                 filter_media.setSelection(filterToots.getMedia().ordinal());
                 filter_pinned.setSelection(filterToots.getPinned().ordinal());
+                filter_order.setSelection(filterToots.getOrder().ordinal());
 
                 final EditText filter_keywords = dialogView.findViewById(R.id.filter_keywords);
 
@@ -422,6 +424,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 filterToots.setReplies(FilterToots.typeFilter.values()[filter_replies.getSelectedItemPosition()]);
                                 filterToots.setMedia(FilterToots.typeFilter.values()[filter_media.getSelectedItemPosition()]);
                                 filterToots.setPinned(FilterToots.typeFilter.values()[filter_pinned.getSelectedItemPosition()]);
+                                filterToots.setOrder(FilterToots.typeOrder.values()[filter_order.getSelectedItemPosition()]);
 
                                 filterToots.setV_public(filter_visibility_public.isChecked());
                                 filterToots.setV_unlisted(filter_visibility_unlisted.isChecked());

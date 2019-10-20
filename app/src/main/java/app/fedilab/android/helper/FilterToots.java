@@ -21,16 +21,30 @@ package app.fedilab.android.helper;
 
 public class FilterToots {
 
+    public typeOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(typeOrder order) {
+        this.order = order;
+    }
+
     public enum typeFilter {
         NONE,
         ONLY,
         BOTH
     }
 
+    public enum typeOrder {
+        DESC,
+        ASC,
+    }
+
     private typeFilter pinned = typeFilter.BOTH;
     private typeFilter boosts = typeFilter.BOTH;
     private typeFilter replies = typeFilter.BOTH;
     private typeFilter media = typeFilter.BOTH;
+    private typeOrder order = typeOrder.DESC;
 
     private boolean v_public = true;
     private boolean v_unlisted = true;

@@ -329,9 +329,18 @@ public class StatusCacheDAO {
             }
             selection.append(")");
         }
+        String order = Sqlite.COL_CREATED_AT + " DESC";
+
+        if (filterToots.getOrder() != null) {
+            if( filterToots.getOrder() == FilterToots.typeOrder.ASC ){
+                order = Sqlite.COL_CREATED_AT + " ASC";
+            }else if(filterToots.getOrder() == FilterToots.typeOrder.DESC) {
+                order = Sqlite.COL_CREATED_AT + " DESC";
+            }
+        }
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "40");
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, order, "40");
             return cursorToListStatuses(c);
         } catch (Exception e) {
             e.printStackTrace();
