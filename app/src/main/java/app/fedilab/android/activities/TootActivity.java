@@ -1610,9 +1610,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             ;
             request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
                     .startUpload();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (MalformedURLException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
