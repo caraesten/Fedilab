@@ -9,10 +9,10 @@ The app has advanced features (especially for Pleroma and Mastodon):
 - Multaj-kontoj subtena
 - Schedule messages from the device
 - Schedule boosts
-- Bookmark messages
+- Stelumaj mesaĝojn
 - Follow and interact with remote instances
 - Timed mute accounts
 - Cross-account actions with a long press
-- Translation feature
-- Arta tempolinio
-- Videa tempolinio
+- Tradukada ĉefaĵon
+- Artaj tempolinioj
+- Videaj tempolinioj
