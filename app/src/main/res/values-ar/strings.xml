@@ -434,6 +434,10 @@
     <string name="data_backup_notifications">نسخ احتياطي لإشعارات %1$s</string>
     <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
     <string name="data_backup_notification_success">%1$s إشعارات جديدة تم استيرادها</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>لا</item>
         <item>فقط</item>
@@ -1146,4 +1150,6 @@
     <string name="long_api_error">لقد تلقى التطبيق رسالة خطأ طويلة مِن API %1$s</string>
     <string name="message_preview">معاينة الرسالة</string>
     <string name="report_mention">إضافة الإشارات إلى الحسابات في كل رسالة</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>
