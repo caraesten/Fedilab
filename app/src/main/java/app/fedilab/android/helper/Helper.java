@@ -4022,7 +4022,7 @@ public class Helper {
                     return false;
             }
         }
-        if (mutedAccount != null && mutedAccount.size() > 0 && mutedAccount.contains(status.getAccount().getId()))
+        if (mutedAccount != null && mutedAccount.size() > 0 && (mutedAccount.contains(status.getAccount().getId()) || (status.getReblog() != null && mutedAccount.contains(status.getReblog().getAccount().getId()))) )
             return false;
         if (status.isNotice())
             return false;
