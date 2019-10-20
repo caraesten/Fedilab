@@ -2624,7 +2624,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             }
                                         }
                                     }
-                                    status.setWebviewURL(url);
+                                    if( status.getReblog() == null) {
+                                        status.setWebviewURL(url);
+                                    }else{
+                                        status.getReblog().setWebviewURL(url);
+                                    }
                                     notifyStatusChanged(status);
                                 }
                             });
