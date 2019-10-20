@@ -213,7 +213,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private MastalabAutoCompleteTextView toot_content;
     private EditText toot_cw_content;
     private TextView toot_space_left;
-    private String visibility;
     private ArrayList<String> splitToot;
     private int stepSpliToot;
     private String in_reply_to_status;
@@ -225,6 +224,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<ViewHolder> lstHolders;
     private final Object lock = new Object();
     private List<Emojis> emojisPicker;
+    private Status statusForQuickReply;
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -542,7 +542,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setSensitive(false);
             if (toot_cw_content.getText().toString().trim().length() > 0)
                 toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
-            toot.setVisibility(visibility);
+            toot.setVisibility(apiResponse.getStatuses().get(0).getVisibility());
             if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
             toot.setContent(tootContent);
@@ -2450,7 +2450,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             holder.quick_reply_button.setOnClickListener(view -> {
-                sendToot(null);
+                sendToot(status,null);
                 status.setShortReply(false);
                 holder.quick_reply_container.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -2480,7 +2480,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     break;
                             }
                             popup.dismiss();
-                            sendToot(contentType);
+                            sendToot(status, contentType);
                             status.setShortReply(false);
                             holder.quick_reply_container.setVisibility(View.GONE);
                             InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -2518,23 +2518,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(DialogInterface dialog, int position) {
                         switch (position) {
                             case 0:
-                                visibility = "public";
+                                status.setQuickReplyPrivacy("public");
                                 holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
                                 break;
                             case 1:
-                                visibility = "unlisted";
+                                status.setQuickReplyPrivacy("unlisted");
                                 holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
                                 break;
                             case 2:
-                                visibility = "private";
+                                status.setQuickReplyPrivacy("private");
                                 holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
                                 break;
                             case 3:
-                                visibility = "direct";
+                                status.setQuickReplyPrivacy("direct");
                                 holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
                                 break;
                         }
-
                         dialog.dismiss();
                     }
                 });
@@ -2688,6 +2687,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                             }
                             status.setShortReply(true);
+                            statusForQuickReply = status;
                             holder.quick_reply_container.setVisibility(View.VISIBLE);
                             InputMethodManager inputMethodManager =
                                     (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -2697,9 +2697,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.quick_reply_text.requestFocus();
                             EditText content_cw = new EditText(context);
                             content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
-                            TootActivity.manageMentions(context, social, userId,
-                                    holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
-                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
+                            if( status.getQuickReplyContent() == null ) {
+                                TootActivity.manageMentions(context, social, userId,
+                                        holder.quick_reply_text, content_cw, holder.toot_space_left, status.getReblog() != null ? status.getReblog() : status);
+                            }else{
+                                holder.quick_reply_text.setText(status.getQuickReplyContent());
+                            }
+                            TextWatcher textWatcher = TootActivity.initializeTextWatcher(context, social, status, holder.quick_reply_text, content_cw, holder.toot_space_left, null, null, StatusListAdapter.this, StatusListAdapter.this, StatusListAdapter.this);
 
                             toot_content = holder.quick_reply_text;
                             int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
@@ -2749,11 +2753,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     initialTootVisibility = 3;
                                     break;
                                 case "private":
-                                    visibility = "private";
+                                    status.setQuickReplyPrivacy("private");
                                     initialTootVisibility = 2;
                                     break;
                                 case "direct":
-                                    visibility = "direct";
+                                    status.setQuickReplyPrivacy("direct");
                                     initialTootVisibility = 1;
                                     break;
                             }
@@ -2766,11 +2770,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         ownerTootVisibility = 3;
                                         break;
                                     case "private":
-                                        visibility = "private";
+                                        status.setQuickReplyPrivacy("private");
                                         ownerTootVisibility = 2;
                                         break;
                                     case "direct":
-                                        visibility = "direct";
+                                        status.setQuickReplyPrivacy("direct");
                                         ownerTootVisibility = 1;
                                         break;
                                 }
@@ -2781,25 +2785,41 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             } else {
                                 tootVisibility = ownerTootVisibility;
                             }
+
                             switch (tootVisibility) {
                                 case 4:
-                                    visibility = "public";
+                                    status.setQuickReplyPrivacy("public");
                                     holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
                                     break;
                                 case 3:
-                                    visibility = "unlisted";
+                                    status.setQuickReplyPrivacy("unlisted");
                                     holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
                                     break;
                                 case 2:
-                                    visibility = "private";
+                                    status.setQuickReplyPrivacy("private");
                                     holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
                                     break;
                                 case 1:
-                                    visibility = "direct";
+                                    status.setQuickReplyPrivacy("direct");
                                     holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
                                     break;
                             }
-
+                            if( status.getQuickReplyPrivacy() != null){
+                                switch (status.getQuickReplyPrivacy()) {
+                                    case "public":
+                                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_public_toot);
+                                        break;
+                                    case "unlisted":
+                                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_open_toot);
+                                        break;
+                                    case "private":
+                                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_lock_outline_toot);
+                                        break;
+                                    case "direct":
+                                        holder.quick_reply_privacy.setImageResource(R.drawable.ic_mail_outline_toot);
+                                        break;
+                                }
+                            }
                             if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                 holder.quick_reply_text.addTextChangedListener(textWatcher);
 
@@ -2822,8 +2842,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     b.putParcelable("tootReply", status);
                                 }
 
-                                b.putString("quickmessagevisibility", visibility);
-                                b.putString("quickmessagecontent", holder.quick_reply_text.getText().toString());
+                                b.putString("quickmessagevisibility", status.getQuickReplyPrivacy());
+                                b.putString("quickmessagecontent", status.getQuickReplyContent());
                                 intent.putExtras(b); //Put your id to your next Intent
                                 context.startActivity(intent);
                                 if (type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
@@ -4104,7 +4124,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         context.startActivity(intent);
     }
 
-    private void sendToot(String content_type) {
+    private void sendToot(Status status, String content_type) {
 
         if (toot_content == null || toot_content.getText() == null) {
             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -4127,7 +4147,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
             tootContent = toot_content.getText().toString().trim();
-            createAndSendToot(tootContent, content_type, userId, instance);
+            createAndSendToot(status, content_type, userId, instance);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -4181,7 +4201,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    createAndSendToot(tootContent, content_type, userId, instance);
+                    createAndSendToot(status, content_type, userId, instance);
                     dialog.dismiss();
                 }
             });
@@ -4192,7 +4212,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
 
-    private void createAndSendToot(String tootContent, String content_type, String userId, String instance){
+    private void createAndSendToot(Status status, String content_type, String userId, String instance){
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -4201,11 +4221,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
-        toot.setVisibility(visibility);
+        toot.setVisibility(status.getQuickReplyPrivacy());
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(tootContent);
+        toot.setContent(status.getQuickReplyContent());
         new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+        status.setQuickReplyPrivacy(null);
+        status.setQuickReplyContent(null);
     }
 
 
@@ -4358,6 +4379,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( statuses.get(i).isFetchMore()){
                         status.setFetchMore(true);
                     }
+                    if( statuses.get(i).isShortReply()){
+                        status.setShortReply(true);
+                    }
+                    if( statuses.get(i).getQuickReplyContent() != null){
+                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
+                    }
+                    if( statuses.get(i).getQuickReplyPrivacy() != null){
+                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
+                    }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                     /*if( mRecyclerView != null) {
@@ -4388,6 +4418,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                     if( statuses.get(i).isFetchMore()){
                         status.setFetchMore(true);
+                    }
+                    if( statuses.get(i).isShortReply()){
+                        status.setShortReply(true);
+                    }
+                    if( statuses.get(i).getQuickReplyContent() != null){
+                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
+                    }
+                    if( statuses.get(i).getQuickReplyPrivacy() != null){
+                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
                     }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
@@ -4505,13 +4544,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     public void storeToot() {
         //Nothing to store here....
-        if (tootReply == null || (toot_content.getText().toString().trim().length() == 0 && toot_cw_content.getText().toString().trim().length() == 0))
+        if (tootReply == null || statusForQuickReply == null  || statusForQuickReply.getQuickReplyContent() == null ||  (statusForQuickReply.getQuickReplyContent().trim().length() == 0 && toot_cw_content.getText().toString().trim().length() == 0))
             return;
         Status toot = new Status();
         if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
-        toot.setVisibility(visibility);
-        toot.setContent(toot_content.getText().toString().trim());
+        if( statusForQuickReply.getQuickReplyPrivacy() != null) {
+            toot.setVisibility(statusForQuickReply.getQuickReplyPrivacy());
+        }
+        if( statusForQuickReply.getQuickReplyContent() != null) {
+            toot.setContent(statusForQuickReply.getQuickReplyContent().trim());
+        }
 
         toot.setIn_reply_to_id(tootReply.getId());
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

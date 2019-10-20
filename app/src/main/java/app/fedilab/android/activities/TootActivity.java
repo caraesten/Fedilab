@@ -882,7 +882,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        textWatcher = initializeTextWatcher(getApplicationContext(), social, toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
+        textWatcher = initializeTextWatcher(getApplicationContext(), social, null, toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             toot_content.addTextChangedListener(textWatcher);
 
@@ -916,7 +916,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social,
+    public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Status status,
                                                     MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
                                                     ImageView pp_actionBar, ProgressBar pp_progress,
                                                     OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
@@ -947,6 +947,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
+                if( status != null ) {
+                    status.setQuickReplyContent(s.toString());
+                }
                 if (autocomplete) {
                     toot_content.removeTextChangedListener(finalTextw);
                     Thread thread = new Thread() {

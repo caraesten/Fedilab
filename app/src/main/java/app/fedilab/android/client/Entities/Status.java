@@ -147,6 +147,8 @@ public class Status implements Parcelable {
     private boolean isExpanded = false;
     private int numberLines = -1;
     private boolean showSpoiler = false;
+    private String quickReplyContent;
+    private String quickReplyPrivacy;
 
     public Status() {
     }
@@ -239,6 +241,8 @@ public class Status implements Parcelable {
         dest.writeStringList(this.imageURL);
         dest.writeInt(this.viewType);
         dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
+        dest.writeString(this.quickReplyContent);
+        dest.writeString(this.quickReplyPrivacy);
 
     }
 
@@ -308,6 +312,8 @@ public class Status implements Parcelable {
         this.imageURL = in.createStringArrayList();
         this.viewType = in.readInt();
         this.isFocused = in.readByte() != 0;
+        this.quickReplyContent = in.readString();
+        this.quickReplyPrivacy = in.readString();
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1806,5 +1812,21 @@ public class Status implements Parcelable {
 
     public void setComments(List<Status> comments) {
         this.comments = comments;
+    }
+
+    public String getQuickReplyContent() {
+        return quickReplyContent;
+    }
+
+    public void setQuickReplyContent(String quickReplyContent) {
+        this.quickReplyContent = quickReplyContent;
+    }
+
+    public String getQuickReplyPrivacy() {
+        return quickReplyPrivacy;
+    }
+
+    public void setQuickReplyPrivacy(String quickReplyPrivacy) {
+        this.quickReplyPrivacy = quickReplyPrivacy;
     }
 }

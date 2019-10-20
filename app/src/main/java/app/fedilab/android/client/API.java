@@ -3322,13 +3322,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);

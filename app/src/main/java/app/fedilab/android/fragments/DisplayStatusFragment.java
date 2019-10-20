@@ -670,7 +670,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onDestroyView() {
         if (lv_status != null) {
-            lv_status.setAdapter(null);
+            try {
+                lv_status.setAdapter(null);
+            }catch (Exception ignored){}
         }
         super.onDestroyView();
     }
