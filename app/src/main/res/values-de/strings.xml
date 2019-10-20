@@ -418,6 +418,10 @@
     <string name="data_backup_notifications">Benachrichtigungen für %1$s sichern</string>
     <string name="data_backup_success">%1$s neue Toots wurden importiert</string>
     <string name="data_backup_notification_success">%1$s neue Benachrichtigungen wurden importiert</string>
+    <string-array name="filter_order">
+        <item>Dates descending</item>
+        <item>Dates ascending</item>
+    </string-array>
     <string-array name="filter_select">
         <item>Nein</item>
         <item>Nur</item>
@@ -1114,4 +1118,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
     <string name="message_preview">Message preview</string>
     <string name="report_mention">Add mentions in each message</string>
+    <string name="fetch_conversation">Fetching conversation</string>
+    <string name="order_by">Order by</string>
 </resources>
