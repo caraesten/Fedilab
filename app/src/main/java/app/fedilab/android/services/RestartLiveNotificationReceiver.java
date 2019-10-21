@@ -33,16 +33,14 @@ public class RestartLiveNotificationReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean delayedNotifications = sharedpreferences.getBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
-        if (delayedNotifications) {
+        int type = Helper.liveNotifType(context);
+        if ( type == Helper.NOTIF_DELAYED) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationDelayedService.class);
             try {
                 context.startService(streamingServiceIntent);
             } catch (Exception ignored) {
             }
-        }else if (liveNotifications) {
+        }else if (type == Helper.NOTIF_LIVE) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
             try {
                 context.startService(streamingServiceIntent);

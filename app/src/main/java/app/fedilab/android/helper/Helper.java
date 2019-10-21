@@ -214,12 +214,9 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
-import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.client.Tls12SocketFactory;
-import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
-import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.MainMenuDAO;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
@@ -4961,8 +4958,8 @@ public class Helper {
     }
 
     public static HashMap<String, Integer> sleeps = new HashMap<>();
+
     public static void startSreaming(Context context) {
-        context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
         int liveNotifications = Helper.liveNotifType(context);
         switch (liveNotifications){
             case Helper.NOTIF_LIVE:

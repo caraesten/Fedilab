@@ -32,8 +32,6 @@ import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.services.LiveNotificationDelayedService;
-import app.fedilab.android.services.LiveNotificationService;
-import app.fedilab.android.services.StopLiveNotificationReceiver;
 
 import static android.content.Context.MODE_PRIVATE;
 

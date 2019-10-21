@@ -97,7 +97,7 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
 import app.fedilab.android.services.LiveNotificationDelayedService;
-import app.fedilab.android.services.LiveNotificationService;
+import app.fedilab.android.services.StopDelayedNotificationReceiver;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.MainMenuDAO;
@@ -1278,7 +1278,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (count2 > 0) {
-                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:
@@ -1286,17 +1285,22 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.VISIBLE);
                             editor.apply();
+                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
                             live_notif_per_account.setVisibility(View.VISIBLE);
+                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                             editor.apply();
                             break;
                         case Helper.NOTIF_NONE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.GONE);
+                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+
                             editor.apply();
                             break;
                     }

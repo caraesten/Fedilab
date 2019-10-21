@@ -17,8 +17,6 @@ package app.fedilab.android.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -59,9 +57,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -69,14 +67,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,10 +120,8 @@ import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
-import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TempMuteDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
@@ -154,9 +148,6 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
-import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
-import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
-import static app.fedilab.android.sqlite.StatusCacheDAO.NOTIFICATION_CACHE;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -1357,7 +1348,6 @@ public abstract class BaseMainActivity extends BaseActivity
             set_live_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    sendBroadcast(new Intent(getApplicationContext(), StopLiveNotificationReceiver.class));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:

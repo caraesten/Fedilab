@@ -15,7 +15,6 @@
 package app.fedilab.android.asynctasks;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
@@ -29,7 +28,6 @@ import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.services.StopLiveNotificationReceiver;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
 import app.fedilab.android.R;

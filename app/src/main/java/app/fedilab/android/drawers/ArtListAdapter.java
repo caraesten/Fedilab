@@ -211,7 +211,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                     else if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
                         attachments.add(status.getMedia_attachments().get(0));
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
-                    b.putInt("position", 0);
+                    b.putInt("position", 1);
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

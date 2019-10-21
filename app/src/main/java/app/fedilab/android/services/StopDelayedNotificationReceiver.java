@@ -1,5 +1,5 @@
 package app.fedilab.android.services;
-/* Copyright 2017 Thomas Schneider
+/* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Fedilab
  *
@@ -21,20 +21,21 @@ import android.content.Intent;
 
 
 /**
- * Created by Thomas on 22/09/2017.
- * BroadcastReceiver for restarting the service
+ * Created by Thomas on 18/10/2019.
+ * BroadcastReceiver for restarting delayed notification service
  */
 
-public class StopLiveNotificationReceiver extends BroadcastReceiver {
+public class StopDelayedNotificationReceiver extends BroadcastReceiver {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
+        Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationDelayedService.class);
         streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        } catch (Exception ignored) { ignored.printStackTrace();}
+        } catch (Exception ignored) {
+        }
     }
 
 }
