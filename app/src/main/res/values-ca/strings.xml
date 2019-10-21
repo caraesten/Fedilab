@@ -418,8 +418,8 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="data_backup_success">S\'han importat %1$s toots nous</string>
     <string name="data_backup_notification_success">%1$s notificacions noves s\'han importat</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Dates en ordre descendent</item>
+        <item>Dates en ordre ascendent</item>
     </string-array>
     <string-array name="filter_select">
         <item>No</item>
@@ -1123,6 +1123,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="long_api_error">L\'aplicació ha rebut un missatge d\'error molt llarg des de l\'API %1$s</string>
     <string name="message_preview">Previsualització de missatge</string>
     <string name="report_mention">Afegeix mencions en cada missatge</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">S\'està extraient la conversa</string>
+    <string name="order_by">Ordenar per</string>
 </resources>

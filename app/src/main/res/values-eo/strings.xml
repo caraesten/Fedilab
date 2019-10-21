@@ -419,8 +419,8 @@
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Datoj malsupreniranta</item>
+        <item>Datoj supreniranta</item>
     </string-array>
     <string-array name="filter_select">
         <item>Ne</item>
@@ -1132,5 +1132,5 @@
     <string name="message_preview">Message preview</string>
     <string name="report_mention">Add mentions in each message</string>
     <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="order_by">Ordigi laŭ</string>
 </resources>

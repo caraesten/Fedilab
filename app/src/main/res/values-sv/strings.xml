@@ -419,8 +419,8 @@
     <string name="data_backup_success">%1$s nya toots har importerats</string>
     <string name="data_backup_notification_success">%1$s nya notifieringar har importerats</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Fallande datum</item>
+        <item>Stigande datum</item>
     </string-array>
     <string-array name="filter_select">
         <item>Nej</item>
@@ -1131,6 +1131,6 @@
     <string name="long_api_error">Appen mottog ett väldigt långt felmeddelande från API:et %1$s</string>
     <string name="message_preview">Förhandsvisning av meddelande</string>
     <string name="report_mention">Ange nämnande i varje meddelande</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">Hämtar konversation</string>
+    <string name="order_by">Sortera efter</string>
 </resources>

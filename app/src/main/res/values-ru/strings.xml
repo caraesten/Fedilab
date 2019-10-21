@@ -1122,8 +1122,8 @@
     <string name="set_hide_status_bar_indication">Чтобы скрыть уведомление в строке состояния, нажмите на кнопку с пиктограммой глаза и снимите флажок: \"Показывать в строке состояния\"</string>
     <string name="set_live_type_title">Включить отложенные уведомления</string>
     <string name="set_live_type_indication">Уведомления будут появляться на 30 секунд позже. Это позволит уменьшить влияние на батарею.</string>
-    <string name="live_delayed">Живое уведомление отложено</string>
-    <string name="no_live_notif">Нет живых уведомлений</string>
+    <string name="live_delayed">Live notifications delayed</string>
+    <string name="no_live_notif">No live notifications</string>
     <string name="no_live_indication">Уведомления будут поступать каждые 15 минут.</string>
     <string name="action_add_notes">Добавить примечания</string>
     <string name="note_for_account">Примечания для аккаунта</string>

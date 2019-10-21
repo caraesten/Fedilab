@@ -4,7 +4,7 @@ Pot incorporar:
 - Mastodon, Pleroma, Peertube, GNU social i Friendica.
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+L'aplicació té funcionalitats avançades (sobretot per a Pleroma i Mastodont):
 
 - Pot assumir múltiples comptes
 - Programar missatges des del dispositiu
@@ -12,7 +12,7 @@ The app has advanced features (especially for Pleroma and Mastodon):
 - Marcar missatges
 - Seguir i interactuar amb instàncies remotes
 - Silenciar comptes temporalment
-- Cross-account actions with a long press
+- Executar accions entre els comptes amb pitjada llarga
 - Funcionalitat de traducció
 - Pissarres de creació artística
 - Pissarres de vídeo
