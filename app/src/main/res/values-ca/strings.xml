@@ -418,8 +418,8 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="data_backup_success">S\'han importat %1$s toots nous</string>
     <string name="data_backup_notification_success">%1$s notificacions noves s\'han importat</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Dates en ordre descendent</item>
+        <item>Dates en ordre ascendent</item>
     </string-array>
     <string-array name="filter_select">
         <item>No</item>
