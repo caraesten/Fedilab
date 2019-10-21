@@ -2183,7 +2183,7 @@ public class Helper {
                                     if (accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
                                         Toasty.info(activity.getApplicationContext(), activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
                                     else
-                                        Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
+                                        Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getUsername() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
                                     Intent changeAccount = new Intent(activity, MainActivity.class);
                                     changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     activity.startActivity(changeAccount);
@@ -3508,11 +3508,12 @@ public class Helper {
             patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
         } catch (Exception ignored) {
         }
-        if (patch_provider)
+        if (patch_provider) {
             try {
                 Security.insertProviderAt(Conscrypt.newProvider(), 1);
             } catch (Exception ignored) {
             }
+        }
     }
 
 

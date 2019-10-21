@@ -303,7 +303,7 @@ public class AccountDAO {
      */
     public boolean userExist(Account account) {
         Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_USER_ACCOUNT
-                + " where " + Sqlite.COL_ACCT + " = '" + account.getAcct() + "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
+                + " where " + Sqlite.COL_USERNAME + " = '" + account.getUsername() + "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();
