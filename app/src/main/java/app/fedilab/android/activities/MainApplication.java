@@ -63,6 +63,7 @@ public class MainApplication extends MultiDexApplication {
 
 
     private static MainApplication app;
+    public static int notificationsSyncJob = -1;
 
     @Override
     public void onCreate() {
@@ -70,7 +71,10 @@ public class MainApplication extends MultiDexApplication {
         app = this;
         //System.setProperty("java.net.preferIPv4Stack" , "true");
         JobManager.create(this).addJobCreator(new ApplicationJob());
-        NotificationsSyncJob.schedule(false);
+
+        if( Helper.getNotificationIcon(getApplicationContext()) == Helper.NOTIF_NONE) {
+            notificationsSyncJob = NotificationsSyncJob.schedule(false);
+        }
         BackupStatusesSyncJob.schedule(false);
         BackupNotificationsSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();

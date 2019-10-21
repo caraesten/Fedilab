@@ -79,12 +79,14 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.LiveNotificationSettingsAccountsActivity;
 import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.MainMenuItem;
 import app.fedilab.android.client.Entities.Relationship;
@@ -96,6 +98,8 @@ import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
+import app.fedilab.android.jobs.ApplicationJob;
+import app.fedilab.android.jobs.NotificationsSyncJob;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.StopDelayedNotificationReceiver;
 import app.fedilab.android.services.StopLiveNotificationReceiver;
@@ -1286,6 +1290,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             live_notif_per_account.setVisibility(View.VISIBLE);
                             editor.apply();
                             context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                            if( MainApplication.notificationsSyncJob != -1){
+                                ApplicationJob.cancelJob(MainApplication.notificationsSyncJob);
+                            }
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
@@ -1293,6 +1300,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             live_notif_per_account.setVisibility(View.VISIBLE);
                             context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                             editor.apply();
+                            if( MainApplication.notificationsSyncJob != -1){
+                                ApplicationJob.cancelJob(MainApplication.notificationsSyncJob);
+                            }
                             break;
                         case Helper.NOTIF_NONE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
@@ -1300,7 +1310,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             live_notif_per_account.setVisibility(View.GONE);
                             context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
                             context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-
+                            MainApplication.notificationsSyncJob = NotificationsSyncJob.schedule(false);
                             editor.apply();
                             break;
                     }
