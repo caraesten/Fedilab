@@ -4,7 +4,7 @@
 - ماستدون وبليروما وبيرتيوب وغنو سوشل وفرانديكا.
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+يحتوي التطبيق على ميزات متقدمة (خاصة Pleroma و Mastodon):
 
 - يدعم الحسابات المتعددة
 - برمجة الرسائل من خلال الجهاز
@@ -12,7 +12,7 @@ The app has advanced features (especially for Pleroma and Mastodon):
 - إضافة المنشورات إلى الفواصل المرجعية
 - المتابعة والتفاعل مع الخوادم البعيدة
 - ميزة للكتم المؤقت للحسابات
-- Cross-account actions with a long press
+- إجراءات ما بين الحسابات بواسطة الضغط المطوّل
 - ميزة الترجمة
 - خطوط زمنية فنية
 - خطوط للفيديوهات
