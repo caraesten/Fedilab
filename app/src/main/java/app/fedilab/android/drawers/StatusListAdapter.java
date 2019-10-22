@@ -566,7 +566,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Toasty.info(context, context.getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
         }
         //For conversation
-        if (context instanceof ShowConversationActivity) {
+        if (context instanceof ShowConversationActivity && apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0) {
             ((ShowConversationActivity) context).addStatuses(apiResponse.getStatuses().get(0));
         }
 

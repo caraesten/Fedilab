@@ -63,7 +63,6 @@ public class MainApplication extends MultiDexApplication {
 
 
     private static MainApplication app;
-    public static int notificationsSyncJob = -1;
 
     @Override
     public void onCreate() {
@@ -71,15 +70,22 @@ public class MainApplication extends MultiDexApplication {
         app = this;
         //System.setProperty("java.net.preferIPv4Stack" , "true");
         JobManager.create(this).addJobCreator(new ApplicationJob());
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
+        ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
         if( Helper.getNotificationIcon(getApplicationContext()) == Helper.NOTIF_NONE) {
-            notificationsSyncJob = NotificationsSyncJob.schedule(false);
+             NotificationsSyncJob.schedule(false);
         }
+
+        ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
+        ApplicationJob.cancelAllJob(BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC);
         BackupNotificationsSyncJob.schedule(false);
+
+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
 

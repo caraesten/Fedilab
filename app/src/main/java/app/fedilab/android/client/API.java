@@ -696,11 +696,7 @@ public class API {
                 editor.putString(Helper.SET_ONION_SCHEME + domain, "http");
                 scheme = "http";
                 editor.apply();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
                 e.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e) {
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -771,9 +767,7 @@ public class API {
         } catch (IOException e) {
             instanceNodeInfo.setConnectionError(true);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             try {
@@ -785,21 +779,14 @@ public class API {
             } catch (IOException e1) {
                 instanceNodeInfo.setConnectionError(true);
                 e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
+            } catch (NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
                 instanceNodeInfo.setName("GNU");
                 instanceNodeInfo.setVersion("unknown");
                 instanceNodeInfo.setOpenRegistrations(true);
                 e1.printStackTrace();
-            } catch (JSONException e1) {
-
-                e1.printStackTrace();
             }
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return instanceNodeInfo;
@@ -1011,7 +998,10 @@ public class API {
             }
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
-            account.setSocial(getNodeInfo(instance).getName().toUpperCase());
+            InstanceNodeInfo nodeinfo = getNodeInfo(instance);
+            if( nodeinfo != null && nodeinfo.getName() != null) {
+                account.setSocial(getNodeInfo(instance).getName().toUpperCase());
+            }
             if (account != null && account.getSocial() != null && account.getSocial().equals("PLEROMA")) {
                 isPleromaAdmin(account.getAcct());
             }
@@ -1044,26 +1034,14 @@ public class API {
                     if (account.getSocial().equals("PLEROMA")) {
                         isPleromaAdmin(account.getAcct());
                     }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
                     e1.printStackTrace();
                 } catch (HttpsConnection.HttpsConnectionException e1) {
                     e1.printStackTrace();
                     setError(e.getStatusCode(), e);
                 }
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return account;

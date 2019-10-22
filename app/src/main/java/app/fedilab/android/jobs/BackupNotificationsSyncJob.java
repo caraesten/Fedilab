@@ -43,7 +43,7 @@ import app.fedilab.android.sqlite.Sqlite;
 
 public class BackupNotificationsSyncJob extends Job {
 
-    static final String BACKUP_NOTIFICATIONS_SYNC = "job_backup_notification";
+    public static final String BACKUP_NOTIFICATIONS_SYNC = "job_backup_notification";
 
     static {
         Helper.installProvider();

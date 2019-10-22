@@ -161,7 +161,9 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
-        values.put(Sqlite.COL_SOCIAL, account.getSocial());
+        if( account.getSocial() != null ) {
+            values.put(Sqlite.COL_SOCIAL, account.getSocial());
+        }
         if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
             values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
             values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());

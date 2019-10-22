@@ -73,7 +73,7 @@ import static app.fedilab.android.helper.Helper.notify_user;
 
 public class NotificationsSyncJob extends Job {
 
-    static final String NOTIFICATION_REFRESH = "job_notification";
+    public static final String NOTIFICATION_REFRESH = "job_notification";
 
     static {
         Helper.installProvider();

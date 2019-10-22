@@ -73,7 +73,7 @@ import static app.fedilab.android.helper.Helper.notify_user;
 
 public class BackupStatusesSyncJob extends Job {
 
-    static final String BACKUP_SYNC = "job_backup";
+    public static final String BACKUP_SYNC = "job_backup";
 
     static {
         Helper.installProvider();
