@@ -4,7 +4,7 @@ Fedilab 是一個可以存取分散式 Fediverse 的多功能 Android 客戶端�
 - Mastodon, Pleroma, Peertube, GNU Social, Friendica.
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+本應用程式有進階功能（特別是對 Pleroma 與 Mastodon）：
 
 - 多帳號支援
 - 從裝置為訊息排程
@@ -12,7 +12,7 @@ The app has advanced features (especially for Pleroma and Mastodon):
 - 將訊息加入書籤
 - 追蹤並與遠端站臺互動
 - 一定時間內靜音帳號
-- Cross-account actions with a long press
+- 長按進行跨帳號動作
 - 翻譯功能
 - 藝術時間軸
 - 影片時間軸
