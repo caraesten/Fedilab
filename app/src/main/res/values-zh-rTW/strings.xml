@@ -415,8 +415,8 @@
     <string name="data_backup_success">%1$s 的新嘟文已匯入</string>
     <string name="data_backup_notification_success">已匯入 %1$s 個新通知</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>日期遞減</item>
+        <item>日期遞增</item>
     </string-array>
     <string-array name="filter_select">
         <item>否</item>
@@ -1125,6 +1125,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="long_api_error">應用程式從 API %1$s 收到非常長的錯誤訊息</string>
     <string name="message_preview">訊息預覽</string>
     <string name="report_mention">在每個訊息中新增提及</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">擷取對話</string>
+    <string name="order_by">排序由</string>
 </resources>
