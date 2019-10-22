@@ -17,6 +17,7 @@ package app.fedilab.android.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -901,65 +902,49 @@ public class PeertubeAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+           // Helper.largeLog(response);
             if (!action.equals("/overviews/videos")) {
                 JSONArray values = new JSONObject(response).getJSONArray("data");
                 peertubes = parsePeertube(values);
             } else {
-                JSONArray videoA = new JSONObject(response).getJSONArray("categories");
-                JSONArray values = videoA.getJSONObject(0).getJSONArray("videos");
-                List<Peertube> peertubes1 = parsePeertube(values);
-                if (peertubes1 != null && peertubes1.size() > 0) {
-                    peertubes1.get(0).setHeaderType("categories");
-                    peertubes1.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("category").getString("label"));
-                    peertubes.addAll(peertubes1);
-                }
-                values = videoA.getJSONObject(1).getJSONArray("videos");
-                List<Peertube> peertubes2 = parsePeertube(values);
-                if (peertubes2 != null && peertubes2.size() > 0) {
-                    peertubes2.get(0).setHeaderType("categories");
-                    peertubes2.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("category").getString("label"));
-                    peertubes.addAll(peertubes2);
+                JSONArray categories = new JSONObject(response).getJSONArray("categories");
+                JSONArray channels = new JSONObject(response).getJSONArray("channels");
+                JSONArray tags = new JSONObject(response).getJSONArray( "tags");
+
+                for (int i = 0; i < categories.length(); i++) {
+                    JSONArray categoriesVideos = categories.getJSONObject(i).getJSONArray("videos");
+                    List<Peertube> peertubeCategories = parsePeertube(categoriesVideos);
+                    if (peertubeCategories != null && peertubeCategories.size() > 0) {
+                        peertubeCategories.get(0).setHeaderType("categories");
+                        peertubeCategories.get(0).setHeaderTypeValue(categories.getJSONObject(i).getJSONObject("category").getString("label"));
+                        peertubes.addAll(peertubeCategories);
+                    }
                 }
 
-                videoA = new JSONObject(response).getJSONArray("tags");
-                values = videoA.getJSONObject(0).getJSONArray("videos");
-                List<Peertube> peertubes5 = parsePeertube(values);
-                if (peertubes5 != null && peertubes5.size() > 0) {
-                    peertubes5.get(0).setHeaderType("tags");
-                    peertubes5.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getString("tag"));
-                    peertubes.addAll(peertubes5);
-                }
-                values = videoA.getJSONObject(1).getJSONArray("videos");
-                List<Peertube> peertubes6 = parsePeertube(values);
-                if (peertubes6 != null && peertubes6.size() > 0) {
-                    peertubes6.get(0).setHeaderType("tags");
-                    peertubes6.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getString("tag"));
-                    peertubes.addAll(peertubes6);
+
+                for (int i = 0; i < channels.length(); i++) {
+                    JSONArray channelsVideos = channels.getJSONObject(i).getJSONArray("videos");
+                    List<Peertube> peertubeChannels = parsePeertube(channelsVideos);
+                    if (peertubeChannels != null && peertubeChannels.size() > 0) {
+                        peertubeChannels.get(0).setHeaderType("channels");
+                        peertubeChannels.get(0).setHeaderTypeValue(channels.getJSONObject(i).getJSONObject("channel").getString("displayName"));
+                        peertubes.addAll(peertubeChannels);
+                    }
                 }
 
-                videoA = new JSONObject(response).getJSONArray("channels");
-                values = videoA.getJSONObject(0).getJSONArray("videos");
-                List<Peertube> peertubes3 = parsePeertube(values);
-                if (peertubes3 != null && peertubes3.size() > 0) {
-                    peertubes3.get(0).setHeaderType("channels");
-                    peertubes3.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("channel").getString("displayName"));
-                    peertubes.addAll(peertubes3);
+                for (int i = 0; i < tags.length(); i++) {
+                    JSONArray tagsVideos = tags.getJSONObject(i).getJSONArray("videos");
+                    List<Peertube> peertubeTags = parsePeertube(tagsVideos);
+                    if (peertubeTags != null && peertubeTags.size() > 0) {
+                        peertubeTags.get(0).setHeaderType("tags");
+                        peertubeTags.get(0).setHeaderTypeValue(tags.getJSONObject(i).getString("tag"));
+                        peertubes.addAll(peertubeTags);
+                    }
                 }
-                values = videoA.getJSONObject(1).getJSONArray("videos");
-                List<Peertube> peertubes4 = parsePeertube(values);
-                if (peertubes4 != null && peertubes4.size() > 0) {
-                    peertubes4.get(0).setHeaderType("channels");
-                    peertubes4.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("channel").getString("displayName"));
-                    peertubes.addAll(peertubes4);
-                }
+
+
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);

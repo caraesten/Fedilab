@@ -69,6 +69,9 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Account account;
+        if( this.contextReference == null){
+            return null;
+        }
         if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).getRealNodeInfo(this.instance);

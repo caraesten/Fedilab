@@ -2227,58 +2227,66 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             createAndSendToot(tootContent, content_type, timestamp);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
-            tootContent = splitToot.get(0);
-            stepSpliToot = 1;
+            if( splitToot.size() > 0 ) {
+                tootContent = splitToot.get(0);
+                stepSpliToot = 1;
 
 
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
+                builderInner.setTitle(R.string.message_preview);
 
-            AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
-            builderInner.setTitle(R.string.message_preview);
+                View preview = getLayoutInflater().inflate(R.layout.popup_message_preview, new LinearLayout(getApplicationContext()), false);
+                builderInner.setView(preview);
 
-            View preview = getLayoutInflater().inflate(R.layout.popup_message_preview, new LinearLayout(getApplicationContext()), false);
-            builderInner.setView(preview);
-
-            //Text for report
-            final TextView textView = preview.findViewById(R.id.preview);
-            textView.setText("");
-            final SwitchCompat report_mention = preview.findViewById(R.id.report_mention);
-            int finalSplit_toot_size = split_toot_size;
-            report_mention.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    splitToot = Helper.splitToots(toot_content.getText().toString().trim(), finalSplit_toot_size, isChecked);
-                    textView.setText("");
-                    int inc = 0;
-                    for(String prev: splitToot){
-                        if( inc < splitToot.size()-1) {
-                            textView.setText(textView.getText() + prev + "\n----------\n");
+                //Text for report
+                final TextView textView = preview.findViewById(R.id.preview);
+                textView.setText("");
+                final SwitchCompat report_mention = preview.findViewById(R.id.report_mention);
+                int finalSplit_toot_size = split_toot_size;
+                report_mention.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        splitToot = Helper.splitToots(toot_content.getText().toString().trim(), finalSplit_toot_size, isChecked);
+                        textView.setText("");
+                        int inc = 0;
+                        for (String prev : splitToot) {
+                            if (inc < splitToot.size() - 1) {
+                                textView.setText(textView.getText() + prev + "\n----------\n");
+                            }
                         }
                     }
+                });
+                int inc = 0;
+                for (String prev : splitToot) {
+                    if (inc < splitToot.size() - 1) {
+                        textView.setText(textView.getText() + prev + "\n----------\n");
+                    }
                 }
-            });
-            int inc = 0;
-            for(String prev: splitToot){
-                if( inc < splitToot.size()-1) {
-                    textView.setText(textView.getText() + prev + "\n----------\n");
-                }
-            }
 
-            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    toot_it.setEnabled(true);
-                    dialog.dismiss();
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        toot_it.setEnabled(true);
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        createAndSendToot(tootContent, content_type, timestamp);
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builderInner.create();
+                alertDialog.show();
+            }else{ //Failed to split the toot.
+                if (!displayWYSIWYG()) {
+                    tootContent = toot_content.getText().toString().trim();
+                } else {
+                    tootContent = wysiwyg.getContentAsHTML();
                 }
-            });
-            builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    createAndSendToot(tootContent, content_type, timestamp);
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog alertDialog = builderInner.create();
-            alertDialog.show();
+                createAndSendToot(tootContent, content_type, timestamp);
+            }
         }
 
 
