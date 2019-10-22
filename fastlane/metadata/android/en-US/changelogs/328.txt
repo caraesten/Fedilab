@@ -1,6 +1,6 @@
 Added
 - Improve battery drain with delayed notifications
-- Allow to reverse the list of our toots
+- Allow to reverse the list of "Your toots"
 - Bottom loader when loading long threads
 
 Fixed
