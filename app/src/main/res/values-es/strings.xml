@@ -418,8 +418,8 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="data_backup_success">%1$s toots nuevos han sido importados</string>
     <string name="data_backup_notification_success">%1$s nuevas notificaciones han sido importadas</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Fechas en orden descendente</item>
+        <item>Fechas en orden ascendente</item>
     </string-array>
     <string-array name="filter_select">
         <item>No</item>
@@ -1125,6 +1125,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="long_api_error">La aplicación recibió un mensaje de error muy largo de la API %1$s</string>
     <string name="message_preview">Vista previa de mensaje</string>
     <string name="report_mention">Añadir menciones en cada mensaje</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">Obteniendo conversación</string>
+    <string name="order_by">Ordenar por</string>
 </resources>
