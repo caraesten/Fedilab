@@ -444,17 +444,17 @@
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
     <string name="privacy_API_authorizations_title">Δικαιώματα API:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Ανάγνωση δεδομένων.\n
+        - <b>Write</b>: Δημοσίευση καταστάσεων και ανέβασμα πολυμέσων για καταστάσεις.\n
+        - <b>Follow</b>: Παρακολούθηση, κατάργηση παρακολούθησης, φραγή, απόφραξη.\n\n
+        <b>&#9888; Αυτές οι ενέργειες εκτελούνται μόνο όταν τις ζητήσει ο χρήστης.</b>
     </string>
     <string name="privacy_API_title">Παρακολούθηση και Βιβλιοθήκες</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Η εφαρμογή <b>δεν χρησιμοποιεί εργαλεία ιχνηλάτησης</b> (μετρήσεις κοινού, αναφορά σφαλμάτων, κλπ) και δεν περιέχει καμία διαφήμιση.\n\n
+        Η χρήση βιβλιοθηκών είναι περιορισμένη: \n
+        - <b>Glide</b>: Για τη διαχείριση πολυμέσων\n
+        - <b>Android-Job</b>: Για τη διαχείριση υπηρεσιών\n
+        - <b>PhotoView</b>: Για τη διαχείριση εικόνων\n
     </string>
     <string name="privacy_API_yandex_title">Μετάφραση των φωνών</string>
     <string name="privacy_API_yandex_authorizations">        Η εφαρμογή προσφέρει τη δυνατότητα να μεταφράσεις φωνές χρησιμοποιώντας την τοπικοποίηση της συσκευής σου και την API του Yandex.\n
@@ -1128,9 +1128,9 @@
     <string name="add_photo_indication_pixelfed">Αποδεκτές Μορφές Αρχείων: jpeg, png, gif  \n\nΜέγιστο Μέγεθος Αρχείου: 15 MB  \n\nΗ συλλογή μπορεί να περιέχει μέχρι 4 φωτογραφίες ή βίντεα</string>
     <string name="upload_media">Ανέβασμα των πολυμέσων</string>
     <string name="pixelfed_compose_placeholder">Προσθήκη προαιρετικής περιγραφής</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
+    <string name="long_api_error">Η εφαρμογή έλαβε ένα μακροσκελές μήνυμα λάθους από την API %1$s</string>
     <string name="message_preview">Προεπισκόπηση του μηνύματος</string>
     <string name="report_mention">Προσθήκη μνημονεύσεων σε κάθε μήνυμα</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">Λαμβάνεται η συζήτηση</string>
+    <string name="order_by">Ταξινόμηση κατά</string>
 </resources>
