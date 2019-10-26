@@ -1,1 +1,1 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse
+Fedilab banatutako Fedibertsoa atzitzeko funtzio anitzeko Android bezeroa da
