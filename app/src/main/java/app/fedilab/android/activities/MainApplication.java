@@ -73,7 +73,7 @@ public class MainApplication extends MultiDexApplication {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
-        if( Helper.getNotificationIcon(getApplicationContext()) == Helper.NOTIF_NONE) {
+        if( Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
              NotificationsSyncJob.schedule(false);
         }
 

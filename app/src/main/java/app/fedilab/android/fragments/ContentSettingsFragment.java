@@ -1247,7 +1247,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 if (isChecked) {
                     notification_settings.setVisibility(View.VISIBLE);
                 }
-                Helper.startSreaming(context);
+                Helper.startStreaming(context);
             }
         });
 
@@ -1310,7 +1310,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.apply();
                             break;
                     }
-                    Helper.startSreaming(context);
+                    Helper.startStreaming(context);
                     switch (Helper.liveNotifType(context)){
                         case Helper.NOTIF_LIVE:
                             set_live_type_indication.setText(R.string.live_notif_indication);
@@ -1701,7 +1701,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
                 }
-                Helper.startSreaming(context);
+                Helper.startStreaming(context);
 
             }
         });

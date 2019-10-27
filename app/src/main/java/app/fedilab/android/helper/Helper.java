@@ -4960,7 +4960,7 @@ public class Helper {
 
     public static HashMap<String, Integer> sleeps = new HashMap<>();
 
-    public static void startSreaming(Context context) {
+    public static void startStreaming(Context context) {
         int liveNotifications = Helper.liveNotifType(context);
         switch (liveNotifications){
             case Helper.NOTIF_LIVE:

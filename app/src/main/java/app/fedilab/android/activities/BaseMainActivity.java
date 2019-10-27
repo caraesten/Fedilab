@@ -754,7 +754,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-            Helper.startSreaming(BaseMainActivity.this);
+            Helper.startStreaming(BaseMainActivity.this);
         }
 
         if (hidde_menu != null)

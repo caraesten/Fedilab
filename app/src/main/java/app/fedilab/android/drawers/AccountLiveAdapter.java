@@ -78,7 +78,7 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
                 } else {
                     LiveNotificationDelayedService.totalAccount--;
                 }
-                Helper.startSreaming(context);
+                Helper.startStreaming(context);
             }
         });
     }

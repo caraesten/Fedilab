@@ -129,7 +129,7 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
         if( account != null) {
             String key = account.getUsername() + "@" + account.getInstance();
             Helper.sleeps.put(key, 30000);
-            Helper.startSreaming(contextReference.get());
+            Helper.startStreaming(contextReference.get());
         }
     }
 
