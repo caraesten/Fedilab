@@ -352,7 +352,7 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             ExifInterface exif = null;
             int rotation = 0;
