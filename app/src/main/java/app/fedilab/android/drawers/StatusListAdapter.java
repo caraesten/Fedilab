@@ -2540,103 +2540,96 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 dialog.show();
             });
 
-
             if ((type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition) || display_card || display_video_preview) {
 
-                if (type == RetrieveFeedsAsyncTask.Type.CONTEXT & viewHolder.getAdapterPosition() == conversationPosition)
-                    holder.status_cardview_content.setVisibility(View.VISIBLE);
-                else
-                    holder.status_cardview_content.setVisibility(View.GONE);
+                holder.status_cardview_content.setVisibility(View.VISIBLE);
 
-                if (viewHolder.getAdapterPosition() == conversationPosition || display_card || display_video_preview) {
-                    Card card = status.getReblog() != null ? status.getReblog().getCard() : status.getCard();
-                    if (card != null) {
-                        holder.status_cardview_content.setText(card.getDescription());
-                        holder.status_cardview_title.setText(card.getTitle());
-                        holder.status_cardview_url.setText(card.getUrl());
-                        if (card.getImage() != null && card.getImage().length() > 10) {
-                            holder.status_cardview_image.setVisibility(View.VISIBLE);
-                            if (!((Activity) context).isFinishing())
-                                Glide.with(holder.status_cardview_image.getContext())
-                                        .load(card.getImage())
-                                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners((int) Helper.convertDpToPixel(3, context))))
-                                        .into(holder.status_cardview_image);
-                        } else
-                            holder.status_cardview_image.setVisibility(View.GONE);
-                        if (!card.getType().toLowerCase().equals("video") && (display_card || viewHolder.getAdapterPosition() == conversationPosition)) {
-                            holder.status_cardview.setVisibility(View.VISIBLE);
-                            holder.status_cardview_video.setVisibility(View.GONE);
-                            holder.status_cardview.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    String url = card.getUrl();
-                                    boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
-                                    if (nitter) {
-                                        Matcher matcher = Helper.nitterPattern.matcher(url);
-                                        while (matcher.find()) {
-                                            final String nitter_directory = matcher.group(2);
-                                            String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
-                                            url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
-                                        }
-                                    }
-                                    Helper.openBrowser(context, url);
-                                }
-                            });
-                        } else if (card.getType().toLowerCase().equals("video") && (display_video_preview || viewHolder.getAdapterPosition() == conversationPosition)) {
+                Card card = status.getReblog() != null ? status.getReblog().getCard() : status.getCard();
+                if (card != null) {
+                    holder.status_cardview_content.setText(card.getDescription());
+                    holder.status_cardview_title.setText(card.getTitle());
+                    holder.status_cardview_url.setText(card.getUrl());
+                    if (card.getImage() != null && card.getImage().length() > 10) {
+                        holder.status_cardview_image.setVisibility(View.VISIBLE);
+                        if (!((Activity) context).isFinishing())
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(card.getImage())
-                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                                    .into(holder.webview_preview_card);
-                            holder.status_cardview.setVisibility(View.GONE);
-                            holder.status_cardview_video.setVisibility(View.VISIBLE);
-                            holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
-                            String html = card.getHtml();
-                            String src = card.getUrl();
-                            if (html != null) {
-                                Matcher matcher = Pattern.compile("src=\"([^\"]+)\"").matcher(html);
-                                if (matcher.find())
-                                    src = matcher.group(1);
-                            }
-                            final String finalSrc = src;
-                            holder.status_cardview_webview.setWebViewClient(new WebViewClient() {
-                                @Override
-                                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                                    holder.status_cardview_video.setVisibility(View.GONE);
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners((int) Helper.convertDpToPixel(3, context))))
+                                    .into(holder.status_cardview_image);
+                    } else
+                        holder.status_cardview_image.setVisibility(View.GONE);
+                    if (!card.getType().toLowerCase().equals("video") && (display_card || (type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition))) {
+                        holder.status_cardview.setVisibility(View.VISIBLE);
+                        holder.status_cardview_video.setVisibility(View.GONE);
+                        holder.status_cardview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String url = card.getUrl();
+                                boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+                                if (nitter) {
+                                    Matcher matcher = Helper.nitterPattern.matcher(url);
+                                    while (matcher.find()) {
+                                        final String nitter_directory = matcher.group(2);
+                                        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+                                        url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
+                                    }
                                 }
-                            });
-                            holder.webview_preview.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    String url = finalSrc;
-                                    if (url != null) {
-                                        boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
-                                        if (invidious) {
-                                            Matcher matcher = Helper.youtubePattern.matcher(url);
-                                            while (matcher.find()) {
-                                                final String youtubeId = matcher.group(3);
-                                                String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
-                                                if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
-                                                    url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
-                                                }else{
-                                                    url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
-                                                }
+                                Helper.openBrowser(context, url);
+                            }
+                        });
+                    } else if (card.getType().toLowerCase().equals("video") && (display_video_preview || (type == RetrieveFeedsAsyncTask.Type.CONTEXT && viewHolder.getAdapterPosition() == conversationPosition))) {
+                        Glide.with(holder.status_cardview_image.getContext())
+                                .load(card.getImage())
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                                .into(holder.webview_preview_card);
+                        holder.status_cardview.setVisibility(View.GONE);
+                        holder.status_cardview_video.setVisibility(View.VISIBLE);
+                        holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
+                        String html = card.getHtml();
+                        String src = card.getUrl();
+                        if (html != null) {
+                            Matcher matcher = Pattern.compile("src=\"([^\"]+)\"").matcher(html);
+                            if (matcher.find())
+                                src = matcher.group(1);
+                        }
+                        final String finalSrc = src;
+                        holder.status_cardview_webview.setWebViewClient(new WebViewClient() {
+                            @Override
+                            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                holder.status_cardview_video.setVisibility(View.GONE);
+                            }
+                        });
+                        holder.webview_preview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String url = finalSrc;
+                                if (url != null) {
+                                    boolean invidious = sharedpreferences.getBoolean(Helper.SET_INVIDIOUS, false);
+                                    if (invidious) {
+                                        Matcher matcher = Helper.youtubePattern.matcher(url);
+                                        while (matcher.find()) {
+                                            final String youtubeId = matcher.group(3);
+                                            String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
+                                            if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
+                                                url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
+                                            }else{
+                                                url = url.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
                                             }
                                         }
                                     }
-                                    if( status.getReblog() == null) {
-                                        status.setWebviewURL(url);
-                                    }else{
-                                        status.getReblog().setWebviewURL(url);
-                                    }
-                                    notifyStatusChanged(status);
                                 }
-                            });
-                        }
-                    } else {
+                                if( status.getReblog() == null) {
+                                    status.setWebviewURL(url);
+                                }else{
+                                    status.getReblog().setWebviewURL(url);
+                                }
+                                notifyStatusChanged(status);
+                            }
+                        });
+                    }else{
                         holder.status_cardview.setVisibility(View.GONE);
                         holder.status_cardview_video.setVisibility(View.GONE);
                     }
-
                 } else {
                     holder.status_cardview.setVisibility(View.GONE);
                     holder.status_cardview_video.setVisibility(View.GONE);
