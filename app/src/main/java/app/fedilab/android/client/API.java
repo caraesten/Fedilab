@@ -782,10 +782,16 @@ public class API {
             } catch (NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                instanceNodeInfo.setName("GNU");
-                instanceNodeInfo.setVersion("unknown");
-                instanceNodeInfo.setOpenRegistrations(true);
-                e1.printStackTrace();
+                if( e1.getStatusCode() == 404) {
+                    instanceNodeInfo.setName("GNU");
+                    instanceNodeInfo.setVersion("unknown");
+                    instanceNodeInfo.setOpenRegistrations(true);
+                    e1.printStackTrace();
+                }else{
+                    instanceNodeInfo.setName("MASTODON");
+                    instanceNodeInfo.setVersion("3.0");
+                    instanceNodeInfo.setOpenRegistrations(false);
+                }
             }
             e.printStackTrace();
         }
@@ -826,11 +832,7 @@ public class API {
             } catch (JSONException e) {
                 setDefaultError(e);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        } catch (IOException | JSONException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             try {
@@ -842,19 +844,20 @@ public class API {
             } catch (IOException e1) {
                 instanceNodeInfo.setConnectionError(true);
                 e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
+            } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                instanceNodeInfo.setName("GNU");
-                instanceNodeInfo.setVersion("unknown");
-                instanceNodeInfo.setOpenRegistrations(true);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
+                if( e1.getStatusCode() == 404) {
+                    instanceNodeInfo.setName("GNU");
+                    instanceNodeInfo.setVersion("unknown");
+                    instanceNodeInfo.setOpenRegistrations(true);
+                    e1.printStackTrace();
+                }else{
+                    instanceNodeInfo.setName("MASTODON");
+                    instanceNodeInfo.setVersion("3.0");
+                    instanceNodeInfo.setOpenRegistrations(false);
+                }
             }
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return instanceNodeInfo;
