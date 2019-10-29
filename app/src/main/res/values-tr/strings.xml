@@ -418,8 +418,8 @@
     <string name="data_backup_success">%1$s yeni toot alındı</string>
     <string name="data_backup_notification_success">%1$s yeni bildirim alındı</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Tarih azalan</item>
+        <item>Tarih artan</item>
     </string-array>
     <string-array name="filter_select">
         <item>Hayır</item>
@@ -761,10 +761,10 @@
     <string name="import_data">Verileri içe aktar</string>
     <string name="toot_select_import">İçe aktarılacak dosyayı seçin</string>
     <string name="toot_select_file_error">Yedekleme dosyasını seçerken bir hata oluştu!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="data_import_start">Lütfen, işleme devam ederken uygulamayı sonlandırmayın. Bu çok uzun sürmez.</string>
+    <string name="add_public_comment">Herkese açık bir yorum ekle</string>
+    <string name="send_comment">Yorum gönder</string>
+    <string name="toast_toot_saved_error">İnternet bağlantısı yok. Mesajınız taslaklara kaydedildi.</string>
     <string name="action_plain_text">Düz metin</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
@@ -805,31 +805,31 @@
     <string name="poll_not_private">Bir doğrudan mesaja anket eklenemez!</string>
     <string name="notif_poll">Oy verdiğiniz bir anket sona erdi</string>
     <string name="notif_poll_self">Tootladığınız bir anket sona erdi</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_customize">Özelleştir</string>
+    <string name="settings_category_notif_categories">Kategoriler</string>
+    <string name="settings_category_notif_news">Haberler</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
+    <string name="settings_category_notif_advanced">Gelişmiş</string>
+    <string name="set_display_new_badge">Okunmamış tootlarda \'yeni\' rozetini göster</string>
+    <string name="set_display_peertube">Peertube zaman çizelgesini göster</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="hide_tab">Sekmeyi gizle</string>
+    <string name="move_timeline">Zaman çizelgesini taşı</string>
+    <string name="hide_timeline">Zaman çizelgesini gizle</string>
+    <string name="reorder_timelines">Zaman çizelgelerini yeniden sırala</string>
+    <string name="reorder_list_deleted">Liste kalıcı olarak silindi</string>
+    <string name="reorder_instance_removed">Takip edilen örnek kaldırıldı</string>
+    <string name="reorder_tag_removed">Sabitlenmiş etiket kaldırıldı</string>
+    <string name="undo">Geri al</string>
+    <string name="visible_tabs_needed">İki görünür sekme tutmanız gerekmektedir!</string>
+    <string name="action_reorder_timeline">Zaman çizelgelerini yeniden sırala</string>
+    <string name="warning_list_deletion">Bu listeyi silmek için listedeki girişleri kullanın!</string>
+    <string name="warning_main_timeline">Ana zaman çizelgeleri sadece gizlenebilir!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="add_timeline">Zaman çizelgesi ekle</string>
+    <string name="set_sensitive_content">Medyayı her zaman hassas olarak işaretle</string>
+    <string name="gnu_instance">GNU örneği</string>
+    <string name="cached_status">Önbelleğe alınmış durum</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
