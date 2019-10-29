@@ -4,7 +4,7 @@ Fedilabはマイクロブログや写真の共有、ビデオのホスティン�
 Mastodon, Pleroma, Peertube, GNU Social, Friendica
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+このアプリには高度な機能があります(特にPleromaとMastodon向け):
 
 ・マルチアカウント対応
 ・端末からのメッセージの予約
@@ -12,7 +12,7 @@ The app has advanced features (especially for Pleroma and Mastodon):
 ・メッセージをブックマーク
 ・リモートインスタンスのフォローや通信
 ・アカウントを時限ミュート
-- Cross-account actions with a long press
+・長押しでマルチアカウントアクション
 ・翻訳機能
 ・アートタイムライン
 ・ビデオタイムライン
