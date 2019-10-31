@@ -419,8 +419,8 @@
     <string name="data_backup_success">%1$s novos toots foron importados</string>
     <string name="data_backup_notification_success">Importáronse %1$s novas notificacións</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Data descendente</item>
+        <item>Data ascendente</item>
     </string-array>
     <string-array name="filter_select">
         <item>Non</item>
@@ -1132,6 +1132,6 @@
     <string name="long_api_error">A app recibeu un mensaxe de fallo moi longa desde API %1$s</string>
     <string name="message_preview">Vista previa</string>
     <string name="report_mention">Engadir mencións en cada mensaxe</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">Obtendo conversa</string>
+    <string name="order_by">Orde por</string>
 </resources>

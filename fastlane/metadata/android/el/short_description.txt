@@ -1,1 +1,1 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse
+Το Φέντιλαμπ είναι ένας πελάτης πολλαπλών λειτουργιών, του Ανδρόιντ, ο οποίος προσφέρει πρόσβαση στο διανεμημένο δικτυακό σύμπαν Φεντιβέρσι
