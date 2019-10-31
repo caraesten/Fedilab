@@ -1003,7 +1003,7 @@ public class API {
             account = parseAccountResponse(context, new JSONObject(response));
             InstanceNodeInfo nodeinfo = getNodeInfo(instance);
             if( nodeinfo != null && nodeinfo.getName() != null) {
-                account.setSocial(getNodeInfo(instance).getName().toUpperCase());
+                account.setSocial(nodeinfo.getName().toUpperCase());
             }
             if (account != null && account.getSocial() != null && account.getSocial().equals("PLEROMA")) {
                 isPleromaAdmin(account.getAcct());
