@@ -21,75 +21,55 @@
     android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <View
-            android:id="@+id/status_reply_indicator_diag_top"
-            android:layout_width="20dp"
-            android:layout_height="11dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/diag_top"
+            android:id="@+id/status_reply_indicator_top"
             android:visibility="gone"
+            android:layout_width="2dp"
+
+            android:layout_height="0dp"
+            android:background="?colorAccent"
+            app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
             app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
             app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <View
-            android:id="@+id/status_reply_indicator_top"
-            android:layout_width="2dp"
-            android:layout_height="0dp"
-            android:background="?colorAccent"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
-            app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
-            app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
-            app:layout_constraintTop_toBottomOf="@id/status_reply_indicator_diag_top" />
-
-        <View
             android:id="@+id/reply_indicator_dot"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="15sp"
             android:background="?colorAccent"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:visibility="gone"
             android:id="@+id/status_reply_indicator_bottom"
             android:layout_width="2dp"
             android:layout_height="0dp"
+
             android:background="?colorAccent"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/status_reply_indicator_diag_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
             app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
             app:layout_constraintTop_toTopOf="@id/reply_indicator_dot" />
 
-
-        <View
-            android:id="@+id/status_reply_indicator_diag_bottom"
-            android:layout_width="20dp"
-            android:layout_height="11dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/diag_bottom"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             style="?attr/cardStyle"
             app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
             app:layout_constraintBottom_toBottomOf="parent"

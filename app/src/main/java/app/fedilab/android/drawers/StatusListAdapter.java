@@ -704,6 +704,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView quick_reply_emoji;
         Button quick_reply_button;
         ImageView quick_reply_privacy;
+        View status_reply_indicator_top, reply_indicator_dot, status_reply_indicator_bottom, status_reply_indicator_diag_top, status_reply_indicator_diag_bottom;
 
         public View getView() {
             return itemView;
@@ -821,6 +822,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             quick_reply_privacy = itemView.findViewById(R.id.quick_reply_privacy);
 
             warning_message = itemView.findViewById(R.id.warning_message);
+
+            status_reply_indicator_bottom = itemView.findViewById(R.id.status_reply_indicator_bottom);
+            status_reply_indicator_top = itemView.findViewById(R.id.status_reply_indicator_top);
+            status_reply_indicator_diag_top = itemView.findViewById(R.id.status_reply_indicator_diag_top);
+            status_reply_indicator_diag_bottom = itemView.findViewById(R.id.status_reply_indicator_diag_bottom);
+            reply_indicator_dot = itemView.findViewById(R.id.reply_indicator_dot);
         }
 
         void updateAnimatedEmoji() {
@@ -924,7 +931,37 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status.setItemViewType(viewHolder.getItemViewType());
 
 
-
+            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT && holder.status_reply_indicator_top != null) {
+                if (status.isShowTopLine()) {
+                    holder.status_reply_indicator_top.setVisibility(View.VISIBLE);
+                    holder.reply_indicator_dot.setVisibility(View.VISIBLE);
+                    if( holder.status_reply_indicator_diag_top != null){
+                        holder.status_reply_indicator_diag_top.setVisibility(View.VISIBLE);
+                    }
+                }
+                if (status.isShowBottomLine()) {
+                    holder.reply_indicator_dot.setVisibility(View.VISIBLE);
+                    holder.status_reply_indicator_bottom.setVisibility(View.VISIBLE);
+                    if( holder.status_reply_indicator_diag_bottom != null){
+                        holder.status_reply_indicator_diag_bottom.setVisibility(View.VISIBLE);
+                    }
+                }
+                if (!status.isShowTopLine()) {
+                    holder.status_reply_indicator_top.setVisibility(View.GONE);
+                    if( holder.status_reply_indicator_diag_top != null){
+                        holder.status_reply_indicator_diag_top.setVisibility(View.GONE);
+                    }
+                }
+                if ( !status.isShowBottomLine()) {
+                    holder.status_reply_indicator_bottom.setVisibility(View.GONE);
+                    if( holder.status_reply_indicator_diag_bottom != null){
+                        holder.status_reply_indicator_diag_bottom.setVisibility(View.GONE);
+                    }
+                }
+                if (!status.isShowTopLine() && !status.isShowBottomLine() ) {
+                    holder.reply_indicator_dot.setVisibility(View.GONE);
+                }
+            }
 
 
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
@@ -4367,6 +4404,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( statuses.get(i).getQuickReplyPrivacy() != null){
                         status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
                     }
+                    if( statuses.get(i).isShowTopLine()){
+                        status.setShowTopLine(true);
+                    }
+                    if( statuses.get(i).isShowBottomLine()){
+                        status.setShowBottomLine(true);
+                    }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                     /*if( mRecyclerView != null) {
@@ -4406,6 +4449,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                     if( statuses.get(i).getQuickReplyPrivacy() != null){
                         status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
+                    }
+                    if( statuses.get(i).isShowTopLine()){
+                        status.setShowTopLine(true);
+                    }
+                    if( statuses.get(i).isShowBottomLine()){
+                        status.setShowBottomLine(true);
                     }
                     statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);

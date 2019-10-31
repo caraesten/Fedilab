@@ -149,6 +149,8 @@ public class Status implements Parcelable {
     private boolean showSpoiler = false;
     private String quickReplyContent;
     private String quickReplyPrivacy;
+    private boolean showBottomLine = false;
+    private boolean showTopLine = false;
 
     public Status() {
     }
@@ -243,6 +245,8 @@ public class Status implements Parcelable {
         dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
         dest.writeString(this.quickReplyContent);
         dest.writeString(this.quickReplyPrivacy);
+        dest.writeByte(this.showBottomLine ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.showTopLine ? (byte) 1 : (byte) 0);
 
     }
 
@@ -314,6 +318,8 @@ public class Status implements Parcelable {
         this.isFocused = in.readByte() != 0;
         this.quickReplyContent = in.readString();
         this.quickReplyPrivacy = in.readString();
+        this.showBottomLine = in.readByte() != 0;
+        this.showTopLine = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1828,5 +1834,21 @@ public class Status implements Parcelable {
 
     public void setQuickReplyPrivacy(String quickReplyPrivacy) {
         this.quickReplyPrivacy = quickReplyPrivacy;
+    }
+
+    public boolean isShowBottomLine() {
+        return showBottomLine;
+    }
+
+    public void setShowBottomLine(boolean showBottomLine) {
+        this.showBottomLine = showBottomLine;
+    }
+
+    public boolean isShowTopLine() {
+        return showTopLine;
+    }
+
+    public void setShowTopLine(boolean showTopLine) {
+        this.showTopLine = showTopLine;
     }
 }

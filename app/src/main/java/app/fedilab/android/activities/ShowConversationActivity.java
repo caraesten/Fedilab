@@ -37,7 +37,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +45,7 @@ import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Context;
-import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.drawers.ConversationDecoration;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -258,7 +254,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
         lv_status.setAdapter(statusListAdapter);
         String statusIdToFetch = null;
         if (initialStatus != null)
@@ -367,17 +362,19 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         if (apiResponse.getContext() == null || apiResponse.getContext().getAncestors() == null) {
             return;
         }
-        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+        if (BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             statusListAdapter.setConversationPosition(apiResponse.getContext().getAncestors().size());
             if (!expanded) {
                 if (apiResponse.getContext().getAncestors() != null && apiResponse.getContext().getAncestors().size() > 0) {
                     statuses.addAll(0, apiResponse.getContext().getAncestors());
                     statusListAdapter.notifyItemRangeInserted(0, apiResponse.getContext().getAncestors().size());
                 }
+                int targetedPosition = statuses.size()-1;
                 if (apiResponse.getContext().getDescendants() != null && apiResponse.getContext().getDescendants().size() > 0) {
                     statuses.addAll(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants());
                     statusListAdapter.notifyItemRangeChanged(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants().size());
                 }
+                decorate(targetedPosition);
             } else {
                 List<Status> statusesTemp = apiResponse.getContext().getDescendants();
                 int i = 1;
@@ -391,6 +388,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     }
                     i++;
                 }
+                decorate(position);
                 statusListAdapter.notifyItemRangeChanged(1, apiResponse.getContext().getDescendants().size());
                 lv_status.scrollToPosition(position);
             }
@@ -411,6 +409,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 }
                 statusListAdapter = new StatusListAdapter((statuses.size() - 1 - i), null, isOnWifi, statuses);
                 statusListAdapter.setConversationPosition((statuses.size() - 1 - i));
+                decorate(0);
                 final LinearLayoutManager mLayoutManager;
                 mLayoutManager = new LinearLayoutManager(this);
                 lv_status.setLayoutManager(mLayoutManager);
@@ -430,11 +429,30 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                         setTheme(R.style.AppThemeDark_NoActionBar);
                 }
 
-                lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
                 lv_status.setAdapter(statusListAdapter);
             }
         }
 
+    }
+
+
+    private void decorate(int targetedPosition){
+        for(int i =0 ; i < statuses.size() ; i++){
+            if (i == targetedPosition) {
+                if( targetedPosition < statuses.size()-1 )
+                    statuses.get(targetedPosition).setShowBottomLine(true);
+                if( targetedPosition > 0 && statuses.get(targetedPosition).getIn_reply_to_id().compareTo(statuses.get(targetedPosition-1).getId()) == 0){
+                    statuses.get(targetedPosition-1).setShowBottomLine(true);
+                    statuses.get(targetedPosition).setShowTopLine(true);
+                }
+            } else if (0 < i && i <= statuses.size() - 1) {
+                if( statuses.get(i-1).getId().compareTo(statuses.get(i).getIn_reply_to_id()) == 0){
+                    statuses.get(i-1).setShowBottomLine(true);
+                    statuses.get(i).setShowTopLine(true);
+                }
+            }
+        }
+        statusListAdapter.notifyItemRangeChanged(0,statuses.size());
     }
 
 }
