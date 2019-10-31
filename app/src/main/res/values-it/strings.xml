@@ -1133,5 +1133,5 @@
     <string name="report_mention">Aggiungi menzioni in ogni messaggio</string>
     <string name="fetch_conversation">Recupero della conversazione</string>
     <string name="order_by">Ordina per</string>
-    <string name="title_video_peertube">Title for the video</string>
+    <string name="title_video_peertube">Titolo per il video</string>
 </resources>
