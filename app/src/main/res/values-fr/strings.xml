@@ -1130,4 +1130,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="report_mention">Ajouter les mentions dans chaque message</string>
     <string name="fetch_conversation">Récupération de la discussion</string>
     <string name="order_by">Trier par</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
