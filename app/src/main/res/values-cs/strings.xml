@@ -1140,4 +1140,5 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="report_mention">Add mentions in each message</string>
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
