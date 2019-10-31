@@ -336,13 +336,12 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 Uri uri = manager.getUriForDownloadedFile(downloadID);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, R.string.share_with);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with));
                 ContentResolver cR = context.getContentResolver();
                 shareIntent.setType(cR.getType(uri));
                 try {
                     startActivity(shareIntent);
                 }catch (Exception ignored){}
-                manager.remove(downloadID);
             }
         }
     };
