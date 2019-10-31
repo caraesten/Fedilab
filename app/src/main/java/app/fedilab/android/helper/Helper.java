@@ -1235,6 +1235,7 @@ public class Helper {
                 .setSmallIcon(getNotificationIcon(context)).setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
+        Log.v(Helper.TAG,"notifType: " + notifType);
         if (notifType == MENTION) {
             if (message.length() > 500) {
                 message = message.substring(0, 499) + "…";
@@ -1244,6 +1245,7 @@ public class Helper {
         notificationBuilder.setGroup(account.getAcct() + "@" + account.getInstance())
                 .setContentIntent(pIntent)
                 .setContentText(message);
+        Log.v(Helper.TAG,"message: " + message);
         int ledColour = Color.BLUE;
         switch (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR)) {
             case 0: // BLUE
@@ -1303,15 +1305,17 @@ public class Helper {
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
 
-        Notification summaryNotification =
-                new NotificationCompat.Builder(context, channelId)
-                        .setContentTitle(account.getAcct()+"@"+account.getInstance())
-                        .setContentText(channelTitle)
-                        .setSmallIcon(getNotificationIcon(context))
-                        .setGroup(account.getAcct() + "@" + account.getInstance())
-                        .setGroupSummary(true)
-                        .build();
-        notificationManager.notify(0, summaryNotification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification summaryNotification =
+                    new NotificationCompat.Builder(context, channelId)
+                            .setContentTitle(account.getAcct() + "@" + account.getInstance())
+                            .setContentText(channelTitle)
+                            .setSmallIcon(getNotificationIcon(context))
+                            .setGroup(account.getAcct() + "@" + account.getInstance())
+                            .setGroupSummary(true)
+                            .build();
+            notificationManager.notify(0, summaryNotification);
+        }
     }
 
 
