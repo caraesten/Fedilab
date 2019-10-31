@@ -1127,5 +1127,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="report_mention">Añadir menciones en cada mensaje</string>
     <string name="fetch_conversation">Obteniendo conversación</string>
     <string name="order_by">Ordenar por</string>
-    <string name="title_video_peertube">Title for the video</string>
+    <string name="title_video_peertube">Título del vídeo</string>
 </resources>
