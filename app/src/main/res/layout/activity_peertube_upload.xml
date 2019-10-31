@@ -94,6 +94,17 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/video_title"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:hint="@string/title_video_peertube" />
+
         <!-- Videos upload submit -->
         <Button
             android:layout_marginTop="40dp"
