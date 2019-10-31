@@ -44,7 +44,7 @@
             android:id="@+id/reply_indicator_dot"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_marginStart="15sp"
+            android:layout_marginStart="16sp"
             android:background="?colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
