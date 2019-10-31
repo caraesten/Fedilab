@@ -1125,5 +1125,5 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="report_mention">Afegeix mencions en cada missatge</string>
     <string name="fetch_conversation">S\'està extraient la conversa</string>
     <string name="order_by">Ordenar per</string>
-    <string name="title_video_peertube">Title for the video</string>
+    <string name="title_video_peertube">Títol del vídeo</string>
 </resources>
