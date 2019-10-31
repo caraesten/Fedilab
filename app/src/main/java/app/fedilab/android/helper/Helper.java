@@ -1235,7 +1235,6 @@ public class Helper {
                 .setSmallIcon(getNotificationIcon(context)).setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
-        Log.v(Helper.TAG,"notifType: " + notifType);
         if (notifType == MENTION) {
             if (message.length() > 500) {
                 message = message.substring(0, 499) + "…";
@@ -1245,7 +1244,6 @@ public class Helper {
         notificationBuilder.setGroup(account.getAcct() + "@" + account.getInstance())
                 .setContentIntent(pIntent)
                 .setContentText(message);
-        Log.v(Helper.TAG,"message: " + message);
         int ledColour = Color.BLUE;
         switch (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR)) {
             case 0: // BLUE
