@@ -20,13 +20,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_container"
-    android:paddingTop="10dp"
-    android:divider="?android:dividerHorizontal"
-    android:showDividers="end"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +43,7 @@
             android:id="@+id/reply_indicator_dot"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_marginStart="11sp"
+            android:layout_marginStart="16sp"
             android:background="?colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -175,14 +168,14 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- Todo -->
-                        <LinearLayout
+                        <!-- Views used when multiple profile images are displayed (e.g.-In DM tab)-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/conversation_pp"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
                             android:orientation="horizontal"
                             android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@id/guide_profile_images_bottom"
-                            app:layout_constraintEnd_toStartOf="@id/guide_profile_images_end"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
@@ -190,56 +183,52 @@
                                 android:id="@+id/conversation_pp_1"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
                                 android:adjustViewBounds="true"
                                 android:contentDescription="@string/profile_picture"
-                                android:scaleType="centerCrop" />
+                                android:scaleType="centerCrop"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/conversation_pp_2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                            <LinearLayout
-                                android:id="@+id/conversation_pp_2_container"
+                            <ImageView
+                                android:id="@+id/conversation_pp_2"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:layout_height="0dp"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/profile_picture"
+                                android:scaleType="centerCrop"
+                                app:layout_constraintBottom_toTopOf="@id/conversation_pp_3"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/conversation_pp_1"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                                <ImageView
-                                    android:id="@+id/conversation_pp_2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/profile_picture"
-                                    android:scaleType="fitCenter" />
+                            <ImageView
+                                android:id="@+id/conversation_pp_3"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/profile_picture"
+                                android:scaleType="centerCrop"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/conversation_pp_4"
+                                app:layout_constraintStart_toEndOf="@id/conversation_pp_1"
+                                app:layout_constraintTop_toBottomOf="@id/conversation_pp_2" />
 
-                                <LinearLayout
-                                    android:id="@+id/conversation_pp_3_container"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:baselineAligned="false"
-                                    android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/conversation_pp_4"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/profile_picture"
+                                android:scaleType="centerCrop"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/conversation_pp_3"
+                                app:layout_constraintTop_toBottomOf="@id/conversation_pp_2" />
 
-                                    <ImageView
-                                        android:id="@+id/conversation_pp_3"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:adjustViewBounds="true"
-                                        android:contentDescription="@string/profile_picture"
-                                        android:scaleType="fitCenter" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                    <ImageView
-                                        android:id="@+id/conversation_pp_4"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:adjustViewBounds="true"
-                                        android:contentDescription="@string/profile_picture"
-                                        android:scaleType="fitCenter" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/status_account_displayname_owner"
