@@ -1120,4 +1120,5 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="report_mention">Erwähnungen in jeder Nachricht hinzufügen</string>
     <string name="fetch_conversation">Unterhaltung wird abgerufen</string>
     <string name="order_by">Sortieren nach</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
