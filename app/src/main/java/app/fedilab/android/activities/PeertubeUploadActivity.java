@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -83,6 +84,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     private Button set_upload_file, set_upload_submit;
     private MaterialSpinner set_upload_privacy, set_upload_channel;
     private TextView set_upload_file_name;
+    private EditText video_title;
     private HashMap<String, String> channels;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
     private Uri uri;
@@ -140,6 +142,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_submit = findViewById(R.id.set_upload_submit);
+        video_title = findViewById(R.id.video_title);
 
         Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_privacy);
         Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_channel);
@@ -233,8 +236,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
+        if( peertubeInformation == null){
+            return;
+        }
         LinkedHashMap<String, String> translations = null;
-        if (peertubeInformation.getTranslations() != null)
+        if ( peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
         LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -251,7 +257,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -285,14 +291,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (ContextCompat.checkSelfPermission(PeertubeUploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PeertubeUploadActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        return;
-                    }
+                if (ContextCompat.checkSelfPermission(PeertubeUploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PeertubeUploadActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return;
                 }
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -357,6 +361,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
                         uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
+                        if( video_title != null && video_title.getText() != null && video_title.getText().toString().trim().length() > 0 ){
+                            filename = video_title.getText().toString().trim();
+                        }
                         String uploadId = UUID.randomUUID().toString();
                         uploadReceiver.setUploadID(uploadId);
                         new MultipartUploadRequest(PeertubeUploadActivity.this, uploadId, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
