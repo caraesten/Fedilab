@@ -96,9 +96,7 @@ public class LiveNotificationDelayedService extends Service {
 
         if (intent == null || intent.getBooleanExtra("stop", false)) {
             totalAccount = 0;
-            if (Build.VERSION.SDK_INT >= 26) {
-                stopForeground(true);
-            }
+            stopForeground(true);
             stopSelf();
         }else{
             if (Build.VERSION.SDK_INT >= 26) {

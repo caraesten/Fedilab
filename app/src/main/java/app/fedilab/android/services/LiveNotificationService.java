@@ -139,9 +139,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
         if (intent == null || intent.getBooleanExtra("stop", false)) {
             totalAccount = 0;
-            if (Build.VERSION.SDK_INT >= 26) {
-                stopForeground(true);
-            }
+            stopForeground(true);
+            stopSelf();
         }else{
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
