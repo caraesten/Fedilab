@@ -1133,4 +1133,5 @@
     <string name="report_mention">Tilføj omtaler i hver besked</string>
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
