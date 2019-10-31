@@ -90,6 +90,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="4dp"
+            style="?attr/cardStyle"
             app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -102,7 +103,7 @@
                     android:id="@+id/status_boosted_by_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#3E7A81"
+                    android:background="?boostcolor"
                     android:padding="5dp"
                     android:visibility="gone"
                     app:layout_constraintTop_toTopOf="parent">
