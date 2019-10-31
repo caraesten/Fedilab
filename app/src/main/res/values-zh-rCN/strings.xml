@@ -1128,4 +1128,5 @@
     <string name="report_mention">在每条消息中添加提及</string>
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
