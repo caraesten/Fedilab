@@ -1133,4 +1133,5 @@
     <string name="report_mention">Προσθήκη μνημονεύσεων σε κάθε μήνυμα</string>
     <string name="fetch_conversation">Λαμβάνεται η συζήτηση</string>
     <string name="order_by">Ταξινόμηση κατά</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
