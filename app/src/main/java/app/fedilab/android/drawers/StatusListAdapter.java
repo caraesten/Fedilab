@@ -2067,11 +2067,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.getReblog() != null) {
                 Helper.loadGiF(context, accountForUrl.getAvatar(), holder.status_account_profile);
                 Helper.loadGiF(context, status.getAccount().getAvatar(), holder.status_account_profile_boost_by);
-                holder.status_boosted_by_info.setVisibility(View.VISIBLE);
+                if( holder.status_boosted_by_info != null) {
+                    holder.status_boosted_by_info.setVisibility(View.VISIBLE);
+                }
             } else {
                 Helper.loadGiF(context, accountForUrl.getAvatar(), holder.status_account_profile);
-                if (holder.status_boosted_by_info != null)
+                if (holder.status_boosted_by_info != null) {
                     holder.status_boosted_by_info.setVisibility(View.GONE);
+                }
             }
             if (type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null) {
                 holder.status_account_profile.setVisibility(View.GONE);

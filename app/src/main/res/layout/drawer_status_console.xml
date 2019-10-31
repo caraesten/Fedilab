@@ -14,12 +14,18 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_container"
     android:paddingTop="10dp"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
@@ -27,6 +33,8 @@
     android:layout_marginRight="5dp"
     android:divider="?android:dividerHorizontal"
     android:showDividers="end"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -65,67 +73,65 @@
                     android:id="@+id/status_account_profile"
                     android:contentDescription="@string/profile_picture" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/conversation_pp"
-                    android:visibility="gone"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:orientation="horizontal">
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/conversation_pp_1"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
+                        android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/profile_picture" />
+                        android:contentDescription="@string/profile_picture"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/conversation_pp_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/conversation_pp_2"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:id="@+id/conversation_pp_2_container"
-                        android:orientation="vertical">
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/profile_picture"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toTopOf="@id/conversation_pp_3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/conversation_pp_1"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/conversation_pp_2"
-                            android:scaleType="fitCenter"
-                            android:layout_height="0dp"
-                            android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:adjustViewBounds="true"
-                            android:contentDescription="@string/profile_picture" />
+                    <ImageView
+                        android:id="@+id/conversation_pp_3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/profile_picture"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/conversation_pp_4"
+                        app:layout_constraintStart_toEndOf="@id/conversation_pp_1"
+                        app:layout_constraintTop_toBottomOf="@id/conversation_pp_2" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:id="@+id/conversation_pp_3_container"
-                            android:baselineAligned="false">
+                    <ImageView
+                        android:id="@+id/conversation_pp_4"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/profile_picture"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/conversation_pp_3"
+                        app:layout_constraintTop_toBottomOf="@id/conversation_pp_2" />
 
-                            <ImageView
-                                android:id="@+id/conversation_pp_3"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:scaleType="fitCenter"
-                                android:adjustViewBounds="true"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/profile_picture" />
-
-                            <ImageView
-                                android:id="@+id/conversation_pp_4"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:scaleType="fitCenter"
-                                android:adjustViewBounds="true"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/profile_picture" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -893,3 +899,4 @@
         android:textStyle="bold"
         android:visibility="gone" />
 </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
