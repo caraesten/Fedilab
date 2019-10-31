@@ -205,27 +205,6 @@ public class LiveNotificationDelayedService extends Service {
         return null;
     }
 
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        if( totalAccount > 0) {
-            restart();
-        }
-    }
-
-    private void restart() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            Intent restartServiceIntent = new Intent(LiveNotificationDelayedService.this, LiveNotificationDelayedService.class);
-            restartServiceIntent.setPackage(getPackageName());
-            PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-            AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-            assert alarmService != null;
-            alarmService.set(
-                    AlarmManager.ELAPSED_REALTIME,
-                    SystemClock.elapsedRealtime() + 1000,
-                    restartServicePendingIntent);
-        }
-    }
 
     private void taks(Account account) {
         String key = account.getUsername() + "@" + account.getInstance();
@@ -291,14 +270,14 @@ public class LiveNotificationDelayedService extends Service {
                         "Live notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-                android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setShowWhen(false)
-                        .setContentTitle(getString(R.string.top_notification))
-                        .setSmallIcon(R.drawable.fedilab_notification_icon)
-                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-                startForeground(1, notificationChannel);
             }
+            android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setShowWhen(false)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setSmallIcon(R.drawable.fedilab_notification_icon)
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+            startForeground(1, notificationChannel);
             event = Helper.EventStreaming.NOTIFICATION;
             boolean canNotify = Helper.canNotify(getApplicationContext());
             boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
