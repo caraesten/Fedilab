@@ -1119,4 +1119,5 @@
     <string name="report_mention">それぞれのメッセージにメンションを追加</string>
     <string name="fetch_conversation">会話を取得</string>
     <string name="order_by">並び順</string>
+    <string name="title_video_peertube">Title for the video</string>
 </resources>
