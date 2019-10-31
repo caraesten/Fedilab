@@ -3456,29 +3456,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
-                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                            Bundle b = new Bundle();
-                            b.putParcelable("account", status.getAccount());
-                            intent.putExtras(b);
-                            context.startActivity(intent);
+                        if (status.getReblog() != null) {
+                            if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                Bundle b = new Bundle();
+                                b.putParcelable("account", status.getReblog().getAccount());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                        } else {
+                            if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                Bundle b = new Bundle();
+                                b.putParcelable("account", status.getAccount());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
                         }
                     }
                 });
 
-                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
-                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                            Bundle b = new Bundle();
-                            b.putParcelable("account", status.getReblog().getAccount());
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                    }
-                });
             } else {
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
