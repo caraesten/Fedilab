@@ -1131,5 +1131,5 @@
     <string name="report_mention">Gehitu aipamenak mezu bakoitzean</string>
     <string name="fetch_conversation">Elkarrizketa jasotzen</string>
     <string name="order_by">Ordena</string>
-    <string name="title_video_peertube">Title for the video</string>
+    <string name="title_video_peertube">Bideoaren izenburua</string>
 </resources>
