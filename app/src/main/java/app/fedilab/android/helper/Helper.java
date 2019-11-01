@@ -1303,17 +1303,17 @@ public class Helper {
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notification summaryNotification =
-                    new NotificationCompat.Builder(context, channelId)
-                            .setContentTitle(account.getAcct() + "@" + account.getInstance())
-                            .setContentText(channelTitle)
-                            .setSmallIcon(getNotificationIcon(context))
-                            .setGroup(account.getAcct() + "@" + account.getInstance())
-                            .setGroupSummary(true)
-                            .build();
-            notificationManager.notify(0, summaryNotification);
-        }
+        Notification summaryNotification =
+                new NotificationCompat.Builder(context, channelId)
+                        .setContentTitle(title)
+                        .setContentText(channelTitle)
+                        .setContentIntent(pIntent)
+                        .setLargeIcon(icon)
+                        .setSmallIcon(getNotificationIcon(context))
+                        .setGroup(account.getAcct() + "@" + account.getInstance())
+                        .setGroupSummary(true)
+                        .build();
+        notificationManager.notify(0, summaryNotification);
     }
 
 
