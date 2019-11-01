@@ -200,6 +200,7 @@ import javax.net.ssl.SSLContext;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.activities.MutedInstanceActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -215,6 +216,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Tls12SocketFactory;
+import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.MainMenuDAO;
@@ -319,7 +321,7 @@ public class Helper {
     public static final String LAST_DATE_LIST_NAME_REFRESH = "last_date_list_name_refresh";
     public static final String LAST_LIST = "last_list";
     public static final String LAST_LIST_NAME = "last_list_name";
-
+    public static final String LAST_DATE_LIST_FETCH = "last_date_list_fetch";
 
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -508,6 +510,7 @@ public class Helper {
     public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
     public static final String INTENT_SEND_MODIFIED_IMAGE = "intent_send_modified_image";
     public static final String INTENT_ADD_UPLOADED_MEDIA = "intent_add_uploaded_media";
+    public static final String REFRESH_LIST_TIMELINE = "refresh_list_timeline";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_ACTION = "receive_action";
@@ -4976,5 +4979,16 @@ public class Helper {
         }
     }
 
+
+    public static boolean canFetchList(Context context, Account account){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String lastDateListRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_FETCH+account.getId()+account.getInstance(), null);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.HOUR, -24);
+        Date dateAllowed = cal.getTime();
+        Date lastRefresh = Helper.stringToDate(context, lastDateListRefresh);
+        return (lastRefresh == null || lastRefresh.before(dateAllowed));
+    }
 
 }

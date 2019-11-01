@@ -59,6 +59,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -197,6 +198,7 @@ public abstract class BaseMainActivity extends BaseActivity
         MASTALAB
     }
     public static iconLauncher mLauncher = iconLauncher.BUBBLES;
+    private Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +210,7 @@ public abstract class BaseMainActivity extends BaseActivity
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+        account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         Intent intent = getIntent();
         PackageManager pm = getPackageManager();
         try {
@@ -438,7 +440,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         main_app_container = findViewById(R.id.main_app_container);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, BaseMainActivity.this).execute();
+            new SyncTimelinesAsyncTask(BaseMainActivity.this, 0, Helper.canFetchList(getApplicationContext(), account), BaseMainActivity.this).execute();
 
         } else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             TabLayout.Tab pTabsub = tabLayout.newTab();
@@ -809,7 +811,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 int position = 0;
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, true,BaseMainActivity.this).execute();
             }
         };
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(hidde_menu, new IntentFilter(Helper.RECEIVE_HIDE_ITEM));
@@ -1543,12 +1545,13 @@ public abstract class BaseMainActivity extends BaseActivity
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REDRAW_MENU) {
                 Helper.hideMenuItem(BaseMainActivity.this, navigationView.getMenu());
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG) {
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, false,BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REFRESH_TIMELINE) {
                 int position = 0;
+                boolean refreshList = extras.getBoolean(Helper.REFRESH_LIST_TIMELINE, false);
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position,  refreshList,BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_REMOTE) {
                 String url = extras.getString(Helper.SEARCH_URL);
                 intent.replaceExtras(new Bundle());

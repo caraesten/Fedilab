@@ -98,6 +98,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private String oldSearch;
     private int theme;
     private String instance;
+    private boolean refresh_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
             style = R.style.Dialog;
         }
 
-
+        refresh_list = false;
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -404,6 +405,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                         timeline = manageTimelines;
                         new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST, null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         new TimelinesDAO(getApplicationContext(), db).remove(timeline);
+                        refresh_list = true;
                         break;
                 }
                 updated = true;
@@ -428,6 +430,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         if (updated) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.putExtra(Helper.INTENT_ACTION, Helper.REFRESH_TIMELINE);
+            intent.putExtra(Helper.REFRESH_LIST_TIMELINE, refresh_list);
             startActivity(intent);
             updated = false;
         }

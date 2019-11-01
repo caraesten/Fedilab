@@ -3969,13 +3969,27 @@ public class API {
             lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+    /**
+     * Get lists for the user
+     *
+     * @return APIResponse
+     */
+    public APIResponse getListsRemote(String prefKeyOauthTokenT) {
+        apiResponse = new APIResponse();
+        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 5, null, prefKeyOauthTokenT);
+            lists = parseLists(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setLists(lists);
