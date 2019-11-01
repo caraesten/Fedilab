@@ -1127,5 +1127,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="report_mention">在每個訊息中新增提及</string>
     <string name="fetch_conversation">擷取對話</string>
     <string name="order_by">排序由</string>
-    <string name="title_video_peertube">Title for the video</string>
+    <string name="title_video_peertube">影片標題</string>
 </resources>
