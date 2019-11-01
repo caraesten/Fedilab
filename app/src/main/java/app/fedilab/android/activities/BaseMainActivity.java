@@ -198,7 +198,7 @@ public abstract class BaseMainActivity extends BaseActivity
         MASTALAB
     }
     public static iconLauncher mLauncher = iconLauncher.BUBBLES;
-    private Account account;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +210,7 @@ public abstract class BaseMainActivity extends BaseActivity
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         Intent intent = getIntent();
         PackageManager pm = getPackageManager();
         try {
