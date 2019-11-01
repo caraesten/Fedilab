@@ -13,6 +13,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class PixelfedAPI {
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
-
+    private int actionCode;
 
     public PixelfedAPI(Context context) {
         this.context = context;
@@ -80,7 +81,7 @@ public class PixelfedAPI {
 
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/stories/v1/me"), 10, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/me"), 10, null, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             pixelFedStory = parseStory(new JSONObject(response));
@@ -95,6 +96,27 @@ public class PixelfedAPI {
         return apiResponse;
     }
 
+    /**
+     * Delete a Pixelfed Story *synchronously*
+     *
+     * @return APIResponse
+     */
+    public int deleteStory(String id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", id);
+        HttpsConnection httpsConnection;
+        try {
+            httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.delete(getAbsoluteUrl("/delete"), 10, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
 
 
     /**
@@ -125,7 +147,7 @@ public class PixelfedAPI {
      * @param jsonArray JSONArray
      * @return List<PixelFedStoryItem>
      */
-    public static List<PixelFedStoryItem> parseStoryItems(JSONArray jsonArray) {
+    private static List<PixelFedStoryItem> parseStoryItems(JSONArray jsonArray) {
 
         List<PixelFedStoryItem> pixelFedStoryItems = new ArrayList<>();
         try {
@@ -214,6 +236,6 @@ public class PixelfedAPI {
 
 
     private String getAbsoluteUrl(String action) {
-        return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api/stories/v1" + action;
     }
 }
