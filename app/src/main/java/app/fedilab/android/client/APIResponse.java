@@ -31,6 +31,7 @@ import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
+import app.fedilab.android.client.Entities.PixelFedStory;
 import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Report;
@@ -70,6 +71,7 @@ public class APIResponse {
     private List<AccountAdmin> accountAdmins = null;
     private List<Report> reports = null;
     private Context context = null;
+    private PixelFedStory pixelFedStory = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -277,5 +279,13 @@ public class APIResponse {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public PixelFedStory getPixelFedStory() {
+        return pixelFedStory;
+    }
+
+    public void setPixelFedStory(PixelFedStory pixelFedStory) {
+        this.pixelFedStory = pixelFedStory;
     }
 }

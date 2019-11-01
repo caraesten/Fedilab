@@ -20,6 +20,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Thomas on 01/11/2019.
@@ -33,10 +34,7 @@ public class PixelFedStory implements Parcelable {
     private String link;
     private Date lastUpdated;
     private boolean seen;
-    private ArrayList<PixelFedStory> pixelFedStoryList;
-
-
-
+    private List<PixelFedStoryItem> pixelFedStoryItems;
 
     public String getId() {
         return id;
@@ -86,13 +84,14 @@ public class PixelFedStory implements Parcelable {
         this.seen = seen;
     }
 
-    public ArrayList<PixelFedStory> getPixelFedStoryList() {
-        return pixelFedStoryList;
+    public List<PixelFedStoryItem> getPixelFedStoryItems() {
+        return pixelFedStoryItems;
     }
 
-    public void setPixelFedStoryList(ArrayList<PixelFedStory> pixelFedStoryList) {
-        this.pixelFedStoryList = pixelFedStoryList;
+    public void setPixelFedStoryItems(List<PixelFedStoryItem> pixelFedStoryItems) {
+        this.pixelFedStoryItems = pixelFedStoryItems;
     }
+
 
     @Override
     public int describeContents() {
@@ -107,7 +106,7 @@ public class PixelFedStory implements Parcelable {
         dest.writeString(this.link);
         dest.writeLong(this.lastUpdated != null ? this.lastUpdated.getTime() : -1);
         dest.writeByte(this.seen ? (byte) 1 : (byte) 0);
-        dest.writeList(this.pixelFedStoryList);
+        dest.writeTypedList(this.pixelFedStoryItems);
     }
 
     public PixelFedStory() {
@@ -121,8 +120,7 @@ public class PixelFedStory implements Parcelable {
         long tmpLastUpdated = in.readLong();
         this.lastUpdated = tmpLastUpdated == -1 ? null : new Date(tmpLastUpdated);
         this.seen = in.readByte() != 0;
-        this.pixelFedStoryList = new ArrayList<PixelFedStory>();
-        in.readList(this.pixelFedStoryList, PixelFedStory.class.getClassLoader());
+        this.pixelFedStoryItems = in.createTypedArrayList(PixelFedStoryItem.CREATOR);
     }
 
     public static final Parcelable.Creator<PixelFedStory> CREATOR = new Parcelable.Creator<PixelFedStory>() {
