@@ -110,6 +110,7 @@ import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
+import app.fedilab.android.fragments.DisplayStoriesFragment;
 import app.fedilab.android.fragments.SettingsPeertubeFragment;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.fragments.TabLayoutScheduleFragment;
@@ -584,12 +585,14 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab pfTabHome = tabLayout.newTab();
             TabLayout.Tab pfTabLocal = tabLayout.newTab();
             TabLayout.Tab pfTabNotification = tabLayout.newTab();
+            TabLayout.Tab pfTabStories = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
             pfTabNotification.setCustomView(R.layout.tab_badge);
+            pfTabStories.setCustomView(R.layout.tab_badge);
             //pfTabDiscover.setCustomView(R.layout.tab_badge);
 
 
@@ -613,6 +616,11 @@ public abstract class BaseMainActivity extends BaseActivity
             ImageView iconNotif = pfTabNotification.getCustomView().findViewById(R.id.tab_icon);
             iconNotif.setImageResource(R.drawable.ic_notifications);
 
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconStories = pfTabStories.getCustomView().findViewById(R.id.tab_icon);
+            iconStories.setImageResource(R.drawable.ic_story);
+
             /*@SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
             iconDiscover.setImageResource(R.drawable.ic_people);*/
@@ -622,23 +630,27 @@ public abstract class BaseMainActivity extends BaseActivity
             // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
             iconNotif.setContentDescription(getString(R.string.notifications));
+            iconStories.setContentDescription(getString(R.string.stories));
 
             if (theme == Helper.THEME_LIGHT) {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconStories.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             } else {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconStories.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
 
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
             tabLayout.addTab(pfTabNotification);
+            tabLayout.addTab(pfTabStories);
             //    tabLayout.addTab(pfTabDiscover);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -2523,6 +2535,8 @@ public abstract class BaseMainActivity extends BaseActivity
                     bundle.putSerializable("type", DisplayNotificationsFragment.Type.ALL);
                     fragment.setArguments(bundle);
                     return fragment;
+                }else if (position == 3) {
+                    return new DisplayStoriesFragment();
                 }
                 /*else if( position == 3) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
