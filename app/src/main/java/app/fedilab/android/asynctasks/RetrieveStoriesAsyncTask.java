@@ -34,19 +34,29 @@ public class RetrieveStoriesAsyncTask extends AsyncTask<Void, Void, Void> {
     private String max_id;
     private OnRetrieveStoriesInterface listener;
     private WeakReference<Context> contextReference;
+    private type typeOfStory;
 
+    public enum type{
+        ME,
+        FRIENDS
+    }
 
-    public RetrieveStoriesAsyncTask(Context context, String max_id, OnRetrieveStoriesInterface onRetrieveStoriesInterface) {
+    public RetrieveStoriesAsyncTask(Context context, String max_id, type typeOfStory, OnRetrieveStoriesInterface onRetrieveStoriesInterface) {
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveStoriesInterface;
+        this.typeOfStory = typeOfStory;
     }
 
 
     @Override
     protected Void doInBackground(Void... params) {
         PixelfedAPI pixelfedAPI = new PixelfedAPI(this.contextReference.get());
-        apiResponse = pixelfedAPI.getFriendStories(max_id);
+        if( typeOfStory == type.FRIENDS) {
+            apiResponse = pixelfedAPI.getFriendStories(max_id);
+        }else if (typeOfStory == type.ME){
+            apiResponse = pixelfedAPI.getMyStories();
+        }
         return null;
     }
 

@@ -68,6 +68,7 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
     private boolean swiped;
     private RecyclerView lv_stories;
     LinearLayoutManager mLayoutManager;
+    private RetrieveStoriesAsyncTask.type type;
 
     public DisplayStoriesFragment() {
     }
@@ -79,6 +80,12 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_stories, container, false);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            type = (RetrieveStoriesAsyncTask.type) bundle.get("type");
+        }
+
         max_id = null;
         context = getContext();
         firstLoad = true;
@@ -106,7 +113,7 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveStoriesAsyncTask(context, max_id, DisplayStoriesFragment.this).execute();
+                            asyncTask = new RetrieveStoriesAsyncTask(context, max_id, type,DisplayStoriesFragment.this).execute();
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -127,7 +134,7 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
                 if (pixelFedStories != null && pixelFedStories.size() > 0)
                     sinceId = pixelFedStories.get(0).getId();
                 if (context != null)
-                    asyncTask = new RetrieveStoriesAsyncTask(context, null, DisplayStoriesFragment.this).execute();
+                    asyncTask = new RetrieveStoriesAsyncTask(context, null, type,DisplayStoriesFragment.this).execute();
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -153,13 +160,13 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
                 break;
         }
         if (context != null)
-            asyncTask = new RetrieveStoriesAsyncTask(context, max_id, DisplayStoriesFragment.this).execute();
+            asyncTask = new RetrieveStoriesAsyncTask(context, max_id, type,DisplayStoriesFragment.this).execute();
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (context != null)
-                        asyncTask = new RetrieveStoriesAsyncTask(context, max_id, DisplayStoriesFragment.this).execute();
+                        asyncTask = new RetrieveStoriesAsyncTask(context, max_id, type,DisplayStoriesFragment.this).execute();
                 }
             }, 500);
         return rootView;
@@ -270,7 +277,7 @@ public class DisplayStoriesFragment extends Fragment implements OnRetrieveStorie
      * @param sinceId String
      */
     void retrieveMissingNotifications(String sinceId) {
-        asyncTask = new RetrieveStoriesAsyncTask(context, null, DisplayStoriesFragment.this).execute();
+        asyncTask = new RetrieveStoriesAsyncTask(context, null, type,DisplayStoriesFragment.this).execute();
     }
 
     @Override

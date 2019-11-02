@@ -88,6 +88,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.asynctasks.RetrieveStoriesAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Filters;
@@ -2536,7 +2537,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     fragment.setArguments(bundle);
                     return fragment;
                 }else if (position == 3) {
-                    return new DisplayStoriesFragment();
+                    DisplayStoriesFragment fragment = new DisplayStoriesFragment();
+                    bundle.putSerializable("type", RetrieveStoriesAsyncTask.type.ME);
+                    fragment.setArguments(bundle);
+                    return fragment;
                 }
                 /*else if( position == 3) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
