@@ -4970,11 +4970,15 @@ public class Helper {
         switch (liveNotifications){
             case Helper.NOTIF_LIVE:
                 Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                context.startService(streamingIntent);
+                try {
+                    context.startService(streamingIntent);
+                }catch (Exception ignored){}
                 break;
             case Helper.NOTIF_DELAYED:
                 streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                context.startService(streamingIntent);
+                try {
+                    context.startService(streamingIntent);
+                }catch (Exception ignored){}
                 break;
         }
     }
