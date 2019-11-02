@@ -4967,19 +4967,24 @@ public class Helper {
 
     public static void startStreaming(Context context) {
         int liveNotifications = Helper.liveNotifType(context);
+        Intent streamingIntent = null;
         switch (liveNotifications){
             case Helper.NOTIF_LIVE:
-                Intent streamingIntent = new Intent(context, LiveNotificationService.class);
-                try {
-                    context.startService(streamingIntent);
-                }catch (Exception ignored){}
+                streamingIntent = new Intent(context, LiveNotificationService.class);
                 break;
             case Helper.NOTIF_DELAYED:
                 streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
-                try {
-                    context.startService(streamingIntent);
-                }catch (Exception ignored){}
                 break;
+        }
+        if( streamingIntent != null) {
+            try {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    context.startForegroundService(streamingIntent);
+                } else {
+                    context.startService(streamingIntent);
+                }
+                context.startService(streamingIntent);
+            } catch (Exception ignored) {}
         }
     }
 
