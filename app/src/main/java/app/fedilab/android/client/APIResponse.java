@@ -32,6 +32,7 @@ import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.client.Entities.PixelFedStory;
+import app.fedilab.android.client.Entities.PixelFedStoryItem;
 import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Report;
@@ -71,7 +72,8 @@ public class APIResponse {
     private List<AccountAdmin> accountAdmins = null;
     private List<Report> reports = null;
     private Context context = null;
-    private PixelFedStory pixelFedStory = null;
+    private List<PixelFedStory> pixelFedStories = null;
+    private List<PixelFedStoryItem> pixelFedStoryItems = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -281,11 +283,20 @@ public class APIResponse {
         this.context = context;
     }
 
-    public PixelFedStory getPixelFedStory() {
-        return pixelFedStory;
+
+    public List<PixelFedStory> getPixelFedStories() {
+        return pixelFedStories;
     }
 
-    public void setPixelFedStory(PixelFedStory pixelFedStory) {
-        this.pixelFedStory = pixelFedStory;
+    public void setPixelFedStories(List<PixelFedStory> pixelFedStories) {
+        this.pixelFedStories = pixelFedStories;
+    }
+
+    public List<PixelFedStoryItem> getPixelFedStoryItems() {
+        return pixelFedStoryItems;
+    }
+
+    public void setPixelFedStoryItems(List<PixelFedStoryItem> pixelFedStoryItems) {
+        this.pixelFedStoryItems = pixelFedStoryItems;
     }
 }

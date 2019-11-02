@@ -33,7 +33,8 @@ public class PixelfedAPI {
 
 
     private Context context;
-    private PixelFedStory pixelFedStory;
+    private List<PixelFedStory> pixelFedStories;
+    private List<PixelFedStoryItem> pixelFedStoryItems;
     private int tootPerPage;
     private String instance;
     private String prefKeyOauthTokenT;
@@ -78,13 +79,15 @@ public class PixelfedAPI {
      * @return APIResponse
      */
     public APIResponse getMyStories() {
-
+        pixelFedStories = new ArrayList<>();
+        PixelFedStory pixelFedStory;
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl("/me"), 10, null, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             pixelFedStory = parseStory(new JSONObject(response));
+            pixelFedStories.add(pixelFedStory);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
@@ -92,7 +95,60 @@ public class PixelfedAPI {
         }
         if (apiResponse == null)
             apiResponse = new APIResponse();
-        apiResponse.setPixelFedStory(pixelFedStory);
+        apiResponse.setPixelFedStories(pixelFedStories);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves Pixelfed Own Stories *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getFriendStories(String max_id) {
+        pixelFedStories = new ArrayList<>();
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/recent"), 10, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            pixelFedStories = parseStories(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        if (apiResponse == null)
+            apiResponse = new APIResponse();
+        apiResponse.setPixelFedStories(pixelFedStories);
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves an item from its ID
+     *
+     * @return APIResponse
+     */
+    public APIResponse getStoryItem(String id) {
+        pixelFedStoryItems = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/item/%s", id)), 10, null, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            PixelFedStoryItem pixelFedStoryItem = parseStoryItem(new JSONObject(response));
+            pixelFedStoryItems.add(pixelFedStoryItem);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        if (apiResponse == null)
+            apiResponse = new APIResponse();
+        apiResponse.setPixelFedStoryItems(pixelFedStoryItems);
         return apiResponse;
     }
 
@@ -117,6 +173,33 @@ public class PixelfedAPI {
         }
         return actionCode;
     }
+
+
+
+    /**
+     * Parse json response for several stories
+     *
+     * @param jsonArray JSONArray
+     * @return List<PixelFedStory>
+     */
+    private static List<PixelFedStory> parseStories(JSONArray jsonArray) {
+
+        List<PixelFedStory> pixelFedStories = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                PixelFedStory pixelFedStory = parseStory(resobj);
+                i++;
+                pixelFedStories.add(pixelFedStory);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return pixelFedStories;
+    }
+
 
 
     /**
