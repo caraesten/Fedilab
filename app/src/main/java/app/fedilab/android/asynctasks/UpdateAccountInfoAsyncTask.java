@@ -72,9 +72,9 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         if( this.contextReference == null){
             return null;
         }
-        if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
+        if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED || social == SOCIAL.PLEROMA) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).getRealNodeInfo(this.instance);
+            InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).displayNodeInfo(this.instance);
             if (info != null && info.getName() != null && account != null)
                 account.setSocial(info.getName().toUpperCase());
         } else if (social == SOCIAL.PEERTUBE) {
@@ -83,8 +83,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
                 account.setSocial("PEERTUBE");
         } else {
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            if (account != null)
-                account.setSocial(account.getSocial());
         }
         if (account == null)
             return null;
