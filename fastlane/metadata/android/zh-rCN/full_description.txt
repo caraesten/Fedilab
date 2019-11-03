@@ -9,10 +9,10 @@ Fedilab 是一个多功能的 Android 客户端，可以访问分布式Fediverse
 - 多账户支助
 - 安排设备上的消息
 - 计划发嘟
-- Bookmark messages
-- Follow and interact with remote instances
-- Timed mute accounts
-- Cross-account actions with a long press
-- Translation feature
-- Art timelines
-- Video timelines
+- 书签消息
+- 关注与交互远程实例
+- 定时静音账户
+- 长按执行跨账户操作
+- 翻译功能
+- 艺术时间线
+- 视频时间线
