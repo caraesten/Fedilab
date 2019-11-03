@@ -296,7 +296,7 @@
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Vojo: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_bubble_counter">Montri sumigiloj</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -328,8 +328,8 @@
     <string name="settings_hour_init">Komenca tempo</string>
     <string name="settings_hour_end">Malkomenca tempo</string>
     <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="custom_tabs">Propra langetoj</string>
+    <string name="use_javascript">Ebligi Ĝavoskripton</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Permesi tria-partiaj kuketojn</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
@@ -381,7 +381,7 @@
     <string name="action_search">Serĉi</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Regrandigi videoj</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Puŝsciigoj</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
@@ -494,7 +494,7 @@
     <string name="media_ready">Media has been loaded. Tap here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
+    <string name="data_export">Eksporti statusoj</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
@@ -592,7 +592,7 @@
     <string name="blocked_domains">Blokita domajnoj</string>
     <string name="block_domain">Blokitu domajno</string>
     <string name="toast_block_domain">La domajno estas blokita</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
+    <string name="toast_unblock_domain">La domajno ne plu estas blokita!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Komentu</string>
     <string name="peertube_instance">Peertube Instenco</string>
@@ -600,7 +600,7 @@
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s vidoj</string>
     <string name="duration_video">Daŭro: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
+    <string name="add_remote_instance">Aldoni instencon</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
     <string name="peertube_favorites">Peertube stelumoj</string>
@@ -648,7 +648,7 @@
     <string name="profile_picture">Profilbildo</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Aldoni novan</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Aktualigu</string>
@@ -668,8 +668,8 @@
         <item>1 horo</item>
         <item>6 horoj</item>
         <item>12 horoj</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>1 tago</item>
+        <item>1 semajno</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -682,19 +682,19 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Lingvoj</string>
     <string name="show_media_only">Nur aŭdvidaĵo</string>
     <string name="show_media_nsfw">Montru NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Crowdin tradukaj</string>
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
+    <string name="about_crowdin">Pri Crowdin</string>
+    <string name="bot">Boto</string>
+    <string name="pixelfed_instance">Pixelfed instenco</string>
+    <string name="mastodon_instance">Mastodono Instenco</string>
+    <string name="no_pixelfed_instance">Neniam Pixelfed instencojn</string>
+    <string name="any_tags">Iu ajn de ĉi tiuj</string>
+    <string name="all_tags">Ĉiuj de ĉi tiuj</string>
     <string name="none_tags">None of these</string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
@@ -739,7 +739,7 @@
     <string name="no_video_to_display">No videos to display!</string>
     <string name="add_image_to_favorite">Aldonu aŭdvidaĵojn stelumej</string>
     <string name="leave_a_comment">Lasi komenton</string>
-    <string name="share">Share</string>
+    <string name="share">Konigi</string>
     <string name="my_pictures">Miaj Bildoj</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">De aparato</string>
@@ -751,10 +751,10 @@
     <string name="settings_category_label_confirmations">Konfirmoj</string>
     <string name="settings_category_label_timelines">Tempolinioj</string>
     <string name="settings_category_label_notification">Notification service</string>
-    <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
+    <string name="settings_category_label_interface">Interfaco</string>
+    <string name="settings_category_label_hiddencontent">Kaŝita enhavo</string>
     <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
+    <string name="contact">Kontaktoj</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
@@ -764,20 +764,20 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
+    <string name="export_data">Eksporti datumojn</string>
     <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
+    <string name="toot_select_import">Elektu dosieron por importi</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
+    <string name="send_comment">Sendi komenton</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
     <string name="action_plain_text">Plain text</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
+    <string name="action_logout_account">Ŝlosi konton</string>
+    <string name="all">Ĉiuj</string>
+    <string name="about_opencollective">Subtenas la app</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">Kopii ligilon</string>
     <string name="connect_instance">Konekti</string>
@@ -835,7 +835,7 @@
     <string name="action_bbcode">BBCode</string>
     <string name="add_timeline">Add a timeline</string>
     <string name="set_sensitive_content">Ĉiam marki aŭdovidaĵojn tiklaj</string>
-    <string name="gnu_instance">GNU instance</string>
+    <string name="gnu_instance">GNU instenco</string>
     <string name="cached_status">Cached status</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
@@ -847,9 +847,9 @@
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
-    <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
-    <string name="create">Create</string>
+    <string name="display_name">Montri nomon</string>
+    <string name="privacy">Privateco</string>
+    <string name="create">Krei</string>
     <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
@@ -887,16 +887,16 @@
     <string name="mention_status">Mention the status</string>
     <string name="action_news">News</string>
     <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
-    <string name="category_general">General</string>
-    <string name="category_regional">Regional</string>
+    <string name="category_general">Ĝeneralaj</string>
+    <string name="category_regional">Regiona</string>
     <string name="category_art">Arto</string>
     <string name="category_journalism">Ĵurnalismo</string>
     <string name="category_activism">Aktivismo</string>
     <string name="category_games">Videoludado</string>
     <string name="category_tech">Teknologio</string>
     <string name="category_adult">Adult content</string>
-    <string name="category_furry">Furry</string>
-    <string name="category_food">Food</string>
+    <string name="category_furry">Felanaro</string>
+    <string name="category_food">Manĝaĵo</string>
     <string name="instance_logo">Logo of the instance</string>
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
@@ -905,8 +905,8 @@
     <string name="password_confirm">Konfirmi la pasvorton</string>
     <string name="agreement_check">Mi konsentas %1$s kaj %2$s</string>
     <string name="server_rules">server rules</string>
-    <string name="tos">terms of service</string>
-    <string name="sign_up">Sign up</string>
+    <string name="tos">Uzkondiĉojn</string>
+    <string name="sign_up">Enskribiĝi</string>
     <string name="validation_needed">This instance works with invitations. Your account will need to be manually approved by an administrator before being usable.</string>
     <string name="all_field_filled">Please, fill all the fields!</string>
     <string name="password_error">Passwords don\'t match!</string>
@@ -923,17 +923,17 @@
         <b>Important</b>: If your instance required validation, you will receive an email once it is validated!
     </string>
     <string name="save_draft">Save the message in drafts?</string>
-    <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
+    <string name="administration">Administrado</string>
+    <string name="reports">Raportoj</string>
     <string name="no_reports">No reports to display!</string>
     <string name="reconnect_account">Reconnect the account</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
-    <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
+    <string name="unresolved">Nesolvitaj</string>
+    <string name="resolved">Solvita</string>
     <string name="remote">Remote</string>
     <string name="active">Active</string>
     <string name="pending">Pending</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Malŝaltita</string>
     <string name="silenced">Silenta</string>
     <string name="suspended">Paŭzita</string>
     <string name="permissions">Permesoj</string>
@@ -999,24 +999,24 @@
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
-    <string name="timelines">Timelines</string>
-    <string name="u_interface">Interface</string>
-    <string name="battery">Battery</string>
-    <string name="compose">Compose</string>
+    <string name="timelines">Tempolinioj</string>
+    <string name="u_interface">Interfaco</string>
+    <string name="battery">Baterio</string>
+    <string name="compose">Verki</string>
     <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
     <string name="folder_name">Enter the folder name</string>
     <string name="valid_folder_name">Please enter a valid folder name</string>
     <string name="folder_exists">This folder already exists.\n Please provide another name for the folder</string>
-    <string name="select">Select</string>
+    <string name="select">Elekti</string>
     <string name="default_directory">Default Directory</string>
-    <string name="folder">Folder</string>
-    <string name="create_folder">Create folder</string>
+    <string name="folder">Dosierujo</string>
+    <string name="create_folder">Krei dosierujon</string>
     <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
     <string name="export_muted_instance">Export muted instances</string>
     <string name="muted_instance_exported">Muted instances have been exported!</string>
-    <string name="add_instances">Add an instance</string>
+    <string name="add_instances">Aldoni instencon</string>
     <string name="export_instances">Export instances</string>
     <string name="import_instances">Import instances</string>
     <string name="set_crash_reports">Crash reports</string>
@@ -1026,7 +1026,7 @@
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="set_wysiwyg">Use the wysiwyg</string>
     <string name="set_wysiwyg_indication">When enabled, you will be able to format your text easily with tools.</string>
-    <string name="action_stats">Statistics</string>
+    <string name="action_stats">Statistiko</string>
     <string name="total_statuses">Total statuses</string>
     <string name="number_boosts">Number of boosts</string>
     <string name="number_favourites">Nombro de stelumoj</string>
@@ -1044,17 +1044,17 @@
     <string name="last_toot_date">Last status date</string>
     <string name="first_notification_date">First notification date</string>
     <string name="last_notification_date">Last notification date</string>
-    <string name="frequency">Frequency</string>
+    <string name="frequency">Ofteco</string>
     <string name="toot_per_day">%s statuses per day</string>
     <string name="notification_per_day">%s notifications per day</string>
     <string name="date_range">Date range</string>
-    <string name="action_groups">Groups</string>
+    <string name="action_groups">Grupoj</string>
     <string name="no_messages">No groups!</string>
     <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <string name="owner_charts">Charts</string>
     <string name="display_charts">Display charts</string>
     <string name="collecting_data_wait">The application collects your local data, please wait...</string>
-    <string name="set_backup">Backup</string>
+    <string name="set_backup">Savkopii</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
     <string name="set_auto_backup_notifications">Auto backup notifications</string>
@@ -1063,21 +1063,21 @@
     <string name="send_invitation">Send an invitation</string>
     <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d voĉdono</item>
+        <item quantity="other">%d voĉdonoj</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minutoj</item>
+        <item>30 minutoj</item>
+        <item>1 horo</item>
+        <item>6 horoj</item>
+        <item>1 tago</item>
+        <item>3 tagoj</item>
+        <item>7 tagoj</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
@@ -1115,14 +1115,14 @@
     <string name="live_delayed">Live notifications delayed</string>
     <string name="no_live_notif">No live notifications</string>
     <string name="no_live_indication">Notifications will be fetched every 15 minutes.</string>
-    <string name="action_add_notes">Add notes</string>
+    <string name="action_add_notes">Aldoni notojn</string>
     <string name="note_for_account">Notes for the account</string>
     <string name="set_resize_picture_indication">Allow to compress large photos into smaller sized photos with very less or negligible loss in quality of the image.</string>
     <string name="set_resize_video_indication">Allow compressing videos while maintaining their quality.</string>
     <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
     <string name="change_app_icon_experimental">Change app icon</string>
     <string name="click_to_change_the_app_icon">Tap to change the app icon</string>
-    <string name="post">Post</string>
+    <string name="post">Afiŝo</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
     <string name="add_photo_pixelfed">Tap here to add photos</string>
     <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
