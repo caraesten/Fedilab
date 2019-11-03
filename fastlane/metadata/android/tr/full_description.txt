@@ -1,7 +1,7 @@
 Fedilab, mikro blog, fotoğraf paylaşımı ve video barındırma içeren dağıtılmış Fediverse'e erişmek için çok işlevli bir Android istemcisidir.
 
 Destekledikleri:
-- Mastodon, Pleroma, Peertube, GNU Social, Friendica.
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
 
 The app has advanced features (especially for Pleroma and Mastodon):
