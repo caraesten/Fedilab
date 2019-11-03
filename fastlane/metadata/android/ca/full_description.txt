@@ -1,7 +1,7 @@
 Fedilab és un client Android multifuncional per a l'accés al Fedivers distribuït i que permet micro-bloguejar, compartir fotos i hostatjar vídeos.
 
 Pot incorporar:
-- Mastodon, Pleroma, Peertube, GNU social i Friendica.
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
 
 L'aplicació té funcionalitats avançades (sobretot per a Pleroma i Mastodont):
