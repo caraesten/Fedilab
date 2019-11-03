@@ -212,9 +212,9 @@ public class LoginActivity extends BaseActivity {
                 }
             }
             if (theme == Helper.THEME_DARK) {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC2);
+                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon_item, R.color.mastodonC2);
             } else {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
+                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon_item, R.color.mastodonC3);
             }
 
             TextView create_an_account_message = findViewById(R.id.create_an_account);

@@ -121,7 +121,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                         holder.iconView.setImageResource(R.drawable.peertube_icon);
                         break;
                     case "MASTODON":
-                        holder.iconView.setImageResource(R.drawable.mastodon_icon);
+                        holder.iconView.setImageResource(R.drawable.mastodon_icon_item);
                         break;
                     case "PIXELFED":
                         holder.iconView.setImageResource(R.drawable.pixelfed);
