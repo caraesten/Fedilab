@@ -2,4 +2,4 @@ Added
 - Custom emoji in polls
 
 Fixed
-- Fix missing feature for Pleroma accounts
+- Fix missing features for Pleroma accounts
