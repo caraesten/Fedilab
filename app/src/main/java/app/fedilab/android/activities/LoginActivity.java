@@ -283,6 +283,7 @@ public class LoginActivity extends BaseActivity {
                                             client_id_for_webview = true;
                                             retrievesClientId();
                                         } else {
+                                            client_id_for_webview = false;
                                             if (instanceNodeInfo.getName().equals("PEERTUBE")) {
                                                 step_login_credential.setVisibility(View.VISIBLE);
                                                 step_instance.setVisibility(View.GONE);

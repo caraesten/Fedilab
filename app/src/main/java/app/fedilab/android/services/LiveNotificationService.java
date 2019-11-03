@@ -14,7 +14,6 @@ package app.fedilab.android.services;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
@@ -69,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
@@ -79,7 +76,6 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static app.fedilab.android.helper.Helper.getMainLogo;
@@ -106,7 +102,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     private NotificationChannel channel;
     public static int totalAccount = 0;
     public static int eventsCount = 0;
-    public static int liveNotifBadge = 0;
 
     public void onCreate() {
         super.onCreate();
@@ -426,8 +421,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             final String finalMessage = message;
                             Handler mainHandler = new Handler(Looper.getMainLooper());
                             Helper.NotifType finalNotifType = notifType;
-                            liveNotifBadge++;
-                            ShortcutBadger.applyCount(getApplicationContext(), liveNotifBadge);
                             Runnable myRunnable = new Runnable() {
                                 @Override
                                 public void run() {

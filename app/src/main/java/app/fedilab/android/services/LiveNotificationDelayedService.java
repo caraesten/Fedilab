@@ -14,7 +14,6 @@ package app.fedilab.android.services;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -294,6 +293,7 @@ public class LiveNotificationDelayedService extends Service {
                 boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
                 boolean notif_poll = sharedpreferences.getBoolean(Helper.SET_NOTIF_POLL, true);
                 boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share || notif_poll);
+
                 String message = null;
                 if (somethingToPush) {
                     switch (notification.getType()) {
@@ -368,6 +368,7 @@ public class LiveNotificationDelayedService extends Service {
                             break;
                         default:
                     }
+
                     //Some others notification
                     final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

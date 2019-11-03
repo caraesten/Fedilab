@@ -143,7 +143,6 @@ import app.fedilab.android.interfaces.OnRetrieveMetaDataInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
 import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -1722,9 +1721,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onResume() {
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
-
-        LiveNotificationService.liveNotifBadge = 0;
-        ShortcutBadger.removeCount(getApplicationContext());
+        
         //Proceeds to update of the authenticated account
         /*if (Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
