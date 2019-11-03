@@ -296,7 +296,7 @@
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Vojo: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_bubble_counter">Montri sumigiloj</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -328,8 +328,8 @@
     <string name="settings_hour_init">Komenca tempo</string>
     <string name="settings_hour_end">Malkomenca tempo</string>
     <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="custom_tabs">Propra langetoj</string>
+    <string name="use_javascript">Ebligi Ĝavoskripton</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Permesi tria-partiaj kuketojn</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
@@ -381,7 +381,7 @@
     <string name="action_search">Serĉi</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Regrandigi videoj</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Puŝsciigoj</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
@@ -494,7 +494,7 @@
     <string name="media_ready">Media has been loaded. Tap here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
+    <string name="data_export">Eksporti statusoj</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
@@ -592,7 +592,7 @@
     <string name="blocked_domains">Blokita domajnoj</string>
     <string name="block_domain">Blokitu domajno</string>
     <string name="toast_block_domain">La domajno estas blokita</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
+    <string name="toast_unblock_domain">La domajno ne plu estas blokita!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Komentu</string>
     <string name="peertube_instance">Peertube Instenco</string>
@@ -600,7 +600,7 @@
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s vidoj</string>
     <string name="duration_video">Daŭro: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
+    <string name="add_remote_instance">Aldoni instencon</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
     <string name="peertube_favorites">Peertube stelumoj</string>
@@ -648,7 +648,7 @@
     <string name="profile_picture">Profilbildo</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Aldoni novan</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Aktualigu</string>
@@ -668,7 +668,7 @@
         <item>1 horo</item>
         <item>6 horoj</item>
         <item>12 horoj</item>
-        <item>1 day</item>
+        <item>1 tago</item>
         <item>1 week</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
