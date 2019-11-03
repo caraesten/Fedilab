@@ -128,7 +128,9 @@ public class LoginActivity extends BaseActivity {
         if (b != null) {
             autofilledInstance = b.getString("instance", null);
             social = b.getString("social", null);
-            socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
+            if( instanceNodeInfo != null) {
+                socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
+            }
             admin = b.getBoolean("admin", false);
         }
 
@@ -711,8 +713,6 @@ public class LoginActivity extends BaseActivity {
                 startActivity(i);
             } else {
                 String url = redirectUserToAuthorizeAndLogin(getApplicationContext(), socialNetwork, client_id, instance);
-
-
                 Helper.openBrowser(LoginActivity.this, url);
             }
         }
