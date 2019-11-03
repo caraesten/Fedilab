@@ -620,18 +620,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         if (social == null || accountReply != null) {
             //Update the static variable which manages account type
-            if (account.getSocial() == null || account.getSocial().equals("MASTODON"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-            else if (account.getSocial().equals("PEERTUBE"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-            else if (account.getSocial().equals("PIXELFED"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
-            else if (account.getSocial().equals("PLEROMA"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
-            else if (account.getSocial().equals("GNU"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-            else if (account.getSocial().equals("FRIENDICA"))
-                social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+            social = Helper.setSoftware(account.getSocial(), false);
         }
         switch (social) {
             case GNU:

@@ -88,11 +88,12 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                         domain = split[2];
                     }
                     if (domain != null && username != null) {
-                        InstanceNodeInfo node = api.getNodeInfo(domain);
+                        InstanceNodeInfo node = api.displayNodeInfo(domain);
                         String url = null;
                         if (node != null && node.getName() != null) {
                             switch (node.getName().trim()) {
                                 case "MASTODON":
+                                case "PLEROMA":
                                     url = "https://" + domain + "/@" + username;
                                     break;
                                 case "PEERTUBE":
@@ -102,6 +103,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                                     url = "https://" + domain + "/" + username;
                                     break;
                                 case "GNU":
+                                case "FRIENDICA":
                                     url = "https://" + domain + "/profile/" + username;
                                     break;
                             }

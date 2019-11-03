@@ -46,6 +46,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.client.Entities.Instance;
+import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeAccountNotification;
 import app.fedilab.android.client.Entities.PeertubeActorFollow;
@@ -326,17 +327,19 @@ public class PeertubeAPI {
      */
     public Account verifyCredentials() {
         account = new Account();
+        InstanceNodeInfo nodeinfo = new API(context).displayNodeInfo(instance);
+        String social = null;
+        if( nodeinfo != null){
+            social = nodeinfo.getName();
+        }
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
             JSONObject accountObject = new JSONObject(response).getJSONObject("account");
             account = parseAccountResponsePeertube(context, accountObject);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+            if( social != null ) {
+                account.setSocial(social.toUpperCase());
+            }
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             if (e.getStatusCode() == 401 || e.getStatusCode() == 403) {
@@ -363,13 +366,10 @@ public class PeertubeAPI {
                     response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/me"), 60, null, targetedAccount.getToken());
                     JSONObject accountObject = new JSONObject(response).getJSONObject("account");
                     account = parseAccountResponsePeertube(context, accountObject);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
+                    if( social != null ) {
+                        account.setSocial(social.toUpperCase());
+                    }
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
                     e1.printStackTrace();
                 } catch (HttpsConnection.HttpsConnectionException e1) {
                     e1.printStackTrace();

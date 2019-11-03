@@ -128,19 +128,7 @@ public class LoginActivity extends BaseActivity {
         if (b != null) {
             autofilledInstance = b.getString("instance", null);
             social = b.getString("social", null);
-            if (social != null) {
-                switch (social) {
-                    case "MASTODON":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                        break;
-                    case "PEERTUBE":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                        break;
-                    case "GNU":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                        break;
-                }
-            }
+            socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
             admin = b.getBoolean("admin", false);
         }
 
@@ -281,27 +269,15 @@ public class LoginActivity extends BaseActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
+                            instanceNodeInfo = new API(LoginActivity.this).displayNodeInfo(instance);
 
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connect_button.setEnabled(true);
                                     if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
-                                        switch (instanceNodeInfo.getName()) {
-                                            case "MASTODON":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                                                break;
-                                            case "PIXELFED":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
-                                                break;
-                                            case "PEERTUBE":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                                                break;
-                                            case "GNU":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                                                break;
-                                        }
-                                        if (instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
+                                        socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
+
+                                        if (instanceNodeInfo.getName().equals("PLEROMA") ||instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
                                         } else {
@@ -310,7 +286,7 @@ public class LoginActivity extends BaseActivity {
                                                 step_instance.setVisibility(View.GONE);
                                                 instance_chosen.setText(instance);
                                                 retrievesClientId();
-                                            } else if (instanceNodeInfo.getName().equals("GNU")) {
+                                            } else if (instanceNodeInfo.getName().equals("GNU") || instanceNodeInfo.getName().equals("FRIENDICA")) {
                                                 step_login_credential.setVisibility(View.VISIBLE);
                                                 step_instance.setVisibility(View.GONE);
                                                 instance_chosen.setText(instance);
@@ -397,8 +373,6 @@ public class LoginActivity extends BaseActivity {
                                             }
                                         });
 
-                                    } catch (HttpsConnection.HttpsConnectionException e) {
-                                        isLoadingInstance = false;
                                     } catch (Exception e) {
                                         isLoadingInstance = false;
                                     }
@@ -788,14 +762,12 @@ public class LoginActivity extends BaseActivity {
             editor.apply();
             return false;
         } else if (id == R.id.action_import_data) {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(LoginActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    return true;
-                }
+            if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                return true;
             }
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);

@@ -5000,4 +5000,36 @@ public class Helper {
         return (lastRefresh == null || lastRefresh.before(dateAllowed));
     }
 
+    public static UpdateAccountInfoAsyncTask.SOCIAL setSoftware(String social, boolean updateSocial){
+        //Update the static variable which manages account type
+        if( updateSocial) {
+            if (social == null || social.equals("MASTODON"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+            else if (social.equals("PEERTUBE"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+            else if (social.equals("PIXELFED"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+            else if (social.equals("PLEROMA"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
+            else if (social.equals("GNU"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+            else if (social.equals("FRIENDICA"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+        }
+        UpdateAccountInfoAsyncTask.SOCIAL socialNetwork = null;
+        if (social == null || social.equals("MASTODON"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+        else if (social.equals("PEERTUBE"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+        else if (social.equals("PIXELFED"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+        else if (social.equals("PLEROMA"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
+        else if (social.equals("GNU"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+        else if (social.equals("FRIENDICA"))
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+        return socialNetwork;
+    }
+
 }

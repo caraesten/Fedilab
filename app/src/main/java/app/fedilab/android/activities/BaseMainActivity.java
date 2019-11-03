@@ -260,18 +260,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         //Update the static variable which manages account type
-        if (account.getSocial() == null || account.getSocial().equals("MASTODON"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-        else if (account.getSocial().equals("PEERTUBE"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-        else if (account.getSocial().equals("PIXELFED"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
-        else if (account.getSocial().equals("PLEROMA"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
-        else if (account.getSocial().equals("GNU"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-        else if (account.getSocial().equals("FRIENDICA"))
-            social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+        Helper.setSoftware(account.getSocial(), true);
         countNewStatus = 0;
         countNewNotifications = 0;
 

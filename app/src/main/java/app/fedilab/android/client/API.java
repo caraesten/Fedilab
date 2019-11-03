@@ -578,121 +578,6 @@ public class API {
     }
 
 
-    public InstanceNodeInfo getNodeInfo(String domain) {
-
-        //Try to guess URL scheme for the onion instance
-        String scheme = "https";
-        if (domain.endsWith(".onion")) {
-            try {
-                new HttpsConnection(context, domain).get("http://" + domain, 30, null, null);
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_ONION_SCHEME + domain, "http");
-                scheme = "http";
-                editor.apply();
-            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-                e.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_ONION_SCHEME + domain, "https");
-                editor.apply();
-            }
-        }
-        String response;
-        InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
-        try {
-            response = new HttpsConnection(context, domain).get(scheme + "://" + domain + "/.well-known/nodeinfo", 30, null, null);
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
-            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
-            try {
-                int i = 0;
-                while (i < jsonArray.length()) {
-
-                    JSONObject resobj = jsonArray.getJSONObject(i);
-                    NodeInfo nodeInfo = new NodeInfo();
-                    nodeInfo.setHref(resobj.getString("href"));
-                    nodeInfo.setRel(resobj.getString("rel"));
-                    i++;
-                    nodeInfos.add(nodeInfo);
-                }
-                if (nodeInfos.size() > 0) {
-                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
-                    response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
-                    JSONObject resobj = new JSONObject(response);
-                    JSONObject jsonObject = resobj.getJSONObject("software");
-                    String name = null;
-                    if (resobj.has("metadata") && resobj.getJSONObject("metadata").has("features")) {
-                        JSONArray features = resobj.getJSONObject("metadata").getJSONArray("features");
-                        if (!resobj.getJSONObject("metadata").isNull("features") && features.length() > 0) {
-                            for (int counter = 0; counter < features.length(); counter++) {
-                                if (features.getString(counter).toUpperCase().equals("MASTODON_API")) {
-                                    name = "MASTODON";
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (name == null) {
-                        if ( !jsonObject.isNull("name") ) {
-                            name = jsonObject.getString("name").toUpperCase();
-                            switch (name) {
-                                case "PLEROMA":
-                                    name = "MASTODON";
-                                    break;
-                                case "GNUSOCIAL":
-                                case "HUBZILLA":
-                                case "REDMATRIX":
-                                case "FRIENDICA":
-                                    name = "GNU";
-                                    break;
-                            }
-                        }
-                    }
-                    instanceNodeInfo.setName(name);
-                    instanceNodeInfo.setVersion(jsonObject.getString("version"));
-                    if( resobj.has("openRegistrations")) {
-                        instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
-                    }
-                }
-            } catch (JSONException e) {
-                setDefaultError(e);
-            }
-        } catch (IOException e) {
-            instanceNodeInfo.setConnectionError(true);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException | KeyManagementException | JSONException e) {
-            e.printStackTrace();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            try {
-                response = new HttpsConnection(context, this.instance).get(scheme + "://" + domain + "/api/v1/instance", 30, null, null);
-                JSONObject jsonObject = new JSONObject(response);
-                instanceNodeInfo.setName("MASTODON");
-                instanceNodeInfo.setVersion(jsonObject.getString("version"));
-                instanceNodeInfo.setOpenRegistrations(true);
-            } catch (IOException e1) {
-                instanceNodeInfo.setConnectionError(true);
-                e1.printStackTrace();
-            } catch (NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
-                e1.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e1) {
-                if( e1.getStatusCode() == 404) {
-                    instanceNodeInfo.setName("GNU");
-                    instanceNodeInfo.setVersion("unknown");
-                    instanceNodeInfo.setOpenRegistrations(true);
-                    e1.printStackTrace();
-                }else{
-                    instanceNodeInfo.setName("MASTODON");
-                    instanceNodeInfo.setVersion("3.0");
-                    instanceNodeInfo.setOpenRegistrations(false);
-                }
-            }
-            e.printStackTrace();
-        }
-        return instanceNodeInfo;
-    }
-
-
     public InstanceNodeInfo displayNodeInfo(String domain) {
 
         String response;
@@ -888,6 +773,11 @@ public class API {
      */
     public Account verifyCredentials() {
         account = new Account();
+        InstanceNodeInfo nodeinfo = displayNodeInfo(instance);
+        String social = null;
+        if( nodeinfo != null){
+            social = nodeinfo.getName();
+        }
         try {
             if (context == null) {
                 setError(500, new Throwable("An error occured!"));
@@ -895,9 +785,8 @@ public class API {
             }
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
-            InstanceNodeInfo nodeinfo = displayNodeInfo(instance);
-            if( nodeinfo != null && nodeinfo.getName() != null) {
-                account.setSocial(nodeinfo.getName().toUpperCase());
+            if( social != null ) {
+                account.setSocial(social.toUpperCase());
             }
             if (account != null && account.getSocial() != null && account.getSocial().equals("PLEROMA")) {
                 isPleromaAdmin(account.getAcct());
@@ -928,6 +817,9 @@ public class API {
                 try {
                     response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, targetedAccount.getToken());
                     account = parseAccountResponse(context, new JSONObject(response));
+                    if( social != null ) {
+                        account.setSocial(social.toUpperCase());
+                    }
                     if (account.getSocial().equals("PLEROMA")) {
                         isPleromaAdmin(account.getAcct());
                     }

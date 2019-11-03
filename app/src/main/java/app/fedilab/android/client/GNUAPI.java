@@ -45,6 +45,7 @@ import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Relationship;
@@ -181,19 +182,21 @@ public class GNUAPI {
      */
     public Account verifyCredentials() {
         account = new Account();
+        InstanceNodeInfo nodeinfo = new API(context).displayNodeInfo(instance);
+        String social = null;
+        if( nodeinfo != null){
+            social = nodeinfo.getName();
+        }
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
+            if( social != null ) {
+                account.setSocial(social.toUpperCase());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return account;
