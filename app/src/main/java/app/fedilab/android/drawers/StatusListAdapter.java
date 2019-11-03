@@ -343,6 +343,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         } else {
             status.setPoll(poll);
         }
+        Status.makeEmojiPoll(context, this, status);
         notifyStatusChanged(status);
     }
 
@@ -1045,6 +1046,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVotes_count());
                             if (pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
+                                bar.setDescriptionSpan(pollOption.getTitleSpan());
                                 bar.setRounded(true);
                                 bar.setHeight1(30);
                                 items.add(bar);
@@ -1054,6 +1056,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.BLACK);
                                 else
                                     bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
+                                bar.setDescriptionSpan(pollOption.getTitleSpan());
                                 bar.setRounded(true);
                                 bar.setHeight1(30);
                                 items.add(bar);
@@ -1070,7 +1073,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 (holder.multiple_choice).removeAllViews();
                             for (PollOptions pollOption : poll.getOptionsList()) {
                                 CheckBox cb = new CheckBox(context);
-                                cb.setText(pollOption.getTitle());
+                                if( pollOption.getTitleSpan() != null){
+                                    cb.setText(pollOption.getTitleSpan(), TextView.BufferType.SPANNABLE);
+                                }else {
+                                    cb.setText(pollOption.getTitle());
+                                }
+
                                 holder.multiple_choice.addView(cb);
                             }
                             holder.multiple_choice.setVisibility(View.VISIBLE);
@@ -1080,7 +1088,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 (holder.radio_group).removeAllViews();
                             for (PollOptions pollOption : poll.getOptionsList()) {
                                 RadioButton rb = new RadioButton(context);
-                                rb.setText(pollOption.getTitle());
+                                if( pollOption.getTitleSpan() != null){
+                                    rb.setText(pollOption.getTitleSpan(), TextView.BufferType.SPANNABLE);
+                                }else {
+                                    rb.setText(pollOption.getTitle());
+                                }
                                 holder.radio_group.addView(rb);
                             }
                             holder.single_choice.setVisibility(View.VISIBLE);
@@ -1610,6 +1622,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (!status.isEmojiFound()) {
                 status.setEmojiFound(true);
                 Status.makeEmojis(context, this, status);
+            }
+            Poll poll = (status.getReblog() == null)?status.getPoll():status.getReblog().getPoll();
+            if (poll != null && !status.isPollEmojiFound()) {
+                status.setPollEmojiFound(true);
+                Status.makeEmojiPoll(context, this, status);
             }
             if (!status.isImageFound()) {
                 status.setImageFound(true);

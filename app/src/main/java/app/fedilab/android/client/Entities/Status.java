@@ -132,6 +132,7 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isPollEmojiFound = false;
     private boolean isImageFound = false;
     private boolean isEmojiTranslateFound = false;
     private boolean isClickable = false;
@@ -1343,6 +1344,105 @@ public class Status implements Parcelable {
     }
 
 
+    public static void makeEmojiPoll(final Context context, final OnRetrieveEmojiInterface listener, Status status){
+        if (((Activity) context).isFinishing())
+            return;
+        if (status.getReblog() != null && status.getReblog().getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        if (status.getReblog() == null && status.getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        Poll poll = status.getReblog()==null?status.getPoll():status.getReblog().getPoll();
+        if (poll == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        int inc = 0;
+        for(PollOptions pollOption : poll.getOptionsList()){
+            inc++;
+            SpannableString titleSpan = new SpannableString(pollOption.getTitle());
+            if (emojis != null && emojis.size() > 0) {
+                final int[] i = {0};
+                for (final Emojis emoji : emojis) {
+                    int finalInc = inc;
+                    Glide.with(context)
+                            .asFile()
+                            .load(emoji.getUrl())
+                            .listener(new RequestListener<File>() {
+                                @Override
+                                public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<File>() {
+                                @Override
+                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                    Drawable resource;
+                                    if (GifParser.isGif(resourceFile.getAbsolutePath())) {
+                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
+                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else {
+                                        resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                    }
+                                    if (resource == null) {
+                                        return;
+                                    }
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if ( titleSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = titleSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= titleSpan.toString().length() && endPosition >= startPosition) {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                titleSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                pollOption.setTitleSpan(titleSpan);
+                                            }
+                                        }
+                                    }
+                                    i[0]++;
+
+                                    if (i[0] == (emojis.size()) && finalInc == poll.getOptionsList().size()) {
+                                        status.setPollEmojiFound(true);
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                }
+                            });
+
+                }
+            }
+        }
+    }
+
     public static void makeImage(final Context context, final OnRetrieveImageInterface listener, Status status) {
 
         if (((Activity) context).isFinishing())
@@ -1850,5 +1950,13 @@ public class Status implements Parcelable {
 
     public void setShowTopLine(boolean showTopLine) {
         this.showTopLine = showTopLine;
+    }
+
+    public boolean isPollEmojiFound() {
+        return isPollEmojiFound;
+    }
+
+    public void setPollEmojiFound(boolean pollEmojiFound) {
+        isPollEmojiFound = pollEmojiFound;
     }
 }

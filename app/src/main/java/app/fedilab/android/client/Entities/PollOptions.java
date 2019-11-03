@@ -16,6 +16,8 @@ package app.fedilab.android.client.Entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.SpannableString;
+import android.text.TextUtils;
 
 public class PollOptions implements Parcelable {
 
@@ -36,6 +38,7 @@ public class PollOptions implements Parcelable {
     }
 
     private String title;
+    private SpannableString titleSpan;
     private int votes_count;
 
 
@@ -48,6 +51,7 @@ public class PollOptions implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
         dest.writeInt(this.votes_count);
+        TextUtils.writeToParcel(this.titleSpan, dest, flags);
     }
 
     public PollOptions() {
@@ -56,6 +60,7 @@ public class PollOptions implements Parcelable {
     protected PollOptions(Parcel in) {
         this.title = in.readString();
         this.votes_count = in.readInt();
+        this.titleSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
     }
 
     public static final Creator<PollOptions> CREATOR = new Creator<PollOptions>() {
@@ -69,4 +74,12 @@ public class PollOptions implements Parcelable {
             return new PollOptions[size];
         }
     };
+
+    public SpannableString getTitleSpan() {
+        return titleSpan;
+    }
+
+    public void setTitleSpan(SpannableString titleSpan) {
+        this.titleSpan = titleSpan;
+    }
 }
